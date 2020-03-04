@@ -1,0 +1,95 @@
+<mat-toolbar color="primary" class="example-toolbar">
+  <button mat-icon-button (click)="sidenav.toggle()"><mat-icon>menu</mat-icon></button>
+  <h1 class="example-app-name">WorldWide Seguros</h1>
+</mat-toolbar>
+
+<mat-sidenav-container class="sidenav-container" [style.marginTop.px]="mobileQuery.matches ? 56 : 0" >
+  <mat-sidenav #sidenav [mode]="mobileQuery.matches ? 'over' : 'side'" [fixedInViewport]="mobileQuery.matches" fixedTopGap="56" opened="true" style="border-bottom-right-radius: 25px; border-top-right-radius: 25px; overflow: hidden; width: 275px;">
+    <div class="grid grid-cols-1">
+      <mat-nav-list style="padding-top: 0px !important" >
+        <div class="dashboard-background-color-first  flex justify-center sm:pb-6 md:pb-12 lg:pb-12 xl:pb-12">
+          <div class="pr-2 pl-2 sidenav-user-info align-items-center d-flex">
+            <div class="flex justify-center pt-2 sm:pt-10 md:pt-10 lg:pt-10 xl:pt-10 pb-3">
+              <div style="background-color: white; border-radius: 100px; height: 90px; width: 90px"></div>
+            </div>
+            <div class="text-center text-white">
+                <ul class="list-unstyled m-0">
+                <li class="pb-1 font-bold uppercase"> Isai Vargas</li>
+                <li class="text-xs font-thin">ivargas@xpertcode.com.do</li>
+                </ul>
+            </div>
+          </div>
+        </div>
+        <mat-list class="dashboard-background-color-gradient pr-3"  style="height: 100vh !important">
+          <mat-list-item
+            [routerLink]="['dashboard-view']"
+            routerLinkActive="router-link-active"
+            style="color: white; max-height: 35px !important;"
+            class="my-3">
+            <img style="max-height: 35px !important;" [src]="activeRoute !== '/dashboard/dashboard-view' ?  '../../../../../../assets/iconos/dashboard-24px.svg' : '../../../../../../assets/iconos/dashboard-24px-b.svg'" height="24px" width="24px" class="mr-1 ml-3">
+            <div style="max-height: 35px !important;" class="text-xs uppercase">Dashboard</div>
+          </mat-list-item>
+          <mat-list-item
+            [routerLink]="['request-management']"
+            routerLinkActive="router-link-active"
+            style="color: white; max-height: 35px !important;"
+            class="my-3">
+            <img style="max-height: 35px !important;" [src]="activeRoute !== '/dashboard/request-management' ? '../../../../../../assets/iconos/work_outline-24px.svg' : '../../../../../../assets/iconos/work_outline-24px-b.svg'" height="24px" width="24px" class="mr-1 ml-3">
+            <div style="max-height: 35px !important;" class="text-xs uppercase">Gestión de solicitud</div>
+          </mat-list-item>
+          <mat-list-item
+            [routerLink]="['quotes']"
+            routerLinkActive="router-link-active"
+            style="color: white; max-height: 35px !important;"
+            class="my-3">
+            <img style="max-height: 35px !important;" [src]="activeRoute !== '/dashboard/quotes' ? '../../../../../../assets/iconos/library_books-24px.svg' : '../../../../../../assets/iconos/library_books-24px-b.svg'" height="24px" width="24px" class="mr-1 ml-3">
+            <div style="max-height: 35px !important;" class="text-xs uppercase">Cotizaciones</div>
+          </mat-list-item>
+          <mat-list-item
+            [routerLink]="['requests']"
+            routerLinkActive="router-link-active"
+            style="color: white; max-height: 35px !important;"
+            class="my-3">
+            <img style="max-height: 35px !important;" [src]="activeRoute !== '/dashboard/requests' ? '../../../../../../assets/iconos/library_add-24px.svg' : '../../../../../../assets/iconos/library_add-24px-b.svg'" height="24px" width="24px" class="mr-1 ml-3">
+            <div style="max-height: 35px !important;" class="text-xs uppercase">Solicitudes</div>
+          </mat-list-item>
+          <mat-list-item
+            [routerLink]="['claims']"
+            routerLinkActive="router-link-active"
+            style="color: white; max-height: 35px !important;"
+            class="my-3">
+            <img style="max-height: 35px !important;" [src]="activeRoute !== '/dashboard/claims' ? '../../../../../../assets/iconos/announcement-24px.svg' : '../../../../../../assets/iconos/announcement-24px-b.svg'" height="24px" width="24px" class="mr-1 ml-3">
+            <div style="max-height: 35px !important;" class="text-xs uppercase">Reclamos</div>
+          </mat-list-item>
+          <mat-list-item
+            [routerLink]="['information']"
+            routerLinkActive="router-link-active"
+            style="color: white; max-height: 35px !important;"
+            class="my-3">
+            <img style="max-height: 35px !important;" [src]="activeRoute !== '/dashboard/information' ? '../../../../../../assets/iconos/perm_contact_calendar-24px.svg' : '../../../../../../assets/iconos/perm_contact_calendar-24px-b.svg'" height="24px" width="24px" class="mr-1 ml-3">
+            <div style="max-height: 35px !important;" class="text-xs uppercase">Datos</div>
+          </mat-list-item>
+          <mat-list-item
+            [routerLink]="['information']"
+            style="color: white; max-height: 35px !important; padding-left: 0.75rem"
+            class="mt-10 sm:mt-40 md:mt-40 lg:mt-40 xl:mt-40"
+            >
+            <div style="max-height: 35px !important;" class="text-xs uppercase">Salir</div>
+          </mat-list-item>
+
+        </mat-list>
+      </mat-nav-list>
+    </div>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <mat-toolbar class="dashboard-toolbar flex flex-row justify-end flex-wrap" role="heading" style="">
+        <button mat-mini-fab aria-label="Example icon-button with a heart icon" class="dashboard-toolbar-buttons" style="margin-right: 0.50rem !important; ">
+          <mat-icon style="color: #18446B">notification_important</mat-icon>
+        </button>
+        <button mat-mini-fab aria-label="Example icon-button with a heart icon" class="dashboard-toolbar-buttons" >
+          <mat-icon style="color: #18446B">settings</mat-icon>
+        </button>
+    </mat-toolbar>
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>

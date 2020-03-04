@@ -1,0 +1,35 @@
+<div class="flex flex-wrap">
+  <div class="w-1/12 bg-white-500 h-screen"></div>
+  <div class="w-3/12 bg-white-400 h-screen text-center flex content-end flex-wrap">
+    <div class=" flex-1 w-full">
+      <div class="text-primary text-large font-bold pb-6">Acceder</div>
+      <form class="pb-3">
+        <div class="pb-2">
+          <mat-form-field appearance="outline" class="w-full" style="font-size: small !important;">
+            <mat-label>Usuario</mat-label>
+            <input matInput placeholder="ivargas">
+          </mat-form-field>
+        </div>
+        <div class="pb-3">
+          <mat-form-field appearance="outline" class="w-full" style="font-size: small !important;">
+            <mat-label>Contraseña</mat-label>
+            <input matInput type="password" placeholder="ASD123*&^">
+          </mat-form-field>
+        </div>
+        <mat-bar-button [options]="loginButtonOptions" (btnClick)="onClick()">
+        </mat-bar-button>
+      </form>
+      <a href="https://wikipedia.com" class="text-xs text-gray-800 ">¿Olvidaste tu contraseña?</a>
+    </div>
+    <div class="text-xs text-gray-800 mb-6" style="margin-top: 30vh;">Copyright 2020 WorldWide Group | Todos los derechos reservados</div>
+  </div>
+  <div class="w-1/12 bg-white-500 h-screen"></div>
+
+  <div class="w-7/12 h-screen flex content-center items-end flex-wrap" style="background-color: #18446b">
+    <!-- <img src="../../assets/background@2x.png" alt="Imagen base" height="100vh" class="login-base-image"> -->
+    <div class="flex flex-wrap flex-col content-end w-full pr-10">
+        <img class="login-logo-image" src="../../assets/Logowws@2x.png" alt="Logo" >
+    </div>
+
+  </div>
+</div>

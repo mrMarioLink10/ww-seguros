@@ -1,0 +1,21 @@
+<div class="pl-6 pr-12 bg-white">
+  <div class="uppercase dashboard-page-title pt-20">Solicitudes</div>
+  <div class="mt-6 w-full">
+    <app-filter></app-filter>
+  </div>
+  <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 mt-10">
+    <div class="dashboard-page-subtitle flex
+    justify-center sm:justify-center md:justify-start
+     lg:justify-start
+     xl:justify-start
+    ">Lista de Solicitudes</div>
+    <div class="flex
+    justify-center sm:justify-center md:justify-end lg:justify-end xl:justify-end
+    mt-3 sm:mt-3 md:mt-0 lg:mt-0 xl:mt-0
+    ">
+      <mat-bar-button [options]="newRequestButtonOptions" (btnClick)="newRequest()"></mat-bar-button>
+    </div>
+  </div>
+  <div class="mt-6 bg-gray-200 w-full h-64"></div>
+  <div class="bg-gray-200 w-full h-64"></div>
+</div>

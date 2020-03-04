@@ -1,1 +1,308 @@
+
+// Custom Theming for Angular Material
+// For more information: https://material.angular.io/guide/theming
+@import '../node_modules/@angular/material/_theming.scss';
+// Plus imports for other components in your app.
+
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// Be sure that you only ever include this mixin once!
+@include mat-core();
+
+$md-primarycolor: (
+  50 : #e3e9ed,
+  100 : #bac7d3,
+  200 : #8ca2b5,
+  300 : #5d7c97,
+  400 : #3b6081,
+  500 : #18446b,
+  600 : #153e63,
+  700 : #113558,
+  800 : #0e2d4e,
+  900 : #081f3c,
+  A100 : #74a9ff,
+  A200 : #4189ff,
+  A400 : #0e6aff,
+  A700 : #005df3,
+  contrast: (
+      50 : #000000,
+      100 : #000000,
+      200 : #000000,
+      300 : #ffffff,
+      400 : #ffffff,
+      500 : #ffffff,
+      600 : #ffffff,
+      700 : #ffffff,
+      800 : #ffffff,
+      900 : #ffffff,
+      A100 : #000000,
+      A200 : #000000,
+      A400 : #ffffff,
+      A700 : #ffffff,
+  )
+);
+
+$md-accentcolor: (
+  50 : #e0eff6,
+  100 : #b3d8e9,
+  200 : #80bedb,
+  300 : #4da4cd,
+  400 : #2691c2,
+  500 : #007db7,
+  600 : #0075b0,
+  700 : #006aa7,
+  800 : #00609f,
+  900 : #004d90,
+  A100 : #bcdbff,
+  A200 : #89c0ff,
+  A400 : #56a5ff,
+  A700 : #3c97ff,
+  contrast: (
+      50 : #000000,
+      100 : #000000,
+      200 : #000000,
+      300 : #000000,
+      400 : #ffffff,
+      500 : #ffffff,
+      600 : #ffffff,
+      700 : #ffffff,
+      800 : #ffffff,
+      900 : #ffffff,
+      A100 : #000000,
+      A200 : #000000,
+      A400 : #000000,
+      A700 : #000000,
+  )
+);
+// Define the palettes for your theme using the Material Design palettes available in palette.scss
+// (imported above). For each palette, you can optionally specify a default, lighter, and darker
+// hue. Available color palettes: https://material.io/design/color/
+$ww-seguros-primary: mat-palette($md-primarycolor);
+$ww-seguros-accent: mat-palette($md-accentcolor);
+
+
+
+
+
+// The warn palette is optional (defaults to red).
+$ww-seguros-warn: mat-palette($mat-red);
+
+// Create the theme object (a Sass map containing all of the palettes).
+$ww-seguros-theme: mat-light-theme($ww-seguros-primary, $ww-seguros-accent, $ww-seguros-warn);
+
+// Include theme styles for core and each component used in your app.
+// Alternatively, you can import and @include the theme mixins for each component
+// that you are using.
+@include angular-material-theme($ww-seguros-theme);
+
 /* You can add global styles to this file, and also import other style files */
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.text-color-green{
+  color: #05842C !important;
+}
+
+.text-color-red{
+  color: #D37575 !important;
+}
+
+.text-color-yellow{
+  color: #D99908 !important;
+}
+
+.login-button {
+  border-radius: 30px !important;
+  font-size: 12px;
+  overflow: hidden !important;
+}
+
+.login-base-image{
+  clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+
+}
+
+.login-logo-image{
+  max-width: 30vw;
+}
+
+.dashboard-button {
+  border-radius: 30px !important;
+  font-size: 12px;
+  overflow: hidden !important;
+  min-width: 220px !important;
+  width: 100%;
+}
+
+@media (min-width: 1280px){
+  .dashboard-button{width: 2rem;}
+}
+
+@media (min-width: 1024px){
+  .dashboard-button {width: 1.5rem;}
+}
+@media (min-width: 768px){
+  .dashboard-button {width: 1rem;}
+}
+@media (min-width: 640px){
+  .dashboard-button {width: 100%;}
+}
+
+.dashboard-toolbar-buttons{
+  margin-right: 1.35rem !important;
+  box-shadow: none !important;
+  background-color: white !important;
+}
+
+.dashboard-table-buttons{
+  margin-right: 1.35rem !important;
+  box-shadow: none !important;
+  background-color: white !important;
+  border: 1px solid #BDBDBD !important;
+  height: 25px;
+  width: 25px;
+}
+
+.dashboard-page-title{
+  font-size: 18px;
+  color: #18446B;
+  font-weight: bold;
+}
+
+.dashboard-page-subtitle{
+  color: #7e7e7e !important;
+  font-size: 15px !important;
+  font-weight: 400 !important;
+  align-items: center;
+}
+
+.dashboard-background-color-gradient{
+  background: rgb(22,87,127);
+  background: -moz-linear-gradient(180deg, rgba(22,87,127,1) 15%, rgba(18,125,179,1) 75%);
+  background: -webkit-linear-gradient(180deg, rgba(22,87,127,1) 15%, rgba(18,125,179,1) 75%);
+  background: linear-gradient(180deg, rgba(22,87,127,1) 15%, rgba(18,125,179,1) 75%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#16577f",endColorstr="#127db3",GradientType=1);
+}
+
+.dashboard-background-color-first{
+  background-color: #18446B;
+}
+
+.dashboard-toolbar{
+  border-bottom: #18446B 2px solid;
+  background-image: url('../src/assets/Ciberataques_Salud.png');
+  background-repeat: no-repeat;
+  background-size: 90vw 100vh;
+  background-position: -150px -330px;
+}
+
+@media (min-width: 640px) {
+  table {
+    display: inline-table !important;
+  }
+
+  thead tr:not(:first-child) {
+    display: none;
+  }
+}
+
+.dashboard-basic-table{
+  .padding-cell{
+    padding: 0px 20px !important;
+  }
+
+  border-bottom-color: #24ACE7 !important;
+
+  .mat-sort-header-container{
+    color: #18446B !important;
+  }
+
+  .mat-row:nth-child(odd){
+    background-color: #FBFBFA !important;
+  }
+
+  .mat-cell, .mat-footer-cell {
+    color:#373536;
+    font-size: 13px !important;
+  }
+
+  td.mat-footer-cell {
+    border-bottom: 2px #24ACE7 solid !important;
+  }
+
+  td.mat-cell, th.mat-header-cell {
+    border-color: #24ACE7 !important;
+  }
+
+  td.mat-cell:last-of-type, td.mat-footer-cell:last-of-type, th.mat-header-cell:last-of-type {
+    padding-right: 45px;
+    text-align: end !important;
+  }
+
+}
+
+.dashboard-table-paginator{
+  .mat-button .mat-button-wrapper>*, .mat-fab .mat-button-wrapper>*, .mat-flat-button .mat-button-wrapper>*, .mat-icon-button .mat-button-wrapper>*, .mat-mini-fab .mat-button-wrapper>*, .mat-raised-button .mat-button-wrapper>*, .mat-stroked-button .mat-button-wrapper>*{
+    color: #007DB7;
+    vertical-align: middle;
+    border-radius: 4px;
+    border: #007DB7 1.3px solid;
+  }
+
+  .mat-paginator-range-label {
+    color: #007DB7;
+  }
+
+  .mat-paginator-page-size-label {
+    color: #007DB7;
+  }
+
+  .mat-paginator-container {
+    justify-content: space-between !important;
+  }
+
+}
+
+
+/** OVERWRITING ANOTHER CLASSES */ /** OVERWRITING ANOTHER CLASSES */ /** OVERWRITING ANOTHER CLASSES */ /** OVERWRITING ANOTHER CLASSES */
+/** OVERWRITING ANOTHER CLASSES */ /** OVERWRITING ANOTHER CLASSES */ /** OVERWRITING ANOTHER CLASSES */ /** OVERWRITING ANOTHER CLASSES */
+/** OVERWRITING ANOTHER CLASSES */ /** OVERWRITING ANOTHER CLASSES */ /** OVERWRITING ANOTHER CLASSES */ /** OVERWRITING ANOTHER CLASSES */
+/** OVERWRITING ANOTHER CLASSES */ /** OVERWRITING ANOTHER CLASSES */ /** OVERWRITING ANOTHER CLASSES */ /** OVERWRITING ANOTHER CLASSES */
+
+.mat-list-item-content{
+  max-height: 35px !important;
+}
+.mat-drawer-inner-container{
+  overflow: hidden !important;
+}
+
+mat-form-field.mat-form-field.mat-form-field-appearance-outline > div.mat-form-field-wrapper > div.mat-form-field-flex > div.mat-form-field-infix  { padding: 0.7em 0px }
+mat-form-field.mat-form-field.mat-form-field-appearance-outline > div.mat-form-field-wrapper > div.mat-form-field-flex > div.mat-form-field-infix > span.mat-form-field-label-wrapper { top: -1em; }
+
+.mat-form-field-appearance-outline.mat-form-field-can-float.mat-form-field-should-float .mat-form-field-label {
+  transform: translateY(-1.5em) scale(.75);
+  width: 133.33333%;
+}
+
+button:focus, button:active:focus, button.active:focus {
+  outline: none !important;
+  outline-style: none !important;
+}
+
+.mat-form-field-appearance-outline .mat-form-field-outline {
+  display: flex;
+  position: absolute;
+  top: .25em;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: white;
+  border-radius: 5px;
+  pointer-events: none;
+}
+

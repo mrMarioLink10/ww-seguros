@@ -14,10 +14,7 @@
       <mat-form-field color="accent" appearance="outline" class="w-full" style="font-size: small !important;">
         <mat-label>Estatus</mat-label>
         <mat-select>
-          <mat-option value="Recibido">Recibido</mat-option>
-          <mat-option value="Aprobado">Aprobado</mat-option>
-          <mat-option value="Pendiente">Pendiente</mat-option>
-          <mat-option value="Rechazado">Rechazado</mat-option>
+          <mat-option *ngFor="let stat of status" value="stat">{{stat | titlecase}}</mat-option>
         </mat-select>
       </mat-form-field>
     </div>

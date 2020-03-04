@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { MatFormField } from '@angular/material';
 
 @Component({
@@ -7,10 +7,13 @@ import { MatFormField } from '@angular/material';
   styleUrls: ['./filter.component.scss']
 })
 export class FilterComponent implements OnInit {
+  @Input() status: [];
 
   constructor() { }
 
   ngOnInit() {
+    console.log(status);
+
   }
 
 }

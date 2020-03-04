@@ -1,7 +1,7 @@
 <div class="pl-6 pr-12 h-auto bg-white">
   <div class="uppercase dashboard-page-title pt-20">Gestión de solicitudes</div>
   <div class="mt-6 w-full">
-    <app-filter></app-filter>
+    <app-filter [status]="statusTypes"></app-filter>
   </div>
   <div class="dashboard-page-subtitle mt-10">Lista de Solicitudes</div>
   <div class="mt-6 pb-8 w-full ">
@@ -33,10 +33,17 @@
           <td class="padding-cell" mat-cell *matCellDef="let element" [ngClass]="{'text-color-green': element.estatus==='Aprobado', 'text-color-yellow': element.estatus==='Pendiente', 'text-color-red': element.estatus==='Rechazado'}"> {{element.estatus}} </td>
         </ng-container>
 
-        <ng-container matColumnDef="acciones"  style="text-align: end !important; margin-right: 15px !important;">
-          <th class="padding-cell" mat-header-cell *matHeaderCellDef mat-sort-header> Acciones </th>
-          <td class="padding-cell" mat-cell *matCellDef="let element">
-            <button mat-mini-fab aria-label="Example icon-button with a heart icon" class="dashboard-table-buttons">
+        <ng-container matColumnDef="acciones"  style="text-align: end !important; margin-right: 15px !important; ">
+          <th class="padding-cell" mat-header-cell *matHeaderCellDef mat-sort-header style="max-width: 110px !important;"> Acciones </th>
+          <td class="padding-cell" mat-cell *matCellDef="let element" style="max-width: 110px !important;">
+            <button mat-mini-fab aria-label="Ver mas" class="dashboard-table-buttons">
+              <img src="../../../../assets/iconos/eye.svg">
+            </button>
+            <button mat-mini-fab aria-label="Aprobar" *ngIf="element.estatus === 'Recibido'" class="dashboard-table-buttons">
+              <img src="../../../../assets/iconos/check.svg">
+            </button>
+            <button mat-mini-fab aria-label="Rechazar" *ngIf="element.estatus === 'Recibido'" class="dashboard-table-buttons">
+              <img src="../../../../assets/iconos/trash.svg">
             </button>
           </td>
         </ng-container>

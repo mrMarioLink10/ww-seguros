@@ -1,23 +1,61 @@
 <div>
-  <mat-accordion>
-
-    <mat-expansion-panel>
-      <mat-expansion-panel-header>
-        This is the expansion 1 title
+  <mat-accordion class="ww-mat-accordion" [togglePosition]="'before'">
+    <mat-expansion-panel class="ww-mat-expansion">
+      <mat-expansion-panel-header class="body-13 icon-blue">
+        Formulario de Reclamación
+      </mat-expansion-panel-header>
+      <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-5">
+        <div class="mr-3">
+          <mat-form-field color="accent" appearance="outline" class="w-full bg-transparente"
+            style="font-size: small !important;">
+            <mat-label>Diagnóstico</mat-label>
+            <input matInput class="" placeholder="Dolor de cabeza">
+          </mat-form-field>
+        </div>
+        <div class="mr-3 mb-3 sm:mb-3 md:mb-0 lg:mb-0 xl:mb-0">
+          <label id="tipo-de-servicio" class="radio-button-label">Tipo de Servicio</label>
+          <br>
+          <mat-radio-group aria-labelledby="tipo-de-servicio" class="radio-group">
+            <mat-radio-button class="radio-button mr-3" value="ambulatorio">Ambulatorio</mat-radio-button>
+            <mat-radio-button class="radio-button" value="hospitalizacion">Hospitalización</mat-radio-button>
+          </mat-radio-group>
+        </div>
+        <div class="mr-3">
+          <mat-form-field color="accent" appearance="outline" class="w-full bg-transparente"
+            style="font-size: small !important;">
+            <mat-label>Autorización No.</mat-label>
+            <input matInput class="" placeholder="123456">
+          </mat-form-field>
+        </div>
+        <div class="mr-3">
+          <mat-form-field color="accent" appearance="outline" class="w-full bg-transparente"
+            style="font-size: small !important;">
+            <mat-label>Autorizado por</mat-label>
+            <input matInput class="" placeholder="Dr. XXXX XXXXX">
+          </mat-form-field>
+        </div>
+        <div>
+          <mat-form-field color="accent" appearance="outline" class="w-full" style="font-size: small !important;">
+            <mat-label>Fecha</mat-label>
+            <input matInput [matDatepicker]="finalDate" placeholder="04/03/2020">
+            <mat-datepicker-toggle matSuffix [for]="finalDate"></mat-datepicker-toggle>
+            <mat-datepicker #finalDate></mat-datepicker>
+          </mat-form-field>
+        </div>
+      </div>
+      <mat-action-row class="action-row">
+        <button mat-button class="next-button">Siguiente</button>
+      </mat-action-row>
+    </mat-expansion-panel>
+    <mat-expansion-panel class="ww-mat-expansion mt-10">
+      <mat-expansion-panel-header class="body-13 icon-blue">
+        Datos del Asegurado
       </mat-expansion-panel-header>
 
-      This the expansion 1 content
-
+      <hr style="border-top: #18446B 1px solid;">
+      <mat-action-row class="action-row">
+        <button mat-button class="next-button">Siguiente</button>
+      </mat-action-row>
     </mat-expansion-panel>
-
-    <mat-expansion-panel>
-      <mat-expansion-panel-header>
-        This is the expansion 2 title
-      </mat-expansion-panel-header>
-
-      This the expansion 2 content
-
-    </mat-expansion-panel>
-
   </mat-accordion>
 </div>

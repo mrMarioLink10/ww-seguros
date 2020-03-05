@@ -27,6 +27,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { MatRadioModule } from '@angular/material/radio';
 
 /**
  * NgModule that includes all Material modules.
@@ -61,7 +62,8 @@ import { MatExpansionModule } from '@angular/material/expansion';
 		MatListModule,
 		MatMenuModule,
 		MatNativeDateModule,
-		MatExpansionModule
+		MatExpansionModule,
+		MatRadioModule
 	]
 })
 export class MaterialModule {}

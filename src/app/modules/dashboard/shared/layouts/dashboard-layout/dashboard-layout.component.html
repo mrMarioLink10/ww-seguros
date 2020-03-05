@@ -84,9 +84,37 @@
   </mat-sidenav>
   <mat-sidenav-content>
     <mat-toolbar class="dashboard-toolbar flex flex-row justify-end flex-wrap" role="heading" style="">
-        <button mat-mini-fab aria-label="Example icon-button with a heart icon" class="dashboard-toolbar-buttons" style="margin-right: 0.50rem !important; ">
+        <button [matMenuTriggerFor]="menu" mat-mini-fab aria-label="Example icon-button with a heart icon" class="dashboard-toolbar-buttons" style="margin-right: 0.50rem !important; ">
           <mat-icon style="color: #18446B">notification_important</mat-icon>
         </button>
+        <mat-menu #menu="matMenu" class="matMenu">
+          <h3 class="title-1 pl-3">Notificaciones</h3>
+         
+          <div mat-menu-item class="menu-items" *ngFor="let new_ of newNotification; let i = index">
+           <p class="title-3 font-hairline" *ngIf="i===0">Nuevas</p>
+            <div class="menu-item-text">
+            <span class="formulary-labels">{{new_.title}}  </span>
+              <span class="body-13">{{new_.description}}</span>
+              <p class="title-13-blue">{{new_.date}}</p>
+            </div>
+          </div>
+
+          <div mat-menu-item class="menu-items" *ngFor="let old of oldNotification; let i = index">
+           <p class="title-3" *ngIf="i===0">Anteriores</p>
+            <div class="menu-item-text">
+            <span class="formulary-labels">{{old.title}}  </span>
+              <span class="body-13">{{old.description}}</span>
+              <p class="title-13-blue">{{old.date}}</p>
+            </div>
+          </div>
+         <!-- <p>Anteriores</p>
+         <div mat-menu-item class="menu-items" *ngFor="let old of oldNotification">
+            <span class="">{{old.title}}  </span>
+            <span class="">{{old.description}}</span>
+            <p class="">{{old.date}}</p>
+          </div> -->
+        </mat-menu>
+
         <button mat-mini-fab aria-label="Example icon-button with a heart icon" class="dashboard-toolbar-buttons" >
           <mat-icon style="color: #18446B">settings</mat-icon>
         </button>

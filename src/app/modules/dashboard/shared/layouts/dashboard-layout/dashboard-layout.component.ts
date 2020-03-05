@@ -14,6 +14,25 @@ export class DashboardLayoutComponent implements OnInit {
   activeRoute = '';
 
   watchRouter: Subscription;
+ newNotification= [
+    {
+      title: "Solicitud - 356453",      
+      description: "Cambio de estatus a “Adjuntar Expediente”.",      
+      date:"Hace 3 horas"      
+    },
+    {
+      title: "Solicitud - 356453",
+      description: "Cambio de estatus a “Adjuntar Expediente”.",
+      date:"Hace 3 horas"
+    },
+  ]
+  oldNotification= [
+    {
+      title: "Solicitud - 356453",
+      description: "Cambio de estatus a “Adjuntar Expediente”.",
+      date:"Hace 1 semana"
+    },
+  ]
 
   private mobileQueryListener: () => void;
 

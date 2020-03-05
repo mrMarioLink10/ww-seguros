@@ -22,7 +22,25 @@ const routes: Routes = [
           }
         ]
       }
-  },
+  }, {
+    path: '',
+    pathMatch: 'full',
+    component: RequestsComponent,
+    data: {
+        slug: 'newRequests',
+        name: 'Nueva Solicitud',
+        breadcrumb: [
+          {
+            label: '',
+            url: '/'
+          },
+          {
+            label: 'Nueva Solicitud',
+            url: '/newRequests'
+          }
+        ]
+      }
+  }
 ];
 
 @NgModule({

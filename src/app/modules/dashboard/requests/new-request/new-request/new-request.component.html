@@ -1,0 +1,27 @@
+<div class="container">
+    <div class="grid-rows-6">
+        <div class="grid-cols-12">
+            <div class="grid-rows-2">
+                <div class="grid-cols-12 infoHome">
+
+                    <h5>Info. Inicio</h5>
+                    <mat-form-field color="accent" appearance="outline" class="w-full bg-transparente" style="font-size: small !important;">
+                        <mat-label>No. Cotización</mat-label>
+                        <input matInput class="" placeholder="Jorge Segura">
+                      </mat-form-field>
+
+                      <div class="mr-3">
+                        <mat-form-field color="accent" appearance="outline" class="w-full" style="font-size: small !important;">
+                          <mat-label>Tipo de Solicitud</mat-label>
+                          <mat-select>
+                            <mat-option *ngFor="let type of requestType" value="type.value">{{type.viewValue}}</mat-option>
+                          </mat-select>
+                        </mat-form-field>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

@@ -62,7 +62,11 @@ const ELEMENT_DATA: PeriodicElement[] = [
 })
 
 export class RequestManagementComponent implements OnInit {
-
+  statusTypes = [
+    'Aprobado',
+    'Rechazado',
+    'Pendiente'
+  ];
 
   displayedColumns: string[] = ['no', 'nombre', 'seguro', 'fecha', 'estatus', 'acciones'];
   dataSource = new MatTableDataSource(ELEMENT_DATA);

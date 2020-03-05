@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatProgressButtonOptions } from 'mat-progress-buttons';
 import { MatTableDataSource, MatSort, MatPaginator } from '@angular/material';
+import { Router } from '@angular/router';
 
 export interface Claims {
   no: number;
@@ -57,7 +58,9 @@ export class ClaimsComponent implements OnInit {
   @ViewChild(MatSort, {static: true}) sort: MatSort;
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 
-  constructor() { }
+  constructor(
+    private route: Router
+  ) { }
 
   ngOnInit() {
     this.dataSource.sort = this.sort;
@@ -66,9 +69,7 @@ export class ClaimsComponent implements OnInit {
 
   newClaim() {
     this.newClaimButtonOptions.active = true;
-    setTimeout(() => {
-      this.newClaimButtonOptions.active = false;
 
-    }, 3500);
+    this.route.navigateByUrl('/dashboard/claims/new-claim');
   }
 }

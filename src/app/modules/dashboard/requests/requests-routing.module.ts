@@ -1,6 +1,7 @@
 import { Routes, RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { RequestsComponent } from './requests.component';
+import { NewRequestComponent } from './new-request/new-request/new-request.component';
 
 
 const routes: Routes = [
@@ -11,35 +12,15 @@ const routes: Routes = [
     data: {
         slug: 'requests',
         name: 'Solicitudes',
-        breadcrumb: [
-          {
-            label: '',
-            url: '/'
-          },
-          {
-            label: 'Solicitudes',
-            url: '/requests'
-          }
-        ]
       }
   }, {
-    path: '',
+    path: 'new-requests',
     pathMatch: 'full',
-    component: RequestsComponent,
+    component: NewRequestComponent,
     data: {
-        slug: 'newRequests',
-        name: 'Nueva Solicitud',
-        breadcrumb: [
-          {
-            label: '',
-            url: '/'
-          },
-          {
-            label: 'Nueva Solicitud',
-            url: '/newRequests'
-          }
-        ]
-      }
+      slug: 'new-requests',
+      name: 'Nueva Solicitud',
+    }
   }
 ];
 

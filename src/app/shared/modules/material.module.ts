@@ -26,44 +26,47 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatListModule } from '@angular/material/list';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatNativeDateModule } from '@angular/material/core';
-import { MatExpansionModule } from '@angular/material/expansion';
-import { MatRadioModule } from '@angular/material/radio';
+import {MatTabsModule} from '@angular/material/tabs';
+import {MatExpansionModule} from '@angular/material/expansion';
+import {MatRadioModule} from '@angular/material/radio';
 
 /**
  * NgModule that includes all Material modules.
 */
 @NgModule({
-	exports: [
-		// CDK
-		A11yModule,
-		BidiModule,
-		ObserversModule,
-		OverlayModule,
-		PlatformModule,
-		PortalModule,
-		CdkStepperModule,
-		CdkTableModule,
-		CdkTreeModule,
-		DragDropModule,
-		// Material
-		MatButtonModule,
-		MatButtonToggleModule,
-		MatCheckboxModule,
-		MatDatepickerModule,
-		MatFormFieldModule,
-		MatIconModule,
-		MatInputModule,
-		MatPaginatorModule,
-		MatSelectModule,
-		MatSidenavModule,
-		MatTableModule,
-		MatToolbarModule,
-		MatProgressButtonsModule,
-		MatListModule,
-		MatMenuModule,
-		MatNativeDateModule,
-		MatExpansionModule,
-		MatRadioModule
-	]
+    exports: [
+        // CDK
+        A11yModule,
+        BidiModule,
+        ObserversModule,
+        OverlayModule,
+        PlatformModule,
+        PortalModule,
+        CdkStepperModule,
+        CdkTableModule,
+        CdkTreeModule,
+        DragDropModule,
+        // Material
+        MatButtonModule,
+        MatButtonToggleModule,
+        MatCheckboxModule,
+        MatDatepickerModule,
+        MatFormFieldModule,
+        MatIconModule,
+        MatInputModule,
+        MatPaginatorModule,
+        MatSelectModule,
+        MatSidenavModule,
+        MatTableModule,
+        MatToolbarModule,
+        MatProgressButtonsModule,
+        MatListModule,
+        MatMenuModule,
+        MatNativeDateModule,
+        MatTabsModule,
+        MatExpansionModule,
+        MatRadioModule
+
+    ]
 })
 export class MaterialModule {}

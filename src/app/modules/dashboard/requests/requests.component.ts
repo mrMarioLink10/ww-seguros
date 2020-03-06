@@ -75,7 +75,7 @@ export class RequestsComponent implements OnInit {
 
   newRequest(){
     this.newRequestButtonOptions.active = true;
-    this.router.navigateByUrl('/newRequests');
+    this.router.navigateByUrl('/dashboard/requests/new-requests');
   }
 
 }

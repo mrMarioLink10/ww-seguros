@@ -5,6 +5,8 @@ import { RequestsRoutingModule } from './requests-routing.module';
 import { SharedModule } from '../shared/shared.module';
 import { MaterialModule } from '../../../shared/modules/material.module';
 import { NewRequestComponent } from './new-request/new-request/new-request.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { SharedDirectivesModule } from 'src/app/core/directive';
 
 
 
@@ -14,7 +16,10 @@ import { NewRequestComponent } from './new-request/new-request/new-request.compo
     CommonModule,
     RequestsRoutingModule,
     SharedModule,
-    MaterialModule
+    MaterialModule,
+    FormsModule,
+    ReactiveFormsModule,
+    SharedDirectivesModule
   ]
 })
 export class RequestsModule { }

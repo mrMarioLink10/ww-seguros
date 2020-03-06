@@ -1,6 +1,6 @@
 <div>
   <mat-accordion class="ww-mat-accordion" [togglePosition]="'before'">
-    <mat-expansion-panel class="ww-mat-expansion">
+    <mat-expansion-panel class="ww-mat-expansion" [expanded]="step === 0" (opened)="setStep(0)">
       <mat-expansion-panel-header class="body-13 icon-blue">
         Formulario de Reclamación
       </mat-expansion-panel-header>
@@ -37,24 +37,248 @@
         <div>
           <mat-form-field color="accent" appearance="outline" class="w-full" style="font-size: small !important;">
             <mat-label>Fecha</mat-label>
-            <input matInput [matDatepicker]="finalDate" placeholder="04/03/2020">
+            <input matInput [matDatepicker]="Date" placeholder="04/03/2020">
+            <mat-datepicker-toggle matSuffix [for]="Date"></mat-datepicker-toggle>
+            <mat-datepicker #finalDate></mat-datepicker>
+          </mat-form-field>
+        </div>
+      </div>
+      <mat-action-row class="action-row">
+        <button mat-button class="next-button" (click)="nextStep()">Siguiente</button>
+      </mat-action-row>
+    </mat-expansion-panel>
+    <mat-expansion-panel class="ww-mat-expansion mt-10" [expanded]="step === 1" (opened)="setStep(1)">
+      <mat-expansion-panel-header class="body-13 icon-blue">
+        Datos del Asegurado
+      </mat-expansion-panel-header>
+      <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4">
+        <div class="mr-3">
+          <mat-form-field color="accent" appearance="outline" class="w-full bg-transparente"
+            style="font-size: small !important;">
+            <mat-label>No. Póliza</mat-label>
+            <input matInput class="" placeholder="123456">
+          </mat-form-field>
+        </div>
+        <div class="mr-3">
+          <mat-form-field color="accent" appearance="outline" class="w-full bg-transparente"
+            style="font-size: small !important;">
+            <mat-label>ID No.</mat-label>
+            <input matInput class="" placeholder="112233">
+          </mat-form-field>
+        </div>
+        <div class="mr-3">
+          <mat-form-field color="accent" appearance="outline" class="w-full bg-transparente"
+            style="font-size: small !important;">
+            <mat-label>Cédula/Pasaporte</mat-label>
+            <input matInput class="" placeholder="40234190011">
+          </mat-form-field>
+        </div>
+        <div class="mr-3">
+          <mat-form-field color="accent" appearance="outline" class="w-full bg-transparente"
+            style="font-size: small !important;">
+            <mat-label>Nombre del Asegurado</mat-label>
+            <input matInput class="" placeholder="Ramon Capalla">
+          </mat-form-field>
+        </div>
+        <div class="mr-3">
+          <mat-form-field color="accent" appearance="outline" class="w-full bg-transparente"
+            style="font-size: small !important;">
+            <mat-label>Número del Contacto</mat-label>
+            <input matInput class="" placeholder="8096546191">
+          </mat-form-field>
+        </div>
+        <div class="mr-3">
+          <mat-form-field color="accent" appearance="outline" class="w-full bg-transparente"
+            style="font-size: small !important;">
+            <mat-label>Edad</mat-label>
+            <input matInput class="" placeholder="26">
+          </mat-form-field>
+        </div>
+        <div class="mr-3 mb-3 sm:mb-3 md:mb-0 lg:mb-0 xl:mb-0">
+          <label id="tipo-de-asegurado" class="radio-button-label">Tipo de Asegurado</label>
+          <br>
+          <mat-radio-group aria-labelledby="tipo-de-asegurado" class="radio-group">
+            <mat-radio-button class="radio-button mr-3" value="titular">Titular</mat-radio-button>
+            <mat-radio-button class="radio-button" value="dependiente">Dependiente</mat-radio-button>
+          </mat-radio-group>
+        </div>
+      </div>
+      <mat-action-row class="action-row">
+        <button mat-button class="next-button" (click)="nextStep()">Siguiente</button>
+      </mat-action-row>
+    </mat-expansion-panel>
+    <mat-expansion-panel class="ww-mat-expansion mt-10" [expanded]="step === 2" (opened)="setStep(2)">
+      <mat-expansion-panel-header class="body-13 icon-blue">
+        Datos del Proveedor
+      </mat-expansion-panel-header>
+      <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
+        <div class="mr-3">
+          <mat-form-field color="accent" appearance="outline" class="w-full bg-transparente"
+            style="font-size: small !important;">
+            <mat-label>Nombre</mat-label>
+            <input matInput class="" placeholder="ARS Seguros">
+          </mat-form-field>
+        </div>
+        <div class="mr-3">
+          <mat-form-field color="accent" appearance="outline" class="w-full bg-transparente"
+            style="font-size: small !important;">
+            <mat-label>Correo</mat-label>
+            <input matInput class="" placeholder="ars.info@seguros.com.do">
+          </mat-form-field>
+        </div>
+        <div class="mr-3">
+          <mat-form-field color="accent" appearance="outline" class="w-full bg-transparente"
+            style="font-size: small !important;">
+            <mat-label>Código</mat-label>
+            <input matInput class="" placeholder="0012990">
+          </mat-form-field>
+        </div>
+        <div class="mr-3">
+          <mat-form-field color="accent" appearance="outline" class="w-full bg-transparente"
+            style="font-size: small !important;">
+            <mat-label>No. de Contrato</mat-label>
+            <input matInput class="" placeholder="900001092092">
+          </mat-form-field>
+        </div>
+      </div>
+      <mat-action-row class="action-row">
+        <button mat-button class="next-button" (click)="nextStep()">Siguiente</button>
+      </mat-action-row>
+    </mat-expansion-panel>
+    <mat-expansion-panel class="ww-mat-expansion mt-10" [expanded]="step === 3" (opened)="setStep(3)">
+      <mat-expansion-panel-header class="body-13 icon-blue">
+        Servicios Reclamados
+      </mat-expansion-panel-header>
+      <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-5 xl:grid-cols-5">
+        <div class="mr-3">
+          <mat-form-field color="accent" appearance="outline" class="w-full bg-transparente"
+            style="font-size: small !important;">
+            <mat-label>Código CPT</mat-label>
+            <input matInput class="" placeholder="27S920">
+          </mat-form-field>
+        </div>
+        <div class="mr-3">
+          <mat-form-field color="accent" appearance="outline" class="w-full bg-transparente"
+            style="font-size: small !important;">
+            <mat-label>Procedimiento</mat-label>
+            <input matInput class="" placeholder="...">
+          </mat-form-field>
+        </div>
+        <div class="mr-3">
+          <mat-form-field color="accent" appearance="outline" class="w-full bg-transparente"
+            style="font-size: small !important;">
+            <mat-label>Monto Reclamado</mat-label>
+            <input matInput class="" placeholder="20,000$ USD">
+          </mat-form-field>
+        </div>
+        <div class="mr-3">
+          <mat-form-field color="accent" appearance="outline" class="w-full bg-transparente"
+            style="font-size: small !important;">
+            <mat-label>Monto Autorizado</mat-label>
+            <input matInput class="" placeholder="14,400$ USD">
+          </mat-form-field>
+        </div>
+        <div class="mr-3">
+          <mat-form-field color="accent" appearance="outline" class="w-full bg-transparente"
+            style="font-size: small !important;">
+            <mat-label>Monto Deducible</mat-label>
+            <input matInput class="" placeholder="1,200 $ USD">
+          </mat-form-field>
+        </div>
+      </div>
+      <div>
+        <button mat-mini-fab aria-label="Agregar reclamacion" class="dashboard-toolbar-buttons"
+          style="border: 1px rgb(197, 197, 197) solid">
+          <mat-icon style="color: #18446B">add</mat-icon>
+        </button>
+      </div>
+      <mat-action-row class="action-row">
+        <div class="mr-3">
+          <mat-form-field color="accent" appearance="outline" class="w-full bg-transparente"
+            style="font-size: small !important; padding-bottom: 0px !important;">
+            <mat-label>Total Monto Reclamado</mat-label>
+            <input matInput class="" disabled placeholder="21,200 $ USD">
+          </mat-form-field>
+        </div>
+        <div class="mr-3">
+          <mat-form-field color="accent" appearance="outline" class="w-full bg-transparente"
+            style="font-size: small !important; padding-bottom: 0px !important;">
+            <mat-label>Total Monto Autorizado</mat-label>
+            <input matInput class="" disabled placeholder="1,200 $ USD">
+          </mat-form-field>
+        </div>
+        <button mat-button class="next-button" (click)="nextStep()">Siguiente</button>
+      </mat-action-row>
+    </mat-expansion-panel>
+    <mat-expansion-panel class="ww-mat-expansion mt-10" [expanded]="step === 4" (opened)="setStep(4)">
+      <mat-expansion-panel-header class="body-13 icon-blue">
+        En caso de hospitalización
+      </mat-expansion-panel-header>
+      <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5">
+        <div class="mr-0 md:mr-3 lg:mr-3 xl:mr-3">
+          <mat-form-field color="accent" appearance="outline" class="w-full" style="font-size: small !important;">
+            <mat-label>Fecha de ingreso</mat-label>
+            <input matInput [matDatepicker]="initialDate" placeholder="01/03/2020">
+            <mat-datepicker-toggle matSuffix [for]="initialDate"></mat-datepicker-toggle>
+            <mat-datepicker #finalDate></mat-datepicker>
+          </mat-form-field>
+        </div>
+        <div>
+          <mat-form-field color="accent" appearance="outline" class="w-full" style="font-size: small !important;">
+            <mat-label>Fecha de egreso</mat-label>
+            <input matInput [matDatepicker]="finalDate" placeholder="07/03/2020">
             <mat-datepicker-toggle matSuffix [for]="finalDate"></mat-datepicker-toggle>
             <mat-datepicker #finalDate></mat-datepicker>
           </mat-form-field>
         </div>
       </div>
       <mat-action-row class="action-row">
-        <button mat-button class="next-button">Siguiente</button>
+        <button mat-button class="next-button" (click)="nextStep()">Siguiente</button>
       </mat-action-row>
     </mat-expansion-panel>
-    <mat-expansion-panel class="ww-mat-expansion mt-10">
+    <mat-expansion-panel class="ww-mat-expansion mt-10" [expanded]="step === 5" (opened)="setStep(5)">
       <mat-expansion-panel-header class="body-13 icon-blue">
-        Datos del Asegurado
+        Observaciones
       </mat-expansion-panel-header>
-
-      <hr style="border-top: #18446B 1px solid;">
+      <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-1 xl:grid-cols-1">
+        <mat-form-field appearance="outline">
+          <mat-label>Texto</mat-label>
+          <textarea matInput></textarea>
+        </mat-form-field>
+      </div>
       <mat-action-row class="action-row">
-        <button mat-button class="next-button">Siguiente</button>
+        <button mat-button class="next-button" (click)="nextStep()">Siguiente</button>
+      </mat-action-row>
+    </mat-expansion-panel>
+    <mat-expansion-panel class="ww-mat-expansion mt-10" [expanded]="step === 6" (opened)="setStep(6)">
+      <mat-expansion-panel-header class="body-13 icon-blue">
+        Declaración
+      </mat-expansion-panel-header>
+      <div class="declaraciones my-4 px-4 sm:px-4 md:px-14 lg:px-12 xl:px-12">
+        CERTIFICO Y DOY FE que los datos suministrados y contenidos en el presente formulario son verdaderos, correctos
+        y actualizados. Declaro bajo la fe del juramento que no he omitido ninguna información requerida en este
+        formulario, explícita o implícitamente, y que en caso de declaración o representación falsa, fraude u omisión,
+        WORLDWIDE se reserva el derecho de declinar la cobertura reclamada, sin menoscabo de cualesquiera otros remedios
+        aplicables de acuerdos a los términos y condiciones del plan contratado por el Asegurado.
+        <div class="pt-4"></div>
+        Con la firma del presente documento, nos comprometemos a la entrega de toda información, documentación y
+        registros, incluyendo pero no limitado a notas médicas relacionadas a consejos, cuidados, tratamientos
+        proporcionados, copia fotostática de expedientes completos, relacionados en cualquier forma con el reclamo
+        presentado.
+        <div class="pt-4"></div>
+        <strong>SERVICIO AL CLIENTE:</strong>
+        <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-2">
+          <div class="mr-3">
+            <strong> Santo Domingo:</strong> Av. Abraham Lincoln #295, Edificio Caribálico, 5to piso, Rep. Dom. Tel.:
+            809-508-7447
+          </div>
+          <div class="mr-3">
+            <strong>Santiago:</strong> C / Eusebio Manzueta #9, Los Jardines. Tel.: 809-581-0111
+          </div>
+        </div>
+      </div>
+      <mat-action-row class="action-row">
+        <button mat-button class="next-button" (click)="nextStep()">Siguiente</button>
       </mat-action-row>
     </mat-expansion-panel>
   </mat-accordion>

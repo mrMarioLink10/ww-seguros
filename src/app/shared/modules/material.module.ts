@@ -26,6 +26,9 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatListModule } from '@angular/material/list';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatNativeDateModule } from '@angular/material/core';
+import {MatTabsModule} from '@angular/material/tabs';
+import {MatExpansionModule} from '@angular/material/expansion';
+import {MatRadioModule} from '@angular/material/radio';
 
 /**
  * NgModule that includes all Material modules.
@@ -59,7 +62,10 @@ import { MatNativeDateModule } from '@angular/material/core';
         MatProgressButtonsModule,
         MatListModule,
         MatMenuModule,
-        MatNativeDateModule
+        MatNativeDateModule,
+        MatTabsModule,
+        MatExpansionModule,
+        MatRadioModule
 
     ]
 })

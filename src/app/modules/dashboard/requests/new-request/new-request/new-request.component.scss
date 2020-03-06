@@ -1,3 +1,17 @@
-.infoHome{
+.info-home{
     background-color: #F2F2F2;
+    mat-form-field{
+        width: 300px;
+    }
+    .w-h{
+        width: 150px;
+    }
+}
+::ng-deep .mat-tab-labels {
+    margin-top: 15px;
+    background-color: #F2F2F2;
+}
+.background-w{
+    
+    background-color: white;
 }

@@ -1,4 +1,3 @@
-
 // Custom Theming for Angular Material
 // For more information: https://material.angular.io/guide/theming
 @import '../node_modules/@angular/material/_theming.scss';
@@ -13,8 +12,7 @@
 // Be sure that you only ever include this mixin once!
 @include mat-core();
 
-$md-primarycolor: (
-  50 : #e3e9ed,
+$md-primarycolor: (50 : #e3e9ed,
   100 : #bac7d3,
   200 : #8ca2b5,
   300 : #5d7c97,
@@ -28,26 +26,23 @@ $md-primarycolor: (
   A200 : #4189ff,
   A400 : #0e6aff,
   A700 : #005df3,
-  contrast: (
-      50 : #000000,
-      100 : #000000,
-      200 : #000000,
-      300 : #ffffff,
-      400 : #ffffff,
-      500 : #ffffff,
-      600 : #ffffff,
-      700 : #ffffff,
-      800 : #ffffff,
-      900 : #ffffff,
-      A100 : #000000,
-      A200 : #000000,
-      A400 : #ffffff,
-      A700 : #ffffff,
-  )
-);
+  contrast: (50 : #000000,
+    100 : #000000,
+    200 : #000000,
+    300 : #ffffff,
+    400 : #ffffff,
+    500 : #ffffff,
+    600 : #ffffff,
+    700 : #ffffff,
+    800 : #ffffff,
+    900 : #ffffff,
+    A100 : #000000,
+    A200 : #000000,
+    A400 : #ffffff,
+    A700 : #ffffff,
+  ));
 
-$md-accentcolor: (
-  50 : #e0eff6,
+$md-accentcolor: (50 : #e0eff6,
   100 : #b3d8e9,
   200 : #80bedb,
   300 : #4da4cd,
@@ -61,23 +56,21 @@ $md-accentcolor: (
   A200 : #89c0ff,
   A400 : #56a5ff,
   A700 : #3c97ff,
-  contrast: (
-      50 : #000000,
-      100 : #000000,
-      200 : #000000,
-      300 : #000000,
-      400 : #ffffff,
-      500 : #ffffff,
-      600 : #ffffff,
-      700 : #ffffff,
-      800 : #ffffff,
-      900 : #ffffff,
-      A100 : #000000,
-      A200 : #000000,
-      A400 : #000000,
-      A700 : #000000,
-  )
-);
+  contrast: (50 : #000000,
+    100 : #000000,
+    200 : #000000,
+    300 : #000000,
+    400 : #ffffff,
+    500 : #ffffff,
+    600 : #ffffff,
+    700 : #ffffff,
+    800 : #ffffff,
+    900 : #ffffff,
+    A100 : #000000,
+    A200 : #000000,
+    A400 : #000000,
+    A700 : #000000,
+  ));
 // Define the palettes for your theme using the Material Design palettes available in palette.scss
 // (imported above). For each palette, you can optionally specify a default, lighter, and darker
 // hue. Available color palettes: https://material.io/design/color/
@@ -101,18 +94,25 @@ $ww-seguros-theme: mat-light-theme($ww-seguros-primary, $ww-seguros-accent, $ww-
 
 /* You can add global styles to this file, and also import other style files */
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html,
+body {
+  height: 100%;
+}
 
-.text-color-green{
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.text-color-green {
   color: #05842C !important;
 }
 
-.text-color-red{
+.text-color-red {
   color: #D37575 !important;
 }
 
-.text-color-yellow{
+.text-color-yellow {
   color: #D99908 !important;
 }
 
@@ -122,13 +122,19 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   overflow: hidden !important;
 }
 
-.login-base-image{
+.login-base-image {
   clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
 
 }
 
-.login-logo-image{
+.login-logo-image {
   max-width: 30vw;
+}
+
+.filter-title {
+  font-size: 13px;
+  font-weight: bold;
+  color: #373536;
 }
 
 .dashboard-button {
@@ -139,27 +145,37 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   width: 100%;
 }
 
-@media (min-width: 1280px){
-  .dashboard-button{width: 2rem;}
+@media (min-width: 1280px) {
+  .dashboard-button {
+    width: 2rem;
+  }
 }
 
-@media (min-width: 1024px){
-  .dashboard-button {width: 1.5rem;}
-}
-@media (min-width: 768px){
-  .dashboard-button {width: 1rem;}
-}
-@media (min-width: 640px){
-  .dashboard-button {width: 100%;}
+@media (min-width: 1024px) {
+  .dashboard-button {
+    width: 1.5rem;
+  }
 }
 
-.dashboard-toolbar-buttons{
+@media (min-width: 768px) {
+  .dashboard-button {
+    width: 1rem;
+  }
+}
+
+@media (min-width: 640px) {
+  .dashboard-button {
+    width: 100%;
+  }
+}
+
+.dashboard-toolbar-buttons {
   margin-right: 1.35rem !important;
   box-shadow: none !important;
   background-color: white !important;
 }
 
-.dashboard-table-buttons{
+.dashboard-table-buttons {
   margin-right: 0.45rem !important;
   box-shadow: none !important;
   background-color: white !important;
@@ -168,32 +184,32 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   width: 25px !important;
 }
 
-.dashboard-page-title{
+.dashboard-page-title {
   font-size: 18px;
   color: #18446B;
   font-weight: bold;
 }
 
-.dashboard-page-subtitle{
+.dashboard-page-subtitle {
   color: #7e7e7e !important;
   font-size: 15px !important;
   font-weight: 400 !important;
   align-items: center;
 }
 
-.dashboard-background-color-gradient{
-  background: rgb(22,87,127);
-  background: -moz-linear-gradient(180deg, rgba(22,87,127,1) 15%, rgba(18,125,179,1) 75%);
-  background: -webkit-linear-gradient(180deg, rgba(22,87,127,1) 15%, rgba(18,125,179,1) 75%);
-  background: linear-gradient(180deg, rgba(22,87,127,1) 15%, rgba(18,125,179,1) 75%);
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#16577f",endColorstr="#127db3",GradientType=1);
+.dashboard-background-color-gradient {
+  background: rgb(22, 87, 127);
+  background: -moz-linear-gradient(180deg, rgba(22, 87, 127, 1) 15%, rgba(18, 125, 179, 1) 75%);
+  background: -webkit-linear-gradient(180deg, rgba(22, 87, 127, 1) 15%, rgba(18, 125, 179, 1) 75%);
+  background: linear-gradient(180deg, rgba(22, 87, 127, 1) 15%, rgba(18, 125, 179, 1) 75%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#16577f", endColorstr="#127db3", GradientType=1);
 }
 
-.dashboard-background-color-first{
+.dashboard-background-color-first {
   background-color: #18446B;
 }
 
-.dashboard-toolbar{
+.dashboard-toolbar {
   border-bottom: #18446B 2px solid;
   background-image: url('../src/assets/Ciberataques_Salud.png');
   background-repeat: no-repeat;
@@ -211,27 +227,28 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   }
 }
 
-.dashboard-basic-table{
+.dashboard-basic-table {
   tr {
     height: 40px !important;
   }
 
-  .padding-cell{
+  .padding-cell {
     padding: 0px 20px !important;
   }
 
   border-bottom-color: #24ACE7 !important;
 
-  .mat-sort-header-container{
+  .mat-sort-header-container {
     color: #18446B !important;
   }
 
-  .mat-row:nth-child(odd){
+  .mat-row:nth-child(odd) {
     background-color: #FBFBFA !important;
   }
 
-  .mat-cell, .mat-footer-cell {
-    color:#373536;
+  .mat-cell,
+  .mat-footer-cell {
+    color: #373536;
     font-size: 13px !important;
   }
 
@@ -239,19 +256,29 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     border-bottom: 2px #24ACE7 solid !important;
   }
 
-  td.mat-cell, th.mat-header-cell {
+  td.mat-cell,
+  th.mat-header-cell {
     border-color: #24ACE7 !important;
   }
 
-  td.mat-cell:last-of-type, td.mat-footer-cell:last-of-type, th.mat-header-cell:last-of-type {
+  td.mat-cell:last-of-type,
+  td.mat-footer-cell:last-of-type,
+  th.mat-header-cell:last-of-type {
     padding-right: 45px;
     text-align: start !important;
   }
 
 }
 
-.dashboard-table-paginator{
-  .mat-button .mat-button-wrapper>*, .mat-fab .mat-button-wrapper>*, .mat-flat-button .mat-button-wrapper>*, .mat-icon-button .mat-button-wrapper>*, .mat-mini-fab .mat-button-wrapper>*, .mat-raised-button .mat-button-wrapper>*, .mat-stroked-button .mat-button-wrapper>*{
+.dashboard-table-paginator {
+
+  .mat-button .mat-button-wrapper>*,
+  .mat-fab .mat-button-wrapper>*,
+  .mat-flat-button .mat-button-wrapper>*,
+  .mat-icon-button .mat-button-wrapper>*,
+  .mat-mini-fab .mat-button-wrapper>*,
+  .mat-raised-button .mat-button-wrapper>*,
+  .mat-stroked-button .mat-button-wrapper>* {
     color: #007DB7;
     vertical-align: middle;
     border-radius: 4px;
@@ -272,28 +299,103 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 }
 
+.title-1 {
+  font-weight: Bold;
+  font-family: 'Open Sans', sans-serif !important;
+  font-size: 18px;
+  color: #007DB7;
+}
 
-/** OVERWRITING ANOTHER CLASSES */ /** OVERWRITING ANOTHER CLASSES */ /** OVERWRITING ANOTHER CLASSES */ /** OVERWRITING ANOTHER CLASSES */
-/** OVERWRITING ANOTHER CLASSES */ /** OVERWRITING ANOTHER CLASSES */ /** OVERWRITING ANOTHER CLASSES */ /** OVERWRITING ANOTHER CLASSES */
-/** OVERWRITING ANOTHER CLASSES */ /** OVERWRITING ANOTHER CLASSES */ /** OVERWRITING ANOTHER CLASSES */ /** OVERWRITING ANOTHER CLASSES */
-/** OVERWRITING ANOTHER CLASSES */ /** OVERWRITING ANOTHER CLASSES */ /** OVERWRITING ANOTHER CLASSES */ /** OVERWRITING ANOTHER CLASSES */
+.title-2 {
+  font-family: 'Open Sans', sans-serif !important;
+  font-size: 18px;
+  color: #575657;
+}
 
-.mat-list-item-content{
+.title-3 {
+  font-family: 'Open Sans', sans-serif !important;
+  font-size: 16px;
+  color: #575657;
+}
+
+.formulary-labels {
+  font-family: 'Open Sans', sans-serif !important;
+  font-size: 13px;
+  font-weight: Bold;
+  color: #373536;
+}
+
+.body-13 {
+  font-family: 'Open Sans', sans-serif !important;
+  font-size: 13px;
+  color: #373536;
+}
+
+.title-13-blue {
+  font-family: 'Open Sans', sans-serif !important;
+  font-size: 13px;
+  color: #24ACE7;
+}
+
+.radio-button-label {
+  font-size: 13px;
+  color: #373536;
+  font-weight: 300;
+}
+
+.radio-button {
+  font-size: 12px;
+  color: #575657;
+
+}
+
+.radio-group {
+  .mat-radio-checked {
+    color: #007DB7 !important;
+  }
+}
+
+/** OVERWRITING ANOTHER CLASSES */
+/** OVERWRITING ANOTHER CLASSES */
+/** OVERWRITING ANOTHER CLASSES */
+/** OVERWRITING ANOTHER CLASSES */
+/** OVERWRITING ANOTHER CLASSES */
+/** OVERWRITING ANOTHER CLASSES */
+/** OVERWRITING ANOTHER CLASSES */
+/** OVERWRITING ANOTHER CLASSES */
+/** OVERWRITING ANOTHER CLASSES */
+/** OVERWRITING ANOTHER CLASSES */
+/** OVERWRITING ANOTHER CLASSES */
+/** OVERWRITING ANOTHER CLASSES */
+/** OVERWRITING ANOTHER CLASSES */
+/** OVERWRITING ANOTHER CLASSES */
+/** OVERWRITING ANOTHER CLASSES */
+/** OVERWRITING ANOTHER CLASSES */
+
+.mat-list-item-content {
   max-height: 35px !important;
 }
-.mat-drawer-inner-container{
+
+.mat-drawer-inner-container {
   overflow: hidden !important;
 }
 
-mat-form-field.mat-form-field.mat-form-field-appearance-outline > div.mat-form-field-wrapper > div.mat-form-field-flex > div.mat-form-field-infix  { padding: 0.7em 0px }
-mat-form-field.mat-form-field.mat-form-field-appearance-outline > div.mat-form-field-wrapper > div.mat-form-field-flex > div.mat-form-field-infix > span.mat-form-field-label-wrapper { top: -1em; }
+mat-form-field.mat-form-field.mat-form-field-appearance-outline>div.mat-form-field-wrapper>div.mat-form-field-flex>div.mat-form-field-infix {
+  padding: 0.7em 0px
+}
+
+mat-form-field.mat-form-field.mat-form-field-appearance-outline>div.mat-form-field-wrapper>div.mat-form-field-flex>div.mat-form-field-infix>span.mat-form-field-label-wrapper {
+  top: -1em;
+}
 
 .mat-form-field-appearance-outline.mat-form-field-can-float.mat-form-field-should-float .mat-form-field-label {
   transform: translateY(-1.5em) scale(.75);
   width: 133.33333%;
 }
 
-button:focus, button:active:focus, button.active:focus {
+button:focus,
+button:active:focus,
+button.active:focus {
   outline: none !important;
   outline-style: none !important;
 }
@@ -310,41 +412,42 @@ button:focus, button:active:focus, button.active:focus {
   pointer-events: none;
 }
 
-.title-1{
-  text-align: left;
-  font-weight: Bold;
-  font-family: 'Open Sans', sans-serif !important;
-  font-size: 18px;
-  color: #007DB7;
-}
-.title-2{
-  text-align: left;
-  font-family: 'Open Sans', sans-serif !important;
-  font-size: 18px;
-  color: #575657;
-}
-.title-3{
-  text-align: left;
-  font-family: 'Open Sans', sans-serif !important;
-  font-size: 16px;
-  color: #575657;
-}
-.formulary-labels{
-  text-align: left;
-  font-family: 'Open Sans', sans-serif !important;
-  font-size: 13px;
-  font-weight: Bold;
-  color: #373536;
-}
-.body-13{
-  text-align: left;
-  font-family: 'Open Sans', sans-serif !important;
-  font-size: 13px;
-  color: #373536;
-}
-.title-13-blue{
-text-align: left;
-  font-family: 'Open Sans', sans-serif !important;
-  font-size: 13px;
-  color: #24ACE7;
+.ww-mat-accordion {
+  .ww-mat-expansion {
+    border-radius: 4px !important;
+    margin-top: 14px !important;
+  }
+
+  .mat-expansion-panel:not([class*=mat-elevation-z]) {
+    box-shadow: 0px -2px 0px -3px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 8px 0px rgba(0, 0, 0, 0.12);
+  }
+
+  .icon-blue {
+    border-color: #18446B !important;
+  }
+
+  .mat-expansion-indicator::after {
+    border-style: solid;
+    border-width: 0 3px 3px 0;
+    content: '';
+    display: inline-block;
+    padding: 3px;
+    transform: rotate(45deg);
+    vertical-align: middle;
+    border-color: #007DB7 !important;
+  }
+
+  .action-row {
+    border: 0px !important;
+    padding-top: 0px !important;
+    padding-right: 24px !important;
+  }
+
+  .next-button {
+    background: #007DB7;
+    color: white;
+    border-radius: 35px;
+    font-size: 12px;
+    padding: 3px 37px;
+  }
 }

@@ -19,7 +19,8 @@ import { SharedDirectivesModule } from 'src/app/core/directive';
     MaterialModule,
     FormsModule,
     ReactiveFormsModule,
-    SharedDirectivesModule
+    SharedDirectivesModule,
+    SharedModule
   ]
 })
 export class RequestsModule { }

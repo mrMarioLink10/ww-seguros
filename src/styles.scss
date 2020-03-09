@@ -363,6 +363,23 @@ body {
   background: #F2F2F2;
 }
 
+.next-button {
+  background: #007DB7 !important;
+  color: white !important;
+  border-radius: 35px !important;
+  font-size: 12px !important;
+  padding: 3px 37px !important;
+}
+
+.send-button {
+  background: white !important;
+  color: #18446B !important;
+  border: 2px solid #BDBDBD !important;
+  border-radius: 35px !important;
+  font-size: 12px !important;
+  padding: 3px 45px !important;
+}
+
 /** OVERWRITING ANOTHER CLASSES */
 /** OVERWRITING ANOTHER CLASSES */
 /** OVERWRITING ANOTHER CLASSES */
@@ -455,11 +472,5 @@ button.active:focus {
     }
   }
 
-  .next-button {
-    background: #007DB7;
-    color: white;
-    border-radius: 35px;
-    font-size: 12px;
-    padding: 3px 37px;
-  }
+
 }

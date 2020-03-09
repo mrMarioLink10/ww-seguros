@@ -8,16 +8,10 @@ import { NewClaimComponent } from './new-claim/new-claim.component';
 import { ClaimComponent } from './new-claim/claim-types/claim/claim.component';
 import { RefundComponent } from './new-claim/claim-types/refund/refund.component';
 import { PreCertificationComponent } from './new-claim/claim-types/pre-certification/pre-certification.component';
-
-
+import { ModulesModule } from '../../modules.module';
 
 @NgModule({
-  declarations: [ClaimsComponent, NewClaimComponent, ClaimComponent, RefundComponent, PreCertificationComponent],
-  imports: [
-    CommonModule,
-    ClaimsRoutingModule,
-    SharedModule,
-    MaterialModule
-  ]
+	declarations: [ ClaimsComponent, NewClaimComponent, ClaimComponent, RefundComponent, PreCertificationComponent ],
+	imports: [ CommonModule, ModulesModule, ClaimsRoutingModule, SharedModule, MaterialModule ]
 })
-export class ClaimsModule { }
+export class ClaimsModule {}

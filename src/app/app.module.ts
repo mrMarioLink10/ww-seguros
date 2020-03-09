@@ -12,10 +12,10 @@ import { MatPaginatorIntl } from '@angular/material';
 import { MatPaginatorIntlCro } from './core/class/MatPaginatorIntl';
 import { DialogComponent } from './shared/component/dialog/dialog/dialog.component';
 
+
 @NgModule({
   declarations: [
     AppComponent,
-    DialogComponent,
 
   ],
   imports: [

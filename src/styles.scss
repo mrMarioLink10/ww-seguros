@@ -424,6 +424,8 @@ button.active:focus {
   .ww-mat-expansion {
     border-radius: 4px !important;
     margin-top: 14px !important;
+    margin-left: 5px !important;
+    margin-right: 5px !important;
   }
 
   .mat-expansion-panel:not([class*=mat-elevation-z]) {
@@ -462,4 +464,8 @@ button.active:focus {
     font-size: 12px;
     padding: 3px 37px;
   }
+}
+
+.mat-tab-body-content {
+  padding-bottom: 10px !important;
 }

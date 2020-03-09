@@ -1,0 +1,74 @@
+.sidenav-container {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.router-link-active {
+  background-color: white !important;
+  color: #18446B !important;
+  border-top-right-radius: 45px;
+  border-bottom-right-radius: 45px;
+}
+
+.example-is-mobile .example-toolbar {
+  position: fixed;
+  /* Make sure the toolbar will stay on top of the content as it scrolls past. */
+  z-index: 2;
+}
+
+h1.example-app-name {
+  margin-left: 8px;
+}
+
+.example-sidenav-container {
+  /* When the sidenav is not fixed, stretch the sidenav container to fill the available space. This
+     causes `<mat-sidenav-content>` to act as our scrolling element for desktop layouts. */
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+}
+
+.example-is-mobile .example-sidenav-container {
+  /* When the sidenav is fixed, don't constrain the height of the sidenav container. This allows the
+     `<body>` to be our scrolling element for mobile layouts. */
+  -webkit-box-flex: 1;
+      -ms-flex: 1 0 auto;
+          flex: 1 0 auto;
+}
+
+.matMenu {
+  margin-top: 30px;
+}
+
+::ng-deep .menu-item-text {
+  line-height: 18px !important;
+  padding: 9px 0 !important;
+  border-bottom: #F2F2F2 solid 1px !important;
+}
+
+::ng-deep .menu-items {
+  height: auto !important;
+}
+
+::ng-deep .mat-menu-item {
+  line-height: 15px !important;
+  margin: 10px 0;
+  white-space: initial !important;
+}
+
+::ng-deep .mat-menu-content {
+  padding-bottom: 15px !important;
+  position: relative;
+  width: 100%;
+  max-width: 283px;
+  height: 100%;
+  max-height: 372px;
+}
+
+::ng-deep .cdk-overlay-pane {
+  margin-top: 9px !important;
+}
+/*# sourceMappingURL=dashboard-layout.component.css.map */

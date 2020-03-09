@@ -25,7 +25,8 @@ export class NewRequestComponent implements OnInit, DoCheck {
       viewValue: 'Suscripción para Colectivos'
     }
   ];
-  
+ 
+  titles =['Datos del Asegurado', 'Sección A', 'Sección B', 'Sección c']
   dependents = [0];
   newRequest: FormGroup;
   dependentsNumber = 0;

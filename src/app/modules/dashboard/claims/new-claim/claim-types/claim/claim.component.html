@@ -1,18 +1,97 @@
 <div>
   <form [formGroup]="claimForm">
-    <mat-accordion class="ww-mat-accordion" [togglePosition]="'before'">
+    <!-- <mat-accordion class="ww-mat-accordion" [togglePosition]="'before'">
       <mat-expansion-panel class="ww-mat-expansion" [expanded]="step === 0" (opened)="setStep(0)">
         <mat-expansion-panel-header class="body-13 icon-blue">
           Formulario de Reclamación
         </mat-expansion-panel-header>
+
+        <mat-action-row class="action-row">
+          <button mat-button class="next-button" (click)="nextStep()">Siguiente</button>
+        </mat-action-row>
+      </mat-expansion-panel>
+      <mat-expansion-panel class="ww-mat-expansion mt-10" [expanded]="step === 1" (opened)="setStep(1)">
+        <mat-expansion-panel-header class="body-13 icon-blue">
+          Datos del Asegurado
+        </mat-expansion-panel-header>
+
+        <mat-action-row class="action-row">
+          <button mat-button class="next-button" (click)="nextStep()">Siguiente</button>
+        </mat-action-row>
+      </mat-expansion-panel>
+      <mat-expansion-panel class="ww-mat-expansion mt-10" [expanded]="step === 2" (opened)="setStep(2)">
+        <mat-expansion-panel-header class="body-13 icon-blue">
+          Datos del Proveedor
+        </mat-expansion-panel-header>
+
+        <mat-action-row class="action-row">
+          <button mat-button class="next-button" (click)="nextStep()">Siguiente</button>
+        </mat-action-row>
+      </mat-expansion-panel>
+      <mat-expansion-panel class="ww-mat-expansion mt-10" [expanded]="step === 3" (opened)="setStep(3)">
+        <mat-expansion-panel-header class="body-13 icon-blue">
+          Servicios Reclamados
+        </mat-expansion-panel-header>
+
+        <mat-action-row class="action-row">
+          <div class="mr-3">
+            <mat-form-field color="accent" appearance="outline" class="w-full bg-transparente"
+              style="font-size: small !important; padding-bottom: 0px !important;">
+              <mat-label>Total Monto Reclamado</mat-label>
+              <input matInput class="" disabled placeholder="21,200 $ USD">
+            </mat-form-field>
+          </div>
+          <div class="mr-3">
+            <mat-form-field color="accent" appearance="outline" class="w-full bg-transparente"
+              style="font-size: small !important; padding-bottom: 0px !important;">
+              <mat-label>Total Monto Autorizado</mat-label>
+              <input matInput class="" disabled placeholder="1,200 $ USD">
+            </mat-form-field>
+          </div>
+          <button mat-button class="next-button" (click)="nextStep()">Siguiente</button>
+        </mat-action-row>
+      </mat-expansion-panel>
+      <mat-expansion-panel class="ww-mat-expansion mt-10" [expanded]="step === 4" (opened)="setStep(4)">
+        <mat-expansion-panel-header class="body-13 icon-blue">
+          En caso de hospitalización
+        </mat-expansion-panel-header>
+
+        <mat-action-row class="action-row">
+          <button mat-button class="next-button" (click)="nextStep()">Siguiente</button>
+        </mat-action-row>
+      </mat-expansion-panel>
+      <mat-expansion-panel class="ww-mat-expansion mt-10" [expanded]="step === 5" (opened)="setStep(5)">
+        <mat-expansion-panel-header class="body-13 icon-blue">
+          Observaciones
+        </mat-expansion-panel-header>
+
+        <mat-action-row class="action-row">
+          <button mat-button class="next-button" (click)="nextStep()">Siguiente</button>
+        </mat-action-row>
+      </mat-expansion-panel>
+      <mat-expansion-panel class="ww-mat-expansion mt-10" [expanded]="step === 6" (opened)="setStep(6)">
+        <mat-expansion-panel-header class="body-13 icon-blue">
+          Declaración
+        </mat-expansion-panel-header>
+
+        <mat-action-row class="action-row">
+          <button mat-button class="next-button" (click)="nextStep()">Siguiente</button>
+        </mat-action-row>
+      </mat-expansion-panel>
+    </mat-accordion> -->
+    <app-forms-container [titles]="accordionTitles">
+      <ng-template #formTemplate>
         <div formGroupName="reclamacion"
           class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-5">
           <div class="mr-3">
             <mat-form-field color="accent" appearance="outline" class="w-full bg-transparente"
               style="font-size: small !important;">
               <mat-label>Diagnóstico</mat-label>
-              <input matInput class="" formControlName="diagnostico" placeholder="Dolor de cabeza">
+              <input matInput class="" #diagnostico formControlName="diagnostico" placeholder="Dolor de cabeza">
             </mat-form-field>
+            <!-- <mat-error
+              *ngIf="claimForm.get('reclamacion.diagnostico').invalid && claimForm.get('reclamacion.diagnostico').dirty">
+              Este campo es requerido</mat-error> -->
           </div>
           <div class="mr-3 mb-3 sm:mb-3 md:mb-0 lg:mb-0 xl:mb-0">
             <label id="tipo-de-servicio" class="radio-button-label">Tipo de Servicio</label>
@@ -45,14 +124,8 @@
             </mat-form-field>
           </div>
         </div>
-        <mat-action-row class="action-row">
-          <button mat-button class="next-button" (click)="nextStep()">Siguiente</button>
-        </mat-action-row>
-      </mat-expansion-panel>
-      <mat-expansion-panel class="ww-mat-expansion mt-10" [expanded]="step === 1" (opened)="setStep(1)">
-        <mat-expansion-panel-header class="body-13 icon-blue">
-          Datos del Asegurado
-        </mat-expansion-panel-header>
+      </ng-template>
+      <ng-template #formTemplate>
         <div formGroupName="asegurado"
           class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4">
           <div class="mr-3">
@@ -106,14 +179,8 @@
             </mat-radio-group>
           </div>
         </div>
-        <mat-action-row class="action-row">
-          <button mat-button class="next-button" (click)="nextStep()">Siguiente</button>
-        </mat-action-row>
-      </mat-expansion-panel>
-      <mat-expansion-panel class="ww-mat-expansion mt-10" [expanded]="step === 2" (opened)="setStep(2)">
-        <mat-expansion-panel-header class="body-13 icon-blue">
-          Datos del Proveedor
-        </mat-expansion-panel-header>
+      </ng-template>
+      <ng-template #formTemplate>
         <div formGroupName="proveedor"
           class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
           <div class="mr-3">
@@ -145,48 +212,43 @@
             </mat-form-field>
           </div>
         </div>
-        <mat-action-row class="action-row">
-          <button mat-button class="next-button" (click)="nextStep()">Siguiente</button>
-        </mat-action-row>
-      </mat-expansion-panel>
-      <mat-expansion-panel class="ww-mat-expansion mt-10" [expanded]="step === 3" (opened)="setStep(3)">
-        <mat-expansion-panel-header class="body-13 icon-blue">
-          Servicios Reclamados
-        </mat-expansion-panel-header>
-        <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-5 xl:grid-cols-5">
+      </ng-template>
+      <ng-template #formTemplate>
+        <div formGroupName="reclamados"
+          class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-5 xl:grid-cols-5">
           <div class="mr-3">
             <mat-form-field color="accent" appearance="outline" class="w-full bg-transparente"
               style="font-size: small !important;">
               <mat-label>Código CPT</mat-label>
-              <input matInput class="" placeholder="27S920">
+              <input formControlName="codigoCpt" matInput class="" placeholder="27S920">
             </mat-form-field>
           </div>
           <div class="mr-3">
             <mat-form-field color="accent" appearance="outline" class="w-full bg-transparente"
               style="font-size: small !important;">
               <mat-label>Procedimiento</mat-label>
-              <input matInput class="" placeholder="...">
+              <input formControlName="procedimiento" matInput class="" placeholder="...">
             </mat-form-field>
           </div>
           <div class="mr-3">
             <mat-form-field color="accent" appearance="outline" class="w-full bg-transparente"
               style="font-size: small !important;">
               <mat-label>Monto Reclamado</mat-label>
-              <input matInput class="" placeholder="20,000$ USD">
+              <input formControlName="montoReclamado" matInput class="" placeholder="20,000$ USD">
             </mat-form-field>
           </div>
           <div class="mr-3">
             <mat-form-field color="accent" appearance="outline" class="w-full bg-transparente"
               style="font-size: small !important;">
               <mat-label>Monto Autorizado</mat-label>
-              <input matInput class="" placeholder="14,400$ USD">
+              <input formControlName="montoAutorizado" matInput class="" placeholder="14,400$ USD">
             </mat-form-field>
           </div>
-          <div class="mr-3">
+          <div>
             <mat-form-field color="accent" appearance="outline" class="w-full bg-transparente"
               style="font-size: small !important;">
               <mat-label>Monto Deducible</mat-label>
-              <input matInput class="" placeholder="1,200 $ USD">
+              <input formControlName="montoDeducible" matInput class="" placeholder="1,200 $ USD">
             </mat-form-field>
           </div>
         </div>
@@ -196,28 +258,8 @@
             <mat-icon style="color: #18446B">add</mat-icon>
           </button>
         </div>
-        <mat-action-row class="action-row">
-          <div class="mr-3">
-            <mat-form-field color="accent" appearance="outline" class="w-full bg-transparente"
-              style="font-size: small !important; padding-bottom: 0px !important;">
-              <mat-label>Total Monto Reclamado</mat-label>
-              <input matInput class="" disabled placeholder="21,200 $ USD">
-            </mat-form-field>
-          </div>
-          <div class="mr-3">
-            <mat-form-field color="accent" appearance="outline" class="w-full bg-transparente"
-              style="font-size: small !important; padding-bottom: 0px !important;">
-              <mat-label>Total Monto Autorizado</mat-label>
-              <input matInput class="" disabled placeholder="1,200 $ USD">
-            </mat-form-field>
-          </div>
-          <button mat-button class="next-button" (click)="nextStep()">Siguiente</button>
-        </mat-action-row>
-      </mat-expansion-panel>
-      <mat-expansion-panel class="ww-mat-expansion mt-10" [expanded]="step === 4" (opened)="setStep(4)">
-        <mat-expansion-panel-header class="body-13 icon-blue">
-          En caso de hospitalización
-        </mat-expansion-panel-header>
+      </ng-template>
+      <ng-template #formTemplate>
         <div formGroupName="casoHospitalizacion"
           class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5">
           <div class="mr-0 md:mr-3 lg:mr-3 xl:mr-3">
@@ -237,14 +279,8 @@
             </mat-form-field>
           </div>
         </div>
-        <mat-action-row class="action-row">
-          <button mat-button class="next-button" (click)="nextStep()">Siguiente</button>
-        </mat-action-row>
-      </mat-expansion-panel>
-      <mat-expansion-panel class="ww-mat-expansion mt-10" [expanded]="step === 5" (opened)="setStep(5)">
-        <mat-expansion-panel-header class="body-13 icon-blue">
-          Observaciones
-        </mat-expansion-panel-header>
+      </ng-template>
+      <ng-template #formTemplate>
         <div formGroupName="observaciones"
           class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-1 xl:grid-cols-1">
           <mat-form-field appearance="outline">
@@ -252,14 +288,8 @@
             <textarea formControlName="observacion" matInput></textarea>
           </mat-form-field>
         </div>
-        <mat-action-row class="action-row">
-          <button mat-button class="next-button" (click)="nextStep()">Siguiente</button>
-        </mat-action-row>
-      </mat-expansion-panel>
-      <mat-expansion-panel class="ww-mat-expansion mt-10" [expanded]="step === 6" (opened)="setStep(6)">
-        <mat-expansion-panel-header class="body-13 icon-blue">
-          Declaración
-        </mat-expansion-panel-header>
+      </ng-template>
+      <ng-template #formTemplate>
         <div class="declaraciones my-4 px-4 sm:px-4 md:px-14 lg:px-12 xl:px-12">
           CERTIFICO Y DOY FE que los datos suministrados y contenidos en el presente formulario son verdaderos,
           correctos
@@ -285,11 +315,8 @@
             </div>
           </div>
         </div>
-        <mat-action-row class="action-row">
-          <button mat-button class="next-button" (click)="nextStep()">Siguiente</button>
-        </mat-action-row>
-      </mat-expansion-panel>
-    </mat-accordion>
+      </ng-template>
+    </app-forms-container>
     <div class="mt-12">
       <button mat-button class="send-button" (click)="sendClaim()" type="submit">Enviar</button>
     </div>

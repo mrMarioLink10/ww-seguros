@@ -1,12 +1,12 @@
 <mat-accordion class="ww-mat-accordion" [togglePosition]="'before'">
-    <mat-expansion-panel *ngFor="let content of grouped._results; let index = index" class="ww-mat-expansion" [expanded]="step === index" (opened)="setStep(index)">
-        <mat-expansion-panel-header class="body-13 icon-blue">
-             {{titles[index]}}
-        </mat-expansion-panel-header>
-            <ng-template [ngTemplateOutlet]="content"></ng-template>
-        <mat-action-row class="action-row">
-            <button mat-button class="next-button" (click)="nextStep()">Siguiente</button>
-        </mat-action-row>
-    </mat-expansion-panel>
+  <mat-expansion-panel *ngFor="let content of grouped._results; let index = index" class="ww-mat-expansion"
+    [expanded]="step === index" (opened)="setStep(index)">
+    <mat-expansion-panel-header class="body-13 icon-blue">
+      {{titles[index]}}
+    </mat-expansion-panel-header>
+    <ng-template [ngTemplateOutlet]="content"></ng-template>
+    <mat-action-row class="action-row">
+      <button mat-button class="next-button" (click)="nextStep()" type="button">Siguiente</button>
+    </mat-action-row>
+  </mat-expansion-panel>
 </mat-accordion>
- 

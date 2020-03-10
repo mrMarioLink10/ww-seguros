@@ -7,32 +7,32 @@ import { RefundComponent } from './new-claim/claim-types/refund/refund.component
 import { PreCertificationComponent } from './new-claim/claim-types/pre-certification/pre-certification.component';
 
 const routes: Routes = [
-  {
-    path: '',
-    pathMatch: 'full',
-    component: ClaimsComponent,
-    data: {
-        slug: 'claims',
-        name: 'Reclamos',
-    }
-  },
-  {
-      path: 'new-claim',
-      component: NewClaimComponent,
-      data: {
-        slug: 'new-claim',
-        name: 'Nuevo Reclamo'
-      },
-      children: [
-        {path: 'claim', component: ClaimComponent},
-        {path: 'refund', component: RefundComponent},
-        {path: 'pre-certification', component: PreCertificationComponent}
-      ]
-  }
+	{
+		path: '',
+		pathMatch: 'full',
+		component: ClaimsComponent,
+		data: {
+			slug: 'claims',
+			name: 'Reclamos'
+		}
+	},
+	{
+		path: 'new-claim',
+		component: NewClaimComponent,
+		data: {
+			slug: 'new-claim',
+			name: 'Nuevo Reclamo'
+		},
+		children: [
+			{ path: 'claim', component: ClaimComponent },
+			{ path: 'refund', component: RefundComponent },
+			{ path: 'pre-certification', component: PreCertificationComponent }
+		]
+	}
 ];
 
 @NgModule({
-  imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+	imports: [ RouterModule.forChild(routes) ],
+	exports: [ RouterModule ]
 })
 export class ClaimsRoutingModule {}

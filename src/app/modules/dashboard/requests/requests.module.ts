@@ -8,19 +8,16 @@ import { NewRequestComponent } from './new-request/new-request/new-request.compo
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedDirectivesModule } from 'src/app/core/directive';
 
-
-
 @NgModule({
-  declarations: [RequestsComponent, NewRequestComponent],
-  imports: [
-    CommonModule,
-    RequestsRoutingModule,
-    SharedModule,
-    MaterialModule,
-    FormsModule,
-    ReactiveFormsModule,
-    SharedDirectivesModule,
-    SharedModule
-  ]
+	declarations: [ RequestsComponent, NewRequestComponent ],
+	imports: [
+		CommonModule,
+		RequestsRoutingModule,
+		SharedModule,
+		MaterialModule,
+		FormsModule,
+		ReactiveFormsModule,
+		SharedDirectivesModule
+	]
 })
-export class RequestsModule { }
+export class RequestsModule {}

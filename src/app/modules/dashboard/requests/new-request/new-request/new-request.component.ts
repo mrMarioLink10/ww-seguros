@@ -1,4 +1,4 @@
-import { Component, OnInit, DoCheck } from '@angular/core';
+import { Component, OnInit, DoCheck, ɵConsole } from '@angular/core';
 import { FormGroup, FormBuilder, FormArray } from '@angular/forms';
 
 @Component({
@@ -25,9 +25,8 @@ export class NewRequestComponent implements OnInit, DoCheck {
       viewValue: 'Suscripción para Colectivos'
     }
   ];
- 
+
   titles =['Datos del Asegurado', 'Sección A', 'Sección B', 'Sección c']
-  dependents = [0];
   newRequest: FormGroup;
   dependentsNumber = 0;
   constructor(private fb: FormBuilder) { }
@@ -50,36 +49,46 @@ export class NewRequestComponent implements OnInit, DoCheck {
     });
   }
   ngDoCheck(): void {
-    this.incrementDependent();
     this.maxWidth = window.matchMedia( '(max-width: 11270px)' );
+    console.log(this.newRequest)
   }
 
   createItem(): FormGroup {
     return this.fb.group({
       name:  [''],
       lastName:   [''],
+      family: [''],
       weight:     [''],
       height:     [''],
-      univercity: [''],
       sex:        [''],
+      birtday:       [''],
+      student: [false],
+      univercity: [''],
       telUnivercity: ['']
     });
   }
-  dependent(): void {
-    this.items = this.newRequest.get('dependents') as FormArray;
-    this.items.push(this.createItem());
+
+  deleteDependent(id) {
+    const dependent = parseInt(this.newRequest.get('dependentsNumber').value, 10);
+    this.t.removeAt(id);
+    if (dependent > 0) {
+      this.newRequest.get('dependentsNumber').setValue(dependent - 1)
+    }
   }
 
-  incrementDependent() {
+  get t() { return this.newRequest.get('dependents') as FormArray; }
+
+  onChangeDependents() {
     const dependent = parseInt(this.newRequest.get('dependentsNumber').value, 10);
-    if (dependent !== 0) {
-      this.dependents.forEach(() => {
-        if (dependent < this.dependents.length ) {
-          this.dependents.pop();
-        } else if (dependent > this.dependents.length) {
-          this.dependents.push(0);
-        }
-      });
+
+    if (this.t.length < dependent) {
+      for (let i = this.t.length; i < dependent; i++) {
+        this.t.push(this.createItem());
+      }
+    } else {
+      for (let i = this.t.length; i >= dependent; i--) {
+        this.deleteDependent(i);
+      }
     }
   }
 }

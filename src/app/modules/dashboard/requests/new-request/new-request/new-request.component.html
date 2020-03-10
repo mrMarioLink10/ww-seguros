@@ -26,7 +26,7 @@
 
       <div>
         <mat-tab-group>
-            <mat-tab label="Asegurado" class="mat-tab-forms"  *ngFor="let t of dependents; let i = index"> 
+            <mat-tab label="Asegurado" class="mat-tab-forms"> 
               
                 <app-forms-container [titles]="titles">
                   <ng-template #formTemplate>
@@ -102,7 +102,7 @@
                               <div class="mr-3">
                                   <mat-form-field color="accent" appearance="outline" class="w-full bg-transparente" style="font-size: small !important;">
                                     <mat-label>No. Dependientes</mat-label>
-                                    <input matInput formControlName="dependentsNumber" appDigitOnly class="" placeholder="Jorge Segura">
+                                    <input matInput formControlName="dependentsNumber" (keyup)="onChangeDependents()" appDigitOnly class="" placeholder="Jorge Segura">
                                   </mat-form-field>
                               </div>
                       </div>
@@ -111,85 +111,91 @@
                         <div class="col-span-1" >Dependientes</div>
                         <mat-divider class="col-span-11"></mat-divider>
                       </div>
-                      <div *ngFor="let t of dependents; let i = index">
-                        <div *ngIf="newRequest.get('dependentsNumber').value !== '0' && newRequest.get('dependentsNumber').value !== ''" class="mt-3 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-5">
-                          <div class="mr-3">
-                            <mat-form-field color="accent" appearance="outline" class="w-full bg-transparente" style="font-size: small !important;">
-                              <mat-label>Nombres</mat-label>
-                              <input formControlName="name" matInput class="" placeholder="Jorge Segura">
-                            </mat-form-field>
-                          </div>
-  
-                          <div class="mr-3">
+
+                      <div formArrayName="dependents">
+                        <div *ngFor="let item of newRequest.get('dependents')['controls']; let i = index;">
+                          <div [formGroupName]="i" *ngIf="newRequest.get('dependentsNumber').value !== '0' && newRequest.get('dependentsNumber').value !== ''" class="mt-3 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-5">
+                            <div class="mr-3">
                               <mat-form-field color="accent" appearance="outline" class="w-full bg-transparente" style="font-size: small !important;">
-                                <mat-label>Apellidos</mat-label>
-                                <input matInput formControlName="lastName" class="" placeholder="Jorge Segura">
+                                <mat-label>Nombres</mat-label>
+                                <input formControlName="name" matInput class="" placeholder="Jorge Segura">
+                              </mat-form-field>
+                            </div>
+    
+                            <div class="mr-3">
+                                <mat-form-field color="accent" appearance="outline" class="w-full bg-transparente" style="font-size: small !important;">
+                                  <mat-label>Apellidos</mat-label>
+                                  <input matInput formControlName="lastName" class="" placeholder="Jorge Segura">
+                                </mat-form-field>
+                            </div>
+                            <div class="mr-3">
+                              <mat-label>Parentezco</mat-label><br>
+                              <mat-radio-group
+                                aria-labelledby="example-radio-group-label"
+                                formControlName="family">
+                                <mat-radio-button  value="Conyuge">Cónyuge</mat-radio-button>
+                                <mat-radio-button class="ml-3" value="Hijo">Hijo</mat-radio-button>
+                              </mat-radio-group>
+                            </div>
+                            <div class="mr-3">
+                              <mat-form-field>
+                                <mat-label>Fecha de Nacimiento</mat-label>
+                                <input formControlName="birtday" matInput [matDatepicker]="picker">
+                                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                <mat-datepicker #picker></mat-datepicker>
+                              </mat-form-field>
+                            </div>
+                            <div class="mr-3">
+                              <mat-label>Sexo</mat-label><br>
+                              <mat-radio-group
+                                aria-labelledby="example-radio-group-label"
+                                formControlName="sex">
+                                <mat-radio-button  value="Femenino">Femenino</mat-radio-button>
+                                <mat-radio-button class="ml-3" value="Masculino">Masculino</mat-radio-button>
+                              </mat-radio-group>
+                            </div>
+    
+                            <div class="mr-3 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2">
+                              <mat-form-field color="accent" appearance="outline" class="w-full bg-transparente" style="font-size: small !important;">
+                                <mat-label>Peso / lbs</mat-label>
+                                <input matInput formControlName="weight" class="" placeholder="Jorge Segura">
+                              </mat-form-field>
+    
+                              <mat-form-field color="accent" appearance="outline" class="w-full bg-transparente ml-3" style="font-size: small !important;">
+                                <mat-label>Estatura/Pies</mat-label>
+                                <input matInput formControlName="height" class="" placeholder="Jorge Segura">
                               </mat-form-field>
                           </div>
-                          <div class="mr-3">
-                            <mat-label>Parentezco</mat-label><br>
-                            <mat-radio-group
+                          <div class="ml-3">
+                            <mat-label>¿Estudiante de tiempo completo?</mat-label><br>
+                            <mat-radio-group #student
                               aria-labelledby="example-radio-group-label"
                               formControlName="sex">
-                              <mat-radio-button  value="Conyuge">Cónyuge</mat-radio-button>
-                              <mat-radio-button class="ml-3" value="Hijo">Hijo</mat-radio-button>
+                              <mat-radio-button  [value]="true">Si</mat-radio-button>
+                              <mat-radio-button class="ml-3" [value]="false">No</mat-radio-button>
                             </mat-radio-group>
                           </div>
-                          <div class="mr-3">
-                            <mat-form-field>
-                              <mat-label>Choose a date</mat-label>
-                              <input matInput [matDatepicker]="picker">
-                              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                              <mat-datepicker #picker></mat-datepicker>
-                            </mat-form-field>
-                          </div>
-                          <div class="mr-3">
-                            <mat-label>Sexo</mat-label><br>
-                            <mat-radio-group
-                              aria-labelledby="example-radio-group-label"
-                              formControlName="sex">
-                              <mat-radio-button  value="Femenino">Femenino</mat-radio-button>
-                              <mat-radio-button class="ml-3" value="Masculino">Masculino</mat-radio-button>
-                            </mat-radio-group>
-                          </div>
-  
-                          <div class="mr-3 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2">
+    
+                          <div class="mr-3" *ngIf="student.value">
                             <mat-form-field color="accent" appearance="outline" class="w-full bg-transparente" style="font-size: small !important;">
-                              <mat-label>Peso / lbs</mat-label>
-                              <input matInput formControlName="weight" class="" placeholder="Jorge Segura">
+                              <mat-label>Universidad</mat-label>
+                              <input matInput formControlName="univercity" class="" placeholder="Jorge Segura">
                             </mat-form-field>
-  
-                            <mat-form-field color="accent" appearance="outline" class="w-full bg-transparente ml-3" style="font-size: small !important;">
-                              <mat-label>Estatura/Pies</mat-label>
-                              <input matInput formControlName="height" class="" placeholder="Jorge Segura">
+                          </div>
+    
+                          <div class="mr-3">
+                            <mat-form-field color="accent" appearance="outline" class="w-full bg-transparente" style="font-size: small !important;">
+                              <mat-label>No. Teléfono Universidad</mat-label>
+                              <input matInput formControlName="telUnivercity" class="" placeholder="Jorge Segura">
                             </mat-form-field>
+                          </div>
+                          <div class="mr-3">
+                            <button mat-mini-fab color="warn" (click)="deleteDependent(i)">-</button>
+                          </div>
                         </div>
-                        <div class="ml-3">
-                          <mat-label>¿Estudiante de tiempo completo?</mat-label><br>
-                          <mat-radio-group
-                            aria-labelledby="example-radio-group-label"
-                            formControlName="sex">
-                            <mat-radio-button  value="si">Si</mat-radio-button>
-                            <mat-radio-button class="ml-3" value="no">No</mat-radio-button>
-                          </mat-radio-group>
-                        </div>
-  
-                        <div class="mr-3">
-                          <mat-form-field color="accent" appearance="outline" class="w-full bg-transparente" style="font-size: small !important;">
-                            <mat-label>Universidad</mat-label>
-                            <input matInput formControlName="lastName" class="" placeholder="Jorge Segura">
-                          </mat-form-field>
-                        </div>
-  
-                        <div class="mr-3">
-                          <mat-form-field color="accent" appearance="outline" class="w-full bg-transparente" style="font-size: small !important;">
-                            <mat-label>No. Teléfono Universidad</mat-label>
-                            <input matInput formControlName="lastName" class="" placeholder="Jorge Segura">
-                          </mat-form-field>
-                        </div>
-                        <mat-divider></mat-divider>
+                        <mat-divider *ngIf="newRequest.get('dependentsNumber').value !== '0' && newRequest.get('dependentsNumber').value !== ''"></mat-divider>
                       </div>
-                      </div>
+                    </div>
                     </form> 
                   </ng-template>
                   <ng-template #formTemplate>hola 1</ng-template>

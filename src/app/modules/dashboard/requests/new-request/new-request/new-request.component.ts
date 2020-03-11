@@ -1,5 +1,5 @@
 import { Component, OnInit, DoCheck, ɵConsole } from '@angular/core';
-import { FormGroup, FormBuilder, FormArray } from '@angular/forms';
+import { FormGroup, FormBuilder, FormArray, Validators } from '@angular/forms';
 import { FormArrayGeneratorService } from 'src/app/core/services/forms/form-array-generator.service';
 
 @Component({
@@ -44,7 +44,7 @@ export class NewRequestComponent implements OnInit, DoCheck {
 
   ngOnInit() {
     this.newRequest = this.fb.group({
-      name:  [''],
+      name:  ['', Validators.required],
       lastName:   [''],
       id:         [''],
       weight:     [''],

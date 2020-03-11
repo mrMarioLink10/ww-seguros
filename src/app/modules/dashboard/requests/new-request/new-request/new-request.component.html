@@ -109,7 +109,7 @@
                   <mat-form-field color="accent" appearance="outline" class="w-full bg-transparente"
                     style="font-size: small !important;">
                     <mat-label>No. Dependientes</mat-label>
-                    <input matInput formControlName="dependentsNumber" (keyup)="onChangeDependents()" appDigitOnly
+                    <input matInput formControlName="dependentsNumber" (keyup)="onChangeDependents()" appDigitOnly min="0" max="2"
                       class="" placeholder="Jorge Segura">
                   </mat-form-field>
                 </div>
@@ -123,7 +123,7 @@
               </div>
 
               <div formArrayName="dependents">
-                <div *ngFor="let item of newRequest.get('dependents')['controls']; let i = index;">
+                <div *ngFor="let item of getdependentsArray.controls; let i = index;">
                   <div [formGroupName]="i"
                     *ngIf="newRequest.get('dependentsNumber').value !== '0' && newRequest.get('dependentsNumber').value !== ''"
                     class="mt-3 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-5">
@@ -202,7 +202,7 @@
                       </mat-form-field>
                     </div>
                     <div class="mr-3">
-                      <button mat-mini-fab color="warn" (click)="deleteDependent(i)">-</button>
+                      <button mat-mini-fab color="warn" (click)="delete(i)">-</button>
                     </div>
                   </div>
                   <mat-divider

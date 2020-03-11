@@ -214,47 +214,60 @@
         </div>
       </ng-template>
       <ng-template #formTemplate>
-        <div formGroupName="reclamados"
-          class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-5 xl:grid-cols-5">
-          <div class="mr-3">
-            <mat-form-field color="accent" appearance="outline" class="w-full bg-transparente"
-              style="font-size: small !important;">
-              <mat-label>Código CPT</mat-label>
-              <input formControlName="codigoCpt" matInput class="" placeholder="27S920">
-            </mat-form-field>
-          </div>
-          <div class="mr-3">
-            <mat-form-field color="accent" appearance="outline" class="w-full bg-transparente"
-              style="font-size: small !important;">
-              <mat-label>Procedimiento</mat-label>
-              <input formControlName="procedimiento" matInput class="" placeholder="...">
-            </mat-form-field>
-          </div>
-          <div class="mr-3">
-            <mat-form-field color="accent" appearance="outline" class="w-full bg-transparente"
-              style="font-size: small !important;">
-              <mat-label>Monto Reclamado</mat-label>
-              <input formControlName="montoReclamado" matInput class="" placeholder="20,000$ USD">
-            </mat-form-field>
-          </div>
-          <div class="mr-3">
-            <mat-form-field color="accent" appearance="outline" class="w-full bg-transparente"
-              style="font-size: small !important;">
-              <mat-label>Monto Autorizado</mat-label>
-              <input formControlName="montoAutorizado" matInput class="" placeholder="14,400$ USD">
-            </mat-form-field>
-          </div>
-          <div>
-            <mat-form-field color="accent" appearance="outline" class="w-full bg-transparente"
-              style="font-size: small !important;">
-              <mat-label>Monto Deducible</mat-label>
-              <input formControlName="montoDeducible" matInput class="" placeholder="1,200 $ USD">
-            </mat-form-field>
+        <div formArrayName="reclamados">
+          <div *ngFor="let reclaimed of reclaimedList.controls; let i = index">
+            <div [formGroupName]="i"
+              class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-5 xl:grid-cols-5">
+              <div class="mr-3">
+                <mat-form-field color="accent" appearance="outline" class="w-full bg-transparente"
+                  style="font-size: small !important;">
+                  <mat-label>Código CPT</mat-label>
+                  <input formControlName="codigoCpt" matInput class="" placeholder="27S920">
+                </mat-form-field>
+              </div>
+              <div class="mr-3">
+                <mat-form-field color="accent" appearance="outline" class="w-full bg-transparente"
+                  style="font-size: small !important;">
+                  <mat-label>Procedimiento</mat-label>
+                  <input formControlName="procedimiento" matInput class="" placeholder="...">
+                </mat-form-field>
+              </div>
+              <div class="mr-3">
+                <mat-form-field color="accent" appearance="outline" class="w-full bg-transparente"
+                  style="font-size: small !important;">
+                  <mat-label>Monto Reclamado</mat-label>
+                  <input formControlName="montoReclamado" matInput class="" placeholder="20,000$ USD">
+                </mat-form-field>
+              </div>
+              <div class="mr-3">
+                <mat-form-field color="accent" appearance="outline" class="w-full bg-transparente"
+                  style="font-size: small !important;">
+                  <mat-label>Monto Autorizado</mat-label>
+                  <input formControlName="montoAutorizado" matInput class="" placeholder="14,400$ USD">
+                </mat-form-field>
+              </div>
+              <div class="grid grid-cols-2">
+                <div class="mr-3">
+                  <mat-form-field color="accent" appearance="outline" class="w-full bg-transparente"
+                    style="font-size: small !important;">
+                    <mat-label>Monto Deducible</mat-label>
+                    <input formControlName="montoDeducible" matInput class="" placeholder="1,200 $ USD">
+                  </mat-form-field>
+                </div>
+                <div>
+                  <button mat-mini-fab aria-label="Eliminar reclamacion" (click)="removeReclaimed(i)" type="button"
+                    class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
+                    <mat-icon style="color: #18446B">remove</mat-icon>
+                  </button>
+                </div>
+              </div>
+
+            </div>
           </div>
         </div>
         <div>
-          <button mat-mini-fab aria-label="Agregar reclamacion" class="dashboard-toolbar-buttons"
-            style="border: 1px rgb(197, 197, 197) solid">
+          <button mat-mini-fab aria-label="Agregar reclamacion" (click)="addReclaimed()" type="button"
+            class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
             <mat-icon style="color: #18446B">add</mat-icon>
           </button>
         </div>

@@ -1,16 +1,15 @@
 import { Routes, RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
-import { QuotesModule } from './quotes/quotes.module';
 import { DashboardLayoutComponent } from './shared/layouts/dashboard-layout/dashboard-layout.component';
 
 const routes: Routes = [
 	{
 		path: '',
-		redirectTo: 'dashboard',
+		redirectTo: 'information',
 		pathMatch: 'full'
 	},
 	{
-		path: 'dashboard',
+		path: '',
 		component: DashboardLayoutComponent,
 		children: [
 			{

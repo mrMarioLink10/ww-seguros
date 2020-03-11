@@ -7,8 +7,6 @@ import { FormGroup, FormControl, FormArray, FormBuilder, Validators } from '@ang
 	styleUrls: [ './claim.component.scss' ]
 })
 export class ClaimComponent implements OnInit {
-	step = 0;
-
 	Date: any;
 	initialDate: any;
 	finalDate: any;
@@ -90,16 +88,25 @@ export class ClaimComponent implements OnInit {
 		return formGroup;
 	}
 
-	setStep(index: number) {
-		this.step = index;
-	}
+	changedReclaimed(index) {
+		let validators = null;
 
-	nextStep() {
-		this.step++;
+		if (this.getReclaimedFormGroup(index).controls['type'].value === 'email') {
+			validators = Validators.compose([ Validators.required, Validators.email ]);
+		} else {
+			validators = Validators.compose([
+				Validators.required,
+				Validators.pattern(new RegExp('^\\+[0-9]?()[0-9](d[0-9]{9})$')) // pattern for validating international phone number
+			]);
+		}
+
+		this.getReclaimedFormGroup(index).controls['value'].setValidators(validators);
+
+		// re-validate the inputs of the form control based on new validation
+		this.getReclaimedFormGroup(index).controls['value'].updateValueAndValidity();
 	}
 
 	sendClaim() {
-		console.log('Impresion de formulario down here:');
-		console.log('form: ', this.claimForm);
+		console.log('Impresion de formulario down here: ', this.claimForm);
 	}
 }

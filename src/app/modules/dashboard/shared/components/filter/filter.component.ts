@@ -2,18 +2,14 @@ import { Component, OnInit, Input } from '@angular/core';
 import { MatFormField } from '@angular/material';
 
 @Component({
-  selector: 'app-filter',
-  templateUrl: './filter.component.html',
-  styleUrls: ['./filter.component.scss']
+	selector: 'app-filter',
+	templateUrl: './filter.component.html',
+	styleUrls: [ './filter.component.scss' ]
 })
 export class FilterComponent implements OnInit {
-  @Input() status: [];
+	@Input() status: [];
 
-  constructor() { }
+	constructor() {}
 
-  ngOnInit() {
-    console.log(status);
-
-  }
-
+	ngOnInit() {}
 }

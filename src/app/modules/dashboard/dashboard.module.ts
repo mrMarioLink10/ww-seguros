@@ -7,21 +7,23 @@ import { RouterModule } from '@angular/router';
 import { SharedModule } from './shared/shared.module';
 import { RequestManagementModule } from './request-management/request-management.module';
 import { MaterialModule } from 'src/app/shared/modules/material.module';
+import { BaseDialogComponent } from '../../shared/components/base-dialog/base-dialog.component';
+import { GlobalSharedModule } from '../../shared/global-shared.module';
 
 @NgModule({
-  declarations: [],
-  imports: [
-    SharedModule,
-    CommonModule,
-    MaterialModule,
-    RequestManagementModule,
-    DashboardRoutingModule,
-    LoginModule,
-    DashboardLayoutModule,
-    RouterModule
-  ],
-  exports: [
-    MaterialModule
-  ]
+	declarations: [],
+	imports: [
+		SharedModule,
+		CommonModule,
+		MaterialModule,
+		RequestManagementModule,
+		DashboardRoutingModule,
+		LoginModule,
+		DashboardLayoutModule,
+		RouterModule,
+		GlobalSharedModule
+	],
+	exports: [ MaterialModule ],
+	entryComponents: [ BaseDialogComponent ]
 })
-export class DashboardModule { }
+export class DashboardModule {}

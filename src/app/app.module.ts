@@ -10,29 +10,22 @@ import { RouterModule } from '@angular/router';
 import { ModulesModule } from './modules/modules.module';
 import { MatPaginatorIntl } from '@angular/material';
 import { MatPaginatorIntlCro } from './core/class/MatPaginatorIntl';
-import { DialogComponent } from './shared/component/dialog/dialog/dialog.component';
-
 
 @NgModule({
-  declarations: [
-    AppComponent,
+	declarations: [ AppComponent ],
+	imports: [
+		/** Modulos de importaciones */
+		BrowserModule,
+		BrowserAnimationsModule,
 
-  ],
-  imports: [
-    /** Modulos de importaciones */
-    BrowserModule,
-    BrowserAnimationsModule,
+		/** Modulos de no se que */
+		AppRoutingModule,
+		// RouterModule,
 
-    /** Modulos de no se que */
-    AppRoutingModule,
-    // RouterModule,
-
-    /** Modulos de componentes */
-    ModulesModule
-  ],
-  providers: [
-    { provide: MatPaginatorIntl, useClass: MatPaginatorIntlCro},
-  ],
-  bootstrap: [AppComponent]
+		/** Modulos de componentes */
+		ModulesModule
+	],
+	providers: [ { provide: MatPaginatorIntl, useClass: MatPaginatorIntlCro } ],
+	bootstrap: [ AppComponent ]
 })
-export class AppModule { }
+export class AppModule {}

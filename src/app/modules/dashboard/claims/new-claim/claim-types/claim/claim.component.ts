@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, FormArray, FormBuilder, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material';
+import { BaseDialogComponent } from '../../../../../../shared/components/base-dialog/base-dialog.component';
+import { DialogOptionService } from 'src/app/core/services/dialog/dialog-option.service';
 
 @Component({
 	selector: 'app-claim',
@@ -24,7 +27,7 @@ export class ClaimComponent implements OnInit {
 	claimForm: FormGroup;
 	reclaimedList: FormArray;
 
-	constructor(private fb: FormBuilder) {}
+	constructor(private fb: FormBuilder, public dialog: MatDialog, public dialogOption: DialogOptionService) {}
 
 	ngOnInit() {
 		this.claimForm = this.fb.group({
@@ -108,5 +111,22 @@ export class ClaimComponent implements OnInit {
 
 	sendClaim() {
 		console.log('Impresion de formulario down here: ', this.claimForm);
+
+		const claimConfirmation = this.dialog.open(BaseDialogComponent, {
+			data: this.dialogOption.reclaimConfirmation,
+			minWidth: 400
+		});
+
+		claimConfirmation.afterClosed().subscribe((result) => {
+			if (result === 'true') {
+				const claimConfirmated = this.dialog.open(BaseDialogComponent, {
+					data: this.dialogOption.reclaimConfirmated
+				});
+
+				setTimeout(() => {
+					claimConfirmated.close();
+				}, 3500);
+			}
+		});
 	}
 }

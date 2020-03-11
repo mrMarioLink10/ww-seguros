@@ -371,6 +371,14 @@ body {
   padding: 3px 37px !important;
 }
 
+.cancel-button {
+  background: #373536 !important;
+  color: white !important;
+  border-radius: 35px !important;
+  font-size: 12px !important;
+  padding: 3px 37px !important;
+}
+
 .send-button {
   background: white !important;
   color: #18446B !important;
@@ -378,6 +386,11 @@ body {
   border-radius: 35px !important;
   font-size: 12px !important;
   padding: 3px 45px !important;
+}
+
+.ww-divider {
+  color: #E5E5E5;
+  border: #E5E5E5 1px solid;
 }
 
 /** OVERWRITING ANOTHER CLASSES */

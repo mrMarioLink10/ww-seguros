@@ -246,7 +246,8 @@
                   <input formControlName="montoAutorizado" matInput class="" placeholder="14,400$ USD">
                 </mat-form-field>
               </div>
-              <div class="grid grid-cols-2">
+              <div class="grid"
+                [ngClass]="{'grid-cols-1': reclaimedList.length === 1, 'grid-cols-2': reclaimedList.length > 1}">
                 <div class="mr-3">
                   <mat-form-field color="accent" appearance="outline" class="w-full bg-transparente"
                     style="font-size: small !important;">
@@ -254,7 +255,7 @@
                     <input formControlName="montoDeducible" matInput class="" placeholder="1,200 $ USD">
                   </mat-form-field>
                 </div>
-                <div>
+                <div *ngIf="reclaimedList.length > 1">
                   <button mat-mini-fab aria-label="Eliminar reclamacion" (click)="removeReclaimed(i)" type="button"
                     class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
                     <mat-icon style="color: #18446B">remove</mat-icon>

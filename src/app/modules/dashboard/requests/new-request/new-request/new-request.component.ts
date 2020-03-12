@@ -1,5 +1,5 @@
 import { Component, OnInit, DoCheck, ɵConsole } from '@angular/core';
-import { FormGroup, FormBuilder, FormArray } from '@angular/forms';
+import { FormGroup, FormBuilder, FormArray, Validators } from '@angular/forms';
 import { FormArrayGeneratorService } from 'src/app/core/services/forms/form-array-generator.service';
 
 @Component({
@@ -10,8 +10,7 @@ import { FormArrayGeneratorService } from 'src/app/core/services/forms/form-arra
 export class NewRequestComponent implements OnInit, DoCheck {
 
   maxWidth: any;
-  items;
-  dependentsFormArray:FormArray;
+  dependentsFormArray: FormArray;
   requestType = [
     {
       value: 'Suscripción para Colectivos',
@@ -26,10 +25,7 @@ export class NewRequestComponent implements OnInit, DoCheck {
       viewValue: 'Suscripción para Colectivos'
     }
   ];
-
-  titles =['Datos del Asegurado', 'Sección A', 'Sección B', 'Sección c']
-  newRequest: FormGroup;
-  oneDepdendent = this.fb.group({
+  dependentFormGroup = {
     name:  [''],
     lastName:   [''],
     family: [''],
@@ -38,15 +34,17 @@ export class NewRequestComponent implements OnInit, DoCheck {
     sex:        [''],
     birtday:       [''],
     student: [false],
-    univercity: [''],
     telUnivercity: ['']
-  });
+  };
+
+  titles =['Datos del Asegurado', 'Sección A', 'Sección B', 'Sección c']
+  newRequest: FormGroup;
   dependentsNumber = 0;
   constructor(private fb: FormBuilder, public formMethods: FormArrayGeneratorService ) { }
 
   ngOnInit() {
     this.newRequest = this.fb.group({
-      name:  [''],
+      name:  ['', Validators.required],
       lastName:   [''],
       id:         [''],
       weight:     [''],
@@ -57,7 +55,7 @@ export class NewRequestComponent implements OnInit, DoCheck {
       direction:  [''],
       city:       [''],
       dependentsNumber: [''],
-      dependents: this.fb.array([ this.formMethods.createItem(this.oneDepdendent) ])
+      dependents: this.fb.array([ this.formMethods.createItem(this.dependentFormGroup)])
 
     });
 
@@ -66,17 +64,14 @@ export class NewRequestComponent implements OnInit, DoCheck {
   ngDoCheck(): void {
     this.maxWidth = window.matchMedia( '(max-width: 11270px)' );
   }
-  get getdependentsArray() {
-    return this.newRequest.get('dependents') as FormArray; 
-  }
 
   onChangeDependents() {
     const dependent = parseInt(this.newRequest.get('dependentsNumber').value, 10);
-    this.dependentsFormArray = this.formMethods.onChangeForms(dependent, this.oneDepdendent, this.getdependentsArray);
+    this.dependentsFormArray = this.formMethods.onChangeForms(dependent, this.dependentFormGroup, this.dependentsFormArray );
   }
 
-  delete(id){
-    this.newRequest.get('dependentsNumber')
-    .setValue(this.formMethods.deleteOneElement(this.dependentsFormArray, id).length);
+  delete(id) {
+    this.dependentsFormArray = this.formMethods.deleteOneElement(this.dependentsFormArray , id).formArray;
+    this.newRequest.get('dependentsNumber').setValue(this.dependentsFormArray.length);
   }
 }

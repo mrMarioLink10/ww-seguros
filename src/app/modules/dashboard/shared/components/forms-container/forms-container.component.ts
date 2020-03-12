@@ -1,36 +1,27 @@
-import { Component, OnInit, Input, ContentChild, TemplateRef, AfterContentInit, ContentChildren, ElementRef, Renderer } from '@angular/core';
+import { Component, OnInit, Input, ElementRef, ContentChildren} from '@angular/core';
+import { FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-forms-container',
   templateUrl: './forms-container.component.html',
   styleUrls: ['./forms-container.component.scss']
 })
-export class FormsContainerComponent implements OnInit,AfterContentInit {
+export class FormsContainerComponent implements OnInit{
   step = 0;
   @Input() titles: Array<any>;
-  @ContentChild('formTemplate', { static: false})formTemplateRef: TemplateRef<any>[];
+  @Input() Form: FormGroup;
   @ContentChildren('formTemplate') grouped;
-  constructor(private renderer: Renderer, private elem: ElementRef) { }
 
-  ngOnInit() {
-   
+  constructor( private elem: ElementRef) { }
+
+  ngOnInit() {}
+
+  setStep(index: number) {
+    this.step = index;
   }
-  ngAfterContentInit(){
-    console.log(this.grouped);
-    this.unsetAllOptions()
-  }
-  setStep(index: number) {this.step = index; }
-  nextStep() {this.step++; }
-  getForm(id) {return 'formTemplate' + id; }
-
-
-  unsetAllOptions(){
-    let elements = this.elem.nativeElement.querySelectorAll('.formElement');
-    console.log(elements);
-    // elements.forEach(element => {
-    //  if(element.checked){
-    //     element.checked = false
-    //  }
-    // });
+  nextStep() {
+    if (this.Form.valid) {
+      this.step++;
+    }
   }
 }

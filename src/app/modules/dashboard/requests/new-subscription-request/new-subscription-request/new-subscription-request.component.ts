@@ -14,7 +14,7 @@ export class NewSubscriptionRequestComponent implements OnInit {
       viewValue: 'Cambio de plan',
     }
   ];
-  options: FieldConfig =
+  requestTypeOptions: FieldConfig =
    {
     label: 'Tipo de Solicitud',
     options: this.requestType,
@@ -22,13 +22,19 @@ export class NewSubscriptionRequestComponent implements OnInit {
     type: 'select'
    };
 
+   costNumber: FieldConfig = {
+    label: 'Tipo de Solicitud',
+    options: this.requestType
+   }
+
    newRequest: FormGroup;
   constructor(private fb: FormBuilder) { }
 
   ngOnInit() {
 
     this.newRequest = this.fb.group({
-      requestType: ['']
+      requestType: [''],
+      NoC: [''],
       // name:  ['', Validators.required],
       // lastName:   [''],
       // id:         [''],

@@ -6,11 +6,12 @@ import { SelectComponent } from './select/select.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { InputComponent } from './input/input.component';
+import { RadioButtonComponent } from './radio-button/radio-button.component';
 
 
 @NgModule({
-    declarations: [ SelectComponent, InputComponent ],
-    exports: [SelectComponent, InputComponent],
+    declarations: [ SelectComponent, InputComponent, RadioButtonComponent ],
+    exports: [SelectComponent, InputComponent, RadioButtonComponent],
     imports: [
         CommonModule,
         MaterialModule,

@@ -3,17 +3,8 @@
     <div class="mt-6 p-3 pb-0 info-home">
       <div class="filter-title">Info. Inicio</div>
       <div class="mt-3 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4">
-        
-        <app-select [options]="options" [group] = "newRequest"></app-select>
-        
-
-        <div class="mr-3">
-          <mat-form-field color="accent" appearance="outline" class="w-full bg-transparente"
-            style="font-size: small !important;">
-            <mat-label>No. Cotización</mat-label>
-            <input matInput class="" placeholder="Jorge Segura">
-          </mat-form-field>
-        </div>
+        <app-select [options]="requestTypeOptions" [group]="newRequest"></app-select>
+        <app-input  [group]="newRequest" label="No. Cotización" name='NoC'></app-input>
       </div>
     </div>
 <div>

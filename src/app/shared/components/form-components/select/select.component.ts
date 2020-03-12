@@ -10,19 +10,10 @@ import { Router } from '@angular/router';
 })
 export class SelectComponent implements OnInit {
 
-  optionSelected = new FormControl();
   @Input() options: FieldConfig;
   @Input() group: FormGroup;
 
   constructor(private router: Router) { }
 
   ngOnInit() {}
-
-  changeOption(type) {
-    console.log('hola');
-    if (type.link) {
-      this.router.navigateByUrl(type);
-    }
-  }
-
 }

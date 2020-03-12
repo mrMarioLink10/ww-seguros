@@ -1,7 +1,6 @@
 <div class="mr-3">
-    <mat-form-field color="accent" appearance="outline" class="w-full bg-transparente"
-      style="font-size: small !important;">
-      <mat-label>No. Cotización</mat-label>
-      <input matInput class="" placeholder="Jorge Segura">
+    <mat-form-field color="accent" appearance="outline" class="w-full bg-transparente"style="font-size: small !important;" [formGroup]="group">
+      <mat-label>{{label}}</mat-label>
+      <input [formControlName]="name" matInput class="" placeholder="">
     </mat-form-field>
 </div>

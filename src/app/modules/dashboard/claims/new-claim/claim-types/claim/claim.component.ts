@@ -114,17 +114,27 @@ export class ClaimComponent implements OnInit {
 
 		const claimConfirmation = this.dialog.open(BaseDialogComponent, {
 			data: this.dialogOption.reclaimConfirmation,
-			minWidth: 400
+			minWidth: 385
 		});
 
 		claimConfirmation.afterClosed().subscribe((result) => {
 			if (result === 'true') {
-				const claimConfirmated = this.dialog.open(BaseDialogComponent, {
-					data: this.dialogOption.reclaimConfirmated
-				});
+				let dialog;
+
+				if (this.claimForm.valid) {
+					dialog = this.dialog.open(BaseDialogComponent, {
+						data: this.dialogOption.reclaimConfirmated,
+						minWidth: 385
+					});
+				} else {
+					dialog = this.dialog.open(BaseDialogComponent, {
+						data: this.dialogOption.formError,
+						minWidth: 385
+					});
+				}
 
 				setTimeout(() => {
-					claimConfirmated.close();
+					dialog.close();
 				}, 3500);
 			}
 		});

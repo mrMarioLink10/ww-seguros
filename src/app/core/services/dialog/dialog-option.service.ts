@@ -7,7 +7,7 @@ import { BaseDialog } from 'src/app/shared/components/base-dialog/models/base-di
 export class DialogOptionService {
 	constructor() {}
 	reclaimConfirmation: BaseDialog = {
-		logo: '',
+		logo: 'warning',
 		title: 'Confirmación',
 		text: 'Se procederá a enviar la solicitud de reclamo',
 		showButtons: true,
@@ -17,9 +17,16 @@ export class DialogOptionService {
 	};
 
 	reclaimConfirmated: BaseDialog = {
-		logo: '',
+		logo: 'check',
 		title: 'Enviado',
 		text: 'Reclamo enviado',
+		showButtons: false
+	};
+
+	formError: BaseDialog = {
+		logo: 'error',
+		title: 'Ha ocurrido error',
+		text: 'Revise si quedan campos requeridos sin completar',
 		showButtons: false
 	};
 }

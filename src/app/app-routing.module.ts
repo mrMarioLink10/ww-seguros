@@ -6,7 +6,7 @@ import { LoginComponent } from './modules/auth/login/login.component';
 const routes: Routes = [
 	{ path: '', component: LoginComponent },
 	{
-		path: 'dashboard',
+		path: 'app',
 		loadChildren: () => import('./modules/dashboard/dashboard.module').then((m) => m.DashboardModule)
 	}
 ];

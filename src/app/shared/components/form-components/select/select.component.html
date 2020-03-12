@@ -1,0 +1,10 @@
+
+<div class="mr-3">
+    <mat-form-field color="accent" appearance="outline" class="w-full " style="font-size: small !important;" [formGroup]="group">
+        <mat-label>{{options.label}}</mat-label>
+        <mat-select [formControlName]="options.name">
+          <mat-option *ngFor="let type of options.options" [value]="type.value" [routerLink]="type.link">{{type.viewValue}}</mat-option>
+        </mat-select>
+        <!-- <mat-error *ngIf="!options.name.valid">Debe de seleccionar el {{options.label}}</mat-error> -->
+    </mat-form-field>
+</div>

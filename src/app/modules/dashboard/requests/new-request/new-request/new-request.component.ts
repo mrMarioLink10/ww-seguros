@@ -1,6 +1,7 @@
 import { Component, OnInit, DoCheck, ɵConsole } from '@angular/core';
 import { FormGroup, FormBuilder, FormArray, Validators } from '@angular/forms';
 import { FormArrayGeneratorService } from 'src/app/core/services/forms/form-array-generator.service';
+import { FieldConfig } from 'src/app/shared/components/form-components/models/field-config';
 
 @Component({
   selector: 'app-new-request',
@@ -14,17 +15,18 @@ export class NewRequestComponent implements OnInit, DoCheck {
   requestType = [
     {
       value: 'Suscripción para Colectivos',
-      viewValue: 'Suscripción para Colectivos'
-    },
-    {
-      value: 'Suscripción para Colectivos',
-      viewValue: 'Suscripción para Colectivos'
-    },
-    {
-      value: 'Suscripción para Colectivos',
-      viewValue: 'Suscripción para Colectivos'
+      viewValue: 'Suscripción para Colectivos',
+      link: '/dashboard/requests/new-subscription-requests'
     }
   ];
+  options: FieldConfig =
+   {
+    label: 'Tipo de Solicitud',
+    options: this.requestType,
+    name: 'requestType',
+    type: 'select'
+   };
+
   dependentFormGroup = {
     name:  [''],
     lastName:   [''],
@@ -44,6 +46,7 @@ export class NewRequestComponent implements OnInit, DoCheck {
 
   ngOnInit() {
     this.newRequest = this.fb.group({
+      requestType: [''],
       name:  ['', Validators.required],
       lastName:   [''],
       id:         [''],

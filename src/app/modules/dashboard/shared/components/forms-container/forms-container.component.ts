@@ -20,8 +20,7 @@ export class FormsContainerComponent implements OnInit{
     this.step = index;
   }
   nextStep() {
-    if (this.Form.valid) {
-      this.step++;
-    }
+    
+    this.step++;
   }
 }

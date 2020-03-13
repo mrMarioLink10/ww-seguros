@@ -84,44 +84,30 @@
         <div formGroupName="reclamacion"
           class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-5">
           <div class="mr-3">
-            <mat-form-field color="accent" appearance="outline" class="w-full bg-transparente"
-              style="font-size: small !important;">
-              <mat-label>Diagnóstico</mat-label>
-              <input matInput class="" #diagnostico formControlName="diagnostico" placeholder="Dolor de cabeza">
-            </mat-form-field>
-            <!-- <mat-error
-              *ngIf="claimForm.get('reclamacion.diagnostico').invalid && claimForm.get('reclamacion.diagnostico').dirty">
-              Este campo es requerido</mat-error> -->
+            <app-input [group]="claimForm.get('reclamacion')" label="Diagnóstico" name='diagnostico'
+              placeholder="Dolor de cabeza"></app-input>
           </div>
           <div class="mr-3 mb-3 sm:mb-3 md:mb-0 lg:mb-0 xl:mb-0">
-            <label id="tipo-de-servicio" class="radio-button-label">Tipo de Servicio</label>
-            <br>
-            <mat-radio-group formControlName="tipoServicio" aria-labelledby="tipo-de-servicio" class="radio-group">
-              <mat-radio-button class="radio-button mr-3" value="ambulatorio">Ambulatorio</mat-radio-button>
-              <mat-radio-button class="radio-button" value="hospitalizacion">Hospitalización</mat-radio-button>
-            </mat-radio-group>
+            <app-radio-button [options]="tipoServicio" name="tipoServicio" [group]="claimForm.get('reclamacion')">
+            </app-radio-button>
           </div>
           <div class="mr-3">
-            <mat-form-field color="accent" appearance="outline" class="w-full bg-transparente"
-              style="font-size: small !important;">
-              <mat-label>Autorización No.</mat-label>
-              <input matInput class="" type="number" formControlName="autorizadoNo" placeholder="123456">
-            </mat-form-field>
+            <app-input [group]="claimForm.get('reclamacion')" label="Autorización No." name='autorizadoNo'
+              placeholder="123456" type="number"></app-input>
           </div>
           <div class="mr-3">
-            <mat-form-field color="accent" appearance="outline" class="w-full bg-transparente"
-              style="font-size: small !important;">
-              <mat-label>Autorizado por</mat-label>
-              <input matInput class="" formControlName="autorizadoPor" placeholder="Dr. XXXX XXXXX">
-            </mat-form-field>
+            <app-input [group]="claimForm.get('reclamacion')" label="Autorizado por" name='autorizadoPor'
+              placeholder="Dr. XXXX XXXXX"></app-input>
           </div>
           <div>
-            <mat-form-field color="accent" appearance="outline" class="w-full" style="font-size: small !important;">
+            <!-- <mat-form-field color="accent" appearance="outline" class="w-full" style="font-size: small !important;">
               <mat-label>Fecha</mat-label>
               <input matInput formControlName="fechaDiagnostico" [matDatepicker]="Date" placeholder="04/03/2020">
               <mat-datepicker-toggle matSuffix [for]="Date"></mat-datepicker-toggle>
               <mat-datepicker #Date></mat-datepicker>
-            </mat-form-field>
+            </mat-form-field> -->
+            <app-date-picker [group]="claimForm.get('reclamacion')" label="Fecha" name="fechaDiagnostico">
+            </app-date-picker>
           </div>
         </div>
       </ng-template>
@@ -144,7 +130,6 @@
           <div class="mr-3">
             <app-input [group]="claimForm.get('asegurado')" label="Nombre del Asegurado" name='nombre'
               placeholder="Ramon Capalla"></app-input>
-
           </div>
           <div class="mr-3">
             <app-input [group]="claimForm.get('asegurado')" label="Número del Contacto" name='numero' type="number"
@@ -155,12 +140,8 @@
             </app-input>
           </div>
           <div class="mr-3 mb-3 sm:mb-3 md:mb-0 lg:mb-0 xl:mb-0">
-            <label id="tipo-de-asegurado" class="radio-button-label">Tipo de Asegurado</label>
-            <br>
-            <mat-radio-group formControlName="tipo" aria-labelledby="tipo-de-asegurado" class="radio-group">
-              <mat-radio-button class="radio-button mr-3" value="titular">Titular</mat-radio-button>
-              <mat-radio-button class="radio-button" value="dependiente">Dependiente</mat-radio-button>
-            </mat-radio-group>
+            <app-radio-button name="tipo" [group]="claimForm.get('asegurado')" [options]="tipoAsegurado">
+            </app-radio-button>
           </div>
         </div>
       </ng-template>

@@ -4,6 +4,7 @@ import { MatDialog } from '@angular/material';
 import { BaseDialogComponent } from '../../../../../../shared/components/base-dialog/base-dialog.component';
 import { DialogOptionService } from 'src/app/core/services/dialog/dialog-option.service';
 import { ClaimModel } from '../models/claim';
+import { FieldConfig } from '../../../../../../shared/components/form-components/models/field-config';
 
 @Component({
 	selector: 'app-claim',
@@ -28,6 +29,34 @@ export class ClaimComponent implements OnInit {
 	claimForm: FormGroup;
 	reclaimedList: FormArray;
 	sendedForm: ClaimModel;
+
+	tipoServicio: FieldConfig = {
+		label: 'Tipo de Servicio',
+		options: [
+			{
+				value: 'ambulatorio',
+				viewValue: 'Ambulatorio'
+			},
+			{
+				value: 'hospitalizacion',
+				viewValue: 'Hospitalización'
+			}
+		]
+	};
+
+	tipoAsegurado: FieldConfig = {
+		label: 'Tipo de Asegurado',
+		options: [
+			{
+				value: 'titular',
+				viewValue: 'Titular'
+			},
+			{
+				value: 'depediente',
+				viewValue: 'Dependiente'
+			}
+		]
+	};
 
 	constructor(private fb: FormBuilder, public dialog: MatDialog, public dialogOption: DialogOptionService) {}
 
@@ -91,24 +120,6 @@ export class ClaimComponent implements OnInit {
 		const formGroup = this.reclaimedList.controls[index] as FormGroup;
 
 		return formGroup;
-	}
-
-	changedReclaimed(index) {
-		let validators = null;
-
-		if (this.getReclaimedFormGroup(index).controls['type'].value === 'email') {
-			validators = Validators.compose([ Validators.required, Validators.email ]);
-		} else {
-			validators = Validators.compose([
-				Validators.required,
-				Validators.pattern(new RegExp('^\\+[0-9]?()[0-9](d[0-9]{9})$')) // pattern for validating international phone number
-			]);
-		}
-
-		this.getReclaimedFormGroup(index).controls['value'].setValidators(validators);
-
-		// re-validate the inputs of the form control based on new validation
-		this.getReclaimedFormGroup(index).controls['value'].updateValueAndValidity();
 	}
 
 	sendClaim() {

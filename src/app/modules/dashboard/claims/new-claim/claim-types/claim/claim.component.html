@@ -129,46 +129,30 @@
         <div formGroupName="asegurado"
           class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4">
           <div class="mr-3">
-            <mat-form-field color="accent" appearance="outline" class="w-full bg-transparente"
-              style="font-size: small !important;">
-              <mat-label>No. Póliza</mat-label>
-              <input type="number" formControlName="numeroPoliza" matInput class="" placeholder="123456">
-            </mat-form-field>
+            <app-input [group]="claimForm.get('asegurado')" label="No. Póliza" name='numeroPoliza' type="number"
+              placeholder="12345678"></app-input>
           </div>
           <div class="mr-3">
-            <mat-form-field color="accent" appearance="outline" class="w-full bg-transparente"
-              style="font-size: small !important;">
-              <mat-label>ID No.</mat-label>
-              <input type="number" formControlName="idNumero" matInput class="" placeholder="112233">
-            </mat-form-field>
+            <app-input [group]="claimForm.get('asegurado')" label="ID No." name='idNumero' type="number"
+              placeholder="12345678"></app-input>
           </div>
           <div class="mr-3">
-            <mat-form-field color="accent" appearance="outline" class="w-full bg-transparente"
-              style="font-size: small !important;">
-              <mat-label>Cédula/Pasaporte</mat-label>
-              <input formControlName="documentoIdentidad" matInput class="" placeholder="40234190011">
-            </mat-form-field>
+            <app-input [group]="claimForm.get('asegurado')" label="Cédula/Pasaporte" name='documentoIdentidad'
+              placeholder="40234190011">
+            </app-input>
           </div>
           <div class="mr-3">
-            <mat-form-field color="accent" appearance="outline" class="w-full bg-transparente"
-              style="font-size: small !important;">
-              <mat-label>Nombre del Asegurado</mat-label>
-              <input formControlName="nombre" matInput class="" placeholder="Ramon Capalla">
-            </mat-form-field>
+            <app-input [group]="claimForm.get('asegurado')" label="Nombre del Asegurado" name='nombre'
+              placeholder="Ramon Capalla"></app-input>
+
           </div>
           <div class="mr-3">
-            <mat-form-field color="accent" appearance="outline" class="w-full bg-transparente"
-              style="font-size: small !important;">
-              <mat-label>Número del Contacto</mat-label>
-              <input type="number" formControlName="numero" matInput class="" placeholder="8096546191">
-            </mat-form-field>
+            <app-input [group]="claimForm.get('asegurado')" label="Número del Contacto" name='numero' type="number"
+              placeholder="8096546191"></app-input>
           </div>
           <div class="mr-3">
-            <mat-form-field color="accent" appearance="outline" class="w-full bg-transparente"
-              style="font-size: small !important;">
-              <mat-label>Edad</mat-label>
-              <input type="number" formControlName="edad" matInput class="" placeholder="26">
-            </mat-form-field>
+            <app-input [group]="claimForm.get('asegurado')" label="Edad" name='edad' type="number" placeholder="26">
+            </app-input>
           </div>
           <div class="mr-3 mb-3 sm:mb-3 md:mb-0 lg:mb-0 xl:mb-0">
             <label id="tipo-de-asegurado" class="radio-button-label">Tipo de Asegurado</label>
@@ -274,7 +258,6 @@
         </div>
       </ng-template>
       <ng-template #formTemplate>
-
         <div formGroupName="casoHospitalizacion"
           class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5">
           <div class="mr-0 md:mr-3 lg:mr-3 xl:mr-3">
@@ -282,22 +265,15 @@
             </app-date-picker>
           </div>
           <div>
-            <mat-form-field color="accent" appearance="outline" class="w-full" style="font-size: small !important;">
-              <mat-label>Fecha de Egreso</mat-label>
-              <input formControlName="egreso" matInput [matDatepicker]="finalDate" placeholder="07/03/2020">
-              <mat-datepicker-toggle matSuffix [for]="finalDate"></mat-datepicker-toggle>
-              <mat-datepicker #finalDate></mat-datepicker>
-            </mat-form-field>
+            <app-date-picker label="Fecha de Egreso" name="egreso" [group]="claimForm.get('casoHospitalizacion')">
+            </app-date-picker>
           </div>
         </div>
       </ng-template>
       <ng-template #formTemplate>
         <div formGroupName="observaciones"
           class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-1 xl:grid-cols-1">
-          <mat-form-field appearance="outline">
-            <mat-label>Texto</mat-label>
-            <textarea formControlName="observacion" matInput></textarea>
-          </mat-form-field>
+          <app-text-area label="Texto" name="observacion" [group]="claimForm.get('observaciones')"></app-text-area>
         </div>
       </ng-template>
       <ng-template #formTemplate>

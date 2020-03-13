@@ -1,6 +1,8 @@
-<div class="radio-container mr-3">
-    <mat-label class="radio-button-label">Sexo</mat-label><br>
-    <mat-radio-group aria-labelledby="example-radio-group-label" formControlName="sex"  class="radio-group">
-      <mat-radio-button value="Femenino" class="mr-3 radio-button" >Femenino</mat-radio-button>
+
+<div [formGroup]="group" class="radio-container">
+    <mat-label class="radio-button-label">{{options.label}}</mat-label><br>
+    <mat-radio-group aria-labelledby="example-radio-group-label" [formControlName]="name"  class="radio-group">
+        <mat-radio-button *ngFor="let option of options.options" [value]="option.value" class="mr-3 radio-button">{{option.viewValue}}</mat-radio-button>
     </mat-radio-group>
 </div>
+

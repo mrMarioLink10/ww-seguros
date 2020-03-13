@@ -9,6 +9,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedDirectivesModule } from 'src/app/core/directive';
 import { NewSubscriptionRequestComponent } from './new-subscription-request/new-subscription-request/new-subscription-request.component';
 import { GlobalSharedModule } from 'src/app/shared/global-shared.module';
+import { ServicesModule } from 'src/app/core/services/services.module';
 
 @NgModule({
 	declarations: [ RequestsComponent, NewRequestComponent, NewSubscriptionRequestComponent ],
@@ -20,7 +21,8 @@ import { GlobalSharedModule } from 'src/app/shared/global-shared.module';
 		FormsModule,
 		ReactiveFormsModule,
 		SharedDirectivesModule,
-		GlobalSharedModule
+		GlobalSharedModule,
+		ServicesModule
 	]
 })
 export class RequestsModule {}

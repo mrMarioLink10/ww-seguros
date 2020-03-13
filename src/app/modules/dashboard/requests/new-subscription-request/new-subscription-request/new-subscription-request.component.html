@@ -16,10 +16,23 @@
       <ng-template #formTemplate>
         <div class="mt-3 grid grid-cols-1 sm:grid-cols-3 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
           <app-input class="mr-3" [group]="newRequest.get('contractor')" label="Nombre de la Sociedad" name='societyName'></app-input>
+          <app-input class="mr-3" [group]="newRequest.get('contractor')" label="Nombre Comercial" name='commercialName'></app-input>
+          <app-input class="mr-3" [group]="newRequest.get('contractor')" label="Núm. Contribuyente o equivalente" name='taxpayerNumber'></app-input>
+          <app-input class="mr-3" [group]="newRequest.get('contractor')" label="Domicilio Social" name='socialHome'></app-input>
+          <app-input class="mr-3" [group]="newRequest.get('contractor')" label="Teléfono (s)" name='tel'></app-input>
+          <app-input class="mr-3" [group]="newRequest.get('contractor')" label="Correo" name='email'></app-input>
+          <app-input class="mr-3" [group]="newRequest.get('contractor')" label="Actividad Comercial" name='commercialActivity'></app-input>
+          <app-select class="mr-3" [options]="requestTypeOptions" [group]="newRequest"></app-select>
         </div>
         <mat-divider class="divider"></mat-divider>
-        <div class="mt-3 grid grid-cols-1 sm:grid-cols-3 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
-          
+
+        <div class="mt-4 grid grid-cols-1 sm:grid-cols-3 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
+          <app-input class="mr-3" [group]="newRequest.get('contractor').get('legalRepresentation')" label="Nombres y Apellidos Representante Legal" name='name'></app-input>
+          <app-input class="mr-3" [group]="newRequest.get('contractor').get('legalRepresentation')" label="Cargo o relación con la Sociedad" name='position'></app-input>
+          <app-input class="mr-3" [group]="newRequest.get('contractor').get('legalRepresentation')" label="Nacionalidad" name='nationality'></app-input>
+          <app-input class="mr-3" [group]="newRequest.get('contractor').get('legalRepresentation')" label="Cédula / Pasaporte" name='id'></app-input>
+          <app-input class="mr-3" [group]="newRequest.get('contractor').get('legalRepresentation')" label="Póliza Existente (Si aplica)" name='policy'></app-input>
+          <app-input class="mr-3" [group]="newRequest.get('contractor').get('legalRepresentation')" label="Correo" name='email'></app-input>
         </div>
       </ng-template>
       <ng-template #formTemplate>
@@ -44,7 +57,7 @@
           <app-input class="mr-3" [group]="newRequest.get('person')" label="Tel. Celular" name='cel'></app-input>
           <app-input class="mr-3" [group]="newRequest.get('person')" label="Tel. Oficina" name='officeTel'></app-input>
           <app-input class="mr-3" [group]="newRequest.get('person')" label="Fax" name='fax'></app-input>
-          <app-input class="mr-3" [group]="newRequest.get('Correo')" label="Fax" name='email'></app-input>
+          <app-input class="mr-3" [group]="newRequest.get('Correo')" label="Correo" name='email'></app-input>
         </div>
 
         <mat-divider class="divider"></mat-divider>

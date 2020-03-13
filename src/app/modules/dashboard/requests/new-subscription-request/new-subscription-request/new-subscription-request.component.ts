@@ -99,7 +99,6 @@ export class NewSubscriptionRequestComponent implements OnInit, DoCheck {
   constructor(private fb: FormBuilder, private countries: CountriesService) { }
 
   ngOnInit() {
-   
    this.newRequest = this.fb.group({
       requestType: [''],
       NoC:         [''],
@@ -114,7 +113,7 @@ export class NewSubscriptionRequestComponent implements OnInit, DoCheck {
         sex:          [''],
         nationality:  [''],
         id:           [''],
-        age:         [''],
+        age:          [''],
         weight:       [''],
         height:       [''],
         status:       [''],
@@ -134,6 +133,24 @@ export class NewSubscriptionRequestComponent implements OnInit, DoCheck {
           sector:             [''],
           city:               [''],
           country:            [''],
+        })
+      }),
+      contractor: this.fb.group({
+        societyName:        [''],
+        commercialName:     [''],
+        taxpayerNumber:     [''],
+        socialHome:         [''],
+        tel:                [''],
+        email:              [''],
+        commercialActivity: [''],
+        requestType:        [''],
+        legalRepresentation: this.fb.group({
+          name:             [''],
+          position:         [''],
+          nationality:      [''],
+          id:               [''],
+          policy:           [''],
+          email:            ['']
         })
       })
     });

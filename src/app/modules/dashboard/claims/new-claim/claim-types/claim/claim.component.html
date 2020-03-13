@@ -105,7 +105,7 @@
             <mat-form-field color="accent" appearance="outline" class="w-full bg-transparente"
               style="font-size: small !important;">
               <mat-label>Autorización No.</mat-label>
-              <input matInput class="" formControlName="autorizadoNo" placeholder="123456">
+              <input matInput class="" type="number" formControlName="autorizadoNo" placeholder="123456">
             </mat-form-field>
           </div>
           <div class="mr-3">
@@ -132,14 +132,14 @@
             <mat-form-field color="accent" appearance="outline" class="w-full bg-transparente"
               style="font-size: small !important;">
               <mat-label>No. Póliza</mat-label>
-              <input formControlName="numeroPoliza" matInput class="" placeholder="123456">
+              <input type="number" formControlName="numeroPoliza" matInput class="" placeholder="123456">
             </mat-form-field>
           </div>
           <div class="mr-3">
             <mat-form-field color="accent" appearance="outline" class="w-full bg-transparente"
               style="font-size: small !important;">
               <mat-label>ID No.</mat-label>
-              <input formControlName="idNumero" matInput class="" placeholder="112233">
+              <input type="number" formControlName="idNumero" matInput class="" placeholder="112233">
             </mat-form-field>
           </div>
           <div class="mr-3">
@@ -160,14 +160,14 @@
             <mat-form-field color="accent" appearance="outline" class="w-full bg-transparente"
               style="font-size: small !important;">
               <mat-label>Número del Contacto</mat-label>
-              <input formControlName="numero" matInput class="" placeholder="8096546191">
+              <input type="number" formControlName="numero" matInput class="" placeholder="8096546191">
             </mat-form-field>
           </div>
           <div class="mr-3">
             <mat-form-field color="accent" appearance="outline" class="w-full bg-transparente"
               style="font-size: small !important;">
               <mat-label>Edad</mat-label>
-              <input formControlName="edad" matInput class="" placeholder="26">
+              <input type="number" formControlName="edad" matInput class="" placeholder="26">
             </mat-form-field>
           </div>
           <div class="mr-3 mb-3 sm:mb-3 md:mb-0 lg:mb-0 xl:mb-0">
@@ -208,7 +208,7 @@
             <mat-form-field color="accent" appearance="outline" class="w-full bg-transparente"
               style="font-size: small !important;">
               <mat-label>No. de Contrato</mat-label>
-              <input formControlName="noContrato" matInput class="" placeholder="900001092092">
+              <input type="number" formControlName="noContrato" matInput class="" placeholder="900001092092">
             </mat-form-field>
           </div>
         </div>
@@ -236,14 +236,14 @@
                 <mat-form-field color="accent" appearance="outline" class="w-full bg-transparente"
                   style="font-size: small !important;">
                   <mat-label>Monto Reclamado</mat-label>
-                  <input formControlName="montoReclamado" matInput class="" placeholder="20,000$ USD">
+                  <input type="number" formControlName="montoReclamado" matInput class="" placeholder="20,000$ USD">
                 </mat-form-field>
               </div>
               <div class="mr-3">
                 <mat-form-field color="accent" appearance="outline" class="w-full bg-transparente"
                   style="font-size: small !important;">
                   <mat-label>Monto Autorizado</mat-label>
-                  <input formControlName="montoAutorizado" matInput class="" placeholder="14,400$ USD">
+                  <input type="number" formControlName="montoAutorizado" matInput class="" placeholder="14,400$ USD">
                 </mat-form-field>
               </div>
               <div class="grid"
@@ -252,7 +252,7 @@
                   <mat-form-field color="accent" appearance="outline" class="w-full bg-transparente"
                     style="font-size: small !important;">
                     <mat-label>Monto Deducible</mat-label>
-                    <input formControlName="montoDeducible" matInput class="" placeholder="1,200 $ USD">
+                    <input type="number" formControlName="montoDeducible" matInput class="" placeholder="1,200 $ USD">
                   </mat-form-field>
                 </div>
                 <div *ngIf="reclaimedList.length > 1">
@@ -274,19 +274,16 @@
         </div>
       </ng-template>
       <ng-template #formTemplate>
+
         <div formGroupName="casoHospitalizacion"
           class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5">
           <div class="mr-0 md:mr-3 lg:mr-3 xl:mr-3">
-            <mat-form-field color="accent" appearance="outline" class="w-full" style="font-size: small !important;">
-              <mat-label>Fecha de ingreso</mat-label>
-              <input formControlName="ingreso" matInput [matDatepicker]="initialDate" placeholder="01/03/2020">
-              <mat-datepicker-toggle matSuffix [for]="initialDate"></mat-datepicker-toggle>
-              <mat-datepicker #initialDate></mat-datepicker>
-            </mat-form-field>
+            <app-date-picker label="Fecha de Ingreso" name="ingreso" [group]="claimForm.get('casoHospitalizacion')">
+            </app-date-picker>
           </div>
           <div>
             <mat-form-field color="accent" appearance="outline" class="w-full" style="font-size: small !important;">
-              <mat-label>Fecha de egreso</mat-label>
+              <mat-label>Fecha de Egreso</mat-label>
               <input formControlName="egreso" matInput [matDatepicker]="finalDate" placeholder="07/03/2020">
               <mat-datepicker-toggle matSuffix [for]="finalDate"></mat-datepicker-toggle>
               <mat-datepicker #finalDate></mat-datepicker>

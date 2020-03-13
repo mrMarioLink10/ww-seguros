@@ -7,18 +7,11 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { InputComponent } from './input/input.component';
 import { RadioButtonComponent } from './radio-button/radio-button.component';
-
+import { DatePickerComponent } from './date-picker/date-picker.component';
 
 @NgModule({
-    declarations: [ SelectComponent, InputComponent, RadioButtonComponent ],
-    exports: [SelectComponent, InputComponent, RadioButtonComponent],
-    imports: [
-        CommonModule,
-        MaterialModule,
-        ReactiveFormsModule,
-        FormsModule,
-        CommonModule,
-        RouterModule
-    ],
+	declarations: [ SelectComponent, InputComponent, RadioButtonComponent, DatePickerComponent ],
+	exports: [ SelectComponent, InputComponent, RadioButtonComponent, DatePickerComponent ],
+	imports: [ CommonModule, MaterialModule, ReactiveFormsModule, FormsModule, CommonModule, RouterModule ]
 })
 export class FormComponentsModule {}

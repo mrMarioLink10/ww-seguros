@@ -6,8 +6,9 @@ import { MatDialogModule } from '@angular/material';
 import { FormComponentsModule } from './components/form-components/form-components.module';
 
 @NgModule({
-	declarations: [ BaseDialogComponent],
+	declarations: [ BaseDialogComponent ],
 	imports: [ CommonModule, MaterialModule, FormComponentsModule, MatDialogModule ],
+	exports: [ FormComponentsModule ],
 	entryComponents: [ BaseDialogComponent ]
 })
 export class GlobalSharedModule {}

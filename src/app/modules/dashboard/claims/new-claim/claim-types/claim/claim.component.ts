@@ -3,6 +3,7 @@ import { FormGroup, FormControl, FormArray, FormBuilder, Validators } from '@ang
 import { MatDialog } from '@angular/material';
 import { BaseDialogComponent } from '../../../../../../shared/components/base-dialog/base-dialog.component';
 import { DialogOptionService } from 'src/app/core/services/dialog/dialog-option.service';
+import { ClaimModel } from '../models/claim';
 
 @Component({
 	selector: 'app-claim',
@@ -26,6 +27,7 @@ export class ClaimComponent implements OnInit {
 
 	claimForm: FormGroup;
 	reclaimedList: FormArray;
+	sendedForm: ClaimModel;
 
 	constructor(private fb: FormBuilder, public dialog: MatDialog, public dialogOption: DialogOptionService) {}
 
@@ -126,6 +128,7 @@ export class ClaimComponent implements OnInit {
 						data: this.dialogOption.reclaimConfirmated,
 						minWidth: 385
 					});
+					this.sendedForm = this.claimForm.value;
 				} else {
 					dialog = this.dialog.open(BaseDialogComponent, {
 						data: this.dialogOption.formError,
@@ -135,6 +138,7 @@ export class ClaimComponent implements OnInit {
 
 				setTimeout(() => {
 					dialog.close();
+					console.log(JSON.stringify(this.sendedForm));
 				}, 3500);
 			}
 		});

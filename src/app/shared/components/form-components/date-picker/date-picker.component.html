@@ -1,0 +1,7 @@
+  <mat-form-field [formGroup]="group" color="accent" appearance="outline" class="w-full"
+    style="font-size: small !important;">
+    <mat-label>{{label}}</mat-label>
+    <input [formControlName]="name" matInput [matDatepicker]="picker" placeholder="01/03/2020">
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+  </mat-form-field>

@@ -15,6 +15,7 @@ export const $sex: FieldConfig = {
 }
 
 export const $res: FieldConfig = {
+    label: '¿Estudiante de tiempo completo?',
     options: [
         {
             value: true,
@@ -26,3 +27,15 @@ export const $res: FieldConfig = {
         }
     ]
 }
+
+export const $country  =
+    [
+        {
+            value: 'Afganistán',
+            viewValue: 'Afganistán'
+        },
+        {
+            value: 'Albania',
+            viewValue: 'Albania',
+        },
+    ]

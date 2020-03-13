@@ -1,10 +1,85 @@
+
 <div class="pl-6 pr-6 xs:pr-6 sm:pr-6 md:pr-12 lg:pr-12 xl:pr-12 bg-white">
+  <form>
     <h3 class="uppercase dashboard-page-title pt-20">FORMULARIO DE SOLICITUD DE SUSCRIPCIÓN SEGURO DE GASTOS MÉDICOS MAYORES</h3>
     <div class="mt-6 p-3 pb-0 info-home">
       <div class="filter-title">Info. Inicio</div>
-      <div class="mt-3 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4">
-        <app-select [options]="requestTypeOptions" [group]="newRequest"></app-select>
-        <app-input  [group]="newRequest" label="No. Cotización" name='NoC'></app-input>
+        <div class="mt-3 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4">
+        <app-select class="mr-3" [options]="requestTypeOptions" [group]="newRequest"></app-select>
+        <app-radio-button  class="mr-3" [group]="newRequest"  name="payment" [options]="payments"></app-radio-button>
+        <app-select class="mr-3" [options]="plans" [group]="newRequest"></app-select>
+        <app-radio-button class="mr-3" [group]="newRequest"  name="deducibles" [options]="deducibles"></app-radio-button>
       </div>
     </div>
+
+    <app-forms-container [titles]="titles" >
+      <ng-template #formTemplate>
+          
+      </ng-template>
+      <ng-template #formTemplate>
+        <div class="mt-3 grid grid-cols-1 sm:grid-cols-3 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
+          <app-input class="mr-3" [group]="newRequest.get('person')" label="Primer Nombre" name='firstName'></app-input>
+          <app-input class="mr-3" [group]="newRequest.get('person')" label="Segundo Nombre" name='secondName'></app-input>
+          <app-input class="mr-3" [group]="newRequest.get('person')" label="Primer y Segundo Apellido / Apellido de Ca." name='lastName'></app-input>
+          <app-date-picker class="mr-3" [group]="newRequest.get('person')" label="fecha" name='date'></app-date-picker>
+          <app-radio-button class="mr-3" [group]="newRequest" name="sex" [options]="sex"></app-radio-button>
+          <app-input class="mr-3" [group]="newRequest.get('person')" label="Nacionalidad" name='nationality'></app-input>
+          <app-input class="mr-3" [group]="newRequest.get('person')" label="Cédula/Pasaporte" name='id'></app-input>
+          <app-input class="mr-3" [group]="newRequest.get('person')" label="Edad" name='age'></app-input>
+          <div class="mr-3 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2">
+            <app-input class="mr-3" [group]="newRequest.get('person')" label="Peso / lbs" name='weight'></app-input>
+            <app-input class="mr-3" [group]="newRequest.get('person')" label="Lbs" name='height'></app-input>
+          </div>
+          <app-select class="mr-3" [options]="status" [group]="newRequest.get('person')"></app-select>
+          <app-select class="mr-3" [options]="country" [group]="newRequest.get('person')"></app-select>
+          <app-input class="mr-3" [group]="newRequest.get('person')" label="Ciudad/Provincia" name='city'></app-input>
+          <app-input class="mr-3" [group]="newRequest.get('person')" label="Dirección de Residencia" name='direction'></app-input>
+          <app-input class="mr-3" [group]="newRequest.get('person')" label="Tel. Residencia" name='tel'></app-input>
+          <app-input class="mr-3" [group]="newRequest.get('person')" label="Tel. Celular" name='cel'></app-input>
+          <app-input class="mr-3" [group]="newRequest.get('person')" label="Tel. Oficina" name='officeTel'></app-input>
+          <app-input class="mr-3" [group]="newRequest.get('person')" label="Fax" name='fax'></app-input>
+          <app-input class="mr-3" [group]="newRequest.get('Correo')" label="Fax" name='email'></app-input>
+        </div>
+
+        <mat-divider class="divider"></mat-divider>
+
+        <div class="mt-3 grid grid-cols-1 sm:grid-cols-3 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
+          <app-input class="mr-3" [group]="newRequest.get('person').get('office')" label="Empresa donde labora" name='company'></app-input>
+          <app-input class="mr-3" [group]="newRequest.get('person').get('office')" label="Ocupación/Cargo" name='position'></app-input>
+          <app-input class="mr-3" [group]="newRequest.get('person').get('office')" label="Dirección" name='direction'></app-input>
+          <app-input class="mr-3" [group]="newRequest.get('person').get('office')" label="Actividad Económica de la Empresa" name='economicActivity'></app-input>
+          <app-input class="mr-3" [group]="newRequest.get('person').get('office')" label="Sector" name='sector'></app-input>
+          <app-input class="mr-3" [group]="newRequest.get('person').get('office')" label="Ciudad" name='city'></app-input>
+          <app-select class="mr-3"[options]="country" [group]="newRequest.get('person')"></app-select>
+        </div>
+      </ng-template>
+      <ng-template #formTemplate>
+          
+      </ng-template>
+      <ng-template #formTemplate>
+          
+      </ng-template>
+      <ng-template #formTemplate>
+          
+      </ng-template>
+      <ng-template #formTemplate>
+          
+      </ng-template>
+      <ng-template #formTemplate>
+          
+      </ng-template>
+      <ng-template #formTemplate>
+          
+      </ng-template>
+      <ng-template #formTemplate>
+          
+      </ng-template>
+      <ng-template #formTemplate>
+          
+      </ng-template>
+    </app-forms-container>
+  </form>
 <div>
+
+
+    

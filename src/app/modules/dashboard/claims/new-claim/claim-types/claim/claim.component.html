@@ -100,12 +100,6 @@
               placeholder="Dr. XXXX XXXXX"></app-input>
           </div>
           <div>
-            <!-- <mat-form-field color="accent" appearance="outline" class="w-full" style="font-size: small !important;">
-              <mat-label>Fecha</mat-label>
-              <input matInput formControlName="fechaDiagnostico" [matDatepicker]="Date" placeholder="04/03/2020">
-              <mat-datepicker-toggle matSuffix [for]="Date"></mat-datepicker-toggle>
-              <mat-datepicker #Date></mat-datepicker>
-            </mat-form-field> -->
             <app-date-picker [group]="claimForm.get('reclamacion')" label="Fecha" name="fechaDiagnostico">
             </app-date-picker>
           </div>

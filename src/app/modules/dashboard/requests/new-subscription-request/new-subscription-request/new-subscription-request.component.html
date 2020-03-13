@@ -14,7 +14,13 @@
 
     <app-forms-container [titles]="titles" >
       <ng-template #formTemplate>
+        <div class="mt-3 grid grid-cols-1 sm:grid-cols-3 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
+          <app-input class="mr-3" [group]="newRequest.get('contractor')" label="Nombre de la Sociedad" name='societyName'></app-input>
+        </div>
+        <mat-divider class="divider"></mat-divider>
+        <div class="mt-3 grid grid-cols-1 sm:grid-cols-3 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
           
+        </div>
       </ng-template>
       <ng-template #formTemplate>
         <div class="mt-3 grid grid-cols-1 sm:grid-cols-3 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
@@ -22,7 +28,7 @@
           <app-input class="mr-3" [group]="newRequest.get('person')" label="Segundo Nombre" name='secondName'></app-input>
           <app-input class="mr-3" [group]="newRequest.get('person')" label="Primer y Segundo Apellido / Apellido de Ca." name='lastName'></app-input>
           <app-date-picker class="mr-3" [group]="newRequest.get('person')" label="fecha" name='date'></app-date-picker>
-          <app-radio-button class="mr-3" [group]="newRequest" name="sex" [options]="sex"></app-radio-button>
+          <app-radio-button class="mr-3" [group]="newRequest.get('person')" name="sex" [options]="sex"></app-radio-button>
           <app-input class="mr-3" [group]="newRequest.get('person')" label="Nacionalidad" name='nationality'></app-input>
           <app-input class="mr-3" [group]="newRequest.get('person')" label="Cédula/Pasaporte" name='id'></app-input>
           <app-input class="mr-3" [group]="newRequest.get('person')" label="Edad" name='age'></app-input>

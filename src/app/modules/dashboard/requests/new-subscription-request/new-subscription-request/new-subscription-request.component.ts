@@ -1,8 +1,9 @@
 import { Component, OnInit, DoCheck } from '@angular/core';
 import { FieldConfig } from 'src/app/shared/components/form-components/models/field-config';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import {$sex, $res, $country} from '../../../../../core/form/objects';
+import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
+import {$sex, $res, $country, $time, $family} from '../../../../../core/form/objects';
 import { CountriesService } from '../../../../../core/services/countries/countries.service';
+import { FormArrayGeneratorService } from 'src/app/core/services/forms/form-array-generator.service';
 @Component({
   selector: 'app-new-subscription-request',
   templateUrl: './new-subscription-request.component.html',
@@ -70,9 +71,6 @@ export class NewSubscriptionRequestComponent implements OnInit, DoCheck {
     name: 'plans',
   };
   titles = ['Contratante','Solicitante', 'Persona políticamente expuesta','Perfil Financiero', 'Dependientes', 'Sección A','Sección B','Sección C Beneficiarios Primarios','Beneficiario(s) Contingente(s)','Comentarios adicionales'];
-  newRequest: FormGroup;
-  sex = $sex;
-  student = $res;
   country = {
     label: 'País',
     options: $country,
@@ -95,8 +93,52 @@ export class NewSubscriptionRequestComponent implements OnInit, DoCheck {
     }
     ],
     name: 'status'
-  }
-  constructor(private fb: FormBuilder, private countries: CountriesService) { }
+  };
+  year = {
+    label: 'Tiempo',
+    options: $time,
+    name: 'time'
+  };
+  mony = {
+    options: [
+      {
+        value: 'Menos de 10 mil US$',
+        viewValue: 'Menos de 10 mil US$'
+      },
+      {
+        value: '10 mil a 30 mil US$',
+        viewValue: '10 mil a 30 mil US$'
+      },
+      {
+        value: '30 mil a 50 mil US$',
+        viewValue: '30 mil a 50 mil US$'
+      },
+      {
+        value: 'Más de 50 mil US$',
+        viewValue: 'Más de 50 mil US$'
+      },
+    ]
+  };
+  dependentFormGroup = {
+    name:  [''],
+    lastName:   [''],
+    family: [''],
+    weight:     [''],
+    date:     [''],
+    height:     [''],
+    sex:        [''],
+    birtday:       [''],
+    student: [false],
+    telUnivercity: [''],
+    id: [''],
+    nationality: [''],
+  };
+  newRequest: FormGroup;
+  sex = $sex;
+  res = $res;
+  family = $family;
+  dependentsFormArray: FormArray;
+  constructor(private fb: FormBuilder, public formMethods: FormArrayGeneratorService) { }
 
   ngOnInit() {
    this.newRequest = this.fb.group({
@@ -152,10 +194,25 @@ export class NewSubscriptionRequestComponent implements OnInit, DoCheck {
           policy:           [''],
           email:            ['']
         })
-      })
+      }),
+      exposedPerson: this.fb.group({
+        contractor:     [false],
+        headLine:       [false],
+        lastPosition:   [''],
+        time:           [''],
+        timeNumber:     ['']
+      }),
+      prinsipalIncome:  [''],
+      otherIncomes:     [''],
+      dependents: this.fb.array([ this.formMethods.createItem(this.dependentFormGroup)])
     });
+    this.dependentsFormArray = this.newRequest.get('dependents') as FormArray;
   }
   ngDoCheck(){
-    // console.log(this.newRequest);
+  //console.log(this.newRequest);
+  }
+  add(){
+    const increment = this.dependentsFormArray.length + 1;
+    this.dependentsFormArray =  this.formMethods.addElement( this.dependentsFormArray, increment, this.dependentFormGroup).formArray;
   }
 }

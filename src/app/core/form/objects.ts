@@ -14,8 +14,20 @@ export const $sex: FieldConfig = {
     ]
 }
 
+export const $family: FieldConfig = {
+    label: 'Parentezco',
+    options: [
+        {
+            value: 'Cónyuge',
+            viewValue: 'Cónyuge'
+        },
+        {
+            value: 'Hijo',
+            viewValue: 'Hijo'
+        }
+    ]
+}
 export const $res: FieldConfig = {
-    label: '¿Estudiante de tiempo completo?',
     options: [
         {
             value: true,
@@ -39,3 +51,17 @@ export const $country  =
             viewValue: 'Albania',
         },
     ]
+export const $time = [
+    {
+        value: 'Mes',
+        viewValue: 'Mes'
+    },
+    {
+        value: 'Día',
+        viewValue: 'Día',
+    },
+    {
+        value: 'año',
+        viewValue: 'año',
+    }
+]

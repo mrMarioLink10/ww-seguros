@@ -96,6 +96,89 @@ export class NewSubscriptionRequestComponent implements OnInit, DoCheck {
     ],
     name: 'status'
   }
+  questions = [
+    {
+      question: '1.',
+      value: false,
+    },
+    {
+      question: '2. ¿Embolia, trombosis, migraña, dolores de cabeza u otros padecimientos cerebro vasculares?',
+      value: false,
+    },
+    {
+      question: '3. ¿Epilepsia, desmayos, mareos, crisis nerviosa, ansiedad, depresión, convulsiones u otros padecimientos del cerebro o sistema nervioso?',
+      value: false,
+    },
+    {
+      question: '4. ¿Visión defectuosa, glaucoma, cataratas, otitis, laberintitis, mala audición u otros padecimientos de la vista y/o del oído?',
+      value: false,
+    },
+    {
+      question: '5. Artritis, reumatismo, artritis deformativa, padecimiento en la espina dorsal',
+      value: false,
+    },
+    {
+      question: '6. ¿Presión arterial alta, problemas del corazón, soplos, valvulopatías, fiebre reumática, angina, infarto, varices, flebitis, patología cardiaca u otros padecimientos del Sistema Cardiovascular?',
+      value: false,
+    },
+    {
+      question: '7. ¿Tuberculosis, enfisema, bronquitis, rinitis, sinusitis, amigdalitis, asma, alergias u otros padecimientos del Sistema Respiratorio?',
+      value: false,
+    },
+    {
+      question: '8. ¿Hernia hiatal, reflujo gastroesofágico, gastritis, úlceras, colitis, hepatitis, diverticulosis, hemorroides, problema de los intestinos, recto, hígado, vesícula biliar, páncreas y otros padecimientos del Sistema Digestivo?',
+      value: false,
+    },
+    {
+      question: '9. ¿Cálculos renales, nefritis, infecciones urinarias, sangre en la orina, padecimientos del riñón u otros padecimientos del Sistema Urinario?',
+      value: false,
+    },
+    {
+      question: '10. ¿Padecimientos de la próstata, testículos, varicocele u otros padecimientos de los órganos reproductivos masculinos?',
+      value: false,
+    },
+    {
+      question: '11. ¿Anemia, anemia falciforme, hemofilia, trastornos de la coagulación u otros padecimientos sanguineos?',
+      value: false,
+    },
+    {
+      question: '12. ¿Diabetes, colesterol y/o triglicéridos altos, padecimientos de la tiroides, gota o trastornos endócrinos?',
+      value: false,
+    },
+    {
+      question: '13. ¿Cáncer, tumor, quistes, crecimiento y/o inflamación de ganglios linfáticos, leucemia? ¿Ha recibido quimioterapia, radioterapia o tratamiento alterno?',
+      value: false,
+    },
+    {
+      question: '14. ¿Prótesis, implantes, amputación, secuelas de algún tipo de limitación funcional?',
+      value: false,
+    },
+    {
+      question: '15. ¿Alguna deformidad, enfermedad o defecto congénito, pérdida del uso de la audición, ojo(s) o algún miembro?',
+      value: false,
+    },
+    {
+      question: '16. ¿Ha recibido transfusión de sangre?',
+      value: false,
+    },
+    {
+      question: '17. ¿Usa o ha usado sustancias psicoactivas o estimulantes? ¿Tiene o ha tenido alguna vez dependencia alcohólica?',
+      value: false,
+    },
+    {
+      question: '18. ¿Fuma o ha fumado cigarrillos, cigarros, pipas o utilizado productos de tabaco o nicotina en cualquier forma?',
+      value: false,
+    },
+    {
+      question: '',
+      value: false,
+    },
+    {
+      question: '',
+      value: false,
+    },
+
+  ]
   constructor(private fb: FormBuilder, private countries: CountriesService) { }
 
   ngOnInit() {

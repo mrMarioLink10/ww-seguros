@@ -2,7 +2,6 @@ import { Component, OnInit, DoCheck } from '@angular/core';
 import { FieldConfig } from 'src/app/shared/components/form-components/models/field-config';
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import {$sex, $res, $country, $time, $family} from '../../../../../core/form/objects';
-import { CountriesService } from '../../../../../core/services/countries/countries.service';
 import { FormArrayGeneratorService } from 'src/app/core/services/forms/form-array-generator.service';
 @Component({
   selector: 'app-new-subscription-request',
@@ -222,7 +221,7 @@ export class NewSubscriptionRequestComponent implements OnInit, DoCheck {
   res = $res;
   family = $family;
   dependentsFormArray: FormArray;
-  constructor(private fb: FormBuilder, private countries: CountriesService) { }
+  constructor(private fb: FormBuilder, public formMethods: FormArrayGeneratorService) { }
  
  
 

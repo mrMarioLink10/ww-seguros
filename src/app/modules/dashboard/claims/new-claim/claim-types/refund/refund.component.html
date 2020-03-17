@@ -1,1 +1,162 @@
-<p>refund works!</p>
+<div class="uppercase dashboard-page-title pb-4">Solicitud de reembolso del asegurado</div>
+
+<div class="p-3 pb-0 mb-4" style="background-color: #F2F2F2">
+  <div class="mt-3 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 xl:grid-cols-5">
+    <app-date-picker [group]="refundForm" name="fecha" label="Fecha"></app-date-picker>
+  </div>
+</div>
+
+<div class="p-3 pb-0 mb-4" style="background-color: #F2F2F2">
+  <div class="filter-title" style="color: #18446B !important">Asegurado</div>
+  <div class="mt-3 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 xl:grid-cols-5">
+
+  </div>
+</div>
+
+<app-forms-container [titles]="accordionTitles">
+  <ng-template #formTemplate>
+    <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+      <div class="mr-3">
+        <app-input [group]="refundForm.get('informacion')" label="No. Póliza" name='noPoliza' placeholder="246810">
+        </app-input>
+      </div>
+      <div class="mr-3">
+        <app-input [group]="refundForm.get('informacion')" label="ID Number" name='idNumber' placeholder="00010002">
+        </app-input>
+      </div>
+      <div class="mr-3">
+        <app-input [group]="refundForm.get('informacion')" label="Nombre del Asegurado / Paciente" name='nombre'
+          placeholder="Alberto Matias">
+        </app-input>
+      </div>
+      <div class="mr-3">
+        <app-input [group]="refundForm.get('informacion')" label="Dirección" name='direccion'
+          placeholder="Santo Domingo Norte">
+        </app-input>
+      </div>
+      <div class="mr-3">
+        <app-input [group]="refundForm.get('informacion')" label="No. de Telefono" name='telefono'
+          placeholder="8096546191">
+        </app-input>
+      </div>
+    </div>
+  </ng-template>
+  <ng-template #formTemplate>
+    <div *ngFor="let reclaimed of diagnosticList.controls; let i = index"
+      class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5">
+      <div class="mr-3">
+        <app-date-picker [group]="refundForm.get('diagnosticos').get(i.toString())" name="fecha"
+          label="Fecha del Servicio">
+        </app-date-picker>
+      </div>
+      <div class="mr-3">
+        <app-input [group]="refundForm.get('diagnosticos').get(i.toString())" name="lugar" label="Lugar del Servicio">
+        </app-input>
+      </div>
+      <div class="mr-3 extern-description">
+        Descripción completa de los procedimientos o asistencia médica suministrados en cada fecha indicada
+      </div>
+      <div class="mr-3">
+        <app-text-area [group]="refundForm.get('diagnosticos').get(i.toString())" name="descripcion"
+          label="Descripción">
+        </app-text-area>
+      </div>
+      <div class="grid"
+        [ngClass]="{'grid-cols-1': diagnosticList.length === 1, 'grid-cols-5': diagnosticList.length > 1}">
+        <div class="mr-3" [ngClass]="{'': diagnosticList.length === 1, 'col-span-4': diagnosticList.length > 1}">
+          <app-input [group]=" refundForm.get('diagnosticos').get(i.toString())" name="monto" label="Monto Reclamado"
+            placeholder="10,000">
+          </app-input>
+        </div>
+        <div *ngIf="diagnosticList.length > 1"
+          [ngClass]="{'': diagnosticList.length === 1, 'col-span-1': diagnosticList.length > 1} ">
+          <button mat-mini-fab aria-label=" Eliminar reclamacion" (click)="removeDiagnostic(i)" type="button"
+            class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
+            <mat-icon style="color: #18446B">remove</mat-icon>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div>
+      <button mat-mini-fab aria-label="Agregar reclamacion" (click)="addDiagnostic()" type="button"
+        class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
+        <mat-icon style="color: #18446B">add</mat-icon>
+      </button>
+    </div>
+  </ng-template>
+  <ng-template #formTemplate>
+    <app-text-area label="Texto" name="comentario" [group]="refundForm"></app-text-area>
+  </ng-template>
+  <ng-template #formTemplate>
+    <!-- <app-radio-button [group]="refundForm" name="forma" [options]="formaPago">
+    </app-radio-button> -->
+    <div [formGroup]="refundForm" class="radio-container">
+      <mat-label class="radio-button-label">{{formaPago.label}}</mat-label><br>
+      <mat-radio-group aria-labelledby="example-radio-group-label" formControlName="forma" class="radio-group">
+        <mat-radio-button *ngFor="let option of formaPago.options" [value]="option.value" class="mr-3 radio-button"
+          (change)="changePayment($event)">
+          {{option.viewValue}}</mat-radio-button>
+      </mat-radio-group>
+    </div>
+
+    <div style="padding-left: 15px !important;"
+      class="mt-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
+      *ngIf="refundForm.get('forma').value === 'transferencia'">
+      <div class="mr-3">
+        <app-input [group]="refundForm.get('infoTransferencia')" label="Cédula" name='cedula' placeholder="0828908801">
+        </app-input>
+      </div>
+      <div class="mr-3">
+        <app-input [group]="refundForm.get('infoTransferencia')" label="No. Cuenta" name='noCuenta'
+          placeholder="0828908801">
+        </app-input>
+      </div>
+      <div class="mr-3">
+        <app-radio-button [group]="refundForm.get('infoTransferencia')" name="tipoCuenta" [options]="cuentaTipos">
+        </app-radio-button>
+      </div>
+      <div class="mr-3">
+        <app-input [group]="refundForm.get('infoTransferencia')" label="Banco Emisor" name='bancoEmisor'
+          placeholder="BHD Leon">
+        </app-input>
+      </div>
+      <div class="mr-3">
+        <app-input [group]="refundForm.get('infoTransferencia')" label="Correo Electrónico" name='correo'
+          placeholder="correo@email.com">
+        </app-input>
+      </div>
+
+    </div>
+  </ng-template>
+  <ng-template #formTemplate>
+    <div class="declaraciones my-4 px-4 sm:px-4 md:px-14 lg:px-12 xl:px-12">
+      CERTIFICO Y DOY FE que los datos suministrados y contenidos en el presente formulario son verdaderos,
+      correctos
+      y actualizados. Declaro bajo la fe del juramento que no he omitido ninguna información requerida en este
+      formulario, explícita o implícitamente, y que en caso de declaración o representación falsa, fraude u omisión,
+      WORLDWIDE se reserva el derecho de declinar la cobertura reclamada, sin menoscabo de cualesquiera otros
+      remedios
+      aplicables de acuerdos a los términos y condiciones del plan contratado por el Asegurado.
+      <div class="pt-4"></div>
+      Con la firma del presente documento, nos comprometemos a la entrega de toda información, documentación y
+      registros, incluyendo pero no limitado a notas médicas relacionadas a consejos, cuidados, tratamientos
+      proporcionados, copia fotostática de expedientes completos, relacionados en cualquier forma con el reclamo
+      presentado.
+      <div class="pt-4"></div>
+      <strong>SERVICIO AL CLIENTE:</strong>
+      <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-2">
+        <div class="mr-3">
+          <strong> Santo Domingo:</strong> Av. Abraham Lincoln #295, Edificio Caribálico, 5to piso, Rep. Dom. Tel.:
+          809-508-7447
+        </div>
+        <div class="mr-3">
+          <strong>Santiago:</strong> C / Eusebio Manzueta #9, Los Jardines. Tel.: 809-581-0111
+        </div>
+      </div>
+    </div>
+  </ng-template>
+</app-forms-container>
+<div class="mt-12">
+  <button mat-button class="send-button" (click)="formHandler.sendForm(refundForm, 'claims-refund')"
+    type="submit">Enviar</button>
+</div>

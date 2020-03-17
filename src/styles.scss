@@ -176,13 +176,14 @@ body {
 }
 
 @media (max-width: 1444px) {
-  .radio-container{
+  .radio-container {
     padding: 15px !important;
     padding-top: 0px !important;
     margin-right: 0px;
   }
+
   .radio-group {
-    mat-radio-button{
+    mat-radio-button {
       margin-left: 0px;
       margin-right: 15px;
     }
@@ -367,6 +368,11 @@ body {
   font-size: 12px;
   color: #575657;
 
+}
+
+.extern-description {
+  font-size: 13px;
+  color: #837c83;
 }
 
 .radio-group {

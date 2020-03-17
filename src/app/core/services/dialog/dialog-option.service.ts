@@ -23,10 +23,27 @@ export class DialogOptionService {
 		showButtons: false
 	};
 
+	refundConfirmation: BaseDialog = {
+		logo: 'warning',
+		title: 'Confirmación',
+		text: 'Se procederá a enviar la solicitud de reembolso',
+		showButtons: true,
+		showCancelButton: true,
+		textPrincipalButton: 'Enviar',
+		textCancelButton: 'Cancelar'
+	};
+
+	refundConfirmated: BaseDialog = {
+		logo: 'check',
+		title: 'Enviado',
+		text: 'La solicitud de reembolso ha sido enviada',
+		showButtons: false
+	};
+
 	formError: BaseDialog = {
 		logo: 'error',
 		title: 'Ha ocurrido error',
-		text: 'Revise si quedan campos requeridos sin completar',
+		text: 'Han quedado campos requeridos sin completar',
 		showButtons: false
 	};
 }

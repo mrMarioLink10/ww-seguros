@@ -21,7 +21,7 @@ export class FormArrayGeneratorService {
   // Obtener el formArray para agregar los nuevos formularios
 
 
-  addElement(FormControlArray: FormArray, incrementValue: number, FormGroupChild: FormGroup): Elements {
+  addElement(FormControlArray: FormArray, incrementValue: number, FormGroupChild: any): Elements {
 
       for (let i = FormControlArray.length; i < incrementValue; i++) {
           FormControlArray.push(this.createItem(FormGroupChild));

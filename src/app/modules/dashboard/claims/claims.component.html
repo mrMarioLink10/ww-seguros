@@ -1,72 +1,91 @@
 <div class="pl-6 pr-6 xs:pr-6 sm:pr-6 md:pr-12 lg:pr-12 xl:pr-12 bg-white">
-    <div class="uppercase dashboard-page-title pt-20">Autorizaciones y reclamos</div>
-    <div class="mt-6 w-full">
-      <app-filter [status]="statusTypes"></app-filter>
-    </div>
-    <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 mt-10">
-      <div class="dashboard-page-subtitle flex
+  <div class="uppercase dashboard-page-title pt-20">Autorizaciones y reclamos</div>
+  <div class="mt-6 w-full">
+    <app-filter [status]="statusTypes"></app-filter>
+  </div>
+  <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 mt-10">
+    <div class="dashboard-page-subtitle flex
       justify-center sm:justify-center md:justify-start
        lg:justify-start
        xl:justify-start
       ">Lista de Reclamos</div>
-      <div class="flex
+    <div class="flex
       justify-center sm:justify-center md:justify-end lg:justify-end xl:justify-end
       mt-3 sm:mt-3 md:mt-0 lg:mt-0 xl:mt-0
       ">
-        <mat-bar-button [options]="newClaimButtonOptions" (btnClick)="newClaim()"></mat-bar-button>
-      </div>
-    </div>
-    <div class="mt-6 pb-8 w-full ">
-      <div class="table-responsive" style="overflow-y: hidden; overflow-x: auto; max-width: 100%;">
-        <table mat-table [dataSource]="dataSource" matSort class="w-full dashboard-basic-table" >
-          <ng-container matColumnDef="no"  style="margin-right: 15px !important">
-            <th class="padding-cell" mat-header-cell *matHeaderCellDef mat-sort-header> No. Cotización</th>
-            <td class="padding-cell" mat-cell *matCellDef="let element" style="color: #007DB7 !important; font-weight: bold !important;"> {{element.no}} </td>
-          </ng-container>
-
-          <ng-container matColumnDef="nombre"  style="margin-right: 15px !important">
-            <th class="padding-cell" mat-header-cell *matHeaderCellDef mat-sort-header> Nombre </th>
-            <td class="padding-cell" mat-cell *matCellDef="let element"> {{element.nombre}} </td>
-          </ng-container>
-
-          <ng-container matColumnDef="seguro"  style="margin-right: 15px !important">
-            <th class="padding-cell" mat-header-cell *matHeaderCellDef mat-sort-header> Seguro de: </th>
-            <td class="padding-cell" mat-cell *matCellDef="let element"> {{element.seguro}} </td>
-          </ng-container>
-
-          <ng-container matColumnDef="plan"  style="margin-right: 15px !important">
-            <th class="padding-cell" mat-header-cell *matHeaderCellDef mat-sort-header> Plan </th>
-            <td class="padding-cell" mat-cell *matCellDef="let element"> {{element.plan}} </td>
-          </ng-container>
-
-          <ng-container matColumnDef="fecha"  style="margin-right: 15px !important">
-            <th class="padding-cell" mat-header-cell *matHeaderCellDef mat-sort-header> Fecha </th>
-            <td class="padding-cell" mat-cell *matCellDef="let element"> {{element.fecha |  date:'dd/MM/yyyy'}} </td>
-          </ng-container>
-
-          <ng-container matColumnDef="monto"  style="margin-right: 15px !important">
-            <th class="padding-cell" mat-header-cell *matHeaderCellDef mat-sort-header> Monto </th>
-            <td class="padding-cell" mat-cell *matCellDef="let element"> {{element.monto | currency}} </td>
-          </ng-container>
-
-          <ng-container matColumnDef="estatus"  style="margin-right: 15px !important">
-            <th class="padding-cell" mat-header-cell *matHeaderCellDef mat-sort-header> Estatus </th>
-            <td class="padding-cell" mat-cell *matCellDef="let element" [ngClass]="{'text-color-yellow': element.estatus === 'Enviado', 'text-color-red': element.estatus === 'Denegado'}"> {{element.estatus}} </td>
-          </ng-container>
-
-          <ng-container matColumnDef="acciones"  style="text-align: end !important; margin-right: 15px !important; ">
-            <th class="padding-cell" mat-header-cell *matHeaderCellDef mat-sort-header style="max-width: 110px !important;"> Acciones </th>
-            <td class="padding-cell" mat-cell *matCellDef="let element" style="max-width: 110px !important;">
-              <button mat-mini-fab aria-label="Ver mas" class="dashboard-table-buttons">
-                <img src="../../../../assets/iconos/eye.svg">
-              </button>
-            </td>
-          </ng-container>
-
-          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-        </table>
-      </div>
-      <mat-paginator color="accent" class="dashboard-table-paginator" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+      <mat-bar-button [options]="newClaimButtonOptions" (btnClick)="newClaim()"></mat-bar-button>
     </div>
   </div>
+  <div class="mt-6 pb-8 w-full ">
+    <div class="table-responsive" style="overflow-y: hidden; overflow-x: auto; max-width: 100%;">
+      <table mat-table [dataSource]="dataSource" matSort class="w-full dashboard-basic-table">
+        <ng-container matColumnDef="no" style="margin-right: 15px !important">
+          <th class="padding-cell" mat-header-cell *matHeaderCellDef mat-sort-header> No. Cotización</th>
+          <td class="padding-cell" mat-cell *matCellDef="let element"
+            style="color: #007DB7 !important; font-weight: bold !important;"> {{element.no}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="nombre" style="margin-right: 15px !important">
+          <th class="padding-cell" mat-header-cell *matHeaderCellDef mat-sort-header> Nombre </th>
+          <td class="padding-cell" mat-cell *matCellDef="let element"> {{element.nombre}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="seguro" style="margin-right: 15px !important">
+          <th class="padding-cell" mat-header-cell *matHeaderCellDef mat-sort-header> Seguro de: </th>
+          <td class="padding-cell" mat-cell *matCellDef="let element"> {{element.seguro}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="plan" style="margin-right: 15px !important">
+          <th class="padding-cell" mat-header-cell *matHeaderCellDef mat-sort-header> Plan </th>
+          <td class="padding-cell" mat-cell *matCellDef="let element"> {{element.plan}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="fecha" style="margin-right: 15px !important">
+          <th class="padding-cell" mat-header-cell *matHeaderCellDef mat-sort-header> Fecha </th>
+          <td class="padding-cell" mat-cell *matCellDef="let element"> {{element.fecha |  date:'dd/MM/yyyy'}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="monto" style="margin-right: 15px !important">
+          <th class="padding-cell" mat-header-cell *matHeaderCellDef mat-sort-header> Monto </th>
+          <td class="padding-cell" mat-cell *matCellDef="let element"> {{element.monto | currency}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="estatus" style="margin-right: 15px !important">
+          <th class="padding-cell" mat-header-cell *matHeaderCellDef mat-sort-header> Estatus </th>
+          <td class="padding-cell" mat-cell *matCellDef="let element"
+            [ngClass]="{'text-color-yellow': element.estatus === 'Enviado', 'text-color-red': element.estatus === 'Denegado'}">
+            {{element.estatus}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="acciones" style="text-align: end !important; margin-right: 15px !important; ">
+          <th class="padding-cell" mat-header-cell *matHeaderCellDef mat-sort-header
+            style="max-width: 110px !important;"> Acciones </th>
+          <td class="padding-cell" mat-cell *matCellDef="let element" style="max-width: 110px !important;">
+            <button mat-mini-fab aria-label="Ver mas" class="dashboard-table-buttons">
+              <img src="../../../../assets/iconos/eye.svg">
+            </button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+    </div>
+    <mat-paginator color="accent" class="dashboard-table-paginator" [pageSizeOptions]="[5, 10, 20]"
+      showFirstLastButtons></mat-paginator>
+  </div>
+
+  <div [formGroup]="testForm" class="radio-container">
+    <mat-label class="radio-button-label">Cardiovascular</mat-label><br>
+    <mat-radio-group aria-labelledby="example-radio-group-label" formControlName="isCardiovascular" class="radio-group">
+      <mat-radio-button value="si" class="mr-3 radio-button" (change)="change($event)">Si</mat-radio-button>
+      <mat-radio-button value="no" class="mr-3 radio-button" (change)="change($event)">No</mat-radio-button>
+    </mat-radio-group>
+  </div>
+  <app-cardiovascular *ngIf="testForm.get('isCardiovascular').value === 'si'" [form]="testForm.get('cardiovascular')">
+  </app-cardiovascular>
+  <div class="my-6">
+    <button mat-button (click)="print()">Imprimeme eta vaina</button>
+  </div>
+
+</div>

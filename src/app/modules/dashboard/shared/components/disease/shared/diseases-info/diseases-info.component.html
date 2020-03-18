@@ -1,0 +1,18 @@
+<div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
+  <div class="mr-3">
+    <app-date-picker [group]="getForm" name="fechaEvento" label="Fecha del evento"></app-date-picker>
+
+  </div>
+  <div class="mr-3">
+    <app-input [group]="getForm" label="Tratamiento médico o quirúrgico" name='tratamiento'>
+    </app-input>
+  </div>
+  <div class="mr-3">
+    <app-date-picker [group]="getForm" name="fechaUltima" label="Fecha de la última consulta">
+    </app-date-picker>
+  </div>
+  <div class="mr-3">
+    <app-input [group]="getForm" label="Frequencia de las consultas" name='frequencia'>
+    </app-input>
+  </div>
+</div>

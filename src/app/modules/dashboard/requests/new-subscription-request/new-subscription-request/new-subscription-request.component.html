@@ -135,7 +135,7 @@
                 <app-input class="mr-3" [group]="newRequest.get('dependents').get(index.toString())" label="Lbs" name='height'></app-input>
               </div>
               <app-input class="mr-3" [group]="newRequest.get('dependents').get(index.toString())" label="Nacionalidad" name='nationality'></app-input><br>
-              <button mat-mini-fab aria-label="Agregar reclamacion" (click)="add()" type="button"
+              <button mat-mini-fab aria-label="Agregar reclamacion" (click)="add(dependentsFormArray,dependentsFormArray)" type="button"
               class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
               <mat-icon style="color: #18446B">add</mat-icon>
             </button>
@@ -143,8 +143,54 @@
           </div>
         </div>
       </ng-template>
-      <ng-template #formTemplate>
-          
+      <ng-template #formTemplate  >
+        <div formArrayName="questions" >
+          <p class='formulary-labels pb-3'  style='width: 85%;'>Según su mejor entendimiento y conocimiento, hay alguna persona nombrada en esta solicitud que haya padecido o padezca de alguna de las siguientes enfermedades:</p>
+          <div *ngFor="let element of questionsFormArray.controls; let index = index">
+            <div [formGroupName]="index">
+              <div class="grid grid-cols-12">
+                <div class="col-span-9">
+                  <div  class='question'>
+                    <p class='body-13'>{{questions[index].question}}</p>
+                  </div>
+                </div>
+                <div class="col-span-3">
+                  <app-radio-button [group]="newRequest.get('questions').get(index.toString())"  name="answer" [options]="res"></app-radio-button>
+                </div>
+              </div>
+            </div> <br>
+         
+            <div>
+              <div class="w-50 pt-5" *ngIf=" questions[index].time && newRequest.get('questions').get(index.toString()).get('answer').value">
+                <p class='body-13 pt-4 pb-4'>{{questions[index].description}}</p>
+                <div class='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3'>
+                  <app-input class="mr-3" [group]="newRequest.get('questions').get(index.toString())" label="Cantidad Diaria" [name]='questions[index].time.name1'></app-input>
+                  <app-input class="mr-3" [group]="newRequest.get('questions').get(index.toString())" label="Tiempo" [name]='questions[index].time.name2'></app-input>
+                  <app-select class="mr-3"[options]="year" [group]="newRequest.get('questions').get(index.toString())" ></app-select>
+                </div>
+              </div>
+
+              <div *ngIf="index === 20 &&  newRequest.get('questions').get(index.toString()).get('answer').value">
+                <label for="date"> ¿Desde cuándo? Describa.</label>
+                <div style="width: 200px;">
+                  <app-date-picker class="mr-3" id='date'  [group]="newRequest.get('questions').get(index.toString())" label="fecha" name='date'></app-date-picker>
+                </div>
+                <app-text-area label='Descripcion'  [group]="newRequest.get('questions').get(index.toString())" label="texto" name='description'></app-text-area>
+              </div>
+
+              <div *ngIf="index === 21 &&  newRequest.get('questions').get(index.toString()).get('answer').value">
+                <p>Favor indicar semanas de embarazo</p><br>
+                
+                <div style="width: 200px;">
+                  <app-input class="mr-3" [group]="newRequest.get('questions').get(index.toString())" label="Semanas" name='time'></app-input>
+                </div>
+              </div>   
+            </div>
+         
+
+            <br>
+        </div>
+      </div>
       </ng-template>
       <ng-template #formTemplate>
           

@@ -1,0 +1,28 @@
+.info-home {
+  background-color: #f2f2f2;
+}
+.info-home mat-form-field {
+  width: 300px;
+}
+.info-home .w-h {
+  width: 150px;
+}
+.divider {
+  margin-top: 15px !important;
+  margin-bottom: 30px !important;
+}
+.colorb {
+  background-color: #e6e7e8;
+  padding: 15px;
+  margin: 15px;
+}
+.b-40 {
+  margin-bottom: 41px;
+}
+.w-50 {
+  width: 65%;
+}
+.question {
+  width: 100%;
+  max-width: 85%;
+}

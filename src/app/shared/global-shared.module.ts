@@ -8,7 +8,7 @@ import { FormComponentsModule } from './components/form-components/form-componen
 @NgModule({
 	declarations: [ BaseDialogComponent ],
 	imports: [ CommonModule, MaterialModule, FormComponentsModule, MatDialogModule ],
-	exports: [ FormComponentsModule ],
+	exports: [ FormComponentsModule, MaterialModule ],
 	entryComponents: [ BaseDialogComponent ]
 })
 export class GlobalSharedModule {}

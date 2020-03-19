@@ -63,6 +63,13 @@
               height="24px" width="24px" class="mr-1 ml-3">
             <div style="max-height: 35px !important;" class="text-xs uppercase">Reclamos</div>
           </mat-list-item>
+          <mat-list-item [routerLink]="['authorizations']" routerLinkActive="router-link-active"
+            style="color: white; max-height: 35px !important;" class="my-3">
+            <img style="max-height: 35px !important;"
+              [src]="activeRoute !== '/dashboard/claims' ? '../../../../../../assets/iconos/announcement-24px.svg' : '../../../../../../assets/iconos/announcement-24px-b.svg'"
+              height="24px" width="24px" class="mr-1 ml-3">
+            <div style="max-height: 35px !important;" class="text-xs uppercase">Autorizaciones</div>
+          </mat-list-item>
           <mat-list-item [routerLink]="['information']" routerLinkActive="router-link-active"
             style="color: white; max-height: 35px !important;" class="my-3">
             <img style="max-height: 35px !important;"

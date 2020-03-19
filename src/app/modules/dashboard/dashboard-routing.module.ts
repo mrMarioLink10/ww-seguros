@@ -16,6 +16,10 @@ const routes: Routes = [
 				path: 'claims',
 				loadChildren: () => import('./claims/claims.module').then((m) => m.ClaimsModule)
 			},
+			{
+				path: 'authorizations',
+				loadChildren: () => import('./authorizations/authorizations.module').then((m) => m.AuthorizationsModule)
+			},
 			// {
 			//   path: 'dashboard-view',
 			//   loadChildren: () => import('./dashboard-view/dashboard-view.module').then(m => m.DashboardViewModule),

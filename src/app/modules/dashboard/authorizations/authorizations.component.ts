@@ -1,8 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 import { MatProgressButtonOptions } from 'mat-progress-buttons';
 import { MatTableDataSource, MatSort, MatPaginator } from '@angular/material';
-import { Router } from '@angular/router';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
+
 
 export interface Claims {
 	no: number;
@@ -90,17 +91,19 @@ const ELEMENT_DATA: Claims[] = [
 	}
 ];
 
-@Component({
-	selector: 'app-claims',
-	templateUrl: './claims.component.html',
-	styleUrls: [ './claims.component.scss' ]
-})
-export class ClaimsComponent implements OnInit {
-	statusTypes = [ 'Enviado', 'Reembolsado', 'Denegado' ];
 
-	newClaimButtonOptions: MatProgressButtonOptions = {
+@Component({
+  selector: 'app-authorizations',
+  templateUrl: './authorizations.component.html',
+  styleUrls: ['./authorizations.component.scss']
+})
+export class AuthorizationsComponent implements OnInit {
+
+  statusTypes = [ 'Enviado', 'Reembolsado', 'Denegado' ];
+
+	newAuthorizationButtonOptions: MatProgressButtonOptions = {
 		active: false,
-		text: 'Nuevo Reclamo',
+		text: 'Nueva Autorización',
 		buttonColor: 'accent',
 		barColor: 'primary',
 		raised: true,
@@ -122,50 +125,18 @@ export class ClaimsComponent implements OnInit {
 
 	testForm: FormGroup;
 
-	constructor(private route: Router, private fb: FormBuilder) {}
+	constructor(private route: Router) {}
 
 	ngOnInit() {
 		this.dataSource.sort = this.sort;
 		this.dataSource.paginator = this.paginator;
 
-		this.testForm = this.fb.group({
-			isCardiovascular: [ '' ]
-		});
-	}
-
-	print() {
-		console.log(this.testForm);
-	}
-
-	change(event) {
-		if (event.value === 'no') {
-			this.testForm.removeControl('cardiovascular');
-		} else if (event.value === 'si') {
-			this.testForm.addControl(
-				'cardiovascular',
-				this.fb.group({
-					nombre: [ '' ],
-					edad: [ '' ],
-					nombreMedico: [ '' ],
-					centroSalud: [ '' ],
-					telefonoCentro: [ '' ],
-					haveChestPain: [ '', Validators.required ],
-					havePalpitations: [ '', Validators.required ],
-					haveCardiacArrhythmias: [ '', Validators.required ],
-					haveDifficultyBreathing: [ '', Validators.required ],
-					haveHeartMurmurs: [ '', Validators.required ],
-					haveHeartAttacks: [ '', Validators.required ],
-					haveCoronaryBypassSurgery: [ '', Validators.required ],
-					haveCardiacCatheterization: [ '', Validators.required ],
-					haveStentPosture: [ '', Validators.required ]
-				})
-			);
-		}
 	}
 
 	newClaim() {
-		this.newClaimButtonOptions.active = true;
+		this.newAuthorizationButtonOptions.active = true;
 
-		this.route.navigateByUrl('/dashboard/claims/new-claim');
+		this.route.navigateByUrl('/dashboard/authorizations/new-authorization');
 	}
 }
+

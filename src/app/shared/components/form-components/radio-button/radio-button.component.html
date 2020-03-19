@@ -1,7 +1,10 @@
 <div [formGroup]="group" class="radio-container">
-  <mat-label *ngIf='options.label || title' class="radio-button-label">{{options.label || title}}</mat-label><br *ngIf='options.label || title'>
+  <mat-label *ngIf='options.label || title' class="radio-button-label">{{options.label || title}}</mat-label><br
+    *ngIf='options.label || title'>
   <mat-radio-group aria-labelledby="example-radio-group-label" [formControlName]="name" class="radio-group">
-    <mat-radio-button *ngFor="let option of options.options" [value]="option.value" class="mr-3 radio-button">
+    <mat-radio-button *ngFor="let option of options.options" [value]="option.value" (change)="emitter($event)"
+      class="mr-3 radio-button">
       {{option.viewValue}}</mat-radio-button>
   </mat-radio-group>
+
 </div>

@@ -73,7 +73,8 @@ export class NewAuthorizationComponent implements OnInit {
 		if (event.valor === 'si') {
 			switch (event.name) {
 				case 'otroSeguro':
-					this.authorization.get('informacionAsegurado').addControl('seguro', this.fb.group({
+					const form = this.authorization.get('informacionAsegurado') as FormGroup;
+					form.addControl('seguro', this.fb.group({
 						nombre: ['', Validators.required],
 						noPoliza: ['', Validators.required],
 						fecha: ['', Validators.required],
@@ -86,7 +87,8 @@ export class NewAuthorizationComponent implements OnInit {
 		} else if (event.valor === 'no') {
 			switch (event.name) {
 				case 'otroSeguro':
-					this.authorization.get('informacionAsegurado').removeControl('seguro');
+					const form = this.authorization.get('informacionAsegurado') as FormGroup;
+					form.removeControl('seguro');
 					break;
 				default:
 					break;

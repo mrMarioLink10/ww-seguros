@@ -101,7 +101,9 @@
                 <div class="relative b-40">
                   <div class="absolute inset-y-0 pt-3 left-0">Titular</div>
                   <div class="absolute inset-y-0 pt-3 right-0">
-                    VFGT
+                    
+                    <app-radio-button [group]="newRequest.get('exposedPerson')"  name="contractor" [options]="res"></app-radio-button>
+                    
                   </div>
                   <mat-divider></mat-divider>
                 </div>
@@ -193,13 +195,14 @@
         <div formArrayName="questionsB" >
           <div *ngFor="let element of questionsBFormArray.controls; let index = index">
             <div [formGroupName]="index">
+             
               <div class="grid grid-cols-12">
-                <div class="col-span-9">
+                <div class="col-span-8">
                   <div  class='question'>
                     <p class='body-13'>{{questions[index].question}}</p>
                   </div>
                 </div>
-                <div class="col-span-3">
+                <div class="col-span-4">
                 
                   <div class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2">
                     <app-radio-button [group]="newRequest.get('questionsB').get(index.toString())"  name="answer" [options]="res"></app-radio-button>
@@ -213,30 +216,55 @@
                 <div *ngIf="index === 2 &&  newRequest.get('questionsB').get(index.toString()).get('answer').value" >
                    
                   <div formArrayName="procedures" >
-                    <div *ngFor="let element of newRequest.get('questionsB').get(index.toString()).get('procedures')['controls']; let index = index">
-                      <div [formGroupName]="index">
+                    <div *ngFor="let element of proceduresArray.controls; let i = index">
+                      <div [formGroupName]="i">
                         <div style="width: 200px;">
-                          <!-- hola
-                          <app-input class="mr-3" [group]="newRequest.get('questionsB').get(index.toString()).get('procedures').get(index.toString())" label="Nombre del Paciente" name='patientsName'></app-input> -->
+                          <app-input class="mr-3" [group]="proceduresFormGroup(index,i)" label="Nombre del Paciente" name='patientsName'></app-input>
                         </div>
-                       <!-- <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-4">
-                        <app-input class="mr-3" [group]="newRequest.get('questionsB').get(index.toString()).get(index.toString())" label="Padecimientos" name='procedures'></app-input>
-                        <app-date-picker class="mr-3" id='date' [group]="newRequest.get('questionsB').get(index.toString()).get(index.toString())" label="fecha" name='date'></app-date-picker>
-                        <app-input class="mr-3" [group]="newRequest.get('questionsB').get(index.toString()).get(index.toString())" label="Tratamiento" name='treatment'></app-input>
+                        
+                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-4">
+                        <app-input class="mr-3" [group]="proceduresFormGroup(index,i)" label="Padecimientos" name='procedures'></app-input>
+                        <app-date-picker class="mr-3" id='date'[group]="proceduresFormGroup(index,i)" label="fecha" name='date'></app-date-picker>
+                        <app-input class="mr-3" [group]="proceduresFormGroup(index,i)" label="Tratamiento" name='treatment'></app-input>
                         <div class="mr-3 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2">
-                          <app-input class="mr-3" [group]="newRequest.get('questionsB').get(index.toString()).get(index.toString())" label="Duración" name='duration'></app-input>
-                          <app-select class="mr-3"[options]="year" [group]="newRequest.get('questionsB').get(index.toString()).get(index.toString())"></app-select>
+                          <app-input class="mr-3" [group]="proceduresFormGroup(index,i)" label="Duración" name='duration'></app-input>
+                          <app-select class="mr-3"[options]="year" [group]="proceduresFormGroup(index,i)"></app-select>
                         </div>
-                        <app-input class="mr-3" [group]="newRequest.get('questionsB').get(index.toString()).get(index.toString())" label="Nombre del proveedor" name='providerName'></app-input>
-                        <app-input class="mr-3" [group]="newRequest.get('questionsB').get(index.toString()).get(index.toString())" label="Dirección del proveedor o centro médico" name='providerDirection'></app-input>
-                       </div> -->
-                       
+                        <app-input class="mr-3" [group]="proceduresFormGroup(index,i)" label="Nombre del proveedor" name='providerName'></app-input>
+                        <app-input class="mr-3" [group]="proceduresFormGroup(index,i)" label="Dirección del proveedor o centro médico" name='providerDirection'></app-input>
+                       </div> 
+                       <button mat-mini-fab aria-label="Agregar reclamacion" (click)="addprocedures()" type="button"
+                        class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
+                        <mat-icon style="color: #18446B">add</mat-icon>
+                      </button>
                       </div>
+                      <br><mat-divider></mat-divider><br>
                     </div>
                   </div>
                 </div>
         
+                <div *ngIf="index === 4 &&  newRequest.get('questionsB').get(index.toString()).get('answer').value">
+                  <p>¿Por qué razón?</p>
+                  <app-text-area label='Descripcion' style='height: 142px!important;'  [group]="newRequest.get('questionsB').get(index.toString())" label="texto" name='reason'></app-text-area>
+                </div>
 
+                <div *ngIf="index === 5 && newRequest.get('questionsB').get(index.toString()).get('answer').value">
+                  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-4">
+                    <app-input class="mr-3" [group]="newRequest.get('questionsB').get(index.toString())" label="Nombres y Apellidos" name='companyName'></app-input>
+                    <app-input class="mr-3" [group]="newRequest.get('questionsB').get(index.toString())" label="Nombres y Apellidos" name='policyName'></app-input>
+                    <app-input class="mr-3" [group]="newRequest.get('questionsB').get(index.toString())" label="Nombres y Apellidos" name='insuredName'></app-input>
+                    <app-input class="mr-3" [group]="newRequest.get('questionsB').get(index.toString())" label="Nombres y Apellidos" name='insuranceCarrier'></app-input>
+                    <app-input class="mr-3" [group]="newRequest.get('questionsB').get(index.toString())" label="Nombres y Apellidos" name='typepolicy'></app-input>
+                    <app-date-picker class="mr-3" id='date'[group]="newRequest.get('questionsB').get(index.toString())"  label="fecha" name='date'></app-date-picker>
+                    <app-radio-button [group]="newRequest.get('questionsB').get(index.toString())" title='Se encuentra vigente en la actualidad' name="valid" [options]="res"></app-radio-button>
+                    <app-radio-button [group]="newRequest.get('questionsB').get(index.toString())"  title='¿Tuvo alguna reclamación?' name="reclamation" [options]="res"></app-radio-button>
+                  </div>
+                  <br>
+                  <div *ngIf="newRequest.get('questionsB').get(index.toString()).get('reclamation').value">
+                    <p>Especifique la reclamación</p>
+                    <app-text-area  style='height: 142px!important;'  [group]="newRequest.get('questionsB').get(index.toString())" label="texto" name='reclamationSpecification'></app-text-area>
+                  </div>
+                </div>
               </div>
               <br>
             </div> 
@@ -291,7 +319,7 @@
                   <app-select class="mr-3"[options]="family"[group]="newRequest.get('contingentBeneficiary').get('dependentsC').get(index.toString())" ></app-select>
                   <app-input class="mr-3" [group]="newRequest.get('contingentBeneficiary').get('dependentsC').get(index.toString())"  label="Cant." name='quantity'></app-input>
                 
-                  <button mat-mini-fab aria-label="Agregar reclamacion" (click)="add(newRequest.get('primaryBenefits').get('dependentsC'),primaryBenefits)" type="button"
+                  <button mat-mini-fab aria-label="Agregar reclamacion" (click)="add(newRequest.get('contingentBeneficiary').get('dependentsC'),primaryBenefits)" type="button"
                   class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
                     <mat-icon style="color: #18446B">add</mat-icon>
                   </button>

@@ -18,6 +18,7 @@ export class NewSubscriptionRequestComponent implements OnInit, DoCheck {
   dependentsFormArray: FormArray;
   questionsFormArray: FormArray;
   questionsBFormArray: FormArray;
+  proceduresArray: FormArray;
   questions = questionsA;
   questionsB = questionsB;
 
@@ -135,7 +136,7 @@ export class NewSubscriptionRequestComponent implements OnInit, DoCheck {
     lastName:   [''],
     family: [''],
     weight:     [''],
-    date:     [''],
+    date:     [new Date()],
     height:     [''],
     sex:        [''],
     birtday:       [''],
@@ -163,8 +164,13 @@ export class NewSubscriptionRequestComponent implements OnInit, DoCheck {
   DateQuestionGroup = {
     question: ['', Validators.required],
     answer: [false, Validators.required],
-    date: ['', Validators.required],
+    date: [new Date(), Validators.required],
     description: ['', Validators.required],
+  }
+  comentaryQuestionGroup = {
+    question: ['', Validators.required],
+    answer: [false, Validators.required],
+    reason: ['', Validators.required],
   }
   pregnant = {
     question: ['', Validators.required],
@@ -175,7 +181,7 @@ export class NewSubscriptionRequestComponent implements OnInit, DoCheck {
   formGroupProcedure = {
     patientsName: [''],
     procedures: [''],
-    date: [''],
+    date: [new Date()],
     treatment: [''],
     duration: [''],
     time: [''],
@@ -184,7 +190,7 @@ export class NewSubscriptionRequestComponent implements OnInit, DoCheck {
   }
   primaryBenefits = {
     name: [''],
-    date: [''],
+    date: [new Date()],
     id: [''],
     nationality:  [''],
     ocupation: [''],
@@ -193,6 +199,20 @@ export class NewSubscriptionRequestComponent implements OnInit, DoCheck {
 
   }
   allFamily= $allFamily;
+
+  b6 = {
+    question: ['', Validators.required],
+    answer: [false, Validators.required],
+    companyName: [''],
+    policyName: [''],
+    insuredName:[''],
+    insuranceCarrier: [''],
+    typepolicy: [''],
+    date:[new Date()],
+    valid:[''],
+    reclamation: [''],
+    reclamationSpecification: ['']
+  }
   constructor(private fb: FormBuilder, public formMethods: FormArrayGeneratorService) { }
   
   ngOnInit() {
@@ -213,7 +233,7 @@ export class NewSubscriptionRequestComponent implements OnInit, DoCheck {
         firstName:    ['', Validators.required],
         secondName:   [''],
         lastName:     ['', Validators.required],
-        date:         [''],
+        date:         [new Date()],
         sex:          [''],
         nationality:  [''],
         id:           [''],
@@ -266,6 +286,8 @@ export class NewSubscriptionRequestComponent implements OnInit, DoCheck {
       }),
       prinsipalIncome:  [''],
       otherIncomes:     [''],
+     
+
       dependents: this.fb.array([ this.formMethods.createItem(this.dependentFormGroup)]),
       questionsA:this.fb.array([ this.formMethods.createItem(this.questionsGroup)]),
       questionsB:this.fb.array([ this.formMethods.createItem(this.questionsGroup)]),
@@ -327,22 +349,35 @@ export class NewSubscriptionRequestComponent implements OnInit, DoCheck {
       if(index > 0){
         if(question.procedures){
           this.add(this.questionsBFormArray,this.procedure);
+          this.proceduresArray = this.newRequest.get('questionsB').get(index.toString()).get('procedures') as FormArray;
           console.log(this.newRequest.get('questionsB').get(index.toString()).get('procedures').get('0'))
-        }else if(index === 3){
+        }
+        else if(index === 3){
           this.add(this.questionsBFormArray,this.familyGroup);
           
         }
-        }else{
+        else if (index===4){
+          this.add(this.questionsBFormArray,this.comentaryQuestionGroup)
+        }
+        else if (index===5){
+          this.add(this.questionsBFormArray,this.b6)
+        }
+        else{
           this.add(this.questionsBFormArray,this.questionsGroup);
         }
+      }
     });
   }
-  proceduresFormGroup(id){
-   //console.log(id)
-  // console.log(this.newRequest.get('questionsB').get(index.toString()).get('procedures').get('0'))
-    console.log(this.newRequest.get('questionsB').get('0').get('procedures').get('0'));
-   //return this.newRequest.get('questionsB').get(id.toString()).get('procedures').get(id.toString());
+  proceduresFormGroup(index,i){
+   return  this.newRequest.get('questionsB').get(index.toString()).get('procedures').get(i.toString()) as FormGroup;
   }
   
+  form():FormGroup{
+    return this.fb.group(this.formGroupProcedure)
+  }
+  addprocedures(){
+    this.proceduresArray.push(this.form())
+    this.proceduresArray.updateValueAndValidity();
+  }
 }
 

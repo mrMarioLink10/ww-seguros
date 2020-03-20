@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
 export class FormHandlerService {
 	sendedForm;
 
-	constructor(private dialog: MatDialog, private dialogOption: DialogOptionService, private route: Router) {}
+	constructor(private dialog: MatDialog, private dialogOption: DialogOptionService, private route: Router) { }
 
 	sendForm(form: FormGroup, name: string) {
 		console.log('Impresion de formulario down here: ', form);
@@ -22,16 +22,25 @@ export class FormHandlerService {
 		let Dialog;
 		let dataOpen;
 		let dataClosing;
+		let route;
 
 		switch (name) {
 			case 'claims-reclaim':
 				dataOpen = this.dialogOption.reclaimConfirmation;
 				dataClosing = this.dialogOption.reclaimConfirmated;
+				route = 'dashboard/claims';
 				break;
 
 			case 'claims-refund':
 				dataOpen = this.dialogOption.refundConfirmation;
 				dataClosing = this.dialogOption.refundConfirmated;
+				route = 'dashboard/claims';
+				break;
+
+			case 'new-authorization':
+				dataOpen = this.dialogOption.refundConfirmation;
+				dataClosing = this.dialogOption.refundConfirmated;
+				route = 'dashboard/authorizations';
 				break;
 		}
 
@@ -50,7 +59,7 @@ export class FormHandlerService {
 						minWidth: 385
 					});
 					this.sendedForm = form.value;
-					this.route.navigateByUrl('dashboard/claims');
+					this.route.navigateByUrl(route);
 				} else {
 					dialog = this.dialog.open(BaseDialogComponent, {
 						data: this.dialogOption.formError,

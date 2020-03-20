@@ -19,9 +19,9 @@ export class CardiovascularComponent implements OnInit {
 		label: 'Nombre enfermedad',
 		options: [
 			{ viewValue: 'Diabetes', value: 'diabetes' },
-			{ viewValue: 'Cancer', value: 'cancer' },
-			{ viewValue: 'Fractura', value: 'fractura' },
-			{ viewValue: 'Presion baja', value: 'presion baja' },
+			{ viewValue: 'Enfisema derrames cerebrales', value: 'enfisema derrames cerebrales' },
+			{ viewValue: 'Cáncer', value: 'cancer' },
+			{ viewValue: 'Enfermedad renal o vascular', value: 'enfermedad renal o vascular' },
 
 		]
 	}
@@ -31,6 +31,9 @@ export class CardiovascularComponent implements OnInit {
 		label: 'Estudio',
 		options: [
 			{ viewValue: 'Electrocardiograma', value: 'electrocardiograma' },
+			{ viewValue: 'Ecocardiograma', value: 'ecocardiograma' },
+			{ viewValue: 'Prueba de esfuerzo', value: 'prueba de esfuerzo' },
+			{ viewValue: 'Otros', value: 'otros' },
 		]
 	}
 

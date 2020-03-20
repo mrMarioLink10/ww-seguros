@@ -1,21 +1,23 @@
 import { Component, OnInit } from '@angular/core';
 import { FieldConfig } from '../../../../shared/components/form-components/models/field-config'
+import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
+import { FormHandlerService } from '../../../../core/services/forms/form-handler.service';
 
 
 @Component({
-  selector: 'app-new-authorization',
-  templateUrl: './new-authorization.component.html',
-  styleUrls: ['./new-authorization.component.scss']
+	selector: 'app-new-authorization',
+	templateUrl: './new-authorization.component.html',
+	styleUrls: ['./new-authorization.component.scss']
 })
 export class NewAuthorizationComponent implements OnInit {
 
-  
-  accordionTitles = [
+
+	accordionTitles = [
 		'Información del Asegurado',
 		'Información Médica'
-  ];
+	];
 
-  generos: FieldConfig = {
+	generos: FieldConfig = {
 		label: 'Sexo',
 		options: [
 			{
@@ -27,9 +29,9 @@ export class NewAuthorizationComponent implements OnInit {
 				viewValue: 'Masculino'
 			}
 		]
-  };
-  
-  seguros: FieldConfig = {
+	};
+
+	seguros: FieldConfig = {
 		label: '¿Tiene otro seguro de salud?',
 		options: [
 			{
@@ -41,9 +43,9 @@ export class NewAuthorizationComponent implements OnInit {
 				viewValue: 'No'
 			}
 		]
-  };
-  
-  condiciones: FieldConfig = {
+	};
+
+	condiciones: FieldConfig = {
 		label: 'La condición se trata de:',
 		options: [
 			{
@@ -53,21 +55,84 @@ export class NewAuthorizationComponent implements OnInit {
 			{
 				value: 'cirugia_electiva',
 				viewValue: 'Cirugía Electiva'
-      },
-      {
+			},
+			{
 				value: 'ambulatorio',
 				viewValue: 'Ambulatorio'
-      },
-      {
+			},
+			{
 				value: 'estudios_especiales',
 				viewValue: 'Estudios Especiales'
 			}
 		]
 	};
 
-  constructor() { }
+	authorization: FormGroup;
 
-  ngOnInit() {
-  }
+	selectChange(event) {
+		if (event.valor === 'si') {
+			switch (event.name) {
+				case 'otroSeguro':
+					this.authorization.get('informacionAsegurado').addControl('seguro', this.fb.group({
+						nombre: ['', Validators.required],
+						noPoliza: ['', Validators.required],
+						fecha: ['', Validators.required],
+						suma: ['', Validators.required],
+					}));
+					break;
+				default:
+					break;
+			}
+		} else if (event.valor === 'no') {
+			switch (event.name) {
+				case 'otroSeguro':
+					this.authorization.get('informacionAsegurado').removeControl('seguro');
+					break;
+				default:
+					break;
+			}
+		}
+
+	}
+
+	constructor(private fb: FormBuilder, public formHandler: FormHandlerService) { }
+
+	ngOnInit() {
+		this.authorization = this.fb.group({
+			fecha: ['', Validators.required],
+			informacionAsegurado: this.fb.group({
+				nombre: ['', Validators.required],
+				noPoliza: ['', Validators.required],
+				sexo: ['', Validators.required],
+				correo: ['', Validators.required],
+				direccion: ['', Validators.required],
+				telefonoResidencia: ['', Validators.required],
+				telefonoCelular: ['', Validators.required],
+				telefonoOficina: ['', Validators.required],
+				otroSeguro: ['', Validators.required],
+			}),
+			informacionMedica: this.fb.group({
+				diagnostico: ['', Validators.required],
+				condicion: ['', Validators.required],
+				procedimiento: ['', Validators.required],
+				primerosSintomas: this.fb.group({
+					fecha: ['', Validators.required],
+					nombreMedico: ['', Validators.required],
+					direccion: ['', Validators.required],
+					telefono: ['', Validators.required],
+				}),
+				admision: this.fb.group({
+					fecha: ['', Validators.required],
+					nombreMedico: ['', Validators.required],
+					direccion: ['', Validators.required],
+					telefono: ['', Validators.required],
+				}),
+				tiempoEstadia: ['', Validators.required],
+				nombreServicio: ['', Validators.required],
+				direccion: ['', Validators.required],
+				telefono: ['', Validators.required],
+			})
+		})
+	}
 
 }

@@ -16,6 +16,7 @@ export const $sex: FieldConfig = {
 
 export const $family: FieldConfig = {
     label: 'Parentezco',
+    name: 'family',
     options: [
         {
             value: 'Cónyuge',
@@ -24,7 +25,11 @@ export const $family: FieldConfig = {
         {
             value: 'Hijo',
             viewValue: 'Hijo'
-        }
+        },
+        {
+            value: 'Padres',
+            viewValue: 'Padres'
+        },
     ]
 }
 export const $res: FieldConfig = {
@@ -65,3 +70,25 @@ export const $time = [
         viewValue: 'año',
     }
 ]
+export const $allFamily = {
+    label: 'Parentezco',
+    name: 'family',
+    options: [
+        {
+            value: 'Padre',
+            viewValue: 'Padre'
+        },
+        {
+            value: 'Madre',
+            viewValue: 'Madre',
+        },
+        {
+            value: 'Hermanos',
+            viewValue: 'Hermanos/as',
+        },
+        {
+            value: 'Hijos',
+            viewValue: 'Hijos/as',
+        }
+    ]
+}

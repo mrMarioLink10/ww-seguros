@@ -93,10 +93,10 @@ const ELEMENT_DATA: Claims[] = [
 @Component({
 	selector: 'app-claims',
 	templateUrl: './claims.component.html',
-	styleUrls: [ './claims.component.scss' ]
+	styleUrls: ['./claims.component.scss']
 })
 export class ClaimsComponent implements OnInit {
-	statusTypes = [ 'Enviado', 'Reembolsado', 'Denegado' ];
+	statusTypes = ['Enviado', 'Reembolsado', 'Denegado'];
 
 	newClaimButtonOptions: MatProgressButtonOptions = {
 		active: false,
@@ -112,7 +112,7 @@ export class ClaimsComponent implements OnInit {
 		customClass: 'dashboard-button'
 	};
 
-	displayedColumns: string[] = [ 'no', 'nombre', 'seguro', 'plan', 'fecha', 'monto', 'estatus', 'acciones' ];
+	displayedColumns: string[] = ['no', 'nombre', 'seguro', 'plan', 'fecha', 'monto', 'estatus', 'acciones'];
 	dataSource = new MatTableDataSource(ELEMENT_DATA);
 
 	@ViewChild(MatSort, { static: true })
@@ -122,14 +122,14 @@ export class ClaimsComponent implements OnInit {
 
 	testForm: FormGroup;
 
-	constructor(private route: Router, private fb: FormBuilder) {}
+	constructor(private route: Router, private fb: FormBuilder) { }
 
 	ngOnInit() {
 		this.dataSource.sort = this.sort;
 		this.dataSource.paginator = this.paginator;
 
 		this.testForm = this.fb.group({
-			isCardiovascular: [ '' ]
+			isCardiovascular: ['']
 		});
 	}
 
@@ -144,20 +144,32 @@ export class ClaimsComponent implements OnInit {
 			this.testForm.addControl(
 				'cardiovascular',
 				this.fb.group({
-					nombre: [ '' ],
-					edad: [ '' ],
-					nombreMedico: [ '' ],
-					centroSalud: [ '' ],
-					telefonoCentro: [ '' ],
-					haveChestPain: [ '', Validators.required ],
-					havePalpitations: [ '', Validators.required ],
-					haveCardiacArrhythmias: [ '', Validators.required ],
-					haveDifficultyBreathing: [ '', Validators.required ],
-					haveHeartMurmurs: [ '', Validators.required ],
-					haveHeartAttacks: [ '', Validators.required ],
-					haveCoronaryBypassSurgery: [ '', Validators.required ],
-					haveCardiacCatheterization: [ '', Validators.required ],
-					haveStentPosture: [ '', Validators.required ]
+					nombre: [''],
+					edad: [''],
+					nombreMedico: [''],
+					centroSalud: [''],
+					telefonoCentro: [''],
+					haveChestPain: ['', Validators.required],
+					havePalpitations: ['', Validators.required],
+					haveCardiacArrhythmias: ['', Validators.required],
+					haveDifficultyBreathing: ['', Validators.required],
+					haveHeartMurmurs: ['', Validators.required],
+					haveHeartAttacks: ['', Validators.required],
+					haveCoronaryBypassSurgery: ['', Validators.required],
+					haveCardiacCatheterization: ['', Validators.required],
+					haveStentPosture: ['', Validators.required],
+					haveAnotherDisease: ['', Validators.required],
+					haveFamilyWithCardio: ['', Validators.required],
+					haveSmokingHabits: ['', Validators.required],
+					haveHypertensionStudies: ['', Validators.required],
+					haveChangedTreatment: ['', Validators.required],
+					haveLiquidAnomaly: ['', Validators.required],
+					medicalConsultationFrequency: ['', Validators.required],
+					importantInformation: ['', Validators.required],
+					lastMedicalConsultation: this.fb.group({
+						fecha: ['', Validators.required],
+						resultado: ['', Validators.required],
+					})
 				})
 			);
 		}

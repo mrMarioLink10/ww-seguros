@@ -23,10 +23,6 @@ export class NewClaimComponent implements OnInit {
 				this.router.navigate([ 'refund' ], { relativeTo: this.route });
 				break;
 
-			case 'precertificacion':
-				this.router.navigate([ 'pre-certification' ], { relativeTo: this.route });
-				break;
-
 			default:
 				break;
 		}

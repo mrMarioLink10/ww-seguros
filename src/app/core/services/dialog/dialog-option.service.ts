@@ -5,7 +5,7 @@ import { BaseDialog } from 'src/app/shared/components/base-dialog/models/base-di
 	providedIn: 'root'
 })
 export class DialogOptionService {
-	constructor() {}
+	constructor() { }
 	reclaimConfirmation: BaseDialog = {
 		logo: 'warning',
 		title: 'Confirmación',
@@ -40,10 +40,27 @@ export class DialogOptionService {
 		showButtons: false
 	};
 
+	authorizationConfirmation: BaseDialog = {
+		logo: 'warning',
+		title: 'Confirmación',
+		text: 'Se procederá a enviar la solicitud de autorización',
+		showButtons: true,
+		showCancelButton: true,
+		textPrincipalButton: 'Enviar',
+		textCancelButton: 'Cancelar'
+	};
+
+	authorizationConfirmated: BaseDialog = {
+		logo: 'check',
+		title: 'Enviado',
+		text: 'La solicitud de autorización ha sido enviada',
+		showButtons: false
+	};
+
 	formError: BaseDialog = {
 		logo: 'error',
 		title: 'Ha ocurrido error',
-		text: 'Han quedado campos requeridos sin completar',
+		text: 'Han quedado campos requeridos sin completar, por favor revise el formulario y valide que todo esta completo',
 		showButtons: false
 	};
 }

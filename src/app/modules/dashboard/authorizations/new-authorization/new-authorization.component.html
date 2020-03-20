@@ -1,1 +1,308 @@
-<p>new-authorization works!</p>
+<div class="uppercase dashboard-page-title pt-10 ml-5">
+    NUEVA AUTORIZACIÓN </div>
+
+<div class="pt-3 pb-0 mt-5 ml-1" style="background-color: #F2F2F2">
+
+    <div class="mt-3 grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4">
+        <div class="ml-5 pl-5 sm:ml-3 pr-8 xl:mr-3 mb-3 mt-2 m:ml-8 m:pl-8">
+            <app-date-picker label="Fecha" name="fechaPrecertificacion">
+            </app-date-picker>
+        </div>
+    </div>
+</div>
+
+<div class="pb-1 mt-4">
+
+    <app-forms-container [titles]="accordionTitles">
+
+        <ng-template #formTemplate>
+
+            <!--formGroupName="" -->
+            <!-- 
+                |
+                V   -->
+            <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-5">
+
+
+                <div class="mr-3 sm:ml-0 sm:mr-3 lg:mr-3 pr-8 xl:pl-4">
+                    <!--[group]="" -->
+                    <!-- 
+                        |
+                        V   -->
+                    <app-input label="Nombre completo asegurado" name='nombre' placeholder="Juan Melo de los Santos"></app-input>
+                </div>
+
+                <div class="mr-3 pr-8">
+                    <!--[group]="" -->
+                    <!-- 
+                              |
+                              V   -->
+                    <app-input label="No. póliza" name='poliza' type="number" placeholder="12345678"></app-input>
+                </div>
+
+                <div class="mr-3 mb-3 sm:mb-3 md:mb-0 lg:mb-0 xl:mb-0">
+                    <!--                                         [group]="" 
+                                                                                 
+                                                                    |
+                                                                    V   -->
+                    <app-radio-button [options]="generos" name="genero">
+                    </app-radio-button>
+                </div>
+
+                <div class="mr-3 pr-8">
+                    <!--[group]="" -->
+                    <!-- 
+                              |
+                              V   -->
+                    <app-input label="Correo" name='correo' placeholder="ars.info@seguros.com.do"></app-input>
+                </div>
+
+                <div class="mr-3 pr-8 xl:-mr-6">
+                    <!--[group]="" -->
+                    <!-- 
+                              |
+                              V   -->
+                    <app-input label="Dirección residencia" name='direccion' placeholder="Calle 5, Casa #50, ..."></app-input>
+                </div>
+
+                <div class="mr-3 sm:ml-0 sm:mr-3 lg:mr-3 pr-8 xl:pl-4 xl:mt-2">
+                    <!--[group]="" -->
+                    <!-- 
+                        |
+                        V   -->
+                    <app-input label="Teléfono residencia" name='telefono' type="number" placeholder="8090010000"></app-input>
+                </div>
+
+                <div class="mr-3 pr-8 xl:mt-2">
+                    <!--[group]="" -->
+                    <!-- 
+                              |
+                              V   -->
+                    <app-input label="Teléfono celular" name='celular' type="number" placeholder="8090010001"></app-input>
+                </div>
+
+                <div class="mr-3 pr-8 xl:mt-2">
+                    <!--[group]="" -->
+                    <!-- 
+                              |
+                              V   -->
+                    <app-input label="Teléfono oficina" name='toficina' type="number" placeholder="8090010002"></app-input>
+                </div>
+
+            </div>
+
+            <div class="grid grid-cols-1 xl:ml-3 mt-5">
+
+                <div class="mr-3 mb-3 sm:mb-3 md:mb-0 lg:mb-0 xl:mb-0 ">
+                    <!--                                         [group]="" 
+                                                                                 
+                                                                    |
+                                                                    V   -->
+                    <app-radio-button [options]="seguros" name="seguro">
+                    </app-radio-button>
+                </div>
+
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-5 mt-6">
+
+                <div class="mr-3 sm:ml-0 sm:mr-3 lg:mr-3 pr-8 xl:pl-4">
+                    <!--[group]="" -->
+                    <!-- 
+                        |
+                        V   -->
+                    <app-input label="Nombre compañía" name='compania' placeholder="WorldWide Seguros"></app-input>
+                </div>
+
+                <div class="mr-3 pr-8">
+                    <!--[group]="" -->
+                    <!-- 
+                              |
+                              V   -->
+                    <app-input label="No. póliza" name='poliza' type="number" placeholder="12345678"></app-input>
+                </div>
+
+                <div class="pr-8 mr-3">
+                    <app-date-picker label="Fecha de emisión" name="fechaEmision">
+                    </app-date-picker>
+                </div>
+
+                <div class="mr-3 pr-10 sm:pr-8 md:pr-8">
+                    <!--[group]="" -->
+                    <!-- 
+                              |
+                              V   -->
+                    <app-input label="Suma asegurada" name='suma' type="number" placeholder="20,000$ USD"></app-input>
+                </div>
+
+            </div>
+
+        </ng-template>
+
+        <ng-template #formTemplate>
+
+            <div class="ml-3 grid xl:grid-cols-1">
+
+            
+                    <div class="grid lg:grid-cols-2 xl:grid-cols-4"> 
+                         <div class="pr-32 md:pr-40 xl:pr-40"> 
+                             <!--[group]="" -->
+                             <!-- 
+                                 |
+                                 V   -->
+                                 <app-input label="Diagnóstico principal" name='diagnostico_principal' placeholder="Dolor de cabeza"></app-input>
+                         </div>
+
+                         <div class="pr-32 md:pr-40 xl:pr-40"> 
+                            <app-date-picker label="Fecha primeros síntomas" name="fechaSintomas">
+                            </app-date-picker>
+                        </div>
+                        
+                        <div class="pr-32 md:pr-40 xl:pr-40"> 
+                            <app-date-picker label="Fecha probable admisión" name="fechaAdmision">
+                            </app-date-picker>
+                        </div>
+
+                        <div class="pr-32 md:pr-40 xl:pr-40"> 
+                            <!--[group]="" -->
+                            <!-- 
+                                |
+                                V   -->
+                                <app-input label="Tiempo probable estadía (días)" name='tiempo_estadia' placeholder="14 días"></app-input>
+                        </div>
+                    </div>
+
+                    <div class="grid lg:grid-cols-2 xl:grid-cols-2">
+                        <div class="grid xl:grid-cols-2"> 
+                            <div class="md:pr-16 mt-3 -mr-3"> 
+
+                                <div class="grid xl:grid-cols-5 xl:fixed xl:-mt-1"> 
+                                    <div class="lg:mb-1 mr-24"> <!-- class="pr-48 lg:mt-3 sm:pr-64 md:pr-64 lg:pr-56 xl:pr-48" -->
+                                       <!-- 
+                                       [group]="" 
+                                           |
+                                           V   -->
+                                        <app-radio-button [options]="condiciones" name="condicion">
+                                        </app-radio-button>
+                                    </div>
+                                    <div class="xl:absolute"> 
+
+                                    </div>
+                                    <div class=""> 
+
+                                    </div>
+                                </div>
+
+                                <div class="pr-32 md:pr-32 md:-mr-4 lg:pt-6 lg:-mt-3 xl:mt-40"> 
+                                <!--[group]="" -->
+                                <!-- 
+                                          |
+                                          V   -->
+                                <app-input label="Procedimiento a realizar" name='procedimiento' placeholder="Operación ..."></app-input>
+                                </div>
+                            </div>
+
+                        <div class="lg:mr-3 xl:mr-0 xl:mt-3">
+                                
+                            <div class="lg:mt-16 xl:mt-0">
+
+                                <div class="mb-5"> 
+                                    <label> <strong> Médico tratante: </strong> </label>
+                                </div>
+
+                                <div class="pr-32 md:pr-40">
+                                    <!--[group]="" -->
+                                    <!-- 
+                                        |
+                                        V   -->
+                                    <app-input label="Nombre" name='medico_tratante' placeholder="Doctor M. García"></app-input>
+                                </div>
+                            </div>
+                            <div class="pr-32 md:pr-40 xl:mt-2"> 
+                            <!--[group]="" -->
+                            <!-- 
+                                      |
+                                      V   -->
+                            <app-input label="Dirección" name='direccion_tratante' placeholder="Calle 6, Apt. #20, av. ..."></app-input>
+                            </div>
+                        
+                            <div class="pr-32 md:pr-40 xl:mt-2"> 
+                                <!--[group]="" -->
+                                <!-- 
+                                          |
+                                          V   -->
+                                <app-input label="Teléfono" name='telefono_tratante' placeholder="8090010001"></app-input>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="grid xl:grid-cols-2 xl:mt-3"> 
+                      <div>
+                        <div class="lg:mt-6 xl:mt-0">  
+                            <div class="mb-5"> 
+                                <label> <strong> Médico que lo refiere: </strong> </label>
+                            </div>               
+                            <div class="pr-32 md:pr-40">
+                                 <!--[group]="" -->
+                                 <!-- 
+                                        |
+                                        V   -->
+                            <app-input label="Nombre" name='medico_refiere' placeholder="Doctor F. García"></app-input>
+                            </div>
+                        </div>
+
+                        <div class="pr-32 md:pr-40 xl:mt-2"> 
+                            <!--[group]="" -->
+                            <!-- 
+                                    |
+                                    V   -->
+                            <app-input label="Dirección" name='direccion_refiere' placeholder="Calle Principal, esq. ..."></app-input>
+                        </div>
+                        
+                        <div class="pr-32 md:pr-40 xl:mt-2"> 
+                            <!--[group]="" -->
+                            <!-- 
+                                      |
+                                      V   -->
+                            <app-input label="Teléfono" name='telefono_refiere' placeholder="8290020002"></app-input>
+                        </div>
+                    </div>    
+                    <div> 
+                        <div class="">  
+                            <div class="mb-5"> 
+                                <label> <strong> Proveedor del servicio: </strong> </label>
+                            </div>              
+                           <div class="pr-32 md:pr-40">
+                                <!--[group]="" -->
+                                <!-- 
+                                       |
+                                       V   -->
+                               <app-input label="Nombre" name='nombre_proveedor' placeholder="Mario Mario"></app-input>
+                           </div>
+                       </div>
+
+                        <div class="pr-32 md:pr-40 xl:mt-2"> 
+                            <!--[group]="" -->
+                            <!-- 
+                                      |
+                                      V   -->
+                            <app-input label="Dirección" name='direccion_proveedor' placeholder="Calle El Gato, de frente al edificio ..."></app-input>
+                        </div>
+
+                        <div class="pr-32 md:pr-40 xl:mt-2"> 
+                            <!--[group]="" -->
+                            <!-- 
+                                 |
+                                 V   -->
+                            <app-input label="Teléfono" name='telefono_proveedor' placeholder="8490030003"></app-input>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        </ng-template>
+
+    </app-forms-container>
+
+</div>

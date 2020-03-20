@@ -7,7 +7,6 @@ import { MaterialModule } from "../../../shared/modules/material.module";
 import { NewClaimComponent } from "./new-claim/new-claim.component";
 import { ClaimComponent } from "./new-claim/claim-types/claim/claim.component";
 import { RefundComponent } from "./new-claim/claim-types/refund/refund.component";
-import { PreCertificationComponent } from "./new-claim/claim-types/pre-certification/pre-certification.component";
 import { ModulesModule } from "../../modules.module";
 import { GlobalSharedModule } from "src/app/shared/global-shared.module";
 
@@ -17,7 +16,6 @@ import { GlobalSharedModule } from "src/app/shared/global-shared.module";
     NewClaimComponent,
     ClaimComponent,
     RefundComponent,
-    PreCertificationComponent
   ],
   imports: [
     CommonModule,

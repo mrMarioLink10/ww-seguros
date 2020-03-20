@@ -4,7 +4,6 @@ import { ClaimsComponent } from './claims.component';
 import { NewClaimComponent } from './new-claim/new-claim.component';
 import { ClaimComponent } from './new-claim/claim-types/claim/claim.component';
 import { RefundComponent } from './new-claim/claim-types/refund/refund.component';
-import { PreCertificationComponent } from './new-claim/claim-types/pre-certification/pre-certification.component';
 
 const routes: Routes = [
 	{
@@ -26,7 +25,6 @@ const routes: Routes = [
 		children: [
 			{ path: 'claim', component: ClaimComponent },
 			{ path: 'refund', component: RefundComponent },
-			{ path: 'pre-certification', component: PreCertificationComponent }
 		]
 	}
 ];

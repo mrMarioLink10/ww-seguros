@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { FormGroup, FormBuilder, RequiredValidator, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, RequiredValidator, Validators, FormArray } from '@angular/forms';
 import { FieldConfig } from 'src/app/shared/components/form-components/models/field-config';
 
 @Component({
@@ -10,9 +10,29 @@ import { FieldConfig } from 'src/app/shared/components/form-components/models/fi
 export class CardiovascularComponent implements OnInit {
 	@Input() form: FormGroup;
 
-	accordionTitle = [ 'Datos' ];
+	accordionTitle = ['Datos'];
 
 	questions: any[];
+
+	anotherDiseasesOptions: FieldConfig = {
+		name: 'disease',
+		label: 'Nombre enfermedad',
+		options: [
+			{ viewValue: 'Diabetes', value: 'diabetes' },
+			{ viewValue: 'Cancer', value: 'cancer' },
+			{ viewValue: 'Fractura', value: 'fractura' },
+			{ viewValue: 'Presion baja', value: 'presion baja' },
+
+		]
+	}
+
+	hypertensionOptions: FieldConfig = {
+		name: 'estudio',
+		label: 'Estudio',
+		options: [
+			{ viewValue: 'Electrocardiograma', value: 'electrocardiograma' },
+		]
+	}
 
 	yesOrNo: FieldConfig = {
 		label: '',
@@ -28,16 +48,25 @@ export class CardiovascularComponent implements OnInit {
 		]
 	};
 
+	studiesList: FormArray;
+	anotherDiseasesList: FormArray;
+	familiarWithCardioList: FormArray;
+	medicalTreatmentList: FormArray;
+	hypertensionStudiesList: FormArray;
+	changedTreatmentList: FormArray;
+	liquidAnomalyList: FormArray;
+
 	diseaseInfoGroup() {
 		return this.fb.group({
-			fechaEvento: [ '', Validators.required ],
-			tratamiento: [ '', Validators.required ],
-			fechaUltima: [ '', Validators.required ],
-			frequencia: [ '', Validators.required ]
+			fechaEvento: ['', Validators.required],
+			tratamiento: ['', Validators.required],
+			fechaUltima: ['', Validators.required],
+			frequencia: ['', Validators.required]
 		});
 	}
 
 	selectChange(event) {
+		console.log(event);
 		if (event.valor === 'si') {
 			switch (event.name) {
 				case 'haveChestPain':
@@ -74,6 +103,39 @@ export class CardiovascularComponent implements OnInit {
 
 				case 'haveStentPosture':
 					this.form.addControl('stentPosture', this.diseaseInfoGroup());
+					break;
+
+				case 'haveAnotherDisease':
+					this.form.addControl('anotherDiseases', this.fb.array([this.createFormArray('anotherDiseases')]));
+					this.anotherDiseasesList = this.form.get('anotherDiseases') as FormArray;
+					break;
+
+				case 'haveFamilyWithCardio':
+					this.form.addControl('familyWithCardio', this.fb.array([this.createFormArray('familyWithCardio')]));
+					this.familiarWithCardioList = this.form.get('familyWithCardio') as FormArray;
+					break;
+
+				case 'haveSmokingHabits':
+					this.form.addControl('smokingHabits', this.fb.group({
+						cantidad: ['', Validators.required]
+					}));
+					break;
+
+				case 'haveHypertensionStudies':
+					this.form.addControl('hypertensionStudies', this.fb.array([this.createFormArray('hypertensionStudies')]));
+					this.hypertensionStudiesList = this.form.get('hypertensionStudies') as FormArray;
+					break;
+
+				case 'haveChangedTreatment':
+					this.form.addControl('changedTreatment', this.fb.group({
+						razon: ['', Validators.required]
+					}));
+					this.changedTreatmentList = this.form.get('changedTreatment') as FormArray;
+					break;
+
+				case 'haveLiquidAnomaly':
+					this.form.addControl('liquidAnomaly', this.fb.array([this.createFormArray('liquidAnomaly')]));
+					this.liquidAnomalyList = this.form.get('liquidAnomaly') as FormArray;
 					break;
 				default:
 					break;
@@ -116,6 +178,35 @@ export class CardiovascularComponent implements OnInit {
 					this.form.removeControl('stentPosture');
 					break;
 
+				case 'haveAnotherDisease':
+					this.form.removeControl('anotherDiseases');
+					this.anotherDiseasesList = undefined;
+					break;
+
+				case 'haveFamilyWithCardio':
+					this.form.removeControl('familyWithCardio');
+					this.familiarWithCardioList = undefined;
+					break;
+
+				case 'haveSmokingHabits':
+					this.form.removeControl('smokingHabits');
+					break;
+
+				case 'haveHypertensionStudies':
+					this.form.removeControl('hypertensionStudies');
+					this.hypertensionStudiesList = undefined;
+					break;
+
+				case 'haveChangedTreatment':
+					this.form.removeControl('changedTreatment');
+					this.changedTreatmentList = undefined;
+					break;
+
+				case 'haveLiquidAnomaly':
+					this.form.removeControl('liquidAnomaly');
+					this.liquidAnomalyList = undefined;
+					break;
+
 				default:
 					break;
 			}
@@ -123,6 +214,12 @@ export class CardiovascularComponent implements OnInit {
 	}
 
 	ngOnInit() {
+		this.form.addControl('studies', this.fb.array([this.createFormArray('studies')]));
+		this.studiesList = this.form.get('studies') as FormArray;
+
+		this.form.addControl('medicalTreatment', this.fb.array([this.createFormArray('medicalTreatment')]));
+		this.medicalTreatmentList = this.form.get('medicalTreatment') as FormArray;
+
 		this.questions = [
 			{
 				label: 'Dolor de Pecho (anginas):',
@@ -172,5 +269,64 @@ export class CardiovascularComponent implements OnInit {
 		];
 	}
 
-	constructor(private fb: FormBuilder) {}
+	createFormArray(type: string): FormGroup {
+		switch (type) {
+			case 'studies':
+				return this.fb.group({
+					nombre: ['', Validators.required],
+					resultado: ['', Validators.required],
+				});
+				break;
+
+			case 'anotherDiseases':
+				return this.fb.group({
+					disease: ['', Validators.required],
+				});
+				break;
+
+			case 'familyWithCardio':
+				return this.fb.group({
+					familiar: ['', Validators.required],
+					condicion: ['', Validators.required],
+				});
+				break;
+
+			case 'hypertensionStudies':
+				return this.fb.group({
+					estudio: ['', Validators.required],
+					fecha: ['', Validators.required],
+					resultado: ['', Validators.required],
+					informacion: [''],
+				});
+				break;
+
+			case 'medicalTreatment':
+				return this.fb.group({
+					nombre: ['', Validators.required],
+					dosis: ['', Validators.required],
+					frecuencia: ['', Validators.required],
+				});
+				break;
+
+			case 'liquidAnomaly':
+				return this.fb.group({
+					fecha: ['', Validators.required],
+					informacion: ['', Validators.required],
+				});
+				break;
+
+			default:
+				break;
+		}
+	}
+
+	addToList(list: any, type: string) {
+		list.push(this.createFormArray(type));
+	}
+
+	removeToList(index, list: any) {
+		list.removeAt(index);
+	}
+
+	constructor(private fb: FormBuilder) { }
 }

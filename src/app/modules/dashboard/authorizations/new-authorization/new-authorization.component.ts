@@ -69,11 +69,12 @@ export class NewAuthorizationComponent implements OnInit {
 
 	authorization: FormGroup;
 
-	selectChange(event) {
+	selectChange(event: any) {
+		const form = this.authorization.get('informacionAsegurado') as FormGroup;
+
 		if (event.valor === 'si') {
 			switch (event.name) {
 				case 'otroSeguro':
-					const form = this.authorization.get('informacionAsegurado') as FormGroup;
 					form.addControl('seguro', this.fb.group({
 						nombre: ['', Validators.required],
 						noPoliza: ['', Validators.required],
@@ -87,14 +88,12 @@ export class NewAuthorizationComponent implements OnInit {
 		} else if (event.valor === 'no') {
 			switch (event.name) {
 				case 'otroSeguro':
-					const form = this.authorization.get('informacionAsegurado') as FormGroup;
 					form.removeControl('seguro');
 					break;
 				default:
 					break;
 			}
 		}
-
 	}
 
 	constructor(private fb: FormBuilder, public formHandler: FormHandlerService) { }
@@ -134,7 +133,7 @@ export class NewAuthorizationComponent implements OnInit {
 				direccion: ['', Validators.required],
 				telefono: ['', Validators.required],
 			})
-		})
+		});
 	}
 
 }

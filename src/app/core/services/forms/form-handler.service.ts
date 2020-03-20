@@ -46,7 +46,7 @@ export class FormHandlerService {
 
 		Dialog = this.dialog.open(BaseDialogComponent, {
 			data: dataOpen,
-			minWidth: 385
+			minWidth: 385,
 		});
 
 		Dialog.afterClosed().subscribe((result) => {

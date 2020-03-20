@@ -1,9 +1,9 @@
 import { Component, OnInit, DoCheck } from '@angular/core';
 import { FieldConfig } from 'src/app/shared/components/form-components/models/field-config';
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
-import {$sex, $res, $country, $time, $family} from '../../../../../core/form/objects';
+import {$sex, $res, $country, $time, $family, $allFamily} from '../../../../../core/form/objects';
 import { FormArrayGeneratorService } from 'src/app/core/services/forms/form-array-generator.service';
-import { questionsA } from './questions';
+import { questionsA, questionsB } from './questions';
 @Component({
   selector: 'app-new-subscription-request',
   templateUrl: './new-subscription-request.component.html',
@@ -12,6 +12,16 @@ import { questionsA } from './questions';
 
 export class NewSubscriptionRequestComponent implements OnInit, DoCheck {
   
+  newRequest: FormGroup;
+  sex = $sex;
+  res = $res;
+  dependentsFormArray: FormArray;
+  questionsFormArray: FormArray;
+  questionsBFormArray: FormArray;
+  questions = questionsA;
+  questionsB = questionsB;
+
+  family = $family
   requestTypeOptions: FieldConfig =
    {
     label: 'Tipo de Solicitud',
@@ -134,16 +144,14 @@ export class NewSubscriptionRequestComponent implements OnInit, DoCheck {
     id: [''],
     nationality: [''],
   };
-  newRequest: FormGroup;
-  sex = $sex;
-  res = $res;
-  family = $family;
-  dependentsFormArray: FormArray;
-  questionsFormArray: FormArray;
-  questions = questionsA;
   questionsGroup = {
     question: ['', Validators.required],
     answer: [false, Validators.required],
+  }
+  familyGroup = {
+    question: ['', Validators.required],
+    answer: [false, Validators.required],
+    family:  [false, Validators.required],
   }
   timeQuestionGroup = {
     question: ['', Validators.required],
@@ -158,17 +166,43 @@ export class NewSubscriptionRequestComponent implements OnInit, DoCheck {
     date: ['', Validators.required],
     description: ['', Validators.required],
   }
-  
   pregnant = {
     question: ['', Validators.required],
     answer: [false, Validators.required],
     time: ['', Validators.required],
   }
-  constructor(private fb: FormBuilder, public formMethods: FormArrayGeneratorService) { }
- 
- 
+  procedure;
+  formGroupProcedure = {
+    patientsName: [''],
+    procedures: [''],
+    date: [''],
+    treatment: [''],
+    duration: [''],
+    time: [''],
+    providerName: [''],
+    providerDirection: ['']
+  }
+  primaryBenefits = {
+    name: [''],
+    date: [''],
+    id: [''],
+    nationality:  [''],
+    ocupation: [''],
+    family:  [''],
+    quantity: ['']
 
+  }
+  allFamily= $allFamily;
+  constructor(private fb: FormBuilder, public formMethods: FormArrayGeneratorService) { }
+  
   ngOnInit() {
+
+    this.procedure = {
+      question: [''],
+      answer: [false],
+      procedures:  this.fb.array([ this.formMethods.createItem(this.formGroupProcedure)])
+    }
+
    this.newRequest = this.fb.group({
       requestType: [''],
       NoC:         [''],
@@ -233,12 +267,34 @@ export class NewSubscriptionRequestComponent implements OnInit, DoCheck {
       prinsipalIncome:  [''],
       otherIncomes:     [''],
       dependents: this.fb.array([ this.formMethods.createItem(this.dependentFormGroup)]),
-      questions:this.fb.array([ this.formMethods.createItem(this.questionsGroup)])
+      questionsA:this.fb.array([ this.formMethods.createItem(this.questionsGroup)]),
+      questionsB:this.fb.array([ this.formMethods.createItem(this.questionsGroup)]),
+      primaryBenefits: this.fb.group({
+        dependentsC: this.fb.array([this.formMethods.createItem(this.primaryBenefits)]),
+        personBenefited: this.fb.group({
+          selection: [''],
+          family: [''],
+          id: ['']
+        })
+      }),
+      contingentBeneficiary: this.fb.group({
+        dependentsC: this.fb.array([this.formMethods.createItem(this.primaryBenefits)]),
+        personBenefited: this.fb.group({
+          selection: [''],
+          family: [''],
+          id: ['']
+        })
+      }),
+      comentary: ['']
+      
     });
 
+
     this.dependentsFormArray = this.newRequest.get('dependents') as FormArray;
-    this.questionsFormArray = this.newRequest.get('questions') as FormArray;
+    this.questionsFormArray = this.newRequest.get('questionsA') as FormArray;
+    this.questionsBFormArray = this.newRequest.get('questionsB') as FormArray;
     this.setQuestionsA();
+    this.setQuestionsB();
     
   }
   ngDoCheck(){
@@ -257,7 +313,7 @@ export class NewSubscriptionRequestComponent implements OnInit, DoCheck {
         else if(question.date){
           this.add(this.questionsFormArray,this.DateQuestionGroup);
           
-        }else if(question. pregnant){
+        }else if(question.pregnant){
           this.add(this.questionsFormArray,this.pregnant);
         }
         else{
@@ -266,4 +322,27 @@ export class NewSubscriptionRequestComponent implements OnInit, DoCheck {
       }
     });
   }
+  setQuestionsB(){
+    this.questionsB.forEach((question,index)=> {
+      if(index > 0){
+        if(question.procedures){
+          this.add(this.questionsBFormArray,this.procedure);
+          console.log(this.newRequest.get('questionsB').get(index.toString()).get('procedures').get('0'))
+        }else if(index === 3){
+          this.add(this.questionsBFormArray,this.familyGroup);
+          
+        }
+        }else{
+          this.add(this.questionsBFormArray,this.questionsGroup);
+        }
+    });
+  }
+  proceduresFormGroup(id){
+   //console.log(id)
+  // console.log(this.newRequest.get('questionsB').get(index.toString()).get('procedures').get('0'))
+    console.log(this.newRequest.get('questionsB').get('0').get('procedures').get('0'));
+   //return this.newRequest.get('questionsB').get(id.toString()).get('procedures').get(id.toString());
+  }
+  
 }
+

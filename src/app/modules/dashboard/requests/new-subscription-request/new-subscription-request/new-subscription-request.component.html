@@ -1,5 +1,5 @@
 
-<div class="pl-6 pr-6 xs:pr-6 sm:pr-6 md:pr-12 lg:pr-12 xl:pr-12 bg-white">
+<div class="p-6 pr-6 xs:pr-6 sm:pr-6 md:pr-12 lg:pr-12 xl:pr-12 bg-white">
   <form [formGroup]='newRequest'>
     <h3 class="uppercase dashboard-page-title pt-20">FORMULARIO DE SOLICITUD DE SUSCRIPCIÓN SEGURO DE GASTOS MÉDICOS MAYORES</h3>
     <div class="mt-6 p-3 pb-0 info-home">
@@ -135,7 +135,7 @@
                 <app-input class="mr-3" [group]="newRequest.get('dependents').get(index.toString())" label="Lbs" name='height'></app-input>
               </div>
               <app-input class="mr-3" [group]="newRequest.get('dependents').get(index.toString())" label="Nacionalidad" name='nationality'></app-input><br>
-              <button mat-mini-fab aria-label="Agregar reclamacion" (click)="add(dependentsFormArray,dependentsFormArray)" type="button"
+              <button mat-mini-fab aria-label="Agregar reclamacion" (click)="add(dependentsFormArray,dependentFormGroup)" type="button"
               class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
               <mat-icon style="color: #18446B">add</mat-icon>
             </button>
@@ -144,7 +144,7 @@
         </div>
       </ng-template>
       <ng-template #formTemplate  >
-        <div formArrayName="questions" >
+        <div formArrayName="questionsA" >
           <p class='formulary-labels pb-3'  style='width: 85%;'>Según su mejor entendimiento y conocimiento, hay alguna persona nombrada en esta solicitud que haya padecido o padezca de alguna de las siguientes enfermedades:</p>
           <div *ngFor="let element of questionsFormArray.controls; let index = index">
             <div [formGroupName]="index">
@@ -155,54 +155,171 @@
                   </div>
                 </div>
                 <div class="col-span-3">
-                  <app-radio-button [group]="newRequest.get('questions').get(index.toString())"  name="answer" [options]="res"></app-radio-button>
+                  <app-radio-button [group]="newRequest.get('questionsA').get(index.toString())"  name="answer" [options]="res"></app-radio-button>
                 </div>
               </div>
-            </div> <br>
-         
-            <div>
-              <div class="w-50 pt-5" *ngIf=" questions[index].time && newRequest.get('questions').get(index.toString()).get('answer').value">
-                <p class='body-13 pt-4 pb-4'>{{questions[index].description}}</p>
-                <div class='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3'>
-                  <app-input class="mr-3" [group]="newRequest.get('questions').get(index.toString())" label="Cantidad Diaria" [name]='questions[index].time.name1'></app-input>
-                  <app-input class="mr-3" [group]="newRequest.get('questions').get(index.toString())" label="Tiempo" [name]='questions[index].time.name2'></app-input>
-                  <app-select class="mr-3"[options]="year" [group]="newRequest.get('questions').get(index.toString())" ></app-select>
+              <div>
+                <div class="w-50 pt-5" *ngIf=" questions[index].time && newRequest.get('questionsA').get(index.toString()).get('answer').value">
+                  <p class='body-13 pt-4 pb-4'>{{questions[index].description}}</p>
+                  <div class='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3'>
+                    <app-input class="mr-3" [group]="newRequest.get('questionsA').get(index.toString())" label="Cantidad Diaria" [name]='questions[index].time.name1'></app-input>
+                    <app-input class="mr-3" [group]="newRequest.get('questionsA').get(index.toString())" label="Tiempo" [name]='questions[index].time.name2'></app-input>
+                    <app-select class="mr-3"[options]="year" [group]="newRequest.get('questionsA').get(index.toString())" ></app-select>
+                  </div>
                 </div>
+  
+                <div *ngIf="index === 20 &&  newRequest.get('questionsA').get(index.toString()).get('answer').value">
+                  <label for="date"> ¿Desde cuándo? Describa.</label>
+                  <div style="width: 200px;">
+                    <app-date-picker class="mr-3" id='date' [group]="newRequest.get('questionsA').get(index.toString())" label="fecha" name='date'></app-date-picker>
+                  </div>
+                  <app-text-area label='Descripcion'  [group]="newRequest.get('questionsA').get(index.toString())" label="texto" name='description'></app-text-area>
+                </div>
+  
+                <div *ngIf="index === 21 &&  newRequest.get('questionsA').get(index.toString()).get('answer').value">
+                  <p>Favor indicar semanas de embarazo</p><br>
+                  
+                  <div style="width: 200px;">
+                    <app-input class="mr-3" [group]="newRequest.get('questionsA').get(index.toString())" label="Semanas" name='time'></app-input>
+                  </div>
+                </div>   
               </div>
-
-              <div *ngIf="index === 20 &&  newRequest.get('questions').get(index.toString()).get('answer').value">
-                <label for="date"> ¿Desde cuándo? Describa.</label>
-                <div style="width: 200px;">
-                  <app-date-picker class="mr-3" id='date'  [group]="newRequest.get('questions').get(index.toString())" label="fecha" name='date'></app-date-picker>
-                </div>
-                <app-text-area label='Descripcion'  [group]="newRequest.get('questions').get(index.toString())" label="texto" name='description'></app-text-area>
-              </div>
-
-              <div *ngIf="index === 21 &&  newRequest.get('questions').get(index.toString()).get('answer').value">
-                <p>Favor indicar semanas de embarazo</p><br>
-                
-                <div style="width: 200px;">
-                  <app-input class="mr-3" [group]="newRequest.get('questions').get(index.toString())" label="Semanas" name='time'></app-input>
-                </div>
-              </div>   
             </div>
-         
-
-            <br>
+            <br><br>
         </div>
       </div>
       </ng-template>
       <ng-template #formTemplate>
-          
+        <div formArrayName="questionsB" >
+          <div *ngFor="let element of questionsBFormArray.controls; let index = index">
+            <div [formGroupName]="index">
+              <div class="grid grid-cols-12">
+                <div class="col-span-9">
+                  <div  class='question'>
+                    <p class='body-13'>{{questions[index].question}}</p>
+                  </div>
+                </div>
+                <div class="col-span-3">
+                
+                  <div class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2">
+                    <app-radio-button [group]="newRequest.get('questionsB').get(index.toString())"  name="answer" [options]="res"></app-radio-button>
+                    <app-select *ngIf="index === 3 && newRequest.get('questionsB').get(index.toString()).get('answer').value" style="width: 115px;" class="mr-3"[options]="allFamily" [group]="newRequest.get('questionsB').get(index.toString())"></app-select>
+                  </div>
+                </div>
+              </div> 
+              <br>
+              <div>
+             
+                <div *ngIf="index === 2 &&  newRequest.get('questionsB').get(index.toString()).get('answer').value" >
+                   
+                  <div formArrayName="procedures" >
+                    <div *ngFor="let element of newRequest.get('questionsB').get(index.toString()).get('procedures')['controls']; let index = index">
+                      <div [formGroupName]="index">
+                        <div style="width: 200px;">
+                          <!-- hola
+                          <app-input class="mr-3" [group]="newRequest.get('questionsB').get(index.toString()).get('procedures').get(index.toString())" label="Nombre del Paciente" name='patientsName'></app-input> -->
+                        </div>
+                       <!-- <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-4">
+                        <app-input class="mr-3" [group]="newRequest.get('questionsB').get(index.toString()).get(index.toString())" label="Padecimientos" name='procedures'></app-input>
+                        <app-date-picker class="mr-3" id='date' [group]="newRequest.get('questionsB').get(index.toString()).get(index.toString())" label="fecha" name='date'></app-date-picker>
+                        <app-input class="mr-3" [group]="newRequest.get('questionsB').get(index.toString()).get(index.toString())" label="Tratamiento" name='treatment'></app-input>
+                        <div class="mr-3 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2">
+                          <app-input class="mr-3" [group]="newRequest.get('questionsB').get(index.toString()).get(index.toString())" label="Duración" name='duration'></app-input>
+                          <app-select class="mr-3"[options]="year" [group]="newRequest.get('questionsB').get(index.toString()).get(index.toString())"></app-select>
+                        </div>
+                        <app-input class="mr-3" [group]="newRequest.get('questionsB').get(index.toString()).get(index.toString())" label="Nombre del proveedor" name='providerName'></app-input>
+                        <app-input class="mr-3" [group]="newRequest.get('questionsB').get(index.toString()).get(index.toString())" label="Dirección del proveedor o centro médico" name='providerDirection'></app-input>
+                       </div> -->
+                       
+                      </div>
+                    </div>
+                  </div>
+                </div>
+        
+
+              </div>
+              <br>
+            </div> 
+          </div>
+        </div>
       </ng-template>
       <ng-template #formTemplate>
-          
+        <div [formGroup]="newRequest.get('primaryBenefits')">
+          <div formArrayName="dependentsC" >
+            <div *ngFor="let element of newRequest.get('primaryBenefits').get('dependentsC')['controls']; let index = index">
+              <div [formGroupName]="index"> 
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-4">
+                  <app-input class="mr-3" [group]="newRequest.get('primaryBenefits').get('dependentsC').get(index.toString())" label="Nombres y Apellidos" name='name'></app-input>
+                  <app-date-picker class="mr-3" id='date'[group]="newRequest.get('primaryBenefits').get('dependentsC').get(index.toString())"  label="fecha" name='date'></app-date-picker>
+                  <app-input class="mr-3" [group]="newRequest.get('primaryBenefits').get('dependentsC').get(index.toString())"  label="Documento de Identidad" name='id'></app-input>
+                  <app-input class="mr-3" [group]="newRequest.get('primaryBenefits').get('dependentsC').get(index.toString())"  label="Nacionalidad" name='nationality'></app-input>
+                  <app-input class="mr-3" [group]="newRequest.get('primaryBenefits').get('dependentsC').get(index.toString())"  label="Ocupación" name='ocupation'></app-input>
+                  <app-select class="mr-3"[options]="family"[group]="newRequest.get('primaryBenefits').get('dependentsC').get(index.toString())" ></app-select>
+                  <app-input class="mr-3" [group]="newRequest.get('primaryBenefits').get('dependentsC').get(index.toString())"  label="Cant." name='quantity'></app-input>
+                
+                  <button mat-mini-fab aria-label="Agregar reclamacion" (click)="add(newRequest.get('primaryBenefits').get('dependentsC'),primaryBenefits)" type="button"
+                  class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
+                    <mat-icon style="color: #18446B">add</mat-icon>
+                  </button>
+                </div>
+                
+                <br><mat-divider></mat-divider><br>
+               </div> 
+            </div> 
+          </div> 
+        </div>
+       <div>
+         <p  >Si a mi fallecimiento alguno de mis Beneficiarios Primarios es menor de edad, el beneficio correspondiente será entregado a</p><br>
+         <div  class='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-4'>
+          <app-select class="mr-3"[options]="family"[group]="newRequest.get('primaryBenefits').get('personBenefited')" ></app-select>
+          <app-select class="mr-3"[options]="family"[group]="newRequest.get('primaryBenefits').get('personBenefited')" ></app-select>
+          <app-input class="mr-3" [group]="newRequest.get('primaryBenefits').get('personBenefited')"  label="Cant." name='id'></app-input>
+         </div>
+       </div>
       </ng-template>
       <ng-template #formTemplate>
-          
+        <div [formGroup]="newRequest.get('contingentBeneficiary')">
+          <div formArrayName="dependentsC" >
+            <div *ngFor="let element of newRequest.get('contingentBeneficiary').get('dependentsC')['controls']; let index = index">
+              <div [formGroupName]="index"> 
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-4">
+                  <app-input class="mr-3" [group]="newRequest.get('contingentBeneficiary').get('dependentsC').get(index.toString())" label="Nombres y Apellidos" name='name'></app-input>
+                  <app-date-picker class="mr-3" id='date'[group]="newRequest.get('contingentBeneficiary').get('dependentsC').get(index.toString())"  label="fecha" name='date'></app-date-picker>
+                  <app-input class="mr-3" [group]="newRequest.get('contingentBeneficiary').get('dependentsC').get(index.toString())"  label="Documento de Identidad" name='id'></app-input>
+                  <app-input class="mr-3" [group]="newRequest.get('contingentBeneficiary').get('dependentsC').get(index.toString())"  label="Nacionalidad" name='nationality'></app-input>
+                  <app-input class="mr-3" [group]="newRequest.get('contingentBeneficiary').get('dependentsC').get(index.toString())"  label="Ocupación" name='ocupation'></app-input>
+                  <app-select class="mr-3"[options]="family"[group]="newRequest.get('contingentBeneficiary').get('dependentsC').get(index.toString())" ></app-select>
+                  <app-input class="mr-3" [group]="newRequest.get('contingentBeneficiary').get('dependentsC').get(index.toString())"  label="Cant." name='quantity'></app-input>
+                
+                  <button mat-mini-fab aria-label="Agregar reclamacion" (click)="add(newRequest.get('primaryBenefits').get('dependentsC'),primaryBenefits)" type="button"
+                  class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
+                    <mat-icon style="color: #18446B">add</mat-icon>
+                  </button>
+                </div>
+                
+                <br><mat-divider></mat-divider><br>
+               </div> 
+            </div> 
+          </div> 
+        </div>
+       <div>
+         <p  >Si a mi fallecimiento alguno de mis Beneficiarios Primarios es menor de edad, el beneficio correspondiente será entregado a</p><br>
+         <div  class='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-4'>
+          <app-select class="mr-3"[options]="family"[group]="newRequest.get('contingentBeneficiary').get('personBenefited')" ></app-select>
+          <app-select class="mr-3"[options]="family"[group]="newRequest.get('contingentBeneficiary').get('personBenefited')" ></app-select>
+          <app-input class="mr-3" [group]="newRequest.get('contingentBeneficiary').get('personBenefited')"  label="Cant." name='id'></app-input>
+         </div>
+       </div>
       </ng-template>
       <ng-template #formTemplate>
-          
+        <app-text-area label='Descripcion' style='height: 142px!important;'  [group]="newRequest" label="texto" name='comentary'></app-text-area>
+        <div class="colorb">
+         <p class='formulary-labels'>Queda entendido y convenido que:</p><br><br>
+         <p>a. WorldWide Seguros, (en adelante “La Compañía”), se reserva el derecho de rechazar o aceptar cualquier solicitud. La cobertura provista por La Compañía no entrará en vigor hasta que la solicitud sea recibida, aprobada y notificada por La Compañía.</p><br>
+         <p>b. Usted está de acuerdo que todas las respuestas mencionadas son completas y verdaderas. Si hubiera alguna(s) respuesta(s) falsa(s), inexacta(s), incompleta(s), fraude u omisión en esta solicitud, entonces el contrato podrá serdado por terminado por La Compañía. </p><br>
+         <p>c. Con presentar una fotocopia o el original de este documento, autorizo voluntaria, libre y expresamente, durante toda la vigencia de la póliza, aún después de mi fallecimiento, a cualquier médico, profesional, hospital público oprivado, clínica, Caja de Seguro Social u otra entidad o agencia gubernamental u otra persona médica o relacionada médicamente, proveedor de servicio de salud, empleador, asegurador o tenedor de pólizas de grupo, todosestos ya sea que estén ubicados en el territorio de la República Dominicana o en el extranjero, para proveer a La Compañía o representantes autorizados, de copia del expediente clínico, de toda información que ésta requiera enrelación con mi salud de cualquier naturaleza y en cualquier etapa de mi vida, registrada en cualquier medio, incluyendo, pero sin limitarse, registros respecto a consejos, indicaciones, cuidado (s) o tratamiento (s) proporcionado(s) a mí y/o a mis dependientes, sin limitación a información relacionada con enfermedades mentales o el uso de drogas o alcohol. Esta es una manifestación libre y voluntaria. Por lo anteriormente manifestado, relevo (relevamos)y libero (liberamos) a todas esas personas, instituciones privadas y/o públicas, nacionales o extranjeras, de toda responsabilidad que le pueda comprometer por revelar, suministrar, mostrar o entregar copias simples o autenticadas de la información o documentación descrita anteriormente. </p><br>
+         <p>d. Autorizo a WorldWide Seguros, a solicitar, gestionar y obtener ante cualquiera entidad de intermediación financiera y crediticia nacional o internacional, toda la información que sea considerada sobre mi historial de crédito, incluyendo de manera enunciativa y sin limitación alguna, a las obligaciones y transacciones comerciales que sean llevadas o pudiesen ser llevadas a cabo con cualquier entidad económica.</p><br>
+        </div>
       </ng-template>
     </app-forms-container>
   </form>

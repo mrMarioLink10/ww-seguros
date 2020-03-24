@@ -217,6 +217,8 @@ export class CardiovascularComponent implements OnInit {
 	}
 
 	ngOnInit() {
+		this.addBasicControls();
+
 		this.form.addControl('studies', this.fb.array([this.createFormArray('studies')]));
 		this.studiesList = this.form.get('studies') as FormArray;
 
@@ -270,6 +272,35 @@ export class CardiovascularComponent implements OnInit {
 				group: 'stentPosture'
 			}
 		];
+	}
+
+	addBasicControls() {
+		this.form.addControl('nombre', this.fb.control('', Validators.required));
+		this.form.addControl('edad', this.fb.control('', Validators.required));
+		this.form.addControl('nombreMedico', this.fb.control('', Validators.required));
+		this.form.addControl('centroSalud', this.fb.control('', Validators.required));
+		this.form.addControl('telefonoCentro', this.fb.control('', Validators.required));
+		this.form.addControl('haveChestPain', this.fb.control('', Validators.required));
+		this.form.addControl('havePalpitations', this.fb.control('', Validators.required));
+		this.form.addControl('haveCardiacArrhythmias', this.fb.control('', Validators.required));
+		this.form.addControl('haveDifficultyBreathing', this.fb.control('', Validators.required));
+		this.form.addControl('haveHeartMurmurs', this.fb.control('', Validators.required));
+		this.form.addControl('haveHeartAttacks', this.fb.control('', Validators.required));
+		this.form.addControl('haveCoronaryBypassSurgery', this.fb.control('', Validators.required));
+		this.form.addControl('haveCardiacCatheterization', this.fb.control('', Validators.required));
+		this.form.addControl('haveStentPosture', this.fb.control('', Validators.required));
+		this.form.addControl('haveAnotherDisease', this.fb.control('', Validators.required));
+		this.form.addControl('haveFamilyWithCardio', this.fb.control('', Validators.required));
+		this.form.addControl('haveSmokingHabits', this.fb.control('', Validators.required));
+		this.form.addControl('haveHypertensionStudies', this.fb.control('', Validators.required));
+		this.form.addControl('haveChangedTreatment', this.fb.control('', Validators.required));
+		this.form.addControl('haveLiquidAnomaly', this.fb.control('', Validators.required));
+		this.form.addControl('medicalConsultationFrequency', this.fb.control('', Validators.required));
+		this.form.addControl('importantInformation', this.fb.control('', Validators.required));
+		this.form.addControl('lastMedicalConsultation', this.fb.group({
+			fecha: ['', Validators.required],
+			resultado: ['', Validators.required],
+		}));
 	}
 
 	createFormArray(type: string): FormGroup {

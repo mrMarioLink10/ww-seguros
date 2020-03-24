@@ -1,9 +1,10 @@
 import { Component, OnInit, DoCheck } from '@angular/core';
 import { FieldConfig } from 'src/app/shared/components/form-components/models/field-config';
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
-import {$sex, $res, $country, $time, $family, $allFamily} from '../../../../../core/form/objects';
+import { $sex, $res, $country, $time, $family, $allFamily } from '../../../../../core/form/objects';
 import { FormArrayGeneratorService } from 'src/app/core/services/forms/form-array-generator.service';
 import { questionsA, questionsB } from './questions';
+import { Requests } from '../../requests.component';
 @Component({
   selector: 'app-new-subscription-request',
   templateUrl: './new-subscription-request.component.html',
@@ -11,7 +12,7 @@ import { questionsA, questionsB } from './questions';
 })
 
 export class NewSubscriptionRequestComponent implements OnInit, DoCheck {
-  
+
   newRequest: FormGroup;
   sex = $sex;
   res = $res;
@@ -23,18 +24,34 @@ export class NewSubscriptionRequestComponent implements OnInit, DoCheck {
   questionsB = questionsB;
 
   family = $family
-  requestTypeOptions: FieldConfig =
-   {
-    label: 'Tipo de Solicitud',
+
+
+  yesOrNo: FieldConfig = {
+    label: '',
     options: [
       {
-        value: 'Cambio de plan',
-        viewValue: 'Cambio de plan',
+        value: 'si',
+        viewValue: 'Si'
+      },
+      {
+        value: 'no',
+        viewValue: 'No'
       }
-    ],
-    name: 'requestType',
-   };
-   payments: FieldConfig = {
+    ]
+  };
+
+  requestTypeOptions: FieldConfig =
+    {
+      label: 'Tipo de Solicitud',
+      options: [
+        {
+          value: 'Cambio de plan',
+          viewValue: 'Cambio de plan',
+        }
+      ],
+      name: 'requestType',
+    };
+  payments: FieldConfig = {
     label: 'Frecuencia de Pago',
     options: [
       {
@@ -42,13 +59,13 @@ export class NewSubscriptionRequestComponent implements OnInit, DoCheck {
         viewValue: 'Anual'
       },
       {
-       value: 'Semestral',
-       viewValue: 'Semestral'
-     },
-     {
-       value: 'otro',
-       viewValue: 'Otra'
-     },
+        value: 'Semestral',
+        viewValue: 'Semestral'
+      },
+      {
+        value: 'otro',
+        viewValue: 'Otra'
+      },
     ]
   };
   deducibles: FieldConfig = {
@@ -59,17 +76,17 @@ export class NewSubscriptionRequestComponent implements OnInit, DoCheck {
         viewValue: '1000'
       },
       {
-       value: 'RD$3,000',
-       viewValue: '3000'
-     },
-     {
-      value: 'RD$5,000',
-      viewValue: '5000'
-    },
-     {
-       value: 'otro',
-       viewValue: 'Otr0'
-     },
+        value: 'RD$3,000',
+        viewValue: '3000'
+      },
+      {
+        value: 'RD$5,000',
+        viewValue: '5000'
+      },
+      {
+        value: 'otro',
+        viewValue: 'Otr0'
+      },
     ]
   };
   plans: FieldConfig = {
@@ -82,7 +99,7 @@ export class NewSubscriptionRequestComponent implements OnInit, DoCheck {
     ],
     name: 'plans',
   };
-  titles = ['Contratante','Solicitante', 'Persona políticamente expuesta','Perfil Financiero', 'Dependientes', 'Sección A','Sección B','Sección C Beneficiarios Primarios','Beneficiario(s) Contingente(s)','Comentarios adicionales'];
+  titles = ['Contratante', 'Solicitante', 'Persona políticamente expuesta', 'Perfil Financiero', 'Dependientes', 'Sección A', 'Sección B', 'Sección C Beneficiarios Primarios', 'Beneficiario(s) Contingente(s)', 'Comentarios adicionales'];
   country = {
     label: 'País',
     options: $country,
@@ -96,18 +113,18 @@ export class NewSubscriptionRequestComponent implements OnInit, DoCheck {
         viewValue: 'soltero'
       },
       {
-       value: 'Casado',
-       viewValue: 'casado'
-     },
-     {
-      value: 'Únion Libre',
-      viewValue: 'Union Libre'
-    }
+        value: 'Casado',
+        viewValue: 'casado'
+      },
+      {
+        value: 'Únion Libre',
+        viewValue: 'Union Libre'
+      }
     ],
     name: 'status'
   }
   year = {
-    label: 'Tiempo',
+    label: 'Seleccione',
     options: $time,
     name: 'time'
   };
@@ -132,14 +149,14 @@ export class NewSubscriptionRequestComponent implements OnInit, DoCheck {
     ]
   };
   dependentFormGroup = {
-    name:  [''],
-    lastName:   [''],
+    name: [''],
+    lastName: [''],
     family: [''],
-    weight:     [''],
-    date:     [new Date()],
-    height:     [''],
-    sex:        [''],
-    birtday:       [''],
+    weight: [''],
+    date: [new Date()],
+    height: [''],
+    sex: [''],
+    birtday: [''],
     student: [false],
     telUnivercity: [''],
     id: [''],
@@ -152,7 +169,7 @@ export class NewSubscriptionRequestComponent implements OnInit, DoCheck {
   familyGroup = {
     question: ['', Validators.required],
     answer: [false, Validators.required],
-    family:  [false, Validators.required],
+    family: [false, Validators.required],
   }
   timeQuestionGroup = {
     question: ['', Validators.required],
@@ -192,105 +209,132 @@ export class NewSubscriptionRequestComponent implements OnInit, DoCheck {
     name: [''],
     date: [new Date()],
     id: [''],
-    nationality:  [''],
+    nationality: [''],
     ocupation: [''],
-    family:  [''],
+    family: [''],
     quantity: ['']
 
   }
-  allFamily= $allFamily;
+  allFamily = $allFamily;
 
   b6 = {
     question: ['', Validators.required],
     answer: [false, Validators.required],
     companyName: [''],
     policyName: [''],
-    insuredName:[''],
+    insuredName: [''],
     insuranceCarrier: [''],
     typepolicy: [''],
-    date:[new Date()],
-    valid:[''],
+    date: [new Date()],
+    valid: [''],
     reclamation: [''],
     reclamationSpecification: ['']
   }
   constructor(private fb: FormBuilder, public formMethods: FormArrayGeneratorService) { }
-  
+
   ngOnInit() {
 
     this.procedure = {
       question: [''],
       answer: [false],
-      procedures:  this.fb.array([ this.formMethods.createItem(this.formGroupProcedure)])
+      procedures: this.fb.array([this.formMethods.createItem(this.formGroupProcedure)])
     }
 
-   this.newRequest = this.fb.group({
+    this.newRequest = this.fb.group({
       requestType: [''],
-      NoC:         [''],
-      deducibles:   [''],
-      payment:     [''],
-      plans:       [''],
+      NoC: [''],
+      deducibles: [''],
+      payment: [''],
+      plans: [''],
       person: this.fb.group({
-        firstName:    ['', Validators.required],
-        secondName:   [''],
-        lastName:     ['', Validators.required],
-        date:         [new Date()],
-        sex:          [''],
-        nationality:  [''],
-        id:           [''],
-        age:          [''],
-        weight:       [''],
-        height:       [''],
-        status:       [''],
-        country:      [''],
-        city:         [''],
-        direction:    [''],
-        tel:          [''],
-        cel:          [''],
-        officeTel:    [''],
-        fax:          [''],
-        email:        [''],
+        firstName: ['', Validators.required],
+        secondName: [''],
+        lastName: ['', Validators.required],
+        date: [new Date()],
+        sex: [''],
+        nationality: [''],
+        id: [''],
+        age: [''],
+        weight: [''],
+        height: [''],
+        status: [''],
+        country: [''],
+        city: [''],
+        direction: [''],
+        tel: [''],
+        cel: [''],
+        officeTel: [''],
+        fax: [''],
+        email: [''],
         office: this.fb.group({
-          company:            [''],
-          position:           [''],
-          direction:          [''],
-          economicActivity:   [''],
-          sector:             [''],
-          city:               [''],
-          country:            [''],
+          company: [''],
+          position: [''],
+          direction: [''],
+          economicActivity: [''],
+          sector: [''],
+          city: [''],
+          country: [''],
         })
       }),
       contractor: this.fb.group({
-        societyName:        [''],
-        commercialName:     [''],
-        taxpayerNumber:     [''],
-        socialHome:         [''],
-        tel:                [''],
-        email:              [''],
+        societyName: [''],
+        commercialName: [''],
+        taxpayerNumber: [''],
+        socialHome: [''],
+        tel: [''],
+        email: [''],
         commercialActivity: [''],
-        requestType:        [''],
+        requestType: [''],
         legalRepresentation: this.fb.group({
-          name:             [''],
-          position:         [''],
-          nationality:      [''],
-          id:               [''],
-          policy:           [''],
-          email:            ['']
+          name: [''],
+          position: [''],
+          nationality: [''],
+          id: [''],
+          policy: [''],
+          email: ['']
         })
       }),
       exposedPerson: this.fb.group({
-        contractor:     [false],
-        headLine:       [false],
-        lastPosition:   [''],
-        time:           [''],
-        timeNumber:     ['']
+        contractor: [false],
+        headLine: [false],
+        lastPosition: [''],
+        time: [''],
+        timeNumber: ['']
       }),
-      prinsipalIncome:  [''],
-      otherIncomes:     [''],
-     
+      prinsipalIncome: [''],
+      otherIncomes: [''],
 
-      dependents: this.fb.array([ this.formMethods.createItem(this.dependentFormGroup)]),
-      questionsA:this.fb.array([ this.formMethods.createItem(this.questionsGroup)]),
-      questionsB:this.fb.array([ this.formMethods.createItem(this.questionsGroup)]),
+
+      dependents: this.fb.array([this.formMethods.createItem(this.dependentFormGroup)]),
+      // questionsA: this.fb.array([this.formMethods.createItem(this.questionsGroup)]),
+
+      questions: this.fb.group({
+        haveMusculoskeletal: ['', Validators.required],
+        haveCerebrovascular: ['', Validators.required],
+        haveNervousSystem: ['', Validators.required],
+        haveVisionHearing: ['', Validators.required],
+        haveSpine: ['', Validators.required],
+        haveCardiovascularSystem: ['', Validators.required],
+        haveRespiratorySystem: ['', Validators.required],
+        haveDigestiveSystem: ['', Validators.required],
+        haveUrinarySystem: ['', Validators.required],
+        haveMaleReproductiveOrgans: ['', Validators.required],
+        haveBloodDisorders: ['', Validators.required],
+        haveEndocrineDisorders: ['', Validators.required],
+        haveAlternateTreatment: ['', Validators.required],
+        haveFunctionalLimitation: ['', Validators.required],
+        haveDeformity: ['', Validators.required],
+        haveBloodTransfusion: ['', Validators.required],
+        haveAlcoholicDependence: ['', Validators.required],
+        haveNicotine: ['', Validators.required],
+        haveStd: ['', Validators.required],
+        havePhysiologicalDisorder: ['', Validators.required],
+        haveHighRiskSport: ['', Validators.required],
+        havePregnant: ['', Validators.required],
+        haveReproductiveOrganDisorders: ['', Validators.required],
+      }),
+
+      questionsB: this.fb.array([this.formMethods.createItem(this.questionsGroup)]),
       primaryBenefits: this.fb.group({
         dependentsC: this.fb.array([this.formMethods.createItem(this.primaryBenefits)]),
         personBenefited: this.fb.group({
@@ -308,76 +352,130 @@ export class NewSubscriptionRequestComponent implements OnInit, DoCheck {
         })
       }),
       comentary: ['']
-      
+
     });
 
 
     this.dependentsFormArray = this.newRequest.get('dependents') as FormArray;
     this.questionsFormArray = this.newRequest.get('questionsA') as FormArray;
     this.questionsBFormArray = this.newRequest.get('questionsB') as FormArray;
-    this.setQuestionsA();
+    // this.setQuestionsA();
     this.setQuestionsB();
-    
+
   }
-  ngDoCheck(){
-  // console.log(this.newRequest);
+  ngDoCheck() {
+    // console.log(this.newRequest);
   }
-  add(dependentsFormArray,group){
+  add(dependentsFormArray, group) {
     const increment = dependentsFormArray.length + 1;
-    dependentsFormArray =  this.formMethods.addElement( dependentsFormArray, increment, group).formArray;
+    dependentsFormArray = this.formMethods.addElement(dependentsFormArray, increment, group).formArray;
   }
-  setQuestionsA(){
-    this.questions.forEach((question,index)=> {
-      if(index > 0){
-        if(question.time){
-          this.add(this.questionsFormArray,this.timeQuestionGroup);
-        }
-        else if(question.date){
-          this.add(this.questionsFormArray,this.DateQuestionGroup);
-          
-        }else if(question.pregnant){
-          this.add(this.questionsFormArray,this.pregnant);
-        }
-        else{
-          this.add(this.questionsFormArray,this.questionsGroup);
-        }
-      }
-    });
-  }
-  setQuestionsB(){
-    this.questionsB.forEach((question,index)=> {
-      if(index > 0){
-        if(question.procedures){
-          this.add(this.questionsBFormArray,this.procedure);
+  // setQuestionsA() {
+  //   this.questions.forEach((question, index) => {
+  //     if (index > 0) {
+  //       if (question.time) {
+  //         this.add(this.questionsFormArray, this.timeQuestionGroup);
+  //       }
+  //       else if (question.date) {
+  //         this.add(this.questionsFormArray, this.DateQuestionGroup);
+
+  //       } else if (question.pregnant) {
+  //         this.add(this.questionsFormArray, this.pregnant);
+  //       }
+  //       else {
+  //         this.add(this.questionsFormArray, this.questionsGroup);
+  //       }
+  //     }
+  //   });
+  // }
+  setQuestionsB() {
+    this.questionsB.forEach((question, index) => {
+      if (index > 0) {
+        if (question.procedures) {
+          this.add(this.questionsBFormArray, this.procedure);
           this.proceduresArray = this.newRequest.get('questionsB').get(index.toString()).get('procedures') as FormArray;
           console.log(this.newRequest.get('questionsB').get(index.toString()).get('procedures').get('0'))
         }
-        else if(index === 3){
-          this.add(this.questionsBFormArray,this.familyGroup);
-          
+        else if (index === 3) {
+          this.add(this.questionsBFormArray, this.familyGroup);
+
         }
-        else if (index===4){
-          this.add(this.questionsBFormArray,this.comentaryQuestionGroup)
+        else if (index === 4) {
+          this.add(this.questionsBFormArray, this.comentaryQuestionGroup)
         }
-        else if (index===5){
-          this.add(this.questionsBFormArray,this.b6)
+        else if (index === 5) {
+          this.add(this.questionsBFormArray, this.b6)
         }
-        else{
-          this.add(this.questionsBFormArray,this.questionsGroup);
+        else {
+          this.add(this.questionsBFormArray, this.questionsGroup);
         }
       }
     });
   }
-  proceduresFormGroup(index,i){
-   return  this.newRequest.get('questionsB').get(index.toString()).get('procedures').get(i.toString()) as FormGroup;
+  proceduresFormGroup(index, i) {
+    return this.newRequest.get('questionsB').get(index.toString()).get('procedures').get(i.toString()) as FormGroup;
   }
-  
-  form():FormGroup{
+
+  form(): FormGroup {
     return this.fb.group(this.formGroupProcedure)
   }
-  addprocedures(){
+  addprocedures() {
     this.proceduresArray.push(this.form())
     this.proceduresArray.updateValueAndValidity();
+  }
+  print() {
+    // console.log(JSON.stringify(this.newRequest.get('questions').value));
+    console.log('SOLO DISEASES', this.newRequest.get('questions').value);
+    console.log('SOLO DEPENDENTS', this.newRequest.get('dependents'));
+    console.log('ENTERO', this.newRequest);
+  }
+
+  selectChange(event) {
+    const questionsForm = this.newRequest.get('questions') as FormGroup;
+
+    console.log(event);
+    if (event.valor === 'si') {
+      switch (event.name) {
+        case 'havePregnant':
+          questionsForm.addControl('pregnant', this.fb.group({
+            time: ['', Validators.required]
+          }));
+          break;
+
+        case 'haveHighRiskSport':
+          questionsForm.addControl('highRiskSport', this.fb.group({
+            date: ['', Validators.required],
+            info: ['', Validators.required],
+          }));
+          break;
+
+        case 'haveNicotine':
+          questionsForm.addControl('nicotine', this.fb.group({
+            quantity: ['', Validators.required],
+            timerange: ['', Validators.required],
+            time: ['', Validators.required],
+          }));
+          break;
+        default:
+          break;
+      }
+    } else if (event.valor === 'no') {
+      switch (event.name) {
+        case 'havePregnant':
+          questionsForm.removeControl('pregnant');
+          break;
+        case 'haveHighRiskSport':
+          questionsForm.removeControl('highRiskSport');
+          break;
+        default:
+          break;
+      }
+    }
+  }
+
+  radioChange(event) {
+    console.log(`value: ${event.value}, name: ${event.source.name}`);
+
   }
 }
 

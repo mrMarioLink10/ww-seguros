@@ -45,7 +45,7 @@ export const $res: FieldConfig = {
     ]
 }
 
-export const $country  =
+export const $country =
     [
         {
             value: 'Afganistán',
@@ -67,7 +67,7 @@ export const $time = [
     },
     {
         value: 'año',
-        viewValue: 'año',
+        viewValue: 'Año',
     }
 ]
 export const $allFamily = {

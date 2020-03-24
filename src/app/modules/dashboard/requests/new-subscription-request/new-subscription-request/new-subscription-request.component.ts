@@ -433,7 +433,7 @@ export class NewSubscriptionRequestComponent implements OnInit, DoCheck {
   }
   print() {
     // console.log(JSON.stringify(this.newRequest.get('questions').value));
-    console.log('SOLO DISEASES', this.newRequest.get('questions').value);
+    console.log('SOLO DISEASES', this.newRequest.get('questionsA').value);
     console.log('SOLO DEPENDENTS', this.newRequest.get('dependents'));
     console.log('ENTERO', this.newRequest);
   }

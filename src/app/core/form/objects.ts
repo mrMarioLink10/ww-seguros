@@ -26,10 +26,6 @@ export const $family: FieldConfig = {
             value: 'Hijo',
             viewValue: 'Hijo'
         },
-        {
-            value: 'Padres',
-            viewValue: 'Padres'
-        },
     ]
 }
 export const $res: FieldConfig = {

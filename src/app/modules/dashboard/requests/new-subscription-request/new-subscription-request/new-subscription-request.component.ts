@@ -1,9 +1,10 @@
 import { Component, OnInit, DoCheck } from '@angular/core';
 import { FieldConfig } from 'src/app/shared/components/form-components/models/field-config';
 import { FormGroup, FormBuilder, Validators, FormArray, FormControl } from '@angular/forms';
-import {$sex, $res, $country, $time, $family, $allFamily} from '../../../../../core/form/objects';
+import { $sex, $res, $country, $time, $family, $allFamily } from '../../../../../core/form/objects';
 import { FormArrayGeneratorService } from 'src/app/core/services/forms/form-array-generator.service';
 import { questionsA, questionsB } from './questions';
+import { Requests } from '../../requests.component';
 @Component({
   selector: 'app-new-subscription-request',
   templateUrl: './new-subscription-request.component.html',
@@ -11,7 +12,7 @@ import { questionsA, questionsB } from './questions';
 })
 
 export class NewSubscriptionRequestComponent implements OnInit, DoCheck {
-  
+
   visible = false;
   newRequest: FormGroup;
   sex = $sex;
@@ -23,24 +24,40 @@ export class NewSubscriptionRequestComponent implements OnInit, DoCheck {
   proceduresArray: FormArray;
   questions = questionsA;
   questionsB = questionsB;
-student = {
-  name: ['',Validators.required],
-  univercity: ['',Validators.required],
-  univercityPhone: ['',Validators.required]
-}
+  student = {
+    name: ['', Validators.required],
+    univercity: ['', Validators.required],
+    univercityPhone: ['', Validators.required]
+  }
   family = $family
-  requestTypeOptions: FieldConfig =
-   {
-    label: 'Tipo de Solicitud',
+
+
+  yesOrNo: FieldConfig = {
+    label: '',
     options: [
       {
-        value: 'Cambio de plan',
-        viewValue: 'Cambio de plan',
+        value: 'si',
+        viewValue: 'Si'
+      },
+      {
+        value: 'no',
+        viewValue: 'No'
       }
-    ],
-    name: 'requestType',
-   };
-   payments: FieldConfig = {
+    ]
+  };
+
+  requestTypeOptions: FieldConfig =
+    {
+      label: 'Tipo de Solicitud',
+      options: [
+        {
+          value: 'Cambio de plan',
+          viewValue: 'Cambio de plan',
+        }
+      ],
+      name: 'requestType',
+    };
+  payments: FieldConfig = {
     label: 'Frecuencia de Pago',
     options: [
       {
@@ -48,13 +65,13 @@ student = {
         viewValue: 'Anual'
       },
       {
-       value: 'Semestral',
-       viewValue: 'Semestral'
-     },
-     {
-       value: 'otro',
-       viewValue: 'Otra'
-     },
+        value: 'Semestral',
+        viewValue: 'Semestral'
+      },
+      {
+        value: 'otro',
+        viewValue: 'Otra'
+      },
     ]
   };
   deducibles: FieldConfig = {
@@ -65,17 +82,17 @@ student = {
         viewValue: '1000'
       },
       {
-       value: 'RD$3,000',
-       viewValue: '3000'
-     },
-     {
-      value: 'RD$5,000',
-      viewValue: '5000'
-    },
-     {
-       value: 'otro',
-       viewValue: 'Otr0'
-     },
+        value: 'RD$3,000',
+        viewValue: '3000'
+      },
+      {
+        value: 'RD$5,000',
+        viewValue: '5000'
+      },
+      {
+        value: 'otro',
+        viewValue: 'Otr0'
+      },
     ]
   };
   plans: FieldConfig = {
@@ -88,7 +105,7 @@ student = {
     ],
     name: 'plans',
   };
-  titles = ['Contratante','Solicitante', 'Persona políticamente expuesta','Perfil Financiero', 'Dependientes', 'Sección A','Sección B','Sección C Beneficiarios Primarios','Beneficiario(s) Contingente(s)','Comentarios adicionales'];
+  titles = ['Contratante', 'Solicitante', 'Persona políticamente expuesta', 'Perfil Financiero', 'Dependientes', 'Sección A', 'Sección B', 'Sección C Beneficiarios Primarios', 'Beneficiario(s) Contingente(s)', 'Comentarios adicionales'];
   country = {
     label: 'País',
     options: $country,
@@ -102,18 +119,18 @@ student = {
         viewValue: 'soltero'
       },
       {
-       value: 'Casado',
-       viewValue: 'casado'
-     },
-     {
-      value: 'Únion Libre',
-      viewValue: 'Union Libre'
-    }
+        value: 'Casado',
+        viewValue: 'casado'
+      },
+      {
+        value: 'Únion Libre',
+        viewValue: 'Union Libre'
+      }
     ],
     name: 'status'
   }
   year = {
-    label: 'Tiempo',
+    label: 'Seleccione',
     options: $time,
     name: 'time'
   };
@@ -138,24 +155,24 @@ student = {
     ]
   };
   dependentFormGroup = {
-    name:  ['',Validators.required],
-    lastName:   ['',Validators.required],
-    family: ['',Validators.required],
-    weight:     ['',Validators.required],
-    date:     [new Date(),Validators.required],
-    height:     ['',Validators.required],
-    sex:        ['',Validators.required],
-    birtday:       ['',Validators.required],
-    student: ['',Validators.required],
-    telUnivercity: ['',Validators.required],
-    id: ['',Validators.required],
-    nationality: ['',Validators.required],
+    name: ['', Validators.required],
+    lastName: ['', Validators.required],
+    family: ['', Validators.required],
+    weight: ['', Validators.required],
+    date: [new Date(), Validators.required],
+    height: ['', Validators.required],
+    sex: ['', Validators.required],
+    birtday: ['', Validators.required],
+    student: ['', Validators.required],
+    telUnivercity: ['', Validators.required],
+    id: ['', Validators.required],
+    nationality: ['', Validators.required],
   };
   questionsGroup = {
     question: ['', Validators.required],
     answer: [false, Validators.required],
   }
-  familyControl  = new FormControl('', Validators.required);
+  familyControl = new FormControl('', Validators.required);
   reasonControl = new FormControl('', Validators.required);
 
   timeQuestionGroup = {
@@ -178,118 +195,129 @@ student = {
   }
   procedures;
   formGroupProcedure = {
-    patientsName: ['',Validators.required],
-    procedures: ['',Validators.required],
-    date: [new Date(),Validators.required],
-    treatment: ['',Validators.required],
-    duration: ['',Validators.required],
-    time: ['',Validators.required],
-    providerName: ['',Validators.required],
-    providerDirection: ['',Validators.required]
+    patientsName: ['', Validators.required],
+    procedures: ['', Validators.required],
+    date: [new Date(), Validators.required],
+    treatment: ['', Validators.required],
+    duration: ['', Validators.required],
+    time: ['', Validators.required],
+    providerName: ['', Validators.required],
+    providerDirection: ['', Validators.required]
   }
   primaryBenefits = {
     name: ['', Validators.required],
-    date: [new Date(),Validators.required],
-    id: ['',Validators.required],
-    nationality:  ['',Validators.required],
-    ocupation: ['',Validators.required],
-    family:  ['',Validators.required],
-    quantity: ['',Validators.required]
+    date: [new Date(), Validators.required],
+    id: ['', Validators.required],
+    nationality: ['', Validators.required],
+    ocupation: ['', Validators.required],
+    family: ['', Validators.required],
+    quantity: ['', Validators.required]
 
   }
-  allFamily= $allFamily;
+  allFamily = $allFamily;
 
-  policy:FormGroup;
+  policy: FormGroup;
   constructor(private fb: FormBuilder, public formMethods: FormArrayGeneratorService) { }
-  
+
   ngOnInit() {
 
-    this.policy = this.fb.group({
-      companyName: [''],
-      policyName: [''],
-      insuredName:[''],
-      insuranceCarrier: [''],
-      typepolicy: [''],
-      date:[new Date()],
-      valid:[''],
-      reclamation: [''],
-      reclamationSpecification: ['']
-    })
+    this.procedures = this.fb.array([this.formMethods.createItem(this.formGroupProcedure)]);
 
-     this.procedures =  this.fb.array([ this.formMethods.createItem(this.formGroupProcedure)])
-    
-
-   this.newRequest = this.fb.group({
-      requestType: ['',Validators.required],
-      NoC:         ['',Validators.required],
-      deducibles:   ['',Validators.required],
-      payment:     ['',Validators.required],
-      plans:       ['',Validators.required],
+    this.newRequest = this.fb.group({
+      requestType: ['', Validators.required],
+      NoC: ['', Validators.required],
+      deducibles: ['', Validators.required],
+      payment: ['', Validators.required],
+      plans: ['', Validators.required],
       person: this.fb.group({
-        firstName:    ['', Validators.required],
-        secondName:   ['',Validators.required],
-        lastName:     ['', Validators.required],
-        date:         [new Date(),Validators.required],
-        sex:          ['',Validators.required],
-        nationality:  ['',Validators.required],
-        id:           ['',Validators.required],
-        age:          ['',Validators.required],
-        weight:       ['',Validators.required],
-        height:       ['',Validators.required],
-        status:       ['',Validators.required],
-        country:      ['',Validators.required],
-        city:         ['',Validators.required],
-        direction:    ['',Validators.required],
-        tel:          ['',Validators.required],
-        cel:          ['',Validators.required],
-        officeTel:    ['',Validators.required],
-        fax:          ['',Validators.required],
-        email:        ['',Validators.required],
+        firstName: ['', Validators.required],
+        secondName: ['', Validators.required],
+        lastName: ['', Validators.required],
+        date: [new Date(), Validators.required],
+        sex: ['', Validators.required],
+        nationality: ['', Validators.required],
+        id: ['', Validators.required],
+        age: ['', Validators.required],
+        weight: ['', Validators.required],
+        height: ['', Validators.required],
+        status: ['', Validators.required],
+        country: ['', Validators.required],
+        city: ['', Validators.required],
+        direction: ['', Validators.required],
+        tel: ['', Validators.required],
+        cel: ['', Validators.required],
+        officeTel: ['', Validators.required],
+        fax: ['', Validators.required],
+        email: ['', Validators.required],
         office: this.fb.group({
-          company:            ['',Validators.required],
-          position:           ['',Validators.required],
-          direction:          ['',Validators.required],
-          economicActivity:   ['',Validators.required],
-          sector:             ['',Validators.required],
-          city:               ['',Validators.required],
-          country:            ['',Validators.required],
+          company: ['', Validators.required],
+          position: ['', Validators.required],
+          direction: ['', Validators.required],
+          economicActivity: ['', Validators.required],
+          sector: ['', Validators.required],
+          city: ['', Validators.required],
+          country: ['', Validators.required],
         })
       }),
       contractor: this.fb.group({
-        societyName:        ['',Validators.required],
-        commercialName:     ['',Validators.required],
-        taxpayerNumber:     ['',Validators.required],
-        socialHome:         ['',Validators.required],
-        tel:                ['',Validators.required],
-        email:              ['',Validators.required],
-        commercialActivity: ['',Validators.required],
-        requestType:        ['',Validators.required],
+        societyName: ['', Validators.required],
+        commercialName: ['', Validators.required],
+        taxpayerNumber: ['', Validators.required],
+        socialHome: ['', Validators.required],
+        tel: ['', Validators.required],
+        email: ['', Validators.required],
+        commercialActivity: ['', Validators.required],
+        requestType: ['', Validators.required],
         legalRepresentation: this.fb.group({
-          name:             ['',Validators.required],
-          position:         ['',Validators.required],
-          nationality:      ['',Validators.required],
-          id:               ['',Validators.required],
-          policy:           ['',Validators.required],
-          email:            ['',Validators.required]
+          name: ['', Validators.required],
+          position: ['', Validators.required],
+          nationality: ['', Validators.required],
+          id: ['', Validators.required],
+          policy: ['', Validators.required],
+          email: ['', Validators.required]
         })
       }),
       exposedPerson: this.fb.group({
-        contractor:     [false,Validators.required],
-        headLine:       [false,Validators.required],
-        lastPosition:   ['',Validators.required],
-        time:           ['',Validators.required],
-        timeNumber:     ['',Validators.required]
+        contractor: [false, Validators.required],
+        headLine: [false, Validators.required],
+        lastPosition: ['', Validators.required],
+        time: ['', Validators.required],
+        timeNumber: ['', Validators.required]
       }),
-      prinsipalIncome:  ['',Validators.required],
-      otherIncomes:     ['',Validators.required],
-     
+      prinsipalIncome: ['', Validators.required],
+      otherIncomes: ['', Validators.required],
+
 
       dependents: this.fb.group({
-        allDependents:this.fb.array([ this.formMethods.createItem(this.dependentFormGroup)]),
-        students: this.fb.array([ this.formMethods.createItem(this.student)]),
+        allDependents: this.fb.array([this.formMethods.createItem(this.dependentFormGroup)]),
+        students: this.fb.array([this.formMethods.createItem(this.student)]),
       }),
-      questionsA:this.fb.array([ this.formMethods.createItem(this.questionsGroup)]),
-      questionsB:this.fb.array([ this.formMethods.createItem(this.questionsGroup)]),
+      questionsA: this.fb.group({
+        haveMusculoskeletal: ['', Validators.required],
+        haveCerebrovascular: ['', Validators.required],
+        haveNervousSystem: ['', Validators.required],
+        haveVisionHearing: ['', Validators.required],
+        haveSpine: ['', Validators.required],
+        haveCardiovascularSystem: ['', Validators.required],
+        haveRespiratorySystem: ['', Validators.required],
+        haveDigestiveSystem: ['', Validators.required],
+        haveUrinarySystem: ['', Validators.required],
+        haveMaleReproductiveOrgans: ['', Validators.required],
+        haveBloodDisorders: ['', Validators.required],
+        haveEndocrineDisorders: ['', Validators.required],
+        haveAlternateTreatment: ['', Validators.required],
+        haveFunctionalLimitation: ['', Validators.required],
+        haveDeformity: ['', Validators.required],
+        haveBloodTransfusion: ['', Validators.required],
+        haveAlcoholicDependence: ['', Validators.required],
+        haveNicotine: ['', Validators.required],
+        haveStd: ['', Validators.required],
+        havePhysiologicalDisorder: ['', Validators.required],
+        haveHighRiskSport: ['', Validators.required],
+        havePregnant: ['', Validators.required],
+        haveReproductiveOrganDisorders: ['', Validators.required],
+      }),
+      questionsB: this.fb.array([this.formMethods.createItem(this.questionsGroup)]),
       primaryBenefits: this.fb.group({
         dependentsC: this.fb.array([this.formMethods.createItem(this.primaryBenefits)]),
         personBenefited: this.fb.group({
@@ -307,45 +335,45 @@ student = {
         })
       }),
       comentary: ['']
-      
+
     });
 
     this.studentDependents = this.newRequest.get('dependents').get('students') as FormArray;
     this.dependentsFormArray = this.newRequest.get('dependents').get('allDependents') as FormArray;
     this.questionsFormArray = this.newRequest.get('questionsA') as FormArray;
     this.questionsBFormArray = this.newRequest.get('questionsB') as FormArray;
-    this.setQuestionsA();
+    // this.setQuestionsA();
     this.setQuestionsB();
-    
+
   }
-  ngDoCheck(){ }
-  
-  add(dependentsFormArray,group){
+  ngDoCheck() { }
+
+  add(dependentsFormArray, group) {
     const increment = dependentsFormArray.length + 1;
-    dependentsFormArray =  this.formMethods.addElement( dependentsFormArray, increment, group).formArray;
+    dependentsFormArray = this.formMethods.addElement(dependentsFormArray, increment, group).formArray;
   }
-  setQuestionsA(){
-    this.questions.forEach((question,index)=> {
-      if(index > 0){
-        if(question.time){
-          this.add(this.questionsFormArray,this.timeQuestionGroup);
-        }
-        else if(question.date){
-          this.add(this.questionsFormArray,this.DateQuestionGroup);
-          
-        }else if(question.pregnant){
-          this.add(this.questionsFormArray,this.pregnant);
-        }
-        else{
-          this.add(this.questionsFormArray,this.questionsGroup);
-        }
-      }
-    });
-  }
+  // setQuestionsA(){
+  //   this.questions.forEach((question,index)=> {
+  //     if(index > 0){
+  //       if(question.time){
+  //         this.add(this.questionsFormArray,this.timeQuestionGroup);
+  //       }
+  //       else if(question.date){
+  //         this.add(this.questionsFormArray,this.DateQuestionGroup);
+
+  //       }else if(question.pregnant){
+  //         this.add(this.questionsFormArray,this.pregnant);
+  //       }
+  //       else{
+  //         this.add(this.questionsFormArray,this.questionsGroup);
+  //       }
+  //     }
+  //   });
+  // }
 
   selectChangeB(event, index) {
     let questions = this.newRequest.get('questionsB').get(index.toString()) as FormGroup;
-    if(event.valor){
+    if (event.valor) {
 
       switch (index) {
         case 2:
@@ -359,12 +387,12 @@ student = {
         case 4:
           questions.addControl('reason', this.reasonControl)
           break;
-        case 5: 
+        case 5:
           questions.addControl('policy', this.policy)
-        break;
-  
+          break;
+
       }
-    }else{
+    } else {
       switch (index) {
         case 2:
           questions.removeControl('procedures')
@@ -375,33 +403,87 @@ student = {
         case 4:
           questions.removeControl('reason')
           break;
-        case 5: 
+        case 5:
           questions.removeControl('policy')
-        break;
-  
+          break;
+
       }
     }
-   
+
   }
 
-  setQuestionsB(){
-    this.questionsB.forEach((question,index)=> {
-      if(index > 0){
-        this.add(this.questionsBFormArray,this.questionsGroup);
+  setQuestionsB() {
+    this.questionsB.forEach((question, index) => {
+      if (index > 0) {
+        this.add(this.questionsBFormArray, this.questionsGroup);
       }
     });
   }
 
-  proceduresFormGroup(index,i){
-   return  this.newRequest.get('questionsB').get(index.toString()).get('procedures').get(i.toString()) as FormGroup;
+  proceduresFormGroup(index, i) {
+    return this.newRequest.get('questionsB').get(index.toString()).get('procedures').get(i.toString()) as FormGroup;
   }
-  
-  form():FormGroup{
+
+  form(): FormGroup {
     return this.fb.group(this.formGroupProcedure)
   }
-  addprocedures(){
+  addprocedures() {
     this.proceduresArray.push(this.form())
     this.proceduresArray.updateValueAndValidity();
+  }
+  print() {
+    // console.log(JSON.stringify(this.newRequest.get('questions').value));
+    console.log('SOLO DISEASES', this.newRequest.get('questions').value);
+    console.log('SOLO DEPENDENTS', this.newRequest.get('dependents'));
+    console.log('ENTERO', this.newRequest);
+  }
+
+  selectChange(event) {
+    const questionsForm = this.newRequest.get('questions') as FormGroup;
+
+    console.log(event);
+    if (event.valor === 'si') {
+      switch (event.name) {
+        case 'havePregnant':
+          questionsForm.addControl('pregnant', this.fb.group({
+            time: ['', Validators.required]
+          }));
+          break;
+
+        case 'haveHighRiskSport':
+          questionsForm.addControl('highRiskSport', this.fb.group({
+            date: ['', Validators.required],
+            info: ['', Validators.required],
+          }));
+          break;
+
+        case 'haveNicotine':
+          questionsForm.addControl('nicotine', this.fb.group({
+            quantity: ['', Validators.required],
+            timerange: ['', Validators.required],
+            time: ['', Validators.required],
+          }));
+          break;
+        default:
+          break;
+      }
+    } else if (event.valor === 'no') {
+      switch (event.name) {
+        case 'havePregnant':
+          questionsForm.removeControl('pregnant');
+          break;
+        case 'haveHighRiskSport':
+          questionsForm.removeControl('highRiskSport');
+          break;
+        default:
+          break;
+      }
+    }
+  }
+
+  radioChange(event) {
+    console.log(`value: ${event.value}, name: ${event.source.name}`);
+
   }
 }
 

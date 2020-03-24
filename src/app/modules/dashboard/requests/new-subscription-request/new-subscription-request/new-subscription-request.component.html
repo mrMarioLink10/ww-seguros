@@ -262,62 +262,100 @@
                 </div>
               </div>
             </div>
-  
+
           </ng-template>
           <ng-template #formTemplate>
-            <div formArrayName="questionsA">
-              <p class='formulary-labels pb-3' style='width: 85%;'>Según su mejor entendimiento y conocimiento, hay
-                alguna persona nombrada en esta solicitud que haya padecido o padezca de alguna de las siguientes
-                enfermedades:</p>
-              <div *ngFor="let element of questionsFormArray.controls; let index = index">
-                <div [formGroupName]="index">
-                  <div class="grid grid-cols-12">
-                    <div class="col-span-9">
-                      <div class='question'>
-                        <p class='body-13'>{{questions[index].question}}</p>
-                      </div>
-                    </div>
-                    <div class="col-span-3">
-                      <app-radio-button [group]="newRequest.get('questionsA').get(index.toString())" name="answer"
-                        [options]="res"></app-radio-button>
-                    </div>
-                  </div>
-                  <div>
-                    <div class="w-50 pt-5"
-                      *ngIf=" questions[index].time && newRequest.get('questionsA').get(index.toString()).get('answer').value">
-                      <p class='body-13 pt-4 pb-4'>{{questions[index].description}}</p>
-                      <div class='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3'>
-                        <app-input class="mr-3" [group]="newRequest.get('questionsA').get(index.toString())"
-                          label="Cantidad Diaria" [name]='questions[index].time.name1'></app-input>
-                        <app-input class="mr-3" [group]="newRequest.get('questionsA').get(index.toString())"
-                          label="Tiempo" [name]='questions[index].time.name2'></app-input>
-                        <app-select class="mr-3" [options]="year"
-                          [group]="newRequest.get('questionsA').get(index.toString())"></app-select>
-                      </div>
-                    </div>
-  
-                    <div *ngIf="index === 20 &&  newRequest.get('questionsA').get(index.toString()).get('answer').value">
-                      <label for="date"> ¿Desde cuándo? Describa.</label>
+            <div>
+              <!-- <p class="formulary-labels pb-3">Según su mejor entendimiento y conocimiento, hay alguna
+                    persona nombrada en esta solicitud que haya padecido o padezca de alguna de las siguientes enfermedades:</p>
+                  <hr class="w-full mb-10 ww-divider">
+          
+                  <div *ngFor="let que of questions; let idx = index">
+                    <div
+                      class="w-full xl:flex xl:justify-between lg:flex lg:justify-between md:flex md:justify-between sm:flex sm:justify-between">
+                      <div class="radio-button-label" style="max-width: 80%;">{{idx+1}}. {{que.question}}</div>
+                      <app-radio-button [group]="newRequest.get('questions')" [name]="que.name" [options]="yesOrNo"
+                        (selected)="selectChange($event)">
+                      </app-radio-button>
+                    </div> -->
+
+              <!-- SI ESTA EMBARAZADA -->
+              <!-- <div *ngIf="newRequest.get('questions').value.havePregnant === 'si' && que.name === 'havePregnant'">
+                      <label class="my-2 text-xs">Favor indicar semanas de embarazo</label>
                       <div style="width: 200px;">
-                        <app-date-picker class="mr-3" id='date'
-                          [group]="newRequest.get('questionsA').get(index.toString())" label="fecha" name='date'>
+                        <app-input class="mr-3" [group]="newRequest.get('questions').get('pregnant')" type="number"
+                          label="Semanas" name='time'>
+                        </app-input>
+                      </div>
+                    </div> -->
+
+              <!-- SI FUMABA -->
+              <!-- <div *ngIf="newRequest.get('questions').value.haveNicotine === 'si' && que.name === 'haveNicotine'">
+                      <label class="my-2 text-xs">Especifique cantidad por día y cuánto tiempo tiene o estuvo fumando</label>
+                      <div class='grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2'>
+                        <div class='grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2'>
+                          <div class="mr-3">
+                            <app-input class="mr-3" [group]="newRequest.get('questions').get('nicotine')" label="Cantidad por día"
+                              name='quantity'>
+                            </app-input>
+                          </div>
+                          <div class='grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2'>
+                            <app-input class="mr-3" [group]="newRequest.get('questions').get('nicotine')" label="Tiempo"
+                              name='timerange'>
+                            </app-input>
+                            <app-select class="mr-3" [options]="year" [group]="newRequest.get('questions').get('nicotine')">
+                            </app-select>
+                          </div>
+                        </div>
+                        <div></div>
+                      </div>
+                    </div> -->
+
+              <!-- SI PRACTICA DEPORTE DE ALTO RIESGO -->
+              <!-- <div *ngIf="newRequest.get('questions').value.haveHighRiskSport === 'si' && que.name === 'haveHighRiskSport'">
+                      <label class="my-2 text-xs">¿Desde cuándo? Describa</label>
+                      <div style="width: 200px;">
+                        <app-date-picker class="mr-3" [group]="newRequest.get('questions').get('highRiskSport')" label="Fecha"
+                          name='date'>
                         </app-date-picker>
                       </div>
-                      <app-text-area label='Descripcion' [group]="newRequest.get('questionsA').get(index.toString())"
-                        label="texto" name='description'></app-text-area>
-                    </div>
-  
-                    <div *ngIf="index === 21 &&  newRequest.get('questionsA').get(index.toString()).get('answer').value">
-                      <p>Favor indicar semanas de embarazo</p><br>
-  
-                      <div style="width: 200px;">
-                        <app-input class="mr-3" [group]="newRequest.get('questionsA').get(index.toString())"
-                          label="Semanas" name='time'></app-input>
+                      <div class="mt-2">
+                        <app-text-area [group]="newRequest.get('questions').get('highRiskSport')" label="Texto" name='info'>
+                        </app-text-area>
                       </div>
                     </div>
-                  </div>
+                    <hr class="w-full mb-6 ww-divider">
+                  </div> -->
+            </div>
+            <p class="formulary-labels pb-3">Según su mejor entendimiento y conocimiento, hay alguna persona nombrada en
+              esta solicitud que haya padecido o padezca de alguna de las siguientes enfermedades:
+            </p>
+            <hr class="w-full mb-10 ww-divider">
+
+            <div
+              class="w-full xl:flex xl:justify-between lg:flex lg:justify-between md:flex md:justify-between sm:flex sm:justify-between">
+              <div class="radio-button-label self-center" style="max-width: 80%;">¿Ha recibido transfusión de sangre?
+              </div>
+              <div class="flex">
+                <div class="self-center">
+                  <mat-radio-group name="transfusion" (change)="radioChange($event)" class="radio-group">
+                    <mat-radio-button value="si" class="mr-3 radio-button">
+                      Si</mat-radio-button>
+                    <mat-radio-button value="no" class="mr-3 radio-button">
+                      No</mat-radio-button>
+                  </mat-radio-group>
                 </div>
-                <br><br>
+                <mat-form-field color="accent" appearance="outline">
+                  <mat-label>Seleccione Dependiente</mat-label>
+                  <mat-select multiple style="font-size: small !important;">
+                    <mat-option value="dependiente">Asegurado - {{newRequest.get('person').value.firstName}}
+                      {{newRequest.get('person').value.lastName}}
+                    </mat-option>
+                    <!-- <mat-option *ngFor="let dpd of newRequest.get('dependents').value; let idx = index"
+                      value="dependiente">
+                      D{{idx+1}} - {{dpd.name}} {{dpd.lastName}}</mat-option> -->
+                  </mat-select>
+                </mat-form-field>
               </div>
             </div>
           </ng-template>

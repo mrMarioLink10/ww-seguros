@@ -539,7 +539,7 @@ export class NewSubscriptionRequestComponent implements OnInit, DoCheck {
 
   sectionASelect(event) {
     console.log(`value: ${event.value}, id: ${event.source.id}`);
-    console.log(`event: ${event}`);
+    console.log(`event:`, event);
 
   }
 }

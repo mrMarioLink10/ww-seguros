@@ -340,26 +340,48 @@
               </div>
               <div class="flex">
                 <div class="self-center">
-                  <!-- <div>{{haveSomeone.[question.name]}}</div> -->
                   <app-radio-button [group]="newRequest.get('sectionAHelper')" center="true" [name]="question.name"
                     [options]="yesOrNo" (selected)="selectChange($event)">
                   </app-radio-button>
                 </div>
-                <mat-form-field color="accent" *ngIf="newRequest.get('sectionAHelper').value[question.name] === 'si'"
+                <!-- <mat-form-field color="accent" *ngIf="newRequest.get('sectionAHelper').value[question.name] === 'si'"
                   appearance="outline">
                   <mat-label>Seleccione Personas</mat-label>
                   <mat-select multiple style="font-size: small !important;" [id]="question.name"
                     (selectionChange)="sectionASelect($event)">
-                    <mat-option value="asegurado">Asegurado - {{newRequest.get('person').value.firstName}}
-                      {{newRequest.get('person').value.lastName}}
-                    </mat-option>
+                    <div [formGroup]="newRequest.get('questionsA')">
+                      <mat-option  value="yes">
+                        Asegurado -
+                        {{newRequest.get('person').value.firstName}}
+                        {{newRequest.get('person').value.lastName}}
+                      </mat-option>
+
+                      
+                    </div>
                     <div *ngIf="newRequest.get('dependents').value.allDependents.length > 0">
                       <mat-option *ngFor=" let dpd of
                       newRequest.get('dependents').value.allDependents; let idx=index" [value]="idx">
                         D{{idx+1}} - {{dpd.name}} {{dpd.lastName}}</mat-option>
                     </div>
                   </mat-select>
-                </mat-form-field>
+                </mat-form-field> -->
+                <button class="select-persons" *ngIf="newRequest.get('sectionAHelper').value[question.name] === 'si'"
+                  [matMenuTriggerFor]="menu">Seleccionar Personas</button>
+                <mat-menu #menu="matMenu">
+                  <div [formGroup]="newRequest.get('questionsA')">
+                    <mat-checkbox (click)="$event.stopPropagation()" class="mat-menu-item"
+                      [formControlName]="question.name" role="menuitemcheckbox">
+                      {{newRequest.get('person').value.firstName}}
+                      {{newRequest.get('person').value.lastName}}</mat-checkbox>
+                  </div>
+                  <!-- <div *ngFor=" let dpd of
+                  newRequest.get('dependents').value.allDependents; let idx=index"
+                    [formGroup]="newRequest.get('dependents').get('allDependents').get(idx.toString()).get('questionsA')">
+                    <mat-checkbox (click)="$event.stopPropagation()" class="mat-menu-item"
+                      [formControlName]="question.name" role="menuitemcheckbox">
+                      D{{idx+1}} - {{dpd.name}} {{dpd.lastName}}</mat-checkbox>
+                  </div> -->
+                </mat-menu>
               </div>
             </div>
           </ng-template>

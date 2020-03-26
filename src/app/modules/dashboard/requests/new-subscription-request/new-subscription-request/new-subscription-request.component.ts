@@ -167,6 +167,31 @@ export class NewSubscriptionRequestComponent implements OnInit, DoCheck {
     telUnivercity: ['', Validators.required],
     id: ['', Validators.required],
     nationality: ['', Validators.required],
+    questionsA: this.fb.group({
+      haveMusculoskeletal: ['', Validators.required],
+      haveCerebrovascular: ['', Validators.required],
+      haveNervousSystem: ['', Validators.required],
+      haveVisionHearing: ['', Validators.required],
+      haveSpine: ['', Validators.required],
+      haveCardiovascularSystem: ['', Validators.required],
+      haveRespiratorySystem: ['', Validators.required],
+      haveDigestiveSystem: ['', Validators.required],
+      haveUrinarySystem: ['', Validators.required],
+      haveMaleReproductiveOrgans: ['', Validators.required],
+      haveBloodDisorders: ['', Validators.required],
+      haveEndocrineDisorders: ['', Validators.required],
+      haveAlternateTreatment: ['', Validators.required],
+      haveFunctionalLimitation: ['', Validators.required],
+      haveDeformity: ['', Validators.required],
+      haveBloodTransfusion: ['', Validators.required],
+      haveAlcoholicDependence: ['', Validators.required],
+      haveNicotine: ['', Validators.required],
+      haveStd: ['', Validators.required],
+      havePhysiologicalDisorder: ['', Validators.required],
+      haveHighRiskSport: ['', Validators.required],
+      havePregnant: ['', Validators.required],
+      haveReproductiveOrganDisorders: ['', Validators.required],
+    }),
   };
   questionsGroup = {
     question: ['', Validators.required],
@@ -487,6 +512,8 @@ export class NewSubscriptionRequestComponent implements OnInit, DoCheck {
     console.log('SOLO DISEASES', this.newRequest.get('questionsA').value);
     console.log('SOLO DEPENDENTS', this.newRequest.get('dependents'));
     console.log('ENTERO', this.newRequest);
+    console.log(this.newRequest.get('dependents').get('allDependents').get('0').get('questionsA'));
+
   }
 
   selectChange(event) {
@@ -538,9 +565,13 @@ export class NewSubscriptionRequestComponent implements OnInit, DoCheck {
   }
 
   sectionASelect(event) {
-    console.log(`value: ${event.value}, id: ${event.source.id}`);
-    console.log(`event:`, event);
-
+    // console.log(`value: ${event.value}, id: ${event.source.id}`);
+    // console.log(`event:`, event);
+    // for (const value of event.value) {
+    //   if (value === 'asegurado') {
+    //     this.newRequest.get('questionsA').get(event.source.id).setValue('si');
+    //   } else if (value )
+    // }
   }
 }
 

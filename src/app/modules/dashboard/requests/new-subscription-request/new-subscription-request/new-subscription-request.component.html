@@ -509,8 +509,7 @@
           <ng-template #formTemplate>
             <div [formGroup]="newRequest.get('primaryBenefits')">
               <div formArrayName="dependentsC">
-                <div
-                  *ngFor="let element of primaryBenefitsArray.controls; let index = index">
+                <div *ngFor="let element of primaryBenefitsArray.controls; let index = index">
                   <div [formGroupName]="index">
                     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-4">
                       <app-input class="mr-3"
@@ -545,8 +544,8 @@
 
                       <button *ngIf="newRequest.get('primaryBenefits').get('dependentsC')['controls'].length > 1"
                         mat-mini-fab aria-label="Eliminar reclamacion"
-                        (click)="formMethods.deleteOneElement(primaryBenefitsArray, index)"
-                        type="button" class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
+                        (click)="formMethods.deleteOneElement(primaryBenefitsArray, index)" type="button"
+                        class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
                         <mat-icon style="color: #18446B">remove</mat-icon>
                       </button>
                     </div>
@@ -602,15 +601,15 @@
 
                     <div class="pb-5">
                       <button mat-mini-fab aria-label="Agregar reclamacion"
-                        (click)="add(contingentBeneficiaryArray,primaryBenefits)"
-                        type="button" class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
+                        (click)="add(contingentBeneficiaryArray,primaryBenefits)" type="button"
+                        class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
                         <mat-icon style="color: #18446B">add</mat-icon>
                       </button>
-  
-                      <button *ngIf="contingentBeneficiaryArray.length > 1"
-                        mat-mini-fab aria-label="Eliminar reclamacion"
-                        (click)="formMethods.deleteOneElement(contingentBeneficiaryArray, index)"
-                        type="button" class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
+
+                      <button *ngIf="contingentBeneficiaryArray.length > 1" mat-mini-fab
+                        aria-label="Eliminar reclamacion"
+                        (click)="formMethods.deleteOneElement(contingentBeneficiaryArray, index)" type="button"
+                        class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
                         <mat-icon style="color: #18446B">remove</mat-icon>
                       </button>
                     </div>

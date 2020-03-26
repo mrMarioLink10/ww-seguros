@@ -20,195 +20,157 @@
       <mat-tab label="Asegurado" class="mat-tab-forms">
         <app-forms-container [titles]="titles" [Form]="newRequest">
           <ng-template #formTemplate>
-            <form [formGroup]="newRequest">
-              <div class="mt-3 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
-
-                <div class="mr-3">
-                  <mat-form-field  appearance="outline" class="w-full bg-transparente"
-                    style="font-size: small !important;">
-                    <mat-label>Nombres</mat-label>
-                    <input formControlName="name" matInput class="" placeholder="Jorge Segura">
-                  </mat-form-field>
-                </div>
-
-                <div class="mr-3">
-                  <mat-form-field color="accent" appearance="outline" class="w-full bg-transparente"
-                    style="font-size: small !important;">
-                    <mat-label>Apellidos</mat-label>
-                    <input matInput formControlName="lastName" class="" placeholder="Jorge Segura">
-                  </mat-form-field>
-                </div>
-                <div class="mr-3">
-                  <mat-form-field color="accent" appearance="outline" class="w-full bg-transparente"
-                    style="font-size: small !important;">
-                    <mat-label>Cédula/Pasaporte</mat-label>
-                    <input matInput formControlName="id" class="" placeholder="Jorge Segura">
-                  </mat-form-field>
-                </div>
-                <div class="radio-container mr-3">
-                  <mat-label class="radio-button-label">Sexo</mat-label><br>
-                  <mat-radio-group aria-labelledby="example-radio-group-label" formControlName="sex"  class="radio-group">
-                    <mat-radio-button value="Femenino" class="mr-3 radio-button" >Femenino</mat-radio-button>
-                    <mat-radio-button value="Masculino" class="radio-button">Masculino</mat-radio-button>
-                  </mat-radio-group>
-                </div>
-                <div class="mr-3 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2">
-                  <div class="mr-3">
-                    <mat-form-field color="accent" appearance="outline" class="w-full bg-transparente mr-3"
-                      style="font-size: small !important;">
-                      <mat-label>Peso / lbs</mat-label>
-                      <input matInput formControlName="weight" class="mr-3" placeholder="Jorge Segura">
-                    </mat-form-field>
-                  </div>
-                 
-                  <mat-form-field color="accent" appearance="outline" class="w-full bg-transparente "
-                    style="font-size: small !important;">
-                    <mat-label>Estatura/Pies</mat-label>
-                    <input matInput formControlName="height"  placeholder="Jorge Segura">
-                  </mat-form-field>
-                </div>
-
-                <div class="mr-3">
-                  <mat-form-field color="accent" appearance="outline" class="w-full bg-transparente"
-                    style="font-size: small !important;">
-                    <mat-label>Empresa donde labora</mat-label>
-                    <input formControlName="company" matInput class="" placeholder="Jorge Segura">
-                  </mat-form-field>
-                </div>
-
-                <div class="mr-3">
-                  <mat-form-field color="accent" appearance="outline" class="w-full bg-transparente"
-                    style="font-size: small !important;">
-                    <mat-label>Ocupación</mat-label>
-                    <input matInput formControlName="position" class="" placeholder="Jorge Segura">
-                  </mat-form-field>
-                </div>
-                <div class="mr-3">
-                  <mat-form-field color="accent" appearance="outline" class="w-full bg-transparente"
-                    style="font-size: small !important;">
-                    <mat-label>Dirección de Residencia</mat-label>
-                    <input matInput formControlName="direction" class="" placeholder="Jorge Segura">
-                  </mat-form-field>
-                </div>
-                <div class="mr-3">
-                  <mat-form-field color="accent" appearance="outline" class="w-full bg-transparente"
-                    style="font-size: small !important;">
-                    <mat-label>Ciudad y País</mat-label>
-                    <input formControlName="city" matInput class="" placeholder="Jorge Segura">
-                  </mat-form-field>
-                </div>
-
-                <div class="mr-3">
-                  <mat-form-field color="accent" appearance="outline" class="w-full bg-transparente"
-                    style="font-size: small !important;">
-                    <mat-label>No. Dependientes</mat-label>
-                    <input matInput formControlName="dependentsNumber" (keyup)="onChangeDependents()" appDigitOnly min="0" max="2"
-                      class="" placeholder="Jorge Segura">
-                  </mat-form-field>
-                </div>
+            <div class="mt-3 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-4">
+              <app-input class="mr-3 pt-21" [group]="newRequest.get('person')" label="Primer Nombre" name='firstName'>
+              </app-input>
+              <app-input class="mr-3 pt-21" [group]="newRequest.get('person')" label="Segundo Nombre" name='secondName'>
+              </app-input>
+              <app-input id='date' class="mr-3 pt-21" [group]="newRequest.get('person')"
+                label="Apellidos / Apellido de Casada" name='lastName'></app-input>
+              <div class="mr-3">
+                <label>Fecha de Nacimiento</label>
+                <app-date-picker class="mr-3" [group]="newRequest.get('person')" name='date'>
+                </app-date-picker>
               </div>
+              <app-radio-button class="mr-3 pt-21" [group]="newRequest.get('person')" name="sex" [options]="sex">
+              </app-radio-button>
+              <app-input class="mr-3 pt-21" [group]="newRequest.get('person')" label="Nacionalidad" name='nationality'>
+              </app-input>
 
-              <div
-                *ngIf="newRequest.get('dependentsNumber').value !== '0' && newRequest.get('dependentsNumber').value !== ''"
-                class="mt-3 grid">
-                <div class="col-span-1">Dependientes</div>
-                <mat-divider class="col-span-11"></mat-divider>
+              <div class="mr-3">
+                <label>Estado Civil</label>
+                <app-select class="mr-3" id="status" [options]="status" [group]="newRequest.get('person')">
+                </app-select>
               </div>
-
-              <div formArrayName="dependents">
-                <div *ngFor="let element of dependentsFormArray.controls; let index = index">
-        
-                  <div [formGroupName]="index"
-                  *ngIf="newRequest.get('dependentsNumber').value !== '0' && newRequest.get('dependentsNumber').value !== ''"
-                    class="mt-3 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-5">
-                    <app-input class="mr-3" [group]="newRequest.get('dependents').get(index.toString())" label="Nombre de la Sociedad" name='name'></app-input>
-                   
-                    <div class="mr-3">
-                      <mat-form-field color="accent" appearance="outline" class="w-full bg-transparente"
-                        style="font-size: small !important;">
-                        <mat-label>Apellidos</mat-label>
-                        <input matInput formControlName="lastName" class="" placeholder="Jorge Segura">
-                      </mat-form-field>
-                    </div>
-                    <div class="mr-3 radio-container">
-                      <mat-label class="radio-button-label">Parentezco</mat-label><br>
-                      <mat-radio-group aria-labelledby="example-radio-group-label" formControlName="family"  class="radio-group">
-                        <mat-radio-button value="Conyuge" class="mr-3">Cónyuge</mat-radio-button>
-                        <mat-radio-button value="Hijo">Hijo</mat-radio-button>
-                      </mat-radio-group>
-                    </div>
-                    <div class="mr-3">
-                      <mat-form-field color="accent" appearance="outline" class="w-full" style="font-size: small !important;">
-                        <mat-label>Fecha de ingreso</mat-label>
-                        <input formControlName="birtday" matInput [matDatepicker]="picker" placeholder="01/03/2020">
-                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                        <mat-datepicker #picker></mat-datepicker>
-                      </mat-form-field>
-                    </div>
-                    <div class="mr-3 radio-container">
-                      <mat-label  class="radio-button-label" id="sex">Sexo</mat-label><br>
-                      <mat-radio-group aria-labelledby="sex" formControlName="sex"  class="radio-group">
-                        <mat-radio-button  value="Femenino" class="mr-3 radio-button">Femenino</mat-radio-button>
-                        <mat-radio-button class="radio-button" value="Masculino">Masculino</mat-radio-button>
-                      </mat-radio-group>
-                    </div>
-
-                    <div class="mr-3 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2">
-                      
-                      <div class="mr-3">
-                        <mat-form-field color="accent" appearance="outline" class="w-full bg-transparente mr-3"
-                          style="font-size: small !important;">
-                          <mat-label>Peso / lbs</mat-label>
-                          <input matInput formControlName="weight" class="" placeholder="Jorge Segura">
-                        </mat-form-field>
-                      </div>
-
-                      <mat-form-field color="accent" appearance="outline" class="w-full bg-transparente"
-                        style="font-size: small !important;">
-                        <mat-label>Estatura/Pies</mat-label>
-                        <input matInput formControlName="height" class="" placeholder="Jorge Segura">
-                      </mat-form-field>
-                      
-                    </div>
-                    <div class="mr-3 radio-container">
-                      <mat-label class="mat-radio-button-label">¿Estudiante de tiempo completo?</mat-label><br>
-                      <mat-radio-group #student aria-labelledby="example-radio-group-label" formControlName="sex"  class="radio-group">
-                        <mat-radio-button [value]="true" class="mr-3 radio-button">Si</mat-radio-button>
-                        <mat-radio-button [value]="false" class="radio-button">No</mat-radio-button>
-                      </mat-radio-group>
-                    </div>
-
-                    <div class="mr-3" *ngIf="student.value">
-                      <mat-form-field color="accent" appearance="outline" class="w-full bg-transparente"
-                        style="font-size: small !important;">
-                        <mat-label>Universidad</mat-label>
-                        <input matInput formControlName="univercity" class="" placeholder="Jorge Segura">
-                      </mat-form-field>
-                    </div>
-
-                    <div class="mr-3">
-                      <mat-form-field color="accent" appearance="outline" class="w-full bg-transparente"
-                        style="font-size: small !important;">
-                        <mat-label>No. Teléfono Universidad</mat-label>
-                        <input matInput formControlName="telUnivercity" class="" placeholder="Jorge Segura">
-                      </mat-form-field>
-                    </div>
-                    <div class="mr-3">
-                      <button mat-mini-fab  (click)="delete(index)">-</button>
-                    </div>
-                  </div>
-                  <mat-divider
-                    *ngIf="newRequest.get('dependentsNumber').value !== '0' && newRequest.get('dependentsNumber').value !== ''">
-                  </mat-divider>
-                </div>
+              <app-input class="mr-3 pt-21" [group]="newRequest.get('person')" label="Cédula/Pasaporte" name='id'>
+              </app-input>
+              <app-input class="mr-3 pt-21" [group]="newRequest.get('person')" label="Edad" name='age'></app-input>
+              <div class="mr-3 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2">
+                <app-input class="mr-3 pt-21" [group]="newRequest.get('person')" label="Peso / lbs" name='weight'>
+                </app-input>
+                <app-input class="mr-3 pt-21" [group]="newRequest.get('person')" label="Lbs" name='height'></app-input>
               </div>
-            </form>
+              <div class="mr-3 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2">
+                <app-input class="mr-3 pt-21" [group]="newRequest.get('person')" label="Ingreso Anual"
+                  name='annualIncome'>
+                </app-input>
+                <app-select class="mr-3 pt-21
+                  " id="status" [options]="currency" placeholder='Moneda' [group]="newRequest.get('person')">
+                </app-select>
+              </div>
+              <div class="mr-3">
+                <label for="">País de Residencia</label>
+                <app-select class="mr-3" [options]=" countryOfResidence" [group]="newRequest.get('person')">
+                </app-select>
+              </div>
+              <div class="mr-3">
+                <label for="">País de Nacimiento</label>
+                <app-select class="mr-3" [options]="countryOfBirth" [group]="newRequest.get('person')"></app-select>
+              </div>
+              <div class="mr-3 col-span-2">
+                <label for="">Dirección de Residencia</label>
+                <app-input class="mr-3" [group]="newRequest.get('person')"
+                  placeholder='Provincia/Distrito/Corregimiento/Urbanización/Calle/Casa o Apto./Edificio.'
+                  name='direction'></app-input>
+              </div>
+              <app-input class="mr-3 pt-21" [group]="newRequest.get('person')" label="Tel. Residencia" name='tel'>
+              </app-input>
+              <app-input class="mr-3 pt-21" [group]="newRequest.get('person')" label="Tel. Celular" name='cel'>
+              </app-input>
+              <app-input class="mr-3 pt-21" [group]="newRequest.get('person')" label="Tel. Oficina" name='officeTel'>
+              </app-input>
+              <app-input class="mr-3 pt-21" [group]="newRequest.get('person')" label="Correo" name='email'></app-input>
+            </div>
           </ng-template>
-          <ng-template #formTemplate>hola 1</ng-template>
-          <ng-template #formTemplate>hola 2</ng-template>
-          <ng-template #formTemplate>hola 3</ng-template>
+          <ng-template #formTemplate>
+            <div class="mt-3 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-4">
+              <app-input class="mr-3 pt-21" [group]="newRequest.get('employer')" label="Nombre de la compañía"
+                name='CompanyName'></app-input>
+              <app-input class="mr-3 pt-21" [group]="newRequest.get('employer')" label="Ocupación y Profesión"
+                name='profession'></app-input>
+              <app-input class="mr-3 pt-21" [group]="newRequest.get('employer')"
+                label="Actividad Económica de la empresa" name='economicActivity'></app-input>
+              <app-input class="mr-3 pt-21" [group]="newRequest.get('employer')" label="Años de empleo en la compañía"
+                name='years'></app-input>
+              <app-input class="mr-3 pt-21" [group]="newRequest.get('employer')" label="Deberes (Favor de dar detalles)"
+                name='jobDuties'></app-input>
+              <div class="mr-3">
+                <label for="">Dirección de Residencia</label>
+                <app-input [group]="newRequest.get('employer')"
+                  placeholder="Provincia/Distrito/Corregimiento/Urbanización/Calle/Casa o Apto./Edificio."
+                  name='countryOfResidence'></app-input>
+              </div>
+            </div>
+
+          </ng-template>
+          <ng-template #formTemplate>
+            <div class="mt-3 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-4">
+              <app-input class="mr-3 pt-21" [group]="newRequest.get('contractor')" label="Primer Nombre" name='firstName'>
+              </app-input>
+              <app-input class="mr-3 pt-21" [group]="newRequest.get('contractor')" label="Segundo Nombre" name='secondName'>
+              </app-input>
+              <app-input id='date' class="mr-3 pt-21" [group]="newRequest.get('contractor')"
+                label="Apellidos / Apellido de Casada" name='lastName'></app-input>
+              <div class="mr-3">
+                <label>Fecha de Nacimiento</label>
+                <app-date-picker class="mr-3" [group]="newRequest.get('contractor')" name='date'>
+                </app-date-picker>
+              </div>
+              <app-radio-button class="mr-3 pt-21" [group]="newRequest.get('contractor')" name="sex" [options]="sex">
+              </app-radio-button>
+              <app-input class="mr-3 pt-21" [group]="newRequest.get('contractor')" label="Nacionalidad" name='nationality'>
+              </app-input>
+              <app-input class="mr-3 pt-21" [group]="newRequest.get('contractor')" label="Cédula/Pasaporte" name='id'>
+              </app-input>
+              
+             
+              <div class="mr-3">
+                <label for="">País de Nacimiento</label>
+                <app-select class="mr-3" [options]="countryOfBirth" [group]="newRequest.get('contractor')"></app-select>
+              </div>
+              
+              <div class="mr-3">
+                <label>Estado Civil</label>
+                <app-select class="mr-3" id="status" [options]="status" [group]="newRequest.get('contractor')">
+                </app-select>
+              </div>
+              <div class="mr-3">
+                <label for="">País de Residencia</label>
+                <app-select class="mr-3" [options]=" countryOfResidence" [group]="newRequest.get('contractor')">
+                </app-select>
+              </div>
+              <div class="mr-3 col-span-2">
+                <label for="">Dirección de Residencia</label>
+                <app-input class="mr-3" [group]="newRequest.get('contractor')"
+                placeholderM='Provincia/Distrito/Corregimiento/Urbanización/Calle/Casa o Apto./Edificio.'
+                  name='direction'></app-input>
+              </div>
+              <app-input class="mr-3 pt-21" [group]="newRequest.get('contractor')" label="Tel. Residencia" name='tel'>
+              </app-input>
+              <app-input class="mr-3 pt-21" [group]="newRequest.get('contractor')" label="Tel. Celular" name='cel'>
+              </app-input>
+              <app-input class="mr-3 pt-21" [group]="newRequest.get('contractor')" label="Tel. Oficina" name='officeTel'>
+              </app-input>
+              <app-input class="mr-3 pt-21" [group]="newRequest.get('contractor')" label="Fax" name='fax'></app-input>
+              <app-input class="mr-3 pt-21" [group]="newRequest.get('contractor')" label="Correo" name='email'></app-input>
+            </div>
+          </ng-template>
+          <ng-template #formTemplate>hola 4</ng-template>
+          <ng-template #formTemplate>hola 5</ng-template>
+          <ng-template #formTemplate>hola 6</ng-template>
+          <ng-template #formTemplate>hola 7</ng-template>
+          <ng-template #formTemplate>hola 8</ng-template>
+          <ng-template #formTemplate>hola 9</ng-template>
+          <ng-template #formTemplate>hola 10</ng-template>
+          <ng-template #formTemplate>hola 11</ng-template>
+          <ng-template #formTemplate>hola 12</ng-template>
+          <ng-template #formTemplate>hola 13</ng-template>
+          <ng-template #formTemplate>hola 14</ng-template>
+
+
         </app-forms-container>
       </mat-tab>
+      <mat-tab label="D01" class="mat-tab-forms"></mat-tab>
     </mat-tab-group>
   </div> -->
 </div>

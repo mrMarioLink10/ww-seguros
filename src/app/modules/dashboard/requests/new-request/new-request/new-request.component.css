@@ -1,21 +1,23 @@
 .info-home {
-  background-color: #F2F2F2;
+  background-color: #f2f2f2;
 }
-
 .info-home mat-form-field {
   width: 300px;
 }
-
 .info-home .w-h {
   width: 150px;
 }
-
 ::ng-deep .mat-tab-labels {
   margin-top: 15px;
-  background-color: #F2F2F2;
+  background-color: #f2f2f2;
 }
-
 .background-w {
   background-color: white;
 }
-/*# sourceMappingURL=new-request.component.css.map */
+mat-divider {
+  margin-top: 15px !important;
+  margin-bottom: 30px !important;
+}
+.pt-21 {
+  padding-top: 21px !important;
+}

@@ -4,15 +4,14 @@ import { RequestsComponent } from './requests.component';
 import { RequestsRoutingModule } from './requests-routing.module';
 import { SharedModule } from '../shared/shared.module';
 import { MaterialModule } from '../../../shared/modules/material.module';
-import { NewRequestComponent } from './new-request/new-request/new-request.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedDirectivesModule } from 'src/app/core/directive';
-import { NewSubscriptionRequestComponent } from './new-subscription-request/new-subscription-request/new-subscription-request.component';
 import { GlobalSharedModule } from 'src/app/shared/global-shared.module';
 import { ServicesModule } from 'src/app/core/services/services.module';
+import { NewRequestComponent } from './new-request/new-request.component';
 
 @NgModule({
-	declarations: [ RequestsComponent, NewRequestComponent, NewSubscriptionRequestComponent ],
+	declarations: [RequestsComponent, NewRequestComponent],
 	imports: [
 		CommonModule,
 		RequestsRoutingModule,
@@ -25,4 +24,4 @@ import { ServicesModule } from 'src/app/core/services/services.module';
 		ServicesModule
 	]
 })
-export class RequestsModule {}
+export class RequestsModule { }

@@ -6,16 +6,16 @@ import { FormArrayGeneratorService } from 'src/app/core/services/forms/form-arra
 import { questionsA, questionsB } from './questions';
 import { Requests } from '../../requests.component';
 @Component({
-  selector: 'app-new-subscription-request',
-  templateUrl: './new-subscription-request.component.html',
-  styleUrls: ['./new-subscription-request.component.scss']
+  selector: 'app-major-expenses',
+  templateUrl: './major-expenses.component.html',
+  styleUrls: ['./major-expenses.component.scss']
 })
 
-export class NewSubscriptionRequestComponent implements OnInit, DoCheck {
+export class MajorExpensesComponent implements OnInit, DoCheck {
 
   visible = false;
-  primaryBenefitsArray:  FormArray;
-  contingentBeneficiaryArray:  FormArray; 
+  primaryBenefitsArray: FormArray;
+  contingentBeneficiaryArray: FormArray;
   newRequest: FormGroup;
   sex = $sex;
   res = $res;
@@ -417,7 +417,7 @@ export class NewSubscriptionRequestComponent implements OnInit, DoCheck {
     });
 
     this.contingentBeneficiaryArray = this.newRequest.get('contingentBeneficiary').get('dependentsC') as FormArray;
-    this. primaryBenefitsArray = this.newRequest.get('primaryBenefits').get('dependentsC') as FormArray;
+    this.primaryBenefitsArray = this.newRequest.get('primaryBenefits').get('dependentsC') as FormArray;
     this.studentDependents = this.newRequest.get('dependents').get('students') as FormArray;
     this.dependentsFormArray = this.newRequest.get('dependents').get('allDependents') as FormArray;
     this.questionsFormArray = this.newRequest.get('questionsA') as FormArray;

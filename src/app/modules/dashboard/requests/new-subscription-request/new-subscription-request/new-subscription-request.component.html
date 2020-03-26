@@ -246,7 +246,7 @@
                         <mat-icon style="color: #18446B">add</mat-icon>
                       </button>
                       <button mat-mini-fab aria-label="Eliminar reclamacion"
-                        (click)="formMethods.deleteOneElement(studentDependents, index)" type="button"
+                        (click)="formMethods.deleteOneElement(studentDependents, i)" type="button"
                         class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
                         <mat-icon style="color: #18446B">remove</mat-icon>
                       </button>
@@ -478,7 +478,7 @@
             <div [formGroup]="newRequest.get('primaryBenefits')">
               <div formArrayName="dependentsC">
                 <div
-                  *ngFor="let element of newRequest.get('primaryBenefits').get('dependentsC')['controls']; let index = index">
+                  *ngFor="let element of primaryBenefitsArray.controls; let index = index">
                   <div [formGroupName]="index">
                     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-4">
                       <app-input class="mr-3"
@@ -506,14 +506,14 @@
   
                     <div class="pb-5">
                       <button mat-mini-fab aria-label="Agregar reclamacion"
-                        (click)="add(newRequest.get('primaryBenefits').get('dependentsC'),primaryBenefits)" type="button"
+                        (click)="add(primaryBenefitsArray,primaryBenefits)" type="button"
                         class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
                         <mat-icon style="color: #18446B">add</mat-icon>
                       </button>
   
                       <button *ngIf="newRequest.get('primaryBenefits').get('dependentsC')['controls'].length > 1"
                         mat-mini-fab aria-label="Eliminar reclamacion"
-                        (click)="formMethods.deleteOneElement(newRequest.get('primaryBenefits').get('dependentsC'), index)"
+                        (click)="formMethods.deleteOneElement(primaryBenefitsArray, index)"
                         type="button" class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
                         <mat-icon style="color: #18446B">remove</mat-icon>
                       </button>
@@ -570,20 +570,18 @@
   
                     <div class="pb-5">
                       <button mat-mini-fab aria-label="Agregar reclamacion"
-                        (click)="add(newRequest.get('contingentBeneficiary').get('dependentsC'),primaryBenefits)"
+                        (click)="add(contingentBeneficiaryArray,primaryBenefits)"
                         type="button" class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
                         <mat-icon style="color: #18446B">add</mat-icon>
                       </button>
   
-                      <button *ngIf="newRequest.get('contingentBeneficiary').get('dependentsC')['controls'].length > 1"
+                      <button *ngIf="contingentBeneficiaryArray.length > 1"
                         mat-mini-fab aria-label="Eliminar reclamacion"
-                        (click)="formMethods.deleteOneElement(newRequest.get('contingentBeneficiary').get('dependentsC'), index)"
+                        (click)="formMethods.deleteOneElement(contingentBeneficiaryArray, index)"
                         type="button" class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
                         <mat-icon style="color: #18446B">remove</mat-icon>
                       </button>
                     </div>
-  
-  
                     <br>
                     <mat-divider></mat-divider><br>
                   </div>

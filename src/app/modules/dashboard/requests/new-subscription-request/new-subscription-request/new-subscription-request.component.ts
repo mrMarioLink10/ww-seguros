@@ -14,6 +14,8 @@ import { Requests } from '../../requests.component';
 export class NewSubscriptionRequestComponent implements OnInit, DoCheck {
 
   visible = false;
+  primaryBenefitsArray:  FormArray;
+  contingentBeneficiaryArray:  FormArray; 
   newRequest: FormGroup;
   sex = $sex;
   res = $res;
@@ -338,6 +340,8 @@ export class NewSubscriptionRequestComponent implements OnInit, DoCheck {
 
     });
 
+    this.contingentBeneficiaryArray = this.newRequest.get('contingentBeneficiary').get('dependentsC') as FormArray;
+    this. primaryBenefitsArray = this.newRequest.get('primaryBenefits').get('dependentsC') as FormArray;
     this.studentDependents = this.newRequest.get('dependents').get('students') as FormArray;
     this.dependentsFormArray = this.newRequest.get('dependents').get('allDependents') as FormArray;
     this.questionsFormArray = this.newRequest.get('questionsA') as FormArray;

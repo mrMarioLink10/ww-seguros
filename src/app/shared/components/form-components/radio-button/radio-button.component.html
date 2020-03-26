@@ -1,10 +1,9 @@
 <div [formGroup]="group" class="radio-container mb-4">
-  <mat-label *ngIf='options.label || title' class="radio-button-label">{{options.label || title}}</mat-label><br
-    *ngIf='options.label || title'>
+  <mat-label *ngIf='options.label || title' class="radio-button-label">{{options.label || title}}</mat-label>
+  <br *ngIf='options.label || title'>
   <mat-radio-group aria-labelledby="example-radio-group-label" [formControlName]="name" class="radio-group">
     <mat-radio-button *ngFor="let option of options.options" [value]="option.value" (change)="emitter($event)"
-      class="mr-3 radio-button">
-      {{option.viewValue}}</mat-radio-button>
+      class="mr-3 radio-button">{{option.viewValue}}</mat-radio-button>
   </mat-radio-group>
-  <mat-error *ngIf="group.get(name).touched && !group.get(name).valid">Debe llenar el campo de {{label}}</mat-error>
+  <mat-error *ngIf="group.get(name).touched && !group.get(name).valid">Debe llenar el campo de {{options.label || title}</mat-error>
 </div>

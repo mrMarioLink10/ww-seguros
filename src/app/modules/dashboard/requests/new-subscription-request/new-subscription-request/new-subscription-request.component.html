@@ -33,7 +33,7 @@
               <app-select class="mr-3" [options]="requestTypeOptions" [group]="newRequest"></app-select>
             </div>
             <mat-divider class="divider"></mat-divider>
-  
+
             <div class="mt-4 grid grid-cols-1 sm:grid-cols-3 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
               <app-input class="mr-3" [group]="newRequest.get('contractor').get('legalRepresentation')"
                 label="Nombres y Apellidos Representante Legal" name='name'></app-input>
@@ -73,7 +73,8 @@
               <app-select class="mr-3" [options]="country" [group]="newRequest.get('person')"></app-select>
               <app-input class="mr-3" [group]="newRequest.get('person')" label="Ciudad/Provincia" name='city'>
               </app-input>
-              <app-input class="mr-3" [group]="newRequest.get('person')" label="Dirección de Residencia" name='direction'>
+              <app-input class="mr-3" [group]="newRequest.get('person')" label="Dirección de Residencia"
+                name='direction'>
               </app-input>
               <app-input class="mr-3" [group]="newRequest.get('person')" label="Tel. Residencia" name='tel'></app-input>
               <app-input class="mr-3" [group]="newRequest.get('person')" label="Tel. Celular" name='cel'></app-input>
@@ -82,15 +83,16 @@
               <app-input class="mr-3" [group]="newRequest.get('person')" label="Fax" name='fax'></app-input>
               <app-input class="mr-3" [group]="newRequest.get('person')" label="Correo" name='email'></app-input>
             </div>
-  
+
             <mat-divider class="divider"></mat-divider>
-  
+
             <div class="mt-3 grid grid-cols-1 sm:grid-cols-3 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
               <app-input class="mr-3" [group]="newRequest.get('person').get('office')" label="Empresa donde labora"
                 name='company'></app-input>
               <app-input class="mr-3" [group]="newRequest.get('person').get('office')" label="Ocupación/Cargo"
                 name='position'></app-input>
-              <app-input class="mr-3" [group]="newRequest.get('person').get('office')" label="Dirección" name='direction'>
+              <app-input class="mr-3" [group]="newRequest.get('person').get('office')" label="Dirección"
+                name='direction'>
               </app-input>
               <app-input class="mr-3" [group]="newRequest.get('person').get('office')"
                 label="Actividad Económica de la Empresa" name='economicActivity'></app-input>
@@ -132,7 +134,7 @@
                     <app-input class="mr-3" [group]="newRequest.get('exposedPerson')" label="Tiempo" name='time'>
                     </app-input>
                     <app-select class="mr-3" [options]="year" [group]="newRequest.get('exposedPerson')"></app-select>
-  
+
                   </div>
                 </div>
               </div>
@@ -140,10 +142,10 @@
                 <div class="relative b-40">
                   <div class="absolute inset-y-0 pt-3 left-0">Titular</div>
                   <div class="absolute inset-y-0 pt-3 right-0">
-  
+
                     <app-radio-button [group]="newRequest.get('exposedPerson')" name="contractor" [options]="res">
                     </app-radio-button>
-  
+
                   </div>
                   <mat-divider></mat-divider>
                 </div>
@@ -169,15 +171,15 @@
             <div [formGroup]="newRequest.get('dependents')">
               <div formArrayName="allDependents">
                 <div *ngFor="let element of dependentsFormArray.controls; let index = index">
-  
+
                   <div [formGroupName]="index"
                     class="mt-3 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-5">
                     <app-input class="mr-3"
                       [group]="newRequest.get('dependents').get('allDependents').get(index.toString())" label="Nombre"
                       name='name'></app-input>
                     <app-input class="mr-3"
-                      [group]="newRequest.get('dependents').get('allDependents').get(index.toString())" label="Apellidos"
-                      name='lastName'></app-input>
+                      [group]="newRequest.get('dependents').get('allDependents').get(index.toString())"
+                      label="Apellidos" name='lastName'></app-input>
                     <app-input class="mr-3"
                       [group]="newRequest.get('dependents').get('allDependents').get(index.toString())"
                       label="Cedula o documento de identidad" name='id'></app-input>
@@ -214,24 +216,24 @@
                       <mat-icon style="color: #18446B">remove</mat-icon>
                     </button>
                   </div>
-  
+
                 </div>
                 <div *ngIf="dependentsFormArray.controls.length === 0">
                   <button mat-mini-fab aria-label="Agregar reclamacion"
-                    (click)="add(dependentsFormArray,dependentFormGroup)" type="button" class="dashboard-toolbar-buttons"
-                    style="border: 1px rgb(197, 197, 197) solid">
+                    (click)="add(dependentsFormArray,dependentFormGroup)" type="button"
+                    class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
                     <mat-icon style="color: #18446B">add</mat-icon>
                   </button>
                 </div>
               </div>
-  
+
               <div formArrayName="students" class="pt-20" *ngIf="dependentsFormArray.controls.length > 0">
                 <div>
                   <p class='formulary-labels'>¿Los hijos de 19 a 24 años son estudiantes a tiempo completo?</p> <br><br>
                   <p class='formulary-labels'>Si su respuesta es afirmativa, mencione el nombre y el número de teléfono
                     de la Universidad:</p><br>
                 </div>
-  
+
                 <div *ngFor="let control of studentDependents.controls; let i = index">
                   <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-4">
                     <app-input class="mr-3" [group]="newRequest.get('dependents').get('students').get(i.toString())"
@@ -250,7 +252,7 @@
                         class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
                         <mat-icon style="color: #18446B">remove</mat-icon>
                       </button>
-  
+
                     </div>
                   </div>
                 </div>
@@ -332,28 +334,30 @@
             </p>
             <hr class="w-full mb-10 ww-divider">
 
-            <div
+            <div *ngFor="let question of questions"
               class="w-full xl:flex xl:justify-between lg:flex lg:justify-between md:flex md:justify-between sm:flex sm:justify-between">
-              <div class="radio-button-label self-center" style="max-width: 80%;">¿Ha recibido transfusión de sangre?
+              <div class="radio-button-label self-center" style="max-width: 65%;">¿{{question.question}}
               </div>
               <div class="flex">
                 <div class="self-center">
-                  <mat-radio-group name="transfusion" (change)="radioChange($event)" class="radio-group">
-                    <mat-radio-button value="si" class="mr-3 radio-button">
-                      Si</mat-radio-button>
-                    <mat-radio-button value="no" class="mr-3 radio-button">
-                      No</mat-radio-button>
-                  </mat-radio-group>
+                  <!-- <div>{{haveSomeone.[question.name]}}</div> -->
+                  <app-radio-button [group]="newRequest.get('sectionAHelper')" center="true" [name]="question.name"
+                    [options]="yesOrNo" (selected)="selectChange($event)">
+                  </app-radio-button>
                 </div>
-                <mat-form-field color="accent" appearance="outline">
-                  <mat-label>Seleccione Dependiente</mat-label>
-                  <mat-select multiple style="font-size: small !important;">
-                    <mat-option value="dependiente">Asegurado - {{newRequest.get('person').value.firstName}}
+                <mat-form-field color="accent" *ngIf="newRequest.get('sectionAHelper').value[question.name] === 'si'"
+                  appearance="outline">
+                  <mat-label>Seleccione Personas</mat-label>
+                  <mat-select multiple style="font-size: small !important;" [id]="question.name"
+                    (selectionChange)="sectionASelect($event)">
+                    <mat-option value="asegurado">Asegurado - {{newRequest.get('person').value.firstName}}
                       {{newRequest.get('person').value.lastName}}
                     </mat-option>
-                    <!-- <mat-option *ngFor="let dpd of newRequest.get('dependents').value; let idx = index"
-                      value="dependiente">
-                      D{{idx+1}} - {{dpd.name}} {{dpd.lastName}}</mat-option> -->
+                    <div *ngIf="newRequest.get('dependents').value.allDependents.length > 0">
+                      <mat-option *ngFor=" let dpd of
+                      newRequest.get('dependents').value.allDependents; let idx=index" [value]="idx">
+                        D{{idx+1}} - {{dpd.name}} {{dpd.lastName}}</mat-option>
+                    </div>
                   </mat-select>
                 </mat-form-field>
               </div>
@@ -363,7 +367,7 @@
             <div formArrayName="questionsB">
               <div *ngFor="let element of questionsBFormArray.controls; let index = index">
                 <div [formGroupName]="index">
-  
+
                   <div class="grid grid-cols-12">
                     <div class="col-span-8">
                       <div class='question'>
@@ -383,9 +387,9 @@
                     </div>
                   </div>
                   <br>
-  
+
                   <div>
-  
+
                     <div *ngIf="index === 2 &&  newRequest.get('questionsB').get(index.toString()).get('answer').value">
                       <div formArrayName="procedures">
                         <div *ngFor="let element of proceduresArray.controls; let i = index">
@@ -394,12 +398,12 @@
                               <app-input class="mr-3" [group]="proceduresFormGroup(index,i)" label="Nombre del Paciente"
                                 name='patientsName'></app-input>
                             </div>
-  
+
                             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-4">
                               <app-input class="mr-3" [group]="proceduresFormGroup(index,i)" label="Padecimientos"
                                 name='procedures'></app-input>
-                              <app-date-picker class="mr-3" id='date' [group]="proceduresFormGroup(index,i)" label="fecha"
-                                name='date'></app-date-picker>
+                              <app-date-picker class="mr-3" id='date' [group]="proceduresFormGroup(index,i)"
+                                label="fecha" name='date'></app-date-picker>
                               <app-input class="mr-3" [group]="proceduresFormGroup(index,i)" label="Tratamiento"
                                 name='treatment'></app-input>
                               <div
@@ -409,47 +413,53 @@
                                 <app-select class="mr-3" [options]="year" [group]="proceduresFormGroup(index,i)">
                                 </app-select>
                               </div>
-                              <app-input class="mr-3" [group]="proceduresFormGroup(index,i)" label="Nombre del proveedor"
-                                name='providerName'></app-input>
+                              <app-input class="mr-3" [group]="proceduresFormGroup(index,i)"
+                                label="Nombre del proveedor" name='providerName'></app-input>
                               <app-input class="mr-3" [group]="proceduresFormGroup(index,i)"
                                 label="Dirección del proveedor o centro médico" name='providerDirection'></app-input>
                             </div>
-                            <button mat-mini-fab aria-label="Agregar reclamacion" (click)="addprocedures()" type="button"
-                              class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
+                            <button mat-mini-fab aria-label="Agregar reclamacion" (click)="addprocedures()"
+                              type="button" class="dashboard-toolbar-buttons"
+                              style="border: 1px rgb(197, 197, 197) solid">
                               <mat-icon style="color: #18446B">add</mat-icon>
                             </button>
                             <button *ngIf='proceduresArray.controls.length > 1' mat-mini-fab
-                              aria-label="Eliminar reclamacion" (click)="formMethods.deleteOneElement(proceduresArray, i)"
-                              type="button" class="dashboard-toolbar-buttons"
-                              style="border: 1px rgb(197, 197, 197) solid">
+                              aria-label="Eliminar reclamacion"
+                              (click)="formMethods.deleteOneElement(proceduresArray, i)" type="button"
+                              class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
                               <mat-icon style="color: #18446B">remove</mat-icon>
                             </button>
                           </div>
                           <br>
                           <mat-divider></mat-divider><br>
-  
+
                         </div>
                       </div>
                     </div>
-  
+
                     <div *ngIf="index === 4 &&  newRequest.get('questionsB').get(index.toString()).get('answer').value">
                       <p>¿Por qué razón?</p>
                       <app-text-area label='Descripcion' style='height: 142px!important;'
                         [group]="newRequest.get('questionsB').get(index.toString())" label="texto" name='reason'>
                       </app-text-area>
                     </div>
-  
+
                     <div *ngIf="index === 5 && newRequest.get('questionsB').get(index.toString()).get('answer').value">
                       <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-4">
-                        <app-input class="mr-3" [group]="newRequest.get('questionsB').get(index.toString()).get('policy')"
+                        <app-input class="mr-3"
+                          [group]="newRequest.get('questionsB').get(index.toString()).get('policy')"
                           label="Nombres y Apellidos" name='companyName'></app-input>
-                        <app-input class="mr-3" [group]="newRequest.get('questionsB').get(index.toString()).get('policy')"
+                        <app-input class="mr-3"
+                          [group]="newRequest.get('questionsB').get(index.toString()).get('policy')"
                           label="Nombres y Apellidos" name='policyName'></app-input>
-                        <app-input class="mr-3" [group]="newRequest.get('questionsB').get(index.toString()).get('policy')"
+                        <app-input class="mr-3"
+                          [group]="newRequest.get('questionsB').get(index.toString()).get('policy')"
                           label="Nombres y Apellidos" name='insuredName'></app-input>
-                        <app-input class="mr-3" [group]="newRequest.get('questionsB').get(index.toString()).get('policy')"
+                        <app-input class="mr-3"
+                          [group]="newRequest.get('questionsB').get(index.toString()).get('policy')"
                           label="Nombres y Apellidos" name='insuranceCarrier'></app-input>
-                        <app-input class="mr-3" [group]="newRequest.get('questionsB').get(index.toString()).get('policy')"
+                        <app-input class="mr-3"
+                          [group]="newRequest.get('questionsB').get(index.toString()).get('policy')"
                           label="Nombres y Apellidos" name='typepolicy'></app-input>
                         <app-date-picker class="mr-3" id='date'
                           [group]="newRequest.get('questionsB').get(index.toString()).get('policy')" label="fecha"
@@ -485,8 +495,8 @@
                         [group]="newRequest.get('primaryBenefits').get('dependentsC').get(index.toString())"
                         label="Nombres y Apellidos" name='name'></app-input>
                       <app-date-picker class="mr-3" id='date'
-                        [group]="newRequest.get('primaryBenefits').get('dependentsC').get(index.toString())" label="fecha"
-                        name='date'></app-date-picker>
+                        [group]="newRequest.get('primaryBenefits').get('dependentsC').get(index.toString())"
+                        label="fecha" name='date'></app-date-picker>
                       <app-input class="mr-3"
                         [group]="newRequest.get('primaryBenefits').get('dependentsC').get(index.toString())"
                         label="Documento de Identidad" name='id'></app-input>
@@ -500,17 +510,17 @@
                         [group]="newRequest.get('primaryBenefits').get('dependentsC').get(index.toString())">
                       </app-select>
                       <app-input class="mr-3"
-                        [group]="newRequest.get('primaryBenefits').get('dependentsC').get(index.toString())" label="Cant."
-                        name='quantity'></app-input>
+                        [group]="newRequest.get('primaryBenefits').get('dependentsC').get(index.toString())"
+                        label="Cant." name='quantity'></app-input>
                     </div>
-  
+
                     <div class="pb-5">
                       <button mat-mini-fab aria-label="Agregar reclamacion"
                         (click)="add(primaryBenefitsArray,primaryBenefits)" type="button"
                         class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
                         <mat-icon style="color: #18446B">add</mat-icon>
                       </button>
-  
+
                       <button *ngIf="newRequest.get('primaryBenefits').get('dependentsC')['controls'].length > 1"
                         mat-mini-fab aria-label="Eliminar reclamacion"
                         (click)="formMethods.deleteOneElement(primaryBenefitsArray, index)"
@@ -518,8 +528,8 @@
                         <mat-icon style="color: #18446B">remove</mat-icon>
                       </button>
                     </div>
-  
-  
+
+
                     <mat-divider class="pt-5"></mat-divider><br>
                   </div>
                 </div>
@@ -567,7 +577,7 @@
                         [group]="newRequest.get('contingentBeneficiary').get('dependentsC').get(index.toString())"
                         label="Cant." name='quantity'></app-input>
                     </div>
-  
+
                     <div class="pb-5">
                       <button mat-mini-fab aria-label="Agregar reclamacion"
                         (click)="add(contingentBeneficiaryArray,primaryBenefits)"
@@ -635,6 +645,8 @@
             </div>
           </ng-template>
         </app-forms-container>
+        <button mat-button (click)="print()">Imprimeme eta vaina</button>
+
       </mat-tab>
       <mat-tab *ngFor=" let element of dependentsFormArray.controls; let i = index"
         [label]="'D0'+ dependentsFormArray.controls.length">

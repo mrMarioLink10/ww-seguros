@@ -218,6 +218,32 @@ export class NewSubscriptionRequestComponent implements OnInit, DoCheck {
   }
   allFamily = $allFamily;
 
+  haveSomeone = {
+    haveMusculoskeletal: '',
+    haveCerebrovascular: '',
+    haveNervousSystem: '',
+    haveVisionHearing: '',
+    haveSpine: '',
+    haveCardiovascularSystem: '',
+    haveRespiratorySystem: '',
+    haveDigestiveSystem: '',
+    haveUrinarySystem: '',
+    haveMaleReproductiveOrgans: '',
+    haveBloodDisorders: '',
+    haveEndocrineDisorders: '',
+    haveAlternateTreatment: '',
+    haveFunctionalLimitation: '',
+    haveDeformity: '',
+    haveBloodTransfusion: '',
+    haveAlcoholicDependence: '',
+    haveNicotine: '',
+    haveStd: '',
+    havePhysiologicalDisorder: '',
+    haveHighRiskSport: '',
+    havePregnant: '',
+    haveReproductiveOrganDisorders: '',
+  }
+
   policy: FormGroup;
   constructor(private fb: FormBuilder, public formMethods: FormArrayGeneratorService) { }
 
@@ -336,7 +362,32 @@ export class NewSubscriptionRequestComponent implements OnInit, DoCheck {
           id: ['']
         })
       }),
-      comentary: ['']
+      comentary: [''],
+      sectionAHelper: this.fb.group({
+        haveMusculoskeletal: ['', Validators.required],
+        haveCerebrovascular: ['', Validators.required],
+        haveNervousSystem: ['', Validators.required],
+        haveVisionHearing: ['', Validators.required],
+        haveSpine: ['', Validators.required],
+        haveCardiovascularSystem: ['', Validators.required],
+        haveRespiratorySystem: ['', Validators.required],
+        haveDigestiveSystem: ['', Validators.required],
+        haveUrinarySystem: ['', Validators.required],
+        haveMaleReproductiveOrgans: ['', Validators.required],
+        haveBloodDisorders: ['', Validators.required],
+        haveEndocrineDisorders: ['', Validators.required],
+        haveAlternateTreatment: ['', Validators.required],
+        haveFunctionalLimitation: ['', Validators.required],
+        haveDeformity: ['', Validators.required],
+        haveBloodTransfusion: ['', Validators.required],
+        haveAlcoholicDependence: ['', Validators.required],
+        haveNicotine: ['', Validators.required],
+        haveStd: ['', Validators.required],
+        havePhysiologicalDisorder: ['', Validators.required],
+        haveHighRiskSport: ['', Validators.required],
+        havePregnant: ['', Validators.required],
+        haveReproductiveOrganDisorders: ['', Validators.required],
+      })
 
     });
 
@@ -437,7 +488,7 @@ export class NewSubscriptionRequestComponent implements OnInit, DoCheck {
   }
   print() {
     // console.log(JSON.stringify(this.newRequest.get('questions').value));
-    console.log('SOLO DISEASES', this.newRequest.get('questions').value);
+    console.log('SOLO DISEASES', this.newRequest.get('questionsA').value);
     console.log('SOLO DEPENDENTS', this.newRequest.get('dependents'));
     console.log('ENTERO', this.newRequest);
   }
@@ -487,6 +538,12 @@ export class NewSubscriptionRequestComponent implements OnInit, DoCheck {
 
   radioChange(event) {
     console.log(`value: ${event.value}, name: ${event.source.name}`);
+
+  }
+
+  sectionASelect(event) {
+    console.log(`value: ${event.value}, id: ${event.source.id}`);
+    console.log(`event:`, event);
 
   }
 }

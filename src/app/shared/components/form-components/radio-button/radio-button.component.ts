@@ -6,19 +6,20 @@ import { Title } from '@angular/platform-browser';
 @Component({
 	selector: 'app-radio-button',
 	templateUrl: './radio-button.component.html',
-	styleUrls: [ './radio-button.component.scss' ]
+	styleUrls: ['./radio-button.component.scss']
 })
 export class RadioButtonComponent implements OnInit {
 	@Input() title: string;
 	@Input() options: FieldConfig;
 	@Input() name: string;
 	@Input() group: FormGroup;
+	@Input() center: string;
 
 	@Output() selected = new EventEmitter<any>();
 
-	constructor() {}
+	constructor() { }
 
-	ngOnInit() {}
+	ngOnInit() { }
 
 	emitter(event) {
 		this.selected.emit({ valor: event.value, name: this.name });

@@ -26,4 +26,4 @@ import { GlobalSharedModule } from "src/app/shared/global-shared.module";
     GlobalSharedModule
   ]
 })
-export class ClaimsModule {}
+export class ClaimsModule { }

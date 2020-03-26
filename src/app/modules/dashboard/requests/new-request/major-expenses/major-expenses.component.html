@@ -365,9 +365,15 @@
                     </div>
                   </mat-select>
                 </mat-form-field> -->
-                <button class="select-persons" *ngIf="newRequest.get('sectionAHelper').value[question.name] === 'si'"
-                  [matMenuTriggerFor]="menu">Seleccionar Personas</button>
-                <mat-menu #menu="matMenu">
+                <button class="select-persons flex"
+                  *ngIf="newRequest.get('sectionAHelper').value[question.name] === 'si'" [matMenuTriggerFor]="menu">
+                  <div class="self-center pr-2">Seleccionar personas</div>
+                  <mat-icon style="color: #18446B">arrow_drop_down
+                  </mat-icon>
+                </button>
+
+
+                <mat-menu #menu="matMenu" class="dependents-select">
                   <div [formGroup]="newRequest.get('questionsA')">
                     <mat-checkbox (click)="$event.stopPropagation()" class="mat-menu-item"
                       [formControlName]="question.name" role="menuitemcheckbox">

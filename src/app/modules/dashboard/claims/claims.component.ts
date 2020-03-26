@@ -129,7 +129,8 @@ export class ClaimsComponent implements OnInit {
 		this.dataSource.paginator = this.paginator;
 
 		this.testForm = this.fb.group({
-			isCardiovascular: ['']
+			isCardiovascular: [''],
+			isSpine: ['']
 		});
 	}
 
@@ -139,10 +140,10 @@ export class ClaimsComponent implements OnInit {
 
 	change(event) {
 		if (event.value === 'no') {
-			this.testForm.removeControl('cardiovascular');
+			this.testForm.removeControl('spine');
 		} else if (event.value === 'si') {
 			this.testForm.addControl(
-				'cardiovascular',
+				'spine',
 				this.fb.group({})
 			);
 		}

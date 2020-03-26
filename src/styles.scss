@@ -502,6 +502,16 @@ button.active:focus {
   pointer-events: none;
 }
 
+.dependents-select {
+  .mat-menu-content {
+    min-width: 200px !important;
+  }
+
+  .mat-checkbox {
+    max-height: 25px !important;
+  }
+}
+
 .ww-mat-accordion {
   .ww-mat-expansion {
     border-radius: 4px !important;

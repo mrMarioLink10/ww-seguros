@@ -24,7 +24,7 @@ export class CardiovascularComponent implements OnInit {
 			{ viewValue: 'Enfermedad renal o vascular', value: 'enfermedad renal o vascular' },
 
 		]
-	}
+	};
 
 	hypertensionOptions: FieldConfig = {
 		name: 'estudio',
@@ -35,7 +35,7 @@ export class CardiovascularComponent implements OnInit {
 			{ viewValue: 'Prueba de esfuerzo', value: 'prueba de esfuerzo' },
 			{ viewValue: 'Otros', value: 'otros' },
 		]
-	}
+	};
 
 	yesOrNo: FieldConfig = {
 		label: '',

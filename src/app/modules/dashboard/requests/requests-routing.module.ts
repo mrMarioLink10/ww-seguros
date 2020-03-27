@@ -1,8 +1,9 @@
 import { Routes, RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { RequestsComponent } from './requests.component';
-import { NewRequestComponent } from './new-request/new-request/new-request.component';
-import { NewSubscriptionRequestComponent } from './new-subscription-request/new-subscription-request/new-subscription-request.component';
+import { LifeComponent } from './new-request/life/life.component';
+import { MajorExpensesComponent } from './new-request/major-expenses/major-expenses.component';
+import { NewRequestComponent } from './new-request/new-request.component';
 
 
 const routes: Routes = [
@@ -11,28 +12,17 @@ const routes: Routes = [
     pathMatch: 'full',
     component: RequestsComponent,
     data: {
-        slug: 'requests',
-        name: 'Solicitudes',
-      }
+      slug: 'requests',
+      name: 'Solicitudes',
+    }
   }, {
     path: 'new-requests',
-    component: NewRequestComponent,
-    data: {
-      slug: 'new-requests',
-      name: 'Nueva Solicitud',
-    }
-  }, {
-    path: 'new-subscription-requests',
-    component: NewSubscriptionRequestComponent,
-    data: {
-      slug: 'new-requests',
-      name: 'Nueva Solicitud',
-    }
-  }
+    loadChildren: () => import('./new-request/new-request.module').then(m => m.NewRequestModule)
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class RequestsRoutingModule {}
+export class RequestsRoutingModule { }

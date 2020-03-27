@@ -1,0 +1,239 @@
+<div class="uppercase dashboard-page-title mt-8 pb-4">cuestionario de columna vertebral</div>
+
+<div class="p-3 pb-0 mb-4" style="background-color: #F2F2F2">
+  <div class="mt-3 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 xl:grid-cols-5">
+    <div class="mr-3">
+      <app-input [group]="form" label="Nombre Completo" name='nombre' placeholder="Alberto Matias">
+      </app-input>
+    </div>
+    <div class="mr-3">
+      <app-input [group]="form" label="Edad" name='edad' placeholder="34" type="number">
+      </app-input>
+    </div>
+    <div class="mr-3">
+      <app-input [group]="form" label="Nombre del Médico Tratante" name='nombreMedico' placeholder="Santiago Alberto">
+      </app-input>
+    </div>
+    <div class="mr-3">
+      <app-input [group]="form" label="Centro de Salud donde trabaja" name='centroSalud'
+        placeholder="Hospital Ney Arias Lora">
+      </app-input>
+    </div>
+    <div class="mr-3">
+      <app-input [group]="form" label="Teléfono del Centro" name='telefonoCentro' placeholder="8207776677">
+      </app-input>
+    </div>
+  </div>
+</div>
+
+<app-forms-container [titles]="accordionTitle">
+  <ng-template #formTemplate>
+    <div class="px-6">
+      <!-- PRIMEROS SINTOMAS -->
+      <div class="body-13 mb-10" style="color: black !important;">¿Cuándo tuvo por primera vez los síntomas?
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5">
+        <app-date-picker [group]="form" name="dateFirstSymptoms" label="Fecha de primeros sintomas">
+        </app-date-picker>
+      </div>
+      <div class="body-13 mb-2">Describa los síntomas
+      </div>
+      <app-text-area [group]="form" name="infoFirstSymptoms" label="Texto">
+      </app-text-area>
+      <hr class="w-full mb-6 ww-divider">
+      <!-- PRIMERA VEZ PADECIMIENTO -->
+      <div class="body-13 mb-8" style="color: black !important;">¿Cuándo se le diagnosticó por primera vez el
+        padecimiento?
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5">
+        <app-date-picker [group]="form" name="dateFirstDiagnosis" label="Fecha de diagnostico">
+        </app-date-picker>
+      </div>
+      <hr class="w-full mb-6 ww-divider">
+      <!-- SEGMENTO DE ESPALDA-->
+      <div class="body-13 mb-8" style="color: black !important;"> ¿Cuál segmento de su espalda está afectado?
+
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5">
+        <div class="mr-3">
+          <app-select [group]="form" [options]="segments">
+          </app-select>
+        </div>
+        <div class="mr-3">
+          <app-input [group]="form" name="affectedVertebra" label="Vértebra afectada">
+          </app-input>
+        </div>
+      </div>
+      <hr class="w-full mb-6 ww-divider">
+      <!-- TIPOS DE ESTUDIOS -->
+      <div class="body-13 mb-8" style="color: black !important;"> Detalle tipo de estudios realizado
+      </div>
+      <div *ngFor="let appliedStudies of appliedStudiesList.controls; let i = index"
+        class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
+        <div class="mr-3">
+          <app-select [group]="form.get('appliedStudies').get(i.toString())" [options]="studiesType">
+          </app-select>
+        </div>
+        <div class="mr-3">
+          <app-date-picker [group]="form.get('appliedStudies').get(i.toString())" name="date" label="Fecha del estudio">
+          </app-date-picker>
+        </div>
+        <div class="mr-3">
+          <app-input [group]="form.get('appliedStudies').get(i.toString())" name="result" label="Resultado">
+          </app-input>
+        </div>
+        <div *ngIf="appliedStudiesList.length > 1"
+          [ngClass]="{'': appliedStudiesList.length === 1, 'col-span-1': appliedStudiesList.length > 1} ">
+          <button mat-mini-fab aria-label=" Eliminar estudio" (click)="removeToList(i, appliedStudiesList)"
+            type="button" class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
+            <mat-icon style="color: #18446B">remove</mat-icon>
+          </button>
+        </div>
+      </div>
+      <div class="mb-8">
+        <button mat-mini-fab aria-label="Agregar estudio" (click)="addToList(appliedStudiesList, 'appliedStudies')"
+          type="button" class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
+          <mat-icon style="color: #18446B">add</mat-icon>
+        </button>
+      </div>
+      <hr class="w-full mb-6 ww-divider">
+      <!-- PRIMERA VEZ PADECIMIENTO -->
+      <div class="body-13 mb-8" style="color: black !important;">¿Cuándo fue la última vez que sintió algunos de los
+        síntomas?</div>
+      <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
+        <div class="mr-3">
+          <app-date-picker [group]="form" name="dateLastSymptoms" label="Fecha de ultima vez">
+          </app-date-picker>
+        </div>
+        <div class="mr-3">
+          <app-input [group]="form" name="frequencySymptoms" label="Frecuencia de los síntomas">
+          </app-input>
+        </div>
+        <div class="mr-3">
+          <app-radio-button [group]="form" name="lastTwoYears" [options]="yesOrNo" (selected)="selectChange($event)">
+          </app-radio-button>
+        </div>
+      </div>
+      <hr class="w-full mb-6 ww-divider">
+      <!-- TIPOS DE TRATAMIENTO -->
+      <div class="body-13 mb-8" style="color: black !important;"> Especificar si utlizo algun tipo de tratamiento
+      </div>
+      <div *ngFor="let question of questions">
+        <div
+          class="w-full xl:flex xl:justify-between lg:flex lg:justify-between md:flex md:justify-between sm:flex sm:justify-between">
+          <div class="radio-button-label" style="font-size: 12px !important;">¿Utilizo {{question.label}} como
+            tratamiento?</div>
+          <app-radio-button [group]="form" [name]="question.name" [options]="yesOrNoOriginal"
+            (selected)="selectChange($event)">
+          </app-radio-button>
+        </div>
+        <div *ngIf="form.value[question.name] === 'si'">
+          <div *ngIf="question.name === 'useSurgery'">
+            <div *ngFor="let studies of surgeryList.controls; let i = index"
+              class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
+              <div class="mr-3">
+                <app-input [group]="form.get('surgeries').get(i.toString())" name="name"
+                  label="Nombre del procedimiento">
+                </app-input>
+              </div>
+              <div class="mr-3">
+                <app-input [group]="form.get('surgeries').get(i.toString())" name="segment"
+                  label="Segmento de la columna operada">
+                </app-input>
+              </div>
+              <div *ngIf="surgeryList.length > 1"
+                [ngClass]="{'': surgeryList.length === 1, 'col-span-1': surgeryList.length > 1} ">
+                <button mat-mini-fab aria-label=" Eliminar estudio" (click)="removeToList(i, surgeryList)" type="button"
+                  class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
+                  <mat-icon style="color: #18446B">remove</mat-icon>
+                </button>
+              </div>
+            </div>
+            <div class="mb-8">
+              <button mat-mini-fab aria-label="Agregar estudio" (click)="addToList(surgeryList, 'surgeries')"
+                type="button" class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
+                <mat-icon style="color: #18446B">add</mat-icon>
+              </button>
+            </div>
+          </div>
+          <div *ngIf="question.name === 'usePhysiotherapy'">
+            <div *ngFor="let studies of physiotherapyList.controls; let i = index"
+              class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
+              <div class="mr-3">
+                <app-date-picker [group]="form.get('physiotherapies').get(i.toString())" name="date" label="Fecha">
+                </app-date-picker>
+              </div>
+              <div class="mr-3">
+                <app-input [group]="form.get('physiotherapies').get(i.toString())" name="quantity" type="number"
+                  label="Cantidad">
+                </app-input>
+              </div>
+              <div *ngIf="physiotherapyList.length > 1"
+                [ngClass]="{'': physiotherapyList.length === 1, 'col-span-1': physiotherapyList.length > 1} ">
+                <button mat-mini-fab aria-label=" Eliminar estudio" (click)="removeToList(i, physiotherapyList)"
+                  type="button" class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
+                  <mat-icon style="color: #18446B">remove</mat-icon>
+                </button>
+              </div>
+            </div>
+            <div class="mb-8">
+              <button mat-mini-fab aria-label="Agregar estudio"
+                (click)="addToList(physiotherapyList, 'physiotherapies')" type="button"
+                class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
+                <mat-icon style="color: #18446B">add</mat-icon>
+              </button>
+            </div>
+          </div>
+          <div *ngIf="question.name === 'useMedication'">
+            <div *ngFor="let studies of medicationList.controls; let i = index"
+              class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
+              <div class="mr-3">
+                <app-input [group]="form.get('medications').get(i.toString())" name="dose"
+                  label="Nombre del medicamento">
+                </app-input>
+              </div>
+              <div class="mr-3">
+                <app-input [group]="form.get('medications').get(i.toString())" name="dose" label="Dosis">
+                </app-input>
+              </div>
+              <div *ngIf="medicationList.length > 1"
+                [ngClass]="{'': medicationList.length === 1, 'col-span-1': medicationList.length > 1} ">
+                <button mat-mini-fab aria-label=" Eliminar estudio" (click)="removeToList(i, medicationList)"
+                  type="button" class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
+                  <mat-icon style="color: #18446B">remove</mat-icon>
+                </button>
+              </div>
+            </div>
+            <div class="mb-8">
+              <button mat-mini-fab aria-label="Agregar estudio" (click)="addToList(medicationList, 'medications')"
+                type="button" class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
+                <mat-icon style="color: #18446B">add</mat-icon>
+              </button>
+            </div>
+          </div>
+        </div>
+        <hr class=" w-full mb-6 ww-divider">
+      </div>
+      <!--Proporcione cualquier otra información adicional que considere útil para la tramitación de su solicitud de seguro. -->
+      <div class="mt-8 mb-4">
+        <div class="body-13  mb-8">Proporcione cualquier otra información
+          adicional que considere útil para la tramitación de su solicitud de seguro.
+        </div>
+        <div class="mr-3">
+          <app-text-area [group]="form" name="aditionalInfo" label="Texto"></app-text-area>
+        </div>
+      </div>
+      <hr class="w-full mb-6 ww-divider">
+      <div class="declaraciones my-4 px-4 sm:px-4 md:px-14 lg:px-12 xl:px-12">
+        Declaro bajo la más solemne fe del juramento que los datos suministrados anteriormente y contenidos en este
+        cuestionario son verdaderos, correctos y actualizados y que no he omitido ni alterado ninguna información,
+        requerida
+        explícita o implícitamente en este cuestionario. Reconozco que el haber completado y firmado el presente
+        cuestionario no supone la aceptación por parte de la Aseguradora, hasta tanto la Aseguradora realice la
+        debida
+        evaluación
+        y aprobación del mismo.
+      </div>
+    </div>
+  </ng-template>
+</app-forms-container>

@@ -1,0 +1,28 @@
+.info-home {
+  background-color: #f2f2f2;
+}
+.info-home mat-form-field {
+  width: 300px;
+}
+.info-home .w-h {
+  width: 150px;
+}
+::ng-deep .mat-tab-labels {
+  margin-top: 15px;
+  background-color: #f2f2f2;
+}
+.colorb {
+  background-color: #e6e7e8;
+  padding: 15px;
+  margin: 15px;
+}
+.background-w {
+  background-color: white;
+}
+mat-divider {
+  margin-top: 15px !important;
+  margin-bottom: 30px !important;
+}
+.pt-21 {
+  padding-top: 21px !important;
+}

@@ -1,0 +1,56 @@
+.info-home {
+  background-color: white;
+
+  mat-form-field {
+    width: 300px;
+  }
+
+  .w-h {
+    width: 150px;
+  }
+
+  box-shadow: 0px -2px 0px -3px rgba(0, 0, 0, 0.2),
+  0px 2px 2px 0px rgba(0, 0, 0, 0.14),
+  0px 1px 8px 0px rgba(0, 0, 0, 0.12);
+
+  margin-right: 5px;
+  margin-left: 5px;
+}
+
+.info-cot {
+  background-color: #F2F2F2;
+
+  .w-h {
+    width: 150px;
+  }
+}
+
+.divider {
+  margin-top: 15px !important;
+  margin-bottom: 30px !important;
+}
+
+.colorb {
+  background-color: #E6E7E8;
+  padding: 15px;
+  margin: 15px;
+}
+
+.b-40 {
+  margin-bottom: 41px;
+}
+
+.w-50 {
+  width: 65%;
+}
+
+.question {
+  width: 100%;
+  max-width: 85%;
+  // background-color: blue;
+}
+
+::ng-deep .mat-tab-labels {
+  margin-top: 30px;
+  background-color: #F2F2F2;
+}

@@ -1,4 +1,4 @@
-<div [formGroup]="group" class="radio-container">
+<div [formGroup]="group" class="radio-container mb-4" [ngClass]="{'pt': center === 'true'}">
   <mat-label *ngIf='options.label || title' class="radio-button-label">{{options.label || title}}</mat-label><br
     *ngIf='options.label || title'>
   <mat-radio-group aria-labelledby="example-radio-group-label" [formControlName]="name" class="radio-group">
@@ -6,5 +6,5 @@
       class="mr-3 radio-button">
       <span style="white-space: normal;"> {{option.viewValue}} </span> </mat-radio-button>
   </mat-radio-group>
-
+  <mat-error *ngIf="group.get(name).touched && !group.get(name).valid">Debe llenar el campo de {{options.label || title}</mat-error>
 </div>

@@ -26,3 +26,7 @@
   width: 100%;
   max-width: 85%;
 }
+::ng-deep .mat-tab-labels {
+  margin-top: 30px;
+  background-color: #f2f2f2;
+}

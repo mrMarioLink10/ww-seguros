@@ -129,48 +129,22 @@ export class ClaimsComponent implements OnInit {
 		this.dataSource.paginator = this.paginator;
 
 		this.testForm = this.fb.group({
-			isCardiovascular: ['']
+			isCardiovascular: [''],
+			isSpine: ['']
 		});
 	}
 
 	print() {
-		console.log(this.testForm);
+		console.log(JSON.stringify(this.testForm.value));
 	}
 
 	change(event) {
 		if (event.value === 'no') {
-			this.testForm.removeControl('cardiovascular');
+			this.testForm.removeControl('spine');
 		} else if (event.value === 'si') {
 			this.testForm.addControl(
-				'cardiovascular',
-				this.fb.group({
-					nombre: [''],
-					edad: [''],
-					nombreMedico: [''],
-					centroSalud: [''],
-					telefonoCentro: [''],
-					haveChestPain: ['', Validators.required],
-					havePalpitations: ['', Validators.required],
-					haveCardiacArrhythmias: ['', Validators.required],
-					haveDifficultyBreathing: ['', Validators.required],
-					haveHeartMurmurs: ['', Validators.required],
-					haveHeartAttacks: ['', Validators.required],
-					haveCoronaryBypassSurgery: ['', Validators.required],
-					haveCardiacCatheterization: ['', Validators.required],
-					haveStentPosture: ['', Validators.required],
-					haveAnotherDisease: ['', Validators.required],
-					haveFamilyWithCardio: ['', Validators.required],
-					haveSmokingHabits: ['', Validators.required],
-					haveHypertensionStudies: ['', Validators.required],
-					haveChangedTreatment: ['', Validators.required],
-					haveLiquidAnomaly: ['', Validators.required],
-					medicalConsultationFrequency: ['', Validators.required],
-					importantInformation: ['', Validators.required],
-					lastMedicalConsultation: this.fb.group({
-						fecha: ['', Validators.required],
-						resultado: ['', Validators.required],
-					})
-				})
+				'spine',
+				this.fb.group({})
 			);
 		}
 	}

@@ -26,15 +26,7 @@ const ELEMENT_DATA: Claims[] = [
 		monto: 2000,
 		estatus: 'Denegado'
 	},
-	{
-		no: 666420,
-		nombre: 'El Penco',
-		seguro: 'Vida',
-		plan: 'Nombre del Plan',
-		fecha: new Date(),
-		monto: 2000,
-		estatus: 'Enviado'
-	},
+
 	{
 		no: 154546,
 		nombre: 'Isai Vargas',
@@ -93,13 +85,13 @@ const ELEMENT_DATA: Claims[] = [
 
 
 @Component({
-  selector: 'app-authorizations',
-  templateUrl: './authorizations.component.html',
-  styleUrls: ['./authorizations.component.scss']
+	selector: 'app-authorizations',
+	templateUrl: './authorizations.component.html',
+	styleUrls: ['./authorizations.component.scss']
 })
 export class AuthorizationsComponent implements OnInit {
 
-  statusTypes = [ 'Enviado', 'Reembolsado', 'Denegado' ];
+	statusTypes = ['Enviado', 'Reembolsado', 'Denegado'];
 
 	newAuthorizationButtonOptions: MatProgressButtonOptions = {
 		active: false,
@@ -115,7 +107,7 @@ export class AuthorizationsComponent implements OnInit {
 		customClass: 'dashboard-button'
 	};
 
-	displayedColumns: string[] = [ 'no', 'nombre', 'seguro', 'plan', 'fecha', 'monto', 'estatus', 'acciones' ];
+	displayedColumns: string[] = ['no', 'nombre', 'seguro', 'plan', 'fecha', 'monto', 'estatus', 'acciones'];
 	dataSource = new MatTableDataSource(ELEMENT_DATA);
 
 	@ViewChild(MatSort, { static: true })
@@ -125,7 +117,7 @@ export class AuthorizationsComponent implements OnInit {
 
 	testForm: FormGroup;
 
-	constructor(private route: Router) {}
+	constructor(private route: Router) { }
 
 	ngOnInit() {
 		this.dataSource.sort = this.sort;

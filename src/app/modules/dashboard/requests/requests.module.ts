@@ -11,7 +11,7 @@ import { ServicesModule } from 'src/app/core/services/services.module';
 import { NewRequestComponent } from './new-request/new-request.component';
 
 @NgModule({
-	declarations: [RequestsComponent, NewRequestComponent],
+	declarations: [RequestsComponent],
 	imports: [
 		CommonModule,
 		RequestsRoutingModule,

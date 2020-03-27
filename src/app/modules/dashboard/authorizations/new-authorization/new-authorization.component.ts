@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FieldConfig } from '../../../../shared/components/form-components/models/field-config'
 import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
 import { FormHandlerService } from '../../../../core/services/forms/form-handler.service';
+import { $country } from 'src/app/core/form/objects';
 
 
 @Component({
@@ -11,25 +12,10 @@ import { FormHandlerService } from '../../../../core/services/forms/form-handler
 })
 export class NewAuthorizationComponent implements OnInit {
 
-
 	accordionTitles = [
 		'Información del Asegurado',
-		'Información Médica'
+		'Información médica'
 	];
-
-	generos: FieldConfig = {
-		label: 'Sexo',
-		options: [
-			{
-				value: 'femenino',
-				viewValue: 'Femenino'
-			},
-			{
-				value: 'masculino',
-				viewValue: 'Masculino'
-			}
-		]
-	};
 
 	seguros: FieldConfig = {
 		label: '¿Tiene otro seguro de salud?',
@@ -45,8 +31,22 @@ export class NewAuthorizationComponent implements OnInit {
 		]
 	};
 
+	generos: FieldConfig = {
+		label: 'Sexo',
+		options: [
+			{
+				value: 'femenino',
+				viewValue: 'Femenino'
+			},
+			{
+				value: 'masculino',
+				viewValue: 'Masculino'
+			}
+		]
+	};
+
 	condiciones: FieldConfig = {
-		label: 'La condición se trata de:',
+		label: 'La condición se trata de: ',
 		options: [
 			{
 				value: 'hospitalizacion',
@@ -68,6 +68,10 @@ export class NewAuthorizationComponent implements OnInit {
 	};
 
 	authorization: FormGroup;
+
+	constructor(private fb: FormBuilder, public formHandler: FormHandlerService) { 
+
+	}
 
 	selectChange(event: any) {
 		const form = this.authorization.get('informacionAsegurado') as FormGroup;
@@ -96,10 +100,9 @@ export class NewAuthorizationComponent implements OnInit {
 		}
 	}
 
-	constructor(private fb: FormBuilder, public formHandler: FormHandlerService) { }
 
-	ngOnInit() {
-		this.authorization = this.fb.group({
+ngOnInit() {
+		this.authorization= this.fb.group({
 			fecha: ['', Validators.required],
 			informacionAsegurado: this.fb.group({
 				nombre: ['', Validators.required],
@@ -135,5 +138,6 @@ export class NewAuthorizationComponent implements OnInit {
 			})
 		});
 	}
+
 
 }

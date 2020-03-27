@@ -39,7 +39,8 @@ const routes: Routes = [
 			{
 				path: 'requests',
 				loadChildren: () => import('./requests/requests.module').then((m) => m.RequestsModule)
-			}
+			},
+			
 		]
 	}
 ];

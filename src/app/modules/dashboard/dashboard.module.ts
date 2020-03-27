@@ -10,6 +10,7 @@ import { MaterialModule } from "src/app/shared/modules/material.module";
 import { BaseDialogComponent } from "../../shared/components/base-dialog/base-dialog.component";
 import { GlobalSharedModule } from "../../shared/global-shared.module";
 
+
 @NgModule({
   declarations: [],
   imports: [

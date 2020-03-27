@@ -4,7 +4,7 @@
   <mat-radio-group aria-labelledby="example-radio-group-label" [formControlName]="name" class="radio-group">
     <mat-radio-button *ngFor="let option of options.options" [value]="option.value" (change)="emitter($event)"
       class="mr-3 radio-button">
-      {{option.viewValue}}</mat-radio-button>
+      <span style="white-space: normal;"> {{option.viewValue}} </span> </mat-radio-button>
   </mat-radio-group>
 
 </div>

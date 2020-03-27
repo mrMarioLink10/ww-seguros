@@ -5,6 +5,7 @@ import { $sex, $res, $country, $time, $family, $allFamily } from '../../../../..
 import { FormArrayGeneratorService } from 'src/app/core/services/forms/form-array-generator.service';
 import { questionsA, questionsB } from './questions';
 import { Requests } from '../../requests.component';
+import { Router, ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'app-major-expenses',
   templateUrl: './major-expenses.component.html',
@@ -107,6 +108,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
     ],
     name: 'plans',
   };
+  // tslint:disable-next-line: max-line-length
   titles = ['Contratante', 'Solicitante', 'Persona políticamente expuesta', 'Perfil Financiero', 'Dependientes', 'Sección A', 'Sección B', 'Sección C Beneficiarios Primarios', 'Beneficiario(s) Contingente(s)', 'Comentarios adicionales'];
   country = {
     label: 'País',
@@ -130,7 +132,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
       }
     ],
     name: 'status'
-  }
+  };
   year = {
     label: 'Seleccione',
     options: $time,
@@ -270,7 +272,8 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
   }
 
   policy: FormGroup;
-  constructor(private fb: FormBuilder, public formMethods: FormArrayGeneratorService) { }
+  // tslint:disable-next-line: max-line-length
+  constructor(private fb: FormBuilder, public formMethods: FormArrayGeneratorService, private router: Router, private route: ActivatedRoute) { }
 
   ngOnInit() {
 
@@ -369,6 +372,8 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
         haveHighRiskSport: ['', Validators.required],
         havePregnant: ['', Validators.required],
         haveReproductiveOrganDisorders: ['', Validators.required],
+        cardiovascular: this.fb.group({}),
+        spine: this.fb.group({}),
       }),
       questionsB: this.fb.array([this.formMethods.createItem(this.questionsGroup)]),
       primaryBenefits: this.fb.group({
@@ -576,6 +581,25 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
     //     this.newRequest.get('questionsA').get(event.source.id).setValue('si');
     //   } else if (value )
     // }
+  }
+
+  selectChangeUrl(event) {
+    switch (event) {
+      case 'vida':
+        this.router.navigate(['../life'], { relativeTo: this.route });
+        break;
+
+      case 'disability':
+        this.router.navigate(['../refund'], { relativeTo: this.route });
+        break;
+
+      case 'gastos mayores':
+        this.router.navigate(['../major-expenses'], { relativeTo: this.route });
+        break;
+
+      default:
+        break;
+    }
   }
 }
 

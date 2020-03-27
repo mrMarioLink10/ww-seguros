@@ -1,8 +1,8 @@
 
 <mat-form-field color="accent" appearance="outline" class="w-full mb-4" style="font-size: small !important;" [formGroup]="group">
   <mat-label>{{options.label}}</mat-label>
-    <mat-select [formControlName]="options.name">
+    <mat-select [formControlName]="name">
       <mat-option *ngFor="let type of options.options" [value]="type.value" [routerLink]="type.link">{{type.viewValue}}</mat-option>
     </mat-select>
-    <mat-error *ngIf="group.get(options.name).touched && !group.get(options.name).valid">Debe llenar el campo de {{options.label}}</mat-error>
+    <mat-error *ngIf="group.get(name).touched && !group.get(name).valid ">Debe llenar el campo de {{options.label}}</mat-error>
 </mat-form-field>

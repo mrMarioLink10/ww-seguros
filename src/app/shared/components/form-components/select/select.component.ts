@@ -12,8 +12,12 @@ export class SelectComponent implements OnInit {
 
   @Input() options: FieldConfig;
   @Input() group: FormGroup;
-
+  @Input() name: string;
   constructor(private router: Router) { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    if(this.options.name){
+      this.name = this.options.name
+    }
+  }
 }

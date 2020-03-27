@@ -10,10 +10,11 @@ import { MaterialModule } from 'src/app/shared/modules/material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedDirectivesModule } from 'src/app/core/directive';
 import { ServicesModule } from 'src/app/core/services/services.module';
+import { NewRequestComponent } from './new-request.component';
 
 
 @NgModule({
-  declarations: [LifeComponent, MajorExpensesComponent],
+  declarations: [NewRequestComponent, LifeComponent, MajorExpensesComponent],
   imports: [
     NewRequestRoutingModule,
     CommonModule,

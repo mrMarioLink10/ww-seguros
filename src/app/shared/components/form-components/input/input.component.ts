@@ -11,6 +11,8 @@ export class InputComponent implements OnInit {
 	@Input() label: string;
 	@Input() name: string;
 	@Input() type: string;
+	@Input() min: string;
+	@Input() max: string;
 	@Input() placeholder: string;
 	@Input() group: FormGroup;
 

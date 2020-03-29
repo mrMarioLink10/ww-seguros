@@ -430,6 +430,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
     // this.setQuestionsA();
     this.setQuestionsB();
 
+
   }
   ngDoCheck() { }
 
@@ -437,6 +438,8 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
     const increment = dependentsFormArray.length + 1;
     dependentsFormArray = this.formMethods.addElement(dependentsFormArray, increment, group).formArray;
   }
+
+
   // setQuestionsA(){
   //   this.questions.forEach((question,index)=> {
   //     if(index > 0){

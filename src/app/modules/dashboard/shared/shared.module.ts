@@ -9,6 +9,7 @@ import { DiseasesInfoComponent } from './components/disease/shared/diseases-info
 import { SpineComponent } from './components/disease/spine/spine.component';
 import { KnowYourClientComponent } from './components/disease/know-your-client/know-your-client.component';
 import { MoneyLaunderingComponent } from './components/disease/money-laundering/money-laundering.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,7 @@ import { MoneyLaunderingComponent } from './components/disease/money-laundering/
     KnowYourClientComponent,
     MoneyLaunderingComponent
   ],
-  imports: [CommonModule, MaterialModule, GlobalSharedModule],
+  imports: [CommonModule, MaterialModule, GlobalSharedModule, FormsModule, ReactiveFormsModule],
   exports: [FilterComponent, FormsContainerComponent, CardiovascularComponent, SpineComponent]
 })
 export class SharedModule { }

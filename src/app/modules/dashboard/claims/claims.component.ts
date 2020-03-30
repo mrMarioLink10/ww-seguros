@@ -129,8 +129,7 @@ export class ClaimsComponent implements OnInit {
 		this.dataSource.paginator = this.paginator;
 
 		this.testForm = this.fb.group({
-			isCardiovascular: [''],
-			isSpine: ['']
+			arthritis: this.fb.group({})
 		});
 	}
 

@@ -10,22 +10,6 @@ import { FieldConfig } from 'src/app/shared/components/form-components/models/fi
 export class ArthritisComponent implements OnInit {
   @Input() form: FormGroup;
 
-  yesOrNoOriginal: FieldConfig = {
-    label: '',
-    options: [
-      {
-        value: 'si',
-        viewValue: 'Si'
-      },
-      {
-        value: 'no',
-        viewValue: 'No'
-      }
-    ]
-  };
-
-  accordionTitle = ['Datos'];
-
   constructor(private fb: FormBuilder) { }
 
   questions: any[];

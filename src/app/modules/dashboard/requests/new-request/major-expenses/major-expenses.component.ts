@@ -6,6 +6,7 @@ import { FormArrayGeneratorService } from 'src/app/core/services/forms/form-arra
 import { questionsA, questionsB } from './questions';
 import { Requests } from '../../requests.component';
 import { Router, ActivatedRoute } from '@angular/router';
+import { generate } from 'rxjs';
 @Component({
   selector: 'app-major-expenses',
   templateUrl: './major-expenses.component.html',
@@ -432,13 +433,13 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
 
 
   }
+
   ngDoCheck() { }
 
   add(dependentsFormArray, group) {
     const increment = dependentsFormArray.length + 1;
     dependentsFormArray = this.formMethods.addElement(dependentsFormArray, increment, group).formArray;
   }
-
 
   // setQuestionsA(){
   //   this.questions.forEach((question,index)=> {

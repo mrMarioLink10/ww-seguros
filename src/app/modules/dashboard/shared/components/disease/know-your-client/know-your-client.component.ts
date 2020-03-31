@@ -150,15 +150,6 @@ export class KnowYourClientComponent implements OnInit {
 		nationality_shareholder:['', Validators.required]
 	}	
 
-	 branchOfficeFormGroup={
-		branch_office_name:['', Validators.required],
-		branch_office_address:['', Validators.required],
-		list_countrys_branch_office:['', Validators.required],
-    		register_number_branch_office:['', [Validators.required, Validators.min(1)]],
-    		telephone_branch_office:['', Validators.required],
-    		other_info_branch_office:['', Validators.required]
-  	}
-
 	constructor(private fb: FormBuilder, public formMethods: FormArrayGeneratorService) { 
 
 	}
@@ -202,24 +193,38 @@ export class KnowYourClientComponent implements OnInit {
 		
 	}
 
-	// selectChangeBranchOffice(event: any) {
+	selectChangeBranchOffice(event) {
 
-	// 	const form = this.know_customer as FormGroup;
-
-	// 	if (event.valor === 'si') {
-		
-	// 				form.addControl('', this.fb.group({
-						
-	// 				}));
-				
-	// 		}
-	// 	 else if (event.valor === 'no') {
+		const form = this.know_customer.get('exposed').get('branch_office') as FormGroup;
 	
-	// 				form.removeControl('');
-
-	// 		}
+		if (event.valor === 'si') {
 		
-	// }
+			  form.addControl('allBranch_office', this.fb.array([this.createFormArray()]));
+			  this.branchOfficeFormArray = this.know_customer.get('exposed').get('branch_office').get('allBranch_office') as FormArray;
+		  }
+		 else if (event.valor === 'no') {
+	  
+			  form.removeControl('allBranch_office');
+			  this.branchOfficeFormArray= undefined;
+	
+		  }
+		
+	  }
+
+	  createFormArray(): FormGroup{
+
+    
+		return this.fb.group({
+		  
+		  branch_office_name:['', Validators.required],
+		  branch_office_address:['', Validators.required],
+		  list_countrys_branch_office:['', Validators.required],
+		  register_number_branch_office:['', [Validators.required, Validators.min(1)]],
+		  telephone_branch_office:['', Validators.required],
+		  other_info_branch_office:['', Validators.required]
+	
+		})
+	}
 
 	ngOnInit() {
 
@@ -267,9 +272,7 @@ export class KnowYourClientComponent implements OnInit {
         old_current_position:['', Validators.required],
         stock_Exchange:['', Validators.required],
         branch_office_radio:['no'],
-			  branch_office: this.fb.group({
-        			allBranch_office: this.fb.array([this.formMethods.createItem(this.branchOfficeFormGroup)])
-      			}),
+			  branch_office: this.createFormArray(),
         investigated_representative:['no'],
         specify_investigated_representative:[''],
       }),
@@ -300,7 +303,6 @@ export class KnowYourClientComponent implements OnInit {
 
 		this.bodyMembersFormArray = this.know_customer.get('management_body_composition').get('allMembers') as FormArray;
 		this.shareholdersFormArray = this.know_customer.get('shareholders').get('allShareholders') as FormArray;
-    this.branchOfficeFormArray = this.know_customer.get('exposed').get('branch_office').get('allBranch_office') as FormArray;
 
 	}
 
@@ -314,10 +316,12 @@ export class KnowYourClientComponent implements OnInit {
 		shareholdersFormArray = this.formMethods.addElement(shareholdersFormArray, increment, group).formArray;
     	 }
 
-	addBranchOffice(branchOfficeFormArray, group) {
-		const increment = branchOfficeFormArray.length + 1;
-		branchOfficeFormArray = this.formMethods.addElement(branchOfficeFormArray, increment, group).formArray;
-    	}
+		 addBranchOffice(branchOfficeFormArray) {
+
+			const increment = branchOfficeFormArray.length + 1;
+			branchOfficeFormArray = this.formMethods.addElement(branchOfficeFormArray, increment, this.createFormArray()).formArray;
+		 
+		  }
 
 
 }

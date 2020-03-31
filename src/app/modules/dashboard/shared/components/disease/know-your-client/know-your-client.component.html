@@ -1,554 +1,549 @@
 
 <div class="mx-4 mb-8">
-    <div class="uppercase dashboard-page-title pt-10">
-      FORMULARIO POLÍTICA CONOZCA A SU CLIENTE (KNOW YOUR CUSTOMER) (PERSONA JURÍDICA) </div>
-  
-    <div class="pt-10 pb-0 mt-5 ml-1" style="background-color: #F2F2F2">
-  
-      <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-5 ml-8 pb-3" style="max-width: 670px;"> 
-        <app-input [group]="know_customer" label="Solicitud No."
-        name='request' type="number" placeholder="12345678"></app-input>  
-      </div>
-  
+  <div class="uppercase dashboard-page-title pt-10">
+    FORMULARIO POLÍTICA CONOZCA A SU CLIENTE (KNOW YOUR CUSTOMER) (PERSONA JURÍDICA) </div>
+
+  <div class="pt-10 pb-0 mt-5 ml-1" style="background-color: #F2F2F2">
+
+    <div class="mr-10 sm:mr-10 md:mr-3 lg:mr-3 xl:mr-3 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4 ml-8 pb-3"> 
+      <app-input [group]="know_customer" label="Solicitud No."
+      name='request' type="number" placeholder="12345678"></app-input>  
     </div>
-  
-    <div class="pb-1 mt-4">
-  
-      <app-forms-container [titles]="accordionTitles">
-        
-        <ng-template #formTemplate>
-  
-          <div class="ml-3 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4"> 
-  
-            <div class="mr-16 sm:mr-16 md:mr-24 lg:mr-32 xl:mr-32">
-              <app-input [group]="know_customer.get('general_data')" label="Nombre de la sociedad"
-                        name='society_name' placeholder=""></app-input>
-            </div>
-  
-            <div class="mr-16 sm:mr-16 md:mr-24 lg:mr-32 xl:mr-32">
-              <app-input [group]="know_customer.get('general_data')" label="Nombre Comercial"
-              name='commercial_name' placeholder=""></app-input>
-            </div>
-  
-            <div class="mr-16 sm:mr-16 md:mr-24 lg:mr-32 xl:mr-32">
-              <app-input [group]="know_customer.get('general_data')" label="Núm. Contribuyente o equivalente"
-              name='contributor_num' type="number" placeholder=""></app-input>
-            </div>
-  
-            <div class="mr-16 sm:mr-16 md:mr-24 lg:mr-32 xl:mr-32">
-              <app-input [group]="know_customer.get('general_data')" label="Domicilio Social"
-              name='home' placeholder=""></app-input>
-            </div>
-  
-            <div class="mr-16 sm:mr-16 md:mr-24 lg:mr-32 xl:mr-32">
-              <app-input [group]="know_customer.get('general_data')" label="Teléfono (s)"
-              name='telephone' type="number" placeholder=""></app-input>
-            </div>
-  
-            <div class="mr-16 sm:mr-16 md:mr-24 lg:mr-32 xl:mr-32">
-              <app-input [group]="know_customer.get('general_data')" label="Correo"
-              name='email' placeholder=""></app-input>
-            </div>
-  
-            <div class="mr-16 sm:mr-16 md:mr-24 lg:mr-32 xl:mr-32">
-              <app-input [group]="know_customer.get('general_data')" label="Actividad Comercial"
-              name='commercial_activity' placeholder=""></app-input>
-            </div>
-  
-            <div class="mr-16 sm:mr-16 md:mr-24 lg:mr-32 xl:mr-32">
-              <app-select name="list_countrys" [options]="countryList" [group]="know_customer.get('general_data')"></app-select>
-            </div>
-  
-          </div>
-  
-        </ng-template>
-  
-        <ng-template #formTemplate>
-          
-          <div class="ml-3 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4"> 
-  
-            <div class="mr-16 sm:mr-16 md:mr-24 lg:mr-32 xl:mr-32 xl:mt-8">
-              <app-input [group]="know_customer.get('representative_data')" label="Nombre (s) y Apellido (s)"
-              name='name_lastname' placeholder=""></app-input>
-            </div>
-  
-            <div class="mr-16 sm:mr-16 md:mr-24 lg:mr-32 xl:mr-32 xl:mt-8">
-              <app-input [group]="know_customer.get('representative_data')" label="Lugar de Nacimiento"
-              name='birthplace' placeholder=""></app-input>
-            </div>
-  
-            <div class="">
-  
-              <div class="pb-3">
-                  <label> <strong> Fecha de nacimiento </strong> </label>
-              </div>
-  
-              <div class="mr-16 sm:mr-16 md:mr-24 lg:mr-32 xl:mr-40">
-                <app-date-picker [group]="know_customer.get('representative_data')" label="Fecha" name='birthdate'> </app-date-picker>
-              </div>
-  
-            </div>
-  
-            <div class="mr-16 sm:mr-16 md:mr-24 md:mt-8 lg:mr-32 lg:mt-8 xl:mr-32 xl:mt-8">
-              <app-input [group]="know_customer.get('representative_data')" label="Cargo o relación con la Sociedad"
-              name='society_position' placeholder=""></app-input>
-            </div>
-  
-            <div class="mr-16 sm:mr-16 md:mr-24 lg:mr-32 xl:mr-32">
-              <app-input [group]="know_customer.get('representative_data')" label="Nacionalidad"
-              name='nationality' placeholder=""></app-input>
-            </div>
-  
-            <div class="mr-16 sm:mr-16 md:mr-24 lg:mr-32 xl:mr-32">
-              <app-input [group]="know_customer.get('representative_data')" label="Teléfono Residencial"
-              name='home_telephone' placeholder=""></app-input>
-            </div>
-  
-            <div class="mr-16 sm:mr-16 md:mr-24 lg:mr-32 xl:mr-32">
-              <app-input [group]="know_customer.get('representative_data')" label="Celular"
-              name='cellphone' placeholder=""></app-input>
-            </div>
-  
-            <div class="mr-16 sm:mr-16 md:mr-24 lg:mr-32 xl:mr-32">
-              <app-input [group]="know_customer.get('representative_data')" label="Cédula / Pasaporte"
-              name='id_passport' placeholder=""></app-input>
-            </div>
-  
-            <div class="mr-16 sm:mr-16 md:mr-24 lg:mr-32 xl:mr-32">
-              <app-input [group]="know_customer.get('representative_data')" label="Correo"
-              name='representative_email' placeholder=""></app-input>
-            </div>
-  
-            <div class="mr-16 sm:mr-16 md:mr-24 lg:mr-32 xl:mr-32">
-              <app-input [group]="know_customer.get('representative_data')" label="Dirección Residencial"
-              name='address' placeholder=""></app-input>
-            </div>
-  
-          </div>
-  
-        </ng-template>
-  
-        <ng-template #formTemplate>
-          
-          <div class="ml-6" [formGroup]="know_customer.get('management_body_composition')">
-                <div formArrayName="allMembers">
-                  <div class="mt-8" *ngFor="let element of bodyMembersFormArray.controls; let index = index">
-      
-                    <div [formGroupName]="index" class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4">
-      
-                      <div class="mr-3 sm:mr-6 md:mr-20 lg:mr-32 xl:mr-32"> 
-                        <app-input 
-                         [group]="know_customer.get('management_body_composition').get('allMembers').get(index.toString())"
-                         label="Nombre (s) y Apellido (s)" name='name_lastname'></app-input>
-                      </div>
-  
-                      <div class="mr-3 sm:mr-6 md:mr-20 lg:mr-32 xl:mr-32"> 
-                        <app-input 
-                         [group]="know_customer.get('management_body_composition').get('allMembers').get(index.toString())"
-                         label="Cargo" name='position'></app-input>
-                      </div>
-                      
-                      <div class="mr-3 sm:mr-6 md:mr-20 lg:mr-32 xl:mr-32">
-                        <app-input 
-                         [group]="know_customer.get('management_body_composition').get('allMembers').get(index.toString())"
-                         label="Cédula / Pasaporte" name='id_passport_management_body'></app-input>
-                     </div>
-  
-                     <div class="mr-3 sm:mr-6 md:mr-20 lg:mr-32 xl:mr-32"> 
-                      <app-input 
-                         [group]="know_customer.get('management_body_composition').get('allMembers').get(index.toString())"
-                         label="Nacionalidad" name='nationality_management_body'></app-input>
-                    </div>
-                  </div>
-                  <div>
-                      <button mat-mini-fab aria-label="Agregar reclamacion"
-                        (click)="addMBody(bodyMembersFormArray,management_bodyFormGroup)" type="button"
-                        class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
-                        <mat-icon style="color: #18446B">add</mat-icon>
-                      </button>
-                      <button *ngIf="bodyMembersFormArray.controls.length > 1" mat-mini-fab aria-label="Eliminar reclamacion"
-                        (click)="formMethods.deleteOneElement(bodyMembersFormArray, index)" type="button"
-                        class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
-                        <mat-icon style="color: #18446B">remove</mat-icon>
-                      </button>
-                    </div>
-      
-                  </div>
-                </div>
-              </div>
-  
-        </ng-template>
-  
-        <ng-template #formTemplate>
-          
-         <div class="ml-6 py-5 mb-4" style="background-color: #E6E7E8;">
-  
-            <p class="pl-10 pr-8"> Persona(s) física(s) que ejerce el control efectivo ﬁnal sobre una persona jurídica o tenga como mínimo el 20% del capital de la persona jurídica incluyendo a la persona física en beneﬁcio de quien o quienes se lleva a cabo una transacción. </p>
-  
-          </div>
-  
-      <div class="ml-6"> 
-              <div [formGroup]="know_customer.get('shareholders')">
-                <div formArrayName="allShareholders">
-                  <div class="mt-8" *ngFor="let element of shareholdersFormArray.controls; let index = index">
-      
-                    <div [formGroupName]="index" class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4">
-      
-                      <div class="mr-3 sm:mr-6 md:mr-20 lg:mr-32 xl:mr-32"> 
-                        <app-input 
-                         [group]="know_customer.get('shareholders').get('allShareholders').get(index.toString())"
-                         label="Nombre (s) y Apellido (s)" name='name_lastname_shareholder'></app-input>
-                      </div>
-  
-                      <div class="mr-3 sm:mr-6 md:mr-20 lg:mr-32 xl:mr-32"> 
-                        <app-input 
-                         [group]="know_customer.get('shareholders').get('allShareholders').get(index.toString())"
-                         label="% de Participación" name='participation_percentage' type="number" min="1" max="100"></app-input>
-                      </div>
-                      
-                      <div class="mr-3 sm:mr-6 md:mr-20 lg:mr-32 xl:mr-32">
-                        <app-input 
-                         [group]="know_customer.get('shareholders').get('allShareholders').get(index.toString())"
-                         label="Cédula / Pasaporte" name='id_passport_shareholder'></app-input>
-                     </div>
-  
-                     <div class="mr-3 sm:mr-6 md:mr-20 lg:mr-32 xl:mr-32"> 
-                      <app-input 
-                         [group]="know_customer.get('shareholders').get('allShareholders').get(index.toString())"
-                         label="Nacionalidad" name='nationality_shareholder'></app-input>
-                    </div>
-                  </div>
-                  <div>
-                      <button mat-mini-fab aria-label="Agregar reclamacion"
-                        (click)="addShareholders(shareholdersFormArray,shareholdersFormGroup)" type="button"
-                        class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
-                        <mat-icon style="color: #18446B">add</mat-icon>
-                      </button>
-                      <button *ngIf="shareholdersFormArray.controls.length > 1" mat-mini-fab aria-label="Eliminar reclamacion"
-                        (click)="formMethods.deleteOneElement(shareholdersFormArray, index)" type="button"
-                        class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
-                        <mat-icon style="color: #18446B">remove</mat-icon>
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4">
-  
-                <div>
-  
-                </div>
-  
-                <div>
-                  
-                </div>
-  
-                <div class="mr-3 mt-8 sm:mt-8 sm:mr-6 md:mt-8 md:mr-20 lg:mt-8 lg:mr-32 xl:mt-0 xl:mr-32">
-                  <app-input 
-                  [group]="know_customer.get('shareholders')"
-                  label="Núm. de Empleados" name='employee_numbers' type="number"></app-input>
-                </div>
-              </div>
-  
-            </div>
-  
-        </ng-template>
-  
-        <ng-template #formTemplate>
-          
-          <div>
-  
-            <!-- Bloque 1 -->
-            <div class="grid grid-cols-1">
-              <div class="ml-6 py-5" style="background-color: #E6E7E8;">
-              
-                <p class="pl-10 pr-8"> Las Personas Políticamente Expuestas son aquéllas que desempeñan o han desempeñado funciones 
-                  públicas destacadas en un país extranjero o en su propio país, ej. Jefes de Estado o de gobierno, políticos de 
-                  alta jerarquía, funcionarios gubernamentales, judiciales o militares de alta jerarquía, altos ejecutivos de 
-                  empresas estatales, funcionarios importantes de partidos políticos. La designación de PEP incluye a su cónyuge y 
-                  familiares hasta el segundo grado de consanguineidad y segundo de aﬁnidad.
-                   </p>
-                 
-              </div>
-  
-              <div class="mt-5">
-  
-                <small class="ml-8 mr-6 mt-3" style="display: inline-block"> ¿Tiene la Sociedad dentro del órgano de gestión una Persona Políticamente Expuesta? </small>
-                  <app-radio-button class="float-right mt-3" style="display: inline-block" [group]="know_customer.get('exposed')" [options]="exposed_politically"
-                  name='exposed_person' (selected)="selectChangeExposedPerson($event)">
-                  </app-radio-button>
-  
-              </div>
-  
-              <div *ngIf="this.know_customer.get('exposed').get('input')" class="ml-6 mt-4 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4">
-  
-                <div>
-  
-                  <div class="mr-16 sm:mr-16 md:mr-24 lg:mr-32 xl:mr-32">
-                    <app-input [group]="know_customer.get('exposed').get('input')" label="Nombre"
-                    name='exposed_name' placeholder=""></app-input>
-                  </div>
-  
-                </div>
-  
-                <div>
-  
-                  <div class="mr-16 sm:mr-16 md:mr-24 lg:mr-32 xl:mr-32">
-                    <app-input [group]="know_customer.get('exposed').get('input')" label="Cargo actual o anterior"
-                    name='old_current_position' placeholder=""></app-input>
-                  </div>
-  
-                </div>
-  
-              </div>
-              
-            </div>
-  
-            <hr class="ml-6">
-            <hr class="ml-6">
-  
-            <!-- Bloque 2 -->
-            <div>
-  
-              <div class="mt-5 mb-6 pb-1">
-  
-                <small class="ml-8 mr-6 mt-3" style="display: inline-block"> ¿Cotiza la Sociedad en la Bolsa de Valores? </small>
-                  <app-radio-button class="float-right mt-3" style="display: inline-block" [group]="know_customer.get('exposed')" [options]="exposed_politically"
-                  name='stock_Exchange'>
-                  </app-radio-button>
-  
-              </div>
-  
-            </div>
-  
-            <hr class="ml-6 mt-10 sm:mt-10 md:mt-10 lg:mt-0 xl:mt-0">
-            <hr class="ml-6">
-  
-            <!-- Bloque 3 -->
-            <div class="mb-4">
-  
-              <div class="my-5">
-                <small class="ml-8 mr-6 mt-3" style="display: inline-block"> ¿Tiene la Sociedad sucursales o afiliadas? </small>
-                  <app-radio-button class="float-right mt-3" style="display: inline-block" [group]="know_customer.get('exposed')" [options]="exposed_politically"
-                  name='branch_office_radio' > <!-- (selected)="selectChangeBranchOffice($event)" -->
-                  </app-radio-button>
-              </div>
-  
-              <div class="ml-8 mt-24"> <!-- *ngIf="this.know_customer.get('branch_office')" -->
-  
-                 <div [formGroup]="know_customer.get('exposed').get('branch_office')">
-                    <div formArrayName="allBranch_office">
-                      <div class="mt-8" *ngFor="let element of branchOfficeFormArray.controls; let index = index">
-          
-                        <div [formGroupName]="index" class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4">
-          
-                          <div class="mr-3 sm:mr-6 md:mr-20 lg:mr-32 xl:mr-32"> 
-                            <app-input 
-                             [group]="know_customer.get('exposed').get('branch_office').get('allBranch_office').get(index.toString())"
-                             label="Sucursales o aﬁliadas" name='branch_office_name'></app-input>
-                          </div>
-      
-                          <div class="mr-3 sm:mr-6 md:mr-20 lg:mr-32 xl:mr-32"> 
-                            <app-input 
-                             [group]="know_customer.get('exposed').get('branch_office').get('allBranch_office').get(index.toString())"
-                             label="Dirección" name='branch_office_address'></app-input>
-                          </div>
-                          
-                          <div class="mr-3 sm:mr-6 md:mr-20 lg:mr-32 xl:mr-32">
-                             <app-select name="list_countrys_branch_office" [options]="countryList" 
-                             [group]="know_customer.get('exposed').get('branch_office').get('allBranch_office').get(index.toString())"></app-select>
-                         </div>
-      
-                         <div class="mr-3 sm:mr-6 md:mr-20 lg:mr-32 xl:mr-32"> 
-                          <app-input 
-                             [group]="know_customer.get('exposed').get('branch_office').get('allBranch_office').get(index.toString())"
-                             label="Número de registro" name='register_number_branch_office' type="number"></app-input>
-                        </div>
-  
-                        <div class="mr-3 sm:mr-6 md:mr-20 lg:mr-32 xl:mr-32"> 
-                          <app-input 
-                             [group]="know_customer.get('exposed').get('branch_office').get('allBranch_office').get(index.toString())"
-                             label="Teléfonos" name='telephone_branch_office' type="number"></app-input>
-                        </div>
-  
-                        <div class="mr-3 sm:mr-6 md:mr-20 lg:mr-32 xl:mr-32"> 
-                          <app-input 
-                             [group]="know_customer.get('exposed').get('branch_office').get('allBranch_office').get(index.toString())"
-                             label="Otros" name='other_info_branch_office'></app-input>
-                        </div>
-  
-                      </div>
-                      <div>
-                          <button mat-mini-fab aria-label="Agregar reclamacion"
-                            (click)="addBranchOffice(branchOfficeFormArray,branchOfficeFormGroup)" type="button"
-                            class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
-                            <mat-icon style="color: #18446B">add</mat-icon>
-                          </button>
-                          <button *ngIf="branchOfficeFormArray.controls.length > 1" mat-mini-fab aria-label="Eliminar reclamacion"
-                            (click)="formMethods.deleteOneElement(branchOfficeFormArray, index)" type="button"
-                            class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
-                            <mat-icon style="color: #18446B">remove</mat-icon>
-                          </button>
-                        </div>
-          
-                      </div>
-                    </div>
-  
-                </div>
-  
-              </div>
-  
-            </div>
-  
-            <hr class="ml-6 mt-10 sm:mt-10 md:mt-10 lg:mt-0 xl:mt-0">
-            <hr class="ml-6">
-  
-            <!-- Bloque 4 -->
-            <div class="mt-4 ">
-  
-              <div class="ml-8">
-  
-                <small class="mr-6 mt-3"> Indique si el Representante Legal, Apoderado o la Sociedad misma son o han sido objeto de investigación, indagación o condena por actividades ilícitas o delitos de lavado o blanqueo de dinero o financiamiento de terrorismo. </small>
-                  <app-radio-button class="float-right mt-3" [group]="know_customer.get('exposed')" [options]="exposed_politically"
-                  name='investigated_representative' (selected)="selectChangeText($event)">
-                  </app-radio-button>
-  
-              </div>
-  
-              <div *ngIf="this.know_customer.get('exposed').get('areatext')" class="ml-8 mt-2">
-                
-                <div class="mb-2 pt-8">
-                  <small> Especifique </small>
-                </div>
-                
-                <div>
-                  <app-text-area  label="Texto" name='specify_investigated_representative' [group]="know_customer.get('exposed').get('areatext')"></app-text-area>
-                </div>
-  
-              </div>
-  
-            </div>
-  
-          </div>
-  
-        </ng-template>
-  
-        <ng-template #formTemplate>
-  
-          <!-- Bloque 1 -->
-          <div>
-  
-            <div>
-              <app-radio-button [group]="know_customer.get('finance')" [options]="main_annual_income_options"
-              name='main_annual_income'>
-              </app-radio-button>
-            </div>
-  
-            <div class="mt-6">
-              <app-radio-button [group]="know_customer.get('finance')" [options]="other_annual_income_options"
-              name="annual_income_others">
-              </app-radio-button>
-            </div>
-  
-          </div>
-  
-          <hr class="ml-3">
-          <hr class="ml-3">
-  
-          <!-- Bloque 2 -->
-          <div class="mt-8 ml-3">
-  
-            <label> <strong> Documentos Necesarios: </strong> </label>
-  
-  
-            <div class="grid grid-cols-1  mt-6">
-              
-              <div class="grid grid-cols-1 xl:grid-cols-2"> 
-                <div class="xl:mr-64 xl:pr-12"> 
-                  <mat-checkbox (change)="onChange0($event)"
-                  [formGroup]="know_customer.get('finance').get('documents')" formControlName="mercantile_register_document"> <span style="white-space: normal;"> {{documents[0].viewValue}} </span> </mat-checkbox>
-                </div>
-  
-                <div class="mt-5 xl:-ml-3 xl:-mr-4 xl:mt-0"> 
-                  <mat-checkbox (change)="onChange2($event)"
-                  [formGroup]="know_customer.get('finance').get('documents')" formControlName="id_shareholder_document"><span style="white-space: normal;"> {{documents[2].viewValue}} </span> </mat-checkbox>
-                </div>
-              </div>
-  
-              <div class="grid grid-cols-1 xl:grid-cols-2 xl:mt-5"> 
-                <div class="mt-5 xl:mr-5 xl:mt-0"> 
-                    <mat-checkbox (change)="onChange1($event)"
-                    [formGroup]="know_customer.get('finance').get('documents')" formControlName="id_representative_document"><span style="white-space: normal;"> {{documents[1].viewValue}} </span> </mat-checkbox>
-                 
-                </div>
-  
-                <div class="mt-5 xl:-ml-3 xl:mr-16 xl:pr-3 xl:mt-0">
-                  <mat-checkbox (change)="onChange3($event)"
-                  [formGroup]="know_customer.get('finance').get('documents')" formControlName="managemente_body_document"><span style="white-space: normal;"> {{documents[3].viewValue}} </span> </mat-checkbox>
-                </div>
-              </div>
-  
-            </div>
-  
-          </div> 
-  
-        </ng-template>
-  
-        <ng-template #formTemplate>
-  
-          <div class="ml-6" style="background-color: #E6E7E8;">
-            <p class="py-5 px-8"> Por la presente declaro bajo la fe de juramento que los datos suministrados anteriormente y 
-              contenidos en este formulario son verdaderos, correctos y actualizados; y que no he omitido ninguna 
-              información requerida explícita o implícitamente en este formulario, y que todas las actividades de la 
-              sociedad son ejercidas dentro de las normas legales y que los recursos utilizados para el pago de los 
-              seguros en mención, provienen de la actividad comercial declarada. </p>
-          </div>
-  
-        </ng-template>
-  
-        <ng-template #formTemplate>
-  
-          <div class="ml-6 mt-5 grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4">
-  
-            <div class="sm:mr-20 md:mr-24 lg:mr-32 xl:mr-32">
-  
-              <app-input [group]="know_customer.get('broker')" label="Nombre/Razón Social" name='social_name' placeholder=""></app-input> 
-  
-            </div>
-  
-            <div class="sm:mr-20 md:mr-24 lg:mr-32 xl:mr-32">
-  
-              <app-input [group]="know_customer.get('broker')" label="No. Licencia" name='license_num' type="number" placeholder=""></app-input> 
-  
-            </div>
-  
-          </div>
-  
-        </ng-template>
-  
-        <ng-template #formTemplate>
-  
-          <div class="ml-6 mt-2 grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4">
-  
-            <div class="sm:mr-20 md:mr-24 lg:mr-32 xl:mr-32">
-  
-              <app-input [group]="know_customer.get('info_for_the_insurance_carrier')" label="Nombre completo funcionario" name='fullname_functionary' placeholder=""></app-input> 
-  
-            </div>
-  
-            <div class="sm:mr-20 md:mr-24 lg:mr-32 xl:mr-32">
-  
-              <app-input [group]="know_customer.get('info_for_the_insurance_carrier')" label="Cargo" name='position_functionary' placeholder=""></app-input> 
-  
-            </div>
-  
-          </div>
-  
-        </ng-template>
-  
-      </app-forms-container>
-  
-    </div>
-  
+
   </div>
-  
+
+  <div class="pb-1 mt-4">
+
+    <app-forms-container [titles]="accordionTitles">
+      
+      <ng-template #formTemplate>
+
+        <div class="ml-3 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4"> 
+
+          <div class="mr-3">
+            <app-input [group]="know_customer.get('general_data')" label="Nombre de la sociedad"
+                      name='society_name' placeholder=""></app-input>
+          </div>
+
+          <div class="mr-3">
+            <app-input [group]="know_customer.get('general_data')" label="Nombre Comercial"
+            name='commercial_name' placeholder=""></app-input>
+          </div>
+
+          <div class="mr-3">
+            <app-input [group]="know_customer.get('general_data')" label="Núm. Contribuyente o equivalente"
+            name='contributor_num' type="number" placeholder=""></app-input>
+          </div>
+
+          <div class="mr-3">
+            <app-input [group]="know_customer.get('general_data')" label="Domicilio Social"
+            name='home' placeholder=""></app-input>
+          </div>
+
+          <div class="mr-3">
+            <app-input [group]="know_customer.get('general_data')" label="Teléfono (s)"
+            name='telephone' type="number" placeholder=""></app-input>
+          </div>
+
+          <div class="mr-3">
+            <app-input [group]="know_customer.get('general_data')" label="Correo"
+            name='email' placeholder=""></app-input>
+          </div>
+
+          <div class="mr-3">
+            <app-input [group]="know_customer.get('general_data')" label="Actividad Comercial"
+            name='commercial_activity' placeholder=""></app-input>
+          </div>
+
+          <div class="mr-3">
+            <app-select name="list_countrys" [options]="countryList" [group]="know_customer.get('general_data')"></app-select>
+          </div>
+
+        </div>
+
+      </ng-template>
+
+      <ng-template #formTemplate>
+        
+        <div class="ml-3 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4"> 
+
+          <div class="mr-3 xl:mt-8">
+            <app-input [group]="know_customer.get('representative_data')" label="Nombre (s) y Apellido (s)"
+            name='name_lastname' placeholder=""></app-input>
+          </div>
+
+          <div class="mr-3 xl:mt-8">
+            <app-input [group]="know_customer.get('representative_data')" label="Lugar de Nacimiento"
+            name='birthplace' placeholder=""></app-input>
+          </div>
+
+          <div class="">
+
+            <div class="pb-3">
+                <label> <strong> Fecha de nacimiento </strong> </label>
+            </div>
+
+            <div class="mr-3">
+              <app-date-picker [group]="know_customer.get('representative_data')" label="Fecha" name='birthdate'> </app-date-picker>
+            </div>
+
+          </div>
+
+          <div class="mr-3 md:mt-8 lg:mt-8 xl:mt-8">
+            <app-input [group]="know_customer.get('representative_data')" label="Cargo o relación con la Sociedad"
+            name='society_position' placeholder=""></app-input>
+          </div>
+
+          <div class="mr-3">
+            <app-input [group]="know_customer.get('representative_data')" label="Nacionalidad"
+            name='nationality' placeholder=""></app-input>
+          </div>
+
+          <div class="mr-3">
+            <app-input [group]="know_customer.get('representative_data')" label="Teléfono Residencial"
+            name='home_telephone' placeholder=""></app-input>
+          </div>
+
+          <div class="mr-3">
+            <app-input [group]="know_customer.get('representative_data')" label="Celular"
+            name='cellphone' placeholder=""></app-input>
+          </div>
+
+          <div class="mr-3">
+            <app-input [group]="know_customer.get('representative_data')" label="Cédula / Pasaporte"
+            name='id_passport' placeholder=""></app-input>
+          </div>
+
+          <div class="mr-3">
+            <app-input [group]="know_customer.get('representative_data')" label="Correo"
+            name='representative_email' placeholder=""></app-input>
+          </div>
+
+          <div class="mr-3">
+            <app-input [group]="know_customer.get('representative_data')" label="Dirección Residencial"
+            name='address' placeholder=""></app-input>
+          </div>
+
+        </div>
+
+      </ng-template>
+
+      <ng-template #formTemplate>
+        
+        <div class="ml-6" [formGroup]="know_customer.get('management_body_composition')">
+              <div formArrayName="allMembers">
+                <div class="mt-8" *ngFor="let element of bodyMembersFormArray.controls; let index = index">
+    
+                  <div [formGroupName]="index" class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4">
+    
+                    <div class="mr-3 "> 
+                      <app-input 
+                       [group]="know_customer.get('management_body_composition').get('allMembers').get(index.toString())"
+                       label="Nombre (s) y Apellido (s)" name='name_lastname'></app-input>
+                    </div>
+
+                    <div class="mr-3 "> 
+                      <app-input 
+                       [group]="know_customer.get('management_body_composition').get('allMembers').get(index.toString())"
+                       label="Cargo" name='position'></app-input>
+                    </div>
+                    
+                    <div class="mr-3 ">
+                      <app-input 
+                       [group]="know_customer.get('management_body_composition').get('allMembers').get(index.toString())"
+                       label="Cédula / Pasaporte" name='id_passport_management_body'></app-input>
+                   </div>
+
+                   <div class="mr-3 "> 
+                    <app-input 
+                       [group]="know_customer.get('management_body_composition').get('allMembers').get(index.toString())"
+                       label="Nacionalidad" name='nationality_management_body'></app-input>
+                  </div>
+                </div>
+                <div>
+                    <button mat-mini-fab aria-label="Agregar reclamacion"
+                      (click)="addMBody(bodyMembersFormArray,management_bodyFormGroup)" type="button"
+                      class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
+                      <mat-icon style="color: #18446B">add</mat-icon>
+                    </button>
+                    <button *ngIf="bodyMembersFormArray.controls.length > 1" mat-mini-fab aria-label="Eliminar reclamacion"
+                      (click)="formMethods.deleteOneElement(bodyMembersFormArray, index)" type="button"
+                      class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
+                      <mat-icon style="color: #18446B">remove</mat-icon>
+                    </button>
+                  </div>
+    
+                </div>
+              </div>
+            </div>
+
+      </ng-template>
+
+      <ng-template #formTemplate>
+        
+       <div class="ml-6 py-5 mb-4" style="background-color: #E6E7E8;">
+
+          <p class="pl-10 pr-8"> Persona(s) física(s) que ejerce el control efectivo ﬁnal sobre una persona jurídica o tenga como mínimo el 20% del capital de la persona jurídica incluyendo a la persona física en beneﬁcio de quien o quienes se lleva a cabo una transacción. </p>
+
+        </div>
+
+    <div class="ml-6"> 
+            <div [formGroup]="know_customer.get('shareholders')">
+              <div formArrayName="allShareholders">
+                <div class="mt-8" *ngFor="let element of shareholdersFormArray.controls; let index = index">
+    
+                  <div [formGroupName]="index" class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4">
+    
+                    <div class="mr-3 "> 
+                      <app-input 
+                       [group]="know_customer.get('shareholders').get('allShareholders').get(index.toString())"
+                       label="Nombre (s) y Apellido (s)" name='name_lastname_shareholder'></app-input>
+                    </div>
+
+                    <div class="mr-3 "> 
+                      <app-input 
+                       [group]="know_customer.get('shareholders').get('allShareholders').get(index.toString())"
+                       label="% de Participación" name='participation_percentage' type="number" min="1" max="100"></app-input>
+                    </div>
+                    
+                    <div class="mr-3 ">
+                      <app-input 
+                       [group]="know_customer.get('shareholders').get('allShareholders').get(index.toString())"
+                       label="Cédula / Pasaporte" name='id_passport_shareholder'></app-input>
+                   </div>
+
+                   <div class="mr-3 "> 
+                    <app-input 
+                       [group]="know_customer.get('shareholders').get('allShareholders').get(index.toString())"
+                       label="Nacionalidad" name='nationality_shareholder'></app-input>
+                  </div>
+                </div>
+                <div>
+                    <button mat-mini-fab aria-label="Agregar reclamacion"
+                      (click)="addShareholders(shareholdersFormArray,shareholdersFormGroup)" type="button"
+                      class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
+                      <mat-icon style="color: #18446B">add</mat-icon>
+                    </button>
+                    <button *ngIf="shareholdersFormArray.controls.length > 1" mat-mini-fab aria-label="Eliminar reclamacion"
+                      (click)="formMethods.deleteOneElement(shareholdersFormArray, index)" type="button"
+                      class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
+                      <mat-icon style="color: #18446B">remove</mat-icon>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4">
+
+              <div>
+
+              </div>
+
+              <div>
+                
+              </div>
+
+              <div class="mr-3 mt-8 sm:mt-8 md:mt-8 lg:mt-8 xl:mt-0">
+                <app-input 
+                [group]="know_customer.get('shareholders')"
+                label="Núm. de Empleados" name='employee_numbers' type="number"></app-input>
+              </div>
+            </div>
+
+          </div>
+
+      </ng-template>
+
+      <ng-template #formTemplate>
+        
+        <div>
+
+          <!-- Bloque 1 -->
+          <div class="grid grid-cols-1">
+            <div class="ml-6 py-5" style="background-color: #E6E7E8;">
+            
+              <p class="pl-10 pr-8"> Las Personas Políticamente Expuestas son aquéllas que desempeñan o han desempeñado funciones 
+                públicas destacadas en un país extranjero o en su propio país, ej. Jefes de Estado o de gobierno, políticos de 
+                alta jerarquía, funcionarios gubernamentales, judiciales o militares de alta jerarquía, altos ejecutivos de 
+                empresas estatales, funcionarios importantes de partidos políticos. La designación de PEP incluye a su cónyuge y 
+                familiares hasta el segundo grado de consanguineidad y segundo de aﬁnidad.
+                 </p>
+               
+            </div>
+
+            <div class="mt-5">
+
+              <small class="ml-8 mr-6 mt-3" style="display: inline-block"> ¿Tiene la Sociedad dentro del órgano de gestión una Persona Políticamente Expuesta? </small>
+                <app-radio-button class="float-right mt-3" style="display: inline-block" [group]="know_customer.get('exposed')" [options]="exposed_politically"
+                name='exposed_person' (selected)="selectChangeExposedPerson($event)">
+                </app-radio-button>
+
+            </div>
+
+            <div *ngIf="this.know_customer.get('exposed').get('input')" class="ml-6 mt-4 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4">
+
+              <div>
+
+                <div class="mr-3">
+                  <app-input [group]="know_customer.get('exposed').get('input')" label="Nombre"
+                  name='exposed_name' placeholder=""></app-input>
+                </div>
+
+              </div>
+
+              <div>
+
+                <div class="mr-3">
+                  <app-input [group]="know_customer.get('exposed').get('input')" label="Cargo actual o anterior"
+                  name='old_current_position' placeholder=""></app-input>
+                </div>
+
+              </div>
+
+            </div>
+            
+          </div>
+
+          <hr class="ww-divider ml-6 -mt-4">
+          
+
+          <!-- Bloque 2 -->
+          <div>
+
+            <div class="mt-5 mb-6 pb-1">
+
+              <small class="ml-8 mr-6 mt-3" style="display: inline-block"> ¿Cotiza la Sociedad en la Bolsa de Valores? </small>
+                <app-radio-button class="float-right mt-3" style="display: inline-block" [group]="know_customer.get('exposed')" [options]="exposed_politically"
+                name='stock_Exchange'>
+                </app-radio-button>
+
+            </div>
+
+          </div>
+
+          <hr class="ww-divider ml-6 mt-10 sm:mt-10 md:mt-10 lg:mt-0 xl:mt-0">
+        
+
+          <!-- Bloque 3 -->
+          <div class="mb-4">
+
+            <div class="my-5">
+              <small class="ml-8 mr-6 mt-3" style="display: inline-block"> ¿Tiene la Sociedad sucursales o afiliadas? </small>
+                <app-radio-button class="float-right mt-3" style="display: inline-block" [group]="know_customer.get('exposed')" [options]="exposed_politically"
+                name='branch_office_radio' (selected)="selectChangeBranchOffice($event)"> <!-- (selected)="selectChangeBranchOffice($event)" -->
+                </app-radio-button>
+            </div>
+
+            <div class="ml-8 mt-24" *ngIf="branchOfficeFormArray"> <!-- *ngIf="this.know_customer.get('branch_office')" -->
+
+              
+                    <div class="mt-8" *ngFor="let element of branchOfficeFormArray.controls; let index = index">
+        
+                      <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4">
+        
+                        <div class="mr-3 "> 
+                          <app-input 
+                           [group]="know_customer.get('exposed').get('branch_office').get('allBranch_office').get(index.toString())"
+                           label="Sucursales o aﬁliadas" name='branch_office_name'></app-input>
+                        </div>
+    
+                        <div class="mr-3 "> 
+                          <app-input 
+                           [group]="know_customer.get('exposed').get('branch_office').get('allBranch_office').get(index.toString())"
+                           label="Dirección" name='branch_office_address'></app-input>
+                        </div>
+                        
+                        <div class="mr-3 ">
+                           <app-select name="list_countrys_branch_office" [options]="countryList" 
+                           [group]="know_customer.get('exposed').get('branch_office').get('allBranch_office').get(index.toString())"></app-select>
+                       </div>
+    
+                       <div class="mr-3 "> 
+                        <app-input 
+                           [group]="know_customer.get('exposed').get('branch_office').get('allBranch_office').get(index.toString())"
+                           label="Número de registro" name='register_number_branch_office' type="number"></app-input>
+                      </div>
+
+                      <div class="mr-3 "> 
+                        <app-input 
+                           [group]="know_customer.get('exposed').get('branch_office').get('allBranch_office').get(index.toString())"
+                           label="Teléfonos" name='telephone_branch_office' type="number"></app-input>
+                      </div>
+
+                      <div class="mr-3 "> 
+                        <app-input 
+                           [group]="know_customer.get('exposed').get('branch_office').get('allBranch_office').get(index.toString())"
+                           label="Otros" name='other_info_branch_office'></app-input>
+                      </div>
+
+                    </div>
+                    <div>
+                        <button mat-mini-fab aria-label="Agregar reclamacion"
+                          (click)="addBranchOffice(branchOfficeFormArray)" type="button"
+                          class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
+                          <mat-icon style="color: #18446B">add</mat-icon>
+                        </button>
+                        <button *ngIf="branchOfficeFormArray.controls.length > 1" mat-mini-fab aria-label="Eliminar reclamacion"
+                          (click)="formMethods.deleteOneElement(branchOfficeFormArray, index)" type="button"
+                          class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
+                          <mat-icon style="color: #18446B">remove</mat-icon>
+                        </button>
+                      </div>
+        
+                    </div>
+                  </div>
+
+          </div>
+
+          <hr class="ww-divider ml-6 mt-10 sm:mt-10 md:mt-10 lg:mt-0 xl:mt-0">
+       
+
+          <!-- Bloque 4 -->
+          <div class="mt-8">
+
+            <div class="ml-8">
+
+              <small class="mr-6 inline"> Indique si el Representante Legal, Apoderado o la Sociedad misma son o han sido objeto de investigación, indagación o condena por actividades ilícitas o delitos de lavado o blanqueo de dinero o financiamiento de terrorismo. </small>
+                <app-radio-button class="float-right inline" [group]="know_customer.get('exposed')" [options]="exposed_politically"
+                name='investigated_representative' (selected)="selectChangeText($event)">
+                </app-radio-button>
+
+            </div>
+
+            <div *ngIf="this.know_customer.get('exposed').get('areatext')" class="ml-8 mt-2">
+              
+              <div class="mb-2 pt-8">
+                <small> Especifique </small>
+              </div>
+              
+              <div>
+                <app-text-area  label="Texto" name='specify_investigated_representative' [group]="know_customer.get('exposed').get('areatext')"></app-text-area>
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </ng-template>
+
+      <ng-template #formTemplate>
+
+        <!-- Bloque 1 -->
+        <div>
+
+          <div>
+            <app-radio-button [group]="know_customer.get('finance')" [options]="main_annual_income_options"
+            name='main_annual_income'>
+            </app-radio-button>
+          </div>
+
+          <div class="mt-6">
+            <app-radio-button [group]="know_customer.get('finance')" [options]="other_annual_income_options"
+            name="annual_income_others">
+            </app-radio-button>
+          </div>
+
+        </div>
+
+        <hr class="ww-divider ml-3">
+   
+
+        <!-- Bloque 2 -->
+        <div class="mt-8 ml-3">
+
+          <label> <strong> Documentos Necesarios: </strong> </label>
+
+
+          <div class="grid grid-cols-1  mt-6">
+            
+            <div class="grid grid-cols-1 xl:grid-cols-2"> 
+              <div class="xl:mr-64 xl:pr-12"> 
+                <mat-checkbox (change)="onChange0($event)"
+                [formGroup]="know_customer.get('finance').get('documents')" formControlName="mercantile_register_document"> <span style="white-space: normal;"> {{documents[0].viewValue}} </span> </mat-checkbox>
+              </div>
+
+              <div class="mt-5 xl:-ml-3 xl:-mr-4 xl:mt-0"> 
+                <mat-checkbox (change)="onChange2($event)"
+                [formGroup]="know_customer.get('finance').get('documents')" formControlName="id_shareholder_document"><span style="white-space: normal;"> {{documents[2].viewValue}} </span> </mat-checkbox>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 xl:grid-cols-2 xl:mt-5"> 
+              <div class="mt-5 xl:mr-5 xl:mt-0"> 
+                  <mat-checkbox (change)="onChange1($event)"
+                  [formGroup]="know_customer.get('finance').get('documents')" formControlName="id_representative_document"><span style="white-space: normal;"> {{documents[1].viewValue}} </span> </mat-checkbox>
+               
+              </div>
+
+              <div class="mt-5 xl:-ml-3 xl:mr-16 xl:pr-3 xl:mt-0">
+                <mat-checkbox (change)="onChange3($event)"
+                [formGroup]="know_customer.get('finance').get('documents')" formControlName="managemente_body_document"><span style="white-space: normal;"> {{documents[3].viewValue}} </span> </mat-checkbox>
+              </div>
+            </div>
+
+          </div>
+
+        </div> 
+
+      </ng-template>
+
+      <ng-template #formTemplate>
+
+        <div class="ml-6" style="background-color: #E6E7E8;">
+          <p class="py-5 px-8"> Por la presente declaro bajo la fe de juramento que los datos suministrados anteriormente y 
+            contenidos en este formulario son verdaderos, correctos y actualizados; y que no he omitido ninguna 
+            información requerida explícita o implícitamente en este formulario, y que todas las actividades de la 
+            sociedad son ejercidas dentro de las normas legales y que los recursos utilizados para el pago de los 
+            seguros en mención, provienen de la actividad comercial declarada. </p>
+        </div>
+
+      </ng-template>
+
+      <ng-template #formTemplate>
+
+        <div class="ml-6 mt-5 grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4">
+
+          <div class="mr-3">
+
+            <app-input [group]="know_customer.get('broker')" label="Nombre/Razón Social" name='social_name' placeholder=""></app-input> 
+
+          </div>
+
+          <div class="mr-3">
+
+            <app-input [group]="know_customer.get('broker')" label="No. Licencia" name='license_num' type="number" placeholder=""></app-input> 
+
+          </div>
+
+        </div>
+
+      </ng-template>
+
+      <ng-template #formTemplate>
+
+        <div class="ml-6 mt-2 grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4">
+
+          <div class="mr-3">
+
+            <app-input [group]="know_customer.get('info_for_the_insurance_carrier')" label="Nombre completo funcionario" name='fullname_functionary' placeholder=""></app-input> 
+
+          </div>
+
+          <div class="mr-3">
+
+            <app-input [group]="know_customer.get('info_for_the_insurance_carrier')" label="Cargo" name='position_functionary' placeholder=""></app-input> 
+
+          </div>
+
+        </div>
+
+      </ng-template>
+
+    </app-forms-container>
+
+  </div>
+
+</div>
+

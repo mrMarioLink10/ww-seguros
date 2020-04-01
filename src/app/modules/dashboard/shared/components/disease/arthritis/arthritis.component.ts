@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { FieldConfig } from 'src/app/shared/components/form-components/models/field-config';
+import { DiseaseService } from '../shared/disease/disease.service';
 
 @Component({
   selector: 'app-arthritis',
@@ -10,7 +11,7 @@ import { FieldConfig } from 'src/app/shared/components/form-components/models/fi
 export class ArthritisComponent implements OnInit {
   @Input() form: FormGroup;
 
-  constructor(private fb: FormBuilder) { }
+  constructor(private fb: FormBuilder, public diseaseService: DiseaseService) { }
 
   questions: any[];
 

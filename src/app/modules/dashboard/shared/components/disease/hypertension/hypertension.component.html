@@ -1,1 +1,262 @@
-<p>hypertension works!</p>
+<div class="uppercase dashboard-page-title mt-8 pb-4">CUESTIONARIO HIPERTENSIÓN ARTERIAL</div>
+
+<div class="p-3 pb-0 mb-4" style="background-color: #F2F2F2">
+  <div class="mt-3 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 xl:grid-cols-5">
+    <div class="mr-3">
+      <app-input [group]="form.get('personInfo')" label="Nombre Completo" name='name' placeholder="Alberto Matias">
+      </app-input>
+    </div>
+    <div class="mr-3">
+      <app-input [group]="form.get('personInfo')" label="Edad" name='age' placeholder="34" type="number">
+      </app-input>
+    </div>
+    <div class="mr-3">
+      <app-input [group]="form.get('personInfo')" label="Nombre del Médico Tratante" name='doctorName'
+        placeholder="Santiago Alberto">
+      </app-input>
+    </div>
+    <div class="mr-3">
+      <app-input [group]="form.get('personInfo')" label="Centro de Salud donde trabaja" name='healthCenter'
+        placeholder="Hospital Ney Arias Lora">
+      </app-input>
+    </div>
+    <div class="mr-3">
+      <app-input [group]="form.get('personInfo')" label="Teléfono del Centro" name='hcNumber' placeholder="8207776677">
+      </app-input>
+    </div>
+  </div>
+</div>
+
+<app-forms-container [titles]="diseaseService.accordionTitle">
+  <ng-template #formTemplate>
+    <div class="px-6">
+      <!-- ¿Cuándo se le diagnóstico por primera vez la hipertensión?-->
+      <div class="body-13 mb-8" style="color: black !important;">¿Cuándo se le diagnóstico por primera vez la
+        hipertensión?
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5">
+        <app-input [group]="form.get('diseaseInfo')" name="dateDiagnostic" label="Fecha del diagnóstico">
+        </app-input>
+      </div>
+      <hr class="w-full mb-6 ww-divider">
+      <!-- ¿Cuáles medicamentos está usando y en qué dosis? -->
+      <div>
+        <div class="body-13 mb-8" style="color: black !important;">¿¿Cuáles medicamentos está usando y en qué dosis?
+        </div>
+        <div *ngFor="let studies of medicationList.controls; let i = index"
+          class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
+          <div class="mr-3">
+            <app-input [group]="form.get('diseaseInfo').get('medicationUsing').get(i.toString())" name="medication"
+              label="Medicamento">
+            </app-input>
+          </div>
+          <div class="mr-3">
+            <app-input [group]="form.get('diseaseInfo').get('medicationUsing').get(i.toString())" name="dose"
+              label="Dosis">
+            </app-input>
+          </div>
+          <div *ngIf="medicationList.length > 1"
+            [ngClass]="{'': medicationList.length === 1, 'col-span-1': medicationList.length > 1} ">
+            <button mat-mini-fab aria-label=" Eliminar estudio" (click)="diseaseService.removeToList(i, medicationList)"
+              type="button" class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
+              <mat-icon style="color: #18446B">remove</mat-icon>
+            </button>
+          </div>
+        </div>
+        <div class="mb-8">
+          <button mat-mini-fab aria-label="Agregar estudio" (click)="addToList(medicationList, 'medication')"
+            type="button" class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
+            <mat-icon style="color: #18446B">add</mat-icon>
+          </button>
+        </div>
+
+      </div>
+      <hr class="w-full mb-6 ww-divider">
+
+      <!-- ¿Se le ha cambiado la medicación en los últimos 12 meses? -->
+      <div>
+        <div
+          class="w-full xl:flex xl:justify-between lg:flex lg:justify-between md:flex md:justify-between sm:flex sm:justify-between">
+          <div class="radio-button-label" style="font-size: 12px !important;">¿Se le ha cambiado la medicación en los
+            últimos 12 meses?</div>
+          <app-radio-button [group]="form.get('diseaseInfo')" name="changedMedicationInLast12Months"
+            [options]="diseaseService.yesOrNoOriginal" (selected)="selectChange($event)">
+          </app-radio-button>
+        </div>
+        <div *ngIf="form.get('diseaseInfo').value.changedMedicationInLast12Months === 'si'">
+          <div *ngFor="let studies of changedMedicationList.controls; let i = index"
+            class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
+            <div class="mr-3">
+              <app-input [group]="form.get('diseaseInfo').get('changedMedications').get(i.toString())" name="medication"
+                label="Medicamento">
+              </app-input>
+            </div>
+            <div class="mr-3">
+              <app-input [group]="form.get('diseaseInfo').get('changedMedications').get(i.toString())" name="dose"
+                label="Dosis">
+              </app-input>
+            </div>
+            <div *ngIf="changedMedicationList.length > 1"
+              [ngClass]="{'': changedMedicationList.length === 1, 'col-span-1': changedMedicationList.length > 1} ">
+              <button mat-mini-fab aria-label=" Eliminar estudio"
+                (click)="diseaseService.removeToList(i, changedMedicationList)" type="button"
+                class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
+                <mat-icon style="color: #18446B">remove</mat-icon>
+              </button>
+            </div>
+          </div>
+          <div class="mb-8">
+            <button mat-mini-fab aria-label="Agregar estudio" (click)="addToList(changedMedicationList, 'medication')"
+              type="button" class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
+              <mat-icon style="color: #18446B">add</mat-icon>
+            </button>
+          </div>
+        </div>
+      </div>
+      <hr class="w-full mb-6 ww-divider">
+      <!-- ¿Ha necesitado internamiento o asistencia de emergencia por esta condición? -->
+      <div>
+        <div
+          class="w-full xl:flex xl:justify-between lg:flex lg:justify-between md:flex md:justify-between sm:flex sm:justify-between">
+          <div class="radio-button-label" style="font-size: 12px !important;">¿Ha necesitado internamiento o asistencia
+            de emergencia por esta condición?</div>
+          <app-radio-button [group]="form.get('diseaseInfo')" name="neededHospitalization"
+            [options]="diseaseService.yesOrNoOriginal">
+          </app-radio-button>
+        </div>
+      </div>
+      <hr class="w-full mb-6 ww-divider">
+      <!-- Tiene alguna complicación de salud relacionada a su hipertensión, tales como: -->
+      <div>
+        <div class="body-13 mb-8" style="color: black !important;">Tiene alguna complicación de salud relacionada a su
+          hipertensión, tales como:
+        </div>
+        <div *ngFor="let question of relatedQuestions">
+          <div
+            class="w-full xl:flex xl:justify-between lg:flex lg:justify-between md:flex md:justify-between sm:flex sm:justify-between">
+            <div class="radio-button-label" style="font-size: 12px !important;">{{question.label}}</div>
+            <app-radio-button [group]="form.get('relatedHealthComplication')" [name]="question.name"
+              [options]="diseaseService.yesOrNoOriginal" (selected)="selectChange($event)">
+            </app-radio-button>
+          </div>
+          <div *ngIf="form.get('relatedHealthComplication').value[question.name] === 'si'">
+            <div *ngIf="question.name !== 'haveOther'">
+              <div class="radio-button-label" style="font-size: 12px !important;">Especifique
+              </div>
+              <app-text-area [group]="form.get('relatedHealthComplication').get(question.group)" name="specify"
+                label="Texto">
+              </app-text-area>
+            </div>
+            <div *ngIf="question.name === 'haveOther'">
+              <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 xl:grid-cols-5">
+                <app-input [group]="form.get('relatedHealthComplication').get(question.group)"
+                  label="Tipo de complicación" name='type'>
+                </app-input>
+              </div>
+              <div class="radio-button-label" style="font-size: 12px !important;">Especifique
+              </div>
+              <app-text-area [group]="form.get('relatedHealthComplication').get(question.group)" name="specify"
+                label="Texto">
+              </app-text-area>
+            </div>
+          </div>
+          <hr class=" w-full mb-6 ww-divider">
+        </div>
+      </div>
+      <!-- Se le ha realizado estudio de diagnósticos para hipertensión arterial, tales como: -->
+      <div>
+        <div class="body-13 mb-8" style="color: black !important;">Se le ha realizado estudio de diagnósticos para
+          hipertensión arterial, tales como:
+        </div>
+        <div *ngFor="let question of studiesQuestions">
+          <div
+            class="w-full xl:flex xl:justify-between lg:flex lg:justify-between md:flex md:justify-between sm:flex sm:justify-between">
+            <div class="radio-button-label" style="font-size: 12px !important;">{{question.label}}</div>
+            <app-radio-button [group]="form.get('diagnosticStudies')" [name]="question.name"
+              [options]="diseaseService.yesOrNoOriginal" (selected)="selectChange($event)">
+            </app-radio-button>
+          </div>
+          <div *ngIf="form.get('diagnosticStudies').value[question.name] === 'si'">
+            <div *ngIf="question.name !== 'other'">
+              <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 xl:grid-cols-5">
+                <div class="mr-3">
+                  <app-date-picker [group]="form.get('diagnosticStudies').get(question.group)" label="Fecha"
+                    name='date'>
+                  </app-date-picker>
+                </div>
+                <div class="mr-3">
+                  <app-input [group]="form.get('diagnosticStudies').get(question.group)" label="Resultado"
+                    name='results'>
+                  </app-input>
+                </div>
+              </div>
+            </div>
+            <div *ngIf="question.name === 'other'">
+              <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 xl:grid-cols-5">
+                <div class="mr-3">
+                  <app-input [group]="form.get('diagnosticStudies').get(question.group)" label="Nombre del estudio"
+                    name='name'>
+                  </app-input>
+                </div>
+                <div class="mr-3">
+                  <app-date-picker [group]="form.get('diagnosticStudies').get(question.group)" label="Fecha"
+                    name='date'>
+                  </app-date-picker>
+                </div>
+                <div class="mr-3">
+                  <app-input [group]="form.get('diagnosticStudies').get(question.group)" label="Resultado"
+                    name='results'>
+                  </app-input>
+                </div>
+              </div>
+            </div>
+          </div>
+          <hr class=" w-full mb-6 ww-divider">
+        </div>
+      </div>
+      <!-- ¿Con qué frecuencia va al médico para una consulta de seguimiento? -->
+      <div class="body-13 mb-8" style="color: black !important;">¿Con qué frecuencia va al médico para una consulta de
+        seguimiento?
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4">
+        <app-input [group]="form.get('diseaseInfo')" label="Frecuencia" name='consultationFrequency'>
+        </app-input>
+      </div>
+      <hr class="w-full mb-6 ww-divider">
+      <!-- ¿Cuándo fue la última vez que consultó su médico y los resultados de la presión arterial? -->
+      <div class="body-13 mb-8" style="color: black !important;">¿Cuándo fue la última vez que consultó su médico y los
+        resultados de la presión arterial?
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4">
+        <div class="mr-3">
+          <app-date-picker [group]="form.get('diseaseInfo')" label="Fecha última consulta" name='lastConsultationDate'>
+          </app-date-picker>
+        </div>
+        <div class="mr-3">
+          <app-input [group]="form.get('diseaseInfo')" label="Resultado" name='lastConsultationResults'>
+          </app-input>
+        </div>
+      </div>
+      <hr class="w-full mb-6 ww-divider">
+      <!--Proporcione cualquier otra información adicional que considere útil para la tramitación de su solicitud de seguro. -->
+      <div class="mt-8 mb-4">
+        <div class="body-13  mb-8">Proporcione cualquier otra información
+          adicional que considere útil para la tramitación de su solicitud de seguro.
+        </div>
+        <div class="mr-3">
+          <app-text-area [group]="form.get('diseaseInfo')" name="aditionalInfo" label="Texto"></app-text-area>
+        </div>
+      </div>
+      <hr class="w-full mb-6 ww-divider">
+      <div class="declaraciones my-4 px-4 sm:px-4 md:px-14 lg:px-12 xl:px-12">
+        Declaro bajo la más solemne fe del juramento que los datos suministrados anteriormente y contenidos en este
+        cuestionario son verdaderos, correctos y actualizados y que no he omitido ni alterado ninguna información,
+        requerida
+        explícita o implícitamente en este cuestionario. Reconozco que el haber completado y firmado el presente
+        cuestionario no supone la aceptación por parte de WorldWide, hasta tanto la Aseguradora realice la debida
+        evaluación y
+        aprobación del mismo.
+      </div>
+    </div>
+  </ng-template>
+</app-forms-container>

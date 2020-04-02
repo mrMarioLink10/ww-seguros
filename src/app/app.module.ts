@@ -10,22 +10,23 @@ import { RouterModule } from '@angular/router';
 import { ModulesModule } from './modules/modules.module';
 import { MatPaginatorIntl } from '@angular/material';
 import { MatPaginatorIntlCro } from './core/class/MatPaginatorIntl';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
-	declarations: [ AppComponent ],
+	declarations: [AppComponent],
 	imports: [
 		/** Modulos de importaciones */
 		BrowserModule,
 		BrowserAnimationsModule,
+		HttpClientModule,
 
-		/** Modulos de no se que */
 		AppRoutingModule,
 		// RouterModule,
 
 		/** Modulos de componentes */
 		ModulesModule
 	],
-	providers: [ { provide: MatPaginatorIntl, useClass: MatPaginatorIntlCro } ],
-	bootstrap: [ AppComponent ]
+	providers: [{ provide: MatPaginatorIntl, useClass: MatPaginatorIntlCro }],
+	bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule { }

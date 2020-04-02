@@ -1,5 +1,6 @@
 export const environment = {
-  production: true
+  production: true,
+  baseUrl: 'https://wwsdevportalbackend.azurewebsites.net'
+
 };
 
-export const baseUrl = 'https://wwsdevportalbackend.azurewebsites.net';

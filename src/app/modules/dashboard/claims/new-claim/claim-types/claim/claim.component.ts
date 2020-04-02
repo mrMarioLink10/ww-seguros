@@ -5,11 +5,12 @@ import { BaseDialogComponent } from '../../../../../../shared/components/base-di
 import { DialogOptionService } from 'src/app/core/services/dialog/dialog-option.service';
 import { ClaimModel } from '../models/claim';
 import { FieldConfig } from '../../../../../../shared/components/form-components/models/field-config';
+import { FormHandlerService } from '../../../../../../core/services/forms/form-handler.service';
 
 @Component({
 	selector: 'app-claim',
 	templateUrl: './claim.component.html',
-	styleUrls: [ './claim.component.scss' ]
+	styleUrls: ['./claim.component.scss']
 })
 export class ClaimComponent implements OnInit {
 	Date: any;
@@ -58,39 +59,39 @@ export class ClaimComponent implements OnInit {
 		]
 	};
 
-	constructor(private fb: FormBuilder, public dialog: MatDialog, public dialogOption: DialogOptionService) {}
+	constructor(private fb: FormBuilder, public dialog: MatDialog, private formHandler: FormHandlerService) { }
 
 	ngOnInit() {
 		this.claimForm = this.fb.group({
 			reclamacion: this.fb.group({
-				diagnostico: [ '', Validators.required ],
-				tipoServicio: [ '', Validators.required ],
-				autorizadoNo: [ '', Validators.required ],
-				autorizadoPor: [ '', Validators.required ],
-				fechaDiagnostico: [ '', Validators.required ]
+				diagnostico: ['', Validators.required],
+				tipoServicio: ['', Validators.required],
+				autorizadoNo: ['', Validators.required],
+				autorizadoPor: ['', Validators.required],
+				fechaDiagnostico: ['', Validators.required]
 			}),
 			asegurado: this.fb.group({
-				numeroPoliza: [ '', Validators.required ],
-				idNumero: [ '', Validators.required ],
-				documentoIdentidad: [ '', Validators.required ],
-				nombre: [ '', Validators.required ],
-				numero: [ '', Validators.required ],
-				edad: [ '', Validators.required ],
-				tipo: [ '', Validators.required ]
+				numeroPoliza: ['', Validators.required],
+				idNumero: ['', Validators.required],
+				documentoIdentidad: ['', Validators.required],
+				nombre: ['', Validators.required],
+				numero: ['', Validators.required],
+				edad: ['', Validators.required],
+				tipo: ['', Validators.required]
 			}),
 			proveedor: this.fb.group({
-				nombre: [ '', Validators.required ],
-				correo: [ '', Validators.required ],
-				codigo: [ '', Validators.required ],
-				noContrato: [ '', Validators.required ]
+				nombre: ['', Validators.required],
+				correo: ['', Validators.required],
+				codigo: ['', Validators.required],
+				noContrato: ['', Validators.required]
 			}),
-			reclamados: this.fb.array([ this.createReclaimed() ]),
+			reclamados: this.fb.array([this.createReclaimed()]),
 			casoHospitalizacion: this.fb.group({
-				ingreso: [ '' ],
-				egreso: [ '' ]
+				ingreso: [''],
+				egreso: ['']
 			}),
 			observaciones: this.fb.group({
-				observacion: [ '' ]
+				observacion: ['']
 			})
 		});
 
@@ -99,11 +100,11 @@ export class ClaimComponent implements OnInit {
 
 	createReclaimed(): FormGroup {
 		return this.fb.group({
-			codigoCpt: [ '', Validators.required ],
-			procedimiento: [ '', Validators.required ],
-			montoReclamado: [ '', Validators.required ],
-			montoAutorizado: [ '', Validators.required ],
-			montoDeducible: [ '', Validators.required ]
+			codigoCpt: ['', Validators.required],
+			procedimiento: ['', Validators.required],
+			montoReclamado: ['', Validators.required],
+			montoAutorizado: ['', Validators.required],
+			montoDeducible: ['', Validators.required]
 		});
 	}
 
@@ -123,35 +124,6 @@ export class ClaimComponent implements OnInit {
 	}
 
 	sendClaim() {
-		console.log('Impresion de formulario down here: ', this.claimForm);
-
-		const claimConfirmation = this.dialog.open(BaseDialogComponent, {
-			data: this.dialogOption.reclaimConfirmation,
-			minWidth: 385
-		});
-
-		claimConfirmation.afterClosed().subscribe((result) => {
-			if (result === 'true') {
-				let dialog;
-
-				if (this.claimForm.valid) {
-					dialog = this.dialog.open(BaseDialogComponent, {
-						data: this.dialogOption.reclaimConfirmated,
-						minWidth: 385
-					});
-					this.sendedForm = this.claimForm.value;
-				} else {
-					dialog = this.dialog.open(BaseDialogComponent, {
-						data: this.dialogOption.formError,
-						minWidth: 385
-					});
-				}
-
-				setTimeout(() => {
-					dialog.close();
-					console.log(JSON.stringify(this.sendedForm));
-				}, 3500);
-			}
-		});
+		this.formHandler.sendForm(this.claimForm, 'claims-reclaim');
 	}
 }

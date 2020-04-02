@@ -57,9 +57,15 @@ export class FormHandlerService {
 					dialog = this.dialog.open(BaseDialogComponent, {
 						data: dataClosing,
 						minWidth: 385
+
 					});
+
+					const json = JSON.stringify(this.sendedForm);
+					console.log(JSON.stringify(this.sendedForm));
+					console.log(json);
+
 					this.sendedForm = form.value;
-					this.route.navigateByUrl(route);
+					// this.route.navigateByUrl(route);
 				} else {
 					dialog = this.dialog.open(BaseDialogComponent, {
 						data: this.dialogOption.formError,
@@ -69,7 +75,7 @@ export class FormHandlerService {
 
 				setTimeout(() => {
 					dialog.close();
-					console.log(JSON.stringify(this.sendedForm));
+
 				}, 3000);
 			}
 		});

@@ -1,0 +1,9 @@
+<mat-form-field color="accent" appearance="outline" class="w-full bg-transparente" style="font-size: small !important;"
+  [formGroup]="group">
+  <mat-label>{{label}}</mat-label>
+  <input [formControlName]="name" matInput class="" type="number" [min]="min" [max]="max" [placeholder]="placeholder">
+  <mat-error *ngIf="group.get(name).touched && !group.get(name).valid">Debe llenar el campo de
+    {{label}}</mat-error>
+  <mat-error *ngIf="group.get(name).touched && !group.get(name).valid">Lo que ha ingresado en
+    {{label}} es incorrecto o el campo está vacío.</mat-error>
+</mat-form-field>

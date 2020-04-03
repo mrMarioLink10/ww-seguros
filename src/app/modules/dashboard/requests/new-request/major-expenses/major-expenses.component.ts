@@ -379,7 +379,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
         hypertension: this.fb.group({}),
         mellitusdiabetes: this.fb.group({}),
         prostatic: this.fb.group({}),
-        knowyourclient: this.fb.group({}),
+        moneylaundering: this.fb.group({}),
       }),
       questionsB: this.fb.array([this.formMethods.createItem(this.questionsGroup)]),
       primaryBenefits: this.fb.group({

@@ -693,28 +693,46 @@
                 entidad económica.</p><br>
             </div>
           </ng-template>
-        
+
         </app-forms-container>
         <div class="mt-12">
           <button mat-button class="send-button" (click)="print()" type="submit">Enviar</button>
         </div>
       </mat-tab>
-      <mat-tab *ngFor=" let element of dependentsFormArray.controls; let i = index"
+      <!-- <mat-tab *ngFor=" let element of dependentsFormArray.controls; let i = index"
         [label]="'D0'+ dependentsFormArray.controls.length">
+
+
+
+
+
+
+        <app-money-laundering [form]="newRequest.get('questionsA').get('moneylaundering')"></app-money-laundering>
+      </mat-tab> -->
+      <mat-tab label="Cardiovasculuar">
         <app-cardiovascular [form]="newRequest.get('questionsA').get('cardiovascular')">
         </app-cardiovascular>
+      </mat-tab>
+      <mat-tab label="Columna Vertebral">
         <app-spine [form]="newRequest.get('questionsA').get('spine')">
         </app-spine>
+      </mat-tab>
+      <mat-tab label="Artritis">
         <app-arthritis [form]="newRequest.get('questionsA').get('arthritis')">
         </app-arthritis>
+      </mat-tab>
+      <mat-tab label="Hipertension Arterial">
         <app-hypertension [form]="newRequest.get('questionsA').get('hypertension')">
         </app-hypertension>
+      </mat-tab>
+      <mat-tab label="Diabetes">
         <app-mellitus-diabetes [form]="newRequest.get('questionsA').get('mellitusdiabetes')">
         </app-mellitus-diabetes>
+      </mat-tab>
+      <mat-tab label="Evaluacion Protastica">
         <app-prostatic [form]="newRequest.get('questionsA').get('prostatic')">
         </app-prostatic>
       </mat-tab>
     </mat-tab-group>
-
   </form>
 </div>

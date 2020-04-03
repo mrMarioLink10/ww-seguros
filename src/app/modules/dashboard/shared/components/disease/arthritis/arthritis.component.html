@@ -26,7 +26,7 @@
   </div>
 </div>
 
-<app-forms-container [titles]="accordionTitle">
+<app-forms-container [titles]="diseaseService.accordionTitle">
   <ng-template #formTemplate>
     <!-- PRIMEROS SINTOMAS -->
     <div class="body-13 mb-8" style="color: black !important;">¿Qué tipo de artritis padece?
@@ -61,7 +61,7 @@
       <div
         class="w-full xl:flex xl:justify-between lg:flex lg:justify-between md:flex md:justify-between sm:flex sm:justify-between">
         <div class="radio-button-label" style="font-size: 12px !important;">{{question.label}}</div>
-        <app-radio-button [group]="form" [name]="question.name" [options]="yesOrNoOriginal"
+        <app-radio-button [group]="form" [name]="question.name" [options]="diseaseService.yesOrNoOriginal"
           (selected)="selectChange($event)">
         </app-radio-button>
       </div>
@@ -161,7 +161,7 @@
       class="w-full xl:flex xl:justify-between lg:flex lg:justify-between md:flex md:justify-between sm:flex sm:justify-between">
       <div class="radio-button-label" style="font-size: 12px !important;">¿Necesita usted un bastón o cualquier forma de
         ayuda para moverse?</div>
-      <app-radio-button [group]="form" name="needAssistance" [options]="yesOrNoOriginal">
+      <app-radio-button [group]="form" name="needAssistance" [options]="diseaseService.yesOrNoOriginal">
       </app-radio-button>
     </div>
     <hr class=" w-full mb-6 ww-divider">

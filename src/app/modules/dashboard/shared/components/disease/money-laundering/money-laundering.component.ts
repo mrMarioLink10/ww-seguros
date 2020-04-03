@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { FieldConfig } from '../../../../../../shared/components/form-components/models/field-config'
 import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
 import { FormHandlerService } from '../../../../../../core/services/forms/form-handler.service';
@@ -9,6 +9,8 @@ import { FormHandlerService } from '../../../../../../core/services/forms/form-h
 	styles: []
 })
 export class MoneyLaunderingComponent implements OnInit {
+
+	@Input() form: FormGroup;
 
 	accordionTitles = [
 		'Datos Generales',
@@ -66,29 +68,30 @@ export class MoneyLaunderingComponent implements OnInit {
 
 	selectChangeInvestigated(event: any) {
 
-		const form = this.anti_laundering as FormGroup;
+		// const form = this.anti_laundering as FormGroup;
 
 		if (event.valor === 'si') {
 
-			form.addControl('investigated', this.fb.group({
+			this.form.addControl('investigated', this.fb.group({
 				specify_investigation: ['', Validators.required]
 			}));
+			// console.log(JSON.stringify(this.anti_laundering.value));
 
 		}
 		else if (event.valor === 'no') {
 
-			form.removeControl('investigated');
+			this.form.removeControl('investigated');
 
 		}
 
 	}
 
-	anti_laundering: FormGroup;
+	// anti_laundering: FormGroup;
 
 	constructor(private fb: FormBuilder, public formHandler: FormHandlerService) { }
 
 	ngOnInit() {
-		this.anti_laundering = this.fb.group({
+		this.form = this.fb.group({
 			request: ['', Validators.required],
 
 			society_name: ['', Validators.required],
@@ -104,8 +107,7 @@ export class MoneyLaunderingComponent implements OnInit {
 			email: ['', [Validators.required, Validators.email]],
 			main_activity: ['', Validators.required],
 
-			investigation_status: ['no'],
-			specify_investigation: ['', Validators.required],
+			investigation_status: [''],
 
 			prevention_program: ['', Validators.required],
 			management_body: ['', Validators.required],

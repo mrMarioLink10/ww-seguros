@@ -165,21 +165,21 @@ createFormArray(name: string) {
 
         }),
 
-        analysis_radio: ['no'],
+        analysis_radio: [''],
         analysis:  this.fb.group({
 
             analysis_array: this.fb.array([this.formMethods.createItem(this.analysisGroup)])
 
         }),
 
-        medication_radio: ['no'],
+        medication_radio: [''],
         medicine: this.fb.group({ 
 
           medicine_array: this.fb.array([this.formMethods.createItem(this.medicineGroup)])
         
         }),
 
-        medical_consultation_radio:['no']
+        medical_consultation_radio:['']
 
       })
 

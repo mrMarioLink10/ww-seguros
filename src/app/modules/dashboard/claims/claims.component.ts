@@ -18,21 +18,12 @@ const ELEMENT_DATA: Claims[] = [
 	// tslint:disable: max-line-length
 	{
 		no: 986543,
-		nombre: 'Danilo Medina',
+		nombre: 'Danilo Martes',
 		seguro: 'Salud',
 		plan: 'Nombre del Plan',
 		fecha: new Date(),
 		monto: 2000,
 		estatus: 'Denegado'
-	},
-	{
-		no: 666420,
-		nombre: 'El Penco',
-		seguro: 'Vida',
-		plan: 'Nombre del Plan',
-		fecha: new Date(),
-		monto: 2000,
-		estatus: 'Enviado'
 	},
 	{
 		no: 154546,
@@ -45,7 +36,7 @@ const ELEMENT_DATA: Claims[] = [
 	},
 	{
 		no: 213214,
-		nombre: 'Huncho Quavo',
+		nombre: 'Luis Manuel',
 		seguro: 'Salud',
 		plan: 'Nombre del Plan',
 		fecha: new Date(),
@@ -63,7 +54,7 @@ const ELEMENT_DATA: Claims[] = [
 	},
 	{
 		no: 986543,
-		nombre: 'Danilo Medina',
+		nombre: 'Robert Medina',
 		seguro: 'Salud',
 		plan: 'Nombre del Plan',
 		fecha: new Date(),
@@ -72,21 +63,12 @@ const ELEMENT_DATA: Claims[] = [
 	},
 	{
 		no: 986543,
-		nombre: 'Danilo Medina',
+		nombre: 'Danilo Antonio',
 		seguro: 'Salud',
 		plan: 'Nombre del Plan',
 		fecha: new Date(),
 		monto: 2000,
 		estatus: 'Reembolsado'
-	},
-	{
-		no: 666420,
-		nombre: 'El Penco',
-		seguro: 'Vida',
-		plan: 'Nombre del Plan',
-		fecha: new Date(),
-		monto: 2000,
-		estatus: 'Enviado'
 	}
 ];
 

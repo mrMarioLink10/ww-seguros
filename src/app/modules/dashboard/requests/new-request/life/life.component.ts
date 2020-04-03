@@ -295,6 +295,7 @@ export class LifeComponent implements OnInit, DoCheck {
     console.log(this.newRequest.get('primaryBenefits'))
     this.primaryBenefitsArray = this.newRequest.get('primaryBenefits').get('dependentsC') as FormArray;
     this.dependentsFormArray = this.newRequest.get('dependents') as FormArray;
+
   }
   ngDoCheck(): void {
     this.maxWidth = window.matchMedia('(max-width: 11270px)');

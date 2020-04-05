@@ -377,6 +377,11 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
         haveReproductiveOrganDisorders: ['', Validators.required],
         cardiovascular: this.fb.group({}),
         spine: this.fb.group({}),
+        arthritis: this.fb.group({}),
+        hypertension: this.fb.group({}),
+        mellitusdiabetes: this.fb.group({}),
+        prostatic: this.fb.group({}),
+        moneylaundering: this.fb.group({}),
       }),
       questionsB: this.fb.array([this.formMethods.createItem(this.questionsGroup)]),
       primaryBenefits: this.fb.group({

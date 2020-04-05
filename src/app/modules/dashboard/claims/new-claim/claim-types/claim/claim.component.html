@@ -1,85 +1,6 @@
 <div class="uppercase dashboard-page-title pb-4">Solicitud de reclamación</div>
 <div>
   <form [formGroup]="claimForm">
-    <!-- <mat-accordion class="ww-mat-accordion" [togglePosition]="'before'">
-      <mat-expansion-panel class="ww-mat-expansion" [expanded]="step === 0" (opened)="setStep(0)">
-        <mat-expansion-panel-header class="body-13 icon-blue">
-          Formulario de Reclamación
-        </mat-expansion-panel-header>
-
-        <mat-action-row class="action-row">
-          <button mat-button class="next-button" (click)="nextStep()">Siguiente</button>
-        </mat-action-row>
-      </mat-expansion-panel>
-      <mat-expansion-panel class="ww-mat-expansion mt-10" [expanded]="step === 1" (opened)="setStep(1)">
-        <mat-expansion-panel-header class="body-13 icon-blue">
-          Datos del Asegurado
-        </mat-expansion-panel-header>
-
-        <mat-action-row class="action-row">
-          <button mat-button class="next-button" (click)="nextStep()">Siguiente</button>
-        </mat-action-row>
-      </mat-expansion-panel>
-      <mat-expansion-panel class="ww-mat-expansion mt-10" [expanded]="step === 2" (opened)="setStep(2)">
-        <mat-expansion-panel-header class="body-13 icon-blue">
-          Datos del Proveedor
-        </mat-expansion-panel-header>
-
-        <mat-action-row class="action-row">
-          <button mat-button class="next-button" (click)="nextStep()">Siguiente</button>
-        </mat-action-row>
-      </mat-expansion-panel>
-      <mat-expansion-panel class="ww-mat-expansion mt-10" [expanded]="step === 3" (opened)="setStep(3)">
-        <mat-expansion-panel-header class="body-13 icon-blue">
-          Servicios Reclamados
-        </mat-expansion-panel-header>
-
-        <mat-action-row class="action-row">
-          <div class="mr-3">
-            <mat-form-field color="accent" appearance="outline" class="w-full bg-transparente"
-              style="font-size: small !important; padding-bottom: 0px !important;">
-              <mat-label>Total Monto Reclamado</mat-label>
-              <input matInput class="" disabled placeholder="21,200 $ USD">
-            </mat-form-field>
-          </div>
-          <div class="mr-3">
-            <mat-form-field color="accent" appearance="outline" class="w-full bg-transparente"
-              style="font-size: small !important; padding-bottom: 0px !important;">
-              <mat-label>Total Monto Autorizado</mat-label>
-              <input matInput class="" disabled placeholder="1,200 $ USD">
-            </mat-form-field>
-          </div>
-          <button mat-button class="next-button" (click)="nextStep()">Siguiente</button>
-        </mat-action-row>
-      </mat-expansion-panel>
-      <mat-expansion-panel class="ww-mat-expansion mt-10" [expanded]="step === 4" (opened)="setStep(4)">
-        <mat-expansion-panel-header class="body-13 icon-blue">
-          En caso de hospitalización
-        </mat-expansion-panel-header>
-
-        <mat-action-row class="action-row">
-          <button mat-button class="next-button" (click)="nextStep()">Siguiente</button>
-        </mat-action-row>
-      </mat-expansion-panel>
-      <mat-expansion-panel class="ww-mat-expansion mt-10" [expanded]="step === 5" (opened)="setStep(5)">
-        <mat-expansion-panel-header class="body-13 icon-blue">
-          Observaciones
-        </mat-expansion-panel-header>
-
-        <mat-action-row class="action-row">
-          <button mat-button class="next-button" (click)="nextStep()">Siguiente</button>
-        </mat-action-row>
-      </mat-expansion-panel>
-      <mat-expansion-panel class="ww-mat-expansion mt-10" [expanded]="step === 6" (opened)="setStep(6)">
-        <mat-expansion-panel-header class="body-13 icon-blue">
-          Declaración
-        </mat-expansion-panel-header>
-
-        <mat-action-row class="action-row">
-          <button mat-button class="next-button" (click)="nextStep()">Siguiente</button>
-        </mat-action-row>
-      </mat-expansion-panel>
-    </mat-accordion> -->
     <app-forms-container [titles]="accordionTitles">
       <ng-template #formTemplate>
         <div formGroupName="reclamacion"
@@ -93,8 +14,8 @@
             </app-radio-button>
           </div>
           <div class="mr-3">
-            <app-input [group]="claimForm.get('reclamacion')" label="Autorización No." name='autorizadoNo'
-              placeholder="123456" type="number"></app-input>
+            <app-number-input [group]="claimForm.get('reclamacion')" label="Autorización No." name='autorizadoNo'
+              placeholder="123456"></app-number-input>
           </div>
           <div class="mr-3">
             <app-input [group]="claimForm.get('reclamacion')" label="Autorizado por" name='autorizadoPor'
@@ -110,12 +31,12 @@
         <div formGroupName="asegurado"
           class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4">
           <div class="mr-3">
-            <app-input [group]="claimForm.get('asegurado')" label="No. Póliza" name='numeroPoliza' type="number"
-              placeholder="12345678"></app-input>
+            <app-number-input [group]="claimForm.get('asegurado')" label="No. Póliza" name='numeroPoliza'
+              placeholder="12345678"></app-number-input>
           </div>
           <div class="mr-3">
-            <app-input [group]="claimForm.get('asegurado')" label="ID No." name='idNumero' type="number"
-              placeholder="12345678"></app-input>
+            <app-number-input [group]="claimForm.get('asegurado')" label="ID No." name='idNumero'
+              placeholder="12345678"></app-number-input>
           </div>
           <div class="mr-3">
             <app-input [group]="claimForm.get('asegurado')" label="Cédula/Pasaporte" name='documentoIdentidad'
@@ -127,12 +48,12 @@
               placeholder="Ramon Capalla"></app-input>
           </div>
           <div class="mr-3">
-            <app-input [group]="claimForm.get('asegurado')" label="Número del Contacto" name='numero' type="number"
-              placeholder="8096546191"></app-input>
+            <app-number-input [group]="claimForm.get('asegurado')" label="Número del Contacto" name='numero'
+              placeholder="8096546191"></app-number-input>
           </div>
           <div class="mr-3">
-            <app-input [group]="claimForm.get('asegurado')" label="Edad" name='edad' type="number" placeholder="26">
-            </app-input>
+            <app-number-input [group]="claimForm.get('asegurado')" label="Edad" name='edad' placeholder="26">
+            </app-number-input>
           </div>
           <div class="mr-3 mb-3 sm:mb-3 md:mb-0 lg:mb-0 xl:mb-0">
             <app-radio-button name="tipo" [group]="claimForm.get('asegurado')" [options]="tipoAsegurado">
@@ -156,8 +77,8 @@
             </app-input>
           </div>
           <div class="mr-3">
-            <app-input [group]="claimForm.get('proveedor')" type="number" label="No. de Contrato" name='noContrato'
-              placeholder="900001092092"></app-input>
+            <app-number-input [group]="claimForm.get('proveedor')" label="No. de Contrato" name='noContrato'
+              placeholder="900001092092"></app-number-input>
           </div>
         </div>
       </ng-template>
@@ -167,51 +88,26 @@
             <div [formGroupName]="i"
               class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-5 xl:grid-cols-5">
               <div class="mr-3">
-                <!-- <mat-form-field color="accent" appearance="outline" class="w-full bg-transparente"
-                  style="font-size: small !important;">
-                  <mat-label>Código CPT</mat-label>
-                  <input formControlName="codigoCpt" matInput class="" placeholder="27S920">
-                </mat-form-field> -->
                 <app-input [group]="claimForm.get('reclamados').get(i.toString()) " label="Código CPT" name='codigoCpt'
                   placeholder="27S920"></app-input>
               </div>
               <div class="mr-3">
-                <!-- <mat-form-field color="accent" appearance="outline" class="w-full bg-transparente"
-                  style="font-size: small !important;">
-                  <mat-label>Procedimiento</mat-label>
-                  <input formControlName="procedimiento" matInput class="" placeholder="...">
-                </mat-form-field> -->
                 <app-input [group]="claimForm.get('reclamados').get(i.toString())" label="Procedimiento"
                   name='procedimiento' placeholder="..."></app-input>
               </div>
               <div class="mr-3">
-                <!-- <mat-form-field color="accent" appearance="outline" class="w-full bg-transparente"
-                  style="font-size: small !important;">
-                  <mat-label>Monto Reclamado</mat-label>
-                  <input type="number" formControlName="montoReclamado" matInput class="" placeholder="20,000$ USD">
-                </mat-form-field> -->
-                <app-input [group]="claimForm.get('reclamados').get(i.toString())" label="Monto Reclamado"
-                  name='montoReclamado' placeholder="20,000$ USD" type="number"></app-input>
+                <app-number-input [group]="claimForm.get('reclamados').get(i.toString())" label="Monto Reclamado"
+                  name='montoReclamado' placeholder="20,000$ USD"></app-number-input>
               </div>
               <div class="mr-3">
-                <!-- <mat-form-field color="accent" appearance="outline" class="w-full bg-transparente"
-                  style="font-size: small !important;">
-                  <mat-label>Monto Autorizado</mat-label>
-                  <input type="number" formControlName="montoAutorizado" matInput class="" placeholder="14,400$ USD">
-                </mat-form-field> -->
-                <app-input [group]="claimForm.get('reclamados').get(i.toString())" label="Monto Autorizado"
-                  name='montoAutorizado' placeholder="14,400$ USD" type="number"></app-input>
+                <app-number-input [group]="claimForm.get('reclamados').get(i.toString())" label="Monto Autorizado"
+                  name='montoAutorizado' placeholder="14,400$ USD"></app-number-input>
               </div>
               <div class="grid"
                 [ngClass]="{'grid-cols-1': reclaimedList.length === 1, 'grid-cols-2': reclaimedList.length > 1}">
                 <div class="mr-3">
-                  <!-- <mat-form-field color="accent" appearance="outline" class="w-full bg-transparente"
-                    style="font-size: small !important;">
-                    <mat-label>Monto Deducible</mat-label>
-                    <input type="number" formControlName="montoDeducible" matInput class="" placeholder="1,200 $ USD">
-                  </mat-form-field> -->
-                  <app-input [group]="claimForm.get('reclamados').get(i.toString())" label="Monto Deducible"
-                    name='montoDeducible' placeholder="1,200 $ USD" type="number"></app-input>
+                  <app-number-input [group]="claimForm.get('reclamados').get(i.toString())" label="Monto Deducible"
+                    name='montoDeducible' placeholder="1,200 $ USD"></app-number-input>
                 </div>
                 <div *ngIf="reclaimedList.length > 1">
                   <button mat-mini-fab aria-label="Eliminar reclamacion" (click)="removeReclaimed(i)" type="button"

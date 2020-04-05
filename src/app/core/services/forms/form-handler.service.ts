@@ -58,6 +58,9 @@ export class FormHandlerService {
 		Dialog.afterClosed().subscribe((result) => {
 			if (result === 'true') {
 				let dialog;
+				this.sendedForm = form.value;
+				const json = JSON.stringify(this.sendedForm);
+				console.log('preview: ', json);
 
 				if (form.valid) {
 					dialog = this.dialog.open(BaseDialogComponent, {
@@ -65,9 +68,12 @@ export class FormHandlerService {
 						minWidth: 385
 
 					});
+					this.sendedForm = form.value;
 
 					if (name === 'claims-reclaim') {
+
 						const json = JSON.stringify(this.sendedForm);
+
 						this.claimService.postClaim(json)
 							.subscribe(res => {
 								console.log(res);
@@ -76,7 +82,6 @@ export class FormHandlerService {
 
 					console.log(JSON.stringify(this.sendedForm));
 
-					this.sendedForm = form.value;
 					// this.route.navigateByUrl(route);
 				} else {
 					dialog = this.dialog.open(BaseDialogComponent, {

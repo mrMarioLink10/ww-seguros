@@ -10,7 +10,7 @@ export class ClaimService {
   constructor(private http: HttpClient) { }
 
   postClaim(body) {
-    console.log(body);
-    return this.http.post(environment.baseUrl, body);
+    console.log('body:', body);
+    return this.http.post(`${environment.baseUrl}/api/Reclamaciones`, body);
   }
 }

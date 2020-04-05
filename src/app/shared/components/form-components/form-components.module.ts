@@ -9,10 +9,11 @@ import { InputComponent } from './input/input.component';
 import { RadioButtonComponent } from './radio-button/radio-button.component';
 import { DatePickerComponent } from './date-picker/date-picker.component';
 import { TextAreaComponent } from './text-area/text-area.component';
+import { NumberInputComponent } from './number-input/number-input.component';
 
 @NgModule({
-	declarations: [ SelectComponent, InputComponent, RadioButtonComponent, DatePickerComponent, TextAreaComponent ],
-	exports: [ SelectComponent, InputComponent, RadioButtonComponent, DatePickerComponent, TextAreaComponent ],
-	imports: [ CommonModule, MaterialModule, ReactiveFormsModule, FormsModule, CommonModule, RouterModule ]
+	declarations: [SelectComponent, InputComponent, RadioButtonComponent, DatePickerComponent, TextAreaComponent, NumberInputComponent],
+	exports: [SelectComponent, InputComponent, RadioButtonComponent, DatePickerComponent, TextAreaComponent, NumberInputComponent],
+	imports: [CommonModule, MaterialModule, ReactiveFormsModule, FormsModule, CommonModule, RouterModule]
 })
-export class FormComponentsModule {}
+export class FormComponentsModule { }

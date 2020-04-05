@@ -17,19 +17,11 @@ export interface Requests {
 
 const ELEMENT_DATA: Requests[] = [
   // tslint:disable: max-line-length
-  { no: 986543, nombre: 'Danilo Medina', dependientes: 1, seguro: 'Salud', plan: 'Nombre del Plan', fecha: new Date(), monto: 2000, estatus: 'Enviado' },
+  { no: 986543, nombre: 'Danilo Antonio', dependientes: 1, seguro: 'Salud', plan: 'Nombre del Plan', fecha: new Date(), monto: 2000, estatus: 'Enviado' },
   { no: 154546, nombre: 'Isai Vargas', dependientes: 2, seguro: 'Vida', plan: 'Nombre del Plan', fecha: new Date(), monto: 2000, estatus: 'Enviado' },
-  { no: 213214, nombre: 'Huncho Quavo', dependientes: 1, seguro: 'Salud', plan: 'Nombre del Plan', fecha: new Date(), monto: 2000, estatus: 'Enviado' },
+  { no: 213214, nombre: 'Kentavious Caldwell', dependientes: 1, seguro: 'Salud', plan: 'Nombre del Plan', fecha: new Date(), monto: 2000, estatus: 'Enviado' },
   { no: 123333, nombre: 'LeBron James', dependientes: 2, seguro: 'Salud', plan: 'Nombre del Plan', fecha: new Date(), monto: 2000, estatus: 'Por Completar' },
-  { no: 768678, nombre: 'Giannis Qwerty', dependientes: 0, seguro: 'Salud', plan: 'Nombre del Plan', fecha: new Date(), monto: 2000, estatus: 'Enviado' },
   { no: 656675, nombre: 'Jim Carrey', dependientes: 3, seguro: 'Vida', plan: 'Nombre del Plan', fecha: new Date(), monto: 2000, estatus: 'Por Completar' },
-  { no: 986543, nombre: 'Danilo Medina', dependientes: 1, seguro: 'Salud', plan: 'Nombre del Plan', fecha: new Date(), monto: 2000, estatus: 'Enviado' },
-  { no: 666420, nombre: 'El Penco', dependientes: 1, seguro: 'Vida', plan: 'Nombre del Plan', fecha: new Date(), monto: 2000, estatus: 'Adjuntar Expediente' },
-  { no: 123333, nombre: 'LeBron James', dependientes: 2, seguro: 'Salud', plan: 'Nombre del Plan', fecha: new Date(), monto: 2000, estatus: 'Por Completar' },
-  { no: 768678, nombre: 'Giannis Qwerty', dependientes: 0, seguro: 'Salud', plan: 'Nombre del Plan', fecha: new Date(), monto: 2000, estatus: 'Adjuntar Expediente' },
-  { no: 656675, nombre: 'Jim Carrey', dependientes: 3, seguro: 'Vida', plan: 'Nombre del Plan', fecha: new Date(), monto: 2000, estatus: 'Por Completar' },
-  { no: 986543, nombre: 'Danilo Medina', dependientes: 1, seguro: 'Salud', plan: 'Nombre del Plan', fecha: new Date(), monto: 2000, estatus: 'Enviado' },
-  { no: 666420, nombre: 'El Penco', dependientes: 1, seguro: 'Vida', plan: 'Nombre del Plan', fecha: new Date(), monto: 2000, estatus: 'Enviado' },
 ];
 
 @Component({

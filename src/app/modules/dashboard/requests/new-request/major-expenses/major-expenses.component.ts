@@ -281,6 +281,8 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
     this.procedures = this.fb.array([this.formMethods.createItem(this.formGroupProcedure)]);
 
     this.newRequest = this.fb.group({
+
+
       requestType: ['', Validators.required],
       NoC: ['', Validators.required],
       deducibles: ['', Validators.required],
@@ -420,6 +422,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
         haveReproductiveOrganDisorders: ['', Validators.required],
       })
 
+      
     });
 
     this.contingentBeneficiaryArray = this.newRequest.get('contingentBeneficiary').get('dependentsC') as FormArray;
@@ -431,7 +434,6 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
     // this.setQuestionsA();
     this.setQuestionsB();
 
-
   }
 
   ngDoCheck() { }
@@ -439,6 +441,9 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
   add(dependentsFormArray, group) {
     const increment = dependentsFormArray.length + 1;
     dependentsFormArray = this.formMethods.addElement(dependentsFormArray, increment, group).formArray;
+
+    console.log(this.newRequest);
+
   }
 
   // setQuestionsA(){

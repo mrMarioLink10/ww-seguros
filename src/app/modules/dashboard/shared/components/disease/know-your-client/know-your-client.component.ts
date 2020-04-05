@@ -176,7 +176,7 @@ export class KnowYourClientComponent implements OnInit {
 					form.addControl('areatext', this.fb.group({
 						specify_investigated_representative: ['', Validators.required],
 					}));
-					// console.log(JSON.stringify(this.form.value));
+					console.log(JSON.stringify(this.form.value));
 			}
 		 else if (event.valor === 'no') {
 	
@@ -196,7 +196,7 @@ export class KnowYourClientComponent implements OnInit {
 						exposed_name: ['', Validators.required],
 						old_current_position: ['', Validators.required],
 					}));
-					// console.log(JSON.stringify(this.form.value));
+					console.log(JSON.stringify(this.form.value));
 			}
 		 else if (event.valor === 'no') {
 	
@@ -231,23 +231,104 @@ export class KnowYourClientComponent implements OnInit {
 
 	ngOnInit() {
 
+		this.addBasicControls();
+
 		this.branch_property = this.fb.array([this.formMethods.createItem(this.branchGroup)]);
 
-		this.form = this.fb.group({
-			request: ['', Validators.required],
+	// 	this.form = this.fb.group({
+	// 		request: ['', Validators.required],
 
-      general_data: this.fb.group({
-          society_name:['',Validators.required],
-			    commercial_name:['',Validators.required],
-			    contributor_num:['', Validators.required],
-			    home:['',Validators.required],
-			    telephone:['', Validators.required],
-			    email:['', [Validators.required, Validators.email]],
-			    commercial_activity:['', Validators.required],
-          list_countrys:['', Validators.required]
-     }),
+    //   general_data: this.fb.group({
+    //       society_name:['',Validators.required],
+	// 		    commercial_name:['',Validators.required],
+	// 		    contributor_num:['', Validators.required],
+	// 		    home:['',Validators.required],
+	// 		    telephone:['', Validators.required],
+	// 		    email:['', [Validators.required, Validators.email]],
+	// 		    commercial_activity:['', Validators.required],
+    //       list_countrys:['', Validators.required]
+    //  }),
       
-     representative_data: this.fb.group({
+    //  representative_data: this.fb.group({
+    //     name_lastname:['', Validators.required],
+	// 		  birthplace:['', Validators.required],
+	// 		  birthdate:['', Validators.required],
+	// 		  society_position:['', Validators.required],
+	// 		  nationality:['', Validators.required],
+	// 		  home_telephone:['', Validators.required],
+	// 		  cellphone:['',Validators.required],
+	// 		  id_passport:['', Validators.required],
+	// 		  representative_email:['', Validators.required],
+	// 		  address:['', Validators.required],
+    //  }),
+
+			
+
+	// 		management_body_composition: this.fb.group({
+	// 			allMembers: this.fb.array([this.formMethods.createItem(this.management_bodyFormGroup)])
+	// 		}),
+
+	// 		shareholders: this.fb.group({
+    //     			allShareholders: this.fb.array([this.formMethods.createItem(this.shareholdersFormGroup)]),
+    //     			employee_numbers: ['', Validators.required]
+	// 		}),
+
+    //   exposed: this.fb.group({
+    //     exposed_person:[''],
+    //     stock_Exchange:['', Validators.required],
+    //     branch_office_radio:[''],
+	// 		  branch_office: this.fb.group({ 
+	// 			allBranch_office: this.fb.array([this.formMethods.createItem(this.branchGroup)])
+	// 		  }), 
+    //     investigated_representative:[''],
+       
+    //   }),
+
+    //   finance: this.fb.group({
+
+    //     main_annual_income:['', Validators.required],
+    //     annual_income_others:['', Validators.required],
+    //     documents: this.fb.group({
+    //         mercantile_register_document:[''],
+    //         id_shareholder_document:[''],
+    //         id_representative_document:[''],
+    //         managemente_body_document:[''],
+    //     })
+    //   }),
+
+    //   broker: this.fb.group({
+    //     social_name:['', Validators.required],
+	// 	  	license_num:['', Validators.required],
+    //   }),
+
+    //   info_for_the_insurance_carrier: this.fb.group({
+    //     fullname_functionary:['', Validators.required],
+	// 		  position_functionary:['', Validators.required]
+    //   })
+
+	// 	});
+
+		this.bodyMembersFormArray = this.form.get('management_body_composition').get('allMembers') as FormArray;
+		this.shareholdersFormArray = this.form.get('shareholders').get('allShareholders') as FormArray;
+
+	}
+
+	addBasicControls() {
+
+		this.form.addControl('request', this.fb.control('', Validators.required));
+
+		this.form.addControl('general_data', this.fb.group({
+			society_name:['',Validators.required],
+				  commercial_name:['',Validators.required],
+				  contributor_num:['', Validators.required],
+				  home:['',Validators.required],
+				  telephone:['', Validators.required],
+				  email:['', [Validators.required, Validators.email]],
+				  commercial_activity:['', Validators.required],
+			list_countrys:['', Validators.required]
+	   }));
+
+	   this.form.addControl('representative_data', this.fb.group({
         name_lastname:['', Validators.required],
 			  birthplace:['', Validators.required],
 			  birthdate:['', Validators.required],
@@ -258,56 +339,49 @@ export class KnowYourClientComponent implements OnInit {
 			  id_passport:['', Validators.required],
 			  representative_email:['', Validators.required],
 			  address:['', Validators.required],
-     }),
+	 }));
+	 
+	 	this.form.addControl('management_body_composition', this.fb.group({
+			allMembers: this.fb.array([this.formMethods.createItem(this.management_bodyFormGroup)])
+		}));
 
-			
+		this.form.addControl('shareholders', this.fb.group({
+			allShareholders: this.fb.array([this.formMethods.createItem(this.shareholdersFormGroup)]),
+			employee_numbers: ['', Validators.required]
+	}));
 
-			management_body_composition: this.fb.group({
-				allMembers: this.fb.array([this.formMethods.createItem(this.management_bodyFormGroup)])
-			}),
+		this.form.addControl('exposed', this.fb.group({
+			exposed_person:[''],
+			stock_Exchange:['', Validators.required],
+			branch_office_radio:[''],
+				  branch_office: this.fb.group({ 
+					allBranch_office: this.fb.array([this.formMethods.createItem(this.branchGroup)])
+				  }), 
+			investigated_representative:[''],
+		   
+		  }));
 
-			shareholders: this.fb.group({
-        			allShareholders: this.fb.array([this.formMethods.createItem(this.shareholdersFormGroup)]),
-        			employee_numbers: ['', Validators.required]
-			}),
+		this.form.addControl('finance', this.fb.group({
 
-      exposed: this.fb.group({
-        exposed_person:[''],
-        stock_Exchange:['', Validators.required],
-        branch_office_radio:[''],
-			  branch_office: this.fb.group({ 
-				allBranch_office: this.fb.array([this.formMethods.createItem(this.branchGroup)])
-			  }), 
-        investigated_representative:[''],
-       
-      }),
+			main_annual_income:['', Validators.required],
+			annual_income_others:['', Validators.required],
+			documents: this.fb.group({
+				mercantile_register_document:[''],
+				id_shareholder_document:[''],
+				id_representative_document:[''],
+				managemente_body_document:[''],
+			})
+		  }));
 
-      finance: this.fb.group({
+		this.form.addControl('broker', this.fb.group({
+			social_name:['', Validators.required],
+				  license_num:['', Validators.required],
+		  }));
 
-        main_annual_income:['', Validators.required],
-        annual_income_others:['', Validators.required],
-        documents: this.fb.group({
-            mercantile_register_document:[''],
-            id_shareholder_document:[''],
-            id_representative_document:[''],
-            managemente_body_document:[''],
-        })
-      }),
-
-      broker: this.fb.group({
-        social_name:['', Validators.required],
-		  	license_num:['', Validators.required],
-      }),
-
-      info_for_the_insurance_carrier: this.fb.group({
-        fullname_functionary:['', Validators.required],
-			  position_functionary:['', Validators.required]
-      })
-
-		});
-
-		this.bodyMembersFormArray = this.form.get('management_body_composition').get('allMembers') as FormArray;
-		this.shareholdersFormArray = this.form.get('shareholders').get('allShareholders') as FormArray;
+		this.form.addControl('info_for_the_insurance_carrier', this.fb.group({
+			fullname_functionary:['', Validators.required],
+				  position_functionary:['', Validators.required]
+		  }));
 
 	}
 

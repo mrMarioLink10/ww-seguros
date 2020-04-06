@@ -49,16 +49,16 @@
               </app-input>
               <app-input class="mr-3 pt-21" [group]="newRequest.get('person')" label="Edad" name='age'></app-input>
               <div class="mr-3 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2">
-                <app-input class="mr-3 pt-21" [group]="newRequest.get('person')" label="Peso / lbs" name='weight'>
+                <app-input class="mr-3 pt-21" [group]="newRequest.get('person')" label="Peso / Lbs" name='weight'>
                 </app-input>
-                <app-input class="mr-3 pt-21" [group]="newRequest.get('person')" label="Lbs" name='height'></app-input>
+                <app-input class="mr-3 pt-21" [group]="newRequest.get('person')" label="Altura / Pies" name='height'>
+                </app-input>
               </div>
               <div class="mr-3 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2">
                 <app-input class="mr-3 pt-21" [group]="newRequest.get('person')" label="Ingreso Anual"
                   name='annualIncome'>
                 </app-input>
-                <app-select class="mr-3 pt-21
-                  " id="status" [options]="currency" placeholder='Moneda' [group]="newRequest.get('person')">
+                <app-select class="mr-3 pt-21" id="status" [options]="currency" [group]="newRequest.get('person')">
                 </app-select>
               </div>
               <div class="mr-3">
@@ -286,30 +286,42 @@
             </div>
           </ng-template>
           <ng-template #formTemplate>
-            <div class="colorb">
-              <p>Las Personas Políticamente Expuestas son aquéllas que desempeñan o han desempeñado funciones públicas
+            <div class="px-6">
+              <div class="declaraciones px-4 sm:px-4 md:px-14 lg:px-12 xl:px-12">
+                Las Personas Políticamente Expuestas son aquéllas que desempeñan o han desempeñado funciones públicas
                 destacadas en un país extranjero o en su propio país, ej. Jefes de Estado o de gobierno, políticos de
                 alta jerarquía, funcionarios gubernamentales, judiciales o militares de alta jerarquía, altos ejecutivos
                 de empresas estatales, funcionarios importantes de partidos políticos, entre otros. La designación de
                 PEP incluye a su cónyuge y familiares hasta el segundo grado de consanguinidad y segundo de afinidad.
-              </p>
+              </div>
+
+              <div
+                class="w-full mt-8 xl:flex xl:justify-between lg:flex lg:justify-between md:flex md:justify-between sm:flex sm:justify-between">
+                <div class="radio-button-label">¿Es Usted una Persona Políticamente Expuesta? En caso afirmativo, cargo
+                  actual o anterior y tiempo en el cargo</div>
+                <app-radio-button [group]="newRequest.get('person')" name="isExposed"
+                  [options]="diseaseService.yesOrNoOriginal" (selected)="selectChange($event)">
+                </app-radio-button>
+              </div>
+
+              <div *ngIf="newRequest.get('person').value.isExposed=== 'si'"
+                class="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-5 xl:grid-cols-5">
+                <app-input class="mr-3" [group]="newRequest.get('exposedPerson')" label="Cargo actual o anterior"
+                  name='lastPosition'></app-input>
+                <div class="grid grid-cols-2">
+                  <app-input class="mr-3" [group]="newRequest.get('exposedPerson')" label="Tiempo" name="timeNumber">
+                  </app-input>
+                  <app-select [options]="year" [group]="newRequest.get('exposedPerson')"></app-select>
+                </div>
+                <app-radio-button class="mr-3" title="Asegurado" [group]="newRequest.get('exposedPerson')"
+                  name="insured" [options]="res"></app-radio-button>
+                <app-radio-button class="mr-3" title="Contratante" [group]="newRequest.get('exposedPerson')"
+                  name="contractor" [options]="res"></app-radio-button>
+                <app-radio-button class="mr-3" title="Pagador" [group]="newRequest.get('exposedPerson')" name="payer"
+                  [options]="res"></app-radio-button>
+              </div>
+
             </div>
-
-            <h4 class='pb-3 pt-3'>¿Es Usted una Persona Políticamente Expuesta?</h4>
-
-            <div class=' pt-5 grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-5 xl:grid-cols-5'>
-              <app-input class="mr-3" [group]="newRequest.get('exposedPerson')" label="Cargo actual o anterior"
-                name='lastPosition'></app-input>
-              <app-input class="mr-3" [group]="newRequest.get('exposedPerson')" label="Tiempo" name='time'></app-input>
-              <app-select class="mr-3" [options]="year" [group]="newRequest.get('exposedPerson')"></app-select>
-              <app-radio-button class="mr-3" title="Asegurado" [group]="newRequest.get('exposedPerson')" name="insured"
-                [options]="res"></app-radio-button>
-              <app-radio-button class="mr-3" title="Contratante" [group]="newRequest.get('exposedPerson')"
-                name="contractor" [options]="res"></app-radio-button>
-              <app-radio-button class="mr-3" title="Pagador" [group]="newRequest.get('exposedPerson')" name="payer"
-                [options]="res"></app-radio-button>
-            </div>
-
           </ng-template>
           <ng-template #formTemplate>
             <app-radio-button class="mr-3" title="Ingresos anuales actividad principal"
@@ -323,11 +335,11 @@
             <app-text-area [group]="newRequest.get('financialProfile')" label="Texto" name='paymentOrigin'>
             </app-text-area>
           </ng-template>
-          <!-- <ng-template #formTemplate>hola 7</ng-template> -->
           <ng-template #formTemplate>
             <app-radio-button class="mr-3" title="Ingresos anuales actividad principal" [group]="newRequest"
               name="IncomeMainActivity" [options]="mainActivity"></app-radio-button>
           </ng-template>
+          <!-- DESIGNACION DE LOS BENEFICIARIOS PRIMARIOS -->
           <ng-template #formTemplate>
             <div [formGroup]="newRequest.get('primaryBenefits')">
               <div formArrayName="dependentsC">
@@ -337,9 +349,6 @@
                       <app-input class="mr-3"
                         [group]="newRequest.get('primaryBenefits').get('dependentsC').get(index.toString())"
                         label="Nombres y Apellidos" name='name'></app-input>
-                      <app-date-picker class="mr-3" id='date'
-                        [group]="newRequest.get('primaryBenefits').get('dependentsC').get(index.toString())"
-                        label="fecha" name='date'></app-date-picker>
                       <app-input class="mr-3"
                         [group]="newRequest.get('primaryBenefits').get('dependentsC').get(index.toString())"
                         label="Documento de Identidad" name='id'></app-input>
@@ -354,7 +363,7 @@
                       </app-select>
                       <app-input class="mr-3"
                         [group]="newRequest.get('primaryBenefits').get('dependentsC').get(index.toString())"
-                        label="Cant." name='quantity'></app-input>
+                        label="Cant. en %" name='quantity'></app-input>
                     </div>
 
                     <div class="pb-5">
@@ -371,9 +380,7 @@
                         <mat-icon style="color: #18446B">remove</mat-icon>
                       </button>
                     </div>
-
-
-                    <mat-divider class="pt-5"></mat-divider><br>
+                    <mat-divider class="pt-5"></mat-divider>
                   </div>
                 </div>
               </div>
@@ -382,25 +389,223 @@
               <p>Si a mi fallecimiento alguno de mis Beneficiarios Primarios es menor de edad, el beneficio
                 correspondiente será entregado a</p><br>
               <div class='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-4'>
+                <app-input class="mr-3" [group]="newRequest.get('primaryBenefits').get('personBenefited')"
+                  label="Nombre" name="name"></app-input>
                 <app-select class="mr-3" [options]="family"
                   [group]="newRequest.get('primaryBenefits').get('personBenefited')"></app-select>
-                <app-select class="mr-3" [options]="family"
-                  [group]="newRequest.get('primaryBenefits').get('personBenefited')"></app-select>
-                <app-input class="mr-3" [group]="newRequest.get('primaryBenefits').get('personBenefited')" label="Cant."
-                  name='id'></app-input>
+                <app-input class="mr-3" [group]="newRequest.get('primaryBenefits').get('personBenefited')"
+                  label="Cédula/Pasaporte" name='id'></app-input>
               </div>
             </div>
           </ng-template>
-          <!-- <ng-template #formTemplate>hola 10</ng-template>
-          <ng-template #formTemplate>hola 11</ng-template>
-          <ng-template #formTemplate>hola 12</ng-template>
-          <ng-template #formTemplate>hola 13</ng-template>
-          <ng-template #formTemplate>hola 14</ng-template> -->
+          <!-- DESIGNACION DE LOS BENEFICIARIOS CONTIGENTES -->
+          <ng-template #formTemplate>
+            <div [formGroup]="newRequest.get('contingentBeneficiary')">
+              <div formArrayName="dependentsC">
+                <div *ngFor="let element of contingentBeneficiaryArray.controls; let index = index">
+                  <div [formGroupName]="index">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-4">
+                      <app-input class="mr-3"
+                        [group]="newRequest.get('contingentBeneficiary').get('dependentsC').get(index.toString())"
+                        label="Nombres y Apellidos" name='name'></app-input>
+                      <app-input class="mr-3"
+                        [group]="newRequest.get('contingentBeneficiary').get('dependentsC').get(index.toString())"
+                        label="Documento de Identidad" name='id'></app-input>
+                      <app-input class="mr-3"
+                        [group]="newRequest.get('contingentBeneficiary').get('dependentsC').get(index.toString())"
+                        label="Nacionalidad" name='nationality'></app-input>
+                      <app-input class="mr-3"
+                        [group]="newRequest.get('contingentBeneficiary').get('dependentsC').get(index.toString())"
+                        label="Ocupación" name='ocupation'></app-input>
+                      <app-select class="mr-3" [options]="family"
+                        [group]="newRequest.get('contingentBeneficiary').get('dependentsC').get(index.toString())">
+                      </app-select>
+                      <app-input class="mr-3"
+                        [group]="newRequest.get('contingentBeneficiary').get('dependentsC').get(index.toString())"
+                        label="Cant. en %" name='quantity'></app-input>
+                    </div>
+
+                    <div class="pb-5">
+                      <button mat-mini-fab aria-label="Agregar reclamacion"
+                        (click)="add(contingentBeneficiaryArray,primaryBenefits)" type="button"
+                        class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
+                        <mat-icon style="color: #18446B">add</mat-icon>
+                      </button>
+
+                      <button *ngIf="newRequest.get('contingentBeneficiary').get('dependentsC')['controls'].length > 1"
+                        mat-mini-fab aria-label="Eliminar reclamacion"
+                        (click)="formMethods.deleteOneElement(contingentBeneficiaryArray, index)" type="button"
+                        class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
+                        <mat-icon style="color: #18446B">remove</mat-icon>
+                      </button>
+                    </div>
+                    <hr class="mt-4 w-full mb-6 ww-divider">
 
 
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div>
+              <div class="radio-button-label" style="font-size: 12px !important;">Si a mi fallecimiento alguno de mis
+                Beneficiarios Primarios es menor de edad, el beneficio
+                correspondiente será entregado a</div><br>
+              <div class='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-4'>
+                <app-input class="mr-3" [group]="newRequest.get('contingentBeneficiary').get('personBenefited')"
+                  label="Nombre" name="name"></app-input>
+                <app-select class="mr-3" [options]="family"
+                  [group]="newRequest.get('contingentBeneficiary').get('personBenefited')"></app-select>
+                <app-input class="mr-3" [group]="newRequest.get('contingentBeneficiary').get('personBenefited')"
+                  label="Cédula/Pasaporte" name='id'></app-input>
+              </div>
+            </div>
+            <hr class=" w-full mb-6 ww-divider">
+            <div>
+              <div class="radio-button-label" style="font-size: 12px !important;">En caso de Cesión Bancaria complete
+                los siguientes datos:</div><br>
+              <div class='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-4'>
+                <app-select class="mr-3" [options]="family"
+                  [group]="newRequest.get('contingentBeneficiary').get('bankTransfer')"></app-select>
+                <app-input class="mr-3" [group]="newRequest.get('contingentBeneficiary').get('bankTransfer')"
+                  label="Suma cedida" name="amount"></app-input>
+                <app-input class="mr-3" [group]="newRequest.get('contingentBeneficiary').get('bankTransfer')"
+                  label="Contacto" name="contact"></app-input>
+                <div></div>
+              </div>
+            </div>
+            <hr class=" w-full mb-6 ww-divider">
+            <div *ngFor="let question of coveragesQuestions">
+              <div
+                class="w-full xl:flex xl:justify-between lg:flex lg:justify-between md:flex md:justify-between sm:flex sm:justify-between">
+                <div class="radio-button-label" style="font-size: 12px !important;">{{question.label}}</div>
+                <app-radio-button [group]="newRequest.get('contingentBeneficiary')" [name]="question.name"
+                  [options]="diseaseService.yesOrNoOriginal" (selected)="selectChange($event)">
+                </app-radio-button>
+              </div>
+              <div *ngIf="newRequest.get('contingentBeneficiary').value[question.name] === 'si'">
+                <div *ngIf="question.name === 'hasAnotherCoverage'">
+                  <div *ngFor="let studies of existingCoveragesList.controls; let i = index"
+                    class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
+                    <div class="mr-3">
+                      <app-input
+                        [group]="newRequest.get('contingentBeneficiary').get('anotherCoverages').get(i.toString())"
+                        name="name" label="Nombre de la Compañia">
+                      </app-input>
+                    </div>
+                    <div class="mr-3">
+                      <app-number-input
+                        [group]="newRequest.get('contingentBeneficiary').get('anotherCoverages').get(i.toString())"
+                        name="amount" label="Monto del Seguro">
+                      </app-number-input>
+                    </div>
+                    <div class="mr-3">
+                      <app-input
+                        [group]="newRequest.get('contingentBeneficiary').get('anotherCoverages').get(i.toString())"
+                        name="policeNo" label="No. de Póliza">
+                      </app-input>
+                    </div>
+                    <div class="mr-3">
+                      <app-input
+                        [group]="newRequest.get('contingentBeneficiary').get('anotherCoverages').get(i.toString())"
+                        name="ADBQuantity" label="Cantidad ADB">
+                      </app-input>
+                    </div>
+                    <div class="mr-3">
+                      <app-date-picker
+                        [group]="newRequest.get('contingentBeneficiary').get('anotherCoverages').get(i.toString())"
+                        name="date" label="Fecha de Solicitud">
+                      </app-date-picker>
+                    </div>
+                    <div *ngIf="existingCoveragesList.length > 1"
+                      [ngClass]="{'': existingCoveragesList.length === 1, 'col-span-1': existingCoveragesList.length > 1} ">
+                      <button mat-mini-fab aria-label=" Eliminar estudio"
+                        (click)="diseaseService.removeToList(i, existingCoveragesList)" type="button"
+                        class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
+                        <mat-icon style="color: #18446B">remove</mat-icon>
+                      </button>
+                    </div>
+                  </div>
+                  <div class="mb-8">
+                    <button mat-mini-fab aria-label="Agregar estudio"
+                      (click)="addToList(existingCoveragesList, 'coverages')" type="button"
+                      class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
+                      <mat-icon style="color: #18446B">add</mat-icon>
+                    </button>
+                  </div>
+                </div>
+                <div *ngIf="question.name === 'changeAnotherCoverage'">
+                  <div *ngFor="let studies of changingCoveragesList.controls; let i = index"
+                    class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
+                    <div class="mr-3">
+                      <app-input
+                        [group]="newRequest.get('contingentBeneficiary').get('changingCoverages').get(i.toString())"
+                        name="name" label="Nombre de la Compañia">
+                      </app-input>
+                    </div>
+                    <div class="mr-3">
+                      <app-number-input
+                        [group]="newRequest.get('contingentBeneficiary').get('changingCoverages').get(i.toString())"
+                        name="amount" label="Monto del Seguro">
+                      </app-number-input>
+                    </div>
+                    <div class="mr-3">
+                      <app-input
+                        [group]="newRequest.get('contingentBeneficiary').get('changingCoverages').get(i.toString())"
+                        name="policeNo" label="No. de Póliza">
+                      </app-input>
+                    </div>
+                    <div class="mr-3">
+                      <app-input
+                        [group]="newRequest.get('contingentBeneficiary').get('changingCoverages').get(i.toString())"
+                        name="ADBQuantity" label="Cantidad ADB">
+                      </app-input>
+                    </div>
+                    <div class="mr-3">
+                      <app-date-picker
+                        [group]="newRequest.get('contingentBeneficiary').get('changingCoverages').get(i.toString())"
+                        name="date" label="Fecha de Solicitud">
+                      </app-date-picker>
+                    </div>
+                    <div *ngIf="changingCoveragesList.length > 1"
+                      [ngClass]="{'': changingCoveragesList.length === 1, 'col-span-1': changingCoveragesList.length > 1} ">
+                      <button mat-mini-fab aria-label=" Eliminar estudio"
+                        (click)="diseaseService.removeToList(i, changingCoveragesList)" type="button"
+                        class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
+                        <mat-icon style="color: #18446B">remove</mat-icon>
+                      </button>
+                    </div>
+                  </div>
+                  <div class="mb-8">
+                    <button mat-mini-fab aria-label="Agregar estudio"
+                      (click)="addToList(changingCoveragesList, 'coverages')" type="button"
+                      class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
+                      <mat-icon style="color: #18446B">add</mat-icon>
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <hr class=" w-full mb-6 ww-divider">
+            </div>
+          </ng-template>
+          <!-- INFORMACION PERSONAL -->
+          <ng-template #formTemplate>
+            <div *ngFor="let question of generalInfoQuestions">
+              <div
+                class="w-full xl:flex xl:justify-between lg:flex lg:justify-between md:flex md:justify-between sm:flex sm:justify-between">
+                <div class="radio-button-label" style="font-size: 12px !important; max-width: 60vw;">{{question.label}}
+                </div>
+                <app-radio-button [group]="newRequest.get('generalInformation')" [name]="question.name"
+                  [options]="diseaseService.yesOrNoOriginal" (selected)="selectChange($event)">
+                </app-radio-button>
+              </div>
+              <hr class=" w-full mb-6 ww-divider">
+            </div>
+          </ng-template>
         </app-forms-container>
       </mat-tab>
       <mat-tab label="D01" class="mat-tab-forms"></mat-tab>
     </mat-tab-group>
   </div>
 </div>
+
+<button (click)="print()">IMPRIMIR</button>

@@ -427,7 +427,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
         haveReproductiveOrganDisorders: ['', Validators.required],
       })
 
-      
+
     });
 
     this.contingentBeneficiaryArray = this.newRequest.get('contingentBeneficiary').get('dependentsC') as FormArray;
@@ -536,6 +536,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
     console.log('SOLO DEPENDENTS', this.newRequest.get('dependents'));
     console.log('ENTERO', this.newRequest);
     console.log(this.newRequest.get('dependents').get('allDependents').get('0').get('questionsA'));
+    console.log(JSON.stringify(this.newRequest.value));
 
   }
 

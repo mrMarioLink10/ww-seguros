@@ -18,9 +18,12 @@ export class LifeComponent implements OnInit, DoCheck {
   dependentsFormArray: FormArray;
   existingCoveragesList: FormArray;
   changingCoveragesList: FormArray;
+  insuranceProposedList: FormArray;
 
   coveragesQuestions: any[];
   generalInfoQuestions: any[];
+  sportsQuestions: any[];
+  medicQuestions: any[];
 
   mainActivity = {
     options: [
@@ -152,6 +155,36 @@ export class LifeComponent implements OnInit, DoCheck {
       }
     ],
     name: 'status'
+  };
+
+  smokingTypes = {
+    options: [
+      {
+        value: 'cigarrillos',
+        viewValue: 'Cigarrillos'
+      },
+      {
+        value: 'pipa',
+        viewValue: 'Pipa'
+      },
+      {
+        value: 'parche o chicle de Nicotina',
+        viewValue: 'Parche o chicle de Nicotina'
+      },
+      {
+        value: 'tabaco',
+        viewValue: 'Tabaco'
+      },
+      {
+        value: 'mastica tabaco',
+        viewValue: 'Mastica tabaco'
+      },
+      {
+        value: 'otro',
+        viewValue: 'Otro'
+      }
+    ],
+    name: 'haveSmoked'
   };
 
   sex = $sex;
@@ -323,7 +356,31 @@ export class LifeComponent implements OnInit, DoCheck {
         infoDiseaseCoverage: ['', Validators.required],
         disabilityBenefitsRequested: ['', Validators.required],
         haveFlownNotAsPassenger: ['', Validators.required],
-        xtremeSport: ['', Validators.required],
+        doXtremeSport: ['', Validators.required],
+      }),
+      medicalHistory: this.fb.group({
+        haveHeartPain: ['', Validators.required],
+        haveRespiratoryDisorder: ['', Validators.required],
+        haveMentalNervousDisorder: ['', Validators.required],
+        haveStomachDisorder: ['', Validators.required],
+        haveEndocrineDisorder: ['', Validators.required],
+        haveSpineDisorder: ['', Validators.required],
+        haveRenalDisorder: ['', Validators.required],
+        haveUnexplainedDisease: ['', Validators.required],
+        haveEyesNoseThroatProblem: ['', Validators.required],
+        haveBloodDisorder: ['', Validators.required],
+        haveBirthDefect: ['', Validators.required],
+        HaveMedicalProcedures: ['', Validators.required],
+        haveBeenAPatient: ['', Validators.required],
+        haveHadSpecializedTests: ['', Validators.required],
+        haveNotCarriedOut: ['', Validators.required],
+        haveTakenInLast12Months: ['', Validators.required],
+        haveTestedPositiveForHIV: ['', Validators.required],
+        havePlanToObtainMedicalTreatment: ['', Validators.required],
+        haveDiabetesDiagnosis: ['', Validators.required],
+        haveHadWeightChanges: ['', Validators.required],
+        isWomen: ['', Validators.required],
+        listDoctors: ['', Validators.required],
       }),
       dependents: this.fb.array([this.formMethods.createItem(this.dependentFormGroup)])
 
@@ -346,6 +403,142 @@ export class LifeComponent implements OnInit, DoCheck {
       }
     ];
 
+    this.sportsQuestions = [
+      {
+        label: 'Participado en deportes submarinos, buceo SCUBA',
+        name: 'diving',
+        group: ''
+      },
+      {
+        label: 'Carreras en un “scooter”, motorizado, motocicleta, carro u otro vehículo impulsado',
+        name: 'racing',
+        group: ''
+      },
+      {
+        label: 'Planeadores de mano, paracaidismo, saltos BASE, saltos en cuerda elástica (bungee jumping), paracaidismo con cometa (para-kiting), paracaidismo planeador (skydiving)',
+        name: 'skydiving',
+        group: ''
+      },
+      {
+        label: 'Esquí con helicóptero, o escalar rocas o montaña',
+        name: 'mountaineering',
+        group: ''
+      },
+    ];
+
+    this.medicQuestions = [
+      {
+        label: 'a. ¿Dolor en el pecho, palpitaciones, hipertensión arterial, fiebre reumática, soplo cardiaco, ataque cardiaco, aneurismas u otra enfermedad del corazón o los vasos sanguíneos?',
+        name: 'haveHeartPain',
+        group: ''
+      },
+      {
+        label: 'b. ¿Ahogos, ronquera, tos persistente, esputos de sangre, bronquitis, pleuresía, asma, enfisema, tuberculosis o trastornos respiratorios crónicos?',
+        name: 'haveRespiratoryDisorder',
+        group: ''
+      },
+      {
+        label: 'c. ¿Mareos, desmayos, epilepsia, convulsiones, dolor de cabeza, afección del habla, parálisis, apoplejía, trastorno mental o nervioso?',
+        name: 'haveMentalNervousDisorder',
+        group: ''
+      },
+      {
+        label: 'd. ¿Ictericia, hemorragia intestinal, úulcera, hernia, apendicitis, colitis, diverticulitis, hemorroides, indigestión recurrente u otro desorden del estómago, intestino, hígado, hepatitis B o C y vesícula biliar?',
+        name: 'haveStomachDisorder',
+        group: ''
+      },
+      {
+        label: 'e. ¿Diabetes, tiroides u otro trastorno endocrino?',
+        name: 'haveEndocrineDisorder',
+        group: ''
+      },
+      {
+        label: 'f. ¿Neuritis, ciática, reumatismo, artritis, gota o desorden de los músculos o huesos, incluso de la columna vertebral, ¿la espalda y las articulaciones?',
+        name: 'haveSpineDisorder',
+        group: ''
+      },
+      {
+        label: 'g. ¿Enfermedad de la piel, ganglios linfáticos, quiste, tumor, cáncer, sudores nocturnos, fatiga o fiebre sin explicación?',
+        name: 'haveUnexplainedDisease',
+        group: ''
+      },
+      {
+        label: 'h. ¿Albúmina, azúcar, sangre o pus en la orina, enfermedades venéreas, cálculos renales u otros trastornos renales, de la vejiga, próstata u órganos reproductivos?',
+        name: 'haveRenalDisorder',
+        group: ''
+      },
+      {
+        label: 'i. ¿Cualquier problema de los ojos, oídos, nariz o garganta?',
+        name: 'haveEyesNoseThroatProblem',
+        group: ''
+      },
+      {
+        label: 'j. ¿Alergias, anemia u otro desorden sanguíneo?',
+        name: 'haveBloodDisorder',
+        group: ''
+      },
+      {
+        label: 'k. ¿Ha tenido alguna deformidad, enfermedad o defecto congénito?',
+        name: 'haveBirthDefect',
+        group: ''
+      },
+      {
+        label: 'l. ¿Ha tenido un examen médico, consulta, enfermedad, lesión o procedimientos médicos ambulatorios o intrahospitalarios?',
+        name: 'HaveMedicalProcedures',
+        group: ''
+      },
+      {
+        label: 'm. ¿Ha sido paciente en un hospital, clínica, sanatorio u otra institución médica?',
+        name: 'haveBeenAPatient',
+        group: ''
+      },
+      {
+        label: 'n. ¿Se ha hecho un electrocardiograma, radiografía u otras pruebas especializadas?',
+        name: 'haveHadSpecializedTests',
+        group: ''
+      },
+      {
+        label: 'o. ¿Se le aconsejó alguna prueba diagnóstica, hospitalización o cirugía que no se ha llevado a cabo?',
+        name: 'haveNotCarriedOut',
+        group: ''
+      },
+      {
+        label: '3. ¿Ha tomado el Propuesto Asegurado en los últimos 12 meses algún medicamento prescrito, o ha recibido tratamiento que haya excedido 14 días?',
+        name: 'haveTakenInLast12Months',
+        group: ''
+      },
+      {
+        label: '4. ¿Tiene provisto a obtener tratamiento y opinión médica en los próximos 6 meses?',
+        name: 'havePlanToObtainMedicalTreatment',
+        group: ''
+      },
+      {
+        label: '5. ¿Ha tenido resultado positivos por haber sido expuesto a la infección del VIH o ha sido diagnosticado con el complejo relacionado con el SIDA por causa de infección VIH u otra enfermedad o condición derivada de dicha infección?',
+        name: 'haveTestedPositiveForHIV',
+        group: ''
+      },
+      {
+        label: '6. ¿Existe un historial de muertes por enfermedad coronaria arterial, embolia, cáncer o enfermedades de los riñones, ya sea de un padre o hermano natural antes de la edad de 60 años, o un diagnóstico de diabetes mellitus antes de la edad de 50 años?',
+        name: 'haveDiabetesDiagnosis',
+        group: ''
+      },
+      {
+        label: '7. ¿Ha tenido algún cambio de peso durante los últimos doce meses?',
+        name: 'haveHadWeightChanges',
+        group: ''
+      },
+      {
+        label: '8. ¿Es una mujer el Asegurado Propuesto?',
+        name: 'isWomen',
+        group: ''
+      },
+      {
+        label: '9. Liste los nombres y direcciones de los médicos que usted ha consultado recientemente por cualquier razón y el médico de cabecera, si fuera diferente.',
+        name: 'listDoctors',
+        group: ''
+      }
+    ];
+
     this.generalInfoQuestions = [
       {
         label: 'a. ¿Ha fumado cigarrillos, cigarros, pipas o utilizado productos de tabaco o nicotina en cualquier forma, incluyendo olido, sumergido, masticado, parches de nicotina, chicle u otros sustitutos en los últimos 24 meses?',
@@ -360,7 +553,7 @@ export class LifeComponent implements OnInit, DoCheck {
       {
         label: 'c. Piensa viajar fuera de su país?',
         name: 'thinkTravel',
-        group: 'travel'
+        group: 'travelInformation'
       },
       {
         label: 'd. ¿Ha recibido tratamiento o se ha unido a una organización por motivo de dependencia o abuso del alcohol?',
@@ -385,12 +578,22 @@ export class LifeComponent implements OnInit, DoCheck {
       {
         label: '3. Favor de proporcionar detalle de su cobertura de enfermedades graves, si la tiene.',
         name: 'infoDiseaseCoverage',
-        group: 'diseaseCoverage'
+        group: 'diseaseCoverageInformation'
       },
       {
         label: '¿Alguna vez ha solicitado o recibido beneficios por incapacidad?',
         name: 'disabilityBenefitsRequested',
         group: 'disabilityBenefits'
+      },
+      {
+        label: 'a. ¿Volado en otra capacidad que no sea la de pasajero en una aerolínea comercial?',
+        name: 'haveFlownNotAsPassenger',
+        group: 'flowNotAsPassenger'
+      },
+      {
+        label: 'b. ¿Participado en actividades que involucren el uso o las carreras en un “scooter”, motorizado, motocicleta, carro u otro vehículo impulsado, participado en deportes submarinos, buceo SCUBA, planeadores de mano, paracaidismo, saltos BASE, saltos en cuerda elástica (bungee jumping), paracaidismo con cometa (para-kiting), paracaidismo planeador (skydiving), esquí con helicóptero, o escalar rocas o montaña?',
+        name: 'doXtremeSport',
+        group: 'xtremeSport'
       },
     ];
   }
@@ -400,7 +603,8 @@ export class LifeComponent implements OnInit, DoCheck {
 
   selectChange(event) {
     const formCB = this.newRequest.get('contingentBeneficiary') as FormGroup;
-    console.log(event);
+    const formGI = this.newRequest.get('generalInformation') as FormGroup;
+
     if (event.valor === 'si') {
       switch (event.name) {
         case 'isExposed':
@@ -424,6 +628,57 @@ export class LifeComponent implements OnInit, DoCheck {
           this.changingCoveragesList = formCB.get('changingCoverages') as FormArray;
           break;
 
+        case 'haveSmoked':
+          formGI.addControl('smoked', this.fb.control('', Validators.required));
+          break;
+
+        case 'consumeAlcohol':
+          formGI.addControl('alcohol', this.fb.group({
+            quantity: ['', Validators.required],
+            frequency: ['', Validators.required],
+          }));
+          break;
+
+        case 'thinkTravel':
+          formGI.addControl('travelInformation', this.fb.control('', Validators.required));
+          break;
+
+        case 'haveAlcoholTreatment':
+          formGI.addControl('alcoholTreatment', this.fb.control('', Validators.required));
+          break;
+
+        case 'infoDiseaseCoverage':
+          formGI.addControl('diseaseCoverageInformation', this.fb.control('', Validators.required));
+          break;
+
+        case 'haveBeenArrestedBecauseNarcotics':
+          formGI.addControl('arrestedInformation', this.fb.control('', Validators.required));
+          break;
+
+        case 'haveLostDriveLicense':
+          formGI.addControl('lostDriveLicense', this.fb.group({
+            who: ['', Validators.required],
+            when: ['', Validators.required],
+            licenseNumber: ['', Validators.required],
+            state: ['', Validators.required],
+            information: ['', Validators.required],
+          }));
+          break;
+
+        case 'doXtremeSport':
+          formGI.addControl('xtremeSports', this.fb.group({
+            diving: ['', Validators.required],
+            racing: ['', Validators.required],
+            skydiving: ['', Validators.required],
+            mountaineering: ['', Validators.required],
+          }));
+          break;
+
+        case 'anyoneProposed':
+          formGI.addControl('insuranceProposed', this.fb.array([this.createFormArray('insurance')]));
+          this.insuranceProposedList = formGI.get('insuranceProposed') as FormArray;
+          break;
+
         default:
           break;
       }
@@ -443,6 +698,38 @@ export class LifeComponent implements OnInit, DoCheck {
           this.changingCoveragesList = undefined;
           break;
 
+        case 'consumeAlcohol':
+          formGI.removeControl('alcohol');
+          break;
+
+        case 'thinkTravel':
+          formGI.removeControl('travelInformation');
+          break;
+
+        case 'haveAlcoholTreatment':
+          formGI.removeControl('alcoholTreatment');
+          break;
+
+        case 'infoDiseaseCoverage':
+          formGI.removeControl('diseaseCoverageInformation');
+          break;
+
+        case 'haveBeenArrestedBecauseNarcotics':
+          formGI.removeControl('arrestedInformation');
+          break;
+
+        case 'haveLostDriveLicense':
+          formGI.removeControl('lostDriveLicense');
+          break;
+
+        case 'doXtremeSport':
+          formGI.removeControl('xtremeSport');
+          break;
+
+        case 'anyoneProposed':
+          formGI.removeControl('insuranceProposed');
+          this.insuranceProposedList = undefined;
+          break;
         default:
           break;
       }
@@ -472,6 +759,13 @@ export class LifeComponent implements OnInit, DoCheck {
           policeNo: ['', Validators.required],
           ADBQuantity: ['', Validators.required],
           date: ['', Validators.required],
+        });
+        break;
+
+      case 'insurance':
+        return this.fb.group({
+          name: ['', Validators.required],
+          detail: ['', Validators.required],
         });
         break;
 

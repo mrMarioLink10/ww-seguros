@@ -589,6 +589,9 @@
           </ng-template>
           <!-- INFORMACION PERSONAL -->
           <ng-template #formTemplate>
+            <div class="radio-button-label mb-6">
+              Alguna vez el Propuesto Asegurado:
+            </div>
             <div *ngFor="let question of generalInfoQuestions">
               <div
                 class="w-full xl:flex xl:justify-between lg:flex lg:justify-between md:flex md:justify-between sm:flex sm:justify-between">
@@ -598,7 +601,143 @@
                   [options]="diseaseService.yesOrNoOriginal" (selected)="selectChange($event)">
                 </app-radio-button>
               </div>
+
+              <div *ngIf="newRequest.get('generalInformation').value[question.name] === 'si'">
+                <div *ngIf="question.name === 'haveSmoked'">
+                  <app-radio-button class="mt-4" [group]="newRequest.get('generalInformation')" [name]="question.group"
+                    [options]="smokingTypes">
+                  </app-radio-button>
+                </div>
+                <div *ngIf="question.name === 'consumeAlcohol'">
+                  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-4">
+                    <app-input class="mr-3" [group]="newRequest.get('generalInformation').get('alcohol')"
+                      name="quantity" label="Cantidad">
+                    </app-input>
+                    <app-input class="mr-3" [group]="newRequest.get('generalInformation').get('alcohol')"
+                      name="frequency" label="Frecuencia">
+                    </app-input>
+                  </div>
+                </div>
+                <div *ngIf="question.name === 'thinkTravel'">
+                  <div class="radio-button-label" style="font-size: 12px !important;">Detalle</div>
+                  <app-text-area [group]="newRequest.get('generalInformation')" name="travelInformation" label="Texto">
+                  </app-text-area>
+                </div>
+                <div *ngIf="question.name === 'haveAlcoholTreatment'">
+                  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-4">
+                    <app-input class="mr-3" [group]="newRequest.get('generalInformation')" name="alcoholTreatment"
+                      label="¿Cuándo?">
+                    </app-input>
+                  </div>
+                </div>
+                <div *ngIf="question.name === 'haveBeenArrestedBecauseNarcotics'">
+                  <div class="radio-button-label" style="font-size: 12px !important;">Detalle</div>
+                  <app-text-area [group]="newRequest.get('generalInformation')" name="arrestedInformation"
+                    label="Texto">
+                  </app-text-area>
+                </div>
+                <div *ngIf="question.name === 'infoDiseaseCoverage'">
+                  <div class="radio-button-label" style="font-size: 12px !important;">Detalle</div>
+                  <app-text-area [group]="newRequest.get('generalInformation')" name="diseaseCoverageInformation"
+                    label="Texto">
+                  </app-text-area>
+                </div>
+                <div *ngIf="question.name === 'haveLostDriveLicense'">
+                  <div class="mt-2 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-4">
+                    <app-input class="mr-3" [group]="newRequest.get('generalInformation').get('lostDriveLicense')"
+                      name="who" label="¿Quién?">
+                    </app-input>
+                    <app-date-picker class="mr-3" [group]="newRequest.get('generalInformation').get('lostDriveLicense')"
+                      name="when" label="¿Cuándo?">
+                    </app-date-picker>
+                    <app-input class="mr-3" [group]="newRequest.get('generalInformation').get('lostDriveLicense')"
+                      name="licenseNumber" label="Número de licencia de conducir">
+                    </app-input>
+                    <app-input class="mr-3" [group]="newRequest.get('generalInformation').get('lostDriveLicense')"
+                      name="state" label="Estado que la expidió">
+                    </app-input>
+                  </div>
+                  <div class="radio-button-label" style="font-size: 12px !important;">Detalle</div>
+                  <app-text-area [group]="newRequest.get('generalInformation').get('lostDriveLicense')"
+                    name="information" label="Texto">
+                  </app-text-area>
+                </div>
+
+                <div *ngIf="question.name === 'anyoneProposed'">
+                  <div *ngFor="let studies of insuranceProposedList.controls; let i = index">
+                    <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-5 xl:grid-cols-5">
+                      <div class="mr-3">
+                        <app-input
+                          [group]="newRequest.get('generalInformation').get('insuranceProposed').get(i.toString())"
+                          name="name" label="Nombre tratamiento">
+                        </app-input>
+                      </div>
+                    </div>
+                    <div class="radio-button-label" style="font-size: 12px !important;">Detalle</div>
+                    <app-text-area
+                      [group]="newRequest.get('generalInformation').get('insuranceProposed').get(i.toString())"
+                      name="detail" label="Texto">
+                    </app-text-area>
+                    <div *ngIf="insuranceProposedList.length > 1"
+                      [ngClass]="{'': insuranceProposedList.length === 1, 'col-span-1': insuranceProposedList.length > 1} ">
+                      <button mat-mini-fab aria-label=" Eliminar estudio"
+                        (click)="diseaseService.removeToList(i, insuranceProposedList)" type="button"
+                        class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
+                        <mat-icon style="color: #18446B">remove</mat-icon>
+                      </button>
+                    </div>
+                  </div>
+                  <div class="my-6">
+                    <button mat-mini-fab aria-label="Agregar estudio"
+                      (click)="addToList(insuranceProposedList, 'insurance')" type="button"
+                      class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
+                      <mat-icon style="color: #18446B">add</mat-icon>
+                    </button>
+                  </div>
+                </div>
+
+                <div class="mt-6" *ngIf="question.name === 'doXtremeSport'">
+                  <div *ngFor="let question of sportsQuestions">
+                    <div
+                      class="w-full xl:flex xl:justify-between lg:flex lg:justify-between md:flex md:justify-between sm:flex sm:justify-between">
+                      <div class="radio-button-label" style="font-size: 12px !important; max-width: 60vw;">
+                        {{question.label}}
+                      </div>
+                      <app-radio-button [group]="newRequest.get('generalInformation').get('xtremeSports')"
+                        [name]="question.name" [options]="diseaseService.yesOrNoOriginal"
+                        (selected)="selectChange($event)">
+                      </app-radio-button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div *ngIf="question.name === 'disabilityBenefitsRequested'">
+                <hr class=" w-full mb-6 ww-divider">
+                <div class="mb-6 radio-button-label" style="font-size: 12px !important; max-width: 60vw;">En los últimos
+                  3
+                  años o en los siguientes 12 meses, alguna persona de las propuestas para seguros habrá:
+                </div>
+              </div>
               <hr class=" w-full mb-6 ww-divider">
+            </div>
+          </ng-template>
+          <!-- HISTORIAL MEDICO -->
+          <ng-template #formTemplate>
+            <div class="radio-button-label mb-6">
+              1. El Propuesto Asegurado ha sido alguna vez tratado, ha tenido alguna señal o síntoma o se le ha dicho
+              que tiene:
+            </div>
+            <div *ngFor="let question of medicQuestions">
+              <div
+                class="w-full xl:flex xl:justify-between lg:flex lg:justify-between md:flex md:justify-between sm:flex sm:justify-between">
+                <div class="radio-button-label" style="font-size: 12px !important; max-width: 63vw;">{{question.label}}
+                </div>
+                <app-radio-button [group]="newRequest.get('medicalHistory')" [name]="question.name"
+                  [options]="diseaseService.yesOrNoOriginal" (selected)="selectChange($event)">
+                </app-radio-button>
+              </div>
+              <hr class=" w-full mb-6 ww-divider">
+
             </div>
           </ng-template>
         </app-forms-container>

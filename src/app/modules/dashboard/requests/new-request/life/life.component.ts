@@ -20,6 +20,30 @@ export class LifeComponent implements OnInit, DoCheck {
   changingCoveragesList: FormArray;
   insuranceProposedList: FormArray;
 
+  heartPainList: FormArray;
+  respiratoryDisorderList: FormArray;
+  mentalNervousDisorderList: FormArray;
+  stomachDisorderList: FormArray;
+  endocrineDisorderList: FormArray;
+  spineDisorderList: FormArray;
+  unexplainedDiseaseList: FormArray;
+  renalDisorderList: FormArray;
+  eyesNoseThroatProblemList: FormArray;
+  bloodDisorderList: FormArray;
+  birthDefectList: FormArray;
+  medicalProceduresList: FormArray;
+  beenAPatientList: FormArray;
+  hadSpecializedTestsList: FormArray;
+  notCarriedOutList: FormArray;
+  takenInLast12MonthsList: FormArray;
+  planToObtainMedicalTreatmentList: FormArray;
+  testedPositiveForHIVList: FormArray;
+  diabetesDiagnosisList: FormArray;
+
+  womenDisordersList: FormArray;
+  doctorList: FormArray;
+
+
   coveragesQuestions: any[];
   generalInfoQuestions: any[];
   sportsQuestions: any[];
@@ -138,6 +162,19 @@ export class LifeComponent implements OnInit, DoCheck {
     ],
   };
 
+  weightChangesOptions = {
+    label: 'Cambio de peso',
+    options: [
+      {
+        value: 'aumento',
+        viewValue: 'Aumento'
+      },
+      {
+        value: 'perdida',
+        viewValue: 'Pérdida'
+      }
+    ],
+  };
 
   status = {
     options: [
@@ -381,6 +418,7 @@ export class LifeComponent implements OnInit, DoCheck {
         haveHadWeightChanges: ['', Validators.required],
         isWomen: ['', Validators.required],
         listDoctors: ['', Validators.required],
+        informations: this.fb.group({}),
       }),
       dependents: this.fb.array([this.formMethods.createItem(this.dependentFormGroup)])
 
@@ -430,112 +468,132 @@ export class LifeComponent implements OnInit, DoCheck {
       {
         label: 'a. ¿Dolor en el pecho, palpitaciones, hipertensión arterial, fiebre reumática, soplo cardiaco, ataque cardiaco, aneurismas u otra enfermedad del corazón o los vasos sanguíneos?',
         name: 'haveHeartPain',
-        group: ''
+        array: 'heartPainList',
+        group: 'heartPain'
       },
       {
         label: 'b. ¿Ahogos, ronquera, tos persistente, esputos de sangre, bronquitis, pleuresía, asma, enfisema, tuberculosis o trastornos respiratorios crónicos?',
         name: 'haveRespiratoryDisorder',
-        group: ''
+        array: 'respiratoryDisorderList',
+        group: 'respiratoryDisorder'
       },
       {
         label: 'c. ¿Mareos, desmayos, epilepsia, convulsiones, dolor de cabeza, afección del habla, parálisis, apoplejía, trastorno mental o nervioso?',
         name: 'haveMentalNervousDisorder',
-        group: ''
+        array: 'mentalNervousDisorderList',
+        group: 'mentalNervousDisorder'
       },
       {
         label: 'd. ¿Ictericia, hemorragia intestinal, úulcera, hernia, apendicitis, colitis, diverticulitis, hemorroides, indigestión recurrente u otro desorden del estómago, intestino, hígado, hepatitis B o C y vesícula biliar?',
         name: 'haveStomachDisorder',
-        group: ''
+        array: 'stomachDisorderList',
+        group: 'stomachDisorder'
       },
       {
         label: 'e. ¿Diabetes, tiroides u otro trastorno endocrino?',
         name: 'haveEndocrineDisorder',
-        group: ''
+        array: 'endocrineDisorderList',
+        group: 'endocrineDisorder'
       },
       {
         label: 'f. ¿Neuritis, ciática, reumatismo, artritis, gota o desorden de los músculos o huesos, incluso de la columna vertebral, ¿la espalda y las articulaciones?',
         name: 'haveSpineDisorder',
-        group: ''
+        array: 'spineDisorderList',
+        group: 'spineDisorder'
       },
       {
         label: 'g. ¿Enfermedad de la piel, ganglios linfáticos, quiste, tumor, cáncer, sudores nocturnos, fatiga o fiebre sin explicación?',
         name: 'haveUnexplainedDisease',
-        group: ''
+        array: 'unexplainedDiseaseList',
+        group: 'unexplainedDisease'
       },
       {
         label: 'h. ¿Albúmina, azúcar, sangre o pus en la orina, enfermedades venéreas, cálculos renales u otros trastornos renales, de la vejiga, próstata u órganos reproductivos?',
         name: 'haveRenalDisorder',
-        group: ''
+        array: 'renalDisorderList',
+        group: 'renalDisorder'
       },
       {
         label: 'i. ¿Cualquier problema de los ojos, oídos, nariz o garganta?',
         name: 'haveEyesNoseThroatProblem',
-        group: ''
+        array: 'eyesNoseThroatProblemList',
+        group: 'eyesNoseThroatProblem'
       },
       {
         label: 'j. ¿Alergias, anemia u otro desorden sanguíneo?',
         name: 'haveBloodDisorder',
-        group: ''
+        array: 'bloodDisorderList',
+        group: 'bloodDisorder'
       },
       {
         label: 'k. ¿Ha tenido alguna deformidad, enfermedad o defecto congénito?',
         name: 'haveBirthDefect',
-        group: ''
+        array: 'birthDefectList',
+        group: 'birthDefect'
       },
       {
         label: 'l. ¿Ha tenido un examen médico, consulta, enfermedad, lesión o procedimientos médicos ambulatorios o intrahospitalarios?',
         name: 'HaveMedicalProcedures',
-        group: ''
+        array: 'medicalProceduresList',
+        group: 'medicalProcedures'
       },
       {
         label: 'm. ¿Ha sido paciente en un hospital, clínica, sanatorio u otra institución médica?',
         name: 'haveBeenAPatient',
-        group: ''
+        array: 'beenAPatientList',
+        group: 'beenAPatient'
       },
       {
         label: 'n. ¿Se ha hecho un electrocardiograma, radiografía u otras pruebas especializadas?',
         name: 'haveHadSpecializedTests',
-        group: ''
+        array: 'hadSpecializedTestsList',
+        group: 'hadSpecializedTests'
       },
       {
         label: 'o. ¿Se le aconsejó alguna prueba diagnóstica, hospitalización o cirugía que no se ha llevado a cabo?',
         name: 'haveNotCarriedOut',
-        group: ''
+        array: 'notCarriedOutList',
+        group: 'notCarriedOut'
       },
       {
         label: '3. ¿Ha tomado el Propuesto Asegurado en los últimos 12 meses algún medicamento prescrito, o ha recibido tratamiento que haya excedido 14 días?',
         name: 'haveTakenInLast12Months',
-        group: ''
+        array: 'takenInLast12MonthsList',
+        group: 'takenInLast12Months'
       },
       {
         label: '4. ¿Tiene provisto a obtener tratamiento y opinión médica en los próximos 6 meses?',
         name: 'havePlanToObtainMedicalTreatment',
-        group: ''
+        array: 'planToObtainMedicalTreatmentList',
+        group: 'planToObtainMedicalTreatment'
       },
       {
         label: '5. ¿Ha tenido resultado positivos por haber sido expuesto a la infección del VIH o ha sido diagnosticado con el complejo relacionado con el SIDA por causa de infección VIH u otra enfermedad o condición derivada de dicha infección?',
         name: 'haveTestedPositiveForHIV',
-        group: ''
+        array: 'testedPositiveForHIVList',
+        group: 'testedPositiveForHIV'
       },
       {
         label: '6. ¿Existe un historial de muertes por enfermedad coronaria arterial, embolia, cáncer o enfermedades de los riñones, ya sea de un padre o hermano natural antes de la edad de 60 años, o un diagnóstico de diabetes mellitus antes de la edad de 50 años?',
         name: 'haveDiabetesDiagnosis',
-        group: ''
+        array: 'diabetesDiagnosisList',
+        group: 'diabetesDiagnosis'
       },
       {
         label: '7. ¿Ha tenido algún cambio de peso durante los últimos doce meses?',
         name: 'haveHadWeightChanges',
-        group: ''
+        group: 'weightChanges'
       },
       {
         label: '8. ¿Es una mujer el Asegurado Propuesto?',
         name: 'isWomen',
-        group: ''
+        group: 'womenInformation'
       },
       {
         label: '9. Liste los nombres y direcciones de los médicos que usted ha consultado recientemente por cualquier razón y el médico de cabecera, si fuera diferente.',
         name: 'listDoctors',
-        group: ''
+        array: 'doctorList',
+        group: 'doctors'
       }
     ];
 
@@ -604,6 +662,10 @@ export class LifeComponent implements OnInit, DoCheck {
   selectChange(event) {
     const formCB = this.newRequest.get('contingentBeneficiary') as FormGroup;
     const formGI = this.newRequest.get('generalInformation') as FormGroup;
+    const formHMI = this.newRequest.get('medicalHistory').get('informations') as FormGroup;
+    const formWI = this.newRequest.get('medicalHistory').get('informations').get('womenInformation') as FormGroup;
+
+    console.log(event);
 
     if (event.valor === 'si') {
       switch (event.name) {
@@ -679,6 +741,137 @@ export class LifeComponent implements OnInit, DoCheck {
           this.insuranceProposedList = formGI.get('insuranceProposed') as FormArray;
           break;
 
+        /** HISTORIAL MEDICO */
+
+        case 'isWomen':
+          formHMI.addControl('womenInformation', this.fb.group({
+            haveDisorder: ['', Validators.required],
+            isPregnant: ['', Validators.required],
+          }));
+          break;
+
+        case 'isPregnant':
+          formWI.addControl('pregnantInformation', this.fb.group({
+            quantity: ['', Validators.required],
+            time: ['', Validators.required],
+          }));
+          break;
+
+        case 'haveHadWeightChanges':
+          formHMI.addControl('weightChanges', this.fb.group({
+            type: ['', Validators.required],
+            detail: ['', Validators.required],
+          }));
+          break;
+
+        case 'haveDisorder':
+          formWI.addControl('disorders', this.fb.array([this.createFormArray('medicalInfo')]));
+          this.womenDisordersList = formWI.get('disorders') as FormArray;
+          break;
+
+
+        case 'haveHeartPain':
+          formHMI.addControl('heartPain', this.fb.array([this.createFormArray('medicalInfo')]));
+          this.heartPainList = formHMI.get('heartPain') as FormArray;
+          break;
+
+        case 'haveRespiratoryDisorder':
+          formHMI.addControl('respiratoryDisorder', this.fb.array([this.createFormArray('medicalInfo')]));
+          this.respiratoryDisorderList = formHMI.get('respiratoryDisorder') as FormArray;
+          break;
+
+        case 'haveMentalNervousDisorder':
+          formHMI.addControl('mentalNervousDisorder', this.fb.array([this.createFormArray('medicalInfo')]));
+          this.mentalNervousDisorderList = formHMI.get('mentalNervousDisorder') as FormArray;
+          break;
+
+        case 'haveStomachDisorder':
+          formHMI.addControl('stomachDisorder', this.fb.array([this.createFormArray('medicalInfo')]));
+          this.stomachDisorderList = formHMI.get('stomachDisorder') as FormArray;
+          break;
+
+        case 'haveEndocrineDisorder':
+          formHMI.addControl('endocrineDisorder', this.fb.array([this.createFormArray('medicalInfo')]));
+          this.endocrineDisorderList = formHMI.get('endocrineDisorder') as FormArray;
+          break;
+
+        case 'haveSpineDisorder':
+          formHMI.addControl('spineDisorder', this.fb.array([this.createFormArray('medicalInfo')]));
+          this.spineDisorderList = formHMI.get('spineDisorder') as FormArray;
+          break;
+
+        case 'haveUnexplainedDisease':
+          formHMI.addControl('unexplainedDisease', this.fb.array([this.createFormArray('medicalInfo')]));
+          this.unexplainedDiseaseList = formHMI.get('unexplainedDisease') as FormArray;
+          break;
+
+        case 'haveRenalDisorder':
+          formHMI.addControl('renalDisorder', this.fb.array([this.createFormArray('medicalInfo')]));
+          this.renalDisorderList = formHMI.get('renalDisorder') as FormArray;
+          break;
+
+        case 'haveEyesNoseThroatProblem':
+          formHMI.addControl('eyesNoseThroatProblem', this.fb.array([this.createFormArray('medicalInfo')]));
+          this.eyesNoseThroatProblemList = formHMI.get('eyesNoseThroatProblem') as FormArray;
+          break;
+
+        case 'haveBloodDisorder':
+          formHMI.addControl('bloodDisorder', this.fb.array([this.createFormArray('medicalInfo')]));
+          this.bloodDisorderList = formHMI.get('bloodDisorder') as FormArray;
+          break;
+
+        case 'haveBirthDefect':
+          formHMI.addControl('birthDefect', this.fb.array([this.createFormArray('medicalInfo')]));
+          this.birthDefectList = formHMI.get('birthDefect') as FormArray;
+          break;
+
+        case 'HaveMedicalProcedures':
+          formHMI.addControl('medicalProcedures', this.fb.array([this.createFormArray('medicalInfo')]));
+          this.medicalProceduresList = formHMI.get('medicalProcedures') as FormArray;
+          break;
+
+        case 'haveBeenAPatient':
+          formHMI.addControl('beenAPatient', this.fb.array([this.createFormArray('medicalInfo')]));
+          this.beenAPatientList = formHMI.get('beenAPatient') as FormArray;
+          break;
+
+        case 'haveHadSpecializedTests':
+          formHMI.addControl('hadSpecializedTests', this.fb.array([this.createFormArray('medicalInfo')]));
+          this.hadSpecializedTestsList = formHMI.get('hadSpecializedTests') as FormArray;
+          break;
+
+        case 'haveNotCarriedOut':
+          formHMI.addControl('notCarriedOut', this.fb.array([this.createFormArray('medicalInfo')]));
+          this.notCarriedOutList = formHMI.get('notCarriedOut') as FormArray;
+          break;
+
+        case 'haveTakenInLast12Months':
+          formHMI.addControl('takenInLast12Months', this.fb.array([this.createFormArray('medicalInfo')]));
+          this.takenInLast12MonthsList = formHMI.get('takenInLast12Months') as FormArray;
+          break;
+
+        case 'havePlanToObtainMedicalTreatment':
+          formHMI.addControl('planToObtainMedicalTreatment', this.fb.array([this.createFormArray('medicalInfo')]));
+          this.planToObtainMedicalTreatmentList = formHMI.get('planToObtainMedicalTreatment') as FormArray;
+          break;
+
+        case 'haveTestedPositiveForHIV':
+          formHMI.addControl('testedPositiveForHIV', this.fb.array([this.createFormArray('medicalInfo')]));
+          this.testedPositiveForHIVList = formHMI.get('testedPositiveForHIV') as FormArray;
+          break;
+
+        case 'haveDiabetesDiagnosis':
+          formHMI.addControl('diabetesDiagnosis', this.fb.array([this.createFormArray('medicalInfo')]));
+          this.diabetesDiagnosisList = formHMI.get('diabetesDiagnosis') as FormArray;
+          break;
+
+        case 'listDoctors':
+          formHMI.addControl('doctors', this.fb.array([this.createFormArray('doctorInfo')]));
+          this.doctorList = formHMI.get('doctors') as FormArray;
+          break;
+
+
+
         default:
           break;
       }
@@ -730,6 +923,120 @@ export class LifeComponent implements OnInit, DoCheck {
           formGI.removeControl('insuranceProposed');
           this.insuranceProposedList = undefined;
           break;
+
+        /** HISTORIAL MEDICO */
+        case 'haveHadWeightChanges':
+          formHMI.removeControl('weightChanges');
+          break;
+
+        case 'isWomen':
+          formHMI.removeControl('womenInformation');
+          break;
+
+        case 'isPregnant':
+          formWI.removeControl('pregnantInformation');
+          break;
+
+        case 'haveDisorder':
+          formWI.removeControl('disorders');
+          this.womenDisordersList = undefined;
+          break;
+
+        case 'haveHeartPain':
+          formHMI.removeControl('heartPain');
+          this.heartPainList = undefined;
+          break;
+        case 'haveRespiratoryDisorder':
+          formHMI.removeControl('respiratoryDisorder');
+          this.respiratoryDisorderList = undefined;
+          break;
+        case 'haveMentalNervousDisorder':
+          formHMI.removeControl('mentalNervousDisorder');
+          this.mentalNervousDisorderList = undefined;
+          break;
+        case 'haveStomachDisorder':
+          formHMI.removeControl('stomachDisorder');
+          this.stomachDisorderList = undefined;
+          break;
+        case 'haveEndocrineDisorder':
+          formHMI.removeControl('endocrineDisorder');
+          this.endocrineDisorderList = undefined;
+          break;
+        case 'haveSpineDisorder':
+          formHMI.removeControl('spineDisorder');
+          this.spineDisorderList = undefined;
+          break;
+
+        case 'haveUnexplainedDisease':
+          formHMI.removeControl('unexplainedDisease');
+          this.unexplainedDiseaseList = undefined;
+          break;
+
+        case 'haveRenalDisorder':
+          formHMI.removeControl('renalDisorder');
+          this.renalDisorderList = undefined;
+          break;
+
+        case 'haveEyesNoseThroatProblem':
+          formHMI.removeControl('eyesNoseThroatProblem');
+          this.eyesNoseThroatProblemList = undefined;
+          break;
+
+        case 'haveBloodDisorder':
+          formHMI.removeControl('bloodDisorder');
+          this.bloodDisorderList = undefined;
+          break;
+
+        case 'haveBirthDefect':
+          formHMI.removeControl('birthDefect');
+          this.birthDefectList = undefined;
+          break;
+
+        case 'HaveMedicalProcedures':
+          formHMI.removeControl('medicalProcedures');
+          this.medicalProceduresList = undefined;
+          break;
+
+        case 'haveBeenAPatient':
+          formHMI.removeControl('beenAPatient');
+          this.beenAPatientList = undefined;
+          break;
+
+        case 'haveHadSpecializedTests':
+          formHMI.removeControl('hadSpecializedTests');
+          this.hadSpecializedTestsList = undefined;
+          break;
+
+        case 'haveNotCarriedOut':
+          formHMI.removeControl('notCarriedOut');
+          this.notCarriedOutList = undefined;
+          break;
+
+        case 'haveTakenInLast12Months':
+          formHMI.removeControl('takenInLast12Months');
+          this.takenInLast12MonthsList = undefined;
+          break;
+
+        case 'havePlanToObtainMedicalTreatment':
+          formHMI.removeControl('planToObtainMedicalTreatment');
+          this.planToObtainMedicalTreatmentList = undefined;
+          break;
+
+        case 'haveTestedPositiveForHIV':
+          formHMI.removeControl('testedPositiveForHIV');
+          this.testedPositiveForHIVList = undefined;
+          break;
+
+        case 'haveDiabetesDiagnosis':
+          formHMI.removeControl('diabetesDiagnosis');
+          this.diabetesDiagnosisList = undefined;
+          break;
+
+        case 'listDoctors':
+          formHMI.removeControl('doctors');
+          this.doctorList = undefined;
+          break;
+
         default:
           break;
       }
@@ -766,6 +1073,25 @@ export class LifeComponent implements OnInit, DoCheck {
         return this.fb.group({
           name: ['', Validators.required],
           detail: ['', Validators.required],
+        });
+        break;
+
+      case 'medicalInfo':
+        return this.fb.group({
+          condition: ['', Validators.required],
+          treatment: ['', Validators.required],
+          hospitalNameAdress: ['', Validators.required],
+          date: ['', Validators.required],
+          duration: ['', Validators.required],
+          time: ['', Validators.required],
+          results: ['', Validators.required],
+        });
+        break;
+
+      case 'doctorInfo':
+        return this.fb.group({
+          name: ['', Validators.required],
+          address: ['', Validators.required],
         });
         break;
 

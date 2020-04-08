@@ -736,10 +736,241 @@
                   [options]="diseaseService.yesOrNoOriginal" (selected)="selectChange($event)">
                 </app-radio-button>
               </div>
-              <hr class=" w-full mb-6 ww-divider">
+              <div *ngIf="newRequest.get('medicalHistory').value[question.name] === 'si'">
+                <div *ngIf="question.name === 'haveHadWeightChanges'">
+                  <app-radio-button [group]="newRequest.get('medicalHistory').get('informations').get('weightChanges')"
+                    name="type" [options]="weightChangesOptions">
+                  </app-radio-button>
+                  <div class="radio-button-label" style="font-size: 12px !important; padding-left: 15px;">Detalle</div>
+                  <app-text-area style="padding-left: 15px;"
+                    [group]="newRequest.get('medicalHistory').get('informations').get('weightChanges')" name="detail"
+                    label="Texto"></app-text-area>
+                </div>
+                <div
+                  *ngIf="question.name !== 'haveHadWeightChanges' && question.name !== 'isWomen' && question.name !== 'listDoctors'">
+                  <div *ngFor="let medic of this[question.array].controls; let i = index"
+                    class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
+                    <app-input class="mr-3"
+                      [group]="newRequest.get('medicalHistory').get('informations').get(question.group).get(i.toString())"
+                      name="condition" label="Afección">
+                    </app-input>
+                    <app-input class="mr-3"
+                      [group]="newRequest.get('medicalHistory').get('informations').get(question.group).get(i.toString())"
+                      name="treatment" label="Tratamiento / Medicamento">
+                    </app-input>
+                    <app-input class="mr-3"
+                      [group]="newRequest.get('medicalHistory').get('informations').get(question.group).get(i.toString())"
+                      name="hospitalNameAdress" label="Nombre y dirección del Hospital">
+                    </app-input>
+                    <app-date-picker class="mr-3"
+                      [group]="newRequest.get('medicalHistory').get('informations').get(question.group).get(i.toString())"
+                      name="date" label="Fecha">
+                    </app-date-picker>
+                    <div class="grid grid-cols-2 mr-3">
+                      <app-input class="mr-3"
+                        [group]="newRequest.get('medicalHistory').get('informations').get(question.group).get(i.toString())"
+                        name="duration" label="Duración">
+                      </app-input>
+                      <app-select [options]="year"
+                        [group]="newRequest.get('medicalHistory').get('informations').get(question.group).get(i.toString())">
+                      </app-select>
+                    </div>
+                    <app-input class="mr-3"
+                      [group]="newRequest.get('medicalHistory').get('informations').get(question.group).get(i.toString())"
+                      name="results" label="Resultados">
+                    </app-input>
+                    <div *ngIf="this[question.array].length > 1"
+                      [ngClass]="{'': this[question.array].length === 1, 'col-span-1': this[question.array].length > 1} ">
+                      <button mat-mini-fab aria-label=" Eliminar estudio"
+                        (click)="diseaseService.removeToList(i, this[question.array])" type="button"
+                        class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
+                        <mat-icon style="color: #18446B">remove</mat-icon>
+                      </button>
+                    </div>
+                  </div>
+                  <div class="mb-8">
+                    <button mat-mini-fab aria-label="Agregar estudio"
+                      (click)="addToList(this[question.array], 'medicalInfo')" type="button"
+                      class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
+                      <mat-icon style="color: #18446B">add</mat-icon>
+                    </button>
+                  </div>
+                </div>
+                <div *ngIf="question.name === 'listDoctors'">
+                  <div *ngFor="let studies of doctorList.controls; let i = index"
+                    class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
+                    <app-input class="mr-3"
+                      [group]="newRequest.get('medicalHistory').get('informations').get('doctors').get(i.toString())"
+                      name="name" label="Nombre">
+                    </app-input>
+                    <app-input class="mr-3"
+                      [group]="newRequest.get('medicalHistory').get('informations').get('doctors').get(i.toString())"
+                      name="address" label="Dirección">
+                    </app-input>
+                    <div *ngIf="doctorList.length > 1"
+                      [ngClass]="{'': doctorList.length === 1, 'col-span-1': doctorList.length > 1} ">
+                      <button mat-mini-fab aria-label=" Eliminar estudio"
+                        (click)="diseaseService.removeToList(i, doctorList)" type="button"
+                        class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
+                        <mat-icon style="color: #18446B">remove</mat-icon>
+                      </button>
+                    </div>
+                  </div>
+                  <div class="mb-8">
+                    <button mat-mini-fab aria-label="Agregar estudio" (click)="addToList(doctorList, 'doctorInfo')"
+                      type="button" class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
+                      <mat-icon style="color: #18446B">add</mat-icon>
+                    </button>
+                  </div>
+                </div>
+                <div *ngIf="question.name === 'isWomen'">
+                  <hr class=" w-full mb-6 ww-divider">
+                  <div
+                    class="w-full xl:flex xl:justify-between lg:flex lg:justify-between md:flex md:justify-between sm:flex sm:justify-between">
+                    <div class="radio-button-label" style="font-size: 12px !important; max-width: 63vw;">
+                      a. ¿Ha tenido usted algún trastorno en la menstruación, en el embarazo, en los órganos
+                      reproductivos o en los senos?
+                    </div>
+                    <app-radio-button
+                      [group]="newRequest.get('medicalHistory').get('informations').get('womenInformation')"
+                      name="haveDisorder" [options]="diseaseService.yesOrNoOriginal" (selected)="selectChange($event)">
+                    </app-radio-button>
+                  </div>
+                  <div
+                    *ngIf="newRequest.get('medicalHistory').get('informations').get('womenInformation').value.haveDisorder === 'si'">
+                    <div *ngFor="let medic of womenDisordersList.controls; let i = index"
+                      class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
+                      <app-input class="mr-3"
+                        [group]="newRequest.get('medicalHistory').get('informations').get('womenInformation').get('disorders').get(i.toString())"
+                        name="condition" label="Afección">
+                      </app-input>
+                      <app-input class="mr-3"
+                        [group]="newRequest.get('medicalHistory').get('informations').get('womenInformation').get('disorders').get(i.toString())"
+                        name="treatment" label="Tratamiento / Medicamento">
+                      </app-input>
+                      <app-input class="mr-3"
+                        [group]="newRequest.get('medicalHistory').get('informations').get('womenInformation').get('disorders').get(i.toString())"
+                        name="hospitalNameAdress" label="Nombre y dirección del Hospital">
+                      </app-input>
+                      <app-date-picker class="mr-3"
+                        [group]="newRequest.get('medicalHistory').get('informations').get('womenInformation').get('disorders').get(i.toString())"
+                        name="date" label="Fecha">
+                      </app-date-picker>
+                      <div class="grid grid-cols-2 mr-3">
+                        <app-input class="mr-3"
+                          [group]="newRequest.get('medicalHistory').get('informations').get('womenInformation').get('disorders').get(i.toString())"
+                          name="duration" label="Duración">
+                        </app-input>
+                        <app-select [options]="year"
+                          [group]="newRequest.get('medicalHistory').get('informations').get('womenInformation').get('disorders').get(i.toString())">
+                        </app-select>
+                      </div>
+                      <app-input class="mr-3"
+                        [group]="newRequest.get('medicalHistory').get('informations').get('womenInformation').get('disorders').get(i.toString())"
+                        name="results" label="Resultados">
+                      </app-input>
+                      <div *ngIf="womenDisordersList.length > 1"
+                        [ngClass]="{'': womenDisordersList.length === 1, 'col-span-1': womenDisordersList.length > 1} ">
+                        <button mat-mini-fab aria-label=" Eliminar estudio"
+                          (click)="diseaseService.removeToList(i, womenDisordersList)" type="button"
+                          class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
+                          <mat-icon style="color: #18446B">remove</mat-icon>
+                        </button>
+                      </div>
+                    </div>
+                    <div class="mb-8">
+                      <button mat-mini-fab aria-label="Agregar estudio"
+                        (click)="addToList(womenDisordersList, 'medicalInfo')" type="button"
+                        class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
+                        <mat-icon style="color: #18446B">add</mat-icon>
+                      </button>
+                    </div>
+                  </div>
+                  <hr class=" w-full mb-6 ww-divider">
+                  <div
+                    class="w-full xl:flex xl:justify-between lg:flex lg:justify-between md:flex md:justify-between sm:flex sm:justify-between">
+                    <div class="radio-button-label" style="font-size: 12px !important; max-width: 63vw;">
+                      b. ¿Está usted embarazada?
+                    </div>
+                    <app-radio-button
+                      [group]="newRequest.get('medicalHistory').get('informations').get('womenInformation')"
+                      name="isPregnant" [options]="diseaseService.yesOrNoOriginal" (selected)="selectChange($event)">
+                    </app-radio-button>
+                  </div>
+                  <div
+                    *ngIf="newRequest.get('medicalHistory').get('informations').get('womenInformation').value.isPregnant === 'si'">
+                    <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
+                      <div class="grid grid-cols-2 mr-3">
+                        <app-input class="mr-3"
+                          [group]="newRequest.get('medicalHistory').get('informations').get('womenInformation').get('pregnantInformation')"
+                          name="quantity" label="Cantidad">
+                        </app-input>
+                        <app-select [options]="year"
+                          [group]="newRequest.get('medicalHistory').get('informations').get('womenInformation').get('pregnantInformation')">
+                        </app-select>
+                      </div>
+                    </div>
+                  </div>
+                </div>
 
+              </div>
+              <hr class=" w-full mb-6 ww-divider">
             </div>
           </ng-template>
+          <!-- FIRMAS -->
+          <ng-template #formTemplate>
+            <div class="px-6">
+              <div class="declaraciones px-4 sm:px-4 md:px-14 lg:px-12 xl:px-12">
+                En la medida de mis conocimientos, las declaraciones y respuestas suministradas en esta declaración son
+                verdaderas, completas y correctamente anotadas. ADVERTENCIA: cualquier persona que a sabiendas y con la
+                intención de dañar, defraudar o engañar a cualquier asegurador, presente un reclamo por beneficios de
+                una póliza de seguro que contenga información falsa, incompleta o engañosa, o que conscientemente
+                presente información falsa en una solicitud de seguros, podría ser hallado culpable de fraude de
+                seguros.
+                <br>
+                <br>
+                Queda entendido y convenido que:
+                <br>
+                <br>
+                a. Worldwide Medical Assurance Ltd. Corp., (en adelante “La
+                Compañía”), se reserva el derecho de rechazar o aceptar cualquier solicitud. La cobertura provista por
+                La Compañía no entrará en vigor hasta que la solicitud sea recibida, aprobada y notificada por La
+                Compañía.
+                <br>
+                b. Usted está de acuerdo que todas las respuestas mencionadas son completas y verdaderas. Si
+                hubiera alguna(s) respuesta(s) falsa(s), inexacta(s), incompleta(s), fraude u omisión en esta solicitud,
+                entonces el contrato podrá ser dado por terminado por La Compañía.
+                <br>
+                c. Con presentar una fotocopia o el
+                original de este documento, autorizo voluntaria, libre y expresamente, durante toda la vigencia de la
+                póliza, aún después de mi fallecimiento; a cualquier médico, profesional, hospital público o privado,
+                clínica, Caja de Seguro Social u otra entidad o agencia gubernamental u otra persona médica o
+                relacionada médicamente, proveedor de servicio de salud, empleador, asegurador o tenedor de pólizas de
+                grupo, todos estos ya sea que estén ubicados en el territorio de la República de Panamá o en el
+                extranjero; para proveer a La Compañía o representantes autorizados, de copia del expediente clínico, de
+                toda información que ésta requiera en relación con mi salud de cualquier naturaleza y en cualquier etapa
+                de mi vida, registrada en cualquier medio, incluyendo, pero sin limitarse, registros respecto a
+                consejos, indicaciones, cuidado (s) o tratamiento (s) proporcionado (s) a mi y/o a mis dependientes, sin
+                limitación a información relacionada con enfermedades mentales o el uso de drogas o alcohol. Esta es una
+                manifestación libre y voluntaria, en pleno conocimiento de la Ley 68 de 20 de noviembre de 2003, y demás
+                normas afines. Por lo anteriormente manifestado, relevo (relevamos) y libero (liberamos) a todas esas
+                personas, instituciones privadas y/o públicas, nacionales o extranjeras, de toda responsabilidad que le
+                pueda comprometer por revelar, suministrar, mostrar o entregar copias simples o autenticadas de la
+                información o documentación descrita anteriormente. Con la información o documentación facilitada, La
+                Compañía puede realizar una evaluación adecuada sobre mi salud y la de mis dependientes, para determinar
+                la cobertura de la póliza.
+                <br>
+
+                d. Autorizo a Worldwide Medical Assurance Ltd. Corp., La Compañía, a
+                solicitar, gestionar y obtener ante cualquiera entidad de intermediación financiera y crediticia
+                nacional o internacional, toda la información que sea considerada sobre mi historial de crédito,
+                incluyendo de manera enunciativa y sin limitación alguna, a las obligaciones y transacciones comerciales
+                que sean llevadas o pudiesen ser llevadas a cabo con cualquier entidad económica.
+              </div>
+            </div>
+          </ng-template>
+          <!-- REPORTE DEL AGENTE -->
+          <ng-template #formTemplate></ng-template>
         </app-forms-container>
       </mat-tab>
       <mat-tab label="D01" class="mat-tab-forms"></mat-tab>

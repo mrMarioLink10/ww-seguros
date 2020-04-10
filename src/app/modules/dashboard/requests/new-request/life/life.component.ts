@@ -43,6 +43,7 @@ export class LifeComponent implements OnInit, DoCheck {
   womenDisordersList: FormArray;
   doctorList: FormArray;
 
+  familyRelationshipInsurances: FormArray;
 
   coveragesQuestions: any[];
   generalInfoQuestions: any[];
@@ -118,6 +119,60 @@ export class LifeComponent implements OnInit, DoCheck {
       {
         value: 'Más de 50 mil US$',
         viewValue: 'Más de 50 mil US$'
+      },
+    ]
+  };
+
+  planTypes = {
+    options: [
+      {
+        value: 'WWTERM',
+        viewValue: 'WWTERM'
+      },
+      {
+        value: 'WWSURVIVOR',
+        viewValue: 'WWSURVIVOR'
+      },
+      {
+        value: 'WWTERM VALUE',
+        viewValue: 'WWTERM VALUE'
+      },
+    ]
+  };
+
+  connectionType = {
+    options: [
+      {
+        value: 'familia',
+        viewValue: 'Familia'
+      },
+      {
+        value: 'amigo',
+        viewValue: 'Amigo'
+      },
+      {
+        value: 'cliente',
+        viewValue: 'Cliente'
+      },
+      {
+        value: 'acabado de conocer',
+        viewValue: '¿Lo acaba de conocer?'
+      },
+
+    ]
+  };
+
+
+  timeFriendship = {
+    label: '¿Cuánto lo conoce?',
+    options: [
+      {
+        value: 'mucho',
+        viewValue: 'Mucho'
+      },
+      {
+        value: 'poco',
+        viewValue: 'Poco'
       },
     ]
   };
@@ -245,7 +300,7 @@ export class LifeComponent implements OnInit, DoCheck {
     'Pagador (completar sólo si no fuese el contratante. De ser una Persona Jurídica, completar el Formulario Persona Jurídica.)',
     'Persona políticamente expuesta',
     'Perfil Financiero',
-    // 'Información pertinente al plan',
+    'Información pertinente al plan',
     'Información pertinente al pago de la prima',
     'Designación de los Beneficiario(s) Primario(s)',
     'Beneficiario(s) Contingente(s)', 'Información general', 'Historial Médico', 'Firmas', 'Reporte del agente'];
@@ -357,8 +412,19 @@ export class LifeComponent implements OnInit, DoCheck {
         othersAnnualIncome: ['', Validators.required],
         paymentOrigin: ['', Validators.required],
       }),
+      releventPlanInformation: this.fb.group({
+        type: ['', Validators.required],
+        timeAmount: ['', Validators.required],
+        time: ['', Validators.required],
+        nicotineEstandar: ['', Validators.required],
+        coverages: this.fb.group({
+          basicLifeAssuredAmount: ['', Validators.required],
+          basicLifeBonus: ['', Validators.required],
+          survivalAssuredAmount: ['', Validators.required],
+          survivalBonus: ['', Validators.required],
+        })
+      }),
       IncomeMainActivity: ['', Validators.required],
-      dependentsNumber: [''],
       primaryBenefits: this.fb.group({
         dependentsC: this.fb.array([this.formMethods.createItem(this.primaryBenefits)]),
         personBenefited: this.fb.group({
@@ -420,8 +486,32 @@ export class LifeComponent implements OnInit, DoCheck {
         listDoctors: ['', Validators.required],
         informations: this.fb.group({}),
       }),
-      dependents: this.fb.array([this.formMethods.createItem(this.dependentFormGroup)])
-
+      agentReport: this.fb.group({
+        connectionType: ['', Validators.required],
+        insurancePurpose: ['', Validators.required],
+        isMarried: ['', Validators.required],
+        isLessThan21: ['', Validators.required],
+        amountProposed: this.fb.group({
+          approximateNetWorth: ['', Validators.required],
+          accruedIncome: ['', Validators.required],
+          unearnedIncome: ['', Validators.required],
+          occupation: ['', Validators.required],
+        }),
+        idInformation: this.fb.group({
+          type: ['', Validators.required],
+          issuedBy: ['', Validators.required],
+          issuedDate: ['', Validators.required],
+          expirationDate: ['', Validators.required],
+        }),
+        agentInformation: this.fb.group({
+          city: ['', Validators.required],
+          country: ['', Validators.required],
+          date: ['', Validators.required],
+          name: ['', Validators.required],
+        }),
+        getAnswersFromInsured: ['', Validators.required],
+      }),
+      questionnaires: this.fb.group({})
     });
 
     this.primaryBenefitsArray = this.newRequest.get('primaryBenefits').get('dependentsC') as FormArray;
@@ -661,23 +751,78 @@ export class LifeComponent implements OnInit, DoCheck {
 
   selectChange(event) {
     const formCB = this.newRequest.get('contingentBeneficiary') as FormGroup;
+    const formQ = this.newRequest.get('questionnaires') as FormGroup;
+    const formAR = this.newRequest.get('agentReport') as FormGroup;
     const formGI = this.newRequest.get('generalInformation') as FormGroup;
     const formHMI = this.newRequest.get('medicalHistory').get('informations') as FormGroup;
     const formWI = this.newRequest.get('medicalHistory').get('informations').get('womenInformation') as FormGroup;
 
     console.log(event);
+    if (event.name === 'connectionType') {
+      console.log(formAR);
+      console.log(event.valor);
+
+      switch (event.valor) {
+
+        case 'familia':
+          formAR.removeControl('connectionTypeInfo');
+          formAR.addControl('connectionTypeInfo', this.fb.group({
+            relationship: ['', Validators.required],
+          }));
+          break;
+
+        case 'amigo':
+          formAR.removeControl('connectionTypeInfo');
+          formAR.addControl('connectionTypeInfo', this.fb.group({
+            friendship: ['', Validators.required],
+            amount: ['', Validators.required],
+            time: ['', Validators.required],
+          }));
+          break;
+
+        case 'cliente':
+          formAR.removeControl('connectionTypeInfo');
+          formAR.addControl('connectionTypeInfo', this.fb.group({
+            amount: ['', Validators.required],
+            time: ['', Validators.required],
+          }));
+          break;
+
+        case 'acabado de conocer':
+          formAR.removeControl('connectionTypeInfo');
+          formAR.addControl('connectionTypeInfo', this.fb.group({
+            how: ['', Validators.required],
+          }));
+          break;
+
+        default:
+          break;
+      }
+    }
 
     if (event.valor === 'si') {
       switch (event.name) {
         case 'isExposed':
           this.newRequest.addControl('exposedPerson', this.fb.group({
-            contractor: [false, Validators.required],
-            payer: [false, Validators.required],
-            insured: [false, Validators.required],
+            contractor: ['', Validators.required],
+            payer: ['', Validators.required],
+            insured: ['', Validators.required],
             lastPosition: ['', Validators.required],
             time: ['', Validators.required],
             timeNumber: ['', Validators.required]
           }));
+          break;
+
+        case 'isMarried':
+          formAR.addControl('marriedInformation', this.fb.group({
+            spouseName: ['', Validators.required],
+            spouseInsuranceAmount: ['', Validators.required],
+          }));
+          break;
+
+        case 'isLessThan21':
+          formAR.addControl('familyInsurances', this.fb.array([this.createFormArray('familyInsurances')]));
+          this.familyRelationshipInsurances = formAR.get('familyInsurances') as FormArray;
           break;
 
         case 'hasAnotherCoverage':
@@ -771,6 +916,8 @@ export class LifeComponent implements OnInit, DoCheck {
 
 
         case 'haveHeartPain':
+          formQ.addControl('hypertension', this.fb.group({}));
+
           formHMI.addControl('heartPain', this.fb.array([this.createFormArray('medicalInfo')]));
           this.heartPainList = formHMI.get('heartPain') as FormArray;
           break;
@@ -791,6 +938,8 @@ export class LifeComponent implements OnInit, DoCheck {
           break;
 
         case 'haveEndocrineDisorder':
+          formQ.addControl('diabetes', this.fb.group({}));
+
           formHMI.addControl('endocrineDisorder', this.fb.array([this.createFormArray('medicalInfo')]));
           this.endocrineDisorderList = formHMI.get('endocrineDisorder') as FormArray;
           break;
@@ -881,6 +1030,15 @@ export class LifeComponent implements OnInit, DoCheck {
           this.newRequest.removeControl('exposedPerson');
           break;
 
+        case 'isMarried':
+          formAR.removeControl('marriedInformation');
+          break;
+
+        case 'isLessThan21':
+          formAR.removeControl('familyInsurances');
+          this.familyRelationshipInsurances = undefined;
+          break;
+
         case 'hasAnotherCoverage':
           formCB.removeControl('anotherCoverages');
           this.changingCoveragesList = undefined;
@@ -943,6 +1101,8 @@ export class LifeComponent implements OnInit, DoCheck {
           break;
 
         case 'haveHeartPain':
+          formQ.removeControl('hypertension');
+
           formHMI.removeControl('heartPain');
           this.heartPainList = undefined;
           break;
@@ -959,6 +1119,9 @@ export class LifeComponent implements OnInit, DoCheck {
           this.stomachDisorderList = undefined;
           break;
         case 'haveEndocrineDisorder':
+          formQ.removeControl('diabetes');
+
+
           formHMI.removeControl('endocrineDisorder');
           this.endocrineDisorderList = undefined;
           break;
@@ -1095,6 +1258,13 @@ export class LifeComponent implements OnInit, DoCheck {
         });
         break;
 
+      case 'familyInsurances':
+        return this.fb.group({
+          family: ['', Validators.required],
+          amount: ['', Validators.required],
+        });
+        break;
+
       default:
         break;
     }
@@ -1111,5 +1281,6 @@ export class LifeComponent implements OnInit, DoCheck {
 
   print() {
     console.log(this.newRequest);
+    console.log('json', JSON.stringify(this.newRequest.get('agentReport').value));
   }
 }

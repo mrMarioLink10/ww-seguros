@@ -285,6 +285,7 @@
               </div>
             </div>
           </ng-template>
+          <!-- POLITCAMENTE EXPUESTA -->
           <ng-template #formTemplate>
             <div class="px-6">
               <div class="declaraciones px-4 sm:px-4 md:px-14 lg:px-12 xl:px-12">
@@ -311,7 +312,7 @@
                 <div class="grid grid-cols-2">
                   <app-input class="mr-3" [group]="newRequest.get('exposedPerson')" label="Tiempo" name="timeNumber">
                   </app-input>
-                  <app-select [options]="year" [group]="newRequest.get('exposedPerson')"></app-select>
+                  <app-select class="mr-3" [options]="year" [group]="newRequest.get('exposedPerson')"></app-select>
                 </div>
                 <app-radio-button class="mr-3" title="Asegurado" [group]="newRequest.get('exposedPerson')"
                   name="insured" [options]="res"></app-radio-button>
@@ -323,6 +324,7 @@
 
             </div>
           </ng-template>
+          <!-- PERFIL FINANCIERO -->
           <ng-template #formTemplate>
             <app-radio-button class="mr-3" title="Ingresos anuales actividad principal"
               [group]="newRequest.get('financialProfile')" name="annualIncome" [options]="annualIncomeValues">
@@ -335,6 +337,58 @@
             <app-text-area [group]="newRequest.get('financialProfile')" label="Texto" name='paymentOrigin'>
             </app-text-area>
           </ng-template>
+          <!-- INFORMACION PERTINENTE AL PLAN -->
+          <ng-template #formTemplate>
+            <div class="mb-4 radio-button-label" style="font-size: 12px !important; max-width: 63vw;">Tipo de Plan
+            </div>
+            <app-radio-button [group]="newRequest.get('releventPlanInformation')" name="type" [options]="planTypes">
+            </app-radio-button>
+            <hr class=" w-full mb-6 ww-divider">
+            <div class="mb-2 radio-button-label" style="font-size: 12px !important; max-width: 63vw;">Tiempo del plan
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
+              <div class="grid grid-cols-2">
+                <app-input class="mr-3" [group]="newRequest.get('releventPlanInformation')" label="Tiempo"
+                  name="timeAmount">
+                </app-input>
+                <app-select class="mr-3" [options]="year" [group]="newRequest.get('releventPlanInformation')">
+                </app-select>
+              </div>
+            </div>
+            <hr class=" w-full mb-6 ww-divider">
+            <div
+              class="w-full xl:flex xl:justify-between lg:flex lg:justify-between md:flex md:justify-between sm:flex sm:justify-between">
+              <div class="radio-button-label" style="font-size: 12px !important; max-width: 63vw;">Estándar Nicotina
+              </div>
+              <app-radio-button [group]="newRequest.get('releventPlanInformation')" name="nicotineEstandar"
+                [options]="diseaseService.yesOrNoOriginal">
+              </app-radio-button>
+            </div>
+            <hr class=" w-full mb-6 ww-divider">
+            <div class="mb-2 radio-button-label">Coberturas
+            </div>
+            <div class="mb-2 radio-button-label" style="font-size: 12px !important; max-width: 63vw;">Vida Basíca
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
+              <app-number-input class="mr-3" [group]="newRequest.get('releventPlanInformation').get('coverages')"
+                label="Suma Asegurada" name="basicLifeAssuredAmount">
+              </app-number-input>
+              <app-number-input class="mr-3" [group]="newRequest.get('releventPlanInformation').get('coverages')"
+                label="Prima" name="basicLifeBonus">
+              </app-number-input>
+            </div>
+            <div class="mb-2 radio-button-label" style="font-size: 12px !important; max-width: 63vw;">Tiempo del plan
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
+              <app-number-input class="mr-3" [group]="newRequest.get('releventPlanInformation').get('coverages')"
+                label="Suma Asegurada" name="survivalAssuredAmount">
+              </app-number-input>
+              <app-number-input class="mr-3" [group]="newRequest.get('releventPlanInformation').get('coverages')"
+                label="Prima" name="survivalBonus">
+              </app-number-input>
+            </div>
+          </ng-template>
+          <!-- INFORMACION PERTINENTE AL PAGO DE LA PRIMA -->
           <ng-template #formTemplate>
             <app-radio-button class="mr-3" title="Ingresos anuales actividad principal" [group]="newRequest"
               name="IncomeMainActivity" [options]="mainActivity"></app-radio-button>
@@ -970,12 +1024,170 @@
             </div>
           </ng-template>
           <!-- REPORTE DEL AGENTE -->
-          <ng-template #formTemplate></ng-template>
+          <ng-template #formTemplate>
+            <div class="px-6">
+              <div class="mb-4 radio-button-label" style="font-size: 12px !important; max-width: 63vw;">1. ¿Qué tan bien
+                conoce
+                al Propuesto Asegurado?
+              </div>
+              <app-radio-button [group]="newRequest.get('agentReport')" name="connectionType" [options]="connectionType"
+                (selected)="selectChange($event)">
+              </app-radio-button>
+              <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
+                <app-input *ngIf="newRequest.get('agentReport').value.connectionType === 'familia'"
+                  [group]="newRequest.get('agentReport').get('connectionTypeInfo')" name="relationship"
+                  label="Parentesco">
+                </app-input>
+                <app-input *ngIf="newRequest.get('agentReport').value.connectionType === 'acabado de conocer'"
+                  [group]="newRequest.get('agentReport').get('connectionTypeInfo')" name="how" label="¿Cómo?">
+                </app-input>
+                <app-radio-button *ngIf="newRequest.get('agentReport').value.connectionType === 'amigo'" class="mr-3"
+                  [group]="newRequest.get('agentReport').get('connectionTypeInfo')" name="friendship"
+                  [options]="timeFriendship">
+                </app-radio-button>
+                <div class="grid grid-cols-2"
+                  *ngIf="newRequest.get('agentReport').value.connectionType === 'cliente' || newRequest.get('agentReport').value.connectionType === 'amigo'">
+                  <app-input class="mr-3" [group]="newRequest.get('agentReport').get('connectionTypeInfo')"
+                    label="Tiempo" name="amount">
+                  </app-input>
+                  <app-select class="mr-3" [options]="year"
+                    [group]="newRequest.get('agentReport').get('connectionTypeInfo')"></app-select>
+                </div>
+              </div>
+              <hr class=" w-full mb-6 ww-divider">
+              <div class="mb-4 radio-button-label" style="font-size: 12px !important; max-width: 63vw;">1. ¿Cuál es el
+                propósito de este seguro?
+              </div>
+              <app-text-area [group]="newRequest.get('agentReport')" name="insurancePurpose" label="Texto">
+              </app-text-area>
+              <hr class=" w-full mb-6 ww-divider">
+              <div
+                class="w-full xl:flex xl:justify-between lg:flex lg:justify-between md:flex md:justify-between sm:flex sm:justify-between">
+                <div class="radio-button-label" style="font-size: 12px !important; max-width: 63vw;">2. ¿El Propuesto
+                  Asegurado es casado?
+                </div>
+                <app-radio-button [group]="newRequest.get('agentReport')" name="isMarried"
+                  [options]="diseaseService.yesOrNoOriginal" (selected)="selectChange($event)">
+                </app-radio-button>
+              </div>
+              <div *ngIf="newRequest.get('agentReport').value.isMarried === 'si'"
+                class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
+                <app-input [group]="newRequest.get('agentReport').get('marriedInformation')" name="spouseName"
+                  label="Nombre del cónyuge" class="mr-3">
+                </app-input>
+                <app-number-input [group]="newRequest.get('agentReport').get('marriedInformation')"
+                  name="spouseInsuranceAmount" label="Cantidad seguros del cónyuge" class="mr-3">
+                </app-number-input>
+              </div>
+              <hr class=" w-full mb-6 ww-divider">
+              <div
+                class="w-full xl:flex xl:justify-between lg:flex lg:justify-between md:flex md:justify-between sm:flex sm:justify-between">
+                <div class="radio-button-label" style="font-size: 12px !important; max-width: 63vw;">3. ¿El Propuesto
+                  Asegurado es menor de 21 años?
+                </div>
+                <app-radio-button [group]="newRequest.get('agentReport')" name="isLessThan21"
+                  [options]="diseaseService.yesOrNoOriginal" (selected)="selectChange($event)">
+                </app-radio-button>
+              </div>
+              <div *ngIf="newRequest.get('agentReport').value.isLessThan21 === 'si'">
+                <div *ngFor="let studies of familyRelationshipInsurances.controls; let i = index">
+                  <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-5 xl:grid-cols-5">
+                    <app-select class="mr-3" [options]="family"
+                      [group]="newRequest.get('agentReport').get('familyInsurances').get(i.toString())"></app-select>
+                    <app-number-input [group]="newRequest.get('agentReport').get('familyInsurances').get(i.toString())"
+                      name="amount" label="Cantidad de seguros" class="mr-3">
+                    </app-number-input>
+                    <div *ngIf="familyRelationshipInsurances.length > 1"
+                      [ngClass]="{'': familyRelationshipInsurances.length === 1, 'col-span-1': familyRelationshipInsurances.length > 1} ">
+                      <button mat-mini-fab aria-label=" Eliminar estudio"
+                        (click)="diseaseService.removeToList(i, insuranceProposedList)" type="button"
+                        class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
+                        <mat-icon style="color: #18446B">remove</mat-icon>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                <div class="mb-6">
+                  <button mat-mini-fab aria-label="Agregar estudio"
+                    (click)="addToList(familyRelationshipInsurances, 'familyInsurances')" type="button"
+                    class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
+                    <mat-icon style="color: #18446B">add</mat-icon>
+                  </button>
+                </div>
+              </div>
+              <hr class=" w-full mb-6 ww-divider">
+              <div class="mb-4 radio-button-label" style="font-size: 12px !important; max-width: 63vw;">4. ¿Cuál es el
+                monto correspondiente al Propuesto Asegurado
+              </div>
+              <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
+                <app-input [group]="newRequest.get('agentReport').get('amountProposed')" name="approximateNetWorth"
+                  label="Valor Neto aproximado de Patrimonio" class="mr-3">
+                </app-input>
+                <app-input [group]="newRequest.get('agentReport').get('amountProposed')" name="accruedIncome"
+                  label="Ingreso Devengado" class="mr-3">
+                </app-input>
+                <app-input [group]="newRequest.get('agentReport').get('amountProposed')" name="unearnedIncome"
+                  label="Ingreso No Devengado" class="mr-3">
+                </app-input>
+                <app-input [group]="newRequest.get('agentReport').get('amountProposed')" name="occupation"
+                  label="Ocupación en los últimos 5 años" class="mr-3">
+                </app-input>
+              </div>
+              <hr class=" w-full mb-6 ww-divider">
+              <div
+                class="w-full xl:flex xl:justify-between lg:flex lg:justify-between md:flex md:justify-between sm:flex sm:justify-between">
+                <div class="radio-button-label" style="font-size: 12px !important; max-width: 63vw;">5. ¿Obtuvo las
+                  respuestas personalmente del Propuesto Asegurado?
+                </div>
+                <app-radio-button [group]="newRequest.get('agentReport')" name="getAnswersFromInsured"
+                  [options]="diseaseService.yesOrNoOriginal" (selected)="selectChange($event)">
+                </app-radio-button>
+              </div>
+              <hr class=" w-full mb-6 ww-divider">
+              <div class="mb-4 radio-button-label" style="font-size: 12px !important; max-width: 63vw;">6. El
+                propietario me mostró un documento de identificación con foto emitido por el Gobierno.
+              </div>
+              <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
+                <app-input [group]="newRequest.get('agentReport').get('idInformation')" name="type" class="mr-3"
+                  label="Tipo de ID">
+                </app-input>
+                <app-input [group]="newRequest.get('agentReport').get('idInformation')" name="issuedBy" class="mr-3"
+                  label="ID emitido por">
+                </app-input>
+                <app-date-picker [group]="newRequest.get('agentReport').get('idInformation')" name="issuedDate"
+                  class="mr-3" label="Fecha de Emisión">
+                </app-date-picker>
+                <app-date-picker [group]="newRequest.get('agentReport').get('idInformation')" name="expirationDate"
+                  class="mr-3" label="Fecha de Expiración">
+                </app-date-picker>
+              </div>
+              <hr class=" w-full mb-6 ww-divider">
+              <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
+                <app-input [group]="newRequest.get('agentReport').get('agentInformation')" name="city" class="mr-3"
+                  label="Ciudad">
+                </app-input>
+                <app-input [group]="newRequest.get('agentReport').get('agentInformation')" name="country" class="mr-3"
+                  label="País">
+                </app-input>
+                <app-date-picker [group]="newRequest.get('agentReport').get('agentInformation')" name="date"
+                  class="mr-3" label="Fecha">
+                </app-date-picker>
+                <app-date-picker [group]="newRequest.get('agentReport').get('agentInformation')" name="name"
+                  class="mr-3" label="Nombre del agente">
+                </app-date-picker>
+              </div>
+            </div>
+          </ng-template>
         </app-forms-container>
       </mat-tab>
-      <mat-tab label="D01" class="mat-tab-forms"></mat-tab>
+      <mat-tab label="Cuestionarios" class="mat-tab-forms">
+        <app-hypertension *ngIf="newRequest.get('questionnaires').get('hypertension')"
+          [form]="newRequest.get('questionnaires').get('hypertension')"></app-hypertension>
+        <app-mellitus-diabetes *ngIf="newRequest.get('questionnaires').get('diabetes')"
+          [form]="newRequest.get('questionnaires').get('diabetes')"></app-mellitus-diabetes>
+      </mat-tab>
     </mat-tab-group>
   </div>
 </div>
-
-<button (click)="print()">IMPRIMIR</button>
+<!-- 
+<button (click)="print()">IMPRIMIR</button> -->

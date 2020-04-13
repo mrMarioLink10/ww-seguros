@@ -93,6 +93,39 @@ export class LifeComponent implements OnInit, DoCheck {
     name: 'time'
   };
 
+  nicotineStandar: FieldConfig = {
+    label: 'Estándar Nicotina',
+    options: [
+      {
+        value: 'si',
+        viewValue: 'Si'
+      },
+      {
+        value: 'no',
+        viewValue: 'No'
+      }
+    ]
+  };
+
+  planTypes = {
+    label: 'Tipo de Plan',
+    options: [
+      {
+        value: 'WWTERM',
+        viewValue: 'WWTERM'
+      },
+      {
+        value: 'WWSURVIVOR',
+        viewValue: 'WWSURVIVOR'
+      },
+      {
+        value: 'WWTERM VALUE',
+        viewValue: 'WWTERM VALUE'
+      },
+    ],
+    name: 'type'
+  };
+
   primaryBenefits = {
     name: ['', Validators.required],
     id: ['', Validators.required],
@@ -123,22 +156,7 @@ export class LifeComponent implements OnInit, DoCheck {
     ]
   };
 
-  planTypes = {
-    options: [
-      {
-        value: 'WWTERM',
-        viewValue: 'WWTERM'
-      },
-      {
-        value: 'WWSURVIVOR',
-        viewValue: 'WWSURVIVOR'
-      },
-      {
-        value: 'WWTERM VALUE',
-        viewValue: 'WWTERM VALUE'
-      },
-    ]
-  };
+
 
   connectionType = {
     options: [
@@ -209,11 +227,66 @@ export class LifeComponent implements OnInit, DoCheck {
         value: 'Pesos Dominicanos',
         viewValue: 'Pesos Dominicanos'
       },
+    ],
+  };
 
+  basicLifeAmountCurrency = {
+    name: 'basicLifeAmountCurrency',
+    label: 'Tipo de Moneda',
+    options: [
       {
-        value: 'Balboa',
-        viewValue: 'Balboa'
-      }
+        value: 'usd',
+        viewValue: 'US$'
+      },
+      {
+        value: 'dop',
+        viewValue: 'DOP$'
+      },
+    ],
+  };
+
+  basicLifeBonusCurrency = {
+    name: 'basicLifeBonusCurrency',
+    label: 'Tipo de Moneda',
+    options: [
+      {
+        value: 'usd',
+        viewValue: 'US$'
+      },
+      {
+        value: 'dop',
+        viewValue: 'DOP$'
+      },
+    ],
+  };
+
+  survivalAmountCurrency = {
+    name: 'survivalAmountCurrency',
+    label: 'Tipo de Moneda',
+    options: [
+      {
+        value: 'usd',
+        viewValue: 'US$'
+      },
+      {
+        value: 'dop',
+        viewValue: 'DOP$'
+      },
+    ],
+  };
+
+  survivalBonusCurrency = {
+    name: 'survivalBonusCurrency',
+    label: 'Tipo de Moneda',
+    options: [
+      {
+        value: 'usd',
+        viewValue: 'US$'
+      },
+      {
+        value: 'dop',
+        viewValue: 'DOP$'
+      },
     ],
   };
 
@@ -420,8 +493,12 @@ export class LifeComponent implements OnInit, DoCheck {
         coverages: this.fb.group({
           basicLifeAssuredAmount: ['', Validators.required],
           basicLifeBonus: ['', Validators.required],
+          basicLifeAmountCurrency: ['', Validators.required],
+          basicLifeBonusCurrency: ['', Validators.required],
           survivalAssuredAmount: ['', Validators.required],
           survivalBonus: ['', Validators.required],
+          survivalAmountCurrency: ['', Validators.required],
+          survivalBonusCurrency: ['', Validators.required],
         })
       }),
       IncomeMainActivity: ['', Validators.required],
@@ -1281,6 +1358,6 @@ export class LifeComponent implements OnInit, DoCheck {
 
   print() {
     console.log(this.newRequest);
-    console.log('json', JSON.stringify(this.newRequest.get('agentReport').value));
+    console.log('json', JSON.stringify(this.newRequest.get('releventPlanInformation').value));
   }
 }

@@ -23,8 +23,10 @@
               name='nombre' placeholder="Juan Melo de los Santos"></app-input>
           </div>
           <div class="mr-3">
-            <app-input [group]="authorization.get('informacionAsegurado')" label="No. póliza" name='noPoliza'
-              type="number" placeholder="12345678"></app-input>
+
+              <app-input [group]="authorization.get('informacionAsegurado')" 
+              label="No. póliza" name='noPoliza' placeholder="12345678"></app-input>
+
           </div>
           <div class="mr-3">
             <app-radio-button [group]="authorization.get('informacionAsegurado')" [options]="generos" name="sexo">
@@ -39,17 +41,22 @@
               placeholder="Calle 5, Casa #50, ..."></app-input>
           </div>
           <div class="mr-3">
-            <app-input [group]="authorization.get('informacionAsegurado')" label="Teléfono residencia"
-              name='telefonoResidencia' type="number" placeholder="8090010000">
-            </app-input>
+
+            <app-input [group]="authorization.get('informacionAsegurado')" 
+              label="Teléfono residencia" name='telefonoResidencia' placeholder=""></app-input>
+
           </div>
           <div class="mr-3">
-            <app-input [group]="authorization.get('informacionAsegurado')" label="Teléfono celular"
-              name='telefonoCelular' type="number" placeholder="8090010001"></app-input>
+
+              <app-input [group]="authorization.get('informacionAsegurado')" 
+              label="Teléfono celular" name='telefonoCelular' placeholder=""></app-input>
+
           </div>
           <div class="mr-3">
-            <app-input [group]="authorization.get('informacionAsegurado')" label="Teléfono oficina"
-              name='telefonoOficina' type="number" placeholder="8090010002"></app-input>
+
+              <app-input [group]="authorization.get('informacionAsegurado')" 
+              label="Teléfono oficina" name='telefonoOficina' placeholder=""></app-input>
+
           </div>
         </div>
 
@@ -69,8 +76,10 @@
               name='nombre' placeholder="WorldWide Seguros"></app-input>
           </div>
           <div class="mr-3">
-            <app-input [group]="authorization.get('informacionAsegurado').get('seguro')" label="No. póliza"
-              name='noPoliza' type="number" placeholder="12345678"></app-input>
+
+              <app-input [group]="authorization.get('informacionAsegurado').get('seguro')" 
+              label="No. póliza" name='noPoliza' placeholder="12345678"></app-input>
+
           </div>
           <div class="mr-3">
             <app-date-picker [group]="authorization.get('informacionAsegurado').get('seguro')" label="Fecha de emisión"
@@ -78,8 +87,8 @@
             </app-date-picker>
           </div>
           <div class="mr-3">
-            <app-input [group]="authorization.get('informacionAsegurado').get('seguro')" label="Suma asegurada"
-              name='suma' type="number" placeholder="20,000$ USD"></app-input>
+              <app-number-input [group]="authorization.get('informacionAsegurado').get('seguro')" 
+              label="Suma asegurada" name='suma' placeholder="20,000$ USD" min="1"></app-number-input>
           </div>
         </div>
 
@@ -117,9 +126,9 @@
             <app-input [group]="authorization.get('informacionMedica').get('primerosSintomas')" label="Dirección"
               name="direccion">
             </app-input>
-            <app-input [group]="authorization.get('informacionMedica').get('primerosSintomas')" label="Teléfono"
-              name="telefono">
-            </app-input>
+
+            <app-input [group]="authorization.get('informacionMedica').get('primerosSintomas')" 
+            label="Teléfono" name='telefono' placeholder=""></app-input>
           </div>
 
           <!--  TERCERA COLUMNA -->
@@ -136,9 +145,9 @@
             <app-input [group]="authorization.get('informacionMedica').get('admision')" label="Dirección"
               name="direccion">
             </app-input>
-            <app-input [group]="authorization.get('informacionMedica').get('admision')" label="Teléfono"
-              name="telefono">
-            </app-input>
+
+            <app-input [group]="authorization.get('informacionMedica').get('admision')" 
+              label="Teléfono" name='telefono' placeholder=""></app-input>
           </div>
 
           <!--  CUARTA COLUMNA -->
@@ -153,8 +162,9 @@
             </app-input>
             <app-input [group]="authorization.get('informacionMedica')" label="Dirección" name="direccion">
             </app-input>
-            <app-input [group]="authorization.get('informacionMedica')" label="Teléfono" name="telefono">
-            </app-input>
+
+            <app-input [group]="authorization.get('informacionMedica')" 
+              label="Teléfono" name='telefono' placeholder=""></app-input>
           </div>
         </div>
       </ng-template>

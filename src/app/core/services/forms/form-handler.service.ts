@@ -5,6 +5,9 @@ import { BaseDialogComponent } from '../../../shared/components/base-dialog/base
 import { DialogOptionService } from '../dialog/dialog-option.service';
 import { Router } from '@angular/router';
 import { ClaimService } from '../../../modules/dashboard/claims/new-claim/claim-types/claim/services/claim.service';
+import { RefundService } from '../../../modules/dashboard/claims/new-claim/claim-types/refund/services/refund.service';
+import { NewAuthorizationService } from '../../../modules/dashboard/authorizations/new-authorization/services/new-authorization.service';
+
 
 @Injectable({
 	providedIn: 'root'
@@ -16,7 +19,9 @@ export class FormHandlerService {
 		private dialog: MatDialog,
 		private dialogOption: DialogOptionService,
 		private route: Router,
-		private claimService: ClaimService
+		private claimService: ClaimService,
+		private refundService: RefundService,
+		private newAuthorizationService:NewAuthorizationService
 	) { }
 
 	sendForm(form: FormGroup, name: string) {
@@ -44,8 +49,8 @@ export class FormHandlerService {
 				break;
 
 			case 'new-authorization':
-				dataOpen = this.dialogOption.refundConfirmation;
-				dataClosing = this.dialogOption.refundConfirmated;
+				dataOpen = this.dialogOption.authorizationConfirmation;
+				dataClosing = this.dialogOption.authorizationConfirmated;
 				route = 'dashboard/authorizations';
 				break;
 		}
@@ -70,11 +75,27 @@ export class FormHandlerService {
 					});
 					this.sendedForm = form.value;
 
+					const json = JSON.stringify(this.sendedForm);
+					
 					if (name === 'claims-reclaim') {
 
-						const json = JSON.stringify(this.sendedForm);
-
 						this.claimService.postClaim(json)
+							.subscribe(res => {
+								console.log(res);
+							});
+					}
+
+					else if (name === 'claims-refund') {
+
+						this.refundService.postClaim(json)
+							.subscribe(res => {
+								console.log(res);
+							});
+					}
+
+					else if (name === 'new-authorization') {
+
+						this.newAuthorizationService.postClaim(json)
 							.subscribe(res => {
 								console.log(res);
 							});

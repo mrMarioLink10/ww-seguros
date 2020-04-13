@@ -124,16 +124,16 @@ export class LifeComponent implements OnInit, DoCheck {
   status = {
     options: [
       {
-        value: 'Soltero',
-        viewValue: 'soltero'
+        value: 'soltero',
+        viewValue: 'Soltero'
       },
       {
-        value: 'Casado',
-        viewValue: 'casado'
+        value: 'casado',
+        viewValue: 'Casado'
       },
       {
-        value: 'Únion Libre',
-        viewValue: 'Union Libre'
+        value: 'union Libre',
+        viewValue: 'Unión Libre'
       }
     ],
     name: 'status'

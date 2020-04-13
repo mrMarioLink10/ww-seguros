@@ -64,9 +64,9 @@
       <div class="grid"
         [ngClass]="{'grid-cols-1': diagnosticList.length === 1, 'grid-cols-5': diagnosticList.length > 1}">
         <div class="mr-3" [ngClass]="{'': diagnosticList.length === 1, 'col-span-4': diagnosticList.length > 1}">
-          <app-input [group]=" refundForm.get('diagnosticos').get(i.toString())" name="monto" label="Monto Reclamado"
+          <app-number-input [group]=" refundForm.get('diagnosticos').get(i.toString())" name="monto" label="Monto Reclamado"
             placeholder="10,000">
-          </app-input>
+          </app-number-input>
         </div>
         <div *ngIf="diagnosticList.length > 1"
           [ngClass]="{'': diagnosticList.length === 1, 'col-span-1': diagnosticList.length > 1} ">

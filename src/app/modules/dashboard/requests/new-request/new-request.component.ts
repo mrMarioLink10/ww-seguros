@@ -20,7 +20,7 @@ export class NewRequestComponent implements OnInit {
         break;
 
       case 'disability':
-        this.router.navigate(['refund'], { relativeTo: this.route });
+        this.router.navigate(['disability'], { relativeTo: this.route });
         break;
 
       case 'gastos mayores':

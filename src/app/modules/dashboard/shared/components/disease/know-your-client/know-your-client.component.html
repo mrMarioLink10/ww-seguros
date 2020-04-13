@@ -3,11 +3,13 @@
   <div class="uppercase dashboard-page-title pt-10">
     FORMULARIO POLÍTICA CONOZCA A SU CLIENTE (KNOW YOUR CUSTOMER) (PERSONA JURÍDICA) </div>
 
-  <div class="pt-10 pb-0 mt-5 ml-1" style="background-color: #F2F2F2">
+  <div class="pt-12 pb-12 mt-5 ml-1" style="background-color: #F2F2F2">
 
-    <div class="mr-10 sm:mr-10 md:mr-3 lg:mr-3 xl:mr-3 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4 ml-8 pb-3"> 
-      <app-input [group]="form" label="Solicitud No."
-      name='request' type="number" placeholder="12345678"></app-input>  
+    <div class="ml-8 mr-10 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4"> 
+
+      <app-number-input [group]="form" label="Solicitud No." name='request'
+      min="1" placeholder="12345678"></app-number-input>
+
     </div>
 
   </div>
@@ -31,8 +33,10 @@
           </div>
 
           <div class="mr-3">
-            <app-input [group]="form.get('general_data')" label="Núm. Contribuyente o equivalente"
-            name='contributor_num' type="number" placeholder=""></app-input>
+
+            <app-number-input [group]="form.get('general_data')" label="Núm. Contribuyente o equivalente" name='contributor_num'
+              min="1" placeholder=""></app-number-input>
+              
           </div>
 
           <div class="mr-3">
@@ -41,8 +45,10 @@
           </div>
 
           <div class="mr-3">
-            <app-input [group]="form.get('general_data')" label="Teléfono (s)"
-            name='telephone' type="number" placeholder=""></app-input>
+
+            <app-input [group]="form.get('general_data')" label="Teléfono (s)" name='telephone'
+              min="1" placeholder=""></app-input>
+
           </div>
 
           <div class="mr-3">
@@ -50,7 +56,7 @@
             name='email' placeholder=""></app-input>
           </div>
 
-          <div class="mr-3">
+          <div class="mr-3"> <!--  mt-4 -->
             <app-input [group]="form.get('general_data')" label="Actividad Comercial"
             name='commercial_activity' placeholder=""></app-input>
           </div>
@@ -100,13 +106,17 @@
           </div>
 
           <div class="mr-3">
-            <app-input [group]="form.get('representative_data')" label="Teléfono Residencial"
-            name='home_telephone' placeholder=""></app-input>
+
+            <app-input [group]="form.get('representative_data')" 
+            label="Teléfono Residencial" name='home_telephone' placeholder=""></app-input>
+
           </div>
 
           <div class="mr-3">
-            <app-input [group]="form.get('representative_data')" label="Celular"
-            name='cellphone' placeholder=""></app-input>
+            
+            <app-input [group]="form.get('representative_data')" 
+            label="Celular" name='cellphone' placeholder=""></app-input>
+            
           </div>
 
           <div class="mr-3">
@@ -183,7 +193,7 @@
         
        <div class="ml-6 py-5 mb-4" style="background-color: #E6E7E8;">
 
-          <p class="pl-10 pr-8"> Persona(s) física(s) que ejerce el control efectivo ﬁnal sobre una persona jurídica o tenga como mínimo el 20% del capital de la persona jurídica incluyendo a la persona física en beneﬁcio de quien o quienes se lleva a cabo una transacción. </p>
+          <p class="pl-10 pr-8" style="font-size: 12px;"> Persona(s) física(s) que ejerce el control efectivo ﬁnal sobre una persona jurídica o tenga como mínimo el 20% del capital de la persona jurídica incluyendo a la persona física en beneﬁcio de quien o quienes se lleva a cabo una transacción. </p>
 
         </div>
 
@@ -201,9 +211,10 @@
                     </div>
 
                     <div class="mr-3 "> 
-                      <app-input 
-                       [group]="form.get('shareholders').get('allShareholders').get(index.toString())"
-                       label="% de Participación" name='participation_percentage' type="number" min="1" max="100"></app-input>
+                      
+                       <app-number-input [group]="form.get('shareholders').get('allShareholders').get(index.toString())" 
+                       label="% de Participación" name='participation_percentage' min="1" max="100" placeholder=""></app-number-input>
+                       
                     </div>
                     
                     <div class="mr-3 ">
@@ -244,9 +255,10 @@
               </div>
 
               <div class="mr-3 mt-8 sm:mt-8 md:mt-8 lg:mt-8 xl:mt-0">
-                <app-input 
-                [group]="form.get('shareholders')"
-                label="Núm. de Empleados" name='employee_numbers' type="number"></app-input>
+
+                <app-number-input [group]="form.get('shareholders')" 
+                    label="Núm. de Empleados" name='employee_numbers' min="1" placeholder=""></app-number-input>
+                
               </div>
             </div>
 
@@ -262,7 +274,7 @@
           <div class="grid grid-cols-1">
             <div class="ml-6 py-5" style="background-color: #E6E7E8;">
             
-              <p class="pl-10 pr-8"> Las Personas Políticamente Expuestas son aquéllas que desempeñan o han desempeñado funciones 
+              <p class="pl-10 pr-8" style="font-size: 12px;"> Las Personas Políticamente Expuestas son aquéllas que desempeñan o han desempeñado funciones 
                 públicas destacadas en un país extranjero o en su propio país, ej. Jefes de Estado o de gobierno, políticos de 
                 alta jerarquía, funcionarios gubernamentales, judiciales o militares de alta jerarquía, altos ejecutivos de 
                 empresas estatales, funcionarios importantes de partidos políticos. La designación de PEP incluye a su cónyuge y 
@@ -359,15 +371,17 @@
                        </div>
     
                        <div class="mr-3 "> 
-                        <app-input 
-                           [group]="form.get('exposed').get('branch_office').get('allBranch_office').get(index.toString())"
-                           label="Número de registro" name='register_number_branch_office' type="number"></app-input>
-                      </div>
+
+                           <app-number-input [group]="form.get('exposed').get('branch_office').get('allBranch_office').get(index.toString())" 
+                    label="Número de registro" name='register_number_branch_office' min="1" placeholder="12345"></app-number-input>
+                      
+                    </div>
 
                       <div class="mr-3 "> 
-                        <app-input 
-                           [group]="form.get('exposed').get('branch_office').get('allBranch_office').get(index.toString())"
-                           label="Teléfonos" name='telephone_branch_office' type="number"></app-input>
+                      
+                           <app-input [group]="form.get('exposed').get('branch_office').get('allBranch_office').get(index.toString())" 
+                    label="Teléfonos" name='telephone_branch_office' placeholder=""></app-input>
+
                       </div>
 
                       <div class="mr-3 "> 
@@ -492,7 +506,7 @@
       <ng-template #formTemplate>
 
         <div class="ml-6" style="background-color: #E6E7E8;">
-          <p class="py-5 px-8"> Por la presente declaro bajo la fe de juramento que los datos suministrados anteriormente y 
+          <p class="py-5 px-8" style="font-size: 12px;"> Por la presente declaro bajo la fe de juramento que los datos suministrados anteriormente y 
             contenidos en este formulario son verdaderos, correctos y actualizados; y que no he omitido ninguna 
             información requerida explícita o implícitamente en este formulario, y que todas las actividades de la 
             sociedad son ejercidas dentro de las normas legales y que los recursos utilizados para el pago de los 
@@ -513,7 +527,10 @@
 
           <div class="mr-3">
 
-            <app-input [group]="form.get('broker')" label="No. Licencia" name='license_num' type="number" placeholder=""></app-input> 
+            <!-- <app-input [group]="form.get('broker')" label="No. Licencia" name='license_num' type="number" placeholder=""></app-input>  -->
+
+            <app-number-input [group]="form.get('broker')" 
+                    label="No. Licencia" name='license_num' placeholder="1" min="1"></app-number-input>
 
           </div>
 

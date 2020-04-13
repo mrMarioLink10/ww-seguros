@@ -71,6 +71,7 @@ export class NewAuthorizationComponent implements OnInit {
 
 	constructor(private fb: FormBuilder, public formHandler: FormHandlerService) { 
 
+		
 	}
 
 	selectChange(event: any) {
@@ -82,8 +83,8 @@ export class NewAuthorizationComponent implements OnInit {
 					form.addControl('seguro', this.fb.group({
 						nombre: ['', Validators.required],
 						noPoliza: ['', Validators.required],
-						fecha: ['', Validators.required],
-						suma: ['', Validators.required],
+						fecha: [new Date(), Validators.required],
+						suma: ['', [Validators.required, Validators.min(1)]],
 					}));
 					break;
 				default:
@@ -103,7 +104,7 @@ export class NewAuthorizationComponent implements OnInit {
 
 ngOnInit() {
 		this.authorization= this.fb.group({
-			fecha: ['', Validators.required],
+			fecha: [new Date(), Validators.required],
 			informacionAsegurado: this.fb.group({
 				nombre: ['', Validators.required],
 				noPoliza: ['', Validators.required],
@@ -120,13 +121,13 @@ ngOnInit() {
 				condicion: ['', Validators.required],
 				procedimiento: ['', Validators.required],
 				primerosSintomas: this.fb.group({
-					fecha: ['', Validators.required],
+					fecha: [new Date(), Validators.required],
 					nombreMedico: ['', Validators.required],
 					direccion: ['', Validators.required],
 					telefono: ['', Validators.required],
 				}),
 				admision: this.fb.group({
-					fecha: ['', Validators.required],
+					fecha: [new Date(), Validators.required],
 					nombreMedico: ['', Validators.required],
 					direccion: ['', Validators.required],
 					telefono: ['', Validators.required],

@@ -315,12 +315,12 @@ export class KnowYourClientComponent implements OnInit {
 
 	addBasicControls() {
 
-		this.form.addControl('request', this.fb.control('', Validators.required));
+		this.form.addControl('request', this.fb.control('', [Validators.required, Validators.min(1)]));
 
 		this.form.addControl('general_data', this.fb.group({
 			society_name:['',Validators.required],
 				  commercial_name:['',Validators.required],
-				  contributor_num:['', Validators.required],
+				  contributor_num:['', [Validators.required, Validators.min(1)]],
 				  home:['',Validators.required],
 				  telephone:['', Validators.required],
 				  email:['', [Validators.required, Validators.email]],
@@ -375,7 +375,7 @@ export class KnowYourClientComponent implements OnInit {
 
 		this.form.addControl('broker', this.fb.group({
 			social_name:['', Validators.required],
-				  license_num:['', Validators.required],
+				  license_num:['', [Validators.required, Validators.min(1)]],
 		  }));
 
 		this.form.addControl('info_for_the_insurance_carrier', this.fb.group({

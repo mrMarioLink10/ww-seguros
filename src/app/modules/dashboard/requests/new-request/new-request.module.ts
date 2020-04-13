@@ -11,10 +11,11 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedDirectivesModule } from 'src/app/core/directive';
 import { ServicesModule } from 'src/app/core/services/services.module';
 import { NewRequestComponent } from './new-request.component';
+import { DisabilityComponent } from './disability/disability.component';
 
 
 @NgModule({
-  declarations: [NewRequestComponent, LifeComponent, MajorExpensesComponent],
+  declarations: [NewRequestComponent, LifeComponent, MajorExpensesComponent, DisabilityComponent],
   imports: [
     NewRequestRoutingModule,
     CommonModule,

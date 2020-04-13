@@ -11,12 +11,12 @@ export class DisabilityService {
   currencyArray=[
 
     {
-      value:'Dolar Estadounidense, US$',
-      viewValue:'US$'
+      value:'Dolares',
+      viewValue:'Dolares'
     },
     {
-      value:'Peso Dominicanco, RD$',
-      viewValue:'RD$'
+      value:'Pesos Dominicanos',
+      viewValue:'Pesos Dominicanos'
     }
 
   ];

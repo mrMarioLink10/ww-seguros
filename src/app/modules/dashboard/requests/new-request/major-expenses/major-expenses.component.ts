@@ -422,7 +422,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
         haveReproductiveOrganDisorders: ['', Validators.required],
       })
 
-      
+
     });
 
     this.contingentBeneficiaryArray = this.newRequest.get('contingentBeneficiary').get('dependentsC') as FormArray;
@@ -525,14 +525,15 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
     this.proceduresArray.push(this.form())
     this.proceduresArray.updateValueAndValidity();
   }
-  print() {
-    // console.log(JSON.stringify(this.newRequest.get('questions').value));
-    console.log('SOLO DISEASES', this.newRequest.get('questionsA').value);
-    console.log('SOLO DEPENDENTS', this.newRequest.get('dependents'));
-    console.log('ENTERO', this.newRequest);
-    console.log(this.newRequest.get('dependents').get('allDependents').get('0').get('questionsA'));
+  // print() {
+  //   // console.log(JSON.stringify(this.newRequest.get('questions').value));
+  //   console.log('SOLO DISEASES', this.newRequest.get('questionsA').value);
+  //   console.log('SOLO DEPENDENTS', this.newRequest.get('dependents'));
+  //   console.log('ENTERO', this.newRequest);
+  //   console.log(this.newRequest.get('dependents').get('allDependents').get('0').get('questionsA'));
+  //   console.log(JSON.stringify(this.newRequest.value));
 
-  }
+  // }
 
   selectChange(event) {
     const questionsForm = this.newRequest.get('questions') as FormGroup;
@@ -609,6 +610,10 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
       default:
         break;
     }
+  }
+
+  print() {
+    console.log(JSON.stringify(this.newRequest.get('questionsA').get('prostatic').value));
   }
 }
 

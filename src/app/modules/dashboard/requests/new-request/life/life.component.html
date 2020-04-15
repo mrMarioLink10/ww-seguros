@@ -339,14 +339,9 @@
           </ng-template>
           <!-- INFORMACION PERTINENTE AL PLAN -->
           <ng-template #formTemplate>
-            <div class="mb-4 radio-button-label" style="font-size: 12px !important; max-width: 63vw;">Tipo de Plan
-            </div>
-            <app-radio-button [group]="newRequest.get('releventPlanInformation')" name="type" [options]="planTypes">
-            </app-radio-button>
-            <hr class=" w-full mb-6 ww-divider">
-            <div class="mb-2 radio-button-label" style="font-size: 12px !important; max-width: 63vw;">Tiempo del plan
-            </div>
             <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
+              <app-select class="mr-3" [group]="newRequest.get('releventPlanInformation')" [options]="planTypes">
+              </app-select>
               <div class="grid grid-cols-2">
                 <app-input class="mr-3" [group]="newRequest.get('releventPlanInformation')" label="Tiempo"
                   name="timeAmount">
@@ -354,38 +349,53 @@
                 <app-select class="mr-3" [options]="year" [group]="newRequest.get('releventPlanInformation')">
                 </app-select>
               </div>
-            </div>
-            <hr class=" w-full mb-6 ww-divider">
-            <div
-              class="w-full xl:flex xl:justify-between lg:flex lg:justify-between md:flex md:justify-between sm:flex sm:justify-between">
-              <div class="radio-button-label" style="font-size: 12px !important; max-width: 63vw;">Estándar Nicotina
-              </div>
               <app-radio-button [group]="newRequest.get('releventPlanInformation')" name="nicotineEstandar"
-                [options]="diseaseService.yesOrNoOriginal">
+                [options]="nicotineStandar">
               </app-radio-button>
             </div>
-            <hr class=" w-full mb-6 ww-divider">
             <div class="mb-2 radio-button-label">Coberturas
             </div>
             <div class="mb-2 radio-button-label" style="font-size: 12px !important; max-width: 63vw;">Vida Basíca
             </div>
             <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
-              <app-number-input class="mr-3" [group]="newRequest.get('releventPlanInformation').get('coverages')"
-                label="Suma Asegurada" name="basicLifeAssuredAmount">
-              </app-number-input>
-              <app-number-input class="mr-3" [group]="newRequest.get('releventPlanInformation').get('coverages')"
-                label="Prima" name="basicLifeBonus">
-              </app-number-input>
+              <div class="grid grid-cols-2">
+                <app-number-input class="mr-3" [group]="newRequest.get('releventPlanInformation').get('coverages')"
+                  label="Suma Asegurada" name="basicLifeAssuredAmount">
+                </app-number-input>
+                <app-select class="mr-3" [options]="basicLifeAmountCurrency"
+                  [group]="newRequest.get('releventPlanInformation').get('coverages')">
+                </app-select>
+              </div>
+              <div></div>
+              <div class="grid grid-cols-2">
+                <app-number-input class="mr-3" [group]="newRequest.get('releventPlanInformation').get('coverages')"
+                  label="Prima" name="basicLifeBonus">
+                </app-number-input>
+                <app-select class="mr-3" [options]="basicLifeBonusCurrency"
+                  [group]="newRequest.get('releventPlanInformation').get('coverages')">
+                </app-select>
+              </div>
             </div>
-            <div class="mb-2 radio-button-label" style="font-size: 12px !important; max-width: 63vw;">Tiempo del plan
+            <div class="mb-2 radio-button-label" style="font-size: 12px !important; max-width: 63vw;">Supervivencia
             </div>
             <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
-              <app-number-input class="mr-3" [group]="newRequest.get('releventPlanInformation').get('coverages')"
-                label="Suma Asegurada" name="survivalAssuredAmount">
-              </app-number-input>
-              <app-number-input class="mr-3" [group]="newRequest.get('releventPlanInformation').get('coverages')"
-                label="Prima" name="survivalBonus">
-              </app-number-input>
+              <div class="grid grid-cols-2">
+                <app-number-input class="mr-3" [group]="newRequest.get('releventPlanInformation').get('coverages')"
+                  label="Suma Asegurada" name="survivalAssuredAmount">
+                </app-number-input>
+                <app-select class="mr-3" [options]="survivalAmountCurrency"
+                  [group]="newRequest.get('releventPlanInformation').get('coverages')">
+                </app-select>
+              </div>
+              <div></div>
+              <div class="grid grid-cols-2">
+                <app-number-input class="mr-3" [group]="newRequest.get('releventPlanInformation').get('coverages')"
+                  label="Prima" name="survivalBonus">
+                </app-number-input>
+                <app-select class="mr-3" [options]="survivalBonusCurrency"
+                  [group]="newRequest.get('releventPlanInformation').get('coverages')">
+                </app-select>
+              </div>
             </div>
           </ng-template>
           <!-- INFORMACION PERTINENTE AL PAGO DE LA PRIMA -->
@@ -1189,5 +1199,5 @@
     </mat-tab-group>
   </div>
 </div>
-<!-- 
-<button (click)="print()">IMPRIMIR</button> -->
+
+<button (click)="print()">IMPRIMIR</button>

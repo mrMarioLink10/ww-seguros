@@ -33,7 +33,11 @@ import { HttpClientModule } from '@angular/common/http';
     RenalUrinaryComponent,
     HypertensionComponent,
     ProstaticComponent,
-    MellitusDiabetesComponent
+    MellitusDiabetesComponent,
+    DivingComponent,
+    RacingComponent,
+    SkydivingComponent,
+    MountaineeringComponent
   ],
   imports: [CommonModule, MaterialModule, GlobalSharedModule, FormsModule, ReactiveFormsModule, HttpClientModule],
   exports: [

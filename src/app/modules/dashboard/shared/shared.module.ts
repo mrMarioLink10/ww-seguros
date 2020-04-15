@@ -17,7 +17,11 @@ import { HypertensionComponent } from './components/disease/hypertension/hyperte
 import { ProstaticComponent } from './components/disease/prostatic/prostatic.component';
 import { MellitusDiabetesComponent } from './components/disease/mellitus-diabetes/mellitus-diabetes.component';
 
-import { HttpClientModule } from '@angular/common/http'
+import { HttpClientModule } from '@angular/common/http';
+import { DivingComponent } from './components/disease/diving/diving.component';
+import { RacingComponent } from './components/disease/racing/racing.component';
+import { SkydivingComponent } from './components/disease/skydiving/skydiving.component';
+import { MountaineeringComponent } from './components/disease/mountaineering/mountaineering.component'
 
 @NgModule({
   declarations: [
@@ -33,7 +37,11 @@ import { HttpClientModule } from '@angular/common/http'
     RenalUrinaryComponent,
     HypertensionComponent,
     ProstaticComponent,
-    MellitusDiabetesComponent
+    MellitusDiabetesComponent,
+    DivingComponent,
+    RacingComponent,
+    SkydivingComponent,
+    MountaineeringComponent
   ],
   imports: [CommonModule, MaterialModule, GlobalSharedModule, FormsModule, ReactiveFormsModule, HttpClientModule],
   exports: [

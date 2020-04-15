@@ -27,41 +27,41 @@
                       name='society_name' placeholder=""></app-input>
           </div>
 
-          <div class="mr-3">
+          <div class="mr-3 mt-8 sm:mt-5 md:mt-0 lg:mt-0 xl:mt-0">
             <app-input [group]="form.get('general_data')" label="Nombre Comercial"
             name='commercial_name' placeholder=""></app-input>
           </div>
 
-          <div class="mr-3">
+          <div class="mr-3 mt-8 sm:mt-5 md:mt-8 lg:mt-2 xl:mt-0">
 
             <app-number-input [group]="form.get('general_data')" label="Núm. Contribuyente o equivalente" name='contributor_num'
               min="1" placeholder=""></app-number-input>
               
           </div>
 
-          <div class="mr-3">
+          <div class="mr-3 mt-8 sm:mt-5 md:mt-8 lg:mt-2 xl:mt-0">
             <app-input [group]="form.get('general_data')" label="Domicilio Social"
             name='home' placeholder=""></app-input>
           </div>
 
-          <div class="mr-3">
+          <div class="mr-3 mt-8 sm:mt-5 md:mt-8 lg:mt-2 xl:mt-5">
 
             <app-input [group]="form.get('general_data')" label="Teléfono (s)" name='telephone'
               min="1" placeholder=""></app-input>
 
           </div>
 
-          <div class="mr-3">
+          <div class="mr-3 mt-8 sm:mt-5 md:mt-8 lg:mt-2 xl:mt-5">
             <app-input [group]="form.get('general_data')" label="Correo"
             name='email' placeholder=""></app-input>
           </div>
 
-          <div class="mr-3"> <!--  mt-4 -->
+          <div class="mr-3 mt-8 sm:mt-5 md:mt-8 lg:mt-2 xl:mt-5"> <!--  mt-4 -->
             <app-input [group]="form.get('general_data')" label="Actividad Comercial"
             name='commercial_activity' placeholder=""></app-input>
           </div>
 
-          <div class="mr-3">
+          <div class="mr-3 mt-8 sm:mt-5 md:mt-8 lg:mt-2 xl:mt-5">
             <app-select name="list_countrys" [options]="countryList" [group]="form.get('general_data')"></app-select>
           </div>
 
@@ -78,15 +78,15 @@
             name='name_lastname' placeholder=""></app-input>
           </div>
 
-          <div class="mr-3 xl:mt-8">
+          <div class="mr-3 mt-5 sm:mt-3 md:mt-0 lg:mt-0 xl:mt-8">
             <app-input [group]="form.get('representative_data')" label="Lugar de Nacimiento"
             name='birthplace' placeholder=""></app-input>
           </div>
 
-          <div class="">
+          <div class="mt-5 sm:mt-3 md:mt-5 lg:mt-2 xl:mt-0">
 
             <div class="pb-3">
-                <label> <strong> Fecha de nacimiento </strong> </label>
+                <label class="formulary-labels">  Fecha de nacimiento  </label>
             </div>
 
             <div class="mr-3">
@@ -95,41 +95,41 @@
 
           </div>
 
-          <div class="mr-3 md:mt-8 lg:mt-8 xl:mt-8">
+          <div class="mr-3 mt-5 sm:mt-3 md:mt-10 md:pt-3 lg:mt-10 lg:pt-0 xl:mt-8 xl:pt-0">
             <app-input [group]="form.get('representative_data')" label="Cargo o relación con la Sociedad"
             name='society_position' placeholder=""></app-input>
           </div>
 
-          <div class="mr-3">
+          <div class="mr-3 mt-5 sm:mt-3 md:mt-5 lg:mt-2 xl:mt-2">
             <app-input [group]="form.get('representative_data')" label="Nacionalidad"
             name='nationality' placeholder=""></app-input>
           </div>
 
-          <div class="mr-3">
+          <div class="mr-3 mt-5 sm:mt-3 md:mt-5 lg:mt-2 xl:mt-2">
 
             <app-input [group]="form.get('representative_data')" 
             label="Teléfono Residencial" name='home_telephone' placeholder=""></app-input>
 
           </div>
 
-          <div class="mr-3">
+          <div class="mr-3 mt-5 sm:mt-3 md:mt-5 lg:mt-2 xl:mt-2">
             
             <app-input [group]="form.get('representative_data')" 
             label="Celular" name='cellphone' placeholder=""></app-input>
             
           </div>
 
-          <div class="mr-3">
+          <div class="mr-3 mt-5 sm:mt-3 md:mt-5 lg:mt-2 xl:mt-2">
             <app-input [group]="form.get('representative_data')" label="Cédula / Pasaporte"
             name='id_passport' placeholder=""></app-input>
           </div>
 
-          <div class="mr-3">
+          <div class="mr-3 mt-5 sm:mt-3 md:mt-5 lg:mt-2 xl:mt-2">
             <app-input [group]="form.get('representative_data')" label="Correo"
             name='representative_email' placeholder=""></app-input>
           </div>
 
-          <div class="mr-3">
+          <div class="mr-3 mt-5 sm:mt-3 md:mt-5 lg:mt-2 xl:mt-2">
             <app-input [group]="form.get('representative_data')" label="Dirección Residencial"
             name='address' placeholder=""></app-input>
           </div>
@@ -146,31 +146,31 @@
     
                   <div [formGroupName]="index" class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4">
     
-                    <div class="mr-3 "> 
+                    <div class="mr-3"> 
                       <app-input 
                        [group]="form.get('management_body_composition').get('allMembers').get(index.toString())"
                        label="Nombre (s) y Apellido (s)" name='name_lastname'></app-input>
                     </div>
 
-                    <div class="mr-3 "> 
+                    <div class="mr-3 mt-3 sm:mt-3 md:mt-0 lg:mt-0 xl:mt-0"> 
                       <app-input 
                        [group]="form.get('management_body_composition').get('allMembers').get(index.toString())"
                        label="Cargo" name='position'></app-input>
                     </div>
                     
-                    <div class="mr-3 ">
+                    <div class="mr-3 mt-3 sm:mt-3 md:mt-3 lg:mt-0 xl:mt-0">
                       <app-input 
                        [group]="form.get('management_body_composition').get('allMembers').get(index.toString())"
                        label="Cédula / Pasaporte" name='id_passport_management_body'></app-input>
                    </div>
 
-                   <div class="mr-3 "> 
+                   <div class="mr-3 mt-3 sm:mt-3 md:mt-3 lg:mt-0 xl:mt-0"> 
                     <app-input 
                        [group]="form.get('management_body_composition').get('allMembers').get(index.toString())"
                        label="Nacionalidad" name='nationality_management_body'></app-input>
                   </div>
                 </div>
-                <div>
+                <div class="mt-3 sm:mt-3 md:mt-5 lg:mt-3 xl:mt-3">
                     <button mat-mini-fab aria-label="Agregar reclamacion"
                       (click)="addMBody(bodyMembersFormArray,management_bodyFormGroup)" type="button"
                       class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
@@ -210,26 +210,26 @@
                        label="Nombre (s) y Apellido (s)" name='name_lastname_shareholder'></app-input>
                     </div>
 
-                    <div class="mr-3 "> 
+                    <div class="mr-3 mt-8 sm:mt-5 md:mt-0 lg:mt-0 xl:mt-0"> 
                       
                        <app-number-input [group]="form.get('shareholders').get('allShareholders').get(index.toString())" 
                        label="% de Participación" name='participation_percentage' min="1" max="100" placeholder=""></app-number-input>
                        
                     </div>
                     
-                    <div class="mr-3 ">
+                    <div class="mr-3 mt-8 sm:mt-5 md:mt-8 lg:mt-3 xl:mt-0">
                       <app-input 
                        [group]="form.get('shareholders').get('allShareholders').get(index.toString())"
                        label="Cédula / Pasaporte" name='id_passport_shareholder'></app-input>
                    </div>
 
-                   <div class="mr-3 "> 
+                   <div class="mr-3 mt-8 sm:mt-5 md:mt-8 lg:mt-3 xl:mt-0"> 
                     <app-input 
                        [group]="form.get('shareholders').get('allShareholders').get(index.toString())"
                        label="Nacionalidad" name='nationality_shareholder'></app-input>
                   </div>
                 </div>
-                <div>
+                <div class="mt-5 sm:mt-3 md:mt-5 lg:mt-1 xl:mt-3">
                     <button mat-mini-fab aria-label="Agregar reclamacion"
                       (click)="addShareholders(shareholdersFormArray,shareholdersFormGroup)" type="button"
                       class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
@@ -254,7 +254,7 @@
                 
               </div>
 
-              <div class="mr-3 mt-8 sm:mt-8 md:mt-8 lg:mt-8 xl:mt-0">
+              <div class="mr-3 mt-8 mb-6 sm:mb-4 sm:mt-8 md:mb-0 md:mt-8 lg:mb-0 lg:mt-8 xl:mb-0 xl:mt-0">
 
                 <app-number-input [group]="form.get('shareholders')" 
                     label="Núm. de Empleados" name='employee_numbers' min="1" placeholder=""></app-number-input>
@@ -285,7 +285,7 @@
 
             <div class="mt-5">
 
-              <small class="ml-8 mr-6 mt-3" style="display: inline-block"> ¿Tiene la Sociedad dentro del órgano de gestión una Persona Políticamente Expuesta? </small>
+              <label class="ml-8 mr-6 mt-3 radio-button-label" style="display: inline-block"> ¿Tiene la Sociedad dentro del órgano de gestión una Persona Políticamente Expuesta? </label>
                 <app-radio-button class="float-right mt-3" style="display: inline-block" [group]="form.get('exposed')" [options]="exposed_politically"
                 name='exposed_person' (selected)="selectChangeExposedPerson($event)">
                 </app-radio-button>
@@ -324,7 +324,7 @@
 
             <div class="mt-5 mb-6 pb-1">
 
-              <small class="ml-8 mr-6 mt-3" style="display: inline-block"> ¿Cotiza la Sociedad en la Bolsa de Valores? </small>
+              <label class="ml-8 mr-6 mt-3 radio-button-label" style="display: inline-block"> ¿Cotiza la Sociedad en la Bolsa de Valores? </label>
                 <app-radio-button class="float-right mt-3" style="display: inline-block" [group]="form.get('exposed')" [options]="exposed_politically"
                 name='stock_Exchange'>
                 </app-radio-button>
@@ -340,7 +340,7 @@
           <div class="mb-4">
 
             <div class="my-5">
-              <small class="ml-8 mr-6 mt-3" style="display: inline-block"> ¿Tiene la Sociedad sucursales o afiliadas? </small>
+              <label class="ml-8 mr-6 mt-3 radio-button-label" style="display: inline-block"> ¿Tiene la Sociedad sucursales o afiliadas? </label>
                 <app-radio-button class="float-right mt-3" style="display: inline-block" [group]="form.get('exposed')" [options]="exposed_politically"
                 name='branch_office_radio' (selected)="selectChangeBranchOffice($event)"> <!-- (selected)="selectChangeBranchOffice($event)" -->
                 </app-radio-button>
@@ -417,7 +417,7 @@
 
             <div class="ml-8">
 
-              <small class="mr-6 inline"> Indique si el Representante Legal, Apoderado o la Sociedad misma son o han sido objeto de investigación, indagación o condena por actividades ilícitas o delitos de lavado o blanqueo de dinero o financiamiento de terrorismo. </small>
+              <label class="mr-6 inline radio-button-label"> Indique si el Representante Legal, Apoderado o la Sociedad misma son o han sido objeto de investigación, indagación o condena por actividades ilícitas o delitos de lavado o blanqueo de dinero o financiamiento de terrorismo. </label>
                 <app-radio-button class="float-right inline" [group]="form.get('exposed')" [options]="exposed_politically"
                 name='investigated_representative' (selected)="selectChangeText($event)">
                 </app-radio-button>
@@ -427,7 +427,7 @@
             <div *ngIf="this.form.get('exposed').get('areatext')" class="ml-8 mt-2">
               
               <div class="mb-2 pt-8">
-                <small> Especifique </small>
+                <label style="font-size: 12px;"> Especifique </label>
               </div>
               
               <div>
@@ -473,27 +473,33 @@
           <div class="grid grid-cols-1  mt-6">
             
             <div class="grid grid-cols-1 xl:grid-cols-2"> 
-              <div class="xl:mr-64 xl:pr-12"> 
-                <mat-checkbox (change)="onChange0($event)"
-                [formGroup]="form.get('finance').get('documents')" formControlName="mercantile_register_document"> <span style="white-space: normal;"> {{documents[0].viewValue}} </span> </mat-checkbox>
+              <div class="xl:mr-64 xl:pr-4"> 
+                <mat-checkbox class="radio-button-label" (change)="onChange0($event)"
+                [formGroup]="form.get('finance').get('documents')" [formControlName]="mercantile_register_document"> <span style="white-space: normal;"> {{documents[0].viewValue}} </span> </mat-checkbox>
               </div>
+<!-- 
+              <div>
+
+                <app-check-box [group]="form.get('finance').get('documents')" name="mercantile_register_document_prueba" [option]="documents[0]"> </app-check-box>
+
+              </div> -->
 
               <div class="mt-5 xl:-ml-3 xl:-mr-4 xl:mt-0"> 
-                <mat-checkbox (change)="onChange2($event)"
-                [formGroup]="form.get('finance').get('documents')" formControlName="id_shareholder_document"><span style="white-space: normal;"> {{documents[2].viewValue}} </span> </mat-checkbox>
+                <mat-checkbox class="radio-button-label" (change)="onChange2($event)"
+                [formGroup]="form.get('finance').get('documents')" [formControlName]="id_shareholder_document"><span style="white-space: normal;"> {{documents[2].viewValue}} </span> </mat-checkbox>
               </div>
             </div>
 
             <div class="grid grid-cols-1 xl:grid-cols-2 xl:mt-5"> 
-              <div class="mt-5 xl:mr-5 xl:mt-0"> 
-                  <mat-checkbox (change)="onChange1($event)"
-                  [formGroup]="form.get('finance').get('documents')" formControlName="id_representative_document"><span style="white-space: normal;"> {{documents[1].viewValue}} </span> </mat-checkbox>
+              <div class="mt-5 xl:mr-6 xl:mt-0"> 
+                  <mat-checkbox class="radio-button-label" (change)="onChange1($event)"
+                  [formGroup]="form.get('finance').get('documents')" [formControlName]="id_representative_document"><span style="white-space: normal;"> {{documents[1].viewValue}} </span> </mat-checkbox>
                
               </div>
 
               <div class="mt-5 xl:-ml-3 xl:mr-16 xl:pr-3 xl:mt-0">
-                <mat-checkbox (change)="onChange3($event)"
-                [formGroup]="form.get('finance').get('documents')" formControlName="managemente_body_document"><span style="white-space: normal;"> {{documents[3].viewValue}} </span> </mat-checkbox>
+                <mat-checkbox class="radio-button-label" (change)="onChange3($event)"
+                [formGroup]="form.get('finance').get('documents')" [formControlName]="managemente_body_document"><span style="white-space: normal;"> {{documents[3].viewValue}} </span> </mat-checkbox>
               </div>
             </div>
 
@@ -517,7 +523,7 @@
 
       <ng-template #formTemplate>
 
-        <div class="ml-6 mt-5 grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4">
+        <div class="ml-6 mb-3 mt-5 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4">
 
           <div class="mr-3">
 
@@ -525,7 +531,7 @@
 
           </div>
 
-          <div class="mr-3">
+          <div class="mr-3 mt-3 sm:mt-3 md:mt-0 lg:mt-0 xl:mt-0">
 
             <!-- <app-input [group]="form.get('broker')" label="No. Licencia" name='license_num' type="number" placeholder=""></app-input>  -->
 
@@ -540,7 +546,7 @@
 
       <ng-template #formTemplate>
 
-        <div class="ml-6 mt-2 grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4">
+        <div class="ml-6 mb-3 mt-2 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4">
 
           <div class="mr-3">
 
@@ -548,7 +554,7 @@
 
           </div>
 
-          <div class="mr-3">
+          <div class="mr-3 mt-5 sm:mt-3 md:mt-0 lg:mt-0 xl:mt-0">
 
             <app-input [group]="form.get('info_for_the_insurance_carrier')" label="Cargo" name='position_functionary' placeholder=""></app-input> 
 

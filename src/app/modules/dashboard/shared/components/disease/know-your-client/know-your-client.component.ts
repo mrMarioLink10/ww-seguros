@@ -110,21 +110,28 @@ export class KnowYourClientComponent implements OnInit {
 
 
   	onChange0(e){
-   		this.documents[0].checked=e.checked;
+		   this.documents[0].checked=e.checked;
+		   console.log(JSON.stringify(this.form.value));
+
   	}
 
   	onChange1(e){
-    		this.documents[1].checked=e.checked;
+			this.documents[1].checked=e.checked;
+			console.log(JSON.stringify(this.form.value));
+
   	}
 
   	onChange2(e){
-    		this.documents[2].checked=e.checked;
+			this.documents[2].checked=e.checked;
+			console.log(JSON.stringify(this.form.value));
+
   	}
 
   	onChange3(e){
-    		this.documents[3].checked=e.checked;
-  	}
+			this.documents[3].checked=e.checked;
+			console.log(JSON.stringify(this.form.value));
 
+	  }
 
 	countryList: FieldConfig = {
 		label: 'País',
@@ -177,6 +184,8 @@ export class KnowYourClientComponent implements OnInit {
 						specify_investigated_representative: ['', Validators.required],
 					}));
 					console.log(JSON.stringify(this.form.value));
+					console.log(this.documents)
+
 			}
 		 else if (event.valor === 'no') {
 	
@@ -331,7 +340,7 @@ export class KnowYourClientComponent implements OnInit {
 	   this.form.addControl('representative_data', this.fb.group({
         name_lastname:['', Validators.required],
 			  birthplace:['', Validators.required],
-			  birthdate:['', Validators.required],
+			  birthdate:[new Date(), Validators.required],
 			  society_position:['', Validators.required],
 			  nationality:['', Validators.required],
 			  home_telephone:['', Validators.required],
@@ -367,6 +376,7 @@ export class KnowYourClientComponent implements OnInit {
 			annual_income_others:['', Validators.required],
 			documents: this.fb.group({
 				mercantile_register_document:[''],
+				// mercantile_register_document_prueba:[''],
 				id_shareholder_document:[''],
 				id_representative_document:[''],
 				managemente_body_document:[''],

@@ -17,7 +17,7 @@ import { HypertensionComponent } from './components/disease/hypertension/hyperte
 import { ProstaticComponent } from './components/disease/prostatic/prostatic.component';
 import { MellitusDiabetesComponent } from './components/disease/mellitus-diabetes/mellitus-diabetes.component';
 
-import { HttpClientModule } from '@angular/common/http'
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [

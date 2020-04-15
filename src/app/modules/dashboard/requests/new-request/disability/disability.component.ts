@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { FormArrayGeneratorService } from 'src/app/core/services/forms/form-array-generator.service';
 import { FieldConfig } from 'src/app/shared/components/form-components/models/field-config';
 import { DisabilityService } from '../disability/services/disability.service'
 import { $country } from 'src/app/core/form/objects';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Component({
   selector: 'app-disability',
@@ -77,6 +78,103 @@ export class DisabilityComponent implements OnInit {
 
     ]
   };
+
+
+  pruebaArray:FieldConfig = {
+    label: 'Prueba',
+    options: [
+
+      {
+        value: 'vida',
+        viewValue: 'Solicitud de Seguro de Vida',
+      },
+
+      {
+        value: 'disability',
+        viewValue: 'Solicitud de Suscripción Disability',
+      },
+
+      {
+        value: 'gastos mayores',
+        viewValue: 'Suscripción Seguro Gastos Médicos Mayores',
+      }
+
+    ]
+  };
+
+array;
+
+countrylist: Array<any> = [
+  { name: 'Alemania', cities: ['Duesseldorf', 'Leinfelden-Echterdingen', 'Eschborn'] },
+  { name: 'España', cities: ['Barcelona'] },
+  { name: 'Estados Unidos', cities: ['Downers Grove'] },
+  { name: 'México', cities: ['Puebla'] },
+  { name: 'China', cities: ['Beijing'] },
+];
+
+// countrylist: Array<any> = [
+//   { name: 'Alemania', cities: [ 
+//     {
+//       value:'Duesseldorf',
+//       viewValue:'Duesseldorf'
+//     },
+//     {
+//       value:'Leinfelden-Echterdingen',
+//       viewValue:'Leinfelden-Echterdingen'
+//     },
+//     {
+//       value:'Eschborn',
+//       viewValue:'Eschborn'
+//     },] 
+// },
+//   { name: 'España', cities: [
+//     {
+//       value:'Barcelona',
+//       viewValue:'Barcelona'
+//     }] 
+// },
+//   { name: 'Estados Unidos', cities: [
+//     {
+//       value:'Downers Grove',
+//       viewValue:'Downers Grove'
+//     }] 
+// },
+//   { name: 'México', cities: [
+//     {
+//       value:'Puebla',
+//       viewValue:'Puebla'
+//     }]
+// },
+//   { name: 'China', cities: [
+//     {
+//       value:'Beijing',
+//       viewValue:'Beijing'
+//     }] 
+// },
+// ];
+
+cities: Array<any>;
+changeCountry(event) {
+  this.cities = this.countrylist.find(con => con.name == event.valor).cities;
+  console.log("hola")
+}
+
+// countryListPrueba= {
+//   label: 'Estado Prueba',
+//   options: this.countrylist[0].cities
+// };
+
+// pruebaCambio(event):any{
+
+// console.log(event.value)
+
+// }
+
+
+  // pruebaArray2:FieldConfig = {
+  //   label: 'Prueba2',
+  //   options: this.pruebaCambio(event)
+  // };
 
   currencyOptions:FieldConfig={
 
@@ -197,6 +295,17 @@ rentOptions:FieldConfig={
   options: this.disabilityService.rentArray
 
 };
+
+@Output() selected = new EventEmitter<any>();
+
+emitter(event) {
+  // this.selected.emit({ valor: event.value });
+
+  // if(event.value==="vida"){
+    console.log("Funciona " + event.value)
+  // }
+
+}
 
 selectChange(event){
   const form = this.disabilityGroup.get('questions') as FormGroup;
@@ -481,6 +590,14 @@ selectChange(event){
   money_laundering:FormGroup;
   know_client:FormGroup;
 
+  // INTENTAR HACER LA CONDICION 6 DEL FORMULARIO DE DISABILITY, TOMANDO COMO BASE LO QUE HIZO ISAI EN EL FORMULARIO
+  // DE VIDA. AH, Y VER SI AL <mat-tab> SE LE PUEDE PONER UNA CONDICION DE QUE APAREZCA SI UNA VARIABLE ES MAYOR
+  // QUE 0 ó HACER VARIOS <mat-tab Y QUE UN RADIOBUTTON HAGA QUE EXISTA
+  //X COMPONENTE RELACIONADO A LOS RADIOBUTTONS, Y SI EXISTE, QUE EL <mat-tab APAREZCA ENTONCES.
+  
+  // @Input() options: FieldConfig;     TERMINAR ESTAS 3 COSAS PARA PROBAR EL SELECT
+  // @Input() group: FormGroup=this.disabilityGroup.get('policyholder') as FormGroup;
+  // @Input() name: string="countryPrueba";
 
   mainGroup ={
     full_name: ['', Validators.required],
@@ -522,7 +639,54 @@ selectChange(event){
 
     }
 
-  constructor(private fb:FormBuilder, public formMethods: FormArrayGeneratorService, private disabilityService:DisabilityService) { }
+    items=[];
+
+  constructor(private fb:FormBuilder, public formMethods: FormArrayGeneratorService, private disabilityService:DisabilityService, private http:HttpClient) {
+
+    this.http.get('https://restcountries.eu/rest/v2/all').subscribe(data=>
+      {
+        console.log(data)
+
+        let list=[];
+
+        for(let key in data){
+          if(data.hasOwnProperty(key)){
+
+            list.push(
+                  {
+                    value: data[key].translations.es,
+                    viewValue: data[key].translations.es
+                  }
+              )
+          }
+        }
+    
+        list[27].value="Bonaire, San Eustaquio y Saba";
+        list[27].viewValue="Bonaire, San Eustaquio y Saba";
+        list[59].value="Curazao";
+        list[59].viewValue="Curazao";
+        list[203].value="San Martín (Países Bajos)";
+        list[203].viewValue="San Martín (Países Bajos)";
+
+        //  this.items= list.map(n=>n.translations.es).sort();
+
+        list.sort(function(a, b){
+          var nameA=a.value.toLowerCase(), nameB=b.value.toLowerCase()
+          if (nameA < nameB) //sort string ascending
+              return -1 
+          if (nameA > nameB)
+              return 1
+          return 0 //default return value (no sorting)
+        })
+
+        this.items= list
+        console.log(this.items)
+
+      });
+
+   }
+
+   
 
   ngOnInit() {
 
@@ -534,6 +698,9 @@ selectChange(event){
 
     this.typeRequestGroup= this.fb.group({
       typeRequest:[''],
+      // prueba:[''],
+      // pruebaA:[''],
+      // pruebaB:['']
 
     })
 
@@ -589,6 +756,7 @@ selectChange(event){
         currency:['', Validators.required],
         address:['', Validators.required],
         country:['', Validators.required],
+        countryPrueba:['', Validators.required],
         city:['', Validators.required],
         postal_address:['', Validators.required],
         country_residence:['', Validators.required],

@@ -19,12 +19,28 @@ export const $family: FieldConfig = {
     name: 'family',
     options: [
         {
-            value: 'Cónyuge',
+            value: 'conyuge',
             viewValue: 'Cónyuge'
         },
         {
-            value: 'Hijo',
+            value: 'hijo',
             viewValue: 'Hijo'
+        },
+        {
+            value: 'padre',
+            viewValue: 'Padre'
+        },
+        {
+            value: 'madre',
+            viewValue: 'Madre'
+        },
+        {
+            value: 'hermano',
+            viewValue: 'Hermano'
+        },
+        {
+            value: 'hermana',
+            viewValue: 'Hermana'
         },
     ]
 }

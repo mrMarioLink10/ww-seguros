@@ -281,6 +281,8 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
     this.procedures = this.fb.array([this.formMethods.createItem(this.formGroupProcedure)]);
 
     this.newRequest = this.fb.group({
+
+
       requestType: ['', Validators.required],
       NoC: ['', Validators.required],
       deducibles: ['', Validators.required],
@@ -425,6 +427,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
         haveReproductiveOrganDisorders: ['', Validators.required],
       })
 
+
     });
 
     this.contingentBeneficiaryArray = this.newRequest.get('contingentBeneficiary').get('dependentsC') as FormArray;
@@ -436,7 +439,6 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
     // this.setQuestionsA();
     this.setQuestionsB();
 
-
   }
 
   ngDoCheck() { }
@@ -444,6 +446,9 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
   add(dependentsFormArray, group) {
     const increment = dependentsFormArray.length + 1;
     dependentsFormArray = this.formMethods.addElement(dependentsFormArray, increment, group).formArray;
+
+    console.log(this.newRequest);
+
   }
 
   // setQuestionsA(){
@@ -525,14 +530,15 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
     this.proceduresArray.push(this.form())
     this.proceduresArray.updateValueAndValidity();
   }
-  print() {
-    // console.log(JSON.stringify(this.newRequest.get('questions').value));
-    console.log('SOLO DISEASES', this.newRequest.get('questionsA').value);
-    console.log('SOLO DEPENDENTS', this.newRequest.get('dependents'));
-    console.log('ENTERO', this.newRequest);
-    console.log(this.newRequest.get('dependents').get('allDependents').get('0').get('questionsA'));
+  // print() {
+  //   // console.log(JSON.stringify(this.newRequest.get('questions').value));
+  //   console.log('SOLO DISEASES', this.newRequest.get('questionsA').value);
+  //   console.log('SOLO DEPENDENTS', this.newRequest.get('dependents'));
+  //   console.log('ENTERO', this.newRequest);
+  //   console.log(this.newRequest.get('dependents').get('allDependents').get('0').get('questionsA'));
+  //   console.log(JSON.stringify(this.newRequest.value));
 
-  }
+  // }
 
   selectChange(event) {
     const questionsForm = this.newRequest.get('questions') as FormGroup;
@@ -609,6 +615,10 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
       default:
         break;
     }
+  }
+
+  print() {
+    console.log(JSON.stringify(this.newRequest.get('questionsA').get('prostatic').value));
   }
 }
 

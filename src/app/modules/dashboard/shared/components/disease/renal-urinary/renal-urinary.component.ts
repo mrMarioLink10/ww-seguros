@@ -59,6 +59,8 @@ export class RenalUrinaryComponent implements OnInit {
 
                   formM.addControl('medicine_array', this.medicine_property);
                   this.medicineOperationFormArray = this.form.get('data').get('medicine').get('medicine_array') as FormArray;
+                  console.log(JSON.stringify(this.form.value));
+                  
                   break;
 
         case 'medical_consultation_radio':
@@ -67,7 +69,8 @@ export class RenalUrinaryComponent implements OnInit {
 					        	date: [new Date(), Validators.required],
 					        	frequency: ['', Validators.required],
                   }));
-                  // console.log(JSON.stringify(this.form.value));
+                  console.log(JSON.stringify(this.form.value));
+                  
                   break;
 
         }
@@ -139,53 +142,104 @@ createFormArray(name: string) {
     this.analysis_property = this.fb.array([this.formMethods.createItem(this.analysisGroup)]);
     this.medicine_property = this.fb.array([this.formMethods.createItem(this.medicineGroup)])
 
-    this.form= this.fb.group({
-      full_name: ['', Validators.required],
-      age:['',[ Validators.required, Validators.min(1)] ],
-      doctor_name: ['', Validators.required],
-      hospital_name:['', Validators.required],
-      hospital_telephone:['', Validators.required],
+    this.addBasicControls();
 
-      data: this.fb.group({
+    // this.form= this.fb.group({
+    //   full_name: ['', Validators.required],
+    //   age:['',[ Validators.required, Validators.min(1)] ],
+    //   doctor_name: ['', Validators.required],
+    //   hospital_name:['', Validators.required],
+    //   hospital_telephone:['', Validators.required],
 
-        diagnosis: this.fb.group({
-          input: ['', Validators.required],
-          date:[new Date(), Validators.required]
-        }),
+    //   data: this.fb.group({
 
-        symptom: this.fb.group({
-          input: ['', Validators.required],
-          date:[new Date(), Validators.required],
-          duration:['', Validators.required]
-        }),
+    //     diagnosis: this.fb.group({
+    //       input: ['', Validators.required],
+    //       date:[new Date(), Validators.required]
+    //     }),
 
-        last_time_symptom: this.fb.group({
+    //     symptom: this.fb.group({
+    //       input: ['', Validators.required],
+    //       date:[new Date(), Validators.required],
+    //       duration:['', Validators.required]
+    //     }),
 
-          date: [new Date(), Validators.required]
+    //     last_time_symptom: this.fb.group({
 
-        }),
+    //       date: [new Date(), Validators.required]
 
-        analysis_radio: [''],
-        analysis:  this.fb.group({
+    //     }),
 
-            analysis_array: this.fb.array([this.formMethods.createItem(this.analysisGroup)])
+    //     analysis_radio: [''],
+    //     analysis:  this.fb.group({
 
-        }),
+    //         analysis_array: this.fb.array([this.formMethods.createItem(this.analysisGroup)])
 
-        medication_radio: [''],
-        medicine: this.fb.group({ 
+    //     }),
 
-          medicine_array: this.fb.array([this.formMethods.createItem(this.medicineGroup)])
+    //     medication_radio: [''],
+    //     medicine: this.fb.group({ 
+
+    //       medicine_array: this.fb.array([this.formMethods.createItem(this.medicineGroup)])
         
-        }),
+    //     }),
 
-        medical_consultation_radio:['']
+    //     medical_consultation_radio:['']
 
-      })
+    //   })
+
+    // })
+    
+    // console.log(JSON.stringify(this.form.value));
+
+  }
+
+  addBasicControls(){
+
+    this.form.addControl('full_name', this.fb.control('', Validators.required));
+    this.form.addControl('age', this.fb.control('', [Validators.required, Validators.min(1)]));
+    this.form.addControl('doctor_name', this.fb.control('', Validators.required));
+    this.form.addControl('hospital_name', this.fb.control('', Validators.required));
+    this.form.addControl('hospital_telephone', this.fb.control('', Validators.required));
+
+    this.form.addControl('data',  this.fb.group({
+
+      diagnosis: this.fb.group({
+        input: ['', Validators.required],
+        date:[new Date(), Validators.required]
+      }),
+
+      symptom: this.fb.group({
+        input: ['', Validators.required],
+        date:[new Date(), Validators.required],
+        duration:['', Validators.required]
+      }),
+
+      last_time_symptom: this.fb.group({
+
+        date: [new Date(), Validators.required]
+
+      }),
+
+      analysis_radio: [''],
+      analysis:  this.fb.group({
+
+          analysis_array: this.fb.array([this.formMethods.createItem(this.analysisGroup)])
+
+      }),
+
+      medication_radio: [''],
+      medicine: this.fb.group({ 
+
+        medicine_array: this.fb.array([this.formMethods.createItem(this.medicineGroup)])
+      
+      }),
+
+      medical_consultation_radio:['']
 
     })
     
-    // console.log(JSON.stringify(this.form.value));
+  );
 
   }
 
@@ -194,7 +248,7 @@ createFormArray(name: string) {
       const increment = array.length + 1;
       array = this.formMethods.addElement(array, increment, this.createFormArray(name)).formArray;
       
-      // console.log(JSON.stringify(this.form.value));
+      console.log(JSON.stringify(this.form.value));
       // array.push(this.createFormArray(name));
       
     }

@@ -68,19 +68,19 @@ export class MoneyLaunderingComponent implements OnInit {
 
 	selectChangeInvestigated(event: any) {
 
-		// const form = this.anti_laundering as FormGroup;
+		const form = this.form as FormGroup;
 
 		if (event.valor === 'si') {
 
-			this.form.addControl('investigated', this.fb.group({
+			form.addControl('investigated', this.fb.group({
 				specify_investigation: ['', Validators.required]
 			}));
-			// console.log(JSON.stringify(this.anti_laundering.value));
+			console.log(JSON.stringify(this.form.value));
 
 		}
 		else if (event.valor === 'no') {
 
-			this.form.removeControl('investigated');
+			form.removeControl('investigated');
 
 		}
 
@@ -91,56 +91,104 @@ export class MoneyLaunderingComponent implements OnInit {
 	constructor(private fb: FormBuilder, public formHandler: FormHandlerService) { }
 
 	ngOnInit() {
-		this.form = this.fb.group({
-			request: ['', Validators.required],
 
-			society_name: ['', Validators.required],
-			contributor_num: ['', Validators.required],
-			associate_type: ['', Validators.required],
-			home: ['', Validators.required],
+		this.addBasicControls();
 
-			date: ['', Validators.required],
-			register_num: ['', Validators.required],
-			postal_address: ['', Validators.required],
-			telephone: ['', Validators.required],
-			fax: ['', Validators.required],
-			email: ['', [Validators.required, Validators.email]],
-			main_activity: ['', Validators.required],
+		// this.form = this.fb.group({
+		// 	request: ['', Validators.required],
 
-			investigation_status: [''],
+		// 	society_name: ['', Validators.required],
+		// 	contributor_num: ['', Validators.required],
+		// 	associate_type: ['', Validators.required],
+		// 	home: ['', Validators.required],
 
-			prevention_program: ['', Validators.required],
-			management_body: ['', Validators.required],
-			written_policy: ['', Validators.required],
-			ban_policy: ['', Validators.required],
-			regulation_policy: ['', Validators.required],
-			branch_office_ban_policy: ['', Validators.required],
-			anonymous_customer_service: ['', Validators.required],
+		// 	date: ['', Validators.required],
+		// 	register_num: ['', Validators.required],
+		// 	postal_address: ['', Validators.required],
+		// 	telephone: ['', Validators.required],
+		// 	fax: ['', Validators.required],
+		// 	email: ['', [Validators.required, Validators.email]],
+		// 	main_activity: ['', Validators.required],
 
-			means_of_audit: ['', Validators.required],
-			clients_monitoring: ['', Validators.required],
-			databases_monitoring: ['', Validators.required],
+		// 	investigation_status: [''],
 
-			prevention_training: ['', Validators.required],
-			official_responsible: ['', Validators.required],
-			training_functionary: ['', Validators.required],
-			staff_training: ['', Validators.required],
-			prove_fullfilment: ['', Validators.required],
-			risk_program: ['', Validators.required],
-			evaluation_techniques: ['', Validators.required],
-			risk_evaluation_techniques: ['', Validators.required],
-			implement_policy: ['', Validators.required],
-			detection_means: ['', Validators.required],
-			transaction_policys: ['', Validators.required],
-			required_documents: ['', Validators.required],
+		// 	prevention_program: ['', Validators.required],
+		// 	management_body: ['', Validators.required],
+		// 	written_policy: ['', Validators.required],
+		// 	ban_policy: ['', Validators.required],
+		// 	regulation_policy: ['', Validators.required],
+		// 	branch_office_ban_policy: ['', Validators.required],
+		// 	anonymous_customer_service: ['', Validators.required],
 
-			name: ['', Validators.required],
-			license: ['', Validators.required],
+		// 	means_of_audit: ['', Validators.required],
+		// 	clients_monitoring: ['', Validators.required],
+		// 	databases_monitoring: ['', Validators.required],
 
-			functionary_name: ['', Validators.required],
-			position: ['', Validators.required]
+		// 	prevention_training: ['', Validators.required],
+		// 	official_responsible: ['', Validators.required],
+		// 	training_functionary: ['', Validators.required],
+		// 	staff_training: ['', Validators.required],
+		// 	prove_fullfilment: ['', Validators.required],
+		// 	risk_program: ['', Validators.required],
+		// 	evaluation_techniques: ['', Validators.required],
+		// 	risk_evaluation_techniques: ['', Validators.required],
+		// 	implement_policy: ['', Validators.required],
+		// 	detection_means: ['', Validators.required],
+		// 	transaction_policys: ['', Validators.required],
+		// 	required_documents: ['', Validators.required],
 
-		});
+		// 	name: ['', Validators.required],
+		// 	license: ['', Validators.required],
+
+		// 	functionary_name: ['', Validators.required],
+		// 	position: ['', Validators.required]
+
+		// });
+	}
+
+
+	addBasicControls(){
+
+		this.form.addControl('request', this.fb.control('', Validators.required));
+		this.form.addControl('society_name', this.fb.control('', Validators.required));
+		this.form.addControl('contributor_num', this.fb.control('', Validators.required));
+		this.form.addControl('associate_type', this.fb.control('', Validators.required));
+		this.form.addControl('home', this.fb.control('', Validators.required));
+		this.form.addControl('date', this.fb.control('', Validators.required));
+		this.form.addControl('register_num', this.fb.control('', Validators.required));
+		this.form.addControl('postal_address', this.fb.control('', Validators.required));
+		this.form.addControl('telephone', this.fb.control('', Validators.required));
+		this.form.addControl('fax', this.fb.control('', Validators.required));
+		this.form.addControl('email', this.fb.control('', Validators.required));
+		this.form.addControl('main_activity', this.fb.control('', Validators.required));
+		this.form.addControl('investigation_status', this.fb.control('', Validators.required));
+		this.form.addControl('prevention_program', this.fb.control('', Validators.required));
+		this.form.addControl('management_body', this.fb.control('', Validators.required));
+		this.form.addControl('written_policy', this.fb.control('', Validators.required));
+		this.form.addControl('ban_policy', this.fb.control('', Validators.required));
+		this.form.addControl('regulation_policy', this.fb.control('', Validators.required));
+		this.form.addControl('branch_office_ban_policy', this.fb.control('', Validators.required));
+		this.form.addControl('anonymous_customer_service', this.fb.control('', Validators.required));
+		this.form.addControl('means_of_audit', this.fb.control('', Validators.required));
+		this.form.addControl('clients_monitoring', this.fb.control('', Validators.required));
+		this.form.addControl('databases_monitoring', this.fb.control('', Validators.required));
+		this.form.addControl('prevention_training', this.fb.control('', Validators.required));
+		this.form.addControl('official_responsible', this.fb.control('', Validators.required));
+		this.form.addControl('training_functionary', this.fb.control('', Validators.required));
+		this.form.addControl('staff_training', this.fb.control('', Validators.required));
+		this.form.addControl('prove_fullfilment', this.fb.control('', Validators.required));
+		this.form.addControl('risk_program', this.fb.control('', Validators.required));
+		this.form.addControl('evaluation_techniques', this.fb.control('', Validators.required));
+		this.form.addControl('risk_evaluation_techniques', this.fb.control('', Validators.required));
+		this.form.addControl('implement_policy', this.fb.control('', Validators.required));
+		this.form.addControl('detection_means', this.fb.control('', Validators.required));
+		this.form.addControl('transaction_policys', this.fb.control('', Validators.required));
+		this.form.addControl('required_documents', this.fb.control('', Validators.required));
+		this.form.addControl('name', this.fb.control('', Validators.required));
+		this.form.addControl('license', this.fb.control('', Validators.required));
+		this.form.addControl('functionary_name', this.fb.control('', Validators.required));
+		this.form.addControl('position', this.fb.control('', Validators.required));
+
 	}
 
 }

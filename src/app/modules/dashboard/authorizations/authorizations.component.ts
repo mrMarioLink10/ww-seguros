@@ -3,6 +3,8 @@ import { Router } from '@angular/router';
 import { MatProgressButtonOptions } from 'mat-progress-buttons';
 import { MatTableDataSource, MatSort, MatPaginator } from '@angular/material';
 import { FormGroup } from '@angular/forms';
+import { AuthorizationsService } from '../services/authorizations/authorizations.service';
+import { HttpParams } from '@angular/common/http';
 
 
 export interface Claims {
@@ -16,7 +18,6 @@ export interface Claims {
 }
 
 const ELEMENT_DATA: Claims[] = [
-	// tslint:disable: max-line-length
 
 	{
 		no: 154546,
@@ -55,7 +56,19 @@ const ELEMENT_DATA: Claims[] = [
 })
 export class AuthorizationsComponent implements OnInit {
 
-	statusTypes = ['Enviado', 'Reembolsado', 'Denegado'];
+	statusTypes = [
+	  'Enviado', 
+	  'Reembolsado', 
+	  'Denegado'
+	];
+
+	fillType = 'nroPoliza';
+
+	fills = {
+	  status: this.statusTypes, 
+	  fillType: this.fillType
+	}; 
+  
 
 	newAuthorizationButtonOptions: MatProgressButtonOptions = {
 		active: false,
@@ -71,8 +84,11 @@ export class AuthorizationsComponent implements OnInit {
 		customClass: 'dashboard-button'
 	};
 
-	displayedColumns: string[] = ['no', 'nombre', 'seguro', 'plan', 'fecha', 'monto', 'estatus', 'acciones'];
-	dataSource = new MatTableDataSource(ELEMENT_DATA);
+	//displayedColumns: string[] = ['no', 'nombre', 'seguro', 'plan', 'fecha', 'monto', 'estatus', 'acciones'];
+	displayedColumns: string[] = ['no', 'nombre', 'seguro', 'plan','condicion', 'estatus', 'acciones'];
+	//dataSource = new MatTableDataSource(ELEMENT_DATA);
+	dataSource;
+	authorizations:any[];
 
 	@ViewChild(MatSort, { static: true })
 	sort: MatSort;
@@ -81,17 +97,27 @@ export class AuthorizationsComponent implements OnInit {
 
 	testForm: FormGroup;
 
-	constructor(private route: Router) { }
+	constructor(private route: Router, private _authorizationsService: AuthorizationsService) { }
+
+
+	getAuthorizations(params:HttpParams = new HttpParams){
+		let data;
+		this._authorizationsService.getAuthoriations(params)
+		.subscribe(res => {
+		  data = res;
+		  this.authorizations = data.data;
+		  this.dataSource = new MatTableDataSource(this.authorizations);
+		  this.dataSource.sort = this.sort;
+		  this.dataSource.paginator = this.paginator;
+		}, err => console.log(err));
+	  }
 
 	ngOnInit() {
-		this.dataSource.sort = this.sort;
-		this.dataSource.paginator = this.paginator;
-
+		this.getAuthorizations();
 	}
 
 	newClaim() {
 		this.newAuthorizationButtonOptions.active = true;
-
 		this.route.navigateByUrl('/dashboard/authorizations/new-authorization');
 	}
 }

@@ -7,6 +7,8 @@ import { questionsA, questionsB } from './questions';
 import { Requests } from '../../requests.component';
 import { Router, ActivatedRoute } from '@angular/router';
 import { generate } from 'rxjs';
+import { FormHandlerService } from 'src/app/core/services/forms/form-handler.service';
+import { DiseaseService } from '../../../shared/components/disease/shared/disease/disease.service';
 @Component({
   selector: 'app-major-expenses',
   templateUrl: './major-expenses.component.html',
@@ -26,14 +28,16 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
   questionsBFormArray: FormArray;
   studentDependents: FormArray;
   proceduresArray: FormArray;
+  informationList: FormArray;
+  familyWithDiseasesList: FormArray;
   questions = questionsA;
   questionsB = questionsB;
   student = {
     name: ['', Validators.required],
     univercity: ['', Validators.required],
     univercityPhone: ['', Validators.required]
-  }
-  family = $family
+  };
+  family = $family;
 
 
   yesOrNo: FieldConfig = {
@@ -60,6 +64,36 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
         }
       ],
       name: 'requestType',
+    };
+
+  itIsCurrentOptions: FieldConfig =
+    {
+      label: 'Se encuentra vigente en la actualidad',
+      options: [
+        {
+          value: 'si',
+          viewValue: 'Si'
+        },
+        {
+          value: 'no',
+          viewValue: 'No'
+        }
+      ],
+    };
+
+  didReclamationOptions: FieldConfig =
+    {
+      label: '¿Tuvo alguna reclamación?',
+      options: [
+        {
+          value: 'si',
+          viewValue: 'Si'
+        },
+        {
+          value: 'no',
+          viewValue: 'No'
+        }
+      ],
     };
   payments: FieldConfig = {
     label: 'Frecuencia de Pago',
@@ -170,7 +204,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
     birtday: ['', Validators.required],
     student: ['', Validators.required],
     telUnivercity: ['', Validators.required],
-    id: ['', Validators.required],
+    id2: ['', Validators.required],
     nationality: ['', Validators.required],
     questionsA: this.fb.group({
       haveMusculoskeletal: ['', Validators.required],
@@ -201,7 +235,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
   questionsGroup = {
     question: ['', Validators.required],
     answer: [false, Validators.required],
-  }
+  };
   familyControl = new FormControl('', Validators.required);
   reasonControl = new FormControl('', Validators.required);
 
@@ -211,18 +245,18 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
     dailyAmount: ['', Validators.required],
     numberTime: ['', Validators.required],
     time: ['', Validators.required],
-  }
+  };
   DateQuestionGroup = {
     question: ['', Validators.required],
     answer: [false, Validators.required],
     date: [new Date(), Validators.required],
     description: ['', Validators.required],
-  }
+  };
   pregnant = {
     question: ['', Validators.required],
     answer: [false, Validators.required],
     time: ['', Validators.required],
-  }
+  };
   procedures;
   formGroupProcedure = {
     patientsName: ['', Validators.required],
@@ -233,17 +267,17 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
     time: ['', Validators.required],
     providerName: ['', Validators.required],
     providerDirection: ['', Validators.required]
-  }
+  };
   primaryBenefits = {
     name: ['', Validators.required],
     date: [new Date(), Validators.required],
-    id: ['', Validators.required],
+    id2: ['', Validators.required],
     nationality: ['', Validators.required],
     ocupation: ['', Validators.required],
     family: ['', Validators.required],
     quantity: ['', Validators.required]
 
-  }
+  };
   allFamily = $allFamily;
 
   haveSomeone = {
@@ -270,24 +304,29 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
     haveHighRiskSport: '',
     havePregnant: '',
     haveReproductiveOrganDisorders: '',
-  }
+  };
 
   policy: FormGroup;
   // tslint:disable-next-line: max-line-length
-  constructor(private fb: FormBuilder, public formMethods: FormArrayGeneratorService, private router: Router, private route: ActivatedRoute) { }
+  constructor(
+    private fb: FormBuilder,
+    public formMethods: FormArrayGeneratorService,
+    private router: Router,
+    private route: ActivatedRoute,
+    public formHandler: FormHandlerService,
+    public diseaseService: DiseaseService
+  ) { }
 
   ngOnInit() {
 
     this.procedures = this.fb.array([this.formMethods.createItem(this.formGroupProcedure)]);
 
     this.newRequest = this.fb.group({
-
-
-      requestType: ['', Validators.required],
       NoC: ['', Validators.required],
       deducibles: ['', Validators.required],
       payment: ['', Validators.required],
       plans: ['', Validators.required],
+      requestType: ['', Validators.required],
       person: this.fb.group({
         firstName: ['', Validators.required],
         secondName: ['', Validators.required],
@@ -295,7 +334,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
         date: [new Date(), Validators.required],
         sex: ['', Validators.required],
         nationality: ['', Validators.required],
-        id: ['', Validators.required],
+        id2: ['', Validators.required],
         age: ['', Validators.required],
         weight: ['', Validators.required],
         height: ['', Validators.required],
@@ -331,7 +370,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
           name: ['', Validators.required],
           position: ['', Validators.required],
           nationality: ['', Validators.required],
-          id: ['', Validators.required],
+          id2: ['', Validators.required],
           policy: ['', Validators.required],
           email: ['', Validators.required]
         })
@@ -339,17 +378,15 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
       exposedPerson: this.fb.group({
         contractor: [false, Validators.required],
         headLine: [false, Validators.required],
-        lastPosition: ['', Validators.required],
-        time: ['', Validators.required],
-        timeNumber: ['', Validators.required]
+
       }),
-      prinsipalIncome: ['', Validators.required],
+      principalIncome: ['', Validators.required],
       otherIncomes: ['', Validators.required],
 
 
       dependents: this.fb.group({
-        allDependents: this.fb.array([this.formMethods.createItem(this.dependentFormGroup)]),
-        students: this.fb.array([this.formMethods.createItem(this.student)]),
+        allDependents: this.fb.array([]),
+        students: this.fb.array([]),
       }),
       questionsA: this.fb.group({
         haveMusculoskeletal: ['', Validators.required],
@@ -378,13 +415,21 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
         cardiovascular: this.fb.group({}),
         spine: this.fb.group({}),
       }),
-      questionsB: this.fb.array([this.formMethods.createItem(this.questionsGroup)]),
+      questionsB: this.fb.group({
+        haveConsultedForUnmentioned: ['', Validators.required],
+        haveAlterationForUnmentioned: ['', Validators.required],
+        haveHadExamStudiesTests: ['', Validators.required],
+        hasFamilyWithHeartKidneyDisease: ['', Validators.required],
+        hasDeclinedInsuranceCompany: ['', Validators.required],
+        haveHadMedicalHealthInsurance: ['', Validators.required],
+        information: this.fb.array([this.createFormArray('medicInformation')]),
+      }),
       primaryBenefits: this.fb.group({
         dependentsC: this.fb.array([this.formMethods.createItem(this.primaryBenefits)]),
         personBenefited: this.fb.group({
           selection: [''],
           family: [''],
-          id: ['']
+          id2: ['']
         })
       }),
       contingentBeneficiary: this.fb.group({
@@ -392,7 +437,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
         personBenefited: this.fb.group({
           selection: [''],
           family: [''],
-          id: ['']
+          id2: ['']
         })
       }),
       comentary: [''],
@@ -431,9 +476,8 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
     this.dependentsFormArray = this.newRequest.get('dependents').get('allDependents') as FormArray;
     this.questionsFormArray = this.newRequest.get('questionsA') as FormArray;
     this.questionsBFormArray = this.newRequest.get('questionsB') as FormArray;
+    this.informationList = this.newRequest.get('questionsB').get('information') as FormArray;
     // this.setQuestionsA();
-    this.setQuestionsB();
-
   }
 
   ngDoCheck() { }
@@ -465,78 +509,24 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
   //   });
   // }
 
-  selectChangeB(event, index) {
-    let questions = this.newRequest.get('questionsB').get(index.toString()) as FormGroup;
-    if (event.valor) {
-
-      switch (index) {
-        case 2:
-          questions.addControl('procedures', this.procedures)
-          this.proceduresArray = this.newRequest.get('questionsB').get(index.toString()).get('procedures') as FormArray;
-          this.visible = true;
-          break;
-        case 3:
-          questions.addControl('family', this.familyControl)
-          break;
-        case 4:
-          questions.addControl('reason', this.reasonControl)
-          break;
-        case 5:
-          questions.addControl('policy', this.policy)
-          break;
-
-      }
-    } else {
-      switch (index) {
-        case 2:
-          questions.removeControl('procedures')
-          break;
-        case 3:
-          questions.removeControl('family')
-          break;
-        case 4:
-          questions.removeControl('reason')
-          break;
-        case 5:
-          questions.removeControl('policy')
-          break;
-
-      }
-    }
-
-  }
-
-  setQuestionsB() {
-    this.questionsB.forEach((question, index) => {
-      if (index > 0) {
-        this.add(this.questionsBFormArray, this.questionsGroup);
-      }
-    });
-  }
-
   proceduresFormGroup(index, i) {
     return this.newRequest.get('questionsB').get(index.toString()).get('procedures').get(i.toString()) as FormGroup;
   }
 
   form(): FormGroup {
-    return this.fb.group(this.formGroupProcedure)
+    return this.fb.group(this.formGroupProcedure);
   }
   addprocedures() {
-    this.proceduresArray.push(this.form())
+    this.proceduresArray.push(this.form());
     this.proceduresArray.updateValueAndValidity();
   }
-  // print() {
-  //   // console.log(JSON.stringify(this.newRequest.get('questions').value));
-  //   console.log('SOLO DISEASES', this.newRequest.get('questionsA').value);
-  //   console.log('SOLO DEPENDENTS', this.newRequest.get('dependents'));
-  //   console.log('ENTERO', this.newRequest);
-  //   console.log(this.newRequest.get('dependents').get('allDependents').get('0').get('questionsA'));
-  //   console.log(JSON.stringify(this.newRequest.value));
 
-  // }
 
   selectChange(event) {
-    const questionsForm = this.newRequest.get('questions') as FormGroup;
+    const questionsForm = this.newRequest.get('questionsA') as FormGroup;
+    const questionsBForm = this.newRequest.get('questionsB') as FormGroup;
+    const mhiForm = this.newRequest.get('questionsB').get('medicalHealthInsurance') as FormGroup;
+    const exposedPersonForm = this.newRequest.get('exposedPerson') as FormGroup;
 
     console.log(event);
     if (event.valor === 'si') {
@@ -561,6 +551,50 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
             time: ['', Validators.required],
           }));
           break;
+
+        case 'contractor':
+          exposedPersonForm.addControl('contractorExposedInfo', this.fb.group({
+            lastPosition: ['', Validators.required],
+            time: ['', Validators.required],
+            timeNumber: ['', Validators.required]
+          }));
+          break;
+
+        case 'headLine':
+          exposedPersonForm.addControl('headLineExposedInfo', this.fb.group({
+            lastPosition: ['', Validators.required],
+            time: ['', Validators.required],
+            timeNumber: ['', Validators.required]
+          }));
+          break;
+
+        case 'hasDeclinedInsuranceCompany':
+          questionsBForm.addControl('declinedInsuranceInformation', this.fb.group({
+            reason: ['', Validators.required],
+          }));
+          break;
+
+        case 'didReclamation':
+          mhiForm.addControl('reclamationInfo', this.fb.control('', Validators.required));
+          break;
+
+        case 'haveHadMedicalHealthInsurance':
+          questionsBForm.addControl('medicalHealthInsurance', this.fb.group({
+            companyName: ['', Validators.required],
+            policeNo: ['', Validators.required],
+            insureName: ['', Validators.required],
+            insuranceCompany: ['', Validators.required],
+            policeType: ['', Validators.required],
+            emitionDate: ['', Validators.required],
+            isItCurrent: ['', Validators.required],
+            didReclamation: ['', Validators.required],
+          }));
+          break;
+
+        case 'hasFamilyWithHeartKidneyDisease':
+          questionsBForm.addControl('familyWithDiseases', this.fb.array([this.createFormArray('haveDisease')]));
+          this.familyWithDiseasesList = questionsBForm.get('familyWithDiseases') as FormArray;
+          break;
         default:
           break;
       }
@@ -571,6 +605,31 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
           break;
         case 'haveHighRiskSport':
           questionsForm.removeControl('highRiskSport');
+          break;
+
+        case 'contractor':
+          exposedPersonForm.removeControl('contractorExposedInfo');
+          break;
+
+        case 'headLine':
+          exposedPersonForm.removeControl('headLineExposedInfo');
+          break;
+
+        case 'hasDeclinedInsuranceCompany':
+          questionsBForm.removeControl('declinedInsuranceInformation');
+          break;
+
+        case 'haveHadMedicalHealthInsurance':
+          questionsBForm.removeControl('medicalHealthInsurance');
+          break;
+
+        case 'didReclamation':
+          mhiForm.removeControl('reclamationInfo');
+          break;
+
+        case 'hasFamilyWithHeartKidneyDisease':
+          questionsBForm.removeControl('familyWithDiseases');
+          this.familyWithDiseasesList = undefined;
           break;
         default:
           break;
@@ -615,5 +674,36 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
   print() {
     console.log(JSON.stringify(this.newRequest.get('questionsA').get('prostatic').value));
   }
+
+  createFormArray(type: string): FormGroup {
+    switch (type) {
+      case 'medicInformation':
+        return this.fb.group({
+          name: ['', Validators.required],
+          ailment: ['', Validators.required],
+          date: ['', Validators.required],
+          threatment: ['', Validators.required],
+          time: ['', Validators.required],
+          duration: ['', Validators.required],
+          medicCenterName: ['', Validators.required],
+          medicCenterAddress: ['', Validators.required],
+        });
+        break;
+
+      case 'haveDisease':
+        return this.fb.group({
+          family: ['', Validators.required],
+        });
+        break;
+
+      default:
+        break;
+    }
+  }
+
+  addToList(list: any, type: string) {
+    list.push(this.createFormArray(type));
+  }
+
 }
 

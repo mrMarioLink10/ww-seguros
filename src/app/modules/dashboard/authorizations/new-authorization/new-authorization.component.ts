@@ -69,9 +69,7 @@ export class NewAuthorizationComponent implements OnInit {
 
 	authorization: FormGroup;
 
-	constructor(private fb: FormBuilder, public formHandler: FormHandlerService) { 
-
-		
+	constructor(private fb: FormBuilder, public formHandler: FormHandlerService) {
 	}
 
 	selectChange(event: any) {
@@ -102,8 +100,8 @@ export class NewAuthorizationComponent implements OnInit {
 	}
 
 
-ngOnInit() {
-		this.authorization= this.fb.group({
+	ngOnInit() {
+		this.authorization = this.fb.group({
 			fecha: [new Date(), Validators.required],
 			informacionAsegurado: this.fb.group({
 				nombre: ['', Validators.required],

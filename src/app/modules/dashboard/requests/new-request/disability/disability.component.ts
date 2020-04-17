@@ -12,6 +12,7 @@ import { FormHandlerService } from 'src/app/core/services/forms/form-handler.ser
   styleUrls: ['./disability.component.scss']
 })
 export class DisabilityComponent implements OnInit {
+  sicknessQuestions: any[];
 
   accordionTitles = [
     'Sección A. Datos del propuesto Asegurado y Estatus laboral',
@@ -203,6 +204,37 @@ export class DisabilityComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.sicknessQuestions = [
+      {
+        label: '',
+        name: 'haveHypertension'
+      },
+      {
+        label: '',
+        name: 'haveArthritis'
+      },
+      {
+        label: '',
+        name: 'haveCardiovascular'
+      },
+      {
+        label: '',
+        name: 'haveRenalUrinary'
+      },
+      {
+        label: '',
+        name: 'haveMetabolics'
+      },
+      {
+        label: '',
+        name: 'haveMusculoSkeletal'
+      },
+      {
+        label: '',
+        name: 'haveProstatics'
+      },
+    ];
+
     this.mainProperty = this.fb.array([this.formMethods.createItem(this.mainGroup)]);
     this.contingentProperty = this.fb.array([this.formMethods.createItem(this.contingentGroup)]);
 
@@ -388,6 +420,13 @@ export class DisabilityComponent implements OnInit {
           formQ.addControl('sicknessType', this.fb.group({
             date: [new Date(), Validators.required],
             description: ['', Validators.required],
+            haveHypertension: ['', Validators.required],
+            haveArthritis: ['', Validators.required],
+            haveCardiovascular: ['', Validators.required],
+            haveRenalUrinary: ['', Validators.required],
+            haveMetabolics: ['', Validators.required],
+            haveMusculoSkeletal: ['', Validators.required],
+            haveProstatics: ['', Validators.required],
           }));
 
           break;
@@ -507,7 +546,6 @@ export class DisabilityComponent implements OnInit {
   }
 
   createFormArray(name: string) {
-
     const formP = this.disabilityGroup.get('main') as FormGroup;
     const formC = this.disabilityGroup.get('contingent') as FormGroup;
 
@@ -515,23 +553,17 @@ export class DisabilityComponent implements OnInit {
     formC.addControl('contingent_array', this.contingentProperty);
 
     switch (name) {
-
       case 'main_array':
-
         return this.mainGroup;
         break;
 
       case 'contingent_array':
-
         return this.contingentGroup;
         break;
-
     }
-
   }
 
   addFormArray(array: any, name: string) {
-
     const increment = array.length + 1;
     array = this.formMethods.addElement(array, increment, this.createFormArray(name)).formArray;
 

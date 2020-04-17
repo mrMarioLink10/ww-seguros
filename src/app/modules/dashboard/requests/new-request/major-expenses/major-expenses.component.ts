@@ -230,6 +230,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
       haveHighRiskSport: ['', Validators.required],
       havePregnant: ['', Validators.required],
       haveReproductiveOrganDisorders: ['', Validators.required],
+      questionnairesGastosMayores: this.fb.group({}),
     }),
   };
   questionsGroup = {
@@ -412,8 +413,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
         haveHighRiskSport: ['', Validators.required],
         havePregnant: ['', Validators.required],
         haveReproductiveOrganDisorders: ['', Validators.required],
-        cardiovascular: this.fb.group({}),
-        spine: this.fb.group({}),
+        questionnairesGastosMayores: this.fb.group({}),
       }),
       questionsB: this.fb.group({
         haveConsultedForUnmentioned: ['', Validators.required],

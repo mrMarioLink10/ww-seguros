@@ -120,7 +120,7 @@ export class DisabilityService {
       value: 'us$ 200,000',
       viewValue: 'US$ 200,000'
     },
-  ]
+  ];
 
   rentArray = [
     {

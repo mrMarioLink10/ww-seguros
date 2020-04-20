@@ -141,8 +141,8 @@
                   </div>
 
                   <div class="mr-3 mt-5 lg:mt-3 xl:mt-0">
-                    <app-input [group]="disabilityGroup.get('insured_data')" label="Teléfono de la Empresa"
-                      name="telephone" placeholder="Por ej: 8090010001"></app-input>
+                    <app-number-input [group]="disabilityGroup.get('insured_data')" label="Teléfono de la Empresa"
+                      name="telephone" placeholder="Por ej: 8090010001"></app-number-input>
                   </div>
 
                   <div class="mr-3 mt-5 lg:mt-3 lg:col-span-2 xl:mt-0 xl:col-span-1">
@@ -331,13 +331,13 @@
                 </div>
 
                 <div class="mr-3 mt-8 sm:mt-5 md:mt-6 md:pt-1 lg:pt-0 lg:mt-4 xl:pt-1 xl:mt-3">
-                  <app-input [group]="disabilityGroup.get('policyholder')" label="Tel. Res." name="telephone"
-                    placeholder="Por ej: 809-002-0034"></app-input>
+                  <app-number-input [group]="disabilityGroup.get('policyholder')" label="Tel. Res." name="telephone"
+                    placeholder="Por ej: 809-002-0034"></app-number-input>
                 </div>
 
                 <div class="mr-3 mt-8 sm:mt-5 md:mt-6 md:pt-1 lg:pt-1 lg:mt-4 xl:pt-1 xl:mt-3">
-                  <app-input [group]="disabilityGroup.get('policyholder')" label="Celular" name="cell"
-                    placeholder="Por ej: 829-318-0000"></app-input>
+                  <app-number-input [group]="disabilityGroup.get('policyholder')" label="Celular" name="cell"
+                    placeholder="Por ej: 829-318-0000"></app-number-input>
                 </div>
 
                 <div class="mr-3 mt-8 sm:mt-5 md:mt-8 md:pt-2 lg:pt-0 lg:mt-8 xl:pt-0 xl:mt-3">
@@ -764,208 +764,224 @@
                               </div>
                             </div>
                             <!-- AQUI ISAI -->
-                            <div>ISAI</div>
-                          </div>
-                        </div>
-                        <hr class="ww-divider mt-8">
-                        <!-- Fila 6b -->
-                        <div class="mt-8 ml-2">
-                          <div class="inline">
-                            <div class="mr-3 sm:mr-6 md:mr-12 lg:mr-20 xl:mr-32">
-                              <label class="radio-button-label">6b. ¿Ha sufrido de cáncer, leucemia u otra enfermedad de
-                                la sangre? </label>
+                            <div class="radio-button-label mt-4">Seleccione cuales enfermedades o desordenes padece o ha
+                              padecido:
                             </div>
-                          </div>
-                          <div class="inline float-right mt-1 sm:mt-1 md:mt-1 lg:-mt-5 xl:-mt-5">
-                            <app-radio-button [group]="disabilityGroup.get('questions').get('questionnaire')"
-                              name="bloodSick_radio" [options]="YesNo"> </app-radio-button>
+                            <div *ngFor="let question of sicknessQuestions">
+                              <hr class="w-full mb-6 ww-divider">
+
+                              <div
+                                class="w-full xl:flex xl:justify-between lg:flex lg:justify-between md:flex md:justify-between sm:flex sm:justify-between">
+                                <div class="radio-button-label" style="font-size: 12px !important;">{{question.label}}
+                                </div>
+                                <app-radio-button
+                                  [group]="disabilityGroup.get('questions').get('questionnaire').get('sicknessType')"
+                                  [name]="question.name" [options]="diseaseService.yesOrNoOriginal"
+                                  (selected)="selectChange($event)">
+                                </app-radio-button>
+                              </div>
+
+                            </div>
                           </div>
                         </div>
                       </div>
                       <hr class="ww-divider mt-8">
-                      <!-- Fila 7 -->
-                      <div class="mt-8">
-                        <div>
-                          <label class="radio-button-label">Sin importar la fecha del evento: </label>
-                        </div>
-                        <div class="mt-8 ml-2">
-                          <div class="inline">
-                            <div class="mr-3 sm:mr-6 md:mr-12 lg:mr-20 xl:mr-32">
-                              <label class="radio-button-label">7. ¿Ha sido sometido a un estudio de VIH o hepatitis
-                                para el que haya tenido resultado positivo? </label>
-                            </div>
-                          </div>
-                          <div class="inline float-right mt-1 sm:mt-1 md:mt-1 lg:mt-1 xl:-mt-5">
-                            <app-radio-button [group]="disabilityGroup.get('questions').get('questionnaire')"
-                              name="VIH_radio" [options]="YesNo" (selected)="selectChange($event)"> </app-radio-button>
-                          </div>
-                          <div class="mt-16"
-                            *ngIf="this.disabilityGroup.get('questions').get('questionnaire').get('VIH')">
-                            <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
-                              <div class="mr-3">
-                                <app-date-picker
-                                  [group]="disabilityGroup.get('questions').get('questionnaire').get('VIH')"
-                                  label="¿En qué fecha?" name='date'> </app-date-picker>
-                              </div>
-                              <div class="mr-3 mt-2 sm:mt-2 md:mt-0 lg:mt-0 xl:mt-0">
-                                <app-input label="¿Cuál?" name='name'
-                                  [group]="disabilityGroup.get('questions').get('questionnaire').get('VIH')">
-                                </app-input>
-                              </div>
-                            </div>
+                      <!-- Fila 6b -->
+                      <div class="mt-8 ml-2">
+                        <div class="inline">
+                          <div class="mr-3 sm:mr-6 md:mr-12 lg:mr-20 xl:mr-32">
+                            <label class="radio-button-label">6b. ¿Ha sufrido de cáncer, leucemia u otra enfermedad de
+                              la sangre? </label>
                           </div>
                         </div>
-                        <hr class="ww-divider mt-8">
-                        <!-- Fila 8 -->
-                        <div class="mt-8 ml-2">
-                          <div class="inline">
-                            <div class="mr-3 sm:mr-6 md:mr-12 lg:mr-20 xl:mr-32 xl:pr-3">
-                              <label class="radio-button-label">8. ¿Ha sido sometido a un tratamiento especializado de
-                                quimioterapia, terapia hormonal, inmunoterapia, terapia de cobalto o radioterapia?
-                              </label>
-                            </div>
-                          </div>
-                          <div class="inline float-right mt-1 sm:mt-1 md:mt-1 lg:mt-1 xl:-mt-5">
-                            <app-radio-button [group]="disabilityGroup.get('questions').get('questionnaire')"
-                              name="specialTherapy_radio" [options]="YesNo" (selected)="selectChange($event)">
-                            </app-radio-button>
-                          </div>
-                          <div class="mt-16"
-                            *ngIf="this.disabilityGroup.get('questions').get('questionnaire').get('specialTherapy')">
-                            <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
-                              <div class="mr-3">
-                                <app-date-picker
-                                  [group]="disabilityGroup.get('questions').get('questionnaire').get('specialTherapy')"
-                                  label="¿En qué fecha?" name='date'> </app-date-picker>
-                              </div>
-                              <div class="mr-3 mt-2 sm:mt-2 md:mt-0 lg:mt-0 xl:mt-0 lg:col-span-2">
-                                <app-text-area label="¿Por qué razón?" name='reason'
-                                  [group]="disabilityGroup.get('questions').get('questionnaire').get('specialTherapy')">
-                                </app-text-area>
-                              </div>
-                            </div>
+                        <div class="inline float-right mt-1 sm:mt-1 md:mt-1 lg:-mt-5 xl:-mt-5">
+                          <app-radio-button [group]="disabilityGroup.get('questions').get('questionnaire')"
+                            name="bloodSick_radio" [options]="YesNo"> </app-radio-button>
+                        </div>
+                      </div>
+                    </div>
+                    <hr class="ww-divider mt-8">
+                    <!-- Fila 7 -->
+                    <div class="mt-8">
+                      <div>
+                        <label class="radio-button-label">Sin importar la fecha del evento: </label>
+                      </div>
+                      <div class="mt-8 ml-2">
+                        <div class="inline">
+                          <div class="mr-3 sm:mr-6 md:mr-12 lg:mr-20 xl:mr-32">
+                            <label class="radio-button-label">7. ¿Ha sido sometido a un estudio de VIH o hepatitis
+                              para el que haya tenido resultado positivo? </label>
                           </div>
                         </div>
-                        <hr class="ww-divider mt-8">
-                        <!-- Fila 9 -->
-                        <div class="mt-8 ml-2">
-                          <div class="inline">
-                            <div class="mr-3 sm:mr-6 md:mr-12 lg:mr-20 xl:mr-32">
-                              <label class="radio-button-label">9. ¿Ha sufrido una enfermedad o accidente por la que
-                                haya tenido efectos secundarios, incapacidad parcial o total? </label>
-                            </div>
-                          </div>
-                          <div class="inline float-right mt-1 sm:mt-1 md:mt-1 lg:mt-1 xl:-mt-5">
-                            <app-radio-button [group]="disabilityGroup.get('questions').get('questionnaire')"
-                              name="accident_radio" [options]="YesNo" (selected)="selectChange($event)">
-                            </app-radio-button>
-                          </div>
-                          <div class="mt-16"
-                            *ngIf="this.disabilityGroup.get('questions').get('questionnaire').get('accident')">
-                            <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
-                              <div class="mr-3">
-                                <app-date-picker
-                                  [group]="disabilityGroup.get('questions').get('questionnaire').get('accident')"
-                                  label="¿En qué fecha?" name='date'> </app-date-picker>
-                              </div>
-                              <div class="mr-3 mt-2 sm:mt-2 md:mt-0 lg:mt-0 xl:mt-0">
-                                <app-text-area label="Naturaleza de la enfermedad o accidente" name='reason'
-                                  [group]="disabilityGroup.get('questions').get('questionnaire').get('accident')">
-                                </app-text-area>
-                              </div>
-                              <div
-                                class="mr-3 mt-5 sm:mt-2 md:mt-5 md:col-span-2 lg:col-span-1 lg:mt-0 xl:col-span-1 xl:mt-0">
-                                <app-text-area label="Naturaleza de los efectos secundarios" name='effects'
-                                  [group]="disabilityGroup.get('questions').get('questionnaire').get('accident')">
-                                </app-text-area>
-                              </div>
-                            </div>
-                          </div>
+                        <div class="inline float-right mt-1 sm:mt-1 md:mt-1 lg:mt-1 xl:-mt-5">
+                          <app-radio-button [group]="disabilityGroup.get('questions').get('questionnaire')"
+                            name="VIH_radio" [options]="YesNo" (selected)="selectChange($event)"> </app-radio-button>
                         </div>
-                        <hr class="ww-divider mt-8">
-                        <!-- Fila 10 -->
-                        <div class="mt-8">
-                          <div class="inline">
-                            <div class="mr-3 sm:mr-6 md:mr-12 lg:mr-20 xl:mr-32 xl:pr-3">
-                              <label class="radio-button-label"> ¿Alguna compañía de seguros le ha declinado, aplazado,
-                                recargado o limitado un seguro de vida, de accidente o de salud a usted o a alguno de
-                                los dependientes nombrados? </label>
-                            </div>
-                          </div>
-                          <div class="inline float-right mt-1 sm:mt-1 md:mt-1 lg:mt-1 xl:-mt-5">
-                            <app-radio-button [group]="disabilityGroup.get('questions').get('questionnaire')"
-                              name="deny_radio" [options]="YesNo" (selected)="selectChange($event)"> </app-radio-button>
-                          </div>
-                          <div class="mt-8"
-                            *ngIf="this.disabilityGroup.get('questions').get('questionnaire').get('deny')">
+                        <div class="mt-16"
+                          *ngIf="this.disabilityGroup.get('questions').get('questionnaire').get('VIH')">
+                          <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
                             <div class="mr-3">
+                              <app-date-picker
+                                [group]="disabilityGroup.get('questions').get('questionnaire').get('VIH')"
+                                label="¿En qué fecha?" name='date'> </app-date-picker>
+                            </div>
+                            <div class="mr-3 mt-2 sm:mt-2 md:mt-0 lg:mt-0 xl:mt-0">
+                              <app-input label="¿Cuál?" name='name'
+                                [group]="disabilityGroup.get('questions').get('questionnaire').get('VIH')">
+                              </app-input>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <hr class="ww-divider mt-8">
+                      <!-- Fila 8 -->
+                      <div class="mt-8 ml-2">
+                        <div class="inline">
+                          <div class="mr-3 sm:mr-6 md:mr-12 lg:mr-20 xl:mr-32 xl:pr-3">
+                            <label class="radio-button-label">8. ¿Ha sido sometido a un tratamiento especializado de
+                              quimioterapia, terapia hormonal, inmunoterapia, terapia de cobalto o radioterapia?
+                            </label>
+                          </div>
+                        </div>
+                        <div class="inline float-right mt-1 sm:mt-1 md:mt-1 lg:mt-1 xl:-mt-5">
+                          <app-radio-button [group]="disabilityGroup.get('questions').get('questionnaire')"
+                            name="specialTherapy_radio" [options]="YesNo" (selected)="selectChange($event)">
+                          </app-radio-button>
+                        </div>
+                        <div class="mt-16"
+                          *ngIf="this.disabilityGroup.get('questions').get('questionnaire').get('specialTherapy')">
+                          <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
+                            <div class="mr-3">
+                              <app-date-picker
+                                [group]="disabilityGroup.get('questions').get('questionnaire').get('specialTherapy')"
+                                label="¿En qué fecha?" name='date'> </app-date-picker>
+                            </div>
+                            <div class="mr-3 mt-2 sm:mt-2 md:mt-0 lg:mt-0 xl:mt-0 lg:col-span-2">
                               <app-text-area label="¿Por qué razón?" name='reason'
-                                [group]="disabilityGroup.get('questions').get('questionnaire').get('deny')">
+                                [group]="disabilityGroup.get('questions').get('questionnaire').get('specialTherapy')">
                               </app-text-area>
                             </div>
                           </div>
                         </div>
-                        <!-- Fila 11 -->
-                        <div class="mt-16">
-                          <div class="inline">
-                            <label class="radio-button-label"> ¿Tiene Seguro de Salud vigente? </label>
+                      </div>
+                      <hr class="ww-divider mt-8">
+                      <!-- Fila 9 -->
+                      <div class="mt-8 ml-2">
+                        <div class="inline">
+                          <div class="mr-3 sm:mr-6 md:mr-12 lg:mr-20 xl:mr-32">
+                            <label class="radio-button-label">9. ¿Ha sufrido una enfermedad o accidente por la que
+                              haya tenido efectos secundarios, incapacidad parcial o total? </label>
                           </div>
-                          <div class="inline float-right ">
-                            <app-radio-button [group]="disabilityGroup.get('questions').get('questionnaire')"
-                              name="insurance_radio" [options]="YesNo" (selected)="selectChange($event)">
-                            </app-radio-button>
-                          </div>
-                          <div
-                            class="mt-16 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
-                            *ngIf="this.disabilityGroup.get('questions').get('questionnaire').get('insurance')">
+                        </div>
+                        <div class="inline float-right mt-1 sm:mt-1 md:mt-1 lg:mt-1 xl:-mt-5">
+                          <app-radio-button [group]="disabilityGroup.get('questions').get('questionnaire')"
+                            name="accident_radio" [options]="YesNo" (selected)="selectChange($event)">
+                          </app-radio-button>
+                        </div>
+                        <div class="mt-16"
+                          *ngIf="this.disabilityGroup.get('questions').get('questionnaire').get('accident')">
+                          <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
                             <div class="mr-3">
-                              <app-input label="Nombre de la compañía" name='company' placeholder="Por ej: Seguros ARS"
-                                [group]="disabilityGroup.get('questions').get('questionnaire').get('insurance')">
-                              </app-input>
-                            </div>
-                            <div class="mr-3 mt-5 sm:mt-2 md:mt-0 lg:mt-0 xl:mt-0">
-                              <app-number-input label="Número de poliza" name='num'
-                                [group]="disabilityGroup.get('questions').get('questionnaire').get('insurance')"
-                                min="1"></app-number-input>
-                            </div>
-                            <div class="mr-3 mt-5 sm:mt-3 md:mt-5 lg:mt-0 xl:mt-0">
-                              <app-input label="Nombre del Asegurado" name='name'
-                                placeholder="Por ej: Ramón Suárez de la Cruz"
-                                [group]="disabilityGroup.get('questions').get('questionnaire').get('insurance')">
-                              </app-input>
-                            </div>
-                            <div class="mr-3 mt-5 sm:mt-3 md:mt-5 lg:mt-4 xl:mt-0">
-                              <app-input label="Compañía Aseguradora" name='insured_company'
-                                [group]="disabilityGroup.get('questions').get('questionnaire').get('insurance')">
-                              </app-input>
-                            </div>
-                            <div class="mr-3 mt-5 sm:mt-3 md:mt-5 lg:mt-4 xl:mt-3">
-                              <app-input label="Tipo de Póliza" name='policy'
-                                [group]="disabilityGroup.get('questions').get('questionnaire').get('insurance')">
-                              </app-input>
-                            </div>
-                            <div class="mr-3 mt-5 sm:mt-3 md:mt-5 lg:mt-4 xl:mt-3">
                               <app-date-picker
+                                [group]="disabilityGroup.get('questions').get('questionnaire').get('accident')"
+                                label="¿En qué fecha?" name='date'> </app-date-picker>
+                            </div>
+                            <div class="mr-3 mt-2 sm:mt-2 md:mt-0 lg:mt-0 xl:mt-0">
+                              <app-text-area label="Naturaleza de la enfermedad o accidente" name='reason'
+                                [group]="disabilityGroup.get('questions').get('questionnaire').get('accident')">
+                              </app-text-area>
+                            </div>
+                            <div
+                              class="mr-3 mt-5 sm:mt-2 md:mt-5 md:col-span-2 lg:col-span-1 lg:mt-0 xl:col-span-1 xl:mt-0">
+                              <app-text-area label="Naturaleza de los efectos secundarios" name='effects'
+                                [group]="disabilityGroup.get('questions').get('questionnaire').get('accident')">
+                              </app-text-area>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <hr class="ww-divider mt-8">
+                      <!-- Fila 10 -->
+                      <div class="mt-8">
+                        <div class="inline">
+                          <div class="mr-3 sm:mr-6 md:mr-12 lg:mr-20 xl:mr-32 xl:pr-3">
+                            <label class="radio-button-label"> ¿Alguna compañía de seguros le ha declinado, aplazado,
+                              recargado o limitado un seguro de vida, de accidente o de salud a usted o a alguno de
+                              los dependientes nombrados? </label>
+                          </div>
+                        </div>
+                        <div class="inline float-right mt-1 sm:mt-1 md:mt-1 lg:mt-1 xl:-mt-5">
+                          <app-radio-button [group]="disabilityGroup.get('questions').get('questionnaire')"
+                            name="deny_radio" [options]="YesNo" (selected)="selectChange($event)"> </app-radio-button>
+                        </div>
+                        <div class="mt-8"
+                          *ngIf="this.disabilityGroup.get('questions').get('questionnaire').get('deny')">
+                          <div class="mr-3">
+                            <app-text-area label="¿Por qué razón?" name='reason'
+                              [group]="disabilityGroup.get('questions').get('questionnaire').get('deny')">
+                            </app-text-area>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- Fila 11 -->
+                      <div class="mt-16">
+                        <div class="inline">
+                          <label class="radio-button-label"> ¿Tiene Seguro de Salud vigente? </label>
+                        </div>
+                        <div class="inline float-right ">
+                          <app-radio-button [group]="disabilityGroup.get('questions').get('questionnaire')"
+                            name="insurance_radio" [options]="YesNo" (selected)="selectChange($event)">
+                          </app-radio-button>
+                        </div>
+                        <div class="mt-16 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
+                          *ngIf="this.disabilityGroup.get('questions').get('questionnaire').get('insurance')">
+                          <div class="mr-3">
+                            <app-input label="Nombre de la compañía" name='company' placeholder="Por ej: Seguros ARS"
+                              [group]="disabilityGroup.get('questions').get('questionnaire').get('insurance')">
+                            </app-input>
+                          </div>
+                          <div class="mr-3 mt-5 sm:mt-2 md:mt-0 lg:mt-0 xl:mt-0">
+                            <app-number-input label="Número de poliza" name='num'
+                              [group]="disabilityGroup.get('questions').get('questionnaire').get('insurance')" min="1">
+                            </app-number-input>
+                          </div>
+                          <div class="mr-3 mt-5 sm:mt-3 md:mt-5 lg:mt-0 xl:mt-0">
+                            <app-input label="Nombre del Asegurado" name='name'
+                              placeholder="Por ej: Ramón Suárez de la Cruz"
+                              [group]="disabilityGroup.get('questions').get('questionnaire').get('insurance')">
+                            </app-input>
+                          </div>
+                          <div class="mr-3 mt-5 sm:mt-3 md:mt-5 lg:mt-4 xl:mt-0">
+                            <app-input label="Compañía Aseguradora" name='insured_company'
+                              [group]="disabilityGroup.get('questions').get('questionnaire').get('insurance')">
+                            </app-input>
+                          </div>
+                          <div class="mr-3 mt-5 sm:mt-3 md:mt-5 lg:mt-4 xl:mt-3">
+                            <app-input label="Tipo de Póliza" name='policy'
+                              [group]="disabilityGroup.get('questions').get('questionnaire').get('insurance')">
+                            </app-input>
+                          </div>
+                          <div class="mr-3 mt-5 sm:mt-3 md:mt-5 lg:mt-4 xl:mt-3">
+                            <app-date-picker
+                              [group]="disabilityGroup.get('questions').get('questionnaire').get('insurance')"
+                              label="Fecha en que se emitió" name='date'> </app-date-picker>
+                          </div>
+                          <div class="mt-5 sm:mt-3 md:mt-5 lg:mt-4 xl:mt-3">
+                            <div>
+                              <label class="radio-button-label"> ¿Tuvo alguna reclamación? </label>
+                            </div>
+                            <div class="mr-3">
+                              <app-radio-button
                                 [group]="disabilityGroup.get('questions').get('questionnaire').get('insurance')"
-                                label="Fecha en que se emitió" name='date'> </app-date-picker>
+                                [options]="YesNo" name='claim_radio' (selected)="selectChange($event)">
+                              </app-radio-button>
                             </div>
-                            <div class="mt-5 sm:mt-3 md:mt-5 lg:mt-4 xl:mt-3">
-                              <div>
-                                <label class="radio-button-label"> ¿Tuvo alguna reclamación? </label>
-                              </div>
-                              <div class="mr-3">
-                                <app-radio-button
-                                  [group]="disabilityGroup.get('questions').get('questionnaire').get('insurance')"
-                                  [options]="YesNo" name='claim_radio' (selected)="selectChange($event)">
-                                </app-radio-button>
-                              </div>
-                            </div>
-                            <div class="mr-3 mt-5 sm:mt-3 md:mt-5 lg:col-span-2 lg:mt-4 xl:col-span-1 xl:mt-3"
-                              *ngIf="this.disabilityGroup.get('questions').get('questionnaire').get('insurance').get('claim')">
-                              <app-input
-                                [group]="disabilityGroup.get('questions').get('questionnaire').get('insurance').get('claim')"
-                                label="Especificar" name='explanation'> </app-input>
-                            </div>
+                          </div>
+                          <div class="mr-3 mt-5 sm:mt-3 md:mt-5 lg:col-span-2 lg:mt-4 xl:col-span-1 xl:mt-3"
+                            *ngIf="this.disabilityGroup.get('questions').get('questionnaire').get('insurance').get('claim')">
+                            <app-input
+                              [group]="disabilityGroup.get('questions').get('questionnaire').get('insurance').get('claim')"
+                              label="Especificar" name='explanation'> </app-input>
                           </div>
                         </div>
                       </div>
@@ -1038,7 +1054,7 @@
                         <div class="mr-3 mt-2 md:mt-0 lg:mt-0 xl:mt-0">
                           <!-- mb-3  sm:mb-3 xl:mt-8 xl:pt-1 -->
                           <app-input [group]="disabilityGroup.get('main').get('main_array').get(in.toString())"
-                            label="Documento de Identidad" name="id" placeholder="Ej.: 402-0070014-8"></app-input>
+                            label="Documento de Identidad" name="id2" placeholder="Ej.: 402-0070014-8"></app-input>
                         </div>
 
                         <div class="mr-3 mt-2 lg:mt-0 xl:mt-0">
@@ -1134,7 +1150,7 @@
                           <!-- mb-3  sm:mb-3 xl:mt-8 xl:pt-1 -->
                           <app-input
                             [group]="disabilityGroup.get('contingent').get('contingent_array').get(in.toString())"
-                            label="Documento de Identidad" name="id" placeholder="Ej.: 402-0070014-8"></app-input>
+                            label="Documento de Identidad" name="id2" placeholder="Ej.: 402-0070014-8"></app-input>
                         </div>
                         <div class="mr-3 mt-2 lg:mt-0 xl:mt-0">
                           <!-- mb-3  sm:mb-3 xl:mt-8 xl:pt-1 -->
@@ -1232,18 +1248,20 @@
       <mat-tab label="Cuestionarios" class="mat-tab-forms">
         <app-hypertension *ngIf="disabilityGroup.get('questionnaires').get('hypertension')"
           [form]="disabilityGroup.get('questionnaires').get('hypertension')"></app-hypertension>
-        <app-mellitus-diabetes *ngIf="disabilityGroup.get('questionnaires').get('diabetes')"
-          [form]="disabilityGroup.get('questionnaires').get('diabetes')"></app-mellitus-diabetes>
+        <app-mellitus-diabetes *ngIf="disabilityGroup.get('questionnaires').get('mellitusDiabetes')"
+          [form]="disabilityGroup.get('questionnaires').get('mellitusDiabetes')"></app-mellitus-diabetes>
         <app-arthritis *ngIf="disabilityGroup.get('questionnaires').get('arthritis')"
           [form]="disabilityGroup.get('questionnaires').get('arthritis')"></app-arthritis>
         <app-spine *ngIf="disabilityGroup.get('questionnaires').get('spine')"
           [form]="disabilityGroup.get('questionnaires').get('spine')"></app-spine>
-        <app-musculoskeletal *ngIf="disabilityGroup.get('questionnaires').get('musculoskeletal')"
-          [form]="disabilityGroup.get('questionnaires').get('musculoskeletal')"></app-musculoskeletal>
+        <app-musculoskeletal *ngIf="disabilityGroup.get('questionnaires').get('musculosSkeletal')"
+          [form]="disabilityGroup.get('questionnaires').get('musculosSkeletal')"></app-musculoskeletal>
         <app-cardiovascular *ngIf="disabilityGroup.get('questionnaires').get('cardiovascular')"
           [form]="disabilityGroup.get('questionnaires').get('cardiovascular')"></app-cardiovascular>
-        <app-renal-urinary *ngIf="disabilityGroup.get('questionnaires').get('renal-urinary')"
-          [form]="disabilityGroup.get('questionnaires').get('renal-urinary')"></app-renal-urinary>
+        <app-renal-urinary *ngIf="disabilityGroup.get('questionnaires').get('renalUrinary')"
+          [form]="disabilityGroup.get('questionnaires').get('renalUrinary')"></app-renal-urinary>
+        <app-prostatic *ngIf="disabilityGroup.get('questionnaires').get('prostatic')"
+          [form]="disabilityGroup.get('questionnaires').get('prostatic')"></app-prostatic>
       </mat-tab>
       <!-- 
       <mat-tab label="Política Antilavado">

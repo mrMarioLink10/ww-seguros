@@ -5,6 +5,7 @@ import { FieldConfig } from 'src/app/shared/components/form-components/models/fi
 import { DisabilityService } from '../disability/services/disability.service';
 import { $country } from 'src/app/core/form/objects';
 import { FormHandlerService } from 'src/app/core/services/forms/form-handler.service';
+import { DiseaseService } from '../../../shared/components/disease/shared/disease/disease.service';
 
 @Component({
   selector: 'app-disability',
@@ -181,7 +182,7 @@ export class DisabilityComponent implements OnInit {
 
   mainGroup = {
     full_name: ['', Validators.required],
-    id: ['', Validators.required],
+    id2: ['', Validators.required],
     nationality: ['', Validators.required],
     relationship: ['', Validators.required],
     percentage: ['', [Validators.required, Validators.min(1), Validators.max(100)]]
@@ -189,7 +190,7 @@ export class DisabilityComponent implements OnInit {
 
   contingentGroup = {
     full_name: ['', Validators.required],
-    id: ['', Validators.required],
+    id2: ['', Validators.required],
     nationality: ['', Validators.required],
     relationship: ['', Validators.required],
     percentage: ['', [Validators.required, Validators.min(1), Validators.max(100)]]
@@ -200,38 +201,43 @@ export class DisabilityComponent implements OnInit {
     private fb: FormBuilder,
     public formMethods: FormArrayGeneratorService,
     private disabilityService: DisabilityService,
-    public formHandler: FormHandlerService
+    public formHandler: FormHandlerService,
+    public diseaseService: DiseaseService
   ) { }
 
   ngOnInit() {
     this.sicknessQuestions = [
       {
-        label: '',
+        label: 'Hipertensión arterial',
         name: 'haveHypertension'
       },
       {
-        label: '',
+        label: 'Artritis',
         name: 'haveArthritis'
       },
       {
-        label: '',
+        label: 'Desórdenes cardiovasculares',
         name: 'haveCardiovascular'
       },
       {
-        label: '',
+        label: 'Padecimientos renales',
         name: 'haveRenalUrinary'
       },
       {
-        label: '',
+        label: 'Padecimientos metabólicos (diabetes, hipercolesterolemia)',
         name: 'haveMetabolics'
       },
       {
-        label: '',
+        label: 'Padecimientos musculoesqueleticos',
         name: 'haveMusculoSkeletal'
       },
       {
-        label: '',
+        label: 'Desórdenes urologicos y tiene mas de 50 años',
         name: 'haveProstatics'
+      },
+      {
+        label: 'Desórdenes osteoarticulares (discal, vertebral y paravertebral, lumbado, clática)',
+        name: 'haveSpine'
       },
     ];
 
@@ -352,6 +358,7 @@ export class DisabilityComponent implements OnInit {
 
   selectChange(event) {
     const form = this.disabilityGroup.get('questions') as FormGroup;
+    const questionnaires = this.disabilityGroup.get('questionnaires') as FormGroup;
     const formQ = this.disabilityGroup.get('questions').get('questionnaire') as FormGroup;
     const formC = this.disabilityGroup.get('questions').get('questionnaire').get('insurance') as FormGroup;
 
@@ -427,8 +434,40 @@ export class DisabilityComponent implements OnInit {
             haveMetabolics: ['', Validators.required],
             haveMusculoSkeletal: ['', Validators.required],
             haveProstatics: ['', Validators.required],
+            haveSpine: ['', Validators.required],
           }));
+          break;
 
+        case 'haveHypertension':
+          questionnaires.addControl('hypertension', this.fb.group({}));
+          break;
+
+        case 'haveArthritis':
+          questionnaires.addControl('arthritis', this.fb.group({}));
+          break;
+
+        case 'haveCardiovascular':
+          questionnaires.addControl('cardiovascular', this.fb.group({}));
+          break;
+
+        case 'haveRenalUrinary':
+          questionnaires.addControl('renalUrinary', this.fb.group({}));
+          break;
+
+        case 'haveMetabolics':
+          questionnaires.addControl('mellitusDiabetes', this.fb.group({}));
+          break;
+
+        case 'haveMusculoSkeletal':
+          questionnaires.addControl('musculosSkeletal', this.fb.group({}));
+          break;
+
+        case 'haveProstatics':
+          questionnaires.addControl('prostatic', this.fb.group({}));
+          break;
+
+        case 'haveSpine':
+          questionnaires.addControl('spine', this.fb.group({}));
           break;
 
         case 'VIH_radio':
@@ -436,7 +475,6 @@ export class DisabilityComponent implements OnInit {
             date: [new Date(), Validators.required],
             name: ['', Validators.required],
           }));
-
           break;
 
         case 'specialTherapy_radio':
@@ -541,6 +579,37 @@ export class DisabilityComponent implements OnInit {
           formC.removeControl('claim');
           break;
 
+        case 'haveHypertension':
+          questionnaires.removeControl('hypertension');
+          break;
+
+        case 'haveArthritis':
+          questionnaires.removeControl('arthritis');
+          break;
+
+        case 'haveCardiovascular':
+          questionnaires.removeControl('cardiovascular');
+          break;
+
+        case 'haveRenalUrinary':
+          questionnaires.removeControl('renalUrinary');
+          break;
+
+        case 'haveMetabolics':
+          questionnaires.removeControl('mellitusDiabetes');
+          break;
+
+        case 'haveMusculoSkeletal':
+          questionnaires.removeControl('musculosSkeletal');
+          break;
+
+        case 'haveProstatics':
+          questionnaires.removeControl('prostatic');
+          break;
+
+        case 'haveSpine':
+          questionnaires.removeControl('spine');
+          break;
       }
     }
   }

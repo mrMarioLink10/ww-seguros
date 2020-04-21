@@ -413,13 +413,16 @@
                         {{newRequest.get('person').value.firstName}}
                         {{newRequest.get('person').value.lastName}}</mat-checkbox>
                     </div>
-                    <!-- <div *ngFor=" let dpd of
-                  newRequest.get('dependents').value.allDependents; let idx=index"
-                    [formGroup]="newRequest.get('dependents').get('allDependents').get(idx.toString()).get('questionsA')">
-                    <mat-checkbox (click)="$event.stopPropagation()" class="mat-menu-item"
-                      [formControlName]="question.name" role="menuitemcheckbox">
-                      D{{idx+1}} - {{dpd.name}} {{dpd.lastName}}</mat-checkbox>
-                  </div> -->
+                    <div *ngFor=" let dpd of
+                        dependentsFormArray.value; let idx=index">
+                      <div
+                        [formGroup]="this.newRequest.get('dependents').get('allDependents').get(idx.toString()).get('questionsA')">
+                        <mat-checkbox [id]="idx" [name]="idx" class="mat-menu-item" role="menuitemcheckbox"
+                          [formControlName]="question.name" (change)="valueChange(idx, $event, question.name)"
+                          (click)="$event.stopPropagation()">
+                          D{{idx+1}} - {{dpd.name}} {{dpd.lastName}}</mat-checkbox>
+                      </div>
+                    </div>
                   </mat-menu>
                 </div>
 
@@ -730,10 +733,10 @@
       </mat-tab>
       <mat-tab *ngFor=" let element of dependentsFormArray.controls; let i = index"
         [label]="'D0'+ dependentsFormArray.controls.length">
-        <app-cardiovascular [form]="newRequest.get('questionsA').get('cardiovascular')">
+        <!-- <app-cardiovascular [form]="newRequest.get('questionsA').get('cardiovascular')">
         </app-cardiovascular>
         <app-spine [form]="newRequest.get('questionsA').get('spine')">
-        </app-spine>
+        </app-spine> -->
       </mat-tab>
     </mat-tab-group>
 
@@ -742,5 +745,6 @@
   <div class="mt-6 mb-4">
     <button mat-button class="send-button" (click)="formHandler.sendForm(newRequest, 'major-expenses')"
       type="submit">Enviar</button>
+    <button mat-button class="send-button" (click)="print()" type="submit">Imprimir</button>
   </div>
 </div>

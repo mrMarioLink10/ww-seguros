@@ -738,7 +738,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
   valueChange(index, $event, question) {
     //set the two-way binding here for the specific unit with the event
     // model.units[unit].checked = $event.checked;
-    // console.log(index, $event.checked);
+    console.log(index, $event.checked);
     // const valor = this.newRequest.get('dependents').get('allDependents') as FormArray;
     // const control = valor.at(index).get('questionsA').get(question);
     // console.log(control.value);
@@ -749,7 +749,8 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
 
     // console.log(this.newRequest.get('dependents').get('allDependents').get(index.toString()).value);
     // console.log(this.newRequest.get('dependents').get('allDependents').get(index.toString()).get('questionsA').get(question));
-    // this.newRequest.get('dependents').get('allDependents').get(index.toString()).get('questionsA').get(question).setValue($event.checked);
+    this.newRequest.get('dependents').get('allDependents').get(index.toString()).get('questionsA').get(question).setValue($event.checked);
+    console.log(this.newRequest.get('dependents').get('allDependents').get(index.toString()).get('questionsA').get(question));
     // console.log(this.newRequest.get('dependents').get('allDependents').get(index.toString()).get('questionsA').value);
 
   }

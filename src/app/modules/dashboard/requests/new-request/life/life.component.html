@@ -1193,7 +1193,10 @@
           </ng-template>
         </app-forms-container>
       </mat-tab>
-      <mat-tab label="Cuestionarios" class="mat-tab-forms">
+      <mat-tab label="Cuestionarios Actividades" *ngIf="activitiesQuestionsLength() > 0" class="mat-tab-forms">
+
+      </mat-tab>
+      <mat-tab label="Cuestionarios Médicos" *ngIf="questionsLength() > 0" class="mat-tab-forms">
         <app-hypertension *ngIf="newRequest.get('questionnaires').get('hypertension')"
           [form]="newRequest.get('questionnaires').get('hypertension')"></app-hypertension>
         <app-mellitus-diabetes *ngIf="newRequest.get('questionnaires').get('diabetes')"

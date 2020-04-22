@@ -591,7 +591,8 @@ export class LifeComponent implements OnInit, DoCheck {
         }),
         getAnswersFromInsured: ['', Validators.required],
       }),
-      questionnaires: this.fb.group({})
+      questionnaires: this.fb.group({}),
+      activitiesQuestionnaires: this.fb.group({}),
     });
 
     this.primaryBenefitsArray = this.newRequest.get('primaryBenefits').get('dependentsC') as FormArray;
@@ -1357,6 +1358,14 @@ export class LifeComponent implements OnInit, DoCheck {
 
   addToList(list: any, type: string) {
     list.push(this.createFormArray(type));
+  }
+
+  questionsLength() {
+    return Object.keys(this.newRequest.get('questionnaires').value).length;
+  }
+
+  activitiesQuestionsLength() {
+    return Object.keys(this.newRequest.get('activitiesQuestionnaires').value).length;
   }
 
   print() {

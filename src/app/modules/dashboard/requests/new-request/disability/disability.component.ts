@@ -3,7 +3,7 @@ import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { FormArrayGeneratorService } from 'src/app/core/services/forms/form-array-generator.service';
 import { FieldConfig } from 'src/app/shared/components/form-components/models/field-config';
 import { DisabilityService } from '../disability/services/disability.service';
-import { $country } from 'src/app/core/form/objects';
+import { $country, $weightTypes, $heightTypes } from 'src/app/core/form/objects';
 import { FormHandlerService } from 'src/app/core/services/forms/form-handler.service';
 import { DiseaseService } from '../../../shared/components/disease/shared/disease/disease.service';
 
@@ -14,6 +14,7 @@ import { DiseaseService } from '../../../shared/components/disease/shared/diseas
 })
 export class DisabilityComponent implements OnInit {
   sicknessQuestions: any[];
+
 
   accordionTitles = [
     'Sección A. Datos del propuesto Asegurado y Estatus laboral',
@@ -117,6 +118,16 @@ export class DisabilityComponent implements OnInit {
     options: $country
   };
 
+  heightList: FieldConfig = {
+    label: 'Unidad',
+    options: $heightTypes
+  };
+
+  weightList: FieldConfig = {
+    label: 'Unidad',
+    options: $weightTypes
+  };
+
   countryList2: FieldConfig = {
     label: 'País de residencia',
     options: $country
@@ -196,7 +207,6 @@ export class DisabilityComponent implements OnInit {
     percentage: ['', [Validators.required, Validators.min(1), Validators.max(100)]]
   };
 
-
   constructor(
     private fb: FormBuilder,
     public formMethods: FormArrayGeneratorService,
@@ -206,6 +216,7 @@ export class DisabilityComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+
     this.sicknessQuestions = [
       {
         label: 'Hipertensión arterial',
@@ -279,11 +290,11 @@ export class DisabilityComponent implements OnInit {
         job_description: ['', Validators.required],
         job_hours: ['', [Validators.required, Validators.min(1)]],
         date: [new Date(), Validators.required],
-        reason_pension: ['', Validators.required],
+        reason_pension: [''],
         office_hours: ['', [Validators.required, Validators.min(1)]],
         company: ['', Validators.required],
-        amount_pension: ['', [Validators.required, Validators.min(1)]],
-        currency_pension: ['', Validators.required],
+        amount_pension: ['', Validators.min(1)],
+        currency_pension: [''],
         outside_hours: ['', [Validators.required, Validators.min(1)]],
         pension_radio: ['', Validators.required],
         pep_radio: ['', Validators.required]
@@ -313,8 +324,9 @@ export class DisabilityComponent implements OnInit {
         alcohol_radio: ['', Validators.required],
         weight: ['', Validators.required],
         height: ['', Validators.required],
+        weightUnit: ['', Validators.required],
+        heightUnit: ['', Validators.required],
         questionnaire: this.fb.group({
-          weight_radio: ['', Validators.required],
           health_radio: ['', Validators.required],
           therapy_radio: ['', Validators.required],
           sick_pay_radio: ['', Validators.required],
@@ -361,9 +373,10 @@ export class DisabilityComponent implements OnInit {
     const questionnaires = this.disabilityGroup.get('questionnaires') as FormGroup;
     const formQ = this.disabilityGroup.get('questions').get('questionnaire') as FormGroup;
     const formC = this.disabilityGroup.get('questions').get('questionnaire').get('insurance') as FormGroup;
+    console.log(event);
 
     if (event.valor === 'si') {
-      console.log(JSON.stringify(this.disabilityGroup.value));
+      // console.log(JSON.stringify(this.disabilityGroup.value));
 
       switch (event.name) {
         case 'smoker_radio':
@@ -418,6 +431,20 @@ export class DisabilityComponent implements OnInit {
 
         case 'inpatientCare_radio':
           formQ.addControl('inpatientCare', this.fb.group({
+            date: [new Date(), Validators.required],
+            reason: ['', Validators.required],
+          }));
+          break;
+
+        case 'bloodSick_radio':
+          formQ.addControl('bloodSick', this.fb.group({
+            date: [new Date(), Validators.required],
+            reason: ['', Validators.required],
+          }));
+          break;
+
+        case 'hospitalization_radio':
+          formQ.addControl('hospitalization', this.fb.group({
             date: [new Date(), Validators.required],
             reason: ['', Validators.required],
           }));
@@ -575,6 +602,18 @@ export class DisabilityComponent implements OnInit {
           formQ.removeControl('insurance');
           break;
 
+        case 'specialTherapy_radio':
+          formQ.removeControl('specialTherapy');
+          break;
+
+        case 'bloodSick_radio':
+          formQ.removeControl('bloodSick');
+          break;
+
+        case 'hospitalization_radio':
+          formQ.removeControl('hospitalization');
+          break;
+
         case 'claim_radio':
           formC.removeControl('claim');
           break;
@@ -643,6 +682,14 @@ export class DisabilityComponent implements OnInit {
 
   removeFormArray(index, array: any) {
     array.removeAt(index);
+  }
+
+  print() {
+
+  }
+
+  questionsLength() {
+    return Object.keys(this.disabilityGroup.get('questionnaires').value).length;
   }
 }
 

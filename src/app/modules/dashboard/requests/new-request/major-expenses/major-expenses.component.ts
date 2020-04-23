@@ -16,7 +16,7 @@ import { DiseaseService } from '../../../shared/components/disease/shared/diseas
 })
 
 export class MajorExpensesComponent implements OnInit, DoCheck {
-
+  pruebaCheck: any;
   visible = false;
   primaryBenefitsArray: FormArray;
   contingentBeneficiaryArray: FormArray;
@@ -201,37 +201,32 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
     date: [new Date(), Validators.required],
     height: ['', Validators.required],
     sex: ['', Validators.required],
-    birtday: ['', Validators.required],
-    student: ['', Validators.required],
-    telUnivercity: ['', Validators.required],
     id2: ['', Validators.required],
     nationality: ['', Validators.required],
-    questionsA: this.fb.group({
-      haveMusculoskeletal: [false, Validators.required],
-      haveCerebrovascular: [false, Validators.required],
-      haveNervousSystem: [false, Validators.required],
-      haveVisionHearing: [false, Validators.required],
-      haveSpine: [false, Validators.required],
-      haveCardiovascularSystem: [false, Validators.required],
-      haveRespiratorySystem: [false, Validators.required],
-      haveDigestiveSystem: [false, Validators.required],
-      haveUrinarySystem: [false, Validators.required],
-      haveMaleReproductiveOrgans: [false, Validators.required],
-      haveBloodDisorders: [false, Validators.required],
-      haveEndocrineDisorders: [false, Validators.required],
-      haveAlternateTreatment: [false, Validators.required],
-      haveFunctionalLimitation: [false, Validators.required],
-      haveDeformity: [false, Validators.required],
-      haveBloodTransfusion: [false, Validators.required],
-      haveAlcoholicDependence: [false, Validators.required],
-      haveNicotine: [false, Validators.required],
-      haveStd: [false, Validators.required],
-      havePhysiologicalDisorder: [false, Validators.required],
-      haveHighRiskSport: [false, Validators.required],
-      havePregnant: [false, Validators.required],
-      haveReproductiveOrganDisorders: [false, Validators.required],
-      questionnairesGastosMayores: this.fb.group({}),
-    }),
+    haveMusculoskeletal: [false, Validators.required],
+    haveCerebrovascular: [false, Validators.required],
+    haveNervousSystem: [false, Validators.required],
+    haveVisionHearing: [false, Validators.required],
+    haveSpine: [false, Validators.required],
+    haveCardiovascularSystem: [false, Validators.required],
+    haveRespiratorySystem: [false, Validators.required],
+    haveDigestiveSystem: [false, Validators.required],
+    haveUrinarySystem: [false, Validators.required],
+    haveMaleReproductiveOrgans: [false, Validators.required],
+    haveBloodDisorders: [false, Validators.required],
+    haveEndocrineDisorders: [false, Validators.required],
+    haveAlternateTreatment: [false, Validators.required],
+    haveFunctionalLimitation: [false, Validators.required],
+    haveDeformity: [false, Validators.required],
+    haveBloodTransfusion: [false, Validators.required],
+    haveAlcoholicDependence: [false, Validators.required],
+    haveNicotine: [false, Validators.required],
+    haveStd: [false, Validators.required],
+    havePhysiologicalDisorder: [false, Validators.required],
+    haveHighRiskSport: [false, Validators.required],
+    havePregnant: [false, Validators.required],
+    haveReproductiveOrganDisorders: [false, Validators.required],
+    questionnairesGastosMayores: this.fb.group({}),
   };
   questionsGroup = {
     question: ['', Validators.required],
@@ -427,7 +422,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
       primaryBenefits: this.fb.group({
         dependentsC: this.fb.array([this.formMethods.createItem(this.primaryBenefits)]),
         personBenefited: this.fb.group({
-          selection: [''],
+          name: [''],
           family: [''],
           id2: ['']
         })
@@ -435,7 +430,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
       contingentBeneficiary: this.fb.group({
         dependentsC: this.fb.array([this.formMethods.createItem(this.primaryBenefits)]),
         personBenefited: this.fb.group({
-          selection: [''],
+          name: [''],
           family: [''],
           id2: ['']
         })
@@ -531,26 +526,6 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
     console.log(event);
     if (event.valor === 'si') {
       switch (event.name) {
-        case 'havePregnant':
-          questionsForm.addControl('pregnant', this.fb.group({
-            time: ['', Validators.required]
-          }));
-          break;
-
-        case 'haveHighRiskSport':
-          questionsForm.addControl('highRiskSport', this.fb.group({
-            date: ['', Validators.required],
-            info: ['', Validators.required],
-          }));
-          break;
-
-        case 'haveNicotine':
-          questionsForm.addControl('nicotine', this.fb.group({
-            quantity: ['', Validators.required],
-            timerange: ['', Validators.required],
-            time: ['', Validators.required],
-          }));
-          break;
 
         case 'contractor':
           exposedPersonForm.addControl('contractorExposedInfo', this.fb.group({
@@ -605,6 +580,10 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
           break;
         case 'haveHighRiskSport':
           questionsForm.removeControl('highRiskSport');
+          break;
+
+        case 'haveNicotine':
+          questionsForm.removeControl('nicotine');
           break;
 
         case 'contractor':
@@ -735,23 +714,57 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
 
   }
 
-  valueChange(index, $event, question) {
-    //set the two-way binding here for the specific unit with the event
-    // model.units[unit].checked = $event.checked;
-    console.log(index, $event.checked);
-    // const valor = this.newRequest.get('dependents').get('allDependents') as FormArray;
-    // const control = valor.at(index).get('questionsA').get(question);
-    // console.log(control.value);
+  valueChange($event, question, typeOrIndex) {
+    console.log('tipo/index: ', typeOrIndex, 'event:', $event, 'question: ', question);
+    if (typeOrIndex === 'solicitante') {
+      if ($event.checked === true) {
+        switch (question) {
+          case '':
+            this.questionnairesGastosMayores.addControl('', this.fb.group({}));
+            break;
 
-    // control.patchValue($event.checked);
+          case 'havePregnant':
+            this.questionsA.addControl('pregnant', this.fb.group({
+              time: ['', Validators.required]
+            }));
+            break;
 
-    // console.log(control.value);
+          case 'haveHighRiskSport':
+            this.questionsA.addControl('highRiskSport', this.fb.group({
+              date: ['', Validators.required],
+              info: ['', Validators.required],
+            }));
+            break;
 
-    // console.log(this.newRequest.get('dependents').get('allDependents').get(index.toString()).value);
-    // console.log(this.newRequest.get('dependents').get('allDependents').get(index.toString()).get('questionsA').get(question));
-    this.newRequest.get('dependents').get('allDependents').get(index.toString()).get('questionsA').get(question).setValue($event.checked);
-    console.log(this.newRequest.get('dependents').get('allDependents').get(index.toString()).get('questionsA').get(question));
-    // console.log(this.newRequest.get('dependents').get('allDependents').get(index.toString()).get('questionsA').value);
+          case 'haveNicotine':
+            this.questionsA.addControl('nicotine', this.fb.group({
+              quantity: ['', Validators.required],
+              timerange: ['', Validators.required],
+              time: ['', Validators.required],
+            }));
+            break;
+
+          default:
+            break;
+        }
+      } else if ($event.checked === false) {
+        switch (question) {
+          case 'havePregnant':
+            this.questionsA.removeControl('pregnant');
+            break;
+          case 'haveHighRiskSport':
+            this.questionsA.removeControl('highRiskSport');
+            break;
+
+          case 'haveNicotine':
+            this.questionsA.removeControl('nicotine');
+            break;
+
+          default:
+            break;
+        }
+      }
+    }
 
   }
 
@@ -766,9 +779,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
 
       const dependent = dpd.at(parseInt(element));
 
-      console.log('a', dependent.get('questionsA').get(name).value);
-      dependent.get('questionsA').get(name).setValue(true);
-      console.log('d', dependent.get('questionsA').get(name).value);
+      dependent.get('questionsA').get(name).setValue(false);
 
 
       // console.log(this.newRequest.get('dependents').get('allDependents').get(element).get('questionsA').get(name).value);
@@ -838,6 +849,18 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
 
   addToList(list: any, type: string) {
     list.push(this.createFormArray(type));
+  }
+
+  get allDependents(): FormArray {
+    return this.newRequest.get('dependents').get('allDependents') as FormArray;
+  }
+
+  get questionnairesGastosMayores(): FormGroup {
+    return this.newRequest.get('questionsA').get('questionnairesGastosMayores') as FormGroup;
+  }
+
+  get questionsA(): FormGroup {
+    return this.newRequest.get('questionsA') as FormGroup;
   }
 
 }

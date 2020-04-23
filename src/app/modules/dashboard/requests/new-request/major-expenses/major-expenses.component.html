@@ -314,53 +314,6 @@
                       </app-radio-button>
                     </div> -->
 
-              <!-- SI ESTA EMBARAZADA -->
-              <!-- <div *ngIf="newRequest.get('questions').value.havePregnant === 'si' && que.name === 'havePregnant'">
-                      <label class="my-2 text-xs">Favor indicar semanas de embarazo</label>
-                      <div style="width: 200px;">
-                        <app-input class="mr-3" [group]="newRequest.get('questions').get('pregnant')" type="number"
-                          label="Semanas" name='time'>
-                        </app-input>
-                      </div>
-                    </div> -->
-
-              <!-- SI FUMABA -->
-              <!-- <div *ngIf="newRequest.get('questions').value.haveNicotine === 'si' && que.name === 'haveNicotine'">
-                      <label class="my-2 text-xs">Especifique cantidad por día y cuánto tiempo tiene o estuvo fumando</label>
-                      <div class='grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2'>
-                        <div class='grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2'>
-                          <div class="mr-3">
-                            <app-input class="mr-3" [group]="newRequest.get('questions').get('nicotine')" label="Cantidad por día"
-                              name='quantity'>
-                            </app-input>
-                          </div>
-                          <div class='grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2'>
-                            <app-input class="mr-3" [group]="newRequest.get('questions').get('nicotine')" label="Tiempo"
-                              name='timerange'>
-                            </app-input>
-                            <app-select class="mr-3" [options]="year" [group]="newRequest.get('questions').get('nicotine')">
-                            </app-select>
-                          </div>
-                        </div>
-                        <div></div>
-                      </div>
-                    </div> -->
-
-              <!-- SI PRACTICA DEPORTE DE ALTO RIESGO -->
-              <!-- <div *ngIf="newRequest.get('questions').value.haveHighRiskSport === 'si' && que.name === 'haveHighRiskSport'">
-                      <label class="my-2 text-xs">¿Desde cuándo? Describa</label>
-                      <div style="width: 200px;">
-                        <app-date-picker class="mr-3" [group]="newRequest.get('questions').get('highRiskSport')" label="Fecha"
-                          name='date'>
-                        </app-date-picker>
-                      </div>
-                      <div class="mt-2">
-                        <app-text-area [group]="newRequest.get('questions').get('highRiskSport')" label="Texto" name='info'>
-                        </app-text-area>
-                      </div>
-                    </div>
-                    <hr class="w-full mb-6 ww-divider">
-                  </div> -->
             </div>
             <p class="formulary-labels pb-3">Según su mejor entendimiento y conocimiento, hay alguna persona nombrada en
               esta solicitud que haya padecido o padezca de alguna de las siguientes enfermedades:
@@ -377,53 +330,78 @@
                       [options]="yesOrNo" (selected)="selectChange($event)">
                     </app-radio-button>
                   </div>
-                  <!-- <mat-form-field color="accent" *ngIf="newRequest.get('sectionAHelper').value[question.name] === 'si'"
-                  appearance="outline">
-                  <mat-label>Seleccione Personas</mat-label>
-                  <mat-select multiple style="font-size: small !important;" [id]="question.name"
-                    (selectionChange)="sectionASelect($event)">
-                    <div [formGroup]="newRequest.get('questionsA')">
-                      <mat-option  value="yes">
-                        Asegurado -
-                        {{newRequest.get('person').value.firstName}}
-                        {{newRequest.get('person').value.lastName}}
-                      </mat-option>
 
-                      
-                    </div>
-                    <div *ngIf="newRequest.get('dependents').value.allDependents.length > 0">
-                      <mat-option *ngFor=" let dpd of
-                      newRequest.get('dependents').value.allDependents; let idx=index" [value]="idx">
-                        D{{idx+1}} - {{dpd.name}} {{dpd.lastName}}</mat-option>
-                    </div>
-                  </mat-select>
-                </mat-form-field> -->
-                  <button class="select-persons flex"
+                  <button class="select-persons flex mt-2"
                     *ngIf="newRequest.get('sectionAHelper').value[question.name] === 'si'" [matMenuTriggerFor]="menu">
                     <div class="self-center pr-2">Seleccionar personas</div>
                     <mat-icon style="color: #18446B">arrow_drop_down
                     </mat-icon>
                   </button>
 
-
-                  <mat-menu #menu="matMenu" class="dependents-select">
+                  <mat-menu #menu="matMenu" class="dependents-select ">
                     <div [formGroup]="newRequest.get('questionsA')">
                       <mat-checkbox (click)="$event.stopPropagation()" class="mat-menu-item"
-                        [formControlName]="question.name" role="menuitemcheckbox">
+                        (change)="valueChange($event, question.name, 'solicitante')" [formControlName]="question.name"
+                        role="menuitemcheckbox">
                         {{newRequest.get('person').value.firstName}}
                         {{newRequest.get('person').value.lastName}}</mat-checkbox>
                     </div>
-                    <div *ngFor=" let dpd of
-                        dependentsFormArray.value; let idx=index">
-                      <mat-checkbox [id]="idx" class="mat-menu-item" role="menuitemcheckbox"
-                        (change)="valueChange(idx, $event, question.name)" (click)="$event.stopPropagation()">
-                        D{{idx+1}} - {{dpd.name}} {{dpd.lastName}}</mat-checkbox>
+                    <div formGroupName="dependents">
+                      <div formArrayName="allDependents" *ngFor="let dpd of allDependents.controls; index as i">
+                        <div [formGroupName]="i">
+                          <mat-checkbox [formControlName]="question.name" class="mat-menu-item" role="menuitemcheckbox"
+                            (change)="valueChange($event, question.name, i)" (click)="$event.stopPropagation()">
+                            D{{i+1}} - {{dpd.value.name}} {{dpd.value.lastName}}</mat-checkbox>
+                        </div>
+                      </div>
                     </div>
                   </mat-menu>
                 </div>
-
-
               </div>
+              <!-- SI FUMABA -->
+              <div *ngIf="newRequest.get('questionsA').value.haveNicotine === true && question.name === 'haveNicotine'">
+                <label class="my-2 text-xs">Especifique cantidad por día y cuánto tiempo tiene o estuvo
+                  fumando</label>
+                <div class='grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2'>
+                  <div class='grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2'>
+                    <app-input class="mr-3" [group]="newRequest.get('questionsA').get('nicotine')"
+                      label="Cantidad por día" name='quantity'>
+                    </app-input>
+                    <div class='grid grid-cols-2'>
+                      <app-input class="mr-3" [group]="newRequest.get('questionsA').get('nicotine')" label="Tiempo"
+                        name='timerange'>
+                      </app-input>
+                      <app-select class="mr-3" [options]="year" [group]="newRequest.get('questionsA').get('nicotine')">
+                      </app-select>
+                    </div>
+                  </div>
+                  <div></div>
+                </div>
+              </div>
+              <!-- SI ESTA EMBARAZADA -->
+              <div *ngIf="newRequest.get('questionsA').value.havePregnant === true && question.name === 'havePregnant'">
+                <label class="my-2 text-xs">Favor indicar semanas de embarazo</label>
+                <div style="width: 200px;">
+                  <app-input class="mr-3" [group]="newRequest.get('questionsA').get('pregnant')" type="number"
+                    label="Semanas" name='time'>
+                  </app-input>
+                </div>
+              </div>
+              <!-- SI PRACTICA DEPORTE DE ALTO RIESGO -->
+              <div
+                *ngIf="newRequest.get('questionsA').value.haveHighRiskSport === true && question.name === 'haveHighRiskSport'">
+                <label class="my-2 text-xs">¿Desde cuándo? Describa</label>
+                <div style="width: 200px;">
+                  <app-date-picker class="mr-3" [group]="newRequest.get('questionsA').get('highRiskSport')"
+                    label="Fecha" name='date'>
+                  </app-date-picker>
+                </div>
+                <div class="mt-2">
+                  <app-text-area [group]="newRequest.get('questionsA').get('highRiskSport')" label="Texto" name='info'>
+                  </app-text-area>
+                </div>
+              </div>
+
               <hr class=" w-full ww-divider">
 
             </div>
@@ -619,10 +597,12 @@
               <p>Si a mi fallecimiento alguno de mis Beneficiarios Primarios es menor de edad, el beneficio
                 correspondiente será entregado a</p><br>
               <div class='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-4'>
+                <app-input class="mr-3" name="name" label="Nombre Completo"
+                  [group]="newRequest.get('primaryBenefits').get('personBenefited')">
+                </app-input>
                 <app-select class="mr-3" [options]="family"
-                  [group]="newRequest.get('primaryBenefits').get('personBenefited')"></app-select>
-                <app-select class="mr-3" [options]="family"
-                  [group]="newRequest.get('primaryBenefits').get('personBenefited')"></app-select>
+                  [group]="newRequest.get('primaryBenefits').get('personBenefited')">
+                </app-select>
                 <app-input class="mr-3" [group]="newRequest.get('primaryBenefits').get('personBenefited')" label="Cant."
                   name='id2'></app-input>
               </div>
@@ -682,8 +662,8 @@
               <p>Si a mi fallecimiento alguno de mis Beneficiarios Primarios es menor de edad, el beneficio
                 correspondiente será entregado a</p><br>
               <div class='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-4'>
-                <app-select class="mr-3" [options]="family"
-                  [group]="newRequest.get('contingentBeneficiary').get('personBenefited')"></app-select>
+                <app-input class="mr-3" name="name" label="Nombre Completo"
+                  [group]="newRequest.get('contingentBeneficiary').get('personBenefited')"></app-input>
                 <app-select class="mr-3" [options]="family"
                   [group]="newRequest.get('contingentBeneficiary').get('personBenefited')"></app-select>
                 <app-input class="mr-3" [group]="newRequest.get('contingentBeneficiary').get('personBenefited')"
@@ -737,10 +717,9 @@
     </mat-tab-group>
 
   </form>
-
   <div class="mt-6 mb-4">
     <button mat-button class="send-button" (click)="formHandler.sendForm(newRequest, 'major-expenses')"
       type="submit">Enviar</button>
-    <!-- <button mat-button class="send-button" (click)="print()" type="submit">Imprimir</button> -->
+    <button mat-button class="send-button" (click)="print()" type="submit">Imprimir</button>
   </div>
 </div>

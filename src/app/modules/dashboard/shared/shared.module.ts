@@ -18,11 +18,11 @@ import { ProstaticComponent } from './components/disease/prostatic/prostatic.com
 import { MellitusDiabetesComponent } from './components/disease/mellitus-diabetes/mellitus-diabetes.component';
 
 import { HttpClientModule } from '@angular/common/http';
-import { DivingComponent } from './components/disease/diving/diving.component';
-import { RacingComponent } from './components/disease/racing/racing.component';
-import { SkydivingComponent } from './components/disease/skydiving/skydiving.component';
 import { MountaineeringComponent } from './components/disease/mountaineering/mountaineering.component';
-import { FinancialStatusComponent } from './components/disease/financial-status/financial-status.component'
+import { SkydivingComponent } from './components/disease/skydiving/skydiving.component';
+import { RacingComponent } from './components/disease/racing/racing.component';
+import { DivingComponent } from './components/disease/diving/diving.component';
+import { FinancialStatusComponent } from './components/disease/financial-status/financial-status.component';
 
 @NgModule({
   declarations: [
@@ -59,7 +59,12 @@ import { FinancialStatusComponent } from './components/disease/financial-status/
     RenalUrinaryComponent,
     HypertensionComponent,
     ProstaticComponent,
-    MellitusDiabetesComponent
+    MellitusDiabetesComponent,
+    MountaineeringComponent,
+    SkydivingComponent,
+    RacingComponent,
+    DivingComponent,
+    FinancialStatusComponent
   ]
 })
 export class SharedModule { }

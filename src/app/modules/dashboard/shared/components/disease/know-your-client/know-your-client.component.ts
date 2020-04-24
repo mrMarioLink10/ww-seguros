@@ -82,49 +82,20 @@ export class KnowYourClientComponent implements OnInit {
 		]
 	};
 
-	documents= [{
-
+	documents= [
+		{
     		viewValue:'Copia Registro Mercantil',
-    		checked: 'false'
-
   		}, 
- 	      {
-    
+ 	    {
     		viewValue:'Copia de Documento de Identidad Personal o pasaporte del Representante o apoderado legal',
-    		checked: 'false'
-
   		},
    		{
-
     		viewValue:'Copia de Documento de Identidad o pasaportes de los principales accionistas',
-    		checked: 'false'
-
   		}, 
   		{
-
     		viewValue:'Copia de Documento de Identidad o pasaporte de los miembros del órgano de gestión',
-    		checked: 'false'
-
   		}, 
 	   ]
-
-
-  	onChange0(e){
-   		this.documents[0].checked=e.checked;
-  	}
-
-  	onChange1(e){
-    		this.documents[1].checked=e.checked;
-  	}
-
-  	onChange2(e){
-    		this.documents[2].checked=e.checked;
-  	}
-
-  	onChange3(e){
-    		this.documents[3].checked=e.checked;
-  	}
-
 
 	countryList: FieldConfig = {
 		label: 'País',
@@ -177,6 +148,8 @@ export class KnowYourClientComponent implements OnInit {
 						specify_investigated_representative: ['', Validators.required],
 					}));
 					console.log(JSON.stringify(this.form.value));
+					console.log(this.documents)
+
 			}
 		 else if (event.valor === 'no') {
 	
@@ -331,7 +304,7 @@ export class KnowYourClientComponent implements OnInit {
 	   this.form.addControl('representative_data', this.fb.group({
         name_lastname:['', Validators.required],
 			  birthplace:['', Validators.required],
-			  birthdate:['', Validators.required],
+			  birthdate:[new Date(), Validators.required],
 			  society_position:['', Validators.required],
 			  nationality:['', Validators.required],
 			  home_telephone:['', Validators.required],
@@ -366,10 +339,10 @@ export class KnowYourClientComponent implements OnInit {
 			main_annual_income:['', Validators.required],
 			annual_income_others:['', Validators.required],
 			documents: this.fb.group({
-				mercantile_register_document:[''],
-				id_shareholder_document:[''],
-				id_representative_document:[''],
-				managemente_body_document:[''],
+				mercantile_register_document:[false],
+				id_shareholder_document:[false],
+				id_representative_document:[false],
+				managemente_body_document:[false],
 			})
 		  }));
 

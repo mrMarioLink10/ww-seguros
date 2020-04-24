@@ -325,6 +325,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
     this.procedures = this.fb.array([this.formMethods.createItem(this.formGroupProcedure)]);
 
     this.newRequest = this.fb.group({
+
       NoC: ['', Validators.required],
       deducibles: ['', Validators.required],
       payment: ['', Validators.required],

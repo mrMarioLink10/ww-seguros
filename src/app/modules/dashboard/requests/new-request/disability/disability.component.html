@@ -408,14 +408,73 @@
 
             </ng-template>
 
-                        <div class="mr-3 mt-8 sm:mt-5 md:mt-6 lg:mt-0 xl:mt-0">
-                            <app-select name="marital_status" [options]="status"
-                            [group]="disabilityGroup.get('policyholder')"></app-select>
-                        </div>
+            <!-- Seccion C -->
+            <ng-template #formTemplate>
 
-                        <div class="mr-3 mt-6 sm:mt-1 md:mt-6 lg:mt-4 xl:mt-3 xl:pt-1">
-                            <app-input [group]="disabilityGroup.get('policyholder')" label="Nacionalidad(es)"
-                            name="nationality" placeholder="Por ej: Estadounidense"></app-input>
+              <div class="ml-3">
+                <!-- Bloque 1 -->
+                <div class="mt-4 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4">
+                  <div class="md:mt-5 lg:mt-0 xl:mt-0">
+                    <div>
+                      <label class="radio-button-label"> ¿Es fumador? </label>
+                    </div>
+                    <div class="mr-3">
+                      <app-radio-button [group]="disabilityGroup.get('questions')" name="smoker_radio" [options]="YesNo"
+                        (selected)="selectChange($event)"> </app-radio-button>
+                    </div>
+                  </div>
+                  <!-- <div > -->
+                  <div class="mr-3 md:mt-5 lg:mt-0 xl:mt-0" *ngIf="this.disabilityGroup.get('questions').get('smoke')">
+                    <app-number-input label="Consumo diario de tabaco (Paquetes)" name="quantity"
+                      [group]="disabilityGroup.get('questions').get('smoke')" placeholder="Por ej: 2" min="1">
+                    </app-number-input>
+                  </div>
+                  <!-- </div> -->
+                  <div class="mt-6 sm:mt-5 md:mt-5 lg:mt-1 xl:mt-0">
+                    <div>
+                      <label class="radio-button-label"> ¿Consume alcohol? </label>
+                    </div>
+                    <div class="mr-3">
+                      <app-radio-button [group]="disabilityGroup.get('questions')" name="alcohol_radio"
+                        [options]="YesNo" (selected)="selectChange($event)"> </app-radio-button>
+                    </div>
+                  </div>
+                  <!-- <div class="mr-3"> -->
+                  <div class="mr-3 md:mt-5 lg:mt-1 xl:mt-0"
+                    *ngIf="this.disabilityGroup.get('questions').get('alcohol')">
+                    <app-number-input label="Consumo semanal de alcohol (Copas)" name="quantity"
+                      [group]="disabilityGroup.get('questions').get('alcohol')" placeholder="Por ej: 4" min="1">
+                    </app-number-input>
+                  </div>
+                  <!-- </div> -->
+                  <div class="grid grid-cols-2">
+                    <app-input class="mr-3" label="Peso" name="weight" [group]="disabilityGroup.get('questions')">
+                    </app-input>
+                    <app-select class="mr-3" name="weightUnit" [options]="weightList"
+                      [group]="disabilityGroup.get('questions')">
+                    </app-select>
+                  </div>
+                  <div class="grid grid-cols-2">
+                    <app-input class="mr-3" label="Estatura" name="height" [group]="disabilityGroup.get('questions')">
+                    </app-input>
+                    <app-select class="mr-3" name="heightUnit" [options]="heightList"
+                      [group]="disabilityGroup.get('questions')">
+                    </app-select>
+                  </div>
+                </div>
+                <!-- Bloque 2 -->
+                <div class="mt-4">
+                  <label class="formulary-labels"> Favor marcar SÍ o NO según corresponda. </label>
+                  <!-- Cuerpo -->
+                  <div class="mt-10">
+                    <!-- Fila 1 -->
+                    <!-- Fila 2 -->
+                    <div class="mt-8">
+                      <div class="inline">
+                        <div class="mr-3 sm:mr-6 md:mr-12 lg:mr-20 xl:mr-32 xl:pr-3">
+                          <label class="radio-button-label">1. En la actualidad, ¿su estado de salud le impide llevar a
+                            cabo su actividad profesional a tiempo completo excepto por licencia de maternidad o está
+                            llevando un tratamiento médico? </label>
                         </div>
                       </div>
                       <div class="inline float-right mt-1 sm:mt-1 md:mt-1 lg:mt-1 xl:-mt-5">
@@ -442,66 +501,58 @@
                             </app-text-area>
                           </div>
                         </div>
-
-                        <div class="mr-3 mt-8 sm:mt-5 md:mt-6 md:pt-1 lg:pt-0 lg:mt-4 xl:pt-1 xl:mt-3">
-                            <app-input [group]="disabilityGroup.get('policyholder')" label="Celular"
-                            name="cell" placeholder="Por ej: 829-318-0000"></app-input>
+                      </div>
+                    </div>
+                    <hr class="ww-divider mt-8">
+                    <!-- Fila 3 -->
+                    <div class="mt-8">
+                      <div>
+                        <label class="radio-button-label">2. Durante los últimos 5 años: </label>
+                      </div>
+                      <!-- Fila 3a -->
+                      <div class="mt-8 ml-2">
+                        <div class="inline ">
+                          <div class="mr-3 sm:mr-6 md:mr-12 lg:mr-20 xl:mr-32 xl:pr-3">
+                            <label class="radio-button-label">2a. ¿Le ha sido prescrito uno o más tratamiento(s) médicos
+                              (medicinal, fisioterapia, sicoterapia u otros) con una duración de más de 3 semanas
+                              consecutivas (excepto por desórdenes estacionales, contracepción, menopausia)? </label>
+                          </div>
                         </div>
-
-                        <div class="mr-3 mt-8 sm:mt-5 md:mt-8 md:pt-2 lg:pt-0 lg:mt-8 xl:pt-1 xl:mt-3">
-                            <app-input [group]="disabilityGroup.get('policyholder')" label="Email personal"
-                            name="email" placeholder="Por ej: ramonPrueba@gmail.com"></app-input>
+                        <div class="inline float-right mt-1 sm:mt-1 md:mt-1 lg:mt-1 xl:-mt-5">
+                          <app-radio-button [group]="disabilityGroup.get('questions').get('questionnaire')"
+                            name="therapy_radio" [options]="YesNo" (selected)="selectChange($event)">
+                          </app-radio-button>
                         </div>
-
-                        <div class="grid grid-cols-2 mt-8 sm:mt-5 md:mt-8 md:pt-2 lg:pt-0 lg:mt-8 xl:pt-0 xl:mt-3">
-
-                            <div class="-mr-1">
-                                <app-number-input [group]="disabilityGroup.get('policyholder')" label="Ingreso Anual"
-                                name="annual_income" placeholder="Por ej: 360000" min="1"></app-number-input>
+                        <div class="mt-16"
+                          *ngIf="this.disabilityGroup.get('questions').get('questionnaire').get('therapies')">
+                          <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
+                            <div class="mr-3">
+                              <app-date-picker
+                                [group]="disabilityGroup.get('questions').get('questionnaire').get('therapies')"
+                                label="¿Desde qué fecha?" name='date'> </app-date-picker>
                             </div>
                             <div class="mr-3 mt-2 sm:mt-2 md:mt-0 lg:mt-0 xl:mt-0">
                               <app-text-area label="¿Por qué razón?" name='reason'
                                 [group]="disabilityGroup.get('questions').get('questionnaire').get('therapies')">
                               </app-text-area>
                             </div>
-
+                            <div
+                              class="mr-3 mt-2 sm:mt-2 md:mt-3 md:col-span-2 lg:col-span-1 lg:mt-0 xl:col-span-1 xl:mt-0">
+                              <app-text-area label="Naturaleza y duración del tratamiento" name='therapy'
+                                [group]="disabilityGroup.get('questions').get('questionnaire').get('therapies')">
+                              </app-text-area>
+                            </div>
+                          </div>
                         </div>
-
-                        <div class="mr-12 mt-6 lg:col-span-1 xl:col-span-2 sm:mr-3 sm:mt-3 md:mt-6 md:pt-1 lg:pt-0 lg:mt-8 xl:pt-0 xl:mt-3">
-                            <app-input label="Dirección Residencial" [group]="disabilityGroup.get('policyholder')"
-                            name="address" placeholder="Por ej: Calle 3, Casa #22, avenida..."> </app-input>
-                        </div>
-
-                        <div class="mr-3 mt-8 sm:mt-6 md:mt-6 md:pt-1 lg:mt-5 lg:pt-0 xl:pt-0 xl:mt-3">
-                            <app-select [group]="disabilityGroup.get('policyholder')" name="country" 
-                            [options]='countryList' (selected)="changeCountry($event)"> </app-select>
-
-                            <!-- <app-select [group]="disabilityGroup.get('policyholder')" name="countryPrueba" 
-                            [options]='countryListPrueba'> </app-select> -->
-
-                            <!-- <mat-form-field color="accent" appearance="outline" class="w-full" style="font-size: small !important;"
-                                        [formGroup]="disabilityGroup.get('policyholder')">
-                                        <mat-label>Paises</mat-label>
-                                        <mat-select [formControlName]="country">
-                                            <mat-option *ngFor="let country of items" value="country">{{country}}
-                                            </mat-option>
-                                        </mat-select>
-                                        <mat-error *ngIf="disabilityGroup.get('policyholder').get('country').touched && !disabilityGroup.get('policyholder').get('country').valid ">Debe llenar el campo de Paises
-                                        </mat-error>
-                            </mat-form-field> -->
-
-                            <!-- <mat-form-field color="accent" appearance="outline" class="w-full" style="font-size: small !important;"
-                                        [formGroup]="group">
-                                        <mat-label>Estados</mat-label>
-                                        <mat-select [formControlName]="countryPrueba">
-                                            <mat-option [value]="">Seleccione un estado
-                                            </mat-option>
-                                            <mat-option *ngFor="let type of cities" [value]="type">{{type}}
-                                            </mat-option>
-                                          </mat-select>
-                                          <mat-error *ngIf="disabilityGroup.get('policyholder').get('countryPrueba').touched && !disabilityGroup.get('policyholder').get('countryPrueba').valid ">Debe llenar el campo de Paises
-                                        </mat-error>
-                                    </mat-form-field> -->
+                      </div>
+                      <hr class="ww-divider mt-8">
+                      <!-- Fila 3b -->
+                      <div class="mt-8 ml-2">
+                        <div class="inline ">
+                          <div class="mr-3 sm:mr-6 md:mr-12 lg:mr-20 xl:mr-32 xl:pr-3">
+                            <label class="radio-button-label">2b. ¿Le ha sido prescrito una o más licencias médicas con
+                              duración de más de 3 semanas consecutivas exceptuando por licencia de maternidad? </label>
+                          </div>
                         </div>
                         <div class="inline float-right mt-1 sm:mt-1 md:mt-1 lg:mt-1 xl:-mt-5 ">
                           <app-radio-button [group]="disabilityGroup.get('questions').get('questionnaire')"
@@ -979,62 +1030,10 @@
                       </app-select>
                     </div>
 
-                                <!-- <div class="mt-10">
-
-                                    <app-select name="prueba" [options]="pruebaArray" 
-                                        [group]="typeRequestGroup" (selectionChange)="emitter($event)"></app-select> 
-
-                                    <br>
-                                    <br>
-                                    <br>
-                                    <br>
-                                    <mat-form-field color="accent" appearance="outline" class="w-full" style="font-size: small !important;"
-                                        [formGroup]="typeRequestGroup">
-                                        <mat-label>Paises</mat-label>
-                                        <mat-select [formControlName]="pruebaA" (selectionChange)="changeCountry($event.value)">
-                                            <mat-option *ngFor="let type of items" [value]="type">{{type}}
-                                            </mat-option>
-                                          </mat-select>
-                                    </mat-form-field>
-
-                                    <br>
-                                    <br>
-                                    <br>
-                                    <br>
-                                    <mat-form-field color="accent" appearance="outline" class="w-full" style="font-size: small !important;"
-                                        [formGroup]="typeRequestGroup">
-                                        <mat-label>Estados</mat-label>
-                                        <mat-select [formControlName]="pruebaB">
-                                            <mat-option [value]="">Seleccione un estado
-                                            </mat-option>
-                                            <mat-option *ngFor="let type of cities" [value]="type">{{type}}
-                                            </mat-option>
-                                          </mat-select>
-                                    </mat-form-field>
-
-
-                                    <br>
-                                    <br>
-
-                                    <label>Country</label>
-                                    <div  title="Please select the country that the customer will primarily be served from">
-                                    	<select placeholder="Phantasyland" (change)="changeCountry($event.target.value)">
-                                            <option *ngFor ="let count of countrylist">{{count.name}} </option>
-                                        </select>
-                                    </div>
-
-
-                                    <label>City</label>
-                                    <div title="Please select the city that the customer is primarily to be served from.">
-                                    	<select placeholder="Anycity">
-                                            <option *ngFor ="let city of cities">{{city}} </option>
-                                      </select>
-                                    </div>
-
-
-                                </div> -->
-
-                        </div>
+                    <div class="mr-3">
+                      <app-select name="rent" [options]="rentOptions" [group]="disabilityGroup.get('plan')">
+                      </app-select>
+                    </div>
 
                   </div>
 

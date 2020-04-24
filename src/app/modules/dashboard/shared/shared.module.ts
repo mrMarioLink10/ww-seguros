@@ -21,7 +21,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { DivingComponent } from './components/disease/diving/diving.component';
 import { RacingComponent } from './components/disease/racing/racing.component';
 import { SkydivingComponent } from './components/disease/skydiving/skydiving.component';
-import { MountaineeringComponent } from './components/disease/mountaineering/mountaineering.component'
+import { MountaineeringComponent } from './components/disease/mountaineering/mountaineering.component';
+import { FinancialStatusComponent } from './components/disease/financial-status/financial-status.component'
 
 @NgModule({
   declarations: [
@@ -41,7 +42,8 @@ import { MountaineeringComponent } from './components/disease/mountaineering/mou
     DivingComponent,
     RacingComponent,
     SkydivingComponent,
-    MountaineeringComponent
+    MountaineeringComponent,
+    FinancialStatusComponent
   ],
   imports: [CommonModule, MaterialModule, GlobalSharedModule, FormsModule, ReactiveFormsModule, HttpClientModule],
   exports: [

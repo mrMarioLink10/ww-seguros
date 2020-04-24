@@ -474,32 +474,33 @@
             
             <div class="grid grid-cols-1 xl:grid-cols-2"> 
               <div class="xl:mr-64 xl:pr-4"> 
-                <mat-checkbox class="radio-button-label" (change)="onChange0($event)"
-                [formGroup]="form.get('finance').get('documents')" [formControlName]="mercantile_register_document"> <span style="white-space: normal;"> {{documents[0].viewValue}} </span> </mat-checkbox>
+                <form [formGroup]="form.get('finance').get('documents')">
+                    <mat-checkbox class="radio-button-label"
+                    formControlName="mercantile_register_document"> <span style="white-space: normal;"> {{documents[0].viewValue}} </span> </mat-checkbox> 
+                </form>
               </div>
-<!-- 
-              <div>
-
-                <app-check-box [group]="form.get('finance').get('documents')" name="mercantile_register_document_prueba" [option]="documents[0]"> </app-check-box>
-
-              </div> -->
 
               <div class="mt-5 xl:-ml-3 xl:-mr-4 xl:mt-0"> 
-                <mat-checkbox class="radio-button-label" (change)="onChange2($event)"
-                [formGroup]="form.get('finance').get('documents')" [formControlName]="id_shareholder_document"><span style="white-space: normal;"> {{documents[2].viewValue}} </span> </mat-checkbox>
+                <form [formGroup]="form.get('finance').get('documents')">
+                  <mat-checkbox class="radio-button-label"
+                  formControlName="id_shareholder_document"> <span style="white-space: normal;"> {{documents[2].viewValue}} </span> </mat-checkbox> 
+                </form>
               </div>
             </div>
 
             <div class="grid grid-cols-1 xl:grid-cols-2 xl:mt-5"> 
               <div class="mt-5 xl:mr-6 xl:mt-0"> 
-                  <mat-checkbox class="radio-button-label" (change)="onChange1($event)"
-                  [formGroup]="form.get('finance').get('documents')" [formControlName]="id_representative_document"><span style="white-space: normal;"> {{documents[1].viewValue}} </span> </mat-checkbox>
-               
+                  <form [formGroup]="form.get('finance').get('documents')">
+                    <mat-checkbox class="radio-button-label"
+                    formControlName="id_representative_document"> <span style="white-space: normal;"> {{documents[1].viewValue}} </span> </mat-checkbox> 
+                  </form>
               </div>
 
               <div class="mt-5 xl:-ml-3 xl:mr-16 xl:pr-3 xl:mt-0">
-                <mat-checkbox class="radio-button-label" (change)="onChange3($event)"
-                [formGroup]="form.get('finance').get('documents')" [formControlName]="managemente_body_document"><span style="white-space: normal;"> {{documents[3].viewValue}} </span> </mat-checkbox>
+                <form [formGroup]="form.get('finance').get('documents')">
+                  <mat-checkbox class="radio-button-label"
+                  formControlName="managemente_body_document"> <span style="white-space: normal;"> {{documents[3].viewValue}} </span> </mat-checkbox> 
+                </form>
               </div>
             </div>
 

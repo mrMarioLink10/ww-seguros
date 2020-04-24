@@ -82,56 +82,20 @@ export class KnowYourClientComponent implements OnInit {
 		]
 	};
 
-	documents= [{
-
+	documents= [
+		{
     		viewValue:'Copia Registro Mercantil',
-    		checked: 'false'
-
   		}, 
- 	      {
-    
+ 	    {
     		viewValue:'Copia de Documento de Identidad Personal o pasaporte del Representante o apoderado legal',
-    		checked: 'false'
-
   		},
    		{
-
     		viewValue:'Copia de Documento de Identidad o pasaportes de los principales accionistas',
-    		checked: 'false'
-
   		}, 
   		{
-
     		viewValue:'Copia de Documento de Identidad o pasaporte de los miembros del órgano de gestión',
-    		checked: 'false'
-
   		}, 
 	   ]
-
-
-  	onChange0(e){
-		   this.documents[0].checked=e.checked;
-		   console.log(JSON.stringify(this.form.value));
-
-  	}
-
-  	onChange1(e){
-			this.documents[1].checked=e.checked;
-			console.log(JSON.stringify(this.form.value));
-
-  	}
-
-  	onChange2(e){
-			this.documents[2].checked=e.checked;
-			console.log(JSON.stringify(this.form.value));
-
-  	}
-
-  	onChange3(e){
-			this.documents[3].checked=e.checked;
-			console.log(JSON.stringify(this.form.value));
-
-	  }
 
 	countryList: FieldConfig = {
 		label: 'País',
@@ -375,11 +339,10 @@ export class KnowYourClientComponent implements OnInit {
 			main_annual_income:['', Validators.required],
 			annual_income_others:['', Validators.required],
 			documents: this.fb.group({
-				mercantile_register_document:[''],
-				// mercantile_register_document_prueba:[''],
-				id_shareholder_document:[''],
-				id_representative_document:[''],
-				managemente_body_document:[''],
+				mercantile_register_document:[false],
+				id_shareholder_document:[false],
+				id_representative_document:[false],
+				managemente_body_document:[false],
 			})
 		  }));
 

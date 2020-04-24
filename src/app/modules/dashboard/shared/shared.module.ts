@@ -18,6 +18,10 @@ import { ProstaticComponent } from './components/disease/prostatic/prostatic.com
 import { MellitusDiabetesComponent } from './components/disease/mellitus-diabetes/mellitus-diabetes.component';
 
 import { HttpClientModule } from '@angular/common/http';
+import { MountaineeringComponent } from './components/disease/mountaineering/mountaineering.component';
+import { SkydivingComponent } from './components/disease/skydiving/skydiving.component';
+import { RacingComponent } from './components/disease/racing/racing.component';
+import { DivingComponent } from './components/disease/diving/diving.component';
 
 @NgModule({
   declarations: [
@@ -53,7 +57,11 @@ import { HttpClientModule } from '@angular/common/http';
     RenalUrinaryComponent,
     HypertensionComponent,
     ProstaticComponent,
-    MellitusDiabetesComponent
+    MellitusDiabetesComponent,
+    MountaineeringComponent,
+    SkydivingComponent, 
+    RacingComponent,
+    DivingComponent
   ]
 })
 export class SharedModule { }

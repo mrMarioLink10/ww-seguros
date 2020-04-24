@@ -751,8 +751,27 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
             break;
 
           case 'haveMaleReproductiveOrgans':
-            this.questionnairesGastosMayores.addControl('prostatic', this.fb.group({}));
+            if (this.person.value.age > 50) {
+              this.questionnairesGastosMayores.addControl('prostatic', this.fb.group({}));
+            }
+
             break;
+
+          case 'haveUrinarySystem':
+            this.questionnairesGastosMayores.addControl('renalUrinary', this.fb.group({}));
+            break;
+
+          case 'haveMusculoskeletal':
+            this.questionnairesGastosMayores.addControl('arthritis', this.fb.group({}));
+            this.questionnairesGastosMayores.addControl('spine', this.fb.group({}));
+            this.questionnairesGastosMayores.addControl('musculosSkeletal', this.fb.group({}));
+            break;
+
+          case 'haveCardiovascularSystem':
+            this.questionnairesGastosMayores.addControl('hypertension', this.fb.group({}));
+            this.questionnairesGastosMayores.addControl('spcardiovascularine', this.fb.group({}));
+            break;
+
           default:
             break;
         }
@@ -775,7 +794,24 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
 
           case 'haveMaleReproductiveOrgans':
             this.questionnairesGastosMayores.removeControl('prostatic');
+
             break;
+
+          case 'haveUrinarySystem':
+            this.questionnairesGastosMayores.removeControl('renalUrinary');
+            break;
+
+          case 'haveMusculoskeletal':
+            this.questionnairesGastosMayores.removeControl('arthritis');
+            this.questionnairesGastosMayores.removeControl('spine');
+            this.questionnairesGastosMayores.removeControl('musculosSkeletal');
+            break;
+
+          case 'haveCardiovascularSystem':
+            this.questionnairesGastosMayores.removeControl('hypertension');
+            this.questionnairesGastosMayores.removeControl('cardiovascular');
+            break;
+
           default:
             break;
         }
@@ -854,12 +890,17 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
     return this.newRequest.get('dependents').get('allDependents') as FormArray;
   }
 
+
   get questionnairesGastosMayores(): FormGroup {
     return this.newRequest.get('questionsA').get('questionnairesGastosMayores') as FormGroup;
   }
 
   get questionsA(): FormGroup {
     return this.newRequest.get('questionsA') as FormGroup;
+  }
+
+  get person(): FormGroup {
+    return this.newRequest.get('person') as FormGroup;
   }
 
 }

@@ -1,4 +1,5 @@
 import { FieldConfig } from 'src/app/shared/components/form-components/models/field-config';
+// tslint:disable: quotemark
 
 export const $sex: FieldConfig = {
     label: 'Sexo',
@@ -12,7 +13,7 @@ export const $sex: FieldConfig = {
             viewValue: 'Masculino'
         }
     ]
-}
+};
 
 export const $family: FieldConfig = {
     label: 'Parentezco',
@@ -43,7 +44,8 @@ export const $family: FieldConfig = {
             viewValue: 'Hermana'
         },
     ]
-}
+};
+
 export const $res: FieldConfig = {
     options: [
         {
@@ -55,7 +57,29 @@ export const $res: FieldConfig = {
             viewValue: 'No'
         }
     ]
-}
+};
+
+export const $weightTypes = [
+    {
+        value: 'kilogramos',
+        viewValue: "kg"
+    },
+    {
+        value: 'libras',
+        viewValue: "lb",
+    },
+];
+
+export const $heightTypes = [
+    {
+        value: 'pies',
+        viewValue: 'pies'
+    },
+    {
+        value: 'centimetros',
+        viewValue: "cm",
+    },
+];
 
 export const $country =
     [
@@ -323,7 +347,8 @@ export const $time = [
         value: 'año',
         viewValue: 'Año',
     }
-]
+];
+
 export const $allFamily = {
     label: 'Parentezco',
     name: 'family',

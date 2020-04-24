@@ -1,17 +1,17 @@
-<div class="uppercase dashboard-page-title mt-8 pb-4">CUESTIONARIO DE DIABETES MELLITUS - SOLICITANTE
-</div>
+<!-- <div class="uppercase dashboard-page-title mt-8 pb-4">CUESTIONARIO DE DIABETES MELLITUS - SOLICITANTE
+</div> -->
 
-<div class="p-3 pb-0 mb-4" style="background-color: #F2F2F2">
-  <div class="mt-3 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 xl:grid-cols-5">
-    <div class="mr-3">
-      <app-input [group]="form" label="Nombre Completo" name='name' placeholder="Alberto Matias">
-      </app-input>
-    </div>
-  </div>
-</div>
 
-<app-forms-container [titles]="diseaseService.accordionTitle">
+<app-forms-container [isQuestionnarie]="false" [titles]="['Cuestionario de Diabetes Mellitus']">
   <ng-template #formTemplate>
+    <div class="p-3 pb-0 mb-4" style="background-color: #F2F2F2">
+      <div class="mt-3 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 xl:grid-cols-5">
+        <div class="mr-3">
+          <app-input [group]="form" label="Nombre Completo" name='name' placeholder="Alberto Matias">
+          </app-input>
+        </div>
+      </div>
+    </div>
     <!-- ¿Cuándo se le diagnosticó por primera vez diabetes? -->
     <div class="body-13 mb-6" style="color: black !important;">¿Cuándo se le diagnosticó por primera vez diabetes?
     </div>
@@ -114,7 +114,8 @@
         </app-input>
       </div>
     </div>
-    <div class="radio-button-label mb-8" style="font-size: 12px !important;">b. Indique los tres últimos resultados del
+    <div class="radio-button-label mb-8" style="font-size: 12px !important;">b. Indique los tres últimos resultados
+      del
       análisis de glucosa en sangre:
     </div>
     <div *ngFor="let studies of bloodGlucoseAnalysisList.controls; let i = index"
@@ -143,7 +144,8 @@
         <mat-icon style="color: #18446B">add</mat-icon>
       </button>
     </div>
-    <div class="radio-button-label mb-8" style="font-size: 12px !important;">c. Indique los tres últimos resultados del
+    <div class="radio-button-label mb-8" style="font-size: 12px !important;">c. Indique los tres últimos resultados
+      del
       análisis de glucosa en orina:
     </div>
     <div *ngFor="let studies of orineGlucoseAnalysisList.controls; let i = index"
@@ -216,7 +218,8 @@
         </app-date-picker>
       </div>
     </div>
-    <div class="radio-button-label mb-8" style="font-size: 12px !important;">g. Indique el nombre y dirección del médico
+    <div class="radio-button-label mb-8" style="font-size: 12px !important;">g. Indique el nombre y dirección del
+      médico
       o clínica que supervisa su tratamiento.
     </div>
     <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5">
@@ -279,7 +282,8 @@
     <hr class="w-full mb-6 ww-divider">
     <div class="declaraciones my-4 px-4 sm:px-4 md:px-14 lg:px-12 xl:px-12">
       Declaro haber contestado verídicamente a estas preguntas y que no he ocultado ninguna información que pueda
-      influir en la evaluación o la aceptación de esta solicitud. Estoy de acuerdo en que este cuestionario forme parte
+      influir en la evaluación o la aceptación de esta solicitud. Estoy de acuerdo en que este cuestionario forme
+      parte
       de mi solicitud de seguro y que el hecho de no revelar alguna circunstancia conocida por mí, puede anular el
       contrato.
     </div>

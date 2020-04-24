@@ -7,6 +7,8 @@ import { questionsA, questionsB } from './questions';
 import { Requests } from '../../requests.component';
 import { Router, ActivatedRoute } from '@angular/router';
 import { generate } from 'rxjs';
+import { FormHandlerService } from 'src/app/core/services/forms/form-handler.service';
+import { DiseaseService } from '../../../shared/components/disease/shared/disease/disease.service';
 @Component({
   selector: 'app-major-expenses',
   templateUrl: './major-expenses.component.html',
@@ -14,7 +16,7 @@ import { generate } from 'rxjs';
 })
 
 export class MajorExpensesComponent implements OnInit, DoCheck {
-
+  pruebaCheck: any;
   visible = false;
   primaryBenefitsArray: FormArray;
   contingentBeneficiaryArray: FormArray;
@@ -26,14 +28,16 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
   questionsBFormArray: FormArray;
   studentDependents: FormArray;
   proceduresArray: FormArray;
+  informationList: FormArray;
+  familyWithDiseasesList: FormArray;
   questions = questionsA;
   questionsB = questionsB;
   student = {
     name: ['', Validators.required],
     univercity: ['', Validators.required],
     univercityPhone: ['', Validators.required]
-  }
-  family = $family
+  };
+  family = $family;
 
 
   yesOrNo: FieldConfig = {
@@ -60,6 +64,36 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
         }
       ],
       name: 'requestType',
+    };
+
+  itIsCurrentOptions: FieldConfig =
+    {
+      label: 'Se encuentra vigente en la actualidad',
+      options: [
+        {
+          value: 'si',
+          viewValue: 'Si'
+        },
+        {
+          value: 'no',
+          viewValue: 'No'
+        }
+      ],
+    };
+
+  didReclamationOptions: FieldConfig =
+    {
+      label: '¿Tuvo alguna reclamación?',
+      options: [
+        {
+          value: 'si',
+          viewValue: 'Si'
+        },
+        {
+          value: 'no',
+          viewValue: 'No'
+        }
+      ],
     };
   payments: FieldConfig = {
     label: 'Frecuencia de Pago',
@@ -110,7 +144,14 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
     name: 'plans',
   };
   // tslint:disable-next-line: max-line-length
-  titles = ['Contratante', 'Solicitante', 'Persona políticamente expuesta', 'Perfil Financiero', 'Dependientes', 'Sección A', 'Sección B', 'Sección C Beneficiarios Primarios', 'Beneficiario(s) Contingente(s)', 'Comentarios adicionales'];
+  titles = [
+    'Contratante', 'Solicitante',
+    'Persona políticamente expuesta',
+    'Perfil Financiero', 'Dependientes',
+    'Sección A', 'Sección B',
+    'Sección C Beneficiarios Primarios',
+    'Beneficiario(s) Contingente(s)',
+    'Comentarios adicionales'];
   country = {
     label: 'País',
     options: $country,
@@ -167,41 +208,37 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
     date: [new Date(), Validators.required],
     height: ['', Validators.required],
     sex: ['', Validators.required],
-    birtday: ['', Validators.required],
-    student: ['', Validators.required],
-    telUnivercity: ['', Validators.required],
-    id: ['', Validators.required],
+    id2: ['', Validators.required],
     nationality: ['', Validators.required],
-    questionsA: this.fb.group({
-      haveMusculoskeletal: ['', Validators.required],
-      haveCerebrovascular: ['', Validators.required],
-      haveNervousSystem: ['', Validators.required],
-      haveVisionHearing: ['', Validators.required],
-      haveSpine: ['', Validators.required],
-      haveCardiovascularSystem: ['', Validators.required],
-      haveRespiratorySystem: ['', Validators.required],
-      haveDigestiveSystem: ['', Validators.required],
-      haveUrinarySystem: ['', Validators.required],
-      haveMaleReproductiveOrgans: ['', Validators.required],
-      haveBloodDisorders: ['', Validators.required],
-      haveEndocrineDisorders: ['', Validators.required],
-      haveAlternateTreatment: ['', Validators.required],
-      haveFunctionalLimitation: ['', Validators.required],
-      haveDeformity: ['', Validators.required],
-      haveBloodTransfusion: ['', Validators.required],
-      haveAlcoholicDependence: ['', Validators.required],
-      haveNicotine: ['', Validators.required],
-      haveStd: ['', Validators.required],
-      havePhysiologicalDisorder: ['', Validators.required],
-      haveHighRiskSport: ['', Validators.required],
-      havePregnant: ['', Validators.required],
-      haveReproductiveOrganDisorders: ['', Validators.required],
-    }),
+    haveMusculoskeletal: [false, Validators.required],
+    haveCerebrovascular: [false, Validators.required],
+    haveNervousSystem: [false, Validators.required],
+    haveVisionHearing: [false, Validators.required],
+    haveSpine: [false, Validators.required],
+    haveCardiovascularSystem: [false, Validators.required],
+    haveRespiratorySystem: [false, Validators.required],
+    haveDigestiveSystem: [false, Validators.required],
+    haveUrinarySystem: [false, Validators.required],
+    haveMaleReproductiveOrgans: [false, Validators.required],
+    haveBloodDisorders: [false, Validators.required],
+    haveEndocrineDisorders: [false, Validators.required],
+    haveAlternateTreatment: [false, Validators.required],
+    haveFunctionalLimitation: [false, Validators.required],
+    haveDeformity: [false, Validators.required],
+    haveBloodTransfusion: [false, Validators.required],
+    haveAlcoholicDependence: [false, Validators.required],
+    haveNicotine: [false, Validators.required],
+    haveStd: [false, Validators.required],
+    havePhysiologicalDisorder: [false, Validators.required],
+    haveHighRiskSport: [false, Validators.required],
+    havePregnant: [false, Validators.required],
+    haveReproductiveOrganDisorders: [false, Validators.required],
+    questionnairesGastosMayores: this.fb.group({}),
   };
   questionsGroup = {
     question: ['', Validators.required],
     answer: [false, Validators.required],
-  }
+  };
   familyControl = new FormControl('', Validators.required);
   reasonControl = new FormControl('', Validators.required);
 
@@ -211,18 +248,18 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
     dailyAmount: ['', Validators.required],
     numberTime: ['', Validators.required],
     time: ['', Validators.required],
-  }
+  };
   DateQuestionGroup = {
     question: ['', Validators.required],
     answer: [false, Validators.required],
     date: [new Date(), Validators.required],
     description: ['', Validators.required],
-  }
+  };
   pregnant = {
     question: ['', Validators.required],
     answer: [false, Validators.required],
     time: ['', Validators.required],
-  }
+  };
   procedures;
   formGroupProcedure = {
     patientsName: ['', Validators.required],
@@ -233,17 +270,17 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
     time: ['', Validators.required],
     providerName: ['', Validators.required],
     providerDirection: ['', Validators.required]
-  }
+  };
   primaryBenefits = {
     name: ['', Validators.required],
     date: [new Date(), Validators.required],
-    id: ['', Validators.required],
+    id2: ['', Validators.required],
     nationality: ['', Validators.required],
     ocupation: ['', Validators.required],
     family: ['', Validators.required],
     quantity: ['', Validators.required]
 
-  }
+  };
   allFamily = $allFamily;
 
   haveSomeone = {
@@ -270,11 +307,18 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
     haveHighRiskSport: '',
     havePregnant: '',
     haveReproductiveOrganDisorders: '',
-  }
+  };
 
   policy: FormGroup;
   // tslint:disable-next-line: max-line-length
-  constructor(private fb: FormBuilder, public formMethods: FormArrayGeneratorService, private router: Router, private route: ActivatedRoute) { }
+  constructor(
+    private fb: FormBuilder,
+    public formMethods: FormArrayGeneratorService,
+    private router: Router,
+    private route: ActivatedRoute,
+    public formHandler: FormHandlerService,
+    public diseaseService: DiseaseService
+  ) { }
 
   ngOnInit() {
 
@@ -282,11 +326,11 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
 
     this.newRequest = this.fb.group({
 
-      requestType: ['', Validators.required],
       NoC: ['', Validators.required],
       deducibles: ['', Validators.required],
       payment: ['', Validators.required],
       plans: ['', Validators.required],
+      requestType: ['', Validators.required],
       person: this.fb.group({
         firstName: ['', Validators.required],
         secondName: ['', Validators.required],
@@ -294,7 +338,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
         date: [new Date(), Validators.required],
         sex: ['', Validators.required],
         nationality: ['', Validators.required],
-        id: ['', Validators.required],
+        id2: ['', Validators.required],
         age: ['', Validators.required],
         weight: ['', Validators.required],
         height: ['', Validators.required],
@@ -330,7 +374,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
           name: ['', Validators.required],
           position: ['', Validators.required],
           nationality: ['', Validators.required],
-          id: ['', Validators.required],
+          id2: ['', Validators.required],
           policy: ['', Validators.required],
           email: ['', Validators.required]
         })
@@ -338,60 +382,65 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
       exposedPerson: this.fb.group({
         contractor: [false, Validators.required],
         headLine: [false, Validators.required],
-        lastPosition: ['', Validators.required],
-        time: ['', Validators.required],
-        timeNumber: ['', Validators.required]
+
       }),
-      prinsipalIncome: ['', Validators.required],
+      principalIncome: ['', Validators.required],
       otherIncomes: ['', Validators.required],
 
 
       dependents: this.fb.group({
-        allDependents: this.fb.array([this.formMethods.createItem(this.dependentFormGroup)]),
-        students: this.fb.array([this.formMethods.createItem(this.student)]),
+        allDependents: this.fb.array([]),
+        students: this.fb.array([]),
       }),
       questionsA: this.fb.group({
-        haveMusculoskeletal: ['', Validators.required],
-        haveCerebrovascular: ['', Validators.required],
-        haveNervousSystem: ['', Validators.required],
-        haveVisionHearing: ['', Validators.required],
-        haveSpine: ['', Validators.required],
-        haveCardiovascularSystem: ['', Validators.required],
-        haveRespiratorySystem: ['', Validators.required],
-        haveDigestiveSystem: ['', Validators.required],
-        haveUrinarySystem: ['', Validators.required],
-        haveMaleReproductiveOrgans: ['', Validators.required],
-        haveBloodDisorders: ['', Validators.required],
-        haveEndocrineDisorders: ['', Validators.required],
-        haveAlternateTreatment: ['', Validators.required],
-        haveFunctionalLimitation: ['', Validators.required],
-        haveDeformity: ['', Validators.required],
-        haveBloodTransfusion: ['', Validators.required],
-        haveAlcoholicDependence: ['', Validators.required],
-        haveNicotine: ['', Validators.required],
-        haveStd: ['', Validators.required],
-        havePhysiologicalDisorder: ['', Validators.required],
-        haveHighRiskSport: ['', Validators.required],
-        havePregnant: ['', Validators.required],
-        haveReproductiveOrganDisorders: ['', Validators.required],
-        cardiovascular: this.fb.group({}),
-        spine: this.fb.group({}),
+        haveMusculoskeletal: [false, Validators.required],
+        haveCerebrovascular: [false, Validators.required],
+        haveNervousSystem: [false, Validators.required],
+        haveVisionHearing: [false, Validators.required],
+        haveSpine: [false, Validators.required],
+        haveCardiovascularSystem: [false, Validators.required],
+        haveRespiratorySystem: [false, Validators.required],
+        haveDigestiveSystem: [false, Validators.required],
+        haveUrinarySystem: [false, Validators.required],
+        haveMaleReproductiveOrgans: [false, Validators.required],
+        haveBloodDisorders: [false, Validators.required],
+        haveEndocrineDisorders: [false, Validators.required],
+        haveAlternateTreatment: [false, Validators.required],
+        haveFunctionalLimitation: [false, Validators.required],
+        haveDeformity: [false, Validators.required],
+        haveBloodTransfusion: [false, Validators.required],
+        haveAlcoholicDependence: [false, Validators.required],
+        haveNicotine: [false, Validators.required],
+        haveStd: [false, Validators.required],
+        havePhysiologicalDisorder: [false, Validators.required],
+        haveHighRiskSport: [false, Validators.required],
+        havePregnant: [false, Validators.required],
+        haveReproductiveOrganDisorders: [false, Validators.required],
+        questionnairesGastosMayores: this.fb.group({}),
       }),
-      questionsB: this.fb.array([this.formMethods.createItem(this.questionsGroup)]),
+      questionsB: this.fb.group({
+        haveConsultedForUnmentioned: ['', Validators.required],
+        haveAlterationForUnmentioned: ['', Validators.required],
+        haveHadExamStudiesTests: ['', Validators.required],
+        hasFamilyWithHeartKidneyDisease: ['', Validators.required],
+        hasDeclinedInsuranceCompany: ['', Validators.required],
+        haveHadMedicalHealthInsurance: ['', Validators.required],
+        information: this.fb.array([this.createFormArray('medicInformation')]),
+      }),
       primaryBenefits: this.fb.group({
         dependentsC: this.fb.array([this.formMethods.createItem(this.primaryBenefits)]),
         personBenefited: this.fb.group({
-          selection: [''],
+          name: [''],
           family: [''],
-          id: ['']
+          id2: ['']
         })
       }),
       contingentBeneficiary: this.fb.group({
         dependentsC: this.fb.array([this.formMethods.createItem(this.primaryBenefits)]),
         personBenefited: this.fb.group({
-          selection: [''],
+          name: [''],
           family: [''],
-          id: ['']
+          id2: ['']
         })
       }),
       comentary: [''],
@@ -430,9 +479,8 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
     this.dependentsFormArray = this.newRequest.get('dependents').get('allDependents') as FormArray;
     this.questionsFormArray = this.newRequest.get('questionsA') as FormArray;
     this.questionsBFormArray = this.newRequest.get('questionsB') as FormArray;
+    this.informationList = this.newRequest.get('questionsB').get('information') as FormArray;
     // this.setQuestionsA();
-    this.setQuestionsB();
-
   }
 
   ngDoCheck() { }
@@ -464,101 +512,71 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
   //   });
   // }
 
-  selectChangeB(event, index) {
-    let questions = this.newRequest.get('questionsB').get(index.toString()) as FormGroup;
-    if (event.valor) {
-
-      switch (index) {
-        case 2:
-          questions.addControl('procedures', this.procedures)
-          this.proceduresArray = this.newRequest.get('questionsB').get(index.toString()).get('procedures') as FormArray;
-          this.visible = true;
-          break;
-        case 3:
-          questions.addControl('family', this.familyControl)
-          break;
-        case 4:
-          questions.addControl('reason', this.reasonControl)
-          break;
-        case 5:
-          questions.addControl('policy', this.policy)
-          break;
-
-      }
-    } else {
-      switch (index) {
-        case 2:
-          questions.removeControl('procedures')
-          break;
-        case 3:
-          questions.removeControl('family')
-          break;
-        case 4:
-          questions.removeControl('reason')
-          break;
-        case 5:
-          questions.removeControl('policy')
-          break;
-
-      }
-    }
-
-  }
-
-  setQuestionsB() {
-    this.questionsB.forEach((question, index) => {
-      if (index > 0) {
-        this.add(this.questionsBFormArray, this.questionsGroup);
-      }
-    });
-  }
-
   proceduresFormGroup(index, i) {
     return this.newRequest.get('questionsB').get(index.toString()).get('procedures').get(i.toString()) as FormGroup;
   }
 
   form(): FormGroup {
-    return this.fb.group(this.formGroupProcedure)
+    return this.fb.group(this.formGroupProcedure);
   }
   addprocedures() {
-    this.proceduresArray.push(this.form())
+    this.proceduresArray.push(this.form());
     this.proceduresArray.updateValueAndValidity();
   }
-  // print() {
-  //   // console.log(JSON.stringify(this.newRequest.get('questions').value));
-  //   console.log('SOLO DISEASES', this.newRequest.get('questionsA').value);
-  //   console.log('SOLO DEPENDENTS', this.newRequest.get('dependents'));
-  //   console.log('ENTERO', this.newRequest);
-  //   console.log(this.newRequest.get('dependents').get('allDependents').get('0').get('questionsA'));
-  //   console.log(JSON.stringify(this.newRequest.value));
 
-  // }
 
   selectChange(event) {
-    const questionsForm = this.newRequest.get('questions') as FormGroup;
+    const questionsForm = this.newRequest.get('questionsA') as FormGroup;
+    const questionsBForm = this.newRequest.get('questionsB') as FormGroup;
+    const mhiForm = this.newRequest.get('questionsB').get('medicalHealthInsurance') as FormGroup;
+    const exposedPersonForm = this.newRequest.get('exposedPerson') as FormGroup;
 
     console.log(event);
     if (event.valor === 'si') {
       switch (event.name) {
-        case 'havePregnant':
-          questionsForm.addControl('pregnant', this.fb.group({
-            time: ['', Validators.required]
-          }));
-          break;
 
-        case 'haveHighRiskSport':
-          questionsForm.addControl('highRiskSport', this.fb.group({
-            date: ['', Validators.required],
-            info: ['', Validators.required],
-          }));
-          break;
-
-        case 'haveNicotine':
-          questionsForm.addControl('nicotine', this.fb.group({
-            quantity: ['', Validators.required],
-            timerange: ['', Validators.required],
+        case 'contractor':
+          exposedPersonForm.addControl('contractorExposedInfo', this.fb.group({
+            lastPosition: ['', Validators.required],
             time: ['', Validators.required],
+            timeNumber: ['', Validators.required]
           }));
+          break;
+
+        case 'headLine':
+          exposedPersonForm.addControl('headLineExposedInfo', this.fb.group({
+            lastPosition: ['', Validators.required],
+            time: ['', Validators.required],
+            timeNumber: ['', Validators.required]
+          }));
+          break;
+
+        case 'hasDeclinedInsuranceCompany':
+          questionsBForm.addControl('declinedInsuranceInformation', this.fb.group({
+            reason: ['', Validators.required],
+          }));
+          break;
+
+        case 'didReclamation':
+          mhiForm.addControl('reclamationInfo', this.fb.control('', Validators.required));
+          break;
+
+        case 'haveHadMedicalHealthInsurance':
+          questionsBForm.addControl('medicalHealthInsurance', this.fb.group({
+            companyName: ['', Validators.required],
+            policeNo: ['', Validators.required],
+            insureName: ['', Validators.required],
+            insuranceCompany: ['', Validators.required],
+            policeType: ['', Validators.required],
+            emitionDate: ['', Validators.required],
+            isItCurrent: ['', Validators.required],
+            didReclamation: ['', Validators.required],
+          }));
+          break;
+
+        case 'hasFamilyWithHeartKidneyDisease':
+          questionsBForm.addControl('familyWithDiseases', this.fb.array([this.createFormArray('haveDisease')]));
+          this.familyWithDiseasesList = questionsBForm.get('familyWithDiseases') as FormArray;
           break;
         default:
           break;
@@ -571,6 +589,128 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
         case 'haveHighRiskSport':
           questionsForm.removeControl('highRiskSport');
           break;
+
+        case 'haveNicotine':
+          questionsForm.removeControl('nicotine');
+          break;
+
+        case 'contractor':
+          exposedPersonForm.removeControl('contractorExposedInfo');
+          break;
+
+        case 'headLine':
+          exposedPersonForm.removeControl('headLineExposedInfo');
+          break;
+
+        case 'hasDeclinedInsuranceCompany':
+          questionsBForm.removeControl('declinedInsuranceInformation');
+          break;
+
+        case 'haveHadMedicalHealthInsurance':
+          questionsBForm.removeControl('medicalHealthInsurance');
+          break;
+
+        case 'didReclamation':
+          mhiForm.removeControl('reclamationInfo');
+          break;
+
+        case 'haveMusculoskeletal':
+          this.makeFalseAll(event.name);
+          break;
+
+        case 'haveCerebrovascular':
+          this.makeFalseAll(event.name);
+          break;
+
+        case 'haveNervousSystem':
+          this.makeFalseAll(event.name);
+          break;
+
+        case 'haveVisionHearing':
+          this.makeFalseAll(event.name);
+          break;
+
+        case 'haveSpine':
+          this.makeFalseAll(event.name);
+          break;
+
+        case 'haveCardiovascularSystem':
+          this.makeFalseAll(event.name);
+          break;
+
+        case 'haveRespiratorySystem':
+          this.makeFalseAll(event.name);
+          break;
+
+        case 'haveDigestiveSystem':
+          this.makeFalseAll(event.name);
+          break;
+
+        case 'haveUrinarySystem':
+          this.makeFalseAll(event.name);
+          break;
+
+        case 'haveMaleReproductiveOrgans':
+          this.makeFalseAll(event.name);
+          break;
+
+        case 'haveBloodDisorders':
+          this.makeFalseAll(event.name);
+          break;
+
+        case 'haveEndocrineDisorders':
+          this.makeFalseAll(event.name);
+          break;
+
+        case 'haveAlternateTreatment':
+          this.makeFalseAll(event.name);
+          break;
+
+        case 'haveFunctionalLimitation':
+          this.makeFalseAll(event.name);
+          break;
+
+        case 'haveDeformity':
+          this.makeFalseAll(event.name);
+          break;
+
+        case 'haveBloodTransfusion':
+          this.makeFalseAll(event.name);
+          break;
+
+        case 'haveAlcoholicDependence':
+          this.makeFalseAll(event.name);
+          break;
+
+        case 'haveNicotine':
+          this.makeFalseAll(event.name);
+          break;
+
+        case 'haveStd':
+          this.makeFalseAll(event.name);
+          break;
+
+        case 'havePhysiologicalDisorder':
+          this.makeFalseAll(event.name);
+          break;
+
+        case 'haveHighRiskSport':
+          this.makeFalseAll(event.name);
+          break;
+
+        case 'havePregnant':
+          this.makeFalseAll(event.name);
+          break;
+
+        case 'haveReproductiveOrganDisorders':
+          this.makeFalseAll(event.name);
+          break;
+
+
+        case 'hasFamilyWithHeartKidneyDisease':
+          questionsBForm.removeControl('familyWithDiseases');
+          this.familyWithDiseasesList = undefined;
+          break;
         default:
           break;
       }
@@ -582,14 +722,115 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
 
   }
 
-  sectionASelect(event) {
-    // console.log(`value: ${event.value}, id: ${event.source.id}`);
-    // console.log(`event:`, event);
-    // for (const value of event.value) {
-    //   if (value === 'asegurado') {
-    //     this.newRequest.get('questionsA').get(event.source.id).setValue('si');
-    //   } else if (value )
-    // }
+  valueChange($event, question, typeOrIndex) {
+    console.log('tipo/index: ', typeOrIndex, 'event:', $event, 'question: ', question);
+    if (typeOrIndex === 'solicitante') {
+      if ($event.checked === true) {
+        switch (question) {
+          case 'havePregnant':
+            this.questionsA.addControl('pregnant', this.fb.group({
+              time: ['', Validators.required]
+            }));
+            break;
+
+          case 'haveHighRiskSport':
+            this.questionsA.addControl('highRiskSport', this.fb.group({
+              date: ['', Validators.required],
+              info: ['', Validators.required],
+            }));
+            break;
+
+          case 'haveNicotine':
+            this.questionsA.addControl('nicotine', this.fb.group({
+              quantity: ['', Validators.required],
+              timerange: ['', Validators.required],
+              time: ['', Validators.required],
+            }));
+            break;
+          case 'haveEndocrineDisorders':
+            this.questionnairesGastosMayores.addControl('mellitusDiabetes', this.fb.group({}));
+            break;
+
+          case 'haveMaleReproductiveOrgans':
+            if (this.person.value.age > 50) {
+              this.questionnairesGastosMayores.addControl('prostatic', this.fb.group({}));
+            }
+
+            break;
+
+          case 'haveUrinarySystem':
+            this.questionnairesGastosMayores.addControl('renalUrinary', this.fb.group({}));
+            break;
+
+          case 'haveMusculoskeletal':
+            this.questionnairesGastosMayores.addControl('arthritis', this.fb.group({}));
+            this.questionnairesGastosMayores.addControl('spine', this.fb.group({}));
+            this.questionnairesGastosMayores.addControl('musculosSkeletal', this.fb.group({}));
+            break;
+
+          case 'haveCardiovascularSystem':
+            this.questionnairesGastosMayores.addControl('hypertension', this.fb.group({}));
+            this.questionnairesGastosMayores.addControl('spcardiovascularine', this.fb.group({}));
+            break;
+
+          default:
+            break;
+        }
+      } else if ($event.checked === false) {
+        switch (question) {
+          case 'havePregnant':
+            this.questionsA.removeControl('pregnant');
+            break;
+          case 'haveHighRiskSport':
+            this.questionsA.removeControl('highRiskSport');
+            break;
+
+          case 'haveNicotine':
+            this.questionsA.removeControl('nicotine');
+            break;
+
+          case 'haveEndocrineDisorders':
+            this.questionnairesGastosMayores.removeControl('mellitusDiabetes');
+            break;
+
+          case 'haveMaleReproductiveOrgans':
+            this.questionnairesGastosMayores.removeControl('prostatic');
+
+            break;
+
+          case 'haveUrinarySystem':
+            this.questionnairesGastosMayores.removeControl('renalUrinary');
+            break;
+
+          case 'haveMusculoskeletal':
+            this.questionnairesGastosMayores.removeControl('arthritis');
+            this.questionnairesGastosMayores.removeControl('spine');
+            this.questionnairesGastosMayores.removeControl('musculosSkeletal');
+            break;
+
+          case 'haveCardiovascularSystem':
+            this.questionnairesGastosMayores.removeControl('hypertension');
+            this.questionnairesGastosMayores.removeControl('cardiovascular');
+            break;
+
+          default:
+            break;
+        }
+      }
+    }
+  }
+
+  makeFalseAll(name) {
+    this.newRequest.get('questionsA').get(name).setValue(false);
+    const dpd = this.newRequest.get('dependents').get('allDependents') as FormArray;
+    // tslint:disable-next-line: forin
+    for (const element in this.dependentsFormArray.value) {
+      // tslint:disable-next-line: radix
+      const dependent = dpd.at(parseInt(element));
+
+      dependent.get('questionsA').get(name).setValue(false);
+
+    }
   }
 
   selectChangeUrl(event) {
@@ -612,7 +853,56 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
   }
 
   print() {
-    console.log(JSON.stringify(this.newRequest.get('questionsA').get('prostatic').value));
+    console.log('solicitante: ', this.newRequest.get('questionsA'));
+    console.log('dependientes: ', this.newRequest.get('dependents'));
   }
+
+  createFormArray(type: string): FormGroup {
+    switch (type) {
+      case 'medicInformation':
+        return this.fb.group({
+          name: ['', Validators.required],
+          ailment: ['', Validators.required],
+          date: ['', Validators.required],
+          threatment: ['', Validators.required],
+          time: ['', Validators.required],
+          duration: ['', Validators.required],
+          medicCenterName: ['', Validators.required],
+          medicCenterAddress: ['', Validators.required],
+        });
+        break;
+
+      case 'haveDisease':
+        return this.fb.group({
+          family: ['', Validators.required],
+        });
+        break;
+
+      default:
+        break;
+    }
+  }
+
+  addToList(list: any, type: string) {
+    list.push(this.createFormArray(type));
+  }
+
+  get allDependents(): FormArray {
+    return this.newRequest.get('dependents').get('allDependents') as FormArray;
+  }
+
+
+  get questionnairesGastosMayores(): FormGroup {
+    return this.newRequest.get('questionsA').get('questionnairesGastosMayores') as FormGroup;
+  }
+
+  get questionsA(): FormGroup {
+    return this.newRequest.get('questionsA') as FormGroup;
+  }
+
+  get person(): FormGroup {
+    return this.newRequest.get('person') as FormGroup;
+  }
+
 }
 

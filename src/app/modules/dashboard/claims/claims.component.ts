@@ -3,6 +3,11 @@ import { MatProgressButtonOptions } from 'mat-progress-buttons';
 import { MatTableDataSource, MatSort, MatPaginator } from '@angular/material';
 import { Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { ClaimsService } from '../services/claims/claims.service';
+import { HttpParams } from '@angular/common/http';
+import { ClaimsListComponent } from './claims-list/claims-list.component';
+import { RefundsListComponent } from './refunds-list/refunds-list.component';
+
 
 export interface Claims {
 	no: number;
@@ -14,71 +19,30 @@ export interface Claims {
 	estatus: string;
 }
 
-const ELEMENT_DATA: Claims[] = [
-	// tslint:disable: max-line-length
-	{
-		no: 986543,
-		nombre: 'Danilo Martes',
-		seguro: 'Salud',
-		plan: 'Nombre del Plan',
-		fecha: new Date(),
-		monto: 2000,
-		estatus: 'Denegado'
-	},
-	{
-		no: 154546,
-		nombre: 'Isai Vargas',
-		seguro: 'Vida',
-		plan: 'Nombre del Plan',
-		fecha: new Date(),
-		monto: 2000,
-		estatus: 'Reembolsado'
-	},
-	{
-		no: 213214,
-		nombre: 'Luis Manuel',
-		seguro: 'Salud',
-		plan: 'Nombre del Plan',
-		fecha: new Date(),
-		monto: 2000,
-		estatus: 'Enviado'
-	},
-	{
-		no: 768678,
-		nombre: 'Giannis Qwerty',
-		seguro: 'Salud',
-		plan: 'Nombre del Plan',
-		fecha: new Date(),
-		monto: 2000,
-		estatus: 'Enviado'
-	},
-	{
-		no: 986543,
-		nombre: 'Robert Medina',
-		seguro: 'Salud',
-		plan: 'Nombre del Plan',
-		fecha: new Date(),
-		monto: 2000,
-		estatus: 'Reembolsado'
-	},
-	{
-		no: 986543,
-		nombre: 'Danilo Antonio',
-		seguro: 'Salud',
-		plan: 'Nombre del Plan',
-		fecha: new Date(),
-		monto: 2000,
-		estatus: 'Reembolsado'
-	}
-];
-
 @Component({
+	providers: [
+		ClaimsListComponent,
+		RefundsListComponent
+	],
 	selector: 'app-claims',
 	templateUrl: './claims.component.html',
 	styleUrls: ['./claims.component.scss']
 })
+
 export class ClaimsComponent implements OnInit {
-	statusTypes = ['Enviado', 'Reembolsado', 'Denegado'];
+
+	statusTypes = [
+	  'Enviado', 
+	  'Reembolsado', 
+	  'Denegado'
+	];
+
+	fillType = 'nroPoliza';
+
+	fills = {
+	  status: this.statusTypes, 
+	  fillType: this.fillType
+	}; 
 
 	newClaimButtonOptions: MatProgressButtonOptions = {
 		active: false,
@@ -95,7 +59,9 @@ export class ClaimsComponent implements OnInit {
 	};
 
 	displayedColumns: string[] = ['no', 'nombre', 'seguro', 'plan', 'fecha', 'monto', 'estatus', 'acciones'];
-	dataSource = new MatTableDataSource(ELEMENT_DATA);
+
+	dataSource;
+	public claims:any[];
 
 	@ViewChild(MatSort, { static: true })
 	sort: MatSort;
@@ -104,12 +70,26 @@ export class ClaimsComponent implements OnInit {
 
 	testForm: FormGroup;
 
-	constructor(private route: Router, private fb: FormBuilder) { }
+	constructor(private route: Router, private fb: FormBuilder, private _claimsService: ClaimsService, private _claimsList: ClaimsListComponent, private _refundsList: RefundsListComponent) { }
 
+	filterData(params:HttpParams = new HttpParams){
+		this._claimsList.getClaims(params);
+		this._refundsList.getRefunds(params);
+	}
+
+	getClaims(params:HttpParams = new HttpParams){
+		let data;
+		this._claimsService.getClaims(params)
+		.subscribe(res => {
+		  data = res;
+		  this.claims = data.data;
+		  this.dataSource = new MatTableDataSource(this.claims);
+		  this.dataSource.sort = this.sort;
+		  this.dataSource.paginator = this.paginator;
+		}, err => console.log(err));
+	  }
+	  
 	ngOnInit() {
-		this.dataSource.sort = this.sort;
-		this.dataSource.paginator = this.paginator;
-
 		this.testForm = this.fb.group({
 			arthritis: this.fb.group({})
 		});
@@ -132,7 +112,8 @@ export class ClaimsComponent implements OnInit {
 
 	newClaim() {
 		this.newClaimButtonOptions.active = true;
-
 		this.route.navigateByUrl('/dashboard/claims/new-claim');
 	}
 }
+
+

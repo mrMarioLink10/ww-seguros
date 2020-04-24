@@ -1,33 +1,33 @@
-<div class="uppercase dashboard-page-title mt-8 pb-4">cuestionario de artritis</div>
+<!-- <div class="uppercase dashboard-page-title mt-8 pb-4">cuestionario de artritis</div> -->
 
-<div class="p-3 pb-0 mb-4" style="background-color: #F2F2F2">
-  <div class="mt-3 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 xl:grid-cols-5">
-    <div class="mr-3">
-      <app-input [group]="form" label="Nombre Completo" name='name' placeholder="Alberto Matias">
-      </app-input>
-    </div>
-    <div class="mr-3">
-      <app-input [group]="form" label="Edad" name='age' placeholder="34" type="number">
-      </app-input>
-    </div>
-    <div class="mr-3">
-      <app-input [group]="form" label="Nombre del Médico Tratante" name='doctorName' placeholder="Santiago Alberto">
-      </app-input>
-    </div>
-    <div class="mr-3">
-      <app-input [group]="form" label="Centro de Salud donde trabaja" name='healthCenter'
-        placeholder="Hospital Ney Arias Lora">
-      </app-input>
-    </div>
-    <div class="mr-3">
-      <app-input [group]="form" label="Teléfono del Centro" name='hcNumber' placeholder="8207776677">
-      </app-input>
-    </div>
-  </div>
-</div>
 
-<app-forms-container [titles]="diseaseService.accordionTitle">
+<app-forms-container [isQuestionnarie]="false" [titles]="['Cuestionario de artritis']">
   <ng-template #formTemplate>
+    <div class="p-3 pb-0 mb-4" style="background-color: #F2F2F2">
+      <div class="mt-3 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 xl:grid-cols-5">
+        <div class="mr-3">
+          <app-input [group]="form" label="Nombre Completo" name='name' placeholder="Alberto Matias">
+          </app-input>
+        </div>
+        <div class="mr-3">
+          <app-input [group]="form" label="Edad" name='age' placeholder="34" type="number">
+          </app-input>
+        </div>
+        <div class="mr-3">
+          <app-input [group]="form" label="Nombre del Médico Tratante" name='doctorName' placeholder="Santiago Alberto">
+          </app-input>
+        </div>
+        <div class="mr-3">
+          <app-input [group]="form" label="Centro de Salud donde trabaja" name='healthCenter'
+            placeholder="Hospital Ney Arias Lora">
+          </app-input>
+        </div>
+        <div class="mr-3">
+          <app-input [group]="form" label="Teléfono del Centro" name='hcNumber' placeholder="8207776677">
+          </app-input>
+        </div>
+      </div>
+    </div>
     <!-- PRIMEROS SINTOMAS -->
     <div class="body-13 mb-8" style="color: black !important;">¿Qué tipo de artritis padece?
     </div>

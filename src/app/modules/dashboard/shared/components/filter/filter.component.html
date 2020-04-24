@@ -1,27 +1,35 @@
-<div class="p-3 pb-0" style="background-color: #F2F2F2">
+<form [formGroup]="filterForm" (ngSubmit)="sendFilterParamsToParent(filterForm.value)" class="p-3 pb-0"
+  style="background-color: #F2F2F2">
   <div class="filter-title">Filtro Rápido</div>
   <div class="mt-3 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 xl:grid-cols-5">
-    <div class="mr-3">
+    <div *ngIf="fills.fillType=='tipoSeguro'" class="mr-3">
       <mat-form-field color="accent" appearance="outline" class="w-full" style="font-size: small !important;">
         <mat-label>Tipo de Seguro</mat-label>
-        <mat-select>
+        <mat-select formControlName="tipoSeguro">
           <mat-option value="Salud">Salud</mat-option>
           <mat-option value="Vida">Vida</mat-option>
         </mat-select>
       </mat-form-field>
     </div>
+    <div *ngIf="fills.fillType=='nroPoliza'" class="mr-3">
+      <mat-form-field color="accent" appearance="outline" class="w-full bg-transparente"
+        style="font-size: small !important;">
+        <mat-label>No. Póliza</mat-label>
+        <input formControlName="nroPoliza" matInput class="" placeholder="">
+      </mat-form-field>
+    </div>
     <div class="mr-3">
       <mat-form-field color="accent" appearance="outline" class="w-full" style="font-size: small !important;">
         <mat-label>Estatus</mat-label>
-        <mat-select>
-          <mat-option *ngFor="let stat of status" value="stat">{{stat | titlecase}}</mat-option>
+        <mat-select formControlName="status">
+          <mat-option *ngFor="let stat of fills.status" [value]="stat">{{stat | titlecase}}</mat-option>
         </mat-select>
       </mat-form-field>
     </div>
     <div class="mr-3">
       <mat-form-field color="accent" appearance="outline" class="w-full" style="font-size: small !important;">
         <mat-label>Desde</mat-label>
-        <input matInput [matDatepicker]="initialDate" placeholder="25/12/2019">
+        <input formControlName="from" matInput [matDatepicker]="initialDate" placeholder="25/12/2019">
         <mat-datepicker-toggle matSuffix [for]="initialDate"></mat-datepicker-toggle>
         <mat-datepicker #initialDate></mat-datepicker>
       </mat-form-field>
@@ -29,16 +37,27 @@
     <div class="mr-3">
       <mat-form-field color="accent" appearance="outline" class="w-full" style="font-size: small !important;">
         <mat-label>Hasta</mat-label>
-        <input matInput [matDatepicker]="finalDate" placeholder="04/03/2020">
+        <input formControlName="to" matInput [matDatepicker]="finalDate" placeholder="04/03/2020">
         <mat-datepicker-toggle matSuffix [for]="finalDate"></mat-datepicker-toggle>
         <mat-datepicker #finalDate></mat-datepicker>
       </mat-form-field>
     </div>
     <div class="mr-3">
-      <mat-form-field color="accent" appearance="outline" class="w-full bg-transparente" style="font-size: small !important;">
+      <mat-form-field color="accent" appearance="outline" class="w-full bg-transparente"
+        style="font-size: small !important;">
         <mat-label>Nombre</mat-label>
-        <input matInput class="" placeholder="Jorge Segura">
+        <input formControlName="name" matInput class="" placeholder="Jorge Segura">
       </mat-form-field>
     </div>
   </div>
+  <button type="submit"
+    style="background-color: #3E7DB8; color: white; font-size: 12px; padding: 5px;border-radius: 3px;margin: 10px auto;">BUSCAR</button>
+</form>
+
+<div *ngIf="false">
+  <mat-form-field color="accent" appearance="outline" class="w-full bg-transparente"
+    style="font-size: small !important; margin: auto;">
+    <mat-label>No. Poliza</mat-label>
+    <input formControlName="name" matInput class="" placeholder="Jorge Segura">
+  </mat-form-field>
 </div>

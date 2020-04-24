@@ -8,9 +8,9 @@ describe('NewSubscriptionRequestComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ NewSubscriptionRequestComponent ]
+      declarations: [NewSubscriptionRequestComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

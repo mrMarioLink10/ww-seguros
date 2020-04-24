@@ -98,27 +98,26 @@ export const questionsA = [
 export const questionsB = [
   {
     question: '1. ¿Haya consultado a un médico para tratamiento médico o quirúrgico, o para consejo de alguna otra enfermedad o alteración de salud que no esté mencionada en la Sección A?',
-    answer: false,
+    name: 'haveConsultedForUnmentioned',
   },
   {
     question: '2. ¿Ha tenido o tiene alguna alteración de buena salud que no haya sido mencionada en la sección A o en la primera pregunta de esta sección?',
-    answer: false,
+    name: 'haveAlterationForUnmentioned',
   },
   {
     question: '3. ¿Haya tenido un examen físico, estudios diagnósticos o pruebas especializadas?',
-    answer: false,
-    procedures: true
+    name: 'haveHadExamStudiesTests',
   },
   {
     question: '4. ¿Alguno de sus padres, hermanos o hermanas ha tenido tuberculosis, diabetes, cáncer, presión arterial alta, enfermedad del corazón o riñón?',
-    answer: false,
+    name: 'hasFamilyWithHeartKidneyDisease',
   },
   {
     question: '5. ¿Alguna compañía de seguros le ha declinado, aplazado, recargado o limitado un seguro de vida, de accidente o de salud a usted o a alguno de los dependientes nombrados?',
-    answer: false,
+    name: 'hasDeclinedInsuranceCompany',
   },
   {
     question: '6. ¿Ha tenido o tiene Seguros de Gastos Médicos/Salud ?',
-    answer: false,
+    name: 'haveHadMedicalHealthInsurance',
   },
 ]

@@ -4,6 +4,7 @@ import { FormArrayGeneratorService } from 'src/app/core/services/forms/form-arra
 import { FieldConfig } from 'src/app/shared/components/form-components/models/field-config';
 import { $sex, $country, $res, $time, $family } from 'src/app/core/form/objects';
 import { DiseaseService } from '../../../shared/components/disease/shared/disease/disease.service';
+import { FormHandlerService } from 'src/app/core/services/forms/form-handler.service';
 
 @Component({
   selector: 'app-life',
@@ -128,7 +129,7 @@ export class LifeComponent implements OnInit, DoCheck {
 
   primaryBenefits = {
     name: ['', Validators.required],
-    id: ['', Validators.required],
+    id2: ['', Validators.required],
     nationality: ['', Validators.required],
     ocupation: ['', Validators.required],
     family: ['', Validators.required],
@@ -202,6 +203,11 @@ export class LifeComponent implements OnInit, DoCheck {
       name: 'requestType',
       type: 'select'
     };
+
+  country = {
+    options: $country,
+  };
+
   countryOfResidence = {
     options: $country,
     name: 'countryOfResidence',
@@ -214,7 +220,6 @@ export class LifeComponent implements OnInit, DoCheck {
     name: 'countryOfBirth',
   };
 
-  country = $country;
   currency = {
     name: 'currency',
     label: 'Tipo de Moneda',
@@ -385,12 +390,12 @@ export class LifeComponent implements OnInit, DoCheck {
   constructor(
     private fb: FormBuilder,
     public formMethods: FormArrayGeneratorService,
-    public diseaseService: DiseaseService
+    public diseaseService: DiseaseService,
+    public formHandler: FormHandlerService
   ) { }
 
   ngOnInit() {
     this.newRequest = this.fb.group({
-      requestType: [''],
       person: this.fb.group({
         firstName: ['', Validators.required],
         secondName: ['', Validators.required],
@@ -398,7 +403,7 @@ export class LifeComponent implements OnInit, DoCheck {
         date: [new Date(), Validators.required],
         sex: ['', Validators.required],
         nationality: ['', Validators.required],
-        id: ['', Validators.required],
+        id2: ['', Validators.required],
         age: ['', Validators.required],
         weight: ['', Validators.required],
         height: ['', Validators.required],
@@ -407,7 +412,6 @@ export class LifeComponent implements OnInit, DoCheck {
         currency: ['', Validators.required],
         countryOfResidence: ['', Validators.required],
         countryOfBirth: ['', Validators.required],
-        city: ['', Validators.required],
         direction: ['', Validators.required],
         tel: ['', Validators.required],
         cel: ['', Validators.required],
@@ -422,7 +426,6 @@ export class LifeComponent implements OnInit, DoCheck {
         years: ['', Validators.required],
         jobDuties: ['', Validators.required],
         countryOfResidence: ['', Validators.required],
-        youAre: ['', Validators.required],
       }),
       contractor: this.fb.group({
         firstName: ['', Validators.required],
@@ -431,7 +434,7 @@ export class LifeComponent implements OnInit, DoCheck {
         date: [new Date(), Validators.required],
         sex: ['', Validators.required],
         nationality: ['', Validators.required],
-        id: ['', Validators.required],
+        id2: ['', Validators.required],
         countryOfResidence: ['', Validators.required],
         status: ['', Validators.required],
         countryOfBirth: ['', Validators.required],
@@ -459,7 +462,7 @@ export class LifeComponent implements OnInit, DoCheck {
         date: [new Date(), Validators.required],
         sex: ['', Validators.required],
         nationality: ['', Validators.required],
-        id: ['', Validators.required],
+        id2: ['', Validators.required],
         countryOfResidence: ['', Validators.required],
         status: ['', Validators.required],
         countryOfBirth: ['', Validators.required],
@@ -507,7 +510,7 @@ export class LifeComponent implements OnInit, DoCheck {
         personBenefited: this.fb.group({
           name: [''],
           family: [''],
-          id: ['']
+          id2: ['']
         })
       }),
       contingentBeneficiary: this.fb.group({
@@ -515,7 +518,7 @@ export class LifeComponent implements OnInit, DoCheck {
         personBenefited: this.fb.group({
           name: [''],
           family: [''],
-          id: ['']
+          id2: ['']
         }),
         bankTransfer: this.fb.group({
           family: [''],
@@ -588,7 +591,8 @@ export class LifeComponent implements OnInit, DoCheck {
         }),
         getAnswersFromInsured: ['', Validators.required],
       }),
-      questionnaires: this.fb.group({})
+      questionnaires: this.fb.group({}),
+      activitiesQuestionnaires: this.fb.group({}),
     });
 
     this.primaryBenefitsArray = this.newRequest.get('primaryBenefits').get('dependentsC') as FormArray;
@@ -1354,6 +1358,14 @@ export class LifeComponent implements OnInit, DoCheck {
 
   addToList(list: any, type: string) {
     list.push(this.createFormArray(type));
+  }
+
+  questionsLength() {
+    return Object.keys(this.newRequest.get('questionnaires').value).length;
+  }
+
+  activitiesQuestionsLength() {
+    return Object.keys(this.newRequest.get('activitiesQuestionnaires').value).length;
   }
 
   print() {

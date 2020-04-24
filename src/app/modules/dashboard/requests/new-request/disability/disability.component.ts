@@ -3,8 +3,10 @@ import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { FormArrayGeneratorService } from 'src/app/core/services/forms/form-array-generator.service';
 import { FieldConfig } from 'src/app/shared/components/form-components/models/field-config';
 import { DisabilityService } from '../disability/services/disability.service'
-import { $country } from 'src/app/core/form/objects';
+import { $country, $heightTypes, $weightTypes } from 'src/app/core/form/objects';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { FormHandlerService } from 'src/app/core/services/forms/form-handler.service';
+import { DiseaseService } from '../../../shared/components/disease/shared/disease/disease.service';
 
 @Component({
   selector: 'app-disability',
@@ -12,70 +14,62 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
   styleUrls: ['./disability.component.scss']
 })
 export class DisabilityComponent implements OnInit {
+  sicknessQuestions: any[];
 
-  accordionTitles= ['Sección A. Datos del propuesto Asegurado y Estatus laboral', 'Sección B. Datos del Contratante', 'Sección C. Cuestionario Médico', 'Sección D. Opción del Plan', 'Sección E. Beneficiarios Primarios', 'Beneficiario(s) Contigente(s)']
 
-  genderOptions:FieldConfig ={
+  accordionTitles = [
+    'Sección A. Datos del propuesto Asegurado y Estatus laboral',
+    'Sección B. Datos del Contratante', 'Sección C. Cuestionario Médico',
+    'Sección D. Opción del Plan', 'Sección E. Beneficiarios Primarios',
+    'Beneficiario(s) Contigente(s)'];
 
-    label:'',
+  genderOptions: FieldConfig = {
+
+    label: '',
     options: [
-
       {
-        value:'masculino',
-        viewValue:'Masculino'
+        value: 'masculino',
+        viewValue: 'Masculino'
       },
-
       {
-        value:'femenino',
-        viewValue:'Femenino'
+        value: 'femenino',
+        viewValue: 'Femenino'
       }
-
     ]
-
   };
 
-  contractOPtions:FieldConfig={
-
-    label:'',
+  contractOPtions: FieldConfig = {
+    label: '',
     options: [
-
       {
-
-        value:'permanente',
-        viewValue:'Permanente'
-
+        value: 'permanente',
+        viewValue: 'Permanente'
       },
       {
-        value:'temporal',
-        viewValue:'Temporal'
+        value: 'temporal',
+        viewValue: 'Temporal'
       }
-
     ]
-
-  }
+  };
 
   type = {
     label: 'Tipo de Solicitud',
     options: [
-
       {
         value: 'vida',
         viewValue: 'Solicitud de Seguro de Vida',
         link: '/dashboard/requests/new-requests/life'
       },
-
       {
         value: 'disability',
         viewValue: 'Solicitud de Suscripción Disability',
         link: '/dashboard/requests/new-requests/disability'
       },
-
       {
         value: 'gastos mayores',
         viewValue: 'Suscripción Seguro Gastos Médicos Mayores',
         link: '/dashboard/requests/new-requests/major-expenses'
       }
-
     ]
   };
 
@@ -180,23 +174,19 @@ changeCountry(event) {
 
     label:'Moneda',
     options: this.disabilityService.currencyArray
-
   };
 
-  YesNo:FieldConfig={
-    label:'',
+  YesNo: FieldConfig = {
+    label: '',
     options: [
-
       {
-        value:'si',
-        viewValue:'Si'
+        value: 'si',
+        viewValue: 'Si'
       },
-
       {
-        value:'no',
-        viewValue:'No'
+        value: 'no',
+        viewValue: 'No'
       }
-
     ]
   };
 
@@ -307,288 +297,518 @@ emitter(event) {
 
 }
 
-selectChange(event){
-  const form = this.disabilityGroup.get('questions') as FormGroup;
-  const formQ = this.disabilityGroup.get('questions').get('questionnaire') as FormGroup;
-  const formC = this.disabilityGroup.get('questions').get('questionnaire').get('insurance') as FormGroup;
-
-  if (event.valor === 'si') {
-
-        switch(event.name){
-        
-            case 'smoker_radio':
-        
-              form.addControl('smoke', this.fb.group({
-                quantity: ['', [Validators.required, Validators.min(1)]]
-              }));
-              console.log(JSON.stringify(this.disabilityGroup.value));
-
-            break;
-        
-            case 'alcohol_radio':
-
-              form.addControl('alcohol', this.fb.group({
-                quantity: ['', [Validators.required, Validators.min(1)]]
-              }));
-              console.log(JSON.stringify(this.disabilityGroup.value));
-
-            break;
-
-            case 'health_radio':
-
-              formQ.addControl('health', this.fb.group({
-                date: [new Date(), Validators.required,],
-                reason: ['', Validators.required],
-                therapy: ['', Validators.required]
-
-              }));
-              console.log(JSON.stringify(this.disabilityGroup.value));
-
-            break;
-            
-            case 'therapy_radio':
-
-              formQ.addControl('therapies', this.fb.group({
-                date: [new Date(), Validators.required,],
-                reason: ['', Validators.required],
-                therapy: ['', Validators.required]
-
-              }));
-              console.log(JSON.stringify(this.disabilityGroup.value));
-
-            break;
-            
-            case 'sick_pay_radio':
-
-              formQ.addControl('sick_pay', this.fb.group({
-                date: [new Date(), Validators.required,],
-                reason: ['', Validators.required],
-                therapy: ['', Validators.required]
-
-              }));
-              console.log(JSON.stringify(this.disabilityGroup.value));
-
-            break;
-
-            case 'analysis_radio':
-
-              formQ.addControl('analysis', this.fb.group({
-                date: [new Date(), Validators.required,],
-                name: ['', Validators.required],
-
-              }));
-              console.log(JSON.stringify(this.disabilityGroup.value));
-
-            break;
-            
-            case 'other_analysis_radio':
-
-              formQ.addControl('other_analysis', this.fb.group({
-                date: [new Date(), Validators.required,],
-                reason: ['', Validators.required],
-
-              }));
-              console.log(JSON.stringify(this.disabilityGroup.value));
-
-            break;
-
-            case 'inpatientCare_radio':
-
-              formQ.addControl('inpatientCare', this.fb.group({
-                date: [new Date(), Validators.required,],
-                reason: ['', Validators.required],
-
-              }));
-              console.log(JSON.stringify(this.disabilityGroup.value));
-
-            break;
-            
-            case 'sicknessType_radio':
-
-              formQ.addControl('sicknessType', this.fb.group({
-                date: [new Date(), Validators.required,],
-                description: ['', Validators.required],
-
-              }));
-              console.log(JSON.stringify(this.disabilityGroup.value));
-
-            break;
-            
-            case 'VIH_radio':
-
-              formQ.addControl('VIH', this.fb.group({
-                date: [new Date(), Validators.required,],
-                name: ['', Validators.required],
-
-              }));
-              console.log(JSON.stringify(this.disabilityGroup.value));
-
-            break;
-            
-            case 'specialTherapy_radio':
-
-              formQ.addControl('specialTherapy', this.fb.group({
-                date: [new Date(), Validators.required,],
-                reason: ['', Validators.required],
-
-              }));
-              console.log(JSON.stringify(this.disabilityGroup.value));
-
-            break;
-            
-            case 'accident_radio':
-
-              formQ.addControl('accident', this.fb.group({
-                date: [new Date(), Validators.required,],
-                reason: ['', Validators.required],
-                effects: ['', Validators.required],
-
-              }));
-              console.log(JSON.stringify(this.disabilityGroup.value));
-
-            break;
-            
-            case 'deny_radio':
-
-              formQ.addControl('deny', this.fb.group({
-                reason: ['', Validators.required]
-
-              }));
-              console.log(JSON.stringify(this.disabilityGroup.value));
-
-            break;
-            
-            case 'insurance_radio':
-
-              formQ.addControl('insurance', this.fb.group({
-                company: ['', Validators.required],
-                num: ['', [Validators.required, Validators.min(1)]],
-                name: ['', Validators.required],
-                insured_company: ['', Validators.required],
-                policy: ['', Validators.required],
-                date: [new Date(), Validators.required],
-                claim_radio:['', Validators.required],
-
-              }));
-              console.log(JSON.stringify(this.disabilityGroup.value));
-
-            break;
-
-            case 'claim_radio':
-
-              formC.addControl('claim', this.fb.group({
-                explanation: ['', Validators.required],
-              }));
-              console.log(JSON.stringify(this.disabilityGroup.value));
-
-            break;
-        
-        }
-
-    }
-
-    else if (event.valor === 'no'){
-
-        switch(event.name){
-
-          case 'smoker_radio':
-        
-            form.removeControl('smoke');
-
-          break;
-          
-          case 'alcohol_radio':
-
-            form.removeControl('alcohol');
-
-          break;
-
-          case 'health_radio':
-
-            formQ.removeControl('health');
-
-          break;
-          
-          case 'therapy_radio':
-
-            formQ.removeControl('therapies');
-
-          break;
-          
-          case 'sick_pay_radio':
-
-            formQ.removeControl('sick_pay');
-
-          break;
-
-          case 'analysis_radio':
-
-            formQ.removeControl('analysis');
-
-          break;
-          
-          case 'other_analysis_radio':
-
-            formQ.removeControl('other_analysis');
-
-          break;
-          
-          case 'inpatientCare_radio':
-
-            formQ.removeControl('inpatientCare');
-
-          break;
-          
-          case 'sicknessType_radio':
-
-            formQ.removeControl('sicknessType');
-
-          break;
-
-          case 'VIH_radio':
-
-            formQ.removeControl('VIH');
-
-          break;
-          
-          case 'accident_radio':
-
-            formQ.removeControl('accident');
-
-          break;
-
-          case 'deny_radio':
-
-            formQ.removeControl('deny');
-
-          break;
-          
-          case 'insurance_radio':
-
-            formQ.removeControl('insurance');
-
-          break;
-
-          case 'claim_radio':
-
-            formC.removeControl('claim');
-
-          break;
-          
-      } 
-  } 
-}
-
-  typeRequestGroup:FormGroup;
-
-  disabilityGroup:FormGroup;
-  mainFormArray:FormArray;
+  heightList: FieldConfig = {
+    label: 'Unidad',
+    options: $heightTypes
+  };
+
+  weightList: FieldConfig = {
+    label: 'Unidad',
+    options: $weightTypes
+  };
+
+  typeRequestGroup: FormGroup;
+
+  disabilityGroup: FormGroup;
+  mainFormArray: FormArray;
   mainProperty;
-  contingentFormArray:FormArray;
+  contingentFormArray: FormArray;
   contingentProperty;
 
-  money_laundering:FormGroup;
-  know_client:FormGroup;
+  money_laundering: FormGroup;
+  know_client: FormGroup;
+
+
+  mainGroup = {
+    full_name: ['', Validators.required],
+    id2: ['', Validators.required],
+    nationality: ['', Validators.required],
+    relationship: ['', Validators.required],
+    percentage: ['', [Validators.required, Validators.min(1), Validators.max(100)]]
+  };
+
+  contingentGroup = {
+    full_name: ['', Validators.required],
+    id2: ['', Validators.required],
+    nationality: ['', Validators.required],
+    relationship: ['', Validators.required],
+    percentage: ['', [Validators.required, Validators.min(1), Validators.max(100)]]
+  };
+
+  // items=[];
+  constructor(
+    private fb: FormBuilder,
+    public formMethods: FormArrayGeneratorService,
+    private disabilityService: DisabilityService,
+    public formHandler: FormHandlerService,
+    public diseaseService: DiseaseService
+  ) { 
+
+    // this.http.get('https://restcountries.eu/rest/v2/all').subscribe(data=>
+    //   {
+    //     console.log(data)
+
+    //     let list=[];
+
+    //     for(let key in data){
+    //       if(data.hasOwnProperty(key)){
+
+    //         list.push(
+    //               {
+    //                 value: data[key].translations.es,
+    //                 viewValue: data[key].translations.es
+    //               }
+    //           )
+    //       }
+    //     }
+    
+    //     list[27].value="Bonaire, San Eustaquio y Saba";
+    //     list[27].viewValue="Bonaire, San Eustaquio y Saba";
+    //     list[59].value="Curazao";
+    //     list[59].viewValue="Curazao";
+    //     list[203].value="San Martín (Países Bajos)";
+    //     list[203].viewValue="San Martín (Países Bajos)";
+
+        //  this.items= list.map(n=>n.translations.es).sort();
+
+        // list.sort(function(a, b){
+        //   var nameA=a.value.toLowerCase(), nameB=b.value.toLowerCase()
+        //   if (nameA < nameB) //sort string ascending
+          //     return -1 
+          // if (nameA > nameB)
+          //     return 1
+          // return 0 //default return value (no sorting)
+      //   })
+
+      //   this.items= list
+      //   console.log(this.items)
+
+      // });
+
+  }
+
+  ngOnInit() {
+
+    this.sicknessQuestions = [
+      {
+        label: 'Hipertensión arterial',
+        name: 'haveHypertension'
+      },
+      {
+        label: 'Artritis',
+        name: 'haveArthritis'
+      },
+      {
+        label: 'Desórdenes cardiovasculares',
+        name: 'haveCardiovascular'
+      },
+      {
+        label: 'Padecimientos renales',
+        name: 'haveRenalUrinary'
+      },
+      {
+        label: 'Padecimientos metabólicos (diabetes, hipercolesterolemia)',
+        name: 'haveMetabolics'
+      },
+      {
+        label: 'Padecimientos musculoesqueleticos',
+        name: 'haveMusculoSkeletal'
+      },
+      {
+        label: 'Desórdenes urologicos y tiene mas de 50 años',
+        name: 'haveProstatics'
+      },
+      {
+        label: 'Desórdenes osteoarticulares (discal, vertebral y paravertebral, lumbado, clática)',
+        name: 'haveSpine'
+      },
+    ];
+
+    this.mainProperty = this.fb.array([this.formMethods.createItem(this.mainGroup)]);
+    this.contingentProperty = this.fb.array([this.formMethods.createItem(this.contingentGroup)]);
+
+    this.money_laundering = this.fb.group({}),
+      this.know_client = this.fb.group({}),
+
+      this.typeRequestGroup = this.fb.group({
+        typeRequest: [''],
+
+      });
+
+    this.disabilityGroup = this.fb.group({
+
+      // money_laundering: this.fb.group({}),
+      // know_client: this.fb.group({}),
+
+      num_financial_quote: ['', Validators.required],
+      // typeRequest:[''],
+      insured_data: this.fb.group({
+        name: ['', Validators.required],
+        last_name: ['', Validators.required],
+        birthdate: [new Date(), Validators.required],
+        gender: ['', Validators.required],
+        job: ['', Validators.required],
+        nationality: ['', Validators.required],
+        id_passport: ['', Validators.required],
+        contract: ['', Validators.required],
+        date_since: [new Date(), Validators.required],
+        date_until: [new Date(), Validators.required],
+        position: ['', Validators.required],
+        salary: ['', [Validators.required, Validators.min(1)]],
+        currency: ['', Validators.required],
+        address: ['', Validators.required],
+        telephone: ['', Validators.required],
+        email: ['', [Validators.required, Validators.email]],
+        job_description: ['', Validators.required],
+        job_hours: ['', [Validators.required, Validators.min(1)]],
+        date: [new Date(), Validators.required],
+        reason_pension: [''],
+        office_hours: ['', [Validators.required, Validators.min(1)]],
+        company: ['', Validators.required],
+        amount_pension: ['', Validators.min(1)],
+        currency_pension: [''],
+        outside_hours: ['', [Validators.required, Validators.min(1)]],
+        pension_radio: ['', Validators.required],
+        pep_radio: ['', Validators.required]
+      }),
+      policyholder: this.fb.group({
+        name: ['', Validators.required],
+        id_passport: ['', Validators.required],
+        marital_status: ['', Validators.required],
+        nationality: ['', Validators.required],
+        telephone: ['', Validators.required],
+        cell: ['', Validators.required],
+        email: ['', [Validators.required, Validators.email]],
+        annual_income: ['', [Validators.required, Validators.min(1)]],
+        currency: ['', Validators.required],
+        address: ['', Validators.required],
+        country: ['', Validators.required],
+        city: ['', Validators.required],
+        postal_address: ['', Validators.required],
+        country_residence: ['', Validators.required],
+        relationship: ['', Validators.required],
+        pep_radio: ['', Validators.required],
+        representative: ['', Validators.required],
+        passport_id: ['', Validators.required]
+      }),
+      questions: this.fb.group({
+        smoker_radio: ['', Validators.required],
+        alcohol_radio: ['', Validators.required],
+        weight: ['', Validators.required],
+        height: ['', Validators.required],
+        weightUnit: ['', Validators.required],
+        heightUnit: ['', Validators.required],
+        questionnaire: this.fb.group({
+          health_radio: ['', Validators.required],
+          therapy_radio: ['', Validators.required],
+          sick_pay_radio: ['', Validators.required],
+          analysis_radio: ['', Validators.required],
+          other_analysis_radio: ['', Validators.required],
+          inpatientCare_radio: ['', Validators.required],
+          hospitalization_radio: ['', Validators.required],
+          sicknessType_radio: ['', Validators.required],
+          bloodSick_radio: ['', Validators.required],
+          VIH_radio: ['', Validators.required],
+          specialTherapy_radio: ['', Validators.required],
+          accident_radio: ['', Validators.required],
+          deny_radio: ['', Validators.required],
+          insurance_radio: ['', Validators.required],
+        })
+      }),
+      plan: this.fb.group({
+        period: ['', Validators.required],
+        life: ['', Validators.required],
+        rent: ['', Validators.required]
+      }),
+      main: this.fb.group({
+        full_name: ['', Validators.required],
+        relationship: ['', Validators.required],
+        id_passport: ['', Validators.required],
+        main_array: this.fb.array([this.formMethods.createItem(this.mainGroup)])
+      }),
+      contingent: this.fb.group({
+        full_name: ['', Validators.required],
+        relationship: ['', Validators.required],
+        id_passport: ['', Validators.required],
+        contingent_array: this.fb.array([this.formMethods.createItem(this.contingentGroup)])
+      }),
+      questionnaires: this.fb.group({})
+    });
+
+    this.mainFormArray = this.disabilityGroup.get('main').get('main_array') as FormArray;
+    this.contingentFormArray = this.disabilityGroup.get('contingent').get('contingent_array') as FormArray;
+
+  }
+
+  selectChange(event) {
+    const form = this.disabilityGroup.get('questions') as FormGroup;
+    const questionnaires = this.disabilityGroup.get('questionnaires') as FormGroup;
+    const formQ = this.disabilityGroup.get('questions').get('questionnaire') as FormGroup;
+    const formC = this.disabilityGroup.get('questions').get('questionnaire').get('insurance') as FormGroup;
+    console.log(event);
+
+    if (event.valor === 'si') {
+      // console.log(JSON.stringify(this.disabilityGroup.value));
+
+      switch (event.name) {
+        case 'smoker_radio':
+          form.addControl('smoke', this.fb.group({
+            quantity: ['', [Validators.required, Validators.min(1)]]
+          }));
+          break;
+
+        case 'alcohol_radio':
+          form.addControl('alcohol', this.fb.group({
+            quantity: ['', [Validators.required, Validators.min(1)]]
+          }));
+          break;
+
+        case 'health_radio':
+          formQ.addControl('health', this.fb.group({
+            date: [new Date(), Validators.required],
+            reason: ['', Validators.required],
+            therapy: ['', Validators.required]
+          }));
+          break;
+
+        case 'therapy_radio':
+          formQ.addControl('therapies', this.fb.group({
+            date: [new Date(), Validators.required],
+            reason: ['', Validators.required],
+            therapy: ['', Validators.required]
+          }));
+          break;
+
+        case 'sick_pay_radio':
+          formQ.addControl('sick_pay', this.fb.group({
+            date: [new Date(), Validators.required],
+            reason: ['', Validators.required],
+            therapy: ['', Validators.required]
+          }));
+          break;
+
+        case 'analysis_radio':
+          formQ.addControl('analysis', this.fb.group({
+            date: [new Date(), Validators.required],
+            name: ['', Validators.required],
+          }));
+          break;
+
+        case 'other_analysis_radio':
+          formQ.addControl('other_analysis', this.fb.group({
+            date: [new Date(), Validators.required],
+            reason: ['', Validators.required],
+          }));
+          break;
+
+        case 'inpatientCare_radio':
+          formQ.addControl('inpatientCare', this.fb.group({
+            date: [new Date(), Validators.required],
+            reason: ['', Validators.required],
+          }));
+          break;
+
+        case 'bloodSick_radio':
+          formQ.addControl('bloodSick', this.fb.group({
+            date: [new Date(), Validators.required],
+            reason: ['', Validators.required],
+          }));
+          break;
+
+        case 'hospitalization_radio':
+          formQ.addControl('hospitalization', this.fb.group({
+            date: [new Date(), Validators.required],
+            reason: ['', Validators.required],
+          }));
+          break;
+
+        case 'sicknessType_radio':
+          formQ.addControl('sicknessType', this.fb.group({
+            date: [new Date(), Validators.required],
+            description: ['', Validators.required],
+            haveHypertension: ['', Validators.required],
+            haveArthritis: ['', Validators.required],
+            haveCardiovascular: ['', Validators.required],
+            haveRenalUrinary: ['', Validators.required],
+            haveMetabolics: ['', Validators.required],
+            haveMusculoSkeletal: ['', Validators.required],
+            haveProstatics: ['', Validators.required],
+            haveSpine: ['', Validators.required],
+          }));
+          break;
+
+        case 'haveHypertension':
+          questionnaires.addControl('hypertension', this.fb.group({}));
+          break;
+
+        case 'haveArthritis':
+          questionnaires.addControl('arthritis', this.fb.group({}));
+          break;
+
+        case 'haveCardiovascular':
+          questionnaires.addControl('cardiovascular', this.fb.group({}));
+          break;
+
+        case 'haveRenalUrinary':
+          questionnaires.addControl('renalUrinary', this.fb.group({}));
+          break;
+
+        case 'haveMetabolics':
+          questionnaires.addControl('mellitusDiabetes', this.fb.group({}));
+          break;
+
+        case 'haveMusculoSkeletal':
+          questionnaires.addControl('musculosSkeletal', this.fb.group({}));
+          break;
+
+        case 'haveProstatics':
+          questionnaires.addControl('prostatic', this.fb.group({}));
+          break;
+
+        case 'haveSpine':
+          questionnaires.addControl('spine', this.fb.group({}));
+          break;
+
+        case 'VIH_radio':
+          formQ.addControl('VIH', this.fb.group({
+            date: [new Date(), Validators.required],
+            name: ['', Validators.required],
+          }));
+          break;
+
+        case 'specialTherapy_radio':
+          formQ.addControl('specialTherapy', this.fb.group({
+            date: [new Date(), Validators.required],
+            reason: ['', Validators.required],
+
+          }));
+          break;
+
+        case 'accident_radio':
+          formQ.addControl('accident', this.fb.group({
+            date: [new Date(), Validators.required],
+            reason: ['', Validators.required],
+            effects: ['', Validators.required],
+
+          }));
+          break;
+
+        case 'deny_radio':
+          formQ.addControl('deny', this.fb.group({
+            reason: ['', Validators.required]
+
+          }));
+          break;
+
+        case 'insurance_radio':
+          formQ.addControl('insurance', this.fb.group({
+            company: ['', Validators.required],
+            num: ['', [Validators.required, Validators.min(1)]],
+            name: ['', Validators.required],
+            insured_company: ['', Validators.required],
+            policy: ['', Validators.required],
+            date: [new Date(), Validators.required],
+            claim_radio: ['', Validators.required],
+
+          }));
+          break;
+
+        case 'claim_radio':
+          formC.addControl('claim', this.fb.group({
+            explanation: ['', Validators.required],
+          }));
+          break;
+
+      }
+    } else if (event.valor === 'no') {
+      switch (event.name) {
+        case 'smoker_radio':
+          form.removeControl('smoke');
+          break;
+
+        case 'alcohol_radio':
+          form.removeControl('alcohol');
+          break;
+
+        case 'health_radio':
+          formQ.removeControl('health');
+          break;
+
+        case 'therapy_radio':
+          formQ.removeControl('therapies');
+          break;
+
+        case 'sick_pay_radio':
+          formQ.removeControl('sick_pay');
+          break;
+
+        case 'analysis_radio':
+          formQ.removeControl('analysis');
+          break;
+
+        case 'other_analysis_radio':
+          formQ.removeControl('other_analysis');
+          break;
+
+        case 'inpatientCare_radio':
+          formQ.removeControl('inpatientCare');
+          break;
+
+        case 'sicknessType_radio':
+          formQ.removeControl('sicknessType');
+          break;
+
+        case 'VIH_radio':
+          formQ.removeControl('VIH');
+          break;
+
+        case 'accident_radio':
+          formQ.removeControl('accident');
+          break;
+
+        case 'deny_radio':
+          formQ.removeControl('deny');
+          break;
+
+        case 'insurance_radio':
+          formQ.removeControl('insurance');
+          break;
+
+        case 'specialTherapy_radio':
+          formQ.removeControl('specialTherapy');
+          break;
+
+        case 'bloodSick_radio':
+          formQ.removeControl('bloodSick');
+          break;
+
+        case 'hospitalization_radio':
+          formQ.removeControl('hospitalization');
+          break;
+
+        case 'claim_radio':
+          formC.removeControl('claim');
+          break;
+
+        case 'haveHypertension':
+          questionnaires.removeControl('hypertension');
+          break;
+
+        case 'haveArthritis':
+          questionnaires.removeControl('arthritis');
+          break;
+
+        case 'haveCardiovascular':
+          questionnaires.removeControl('cardiovascular');
+          break;
+
+        case 'haveRenalUrinary':
+          questionnaires.removeControl('renalUrinary');
+          break;
+
+        case 'haveMetabolics':
+          questionnaires.removeControl('mellitusDiabetes');
+          break;
 
   // INTENTAR HACER LA CONDICION 6 DEL FORMULARIO DE DISABILITY, TOMANDO COMO BASE LO QUE HIZO ISAI EN EL FORMULARIO
   // DE VIDA. AH, Y VER SI AL <mat-tab> SE LE PUEDE PONER UNA CONDICION DE QUE APAREZCA SI UNA VARIABLE ES MAYOR
@@ -599,249 +819,54 @@ selectChange(event){
   // @Input() group: FormGroup=this.disabilityGroup.get('policyholder') as FormGroup;
   // @Input() name: string="countryPrueba";
 
-  mainGroup ={
-    full_name: ['', Validators.required],
-    id: ['', Validators.required],
-    nationality: ['', Validators.required],
-    relationship: ['', Validators.required],
-    percentage: ['', [Validators.required, Validators.min(1), Validators.max(100)]]
-  }
+        case 'haveProstatics':
+          questionnaires.removeControl('prostatic');
+          break;
 
-  contingentGroup ={
-    full_name: ['', Validators.required],
-    id: ['', Validators.required],
-    nationality: ['', Validators.required],
-    relationship: ['', Validators.required],
-    percentage: ['', [Validators.required, Validators.min(1), Validators.max(100)]]
+        case 'haveSpine':
+          questionnaires.removeControl('spine');
+          break;
+      }
+    }
   }
 
   createFormArray(name: string) {
-
     const formP = this.disabilityGroup.get('main') as FormGroup;
     const formC = this.disabilityGroup.get('contingent') as FormGroup;
-    
+
     formP.addControl('main_array', this.mainProperty);
     formC.addControl('contingent_array', this.contingentProperty);
 
-		switch (name) {
-
-			case 'main_array':
-
-				  return this.mainGroup;
-          break;
+    switch (name) {
+      case 'main_array':
+        return this.mainGroup;
+        break;
 
       case 'contingent_array':
+        return this.contingentGroup;
+        break;
+    }  
+}
 
-          return this.contingentGroup;
-          break;
+addFormArray(array: any, name: string) {
+  const increment = array.length + 1;
+  array = this.formMethods.addElement(array, increment, this.createFormArray(name)).formArray;
 
-      }
+  console.log(JSON.stringify(this.disabilityGroup.value));
+  // array.push(this.createFormArray(name));
 
-    }
+}
 
-    items=[];
+removeFormArray(index, array: any) {
+  array.removeAt(index);
+}
 
-  constructor(private fb:FormBuilder, public formMethods: FormArrayGeneratorService, private disabilityService:DisabilityService, private http:HttpClient) {
+print() {
 
-    this.http.get('https://restcountries.eu/rest/v2/all').subscribe(data=>
-      {
-        console.log(data)
+}
 
-        let list=[];
-
-        for(let key in data){
-          if(data.hasOwnProperty(key)){
-
-            list.push(
-                  {
-                    value: data[key].translations.es,
-                    viewValue: data[key].translations.es
-                  }
-              )
-          }
-        }
-    
-        list[27].value="Bonaire, San Eustaquio y Saba";
-        list[27].viewValue="Bonaire, San Eustaquio y Saba";
-        list[59].value="Curazao";
-        list[59].viewValue="Curazao";
-        list[203].value="San Martín (Países Bajos)";
-        list[203].viewValue="San Martín (Países Bajos)";
-
-        //  this.items= list.map(n=>n.translations.es).sort();
-
-        list.sort(function(a, b){
-          var nameA=a.value.toLowerCase(), nameB=b.value.toLowerCase()
-          if (nameA < nameB) //sort string ascending
-              return -1 
-          if (nameA > nameB)
-              return 1
-          return 0 //default return value (no sorting)
-        })
-
-        this.items= list
-        console.log(this.items)
-
-      });
-
-   }
-
-   
-
-  ngOnInit() {
-
-    this.mainProperty = this.fb.array([this.formMethods.createItem(this.mainGroup)]);
-    this.contingentProperty = this.fb.array([this.formMethods.createItem(this.contingentGroup)]);
-
-    this.money_laundering= this.fb.group({}),
-    this.know_client=this.fb.group({}),
-
-    this.typeRequestGroup= this.fb.group({
-      typeRequest:[''],
-      // prueba:[''],
-      // pruebaA:[''],
-      // pruebaB:['']
-
-    })
-
-    this.disabilityGroup = this.fb.group({
-
-      // money_laundering: this.fb.group({}),
-      // know_client: this.fb.group({}),
-
-      num_financial_quote: ['', Validators.required],
-      // typeRequest:[''],
-      insured_data: this.fb.group({
-
-        name: ['', Validators.required],
-        last_name: ['', Validators.required],
-        birthdate: [new Date(), Validators.required],
-        gender: ['', Validators.required],
-        job: ['', Validators.required],
-        nationality: ['', Validators.required],
-        id_passport: ['', Validators.required],
-        contract: ['', Validators.required],
-        date_since:[new Date(), Validators.required],
-        date_until:[new Date(), Validators.required],
-        position:['', Validators.required],
-        salary:['', [Validators.required, Validators.min(1)]],
-        currency:['', Validators.required],
-        address:['', Validators.required],
-        telephone:['', Validators.required],
-        email:['', [Validators.required, Validators.email]],
-        job_description:['', Validators.required],
-        job_hours:['',[Validators.required, Validators.min(1)]],
-        date:[new Date(), Validators.required],
-        reason_pension:['', Validators.required],
-        office_hours:['', [Validators.required, Validators.min(1)]],
-        company:['', Validators.required],
-        amount_pension:['', [Validators.required, Validators.min(1)]],
-        currency_pension:['', Validators.required],
-        outside_hours:['', [Validators.required, Validators.min(1)]],
-        pension_radio:['', Validators.required],
-        pep_radio:['', Validators.required]
-
-      }),
-
-      policyholder: this.fb.group({
-
-        name:['', Validators.required],
-        id_passport:['', Validators.required],
-        marital_status:['', Validators.required],
-        nationality:['', Validators.required],
-        telephone:['', Validators.required],
-        cell:['', Validators.required],
-        email:['', [Validators.required, Validators.email]],
-        annual_income:['', [Validators.required, Validators.min(1)]],
-        currency:['', Validators.required],
-        address:['', Validators.required],
-        country:['', Validators.required],
-        countryPrueba:['', Validators.required],
-        city:['', Validators.required],
-        postal_address:['', Validators.required],
-        country_residence:['', Validators.required],
-        relationship:['', Validators.required],
-        pep_radio:['', Validators.required],
-        representative:['', Validators.required],
-        passport_id:['', Validators.required]
-
-      }),
-
-      questions: this.fb.group({
-        smoker_radio:['', Validators.required],
-        alcohol_radio:['', Validators.required],
-        weight:['', Validators.required],
-        height:['', Validators.required],
-
-        questionnaire: this.fb.group({
-
-          weight_radio:['', Validators.required],
-          health_radio:['', Validators.required],
-          therapy_radio:['', Validators.required],
-          sick_pay_radio:['', Validators.required],
-          analysis_radio:['', Validators.required],
-          other_analysis_radio:['', Validators.required],
-          inpatientCare_radio:['', Validators.required],
-          hospitalization_radio:['', Validators.required],
-          sicknessType_radio:['', Validators.required],
-          bloodSick_radio:['', Validators.required],
-          VIH_radio:['', Validators.required],
-          specialTherapy_radio:['', Validators.required],
-          accident_radio:['', Validators.required],
-          deny_radio:['', Validators.required],
-          insurance_radio:['', Validators.required],
-
-
-        })
-
-      }),
-
-      plan: this.fb.group({
-
-        period:['', Validators.required],
-        life:['', Validators.required],
-        rent:['', Validators.required]
-      }),
-
-      main: this.fb.group({
-
-        full_name:['', Validators.required],
-        relationship:['', Validators.required],
-        id_passport:['', Validators.required],
-          
-        main_array: this.fb.array([this.formMethods.createItem(this.mainGroup)])   
-
-      }),
-
-      contingent: this.fb.group({
-
-        full_name:['', Validators.required],
-        relationship:['', Validators.required],
-        id_passport:['', Validators.required],
-          
-        contingent_array: this.fb.array([this.formMethods.createItem(this.contingentGroup)])   
-
-      }),
-
-    })
-
-    this.mainFormArray = this.disabilityGroup.get('main').get('main_array') as FormArray;
-    this.contingentFormArray = this.disabilityGroup.get('contingent').get('contingent_array') as FormArray;
-
-  }
-
-  addFormArray(array: any, name: string) {
-
-    const increment = array.length + 1;
-    array = this.formMethods.addElement(array, increment, this.createFormArray(name)).formArray;
-    
-    console.log(JSON.stringify(this.disabilityGroup.value));
-    // array.push(this.createFormArray(name));
-    
-  }
-
-  removeFormArray(index, array: any) {
-    array.removeAt(index);
-  }
+questionsLength() {
+  return Object.keys(this.disabilityGroup.get('questionnaires').value).length;
+}
 
 }

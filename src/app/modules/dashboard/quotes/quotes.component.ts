@@ -1,10 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatProgressButtonOptions } from 'mat-progress-buttons';
 import { MatTableDataSource, MatSort, MatPaginator } from '@angular/material';
-
+import { QuotesService } from '../services/quotes/quotes.service';
+import { HttpParams } from '@angular/common/http';
 
 export interface Quotes {
-  no: number;
+  noCotizacion: number;
   nombre: string;
   dependientes: number;
   seguro: string;
@@ -14,16 +15,6 @@ export interface Quotes {
   estatus: string;
 
 }
-
-const ELEMENT_DATA: Quotes[] = [
-  // tslint:disable: max-line-length
-  { no: 154546, nombre: 'Isai Vargas', dependientes: 2, seguro: 'Vida', plan: 'Nombre del Plan', fecha: new Date(), monto: 2000, estatus: 'Enviado' },
-  { no: 213214, nombre: 'David Antonio', dependientes: 1, seguro: 'Salud', plan: 'Nombre del Plan', fecha: new Date(), monto: 2000, estatus: 'Enviado' },
-  { no: 123333, nombre: 'LeBron James', dependientes: 2, seguro: 'Salud', plan: 'Nombre del Plan', fecha: new Date(), monto: 2000, estatus: 'Por Enviar' },
-  { no: 768678, nombre: 'Giannis Akumpo', dependientes: 0, seguro: 'Salud', plan: 'Nombre del Plan', fecha: new Date(), monto: 2000, estatus: 'Enviado' },
-  { no: 656675, nombre: 'Jim Carrey', dependientes: 3, seguro: 'Vida', plan: 'Nombre del Plan', fecha: new Date(), monto: 2000, estatus: 'Por Enviar' },
-
-];
 
 @Component({
   selector: 'app-quotes',
@@ -36,6 +27,13 @@ export class QuotesComponent implements OnInit {
     'Enviado',
     'Por Enviar'
   ];
+
+  fillType = 'tipoSeguro';
+
+  fills = {
+    status: this.statusTypes, 
+    fillType: this.fillType
+  }; 
 
   newQuoteButtonOptions: MatProgressButtonOptions = {
     active: false,
@@ -52,17 +50,29 @@ export class QuotesComponent implements OnInit {
   };
 
   displayedColumns: string[] = ['no', 'nombre', 'dependientes', 'seguro', 'plan', 'fecha', 'monto', 'estatus', 'acciones'];
-  dataSource = new MatTableDataSource(ELEMENT_DATA);
+  dataSource;
+
+  quotes:any[];
 
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
-  constructor() { }
+  constructor(private _quotesService: QuotesService) { }
+
+  getQuotes(params:HttpParams = new HttpParams){
+    let data;
+    this._quotesService.getQuotes(params)
+    .subscribe(res => {
+      data = res;
+      this.quotes = data.data;
+      this.dataSource = new MatTableDataSource(this.quotes);
+      this.dataSource.sort = this.sort;
+      this.dataSource.paginator = this.paginator;
+    }, err => console.log(err));
+  }
 
   ngOnInit() {
-    this.dataSource.sort = this.sort;
-    this.dataSource.paginator = this.paginator;
-
+    this.getQuotes();
   }
 
   newQuote() {

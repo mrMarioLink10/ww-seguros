@@ -704,8 +704,31 @@
                 entidad económica.</p><br>
             </div>
           </ng-template>
-
         </app-forms-container>
+        <app-hypertension *ngIf="newRequest.get('questionsA').get('questionnairesGastosMayores').get('hypertension')"
+          [form]="newRequest.get('questionsA').get('questionnairesGastosMayores').get('hypertension')">
+        </app-hypertension>
+        <app-cardiovascular
+          *ngIf="newRequest.get('questionsA').get('questionnairesGastosMayores').get('cardiovascular')"
+          [form]="newRequest.get('questionsA').get('questionnairesGastosMayores').get('cardiovascular')">
+        </app-cardiovascular>
+        <app-mellitus-diabetes
+          *ngIf="newRequest.get('questionsA').get('questionnairesGastosMayores').get('mellitusDiabetes')"
+          [form]="newRequest.get('questionsA').get('questionnairesGastosMayores').get('mellitusDiabetes')">
+        </app-mellitus-diabetes>
+        <app-arthritis *ngIf="newRequest.get('questionsA').get('questionnairesGastosMayores').get('arthritis')"
+          [form]="newRequest.get('questionsA').get('questionnairesGastosMayores').get('arthritis')"></app-arthritis>
+        <app-spine *ngIf="newRequest.get('questionsA').get('questionnairesGastosMayores').get('spine')"
+          [form]="newRequest.get('questionsA').get('questionnairesGastosMayores').get('spine')"></app-spine>
+        <app-musculoskeletal
+          *ngIf="newRequest.get('questionsA').get('questionnairesGastosMayores').get('musculosSkeletal')"
+          [form]="newRequest.get('questionsA').get('questionnairesGastosMayores').get('musculosSkeletal')">
+        </app-musculoskeletal>
+        <app-renal-urinary *ngIf="newRequest.get('questionsA').get('questionnairesGastosMayores').get('renalUrinary')"
+          [form]="newRequest.get('questionsA').get('questionnairesGastosMayores').get('renalUrinary')">
+        </app-renal-urinary>
+        <app-prostatic *ngIf="newRequest.get('questionsA').get('questionnairesGastosMayores').get('prostatic')"
+          [form]="newRequest.get('questionsA').get('questionnairesGastosMayores').get('prostatic')"></app-prostatic>
       </mat-tab>
       <mat-tab *ngFor=" let element of dependentsFormArray.controls; let i = index"
         [label]="'D0'+ dependentsFormArray.controls.length">

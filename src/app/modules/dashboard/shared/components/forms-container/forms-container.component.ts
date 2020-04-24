@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ElementRef, ContentChildren} from '@angular/core';
+import { Component, OnInit, Input, ElementRef, ContentChildren } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
 @Component({
@@ -6,21 +6,23 @@ import { FormGroup } from '@angular/forms';
   templateUrl: './forms-container.component.html',
   styleUrls: ['./forms-container.component.scss']
 })
-export class FormsContainerComponent implements OnInit{
-  step = 0;
+export class FormsContainerComponent implements OnInit {
+  step: number;
   @Input() titles: Array<any>;
+  @Input() isQuestionnarie?= true;
+  @Input() formsTitles: Array<any>;
   @Input() Form: FormGroup;
   @ContentChildren('formTemplate') grouped;
 
-  constructor( private elem: ElementRef) { }
+  constructor(private elem: ElementRef) { }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
   setStep(index: number) {
     this.step = index;
   }
   nextStep() {
-    
+
     this.step++;
   }
 }

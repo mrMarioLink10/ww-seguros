@@ -144,7 +144,14 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
     name: 'plans',
   };
   // tslint:disable-next-line: max-line-length
-  titles = ['Contratante', 'Solicitante', 'Persona políticamente expuesta', 'Perfil Financiero', 'Dependientes', 'Sección A', 'Sección B', 'Sección C Beneficiarios Primarios', 'Beneficiario(s) Contingente(s)', 'Comentarios adicionales'];
+  titles = [
+    'Contratante', 'Solicitante',
+    'Persona políticamente expuesta',
+    'Perfil Financiero', 'Dependientes',
+    'Sección A', 'Sección B',
+    'Sección C Beneficiarios Primarios',
+    'Beneficiario(s) Contingente(s)',
+    'Comentarios adicionales'];
   country = {
     label: 'País',
     options: $country,
@@ -719,10 +726,6 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
     if (typeOrIndex === 'solicitante') {
       if ($event.checked === true) {
         switch (question) {
-          case '':
-            this.questionnairesGastosMayores.addControl('', this.fb.group({}));
-            break;
-
           case 'havePregnant':
             this.questionsA.addControl('pregnant', this.fb.group({
               time: ['', Validators.required]
@@ -743,7 +746,13 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
               time: ['', Validators.required],
             }));
             break;
+          case 'haveEndocrineDisorders':
+            this.questionnairesGastosMayores.addControl('mellitusDiabetes', this.fb.group({}));
+            break;
 
+          case 'haveMaleReproductiveOrgans':
+            this.questionnairesGastosMayores.addControl('prostatic', this.fb.group({}));
+            break;
           default:
             break;
         }
@@ -760,12 +769,18 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
             this.questionsA.removeControl('nicotine');
             break;
 
+          case 'haveEndocrineDisorders':
+            this.questionnairesGastosMayores.removeControl('mellitusDiabetes');
+            break;
+
+          case 'haveMaleReproductiveOrgans':
+            this.questionnairesGastosMayores.removeControl('prostatic');
+            break;
           default:
             break;
         }
       }
     }
-
   }
 
   makeFalseAll(name) {
@@ -773,28 +788,12 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
     const dpd = this.newRequest.get('dependents').get('allDependents') as FormArray;
     // tslint:disable-next-line: forin
     for (const element in this.dependentsFormArray.value) {
-      console.log(element);
-      // console.log(this.newRequest.get('dependents').get('allDependents').get(element).get('questionsA').get(name).value);
-      // this.newRequest.get('dependents').get('allDependents').get(element).get('questionsA').get(name).setValue(true);
-
+      // tslint:disable-next-line: radix
       const dependent = dpd.at(parseInt(element));
 
       dependent.get('questionsA').get(name).setValue(false);
 
-
-      // console.log(this.newRequest.get('dependents').get('allDependents').get(element).get('questionsA').get(name).value);
-
     }
-  }
-
-  sectionASelect(event) {
-    // console.log(`value: ${event.value}, id: ${event.source.id}`);
-    // console.log(`event:`, event);
-    // for (const value of event.value) {
-    //   if (value === 'asegurado') {
-    //     this.newRequest.get('questionsA').get(event.source.id).setValue('si');
-    //   } else if (value )
-    // }
   }
 
   selectChangeUrl(event) {

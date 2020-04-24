@@ -6,7 +6,10 @@
     </mat-expansion-panel-header>
     <ng-template [ngTemplateOutlet]="content"></ng-template>
     <mat-action-row class="action-row">
-      <button mat-button class="next-button" (click)="nextStep()" type="button">Siguiente</button>
+      <button mat-button class="next-button" (click)="nextStep()" type="button">
+        <div *ngIf="isQuestionnarie">Siguiente</div>
+        <div *ngIf="!isQuestionnarie">Cerrar</div>
+      </button>
     </mat-action-row>
   </mat-expansion-panel>
 </mat-accordion>

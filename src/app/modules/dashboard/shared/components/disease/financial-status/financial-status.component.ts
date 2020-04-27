@@ -54,19 +54,19 @@ dataSource= [
     namePasive:'real_estate_mortgage'
   },
   {
-    labelActive:'Acciones y Bonos (no incluidos anteriormente)',
+    labelActive:'Acciones y Bonos (No incluidos anteriormente)',
     nameActive:'share_bonds',
-    labelPasive:'Otros Pasivos (favor describa)',
+    labelPasive:'Otros Pasivos (Favor describa)',
     namePasive:'other_liabilities'
   },
   {
-    labelActive:'Propiedad Personal (auto, muebles, etc.)',
+    labelActive:'Propiedad Personal (Auto, muebles, etc.)',
     nameActive:'personal_property',
     labelPasive:'Total Pasivos',
     namePasive:'total_liabilities'
   },
   {
-    labelActive:'Otros activos (describa)',
+    labelActive:'Otros activos (Describa)',
     nameActive:'other_assets',
     labelPasive:'TOTAL',
     namePasive:'total_pasive'

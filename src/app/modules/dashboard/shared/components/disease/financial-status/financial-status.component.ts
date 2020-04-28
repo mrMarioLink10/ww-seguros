@@ -11,7 +11,7 @@ export class FinancialStatusComponent implements OnInit {
 
 @Input() form:FormGroup;
 
-accordionTitles=["Datos"]
+// accordionTitles=["Datos"]
 
 displayedColumns: string[] = ['activo', 'pasivo'];
 displayedColumnsSecond: string[] = ['ingresos', 'pasado','antepasado'];

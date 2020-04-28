@@ -23,6 +23,7 @@ import { SkydivingComponent } from './components/disease/skydiving/skydiving.com
 import { RacingComponent } from './components/disease/racing/racing.component';
 import { DivingComponent } from './components/disease/diving/diving.component';
 import { FinancialStatusComponent } from './components/disease/financial-status/financial-status.component';
+import { KnowYourCustomerComponent } from './components/disease/know-your-customer/know-your-customer.component';
 
 @NgModule({
   declarations: [
@@ -43,7 +44,8 @@ import { FinancialStatusComponent } from './components/disease/financial-status/
     RacingComponent,
     SkydivingComponent,
     MountaineeringComponent,
-    FinancialStatusComponent
+    FinancialStatusComponent,
+    KnowYourCustomerComponent
   ],
   imports: [CommonModule, MaterialModule, GlobalSharedModule, FormsModule, ReactiveFormsModule, HttpClientModule],
   exports: [
@@ -64,7 +66,8 @@ import { FinancialStatusComponent } from './components/disease/financial-status/
     SkydivingComponent,
     RacingComponent,
     DivingComponent,
-    FinancialStatusComponent
+    FinancialStatusComponent,
+    KnowYourCustomerComponent
   ]
 })
 export class SharedModule { }

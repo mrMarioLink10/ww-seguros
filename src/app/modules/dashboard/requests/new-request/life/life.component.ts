@@ -51,6 +51,8 @@ export class LifeComponent implements OnInit, DoCheck {
   sportsQuestions: any[];
   medicQuestions: any[];
 
+  needFinancialStatus = false;
+
   mainActivity = {
     options: [
       {
@@ -495,12 +497,12 @@ export class LifeComponent implements OnInit, DoCheck {
         nicotineEstandar: ['', Validators.required],
         coverages: this.fb.group({
           basicLifeAssuredAmount: ['', Validators.required],
-          basicLifeBonus: ['', Validators.required],
           basicLifeAmountCurrency: ['', Validators.required],
+          basicLifeBonus: ['', Validators.required],
           basicLifeBonusCurrency: ['', Validators.required],
           survivalAssuredAmount: ['', Validators.required],
-          survivalBonus: ['', Validators.required],
           survivalAmountCurrency: ['', Validators.required],
+          survivalBonus: ['', Validators.required],
           survivalBonusCurrency: ['', Validators.required],
         })
       }),
@@ -1361,11 +1363,32 @@ export class LifeComponent implements OnInit, DoCheck {
   }
 
   questionsLength() {
-    return Object.keys(this.newRequest.get('questionnaires').value).length;
+    if (this.newRequest.get('questionnaires').get('financialStatus')) {
+      return Object.keys(this.newRequest.get('questionnaires').value).length - 1;
+    } else {
+      return Object.keys(this.newRequest.get('questionnaires').value).length;
+
+    }
   }
 
   activitiesQuestionsLength() {
     return Object.keys(this.newRequest.get('activitiesQuestionnaires').value).length;
+  }
+
+  needFinancialStatusCalculator() {
+    console.log('SI');
+    const quantity = this.newRequest.get('releventPlanInformation').get('coverages').value.basicLifeAssuredAmount;
+    const currency = this.newRequest.get('releventPlanInformation').get('coverages').value.basicLifeAmountCurrency;
+    const formQ = this.newRequest.get('questionnaires') as FormGroup;
+
+    if ((quantity >= 500000 && currency === 'usd') || (quantity >= 27370000 && currency === 'dop')) {
+      formQ.addControl('financialStatus', this.fb.group({}));
+    } else {
+      formQ.removeControl('financialStatus');
+    }
+
+
+
   }
 
   print() {

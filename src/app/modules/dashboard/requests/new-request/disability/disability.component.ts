@@ -6,6 +6,7 @@ import { DisabilityService } from '../disability/services/disability.service';
 import { $country, $weightTypes, $heightTypes } from 'src/app/core/form/objects';
 import { FormHandlerService } from 'src/app/core/services/forms/form-handler.service';
 import { DiseaseService } from '../../../shared/components/disease/shared/disease/disease.service';
+// tslint:disable: forin
 
 @Component({
   selector: 'app-disability',
@@ -690,6 +691,30 @@ export class DisabilityComponent implements OnInit {
 
   questionsLength() {
     return Object.keys(this.disabilityGroup.get('questionnaires').value).length;
+  }
+
+  isBenefitMinorThan100(group: string, subgroup: string): boolean {
+    const form = this.disabilityGroup.get(group).get(subgroup) as FormGroup;
+
+    if (this.benefitFor(form).total < 100 && this.benefitFor(form).isDirty) { return true; } else { return false; }
+  }
+
+  isBenefitMajorThan100(group: string, subgroup: string): boolean {
+    const form = this.disabilityGroup.get(group).get(subgroup) as FormGroup;
+
+    if (this.benefitFor(form).total > 100 && this.benefitFor(form).isDirty) { return true; } else { return false; }
+  }
+
+  benefitFor(form: FormGroup) {
+    let total = 0;
+    let isDirty = false;
+
+    for (const dpd in form.value) {
+      if (form.controls[dpd].dirty) { isDirty = true; }
+      total += form.value[dpd].percentage;
+
+    }
+    return { total, isDirty };
   }
 }
 

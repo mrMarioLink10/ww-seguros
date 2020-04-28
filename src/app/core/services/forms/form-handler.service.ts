@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Form, FormGroup } from '@angular/forms';
+import { Form, FormGroup, AbstractControl, FormControl, FormArray } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { BaseDialogComponent } from '../../../shared/components/base-dialog/base-dialog.component';
 import { DialogOptionService } from '../dialog/dialog-option.service';
@@ -10,7 +10,8 @@ import { NewAuthorizationService } from '../../../modules/dashboard/authorizatio
 import { LifeService } from 'src/app/modules/dashboard/requests/new-request/life/services/life.service';
 import { MajorExpensesService } from '../../../modules/dashboard/requests/new-request/major-expenses/services/major-expenses.service';
 import { DisabilityService } from '../../../modules/dashboard/requests/new-request/disability/services/disability.service';
-
+// tslint:disable: forin
+// tslint:disable: variable-name
 
 @Injectable({
 	providedIn: 'root'
@@ -92,7 +93,6 @@ export class FormHandlerService {
 
 			if (result === 'true') {
 				let dialog;
-
 				if (form.valid) {
 
 					switch (name) {
@@ -168,19 +168,19 @@ export class FormHandlerService {
 
 					console.log(JSON.stringify(this.sendedForm));
 				} else {
+					// console.log(this.findInvalidControls(form));
+					for (const control in this.findInvalidControls(form)) {
+						console.log(this.getName(this.findInvalidControls(form)[control]));
+
+					}
+
 					dialog = this.dialog.open(BaseDialogComponent, {
 						data: this.dialogOption.formError,
 						minWidth: 385
 					});
 					this.closeDialog(dialog);
-
-
 				}
-
-
 			}
-
-
 		});
 	}
 
@@ -211,5 +211,55 @@ export class FormHandlerService {
 
 	navigateToMenu(route) {
 		this.route.navigateByUrl(route);
+	}
+
+	findInvalidControls(_input: AbstractControl, _invalidControls?: AbstractControl[]): AbstractControl[] {
+		if (!_invalidControls) { _invalidControls = []; }
+		if (_input instanceof FormControl) {
+			if (_input.invalid) { _invalidControls.push(_input); }
+			return _invalidControls;
+		}
+
+		if (!(_input instanceof FormArray) && !(_input instanceof FormGroup)) { return _invalidControls; }
+
+		const controls = _input.controls;
+
+		for (const name in controls) {
+			const control = controls[name];
+			if (control.invalid) { _invalidControls.push(control); }
+			// switch (control.constructor.name) {
+			// 	case 'FormArray':
+			// 		(control as FormArray).controls.forEach(_control => _invalidControls = this.findInvalidControls(_control, _invalidControls));
+			// 		break;
+
+			// 	case 'FormGroup':
+			// 		_invalidControls = this.findInvalidControls(control, _invalidControls);
+			// 		break;
+			// }
+		}
+
+		return _invalidControls;
+	}
+
+	getName(control: AbstractControl): string | null {
+		const group = control.parent as FormGroup;
+
+		if (!group) {
+			return null;
+		}
+
+		let name: string;
+
+		Object.keys(group.controls).forEach(key => {
+			const childControl = group.get(key);
+
+			if (childControl !== control) {
+				return;
+			}
+
+			name = key;
+		});
+
+		return name;
 	}
 }

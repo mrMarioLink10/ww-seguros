@@ -233,7 +233,6 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
     haveHighRiskSport: [false, Validators.required],
     havePregnant: [false, Validators.required],
     haveReproductiveOrganDisorders: [false, Validators.required],
-    questionnairesGastosMayores: this.fb.group({}),
   };
   questionsGroup = {
     question: ['', Validators.required],
@@ -380,14 +379,14 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
         })
       }),
       exposedPerson: this.fb.group({
-        contractor: [false, Validators.required],
-        headLine: [false, Validators.required],
+        contractor: ['', Validators.required],
+        headLine: ['', Validators.required],
 
       }),
-      principalIncome: ['', Validators.required],
-      otherIncomes: ['', Validators.required],
-
-
+      incomes: this.fb.group({
+        principalIncome: ['', Validators.required],
+        otherIncomes: ['', Validators.required],
+      }),
       dependents: this.fb.group({
         allDependents: this.fb.array([]),
         students: this.fb.array([]),
@@ -817,19 +816,93 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
             break;
         }
       }
+    } else {
+      const dependents = this.allDependents;
+      const questionnaire = dependents.at(typeOrIndex) as FormGroup;
+      // const questionnaire = dependent.get('questionnairesGastosMayores') as FormGroup;
+
+      if ($event.checked === true) {
+        console.log('true');
+        switch (question) {
+          case 'haveEndocrineDisorders':
+            questionnaire.addControl('mellitusDiabetes', this.fb.group({}));
+            break;
+
+          case 'haveMaleReproductiveOrgans':
+            if (this.person.value.age > 50) {
+              questionnaire.addControl('prostatic', this.fb.group({}));
+            }
+
+            break;
+
+          case 'haveUrinarySystem':
+            questionnaire.addControl('renalUrinary', this.fb.group({}));
+            break;
+
+          case 'haveMusculoskeletal':
+            questionnaire.addControl('arthritis', this.fb.group({}));
+            questionnaire.addControl('spine', this.fb.group({}));
+            questionnaire.addControl('musculosSkeletal', this.fb.group({}));
+            break;
+
+          case 'haveCardiovascularSystem':
+            questionnaire.addControl('hypertension', this.fb.group({}));
+            questionnaire.addControl('spcardiovascularine', this.fb.group({}));
+            break;
+
+          default:
+            break;
+        }
+      } else if ($event.checked === false) {
+        console.log('false');
+
+        switch (question) {
+          case 'haveEndocrineDisorders':
+            questionnaire.removeControl('mellitusDiabetes');
+            break;
+
+          case 'haveMaleReproductiveOrgans':
+            questionnaire.removeControl('prostatic');
+
+            break;
+
+          case 'haveUrinarySystem':
+            questionnaire.removeControl('renalUrinary');
+            break;
+
+          case 'haveMusculoskeletal':
+            questionnaire.removeControl('arthritis');
+            questionnaire.removeControl('spine');
+            questionnaire.removeControl('musculosSkeletal');
+            break;
+
+          case 'haveCardiovascularSystem':
+            questionnaire.removeControl('hypertension');
+            questionnaire.removeControl('cardiovascular');
+            break;
+
+          default:
+            break;
+        }
+      }
+
+      console.log(questionnaire.value.name, questionnaire.value);
+
     }
   }
 
   makeFalseAll(name) {
     this.newRequest.get('questionsA').get(name).setValue(false);
+    this.valueChange({ checked: false }, name, 'solicitante');
+
     const dpd = this.newRequest.get('dependents').get('allDependents') as FormArray;
     // tslint:disable-next-line: forin
     for (const element in this.dependentsFormArray.value) {
       // tslint:disable-next-line: radix
       const dependent = dpd.at(parseInt(element));
 
-      dependent.get('questionsA').get(name).setValue(false);
-
+      dependent.get(name).setValue(false);
+      this.valueChange({ checked: false }, name, element);
     }
   }
 
@@ -854,7 +927,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
 
   print() {
     console.log('solicitante: ', this.newRequest.get('questionsA'));
-    console.log('dependientes: ', this.newRequest.get('dependents'));
+    console.log('dependientes: ', this.newRequest.get('dependents').value.allDependents);
   }
 
   createFormArray(type: string): FormGroup {

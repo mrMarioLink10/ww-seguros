@@ -169,13 +169,13 @@ export class FormHandlerService {
 					console.log(JSON.stringify(this.sendedForm));
 				} else {
 					// console.log(this.findInvalidControls(form));
+
+					const invalidControls = [];
 					for (const control in this.findInvalidControls(form)) {
-						console.log(this.getName(this.findInvalidControls(form)[control]));
-
+						invalidControls.push(this.getName(this.findInvalidControls(form)[control]));
 					}
-
 					dialog = this.dialog.open(BaseDialogComponent, {
-						data: this.dialogOption.formError,
+						data: this.dialogOption.getInvalidControls(invalidControls),
 						minWidth: 385
 					});
 					this.closeDialog(dialog);
@@ -206,7 +206,7 @@ export class FormHandlerService {
 		setTimeout(() => {
 			dialog.close();
 
-		}, 3000);
+		}, 7000);
 	}
 
 	navigateToMenu(route) {
@@ -227,15 +227,7 @@ export class FormHandlerService {
 		for (const name in controls) {
 			const control = controls[name];
 			if (control.invalid) { _invalidControls.push(control); }
-			// switch (control.constructor.name) {
-			// 	case 'FormArray':
-			// 		(control as FormArray).controls.forEach(_control => _invalidControls = this.findInvalidControls(_control, _invalidControls));
-			// 		break;
 
-			// 	case 'FormGroup':
-			// 		_invalidControls = this.findInvalidControls(control, _invalidControls);
-			// 		break;
-			// }
 		}
 
 		return _invalidControls;

@@ -363,9 +363,10 @@
             <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
               <div class="grid grid-cols-2">
                 <app-number-input class="mr-3" [group]="newRequest.get('releventPlanInformation').get('coverages')"
-                  label="Suma Asegurada" name="basicLifeAssuredAmount">
+                  label="Suma Asegurada" (keyup)="needFinancialStatusCalculator()" name="basicLifeAssuredAmount">
                 </app-number-input>
-                <app-select class="mr-3" [options]="basicLifeAmountCurrency"
+                <app-select class="mr-3" (selectionChange)="needFinancialStatusCalculator()"
+                  [options]="basicLifeAmountCurrency"
                   [group]="newRequest.get('releventPlanInformation').get('coverages')">
                 </app-select>
               </div>
@@ -1201,6 +1202,11 @@
           [form]="newRequest.get('questionnaires').get('hypertension')"></app-hypertension>
         <app-mellitus-diabetes *ngIf="newRequest.get('questionnaires').get('diabetes')"
           [form]="newRequest.get('questionnaires').get('diabetes')"></app-mellitus-diabetes>
+      </mat-tab>
+      <mat-tab label="Formulario de Estado Financiero" *ngIf="newRequest.get('questionnaires').get('financialStatus')"
+        class="mat-tab-forms">
+        <app-financial-status *ngIf="newRequest.get('questionnaires').get('financialStatus')"
+          [form]="newRequest.get('questionnaires').get('financialStatus')"></app-financial-status>
       </mat-tab>
     </mat-tab-group>
   </div>

@@ -1,11 +1,15 @@
 import { Injectable } from '@angular/core';
 import { BaseDialog } from 'src/app/shared/components/base-dialog/models/base-dialog';
+import { InvalidControlEnhancerPipe } from '../../pipes/invalid-control-enhancer.pipe';
+// tslint:disable: forin
 
 @Injectable({
 	providedIn: 'root'
 })
 export class DialogOptionService {
-	constructor() { }
+	constructor(
+		private invalidControlEnhancer: InvalidControlEnhancerPipe,
+	) { }
 	reclaimConfirmation: BaseDialog = {
 		logo: 'warning',
 		title: 'Confirmación',
@@ -94,17 +98,26 @@ export class DialogOptionService {
 		showButtons: false
 	};
 
-	formError: BaseDialog = {
-		logo: 'error',
-		title: 'Ha ocurrido error',
-		text: 'Han quedado campos requeridos sin completar, por favor revise el formulario y valide que todo esta completo',
-		showButtons: false
-	};
-
 	errorServer: BaseDialog = {
 		logo: 'error',
 		title: 'Ha ocurrido error',
 		text: 'Ha ocurrido un error al intentar realizar la petición',
 		showButtons: false
 	};
+
+	getInvalidControls(invalidControls: any[]) {
+		let text = '; los campos invalidos se encuentran en las sección o campo: \n';
+
+		for (const element in invalidControls) {
+			text += `${this.invalidControlEnhancer.transform(invalidControls[element])}, \n`;
+
+		}
+
+		return {
+			logo: 'error',
+			title: 'Ha ocurrido un error',
+			text: 'Han quedado campos requeridos sin completar, por favor revise el formulario y valide que todo esta completo' + text,
+			showButtons: false
+		};
+	}
 }

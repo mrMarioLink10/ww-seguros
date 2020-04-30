@@ -184,9 +184,9 @@
             </div>
           </ng-template>
           <ng-template #formTemplate>
-            <app-radio-button class="mr-3" [group]="newRequest" name="principalIncome" [options]="mony"
+            <app-radio-button class="mr-3" [group]="newRequest.get('incomes')" name="principalIncome" [options]="mony"
               title='Ingresos anuales actividad principal'></app-radio-button>
-            <app-radio-button class="mr-3" [group]="newRequest" name="otherIncomes" [options]="mony"
+            <app-radio-button class="mr-3" [group]="newRequest.get('incomes')" name="otherIncomes" [options]="mony"
               title='Ingresos anuales por otras actividades'></app-radio-button>
           </ng-template>
           <!-- DEPENDIENTES -->
@@ -724,12 +724,33 @@
         <app-prostatic *ngIf="newRequest.get('questionsA').get('questionnairesGastosMayores').get('prostatic')"
           [form]="newRequest.get('questionsA').get('questionnairesGastosMayores').get('prostatic')"></app-prostatic>
       </mat-tab>
-      <mat-tab *ngFor=" let element of dependentsFormArray.controls; let i = index"
-        [label]="'D0'+ dependentsFormArray.controls.length">
-        <!-- <app-cardiovascular [form]="newRequest.get('questionsA').get('cardiovascular')">
+      <mat-tab *ngFor=" let element of dependentsFormArray.controls; let i = index" [label]="'D0'+ (i+1)">
+        <app-hypertension
+          *ngIf="newRequest.get('dependents').get('allDependents').get(i.toString()).get('hypertension')"
+          [form]="newRequest.get('dependents').get('allDependents').get(i.toString()).get('hypertension')">
+        </app-hypertension>
+        <app-cardiovascular
+          *ngIf="newRequest.get('dependents').get('allDependents').get(i.toString()).get('cardiovascular')"
+          [form]="newRequest.get('dependents').get('allDependents').get(i.toString()).get('cardiovascular')">
         </app-cardiovascular>
-        <app-spine [form]="newRequest.get('questionsA').get('spine')">
-        </app-spine> -->
+        <app-mellitus-diabetes
+          *ngIf="newRequest.get('dependents').get('allDependents').get(i.toString()).get('mellitusDiabetes')"
+          [form]="newRequest.get('dependents').get('allDependents').get(i.toString()).get('mellitusDiabetes')">
+        </app-mellitus-diabetes>
+        <app-arthritis *ngIf="newRequest.get('dependents').get('allDependents').get(i.toString()).get('arthritis')"
+          [form]="newRequest.get('dependents').get('allDependents').get(i.toString()).get('arthritis')"></app-arthritis>
+        <app-spine *ngIf="newRequest.get('dependents').get('allDependents').get(i.toString()).get('spine')"
+          [form]="newRequest.get('dependents').get('allDependents').get(i.toString()).get('spine')"></app-spine>
+        <app-musculoskeletal
+          *ngIf="newRequest.get('dependents').get('allDependents').get(i.toString()).get('musculosSkeletal')"
+          [form]="newRequest.get('dependents').get('allDependents').get(i.toString()).get('musculosSkeletal')">
+        </app-musculoskeletal>
+        <app-renal-urinary
+          *ngIf="newRequest.get('dependents').get('allDependents').get(i.toString()).get('renalUrinary')"
+          [form]="newRequest.get('dependents').get('allDependents').get(i.toString()).get('renalUrinary')">
+        </app-renal-urinary>
+        <app-prostatic *ngIf="newRequest.get('dependents').get('allDependents').get(i.toString()).get('prostatic')"
+          [form]="newRequest.get('dependents').get('allDependents').get(i.toString()).get('prostatic')"></app-prostatic>
       </mat-tab>
     </mat-tab-group>
 

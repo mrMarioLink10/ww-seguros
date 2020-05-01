@@ -298,7 +298,7 @@ export class DisabilityComponent implements OnInit {
         currency_pension: [''],
         outside_hours: ['', [Validators.required, Validators.min(1)]],
         pension_radio: ['', Validators.required],
-        pep_radio: ['', Validators.required]
+        pep_radio_insured: ['', Validators.required]
       }),
       policyholder: this.fb.group({
         name: ['', Validators.required],
@@ -316,7 +316,7 @@ export class DisabilityComponent implements OnInit {
         postal_address: ['', Validators.required],
         country_residence: ['', Validators.required],
         relationship: ['', Validators.required],
-        pep_radio: ['', Validators.required],
+        pep_radio_holder: ['', Validators.required],
         representative: ['', Validators.required],
         passport_id: ['', Validators.required]
       }),
@@ -371,6 +371,8 @@ export class DisabilityComponent implements OnInit {
 
   selectChange(event) {
     const form = this.disabilityGroup.get('questions') as FormGroup;
+    const formInsured = this.disabilityGroup.get('insured_data') as FormGroup;
+    const formHolder = this.disabilityGroup.get('policyholder') as FormGroup;
     const questionnaires = this.disabilityGroup.get('questionnaires') as FormGroup;
     const formQ = this.disabilityGroup.get('questions').get('questionnaire') as FormGroup;
     const formC = this.disabilityGroup.get('questions').get('questionnaire').get('insurance') as FormGroup;
@@ -468,6 +470,14 @@ export class DisabilityComponent implements OnInit {
 
         case 'haveHypertension':
           questionnaires.addControl('hypertension', this.fb.group({}));
+          break;
+
+        case 'pep_radio_insured':
+          formInsured.addControl('knowYourClient', this.fb.group({}));
+          break;
+
+        case 'pep_radio_holder':
+          formHolder.addControl('knowYourClient', this.fb.group({}));
           break;
 
         case 'haveArthritis':
@@ -649,6 +659,14 @@ export class DisabilityComponent implements OnInit {
 
         case 'haveSpine':
           questionnaires.removeControl('spine');
+          break;
+
+        case 'pep_radio_insured':
+          formInsured.removeControl('knowYourClient');
+          break;
+
+        case 'pep_radio_holder':
+          formHolder.removeControl('knowYourClient');
           break;
       }
     }

@@ -1,5 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, DoBootstrap, ApplicationRef } from '@angular/core';
+import { KeycloakAngularModule, KeycloakService } from 'keycloak-angular';
+
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -10,24 +12,35 @@ import { RouterModule } from '@angular/router';
 import { ModulesModule } from './modules/modules.module';
 import { MatPaginatorIntl } from '@angular/material';
 import { MatPaginatorIntlCro } from './core/class/MatPaginatorIntl';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { InvalidControlEnhancerPipe } from './core/pipes/invalid-control-enhancer.pipe';
+import { RequestHandlerInterceptor } from './core/interceptor/request-handler.interceptor';
+
+const keycloakService = new KeycloakService();
 
 @NgModule({
 	declarations: [AppComponent, InvalidControlEnhancerPipe],
 	imports: [
-		/** Modulos de importaciones */
 		BrowserModule,
 		BrowserAnimationsModule,
 		HttpClientModule,
-
 		AppRoutingModule,
-		// RouterModule,
-
-		/** Modulos de componentes */
-		ModulesModule
+		ModulesModule,
+		KeycloakAngularModule
 	],
-	providers: [{ provide: MatPaginatorIntl, useClass: MatPaginatorIntlCro }, InvalidControlEnhancerPipe],
+	providers: [
+		{ provide: MatPaginatorIntl, useClass: MatPaginatorIntlCro },
+		InvalidControlEnhancerPipe,
+		{
+			provide: KeycloakService, useValue: keycloakService
+		},
+		{
+			provide: HTTP_INTERCEPTORS,
+			useClass: RequestHandlerInterceptor,
+			multi: true
+		},
+	],
+
 	bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -102,7 +102,7 @@ export class FormHandlerService {
 									this.correctSend(res, dialog, dataClosing, route);
 
 								}, (err) => {
-									this.badSend(dialog);
+									this.badSend(err, dialog);
 
 								});
 							break;
@@ -113,7 +113,7 @@ export class FormHandlerService {
 									this.correctSend(res, dialog, dataClosing, route);
 
 								}, (err) => {
-									this.badSend(dialog);
+									this.badSend(err, dialog);
 
 								});
 							break;
@@ -124,7 +124,7 @@ export class FormHandlerService {
 									this.correctSend(res, dialog, dataClosing, route);
 
 								}, (err) => {
-									this.badSend(dialog);
+									this.badSend(err, dialog);
 
 								});
 							break;
@@ -135,7 +135,7 @@ export class FormHandlerService {
 									this.correctSend(res, dialog, dataClosing, route);
 
 								}, (err) => {
-									this.badSend(dialog);
+									this.badSend(err, dialog);
 
 								});
 							break;
@@ -146,7 +146,7 @@ export class FormHandlerService {
 									this.correctSend(res, dialog, dataClosing, route);
 
 								}, (err) => {
-									this.badSend(dialog);
+									this.badSend(err, dialog);
 
 								});
 							break;
@@ -157,7 +157,7 @@ export class FormHandlerService {
 									this.correctSend(res, dialog, dataClosing, route);
 
 								}, (err) => {
-									this.badSend(dialog);
+									this.badSend(err, dialog);
 
 								});
 							break;
@@ -194,7 +194,9 @@ export class FormHandlerService {
 		this.navigateToMenu(route);
 	}
 
-	badSend(dialog) {
+	badSend(err, dialog) {
+		console.log(err);
+
 		dialog = this.dialog.open(BaseDialogComponent, {
 			data: this.errorServer,
 			minWidth: 385

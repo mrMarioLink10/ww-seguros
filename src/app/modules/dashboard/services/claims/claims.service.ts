@@ -7,14 +7,14 @@ export class ClaimsService {
 
   BASE_URL: any = 'https://wwsdevportalbackend.azurewebsites.net/api';
 
-  constructor(private _http: HttpClient) { }
+  constructor(private http: HttpClient) { }
 
   getClaims(params) {
-    return (this._http.get(`${this.BASE_URL}/Reclamaciones`, {params}));
+    return (this.http.get(`${this.BASE_URL}/Reclamaciones`, { params }));
   }
 
   getRefunds(params) {
-    return (this._http.get(`${this.BASE_URL}/Reembolsos`, {params}));
+    return (this.http.get(`${this.BASE_URL}/Reembolsos`, { params }));
   }
 
 }

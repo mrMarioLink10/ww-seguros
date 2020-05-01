@@ -1,6 +1,16 @@
+import { KeycloakConfig } from 'keycloak-angular';
+
+// Add here your keycloak setup infos
+const keycloakConfig: KeycloakConfig = {
+  url: 'https://sso.wwseguros.com.do:8443/auth/',
+  realm: 'worldwide',
+  clientId: 'cotizador',
+};
+
 export const environment = {
   production: true,
-  baseUrl: 'https://wwsdevportalbackend.azurewebsites.net'
+  baseUrl: 'https://wwsdevportalbackend.azurewebsites.net',
+  keycloak: keycloakConfig,
 
 };
 

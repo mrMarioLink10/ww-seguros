@@ -249,7 +249,7 @@
                       </div>
                       <div class="mr-3">
                         <app-radio-button [group]="disabilityGroup.get('insured_data')" [options]="YesNo"
-                          name='pep_radio'>
+                          name='pep_radio_insured' (selected)="selectChange($event)">
                         </app-radio-button>
 
                         <div class="-mt-8">
@@ -383,7 +383,8 @@
                   </div>
 
                   <div class="mr-3 xl:mt-3">
-                    <app-radio-button [group]="disabilityGroup.get('policyholder')" [options]="YesNo" name='pep_radio'>
+                    <app-radio-button [group]="disabilityGroup.get('policyholder')" (selected)="selectChange($event)"
+                      [options]="YesNo" name='pep_radio_holder'>
                     </app-radio-button>
 
                     <div class="-mt-8">
@@ -1277,13 +1278,30 @@
         <app-prostatic *ngIf="disabilityGroup.get('questionnaires').get('prostatic')"
           [form]="disabilityGroup.get('questionnaires').get('prostatic')"></app-prostatic>
       </mat-tab>
-      <!-- 
-      <mat-tab label="Política Antilavado">
+
+      <!-- <mat-tab label="Política Antilavado">
         <app-money-laundering [form]="money_laundering"> </app-money-laundering>
-      </mat-tab>
-      <mat-tab label="Conozca a su cliente">
-        <app-know-your-client [form]="know_client"> </app-know-your-client>
       </mat-tab> -->
+      <mat-tab
+        *ngIf="disabilityGroup.get('insured_data').get('knowYourClient') || disabilityGroup.get('insured_data').get('knowYourCustomer')"
+        label="Conozca a su cliente - Asegurado">
+        <app-know-your-client *ngIf="this.role === 'WWA'"
+          [form]="disabilityGroup.get('insured_data').get('knowYourClient')">
+        </app-know-your-client>
+        <app-know-your-customer *ngIf="this.role === 'WWS'"
+          [form]="disabilityGroup.get('insured_data').get('knowYourCustomer')">
+        </app-know-your-customer>
+      </mat-tab>
+      <mat-tab
+        *ngIf="disabilityGroup.get('policyholder').get('knowYourClient') || disabilityGroup.get('policyholder').get('knowYourCustomer')"
+        label="Conozca a su cliente - Contratante">
+        <app-know-your-client *ngIf="this.role === 'WWA'"
+          [form]="disabilityGroup.get('policyholder').get('knowYourClient')">
+        </app-know-your-client>
+        <app-know-your-customer *ngIf="this.role === 'WWS'"
+          [form]="disabilityGroup.get('policyholder').get('knowYourCustomer')">
+        </app-know-your-customer>
+      </mat-tab>
     </mat-tab-group>
   </form>
   <div class="mt-6 mb-4">

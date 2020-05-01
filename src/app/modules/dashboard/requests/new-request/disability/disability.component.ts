@@ -6,7 +6,9 @@ import { DisabilityService } from '../disability/services/disability.service';
 import { $country, $weightTypes, $heightTypes } from 'src/app/core/form/objects';
 import { FormHandlerService } from 'src/app/core/services/forms/form-handler.service';
 import { DiseaseService } from '../../../shared/components/disease/shared/disease/disease.service';
+import { UserService } from '../../../../../core/services/user/user.service';
 // tslint:disable: forin
+// tslint:disable: one-line
 
 @Component({
   selector: 'app-disability',
@@ -15,7 +17,7 @@ import { DiseaseService } from '../../../shared/components/disease/shared/diseas
 })
 export class DisabilityComponent implements OnInit {
   sicknessQuestions: any[];
-
+  role: string;
 
   accordionTitles = [
     'Sección A. Datos del propuesto Asegurado y Estatus laboral',
@@ -213,10 +215,14 @@ export class DisabilityComponent implements OnInit {
     public formMethods: FormArrayGeneratorService,
     private disabilityService: DisabilityService,
     public formHandler: FormHandlerService,
-    public diseaseService: DiseaseService
+    public diseaseService: DiseaseService,
+    public userService: UserService
   ) { }
 
   ngOnInit() {
+    this.role = this.userService.getRoleCotizador();
+    console.log(this.role);
+
 
     this.sicknessQuestions = [
       {
@@ -298,7 +304,7 @@ export class DisabilityComponent implements OnInit {
         currency_pension: [''],
         outside_hours: ['', [Validators.required, Validators.min(1)]],
         pension_radio: ['', Validators.required],
-        pep_radio: ['', Validators.required]
+        pep_radio_insured: ['', Validators.required]
       }),
       policyholder: this.fb.group({
         name: ['', Validators.required],
@@ -316,7 +322,7 @@ export class DisabilityComponent implements OnInit {
         postal_address: ['', Validators.required],
         country_residence: ['', Validators.required],
         relationship: ['', Validators.required],
-        pep_radio: ['', Validators.required],
+        pep_radio_holder: ['', Validators.required],
         representative: ['', Validators.required],
         passport_id: ['', Validators.required]
       }),
@@ -371,6 +377,8 @@ export class DisabilityComponent implements OnInit {
 
   selectChange(event) {
     const form = this.disabilityGroup.get('questions') as FormGroup;
+    const formInsured = this.disabilityGroup.get('insured_data') as FormGroup;
+    const formHolder = this.disabilityGroup.get('policyholder') as FormGroup;
     const questionnaires = this.disabilityGroup.get('questionnaires') as FormGroup;
     const formQ = this.disabilityGroup.get('questions').get('questionnaire') as FormGroup;
     const formC = this.disabilityGroup.get('questions').get('questionnaire').get('insurance') as FormGroup;
@@ -468,6 +476,20 @@ export class DisabilityComponent implements OnInit {
 
         case 'haveHypertension':
           questionnaires.addControl('hypertension', this.fb.group({}));
+          break;
+
+        case 'pep_radio_insured':
+          console.log(this.role);
+
+          if (this.role === 'WWA') { formInsured.addControl('knowYourClient', this.fb.group({})); }
+          else if (this.role === 'WWS') { formInsured.addControl('knowYourCustomer', this.fb.group({})); }
+          break;
+
+        case 'pep_radio_holder':
+          console.log(this.role);
+
+          if (this.role === 'WWA') { formHolder.addControl('knowYourClient', this.fb.group({})); }
+          else if (this.role === 'WWS') { formHolder.addControl('knowYourCustomer', this.fb.group({})); }
           break;
 
         case 'haveArthritis':
@@ -649,6 +671,17 @@ export class DisabilityComponent implements OnInit {
 
         case 'haveSpine':
           questionnaires.removeControl('spine');
+          break;
+
+        case 'pep_radio_insured':
+          formInsured.removeControl('knowYourClient');
+          formInsured.removeControl('knowYourCustomer');
+          break;
+
+
+        case 'pep_radio_holder':
+          formHolder.removeControl('knowYourClient');
+          formHolder.removeControl('knowYourCustomer');
           break;
       }
     }

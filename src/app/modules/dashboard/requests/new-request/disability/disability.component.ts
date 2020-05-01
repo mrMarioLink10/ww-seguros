@@ -6,7 +6,9 @@ import { DisabilityService } from '../disability/services/disability.service';
 import { $country, $weightTypes, $heightTypes } from 'src/app/core/form/objects';
 import { FormHandlerService } from 'src/app/core/services/forms/form-handler.service';
 import { DiseaseService } from '../../../shared/components/disease/shared/disease/disease.service';
+import { UserService } from '../../../../../core/services/user/user.service';
 // tslint:disable: forin
+// tslint:disable: one-line
 
 @Component({
   selector: 'app-disability',
@@ -15,7 +17,7 @@ import { DiseaseService } from '../../../shared/components/disease/shared/diseas
 })
 export class DisabilityComponent implements OnInit {
   sicknessQuestions: any[];
-
+  role: string;
 
   accordionTitles = [
     'Sección A. Datos del propuesto Asegurado y Estatus laboral',
@@ -213,10 +215,14 @@ export class DisabilityComponent implements OnInit {
     public formMethods: FormArrayGeneratorService,
     private disabilityService: DisabilityService,
     public formHandler: FormHandlerService,
-    public diseaseService: DiseaseService
+    public diseaseService: DiseaseService,
+    public userService: UserService
   ) { }
 
   ngOnInit() {
+    this.role = this.userService.getRoleCotizador();
+    console.log(this.role);
+
 
     this.sicknessQuestions = [
       {
@@ -473,11 +479,17 @@ export class DisabilityComponent implements OnInit {
           break;
 
         case 'pep_radio_insured':
-          formInsured.addControl('knowYourClient', this.fb.group({}));
+          console.log(this.role);
+
+          if (this.role === 'WWA') { formInsured.addControl('knowYourClient', this.fb.group({})); }
+          else if (this.role === 'WWS') { formInsured.addControl('knowYourCustomer', this.fb.group({})); }
           break;
 
         case 'pep_radio_holder':
-          formHolder.addControl('knowYourClient', this.fb.group({}));
+          console.log(this.role);
+
+          if (this.role === 'WWA') { formHolder.addControl('knowYourClient', this.fb.group({})); }
+          else if (this.role === 'WWS') { formHolder.addControl('knowYourCustomer', this.fb.group({})); }
           break;
 
         case 'haveArthritis':
@@ -663,10 +675,13 @@ export class DisabilityComponent implements OnInit {
 
         case 'pep_radio_insured':
           formInsured.removeControl('knowYourClient');
+          formInsured.removeControl('knowYourCustomer');
           break;
+
 
         case 'pep_radio_holder':
           formHolder.removeControl('knowYourClient');
+          formHolder.removeControl('knowYourCustomer');
           break;
       }
     }

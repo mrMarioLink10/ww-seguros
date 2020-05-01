@@ -7,20 +7,21 @@ export class UserService {
 
   constructor() { }
 
-  token: any;
-  user: any;
   getAccessToken() {
-    this.token = localStorage.getItem('ang-token');
+    const token = localStorage.getItem('ang-token');
 
-    return this.token;
-
+    return token;
   }
 
   getUserInformation() {
-    const user = localStorage.getItem('user-information');
-    this.user = JSON.parse(user);
+    const user = JSON.parse(localStorage.getItem('user-information'));
 
-    return this.user;
+    return user;
+  }
 
+  getRoleCotizador() {
+    const user = this.getUserInformation();
+
+    return user.resource_access.cotizador.roles[0];
   }
 }

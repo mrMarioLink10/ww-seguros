@@ -9,7 +9,7 @@ const keycloakConfig: KeycloakConfig = {
 
 export const environment = {
   production: true,
-  baseUrl: 'https://wwsdevportalbackend.azurewebsites.net',
+  baseUrl: 'https://wwsdevfrontend.azurewebsites.net/',
   keycloak: keycloakConfig,
 
 };

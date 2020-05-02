@@ -78,7 +78,7 @@ export class DashboardLayoutComponent implements OnInit, OnDestroy {
 
   logOut() {
     // tslint:disable-next-line: max-line-length
-    document.location.href = `${environment.keycloak.url}realms/${environment.keycloak.realm}/protocol/openid-connect/logout?redirect_uri=${environment.keycloak.url}`;
+    document.location.href = `${environment.keycloak.url}realms/${environment.keycloak.realm}/protocol/openid-connect/logout?redirect_uri=${environment.baseUrl}`;
 
   }
 }

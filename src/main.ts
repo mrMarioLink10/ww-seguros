@@ -10,9 +10,6 @@ if (environment.production) {
   enableProdMode();
 }
 
-// platformBrowserDynamic().bootstrapModule(AppModule)
-//   .catch(err => console.error(err));
-
 // keycloak init options
 const initOptions = {
   url: 'https://sso.wwseguros.com.do:8443/auth', realm: 'worldwide', clientId: 'cotizador'

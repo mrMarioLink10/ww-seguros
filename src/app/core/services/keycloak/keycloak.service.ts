@@ -9,7 +9,8 @@ import { environment } from '../../../../environments/environment';
 })
 export class KeycloakService {
 
-  constructor() { }
+  constructor(
+  ) { }
   // keycloak init options
   initOptions = {
     url: environment.keycloak.url, realm: environment.keycloak.realm, clientId: environment.keycloak.clientId
@@ -59,8 +60,6 @@ export class KeycloakService {
   }
 
   logOut() {
-    console.log(this.keycloak);
 
-    this.keycloak.logout();
   }
 }

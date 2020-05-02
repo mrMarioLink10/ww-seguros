@@ -5,6 +5,7 @@ import { Subscription } from 'rxjs';
 import { Location } from '@angular/common';
 import { UserService } from '../../../../../core/services/user/user.service';
 import { KeycloakService } from '../../../../../core/services/keycloak/keycloak.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-dashboard-layout',
@@ -46,6 +47,7 @@ export class DashboardLayoutComponent implements OnInit, OnDestroy {
     private changeDetectorRef: ChangeDetectorRef,
     private media: MediaMatcher,
     private router: Router,
+    public keycloakService: KeycloakService
   ) {
     this.mobileQuery = media.matchMedia('(max-width: 600px)');
     this.mobileQueryListener = () => changeDetectorRef.detectChanges();
@@ -72,5 +74,11 @@ export class DashboardLayoutComponent implements OnInit, OnDestroy {
     this.mobileQuery.removeListener(this.mobileQueryListener);
 
     this.watchRouter.unsubscribe();
+  }
+
+  logOut() {
+    // tslint:disable-next-line: max-line-length
+    document.location.href = `${environment.keycloak.url}realms/${environment.keycloak.realm}/protocol/openid-connect/logout?redirect_uri=${environment.keycloak.url}`;
+
   }
 }

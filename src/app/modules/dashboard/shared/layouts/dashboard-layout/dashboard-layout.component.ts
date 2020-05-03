@@ -6,6 +6,10 @@ import { Location } from '@angular/common';
 import { UserService } from '../../../../../core/services/user/user.service';
 import { KeycloakService } from '../../../../../core/services/keycloak/keycloak.service';
 import { environment } from 'src/environments/environment';
+import { BaseDialogComponent } from 'src/app/shared/components/base-dialog/base-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
+import { DialogOptionService } from 'src/app/core/services/dialog/dialog-option.service';
+// tslint:disable: max-line-length
 
 @Component({
   selector: 'app-dashboard-layout',
@@ -47,7 +51,9 @@ export class DashboardLayoutComponent implements OnInit, OnDestroy {
     private changeDetectorRef: ChangeDetectorRef,
     private media: MediaMatcher,
     private router: Router,
-    public keycloakService: KeycloakService
+    public keycloakService: KeycloakService,
+    private dialog: MatDialog,
+    private dialogOption: DialogOptionService,
   ) {
     this.mobileQuery = media.matchMedia('(max-width: 600px)');
     this.mobileQueryListener = () => changeDetectorRef.detectChanges();
@@ -77,8 +83,15 @@ export class DashboardLayoutComponent implements OnInit, OnDestroy {
   }
 
   logOut() {
-    // tslint:disable-next-line: max-line-length
-    document.location.href = `${environment.keycloak.url}realms/${environment.keycloak.realm}/protocol/openid-connect/logout?redirect_uri=${environment.baseUrl}`;
-
+    const Dialog = this.dialog.open(BaseDialogComponent, {
+      data: this.dialogOption.logoutConfirmation,
+      minWidth: 385,
+    });
+    // tslint:disable-next-line: deprecation
+    Dialog.afterClosed().subscribe((result) => {
+      if (result === 'true') {
+        this.keycloakService.logOut();
+      }
+    });
   }
 }

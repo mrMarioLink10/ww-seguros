@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormArray, FormBuilder, Validators } from '@angular/forms';
 import { FieldConfig, Validator } from '../../../../../../shared/components/form-components/models/field-config';
 import { FormHandlerService } from '../../../../../../core/services/forms/form-handler.service';
+import { RefundService } from '../../../../claims/new-claim/claim-types/refund/services/refund.service';
+
 
 @Component({
 	selector: 'app-refund',
@@ -48,9 +50,11 @@ export class RefundComponent implements OnInit {
 	refundForm: FormGroup;
 	diagnosticList: FormArray;
 
-	constructor(private fb: FormBuilder, public formHandler: FormHandlerService) {}
+	constructor(private fb: FormBuilder, public formHandler: FormHandlerService, private refund:RefundService) {}
+
 
 	ngOnInit() {
+
 		this.refundForm = this.fb.group({
 			fecha: [ '', Validators.required ],
 			informacion: this.fb.group({
@@ -111,4 +115,5 @@ export class RefundComponent implements OnInit {
 	removeDiagnostic(index) {
 		this.diagnosticList.removeAt(index);
 	}
+
 }

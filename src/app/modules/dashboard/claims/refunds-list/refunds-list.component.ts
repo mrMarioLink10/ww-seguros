@@ -5,6 +5,8 @@ import { Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ClaimsService } from '../../services/claims/claims.service';
 import { HttpParams } from '@angular/common/http';
+import { RefundService } from './../new-claim/claim-types/refund/services/refund.service'
+
 
 @Component({
   selector: 'app-refunds-list',
@@ -26,7 +28,7 @@ export class RefundsListComponent implements OnInit {
 
 	testForm: FormGroup;
 
-  constructor(private route: Router, private fb: FormBuilder, private _claimsService: ClaimsService) { }
+  constructor(private route: Router, private fb: FormBuilder, private _claimsService: ClaimsService, private refund:RefundService) { }
 
 	getRefunds(params:HttpParams = new HttpParams){
 		let data;

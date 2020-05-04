@@ -462,6 +462,10 @@ body {
 /** OVERWRITING ANOTHER CLASSES */
 /** OVERWRITING ANOTHER CLASSES */
 
+.mat-raised-button {
+  box-shadow: none !important;
+}
+
 .mat-list-item-content {
   max-height: 35px !important;
 }

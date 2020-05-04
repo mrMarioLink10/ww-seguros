@@ -20,11 +20,11 @@ export class ClaimService {
     };
 
     console.log('body:', body);
-    return this.http.post(`${environment.baseUrl}/api/Reclamaciones`, body, httpOptions);
+    return this.http.post(`${environment.apiUrl}/api/Reclamaciones`, body, httpOptions);
   }
 
   returnData(id):Observable<any>{
-    return this.http.get(`${environment.baseUrl}/api/Reclamaciones/${id}`)
+    return this.http.get(`${environment.apiUrl}/api/Reclamaciones/${id}`)
   }
 
   id=null;

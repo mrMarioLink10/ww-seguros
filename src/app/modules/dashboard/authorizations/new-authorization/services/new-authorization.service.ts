@@ -19,11 +19,11 @@ export class NewAuthorizationService {
     };
 
     console.log('body:', body);
-    return this.http.post(`${environment.baseUrl}/api/Precertificado`, body, httpOptions);
+    return this.http.post(`${environment.apiUrl}/api/Precertificado`, body, httpOptions);
   }
 
   returnData(id):Observable<any>{
-    return this.http.get(`${environment.baseUrl}/api/Precertificado/${id}`)
+    return this.http.get(`${environment.apiUrl}/api/Precertificado/${id}`)
   }
 
   id=null;

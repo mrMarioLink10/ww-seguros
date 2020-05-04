@@ -20,11 +20,11 @@ export class RefundService {
     }
 
     console.log('body:', body);
-    return this.http.post(`${environment.baseUrl}/api/Reembolsos`, body, httpOptions);
+    return this.http.post(`${environment.apiUrl}/api/Reembolsos`, body, httpOptions);
   }
 
   returnData(id):Observable<any>{
-    return this.http.get(`${environment.baseUrl}/api/Reembolsos/${id}`)
+    return this.http.get(`${environment.apiUrl}/api/Reembolsos/${id}`)
   }
 
   id=null;

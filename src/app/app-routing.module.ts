@@ -7,7 +7,7 @@ import { AppAuthGuard } from './core/guards/app-auth.guard';
 const routes: Routes = [
 	{
 		path: '',
-		redirectTo: 'dashboard/information',
+		redirectTo: 'dashboard/requests',
 		pathMatch: 'full'
 	},
 	{

@@ -5,6 +5,8 @@ import { FieldConfig } from 'src/app/shared/components/form-components/models/fi
 import { $sex, $country, $res, $time, $family } from 'src/app/core/form/objects';
 import { DiseaseService } from '../../../shared/components/disease/shared/disease/disease.service';
 import { FormHandlerService } from 'src/app/core/services/forms/form-handler.service';
+import { UserService } from '../../../../../core/services/user/user.service';
+// tslint:disable: one-line
 
 @Component({
   selector: 'app-life',
@@ -12,7 +14,7 @@ import { FormHandlerService } from 'src/app/core/services/forms/form-handler.ser
   styleUrls: ['./life.component.scss']
 })
 export class LifeComponent implements OnInit, DoCheck {
-
+  role: string;
   maxWidth: any;
   primaryBenefitsArray: FormArray;
   contingentBeneficiaryArray: FormArray;
@@ -393,10 +395,13 @@ export class LifeComponent implements OnInit, DoCheck {
     private fb: FormBuilder,
     public formMethods: FormArrayGeneratorService,
     public diseaseService: DiseaseService,
-    public formHandler: FormHandlerService
+    public formHandler: FormHandlerService,
+    private userService: UserService
   ) { }
 
   ngOnInit() {
+    this.role = this.userService.getRoleCotizador();
+
     this.newRequest = this.fb.group({
       person: this.fb.group({
         firstName: ['', Validators.required],
@@ -455,7 +460,7 @@ export class LifeComponent implements OnInit, DoCheck {
           country: ['', Validators.required],
           insurancePurpose: ['', Validators.required],
           contractorCountry: ['', Validators.required],
-        })
+        }),
       }),
       payer: this.fb.group({
         firstName: ['', Validators.required],
@@ -483,7 +488,7 @@ export class LifeComponent implements OnInit, DoCheck {
           country: ['', Validators.required],
           kinship: ['', Validators.required],
           contractorCountry: ['', Validators.required],
-        })
+        }),
       }),
       financialProfile: this.fb.group({
         annualIncome: ['', Validators.required],
@@ -594,6 +599,8 @@ export class LifeComponent implements OnInit, DoCheck {
         getAnswersFromInsured: ['', Validators.required],
       }),
       questionnaires: this.fb.group({}),
+      contractorQuestionnaires: this.fb.group({}),
+      payerQuestionnaires: this.fb.group({}),
       activitiesQuestionnaires: this.fb.group({}),
     });
 
@@ -1386,9 +1393,26 @@ export class LifeComponent implements OnInit, DoCheck {
     } else {
       formQ.removeControl('financialStatus');
     }
+  }
 
+  isFormValid(form: string) {
+    const isValid = this.newRequest.get(form).valid;
+    const contractor = this.newRequest.get('contractorQuestionnaires') as FormGroup;
+    const payer = this.newRequest.get('contractorQuestionnaires') as FormGroup;
 
+    const getForm = form === 'payer' ? contractor : payer;
 
+    if (isValid) {
+      if (this.role === 'WWA') { getForm.addControl('knowYourClient', this.fb.group({})); }
+      else if (this.role === 'WWS') { getForm.addControl('knowYourCustomer', this.fb.group({})); }
+
+      return true;
+    } else {
+      if (this.role === 'WWA') { getForm.removeControl('knowYourClient'); }
+      else if (this.role === 'WWS') { getForm.removeControl('knowYourCustomer'); }
+
+      return false;
+    }
   }
 
   print() {

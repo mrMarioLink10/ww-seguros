@@ -10,9 +10,6 @@ if (environment.production) {
   enableProdMode();
 }
 
-platformBrowserDynamic().bootstrapModule(AppModule)
-  .catch(err => console.error(err));
-
 // keycloak init options
 const initOptions = {
   url: 'https://sso.wwseguros.com.do:8443/auth', realm: 'worldwide', clientId: 'cotizador'
@@ -27,6 +24,7 @@ keycloak.init({ onLoad: 'login-required' }).then((auth) => {
   } else {
     console.log('Authenticated');
     console.log(keycloak);
+    console.log(Math.round(keycloak.tokenParsed.exp + keycloak.timeSkew - new Date().getTime() / 1000) + ' seconds');
 
   }
 
@@ -39,19 +37,23 @@ keycloak.init({ onLoad: 'login-required' }).then((auth) => {
   localStorage.setItem('user-information', JSON.stringify(keycloak.tokenParsed));
 
   setTimeout(() => {
-    keycloak.updateToken(70).then((refreshed) => {
+    keycloak.updateToken(180).then((refreshed) => {
       if (refreshed) {
-        console.log('Token refreshed' + refreshed);
+        console.log('Token was successfully refreshed' + refreshed);
+
       } else {
         console.warn('Token not refreshed, valid for '
           + Math.round(keycloak.tokenParsed.exp + keycloak.timeSkew - new Date().getTime() / 1000) + ' seconds');
+
       }
     }).catch(() => {
+      window.location.reload();
       console.error('Failed to refresh token');
+      // tslint:disable-next-line: max-line-length
     });
 
 
-  }, 60000);
+  }, 45000);
 
 }).catch(() => {
   console.error('Authenticated Failed');

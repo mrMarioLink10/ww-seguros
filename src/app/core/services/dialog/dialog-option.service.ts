@@ -91,6 +91,16 @@ export class DialogOptionService {
 		textCancelButton: 'Cancelar'
 	};
 
+	logoutConfirmation: BaseDialog = {
+		logo: 'warning',
+		title: 'Confirmación',
+		text: '¿Esta seguro de que quiere cerrar sesión?',
+		showButtons: true,
+		showCancelButton: true,
+		textPrincipalButton: 'Cerrar sesión',
+		textCancelButton: 'Cancelar'
+	};
+
 	requestConfirmated: BaseDialog = {
 		logo: 'check',
 		title: 'Enviado',

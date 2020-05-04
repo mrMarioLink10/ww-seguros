@@ -221,8 +221,6 @@ export class DisabilityComponent implements OnInit {
 
   ngOnInit() {
     this.role = this.userService.getRoleCotizador();
-    console.log(this.role);
-
 
     this.sicknessQuestions = [
       {

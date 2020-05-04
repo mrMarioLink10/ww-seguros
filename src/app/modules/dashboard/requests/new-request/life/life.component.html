@@ -1208,6 +1208,16 @@
         <app-financial-status *ngIf="newRequest.get('questionnaires').get('financialStatus')"
           [form]="newRequest.get('questionnaires').get('financialStatus')"></app-financial-status>
       </mat-tab>
+      <mat-tab
+        *ngIf="isFormValid('contractor') && (newRequest.get('contractorQuestionnaires').get('knowYourClient') || newRequest.get('contractorQuestionnaires').get('knowYourCustomer'))"
+        label="Conozca a su cliente - Contratante">
+        <app-know-your-client *ngIf="this.role === 'WWA'"
+          [form]="newRequest.get('contractorQuestionnaires').get('knowYourClient')">
+        </app-know-your-client>
+        <app-know-your-customer *ngIf="this.role === 'WWS'"
+          [form]="newRequest.get('contractorQuestionnaires').get('knowYourCustomer')">
+        </app-know-your-customer>
+      </mat-tab>
     </mat-tab-group>
   </div>
 </div>

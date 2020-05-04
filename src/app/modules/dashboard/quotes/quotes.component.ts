@@ -31,9 +31,9 @@ export class QuotesComponent implements OnInit {
   fillType = 'tipoSeguro';
 
   fills = {
-    status: this.statusTypes, 
+    status: this.statusTypes,
     fillType: this.fillType
-  }; 
+  };
 
   newQuoteButtonOptions: MatProgressButtonOptions = {
     active: false,
@@ -52,23 +52,25 @@ export class QuotesComponent implements OnInit {
   displayedColumns: string[] = ['no', 'nombre', 'dependientes', 'seguro', 'plan', 'fecha', 'monto', 'estatus', 'acciones'];
   dataSource;
 
-  quotes:any[];
+  quotes: any[];
 
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
-  constructor(private _quotesService: QuotesService) { }
+  constructor(
+    private _quotesService: QuotesService,
+  ) { }
 
-  getQuotes(params:HttpParams = new HttpParams){
+  getQuotes(params: HttpParams = new HttpParams) {
     let data;
     this._quotesService.getQuotes(params)
-    .subscribe(res => {
-      data = res;
-      this.quotes = data.data;
-      this.dataSource = new MatTableDataSource(this.quotes);
-      this.dataSource.sort = this.sort;
-      this.dataSource.paginator = this.paginator;
-    }, err => console.log(err));
+      .subscribe(res => {
+        data = res;
+        this.quotes = data.data;
+        this.dataSource = new MatTableDataSource(this.quotes);
+        this.dataSource.sort = this.sort;
+        this.dataSource.paginator = this.paginator;
+      }, err => console.log(err));
   }
 
   ngOnInit() {
@@ -76,11 +78,7 @@ export class QuotesComponent implements OnInit {
   }
 
   newQuote() {
-    this.newQuoteButtonOptions.active = true;
-    setTimeout(() => {
-      this.newQuoteButtonOptions.active = false;
-
-    }, 3500);
+    window.open('https://cotizadores.wwseguros.com.do/', '_blank');
   }
 
 }

@@ -2,9 +2,11 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatProgressButtonOptions } from 'mat-progress-buttons';
 import { MatTableDataSource, MatSort, MatPaginator } from '@angular/material';
-import { FormGroup } from '@angular/forms';
+import { FormGroup, Validators } from '@angular/forms';
 import { AuthorizationsService } from '../services/authorizations/authorizations.service';
 import { HttpParams } from '@angular/common/http';
+import { NewAuthorizationService } from '../../../modules/dashboard/authorizations/new-authorization/services/new-authorization.service';
+
 
 
 export interface Claims {
@@ -97,7 +99,7 @@ export class AuthorizationsComponent implements OnInit {
 
 	testForm: FormGroup;
 
-	constructor(private route: Router, private _authorizationsService: AuthorizationsService) { }
+	constructor(private route: Router, private _authorizationsService: AuthorizationsService, private newAuthorization:NewAuthorizationService) { }
 
 
 	getAuthorizations(params:HttpParams = new HttpParams){
@@ -120,5 +122,6 @@ export class AuthorizationsComponent implements OnInit {
 		this.newAuthorizationButtonOptions.active = true;
 		this.route.navigateByUrl('/dashboard/authorizations/new-authorization');
 	}
+	
 }
 

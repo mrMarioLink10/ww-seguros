@@ -59,18 +59,18 @@ const ELEMENT_DATA: Claims[] = [
 export class AuthorizationsComponent implements OnInit {
 
 	statusTypes = [
-	  'Enviado', 
-	  'Reembolsado', 
-	  'Denegado'
+		'Enviado',
+		'Reembolsado',
+		'Denegado'
 	];
 
 	fillType = 'nroPoliza';
 
 	fills = {
-	  status: this.statusTypes, 
-	  fillType: this.fillType
-	}; 
-  
+		status: this.statusTypes,
+		fillType: this.fillType
+	};
+
 
 	newAuthorizationButtonOptions: MatProgressButtonOptions = {
 		active: false,
@@ -87,10 +87,10 @@ export class AuthorizationsComponent implements OnInit {
 	};
 
 	//displayedColumns: string[] = ['no', 'nombre', 'seguro', 'plan', 'fecha', 'monto', 'estatus', 'acciones'];
-	displayedColumns: string[] = ['no', 'nombre', 'seguro', 'plan','condicion', 'estatus', 'acciones'];
+	displayedColumns: string[] = ['no', 'nombre', 'seguro', 'plan', 'condicion', 'estatus', 'acciones'];
 	//dataSource = new MatTableDataSource(ELEMENT_DATA);
 	dataSource;
-	authorizations:any[];
+	authorizations: any[];
 
 	@ViewChild(MatSort, { static: true })
 	sort: MatSort;
@@ -99,20 +99,23 @@ export class AuthorizationsComponent implements OnInit {
 
 	testForm: FormGroup;
 
-	constructor(private route: Router, private _authorizationsService: AuthorizationsService, private newAuthorization:NewAuthorizationService) { }
+	constructor(
+		private route: Router,
+		public _authorizationsService: AuthorizationsService,
+		public newAuthorization: NewAuthorizationService) { }
 
 
-	getAuthorizations(params:HttpParams = new HttpParams){
+	getAuthorizations(params: HttpParams = new HttpParams) {
 		let data;
 		this._authorizationsService.getAuthoriations(params)
-		.subscribe(res => {
-		  data = res;
-		  this.authorizations = data.data;
-		  this.dataSource = new MatTableDataSource(this.authorizations);
-		  this.dataSource.sort = this.sort;
-		  this.dataSource.paginator = this.paginator;
-		}, err => console.log(err));
-	  }
+			.subscribe(res => {
+				data = res;
+				this.authorizations = data.data;
+				this.dataSource = new MatTableDataSource(this.authorizations);
+				this.dataSource.sort = this.sort;
+				this.dataSource.paginator = this.paginator;
+			}, err => console.log(err));
+	}
 
 	ngOnInit() {
 		this.getAuthorizations();
@@ -122,6 +125,6 @@ export class AuthorizationsComponent implements OnInit {
 		this.newAuthorizationButtonOptions.active = true;
 		this.route.navigateByUrl('/dashboard/authorizations/new-authorization');
 	}
-	
+
 }
 

@@ -55,7 +55,12 @@ keycloak.init({ onLoad: 'login-required' }).then((auth) => {
 
   }, 45000);
 
-}).catch(() => {
+}).catch((err) => {
+  console.log(err);
+
   console.error('Authenticated Failed');
+  // tslint:disable-next-line: max-line-length
+  // document.location.href = `${environment.keycloak.url}realms/${environment.keycloak.realm}/protocol/openid-connect/logout?redirect_uri=${environment.baseUrl}`;
+
 });
 

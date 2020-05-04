@@ -15,6 +15,8 @@ import { MatPaginatorIntlCro } from './core/class/MatPaginatorIntl';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { InvalidControlEnhancerPipe } from './core/pipes/invalid-control-enhancer.pipe';
 import { RequestHandlerInterceptor } from './core/interceptor/request-handler.interceptor';
+import { SharedModule } from './modules/dashboard/shared/shared.module';
+import { GlobalSharedModule } from './shared/global-shared.module';
 
 const keycloakService = new KeycloakService();
 
@@ -26,7 +28,7 @@ const keycloakService = new KeycloakService();
 		HttpClientModule,
 		AppRoutingModule,
 		ModulesModule,
-		KeycloakAngularModule
+		GlobalSharedModule
 	],
 	providers: [
 		{ provide: MatPaginatorIntl, useClass: MatPaginatorIntlCro },

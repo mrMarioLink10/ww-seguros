@@ -30,10 +30,11 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 /**
  * NgModule that includes all Material modules.
-*/
+ */
 @NgModule({
 	exports: [
 		// CDK
@@ -67,7 +68,9 @@ import { MatDialogModule } from '@angular/material/dialog';
 		MatTabsModule,
 		MatExpansionModule,
 		MatRadioModule,
-		MatDialogModule
+		MatDialogModule,
+		MatProgressSpinnerModule
+
 	]
 })
-export class MaterialModule {}
+export class MaterialModule { }

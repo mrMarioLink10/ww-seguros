@@ -212,8 +212,8 @@ export class NewAuthorizationComponent implements OnInit {
 			// console.log(data.data.informacionMedica.primerosSintomas.id)
 			const formID1 = this.authorization as FormGroup;
 			formID1.addControl('id', this.fb.control(data.data.id, Validators.required));
-			formID1.addControl('informacionAseguradoId', this.fb.control(data.data.informacionAseguradoId, Validators.required));
-			formID1.addControl('informacionMedicaId', this.fb.control(data.data.informacionMedicaId, Validators.required));
+			// formID1.addControl('informacionAseguradoId', this.fb.control(data.data.informacionAseguradoId, Validators.required));
+			// formID1.addControl('informacionMedicaId', this.fb.control(data.data.informacionMedicaId, Validators.required));
 			
 			const formID2 = this.authorization.get('informacionAsegurado') as FormGroup;
 			formID2.addControl('id', this.fb.control(data.data.informacionAsegurado.id, Validators.required));

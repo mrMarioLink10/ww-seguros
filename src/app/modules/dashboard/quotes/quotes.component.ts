@@ -49,7 +49,7 @@ export class QuotesComponent implements OnInit {
     customClass: 'dashboard-button'
   };
 
-  displayedColumns: string[] = ['no', 'nombre', 'dependientes', 'seguro', 'plan', 'fecha', 'monto', 'estatus', 'acciones'];
+  displayedColumns: string[] = ['noCotizacion', 'nombre', 'dependientes', 'plan', 'fecha', 'monto', 'estatus', 'acciones'];
   dataSource;
 
   quotes: any[];
@@ -58,12 +58,12 @@ export class QuotesComponent implements OnInit {
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
   constructor(
-    private _quotesService: QuotesService,
+    private quotesService: QuotesService,
   ) { }
 
-  getQuotes(params: HttpParams = new HttpParams) {
+  getQuotes(params: HttpParams = new HttpParams()) {
     let data;
-    this._quotesService.getQuotes(params)
+    this.quotesService.getQuotes(params)
       .subscribe(res => {
         data = res;
         this.quotes = data.data;

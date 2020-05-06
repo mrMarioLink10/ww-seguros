@@ -12,8 +12,15 @@
       </div>
       <div></div>
       <div></div>
-      <div class="mr-3">
-        <!-- <app-select [options]="options" [group]="newRequest"></app-select> -->
+      <div>
+        <mat-form-field color="accent" appearance="outline" class="w-full" style="font-size: small !important;">
+          <mat-label>Tipo de Solicitud</mat-label>
+          <mat-select (selectionChange)="selectChangeUrl($event.value)">
+            <mat-option value="vida">Solicitud de Seguro de Vida</mat-option>
+            <mat-option value="disability">Solicitud de Suscripción Disability</mat-option>
+            <mat-option value="gastos mayores">Suscripción Seguro Gastos Médicos Mayores</mat-option>
+          </mat-select>
+        </mat-form-field>
       </div>
 
     </div>

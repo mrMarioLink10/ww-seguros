@@ -6,7 +6,9 @@ import { $sex, $country, $res, $time, $family } from 'src/app/core/form/objects'
 import { DiseaseService } from '../../../shared/components/disease/shared/disease/disease.service';
 import { FormHandlerService } from 'src/app/core/services/forms/form-handler.service';
 import { UserService } from '../../../../../core/services/user/user.service';
+import { Router, ActivatedRoute } from '@angular/router';
 // tslint:disable: one-line
+// tslint:disable: max-line-length
 
 @Component({
   selector: 'app-life',
@@ -396,7 +398,9 @@ export class LifeComponent implements OnInit, DoCheck {
     public formMethods: FormArrayGeneratorService,
     public diseaseService: DiseaseService,
     public formHandler: FormHandlerService,
-    private userService: UserService
+    private userService: UserService,
+    private router: Router,
+    private route: ActivatedRoute,
   ) { }
 
   ngOnInit() {
@@ -1412,6 +1416,25 @@ export class LifeComponent implements OnInit, DoCheck {
       else if (this.role === 'WWS') { getForm.removeControl('knowYourCustomer'); }
 
       return false;
+    }
+  }
+
+  selectChangeUrl(event) {
+    switch (event) {
+      case 'vida':
+        this.router.navigate(['../life'], { relativeTo: this.route });
+        break;
+
+      case 'disability':
+        this.router.navigate(['../disability'], { relativeTo: this.route });
+        break;
+
+      case 'gastos mayores':
+        this.router.navigate(['../major-expenses'], { relativeTo: this.route });
+        break;
+
+      default:
+        break;
     }
   }
 

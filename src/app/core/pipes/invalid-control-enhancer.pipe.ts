@@ -168,8 +168,9 @@ export class InvalidControlEnhancerPipe implements PipeTransform {
       case 'example':
         newValue = '';
         return newValue;
+
       default:
-        break;
+        return value;
     }
   }
 

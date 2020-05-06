@@ -125,8 +125,8 @@ export class DialogOptionService {
 
 		return {
 			logo: 'error',
-			title: 'Ha ocurrido un error',
-			text: 'Han quedado campos requeridos sin completar, por favor revise el formulario y valide que todo esta completo' + text,
+			title: 'Campos Inválidos',
+			text: 'Por favor revise el formulario y valide que todo esta completo' + text,
 			showButtons: false
 		};
 	}

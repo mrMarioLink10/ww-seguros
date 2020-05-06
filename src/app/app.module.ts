@@ -20,7 +20,7 @@ import { MatTableModule } from '@angular/material/table';
 const keycloakService = new KeycloakService();
 
 @NgModule({
-	declarations: [AppComponent],
+	declarations: [AppComponent, InvalidControlEnhancerPipe],
 	imports: [
 		BrowserModule,
 		BrowserAnimationsModule,
@@ -29,7 +29,7 @@ const keycloakService = new KeycloakService();
 		ModulesModule,
 		GlobalSharedModule,
 		MatTableModule,
-		MatSortModule
+		MatSortModule,
 	],
 	providers: [
 		{ provide: MatPaginatorIntl, useClass: MatPaginatorIntlCro },

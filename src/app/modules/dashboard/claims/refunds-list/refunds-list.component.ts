@@ -9,17 +9,17 @@ import { RefundService } from './../new-claim/claim-types/refund/services/refund
 
 
 @Component({
-  selector: 'app-refunds-list',
-  templateUrl: './refunds-list.component.html',
-  styleUrls: ['./refunds-list.component.scss']
+	selector: 'app-refunds-list',
+	templateUrl: './refunds-list.component.html',
+	styleUrls: ['./refunds-list.component.scss']
 })
 
 export class RefundsListComponent implements OnInit {
 
-	displayedColumns: string[] = ['no', 'nombre', 'cedula','bancoEmisor', 'forma', 'estatus', 'acciones'];
+	displayedColumns: string[] = ['no', 'nombre', 'cedula', 'bancoEmisor', 'forma', 'estatus', 'acciones'];
 
 	dataSource;
-	@Input() refunds:any[];
+	@Input() refunds: any[];
 
 	@ViewChild(MatSort, { static: true })
 	sort: MatSort;
@@ -28,22 +28,22 @@ export class RefundsListComponent implements OnInit {
 
 	testForm: FormGroup;
 
-  constructor(private route: Router, private fb: FormBuilder, private _claimsService: ClaimsService, private refund:RefundService) { }
+	constructor(private route: Router, private fb: FormBuilder, public claimsService: ClaimsService, public refund: RefundService) { }
 
-	getRefunds(params:HttpParams = new HttpParams){
+	getRefunds(params: HttpParams = new HttpParams()) {
 		let data;
-		this._claimsService.getRefunds(params)
-		.subscribe(res => {
-		  data = res;
-		  this.refunds = data.data;
-		  this.dataSource = new MatTableDataSource(this.refunds);
-		  this.dataSource.sort = this.sort;
-		  this.dataSource.paginator = this.paginator;
-		}, err => console.log(err));
-	} 
+		this.claimsService.getRefunds(params)
+			.subscribe(res => {
+				data = res;
+				this.refunds = data.data;
+				this.dataSource = new MatTableDataSource(this.refunds);
+				this.dataSource.sort = this.sort;
+				this.dataSource.paginator = this.paginator;
+			}, err => console.log(err));
+	}
 
-  ngOnInit() {
-    this.getRefunds();
-  }
+	ngOnInit() {
+		this.getRefunds();
+	}
 
 }

@@ -19,7 +19,9 @@
 
       <ng-container matColumnDef="bancoEmisor" style="margin-right: 15px !important">
         <th class="padding-cell" mat-header-cell *matHeaderCellDef mat-sort-header> Banco Emisor </th>
-        <td class="padding-cell" mat-cell *matCellDef="let element"> {{element.infoTransferencia.bancoEmisor}} </td>
+        <td class="padding-cell" mat-cell *matCellDef="let element">
+          <div *ngIf="element.infoTransferencia"> {{element.infoTransferencia.bancoEmisor}} </div>
+        </td>
       </ng-container>
 
       <ng-container matColumnDef="tipoServicio" style="margin-right: 15px !important">
@@ -52,9 +54,10 @@
           <button mat-mini-fab aria-label="Ver mas" class="dashboard-table-buttons">
             <img src="../../../../assets/iconos/eye.svg">
           </button>
-          <!-- <button (click)="this.refund.getID(element.id)" mat-mini-fab aria-label="Editar" class="dashboard-table-buttons">
-              <img src="../../../../assets/iconos/edit.svg">
-            </button> -->
+          <button (click)="this.refund.getID(element.id)" mat-mini-fab aria-label="Editar"
+            class="dashboard-table-buttons">
+            <img src="../../../../assets/iconos/edit.svg">
+          </button>
         </td>
       </ng-container>
 

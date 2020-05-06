@@ -152,11 +152,13 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
     'Sección C Beneficiarios Primarios',
     'Beneficiario(s) Contingente(s)',
     'Comentarios adicionales'];
+
   country = {
     label: 'País',
     options: $country,
     name: 'country',
-  }
+  };
+
   status = {
     label: 'Estado Civil',
     options: [

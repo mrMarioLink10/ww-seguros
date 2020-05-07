@@ -47,13 +47,13 @@ keycloak.init({ onLoad: 'login-required' }).then((auth) => {
 
       }
     }).catch(() => {
-      window.location.reload();
+      // window.location.reload();
       console.error('Failed to refresh token');
       // tslint:disable-next-line: max-line-length
     });
 
 
-  }, 45000);
+  }, 180000);
 
 }).catch((err) => {
   console.log(err);

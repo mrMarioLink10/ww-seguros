@@ -193,6 +193,6 @@ export class DisabilityService {
     };
 
     console.log('body:', body);
-    return this.http.post(`${environment.baseUrl}/api/Solicitudes/disability`, body, httpOptions);
+    return this.http.post(`${environment.apiUrl}/api/Solicitudes/disability`, body, httpOptions);
   }
 }

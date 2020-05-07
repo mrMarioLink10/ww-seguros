@@ -16,6 +16,6 @@ export class LifeService {
     };
 
     console.log('body:', body);
-    return this.http.post(`${environment.baseUrl}/api/Solicitudes/vida`, body, httpOptions);
+    return this.http.post(`${environment.apiUrl}/api/Solicitudes/vida`, body, httpOptions);
   }
 }

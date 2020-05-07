@@ -89,9 +89,15 @@ export class MusculoskeletalComponent implements OnInit {
 
         case 'recovered_radio':
 
-                  formNFA.removeControl('areaText')
-                  break;
+                  formNFA.addControl('date', this.fb.control(new Date(), Validators.required));
 
+                  formNFA.addControl('areaText', this.fb.group({
+
+                        residual_symptoms:['', Validators.required],
+
+                  }));
+                  console.log(JSON.stringify(this.form.value));
+                  break;
         }
 
 			}
@@ -119,16 +125,10 @@ export class MusculoskeletalComponent implements OnInit {
             break;
 
         case 'recovered_radio':
-
-            formNFA.addControl('areaText', this.fb.group({
-
-                residual_symptoms:['', Validators.required],
-
-            }));
-
-            console.log(JSON.stringify(this.form.value));
+          
+            formNFA.removeControl('date')
+            formNFA.removeControl('areaText')
             break;
-
         }
 
 			}
@@ -247,7 +247,6 @@ export class MusculoskeletalComponent implements OnInit {
 
       skeletal_disorder_radio:['', Validators.required],
       recovered_radio:['', Validators.required],
-      date: [new Date(), Validators.required],
       episode_radio:['', Validators.required],
       episode:  this.fb.group({
 

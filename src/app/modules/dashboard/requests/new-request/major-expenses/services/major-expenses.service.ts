@@ -16,6 +16,6 @@ export class MajorExpensesService {
     };
 
     console.log('body:', body);
-    return this.http.post(`${environment.baseUrl}/api/Solicitudes/salud`, body, httpOptions);
+    return this.http.post(`${environment.apiUrl}/api/Solicitudes/salud`, body, httpOptions);
   }
 }

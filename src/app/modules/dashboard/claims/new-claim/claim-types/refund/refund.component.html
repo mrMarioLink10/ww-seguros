@@ -64,8 +64,8 @@
       <div class="grid"
         [ngClass]="{'grid-cols-1': diagnosticList.length === 1, 'grid-cols-5': diagnosticList.length > 1}">
         <div class="mr-3" [ngClass]="{'': diagnosticList.length === 1, 'col-span-4': diagnosticList.length > 1}">
-          <app-number-input [group]=" refundForm.get('diagnosticos').get(i.toString())" name="monto" label="Monto Reclamado"
-            placeholder="10,000">
+          <app-number-input [group]=" refundForm.get('diagnosticos').get(i.toString())" name="monto"
+            label="Monto Reclamado" placeholder="10,000">
           </app-number-input>
         </div>
         <div *ngIf="diagnosticList.length > 1"
@@ -156,7 +156,11 @@
     </div>
   </ng-template>
 </app-forms-container>
-<div class="mt-12">
-  <button mat-button class="send-button" (click)="formHandler.sendForm(refundForm, 'claims-refund')"
+<div class="mt-8">
+  <button mat-button class="cancel-form-button" style="margin-right: 7.5px !important;"
+    (click)="formHandler.sendForm(refundForm, 'claims-refund', 'cancel')" type="submit">Cancelar</button>
+  <button mat-button class="save-button" style="margin-right: 7.5px !important;"
+    (click)="formHandler.sendForm(refundForm, 'claims-refund', 'save')" type="submit">Guardar</button>
+  <button mat-button class="send-button" (click)="formHandler.sendForm(refundForm, 'claims-refund', 'send')"
     type="submit">Enviar</button>
 </div>

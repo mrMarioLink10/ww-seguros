@@ -60,16 +60,16 @@ export class ClaimComponent implements OnInit {
 		]
 	};
 
-	constructor(private fb: FormBuilder, public dialog: MatDialog, private formHandler: FormHandlerService, private claim:ClaimService) { }
+	constructor(private fb: FormBuilder, public dialog: MatDialog, public formHandler: FormHandlerService, private claim: ClaimService) { }
 
-	ID=null;
+	ID = null;
 	ngOnInit() {
-		this.ID=this.claim.id;
-		if(this.ID!=null){
-			console.log("El ID es "+ this.ID);
+		this.ID = this.claim.id;
+		if (this.ID != null) {
+			console.log("El ID es " + this.ID);
 			this.getData(this.ID)
 		}
-		else if(this.ID==null){
+		else if (this.ID == null) {
 			console.log("ID esta vacio")
 		}
 
@@ -138,13 +138,13 @@ export class ClaimComponent implements OnInit {
 		this.formHandler.sendForm(this.claimForm, 'claims-reclaim');
 	}
 
-	getData(id){
-		this.claim.returnData(id).subscribe(data=>{
+	getData(id) {
+		this.claim.returnData(id).subscribe(data => {
 			console.log(data.data.asegurado.documentoIdentidad)
 			console.log(data)
-			for(let x=0; x<data.data.reclamados.length;x++){
+			for (let x = 0; x < data.data.reclamados.length; x++) {
 				// console.log("hola, soy id numero "+data.data.reclamados[x].id)
-				if(x>=1){
+				if (x >= 1) {
 					// console.log('Hola, soy yo, ' + x)
 					this.addReclaimed();
 				}
@@ -153,7 +153,7 @@ export class ClaimComponent implements OnInit {
 				this.claimForm['controls'].reclamados['controls'][x]['controls'].montoDeducible.setValue(data.data.reclamados[x].montoDeducible)
 				this.claimForm['controls'].reclamados['controls'][x]['controls'].montoReclamado.setValue(data.data.reclamados[x].montoReclamado)
 				this.claimForm['controls'].reclamados['controls'][x]['controls'].procedimiento.setValue(data.data.reclamados[x].procedimiento)
-			
+
 				const formID7 = this.claimForm.get('reclamados').get([x]) as FormGroup;
 				formID7.addControl('id', this.fb.control(data.data.reclamados[x].id, Validators.required));
 			}
@@ -186,7 +186,7 @@ export class ClaimComponent implements OnInit {
 			// console.log(data.data.reclamacion.id)
 			const formID1 = this.claimForm as FormGroup;
 			formID1.addControl('id', this.fb.control(data.data.id, Validators.required));
-	
+
 			const formID2 = this.claimForm.get('asegurado') as FormGroup;
 			formID2.addControl('id', this.fb.control(data.data.asegurado.id, Validators.required));
 
@@ -204,7 +204,7 @@ export class ClaimComponent implements OnInit {
 
 			console.log(JSON.stringify(this.claimForm.value))
 		})
-		this.claim.id=null;
-		console.log("this.claim.id es igual a "+ this.claim.id);
-	  }
+		this.claim.id = null;
+		console.log("this.claim.id es igual a " + this.claim.id);
+	}
 }

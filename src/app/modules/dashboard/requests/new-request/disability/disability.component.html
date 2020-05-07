@@ -1304,9 +1304,12 @@
       </mat-tab>
     </mat-tab-group>
   </form>
-  <div class="mt-6 mb-4">
-    <button mat-button class="send-button" (click)="formHandler.sendForm(disabilityGroup, 'disability')"
+  <div class="mt-8">
+    <button mat-button class="cancel-form-button" style="margin-right: 7.5px !important;"
+      (click)="formHandler.sendForm(disabilityGroup, 'disability', 'cancel')" type="submit">Cancelar</button>
+    <button mat-button class="save-button" style="margin-right: 7.5px !important;"
+      (click)="formHandler.sendForm(disabilityGroup, 'disability', 'save')" type="submit">Guardar</button>
+    <button mat-button class="send-button" (click)="formHandler.sendForm(disabilityGroup, 'disability', 'send')"
       type="submit">Enviar</button>
-    <!-- <button mat-button class="send-button" (click)="print()" type="submit">Imprimir</button> -->
   </div>
 </div>

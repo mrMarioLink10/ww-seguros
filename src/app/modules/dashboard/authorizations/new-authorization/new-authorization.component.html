@@ -24,8 +24,8 @@
           </div>
           <div class="mr-3">
 
-              <app-input [group]="authorization.get('informacionAsegurado')" 
-              label="No. póliza" name='noPoliza' placeholder="12345678"></app-input>
+            <app-input [group]="authorization.get('informacionAsegurado')" label="No. póliza" name='noPoliza'
+              placeholder="12345678"></app-input>
 
           </div>
           <div class="mr-3">
@@ -42,20 +42,20 @@
           </div>
           <div class="mr-3">
 
-            <app-input [group]="authorization.get('informacionAsegurado')" 
-              label="Teléfono residencia" name='telefonoResidencia' placeholder=""></app-input>
+            <app-input [group]="authorization.get('informacionAsegurado')" label="Teléfono residencia"
+              name='telefonoResidencia' placeholder=""></app-input>
 
           </div>
           <div class="mr-3">
 
-              <app-input [group]="authorization.get('informacionAsegurado')" 
-              label="Teléfono celular" name='telefonoCelular' placeholder=""></app-input>
+            <app-input [group]="authorization.get('informacionAsegurado')" label="Teléfono celular"
+              name='telefonoCelular' placeholder=""></app-input>
 
           </div>
           <div class="mr-3">
 
-              <app-input [group]="authorization.get('informacionAsegurado')" 
-              label="Teléfono oficina" name='telefonoOficina' placeholder=""></app-input>
+            <app-input [group]="authorization.get('informacionAsegurado')" label="Teléfono oficina"
+              name='telefonoOficina' placeholder=""></app-input>
 
           </div>
         </div>
@@ -77,8 +77,8 @@
           </div>
           <div class="mr-3">
 
-              <app-input [group]="authorization.get('informacionAsegurado').get('seguro')" 
-              label="No. póliza" name='noPoliza' placeholder="12345678"></app-input>
+            <app-input [group]="authorization.get('informacionAsegurado').get('seguro')" label="No. póliza"
+              name='noPoliza' placeholder="12345678"></app-input>
 
           </div>
           <div class="mr-3">
@@ -87,8 +87,8 @@
             </app-date-picker>
           </div>
           <div class="mr-3">
-              <app-number-input [group]="authorization.get('informacionAsegurado').get('seguro')" 
-              label="Suma asegurada" name='suma' placeholder="20,000$ USD" min="1"></app-number-input>
+            <app-number-input [group]="authorization.get('informacionAsegurado').get('seguro')" label="Suma asegurada"
+              name='suma' placeholder="20,000$ USD" min="1"></app-number-input>
           </div>
         </div>
 
@@ -127,8 +127,8 @@
               name="direccion">
             </app-input>
 
-            <app-input [group]="authorization.get('informacionMedica').get('primerosSintomas')" 
-            label="Teléfono" name='telefono' placeholder=""></app-input>
+            <app-input [group]="authorization.get('informacionMedica').get('primerosSintomas')" label="Teléfono"
+              name='telefono' placeholder=""></app-input>
           </div>
 
           <!--  TERCERA COLUMNA -->
@@ -146,8 +146,8 @@
               name="direccion">
             </app-input>
 
-            <app-input [group]="authorization.get('informacionMedica').get('admision')" 
-              label="Teléfono" name='telefono' placeholder=""></app-input>
+            <app-input [group]="authorization.get('informacionMedica').get('admision')" label="Teléfono" name='telefono'
+              placeholder=""></app-input>
           </div>
 
           <!--  CUARTA COLUMNA -->
@@ -163,8 +163,8 @@
             <app-input [group]="authorization.get('informacionMedica')" label="Dirección" name="direccion">
             </app-input>
 
-            <app-input [group]="authorization.get('informacionMedica')" 
-              label="Teléfono" name='telefono' placeholder=""></app-input>
+            <app-input [group]="authorization.get('informacionMedica')" label="Teléfono" name='telefono' placeholder="">
+            </app-input>
           </div>
         </div>
       </ng-template>
@@ -172,9 +172,12 @@
     </app-forms-container>
 
   </div>
-  <div class="mt-6 mb-4">
-    <button mat-button class="send-button" (click)="formHandler.sendForm(authorization, 'new-authorization')"
+  <div class="mt-8">
+    <button mat-button class="cancel-form-button" style="margin-right: 7.5px !important;"
+      (click)="formHandler.sendForm(authorization, 'new-authorization', 'cancel')" type="submit">Cancelar</button>
+    <button mat-button class="save-button" style="margin-right: 7.5px !important;"
+      (click)="formHandler.sendForm(authorization, 'new-authorization', 'save')" type="submit">Guardar</button>
+    <button mat-button class="send-button" (click)="formHandler.sendForm(authorization, 'new-authorization', 'send')"
       type="submit">Enviar</button>
   </div>
-
 </div>

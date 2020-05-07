@@ -32,12 +32,12 @@ export class FormHandlerService {
 		private disabilityService: DisabilityService,
 	) { }
 
-	sendForm(form: FormGroup, name: string) {
+	sendForm(form: FormGroup, name: string, type?: string) {
 		console.log('Impresion de formulario down here: ', form);
-		this.dialogHandler(form, name);
+		this.dialogHandler(form, name, type);
 	}
 
-	dialogHandler(form: FormGroup, name: string) {
+	dialogHandler(form: FormGroup, name: string, type: string) {
 		let Dialog;
 		let dataOpen;
 		let dataClosing;
@@ -45,41 +45,78 @@ export class FormHandlerService {
 
 		switch (name) {
 			case 'claims-reclaim':
-				dataOpen = this.dialogOption.reclaimConfirmation;
-				dataClosing = this.dialogOption.reclaimConfirmated;
+				if (type === 'send') {
+					dataOpen = this.dialogOption.sendForm('Reclamo');
+					dataClosing = this.dialogOption.confirmedForm('Reclamo');
+				} else if (type === 'save') {
+					dataOpen = this.dialogOption.saveForm('Reclamo');
+					dataClosing = this.dialogOption.confirmedSavedForm('Reclamo');
+				}
 				route = 'dashboard/claims';
 				break;
 
 			case 'claims-refund':
-				dataOpen = this.dialogOption.refundConfirmation;
-				dataClosing = this.dialogOption.refundConfirmated;
+				if (type === 'send') {
+					dataOpen = this.dialogOption.sendForm('Reembolso');
+					dataClosing = this.dialogOption.confirmedForm('Reembolso');
+				} else if (type === 'save') {
+					dataOpen = this.dialogOption.saveForm('Reembolso');
+					dataClosing = this.dialogOption.confirmedSavedForm('Reembolso');
+				}
 				route = 'dashboard/claims';
 				break;
 
 			case 'new-authorization':
-				dataOpen = this.dialogOption.authorizationConfirmation;
-				dataClosing = this.dialogOption.authorizationConfirmated;
+				if (type === 'send') {
+					dataOpen = this.dialogOption.sendForm('Autorización');
+					dataClosing = this.dialogOption.confirmedForm('Autorización');
+				} else if (type === 'save') {
+					dataOpen = this.dialogOption.saveForm('Autorización');
+					dataClosing = this.dialogOption.confirmedSavedForm('Autorización');
+				}
 				route = 'dashboard/authorizations';
 				break;
 
 			case 'life':
-				dataOpen = this.dialogOption.lifeConfirmation;
-				dataClosing = this.dialogOption.requestConfirmated;
+				if (type === 'send') {
+					dataOpen = this.dialogOption.sendForm('seguro de Vida');
+					dataClosing = this.dialogOption.confirmedForm('seguro de Vida');
+				} else if (type === 'save') {
+					dataOpen = this.dialogOption.saveForm('seguro de Vida');
+					dataClosing = this.dialogOption.confirmedSavedForm('seguro de Vida');
+				}
 				route = 'dashboard/requests';
 				break;
 
 			case 'major-expenses':
-				dataOpen = this.dialogOption.healthConfirmation;
-				dataClosing = this.dialogOption.requestConfirmated;
+				if (type === 'send') {
+					dataOpen = this.dialogOption.sendForm('seguro Gastos Médicos Mayores');
+					dataClosing = this.dialogOption.confirmedForm('seguro Gastos Médicos Mayores');
+				} else if (type === 'save') {
+					dataOpen = this.dialogOption.saveForm('seguro Gastos Médicos Mayores');
+					dataClosing = this.dialogOption.confirmedSavedForm('seguro Gastos Médicos Mayores');
+				}
 				route = 'dashboard/requests';
 				break;
 
 			case 'disability':
-				dataOpen = this.dialogOption.disabilityConfirmation;
-				dataClosing = this.dialogOption.requestConfirmated;
+				if (type === 'send') {
+					dataOpen = this.dialogOption.sendForm('suscripcion Disability');
+					dataClosing = this.dialogOption.confirmedForm('suscripcion Disability');
+				} else if (type === 'save') {
+					dataOpen = this.dialogOption.sendForm('suscripcion Disability');
+					dataClosing = this.dialogOption.confirmedForm('suscripcion Disability');
+				}
 				route = 'dashboard/requests';
 				break;
+
 		}
+
+		if (type === 'cancel') {
+			dataOpen = this.dialogOption.cancelRequest;
+		}
+
+		console.log(dataOpen, dataClosing);
 
 		Dialog = this.dialog.open(BaseDialogComponent, {
 			data: dataOpen,
@@ -91,95 +128,171 @@ export class FormHandlerService {
 			const json = JSON.stringify(this.sendedForm);
 			console.log(json);
 
-			if (result === 'true') {
-				let dialog;
-				if (form.valid) {
+			switch (type) {
+				case 'save':
+					if (result === 'true') {
+						let dialog;
+						switch (name) {
+							case 'claims-reclaim':
+								this.claimService.postClaim(json)
+									.subscribe(res => {
+										this.correctSend(res, dialog, dataClosing, route);
+									}, (err) => {
+										this.badSend(err, dialog);
+									});
+								break;
 
-					switch (name) {
-						case 'claims-reclaim':
-							this.claimService.postClaim(json)
-								.subscribe(res => {
-									this.correctSend(res, dialog, dataClosing, route);
+							case 'claims-refund':
+								this.refundService.postClaim(json)
+									.subscribe(res => {
+										this.correctSend(res, dialog, dataClosing, route);
+									}, (err) => {
+										this.badSend(err, dialog);
+									});
+								break;
 
-								}, (err) => {
-									this.badSend(err, dialog);
+							case 'new-authorization':
+								this.newAuthorizationService.postClaim(json)
+									.subscribe(res => {
+										this.correctSend(res, dialog, dataClosing, route);
+									}, (err) => {
+										this.badSend(err, dialog);
+									});
+								break;
 
-								});
-							break;
+							case 'life':
+								this.lifeService.postRequest(json)
+									.subscribe(res => {
+										this.correctSend(res, dialog, dataClosing, route);
+									}, (err) => {
+										this.badSend(err, dialog);
+									});
+								break;
 
-						case 'claims-refund':
-							this.refundService.postClaim(json)
-								.subscribe(res => {
-									this.correctSend(res, dialog, dataClosing, route);
+							case 'major-expenses':
+								this.majorExpensesService.postRequest(json)
+									.subscribe(res => {
+										this.correctSend(res, dialog, dataClosing, route);
+									}, (err) => {
+										this.badSend(err, dialog);
+									});
+								break;
 
-								}, (err) => {
-									this.badSend(err, dialog);
+							case 'disability':
+								this.disabilityService.postRequest(json)
+									.subscribe(res => {
+										this.correctSend(res, dialog, dataClosing, route);
+									}, (err) => {
+										this.badSend(err, dialog);
+									});
+								break;
 
-								});
-							break;
-
-						case 'new-authorization':
-							this.newAuthorizationService.postClaim(json)
-								.subscribe(res => {
-									this.correctSend(res, dialog, dataClosing, route);
-
-								}, (err) => {
-									this.badSend(err, dialog);
-
-								});
-							break;
-
-						case 'life':
-							this.lifeService.postRequest(json)
-								.subscribe(res => {
-									this.correctSend(res, dialog, dataClosing, route);
-
-								}, (err) => {
-									this.badSend(err, dialog);
-
-								});
-							break;
-
-						case 'major-expenses':
-							this.majorExpensesService.postRequest(json)
-								.subscribe(res => {
-									this.correctSend(res, dialog, dataClosing, route);
-
-								}, (err) => {
-									this.badSend(err, dialog);
-
-								});
-							break;
-
-						case 'disability':
-							this.disabilityService.postRequest(json)
-								.subscribe(res => {
-									this.correctSend(res, dialog, dataClosing, route);
-
-								}, (err) => {
-									this.badSend(err, dialog);
-
-								});
-							break;
-
-						default:
-							break;
+							default:
+								break;
+						}
+						console.log(JSON.stringify(this.sendedForm));
 					}
+					break;
 
-					console.log(JSON.stringify(this.sendedForm));
-				} else {
-					// console.log(this.findInvalidControls(form));
+				case 'send':
+					if (result === 'true') {
+						let dialog;
+						if (form.valid) {
+							switch (name) {
+								case 'claims-reclaim':
+									this.claimService.postClaim(json)
+										.subscribe(res => {
+											this.correctSend(res, dialog, dataClosing, route);
 
-					const invalidControls = [];
-					for (const control in this.findInvalidControls(form)) {
-						invalidControls.push(this.getName(this.findInvalidControls(form)[control]));
+										}, (err) => {
+											this.badSend(err, dialog);
+
+										});
+									break;
+
+								case 'claims-refund':
+									this.refundService.postClaim(json)
+										.subscribe(res => {
+											this.correctSend(res, dialog, dataClosing, route);
+
+										}, (err) => {
+											this.badSend(err, dialog);
+
+										});
+									break;
+
+								case 'new-authorization':
+									this.newAuthorizationService.postClaim(json)
+										.subscribe(res => {
+											this.correctSend(res, dialog, dataClosing, route);
+
+										}, (err) => {
+											this.badSend(err, dialog);
+
+										});
+									break;
+
+								case 'life':
+									this.lifeService.postRequest(json)
+										.subscribe(res => {
+											this.correctSend(res, dialog, dataClosing, route);
+
+										}, (err) => {
+											this.badSend(err, dialog);
+
+										});
+									break;
+
+								case 'major-expenses':
+									this.majorExpensesService.postRequest(json)
+										.subscribe(res => {
+											this.correctSend(res, dialog, dataClosing, route);
+
+										}, (err) => {
+											this.badSend(err, dialog);
+
+										});
+									break;
+
+								case 'disability':
+									this.disabilityService.postRequest(json)
+										.subscribe(res => {
+											this.correctSend(res, dialog, dataClosing, route);
+
+										}, (err) => {
+											this.badSend(err, dialog);
+
+										});
+									break;
+
+								default:
+									break;
+							}
+
+							console.log(JSON.stringify(this.sendedForm));
+						} else {
+							// console.log(this.findInvalidControls(form));
+
+							const invalidControls = [];
+							for (const control in this.findInvalidControls(form)) {
+								invalidControls.push(this.getName(this.findInvalidControls(form)[control]));
+							}
+							dialog = this.dialog.open(BaseDialogComponent, {
+								data: this.dialogOption.getInvalidControls(invalidControls),
+								minWidth: 385
+							});
+							this.closeDialog(dialog);
+						}
 					}
-					dialog = this.dialog.open(BaseDialogComponent, {
-						data: this.dialogOption.getInvalidControls(invalidControls),
-						minWidth: 385
-					});
-					this.closeDialog(dialog);
-				}
+					break;
+
+				case 'cancel':
+					if (result === 'true') {
+						this.navigateToMenu(route)
+					}
+					break;
+				default:
+					break;
 			}
 		});
 	}
@@ -208,7 +321,7 @@ export class FormHandlerService {
 		setTimeout(() => {
 			dialog.close();
 
-		}, 7000);
+		}, 4000);
 	}
 
 	navigateToMenu(route) {

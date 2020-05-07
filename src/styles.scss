@@ -438,12 +438,36 @@ body {
 }
 
 .send-button {
+  background: #007DB7 !important;
+  color: white !important;
+  border: 2px solid #007DB7 !important;
+  border-radius: 35px !important;
+  font-size: 12px !important;
+  padding: 3px 39.5px !important;
+  min-width: 120px !important;
+  font-weight: 900 !important;
+}
+
+.save-button {
   background: white !important;
-  color: #18446B !important;
+  color: #373536 !important;
   border: 2px solid #BDBDBD !important;
   border-radius: 35px !important;
   font-size: 12px !important;
-  padding: 3px 45px !important;
+  padding: 3px 39.5px !important;
+  min-width: 120px !important;
+  font-weight: 900 !important;
+}
+
+.cancel-form-button {
+  background: #C4C4C466 !important;
+  color: #373536 !important;
+  border: 2px solid #BDBDBD !important;
+  border-radius: 35px !important;
+  font-size: 12px !important;
+  padding: 3px 39.5px !important;
+  min-width: 120px !important;
+  font-weight: 900 !important;
 }
 
 .ww-divider {

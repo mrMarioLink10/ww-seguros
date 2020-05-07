@@ -10,86 +10,6 @@ export class DialogOptionService {
 	constructor(
 		private invalidControlEnhancer: InvalidControlEnhancerPipe,
 	) { }
-	reclaimConfirmation: BaseDialog = {
-		logo: 'warning',
-		title: 'Confirmación',
-		text: 'Se procederá a enviar la solicitud de reclamo',
-		showButtons: true,
-		showCancelButton: true,
-		textPrincipalButton: 'Enviar',
-		textCancelButton: 'Cancelar'
-	};
-
-	reclaimConfirmated: BaseDialog = {
-		logo: 'check',
-		title: 'Enviado',
-		text: 'Reclamo enviado',
-		showButtons: false
-	};
-
-	refundConfirmation: BaseDialog = {
-		logo: 'warning',
-		title: 'Confirmación',
-		text: 'Se procederá a enviar la solicitud de reembolso',
-		showButtons: true,
-		showCancelButton: true,
-		textPrincipalButton: 'Enviar',
-		textCancelButton: 'Cancelar'
-	};
-
-	refundConfirmated: BaseDialog = {
-		logo: 'check',
-		title: 'Enviado',
-		text: 'La solicitud de reembolso ha sido enviada',
-		showButtons: false
-	};
-
-	authorizationConfirmation: BaseDialog = {
-		logo: 'warning',
-		title: 'Confirmación',
-		text: 'Se procederá a enviar la solicitud de autorización',
-		showButtons: true,
-		showCancelButton: true,
-		textPrincipalButton: 'Enviar',
-		textCancelButton: 'Cancelar'
-	};
-
-	authorizationConfirmated: BaseDialog = {
-		logo: 'check',
-		title: 'Enviado',
-		text: 'La solicitud de autorización ha sido enviada',
-		showButtons: false
-	};
-
-	lifeConfirmation: BaseDialog = {
-		logo: 'warning',
-		title: 'Confirmación',
-		text: 'Se procederá a enviar la solicitud de seguro de Vida',
-		showButtons: true,
-		showCancelButton: true,
-		textPrincipalButton: 'Enviar',
-		textCancelButton: 'Cancelar'
-	};
-
-	healthConfirmation: BaseDialog = {
-		logo: 'warning',
-		title: 'Confirmación',
-		text: 'Se procederá a enviar la solicitud de seguro de gastos médicos mayores',
-		showButtons: true,
-		showCancelButton: true,
-		textPrincipalButton: 'Enviar',
-		textCancelButton: 'Cancelar'
-	};
-
-	disabilityConfirmation: BaseDialog = {
-		logo: 'warning',
-		title: 'Confirmación',
-		text: 'Se procederá a enviar la solicitud de Suscripción Disability',
-		showButtons: true,
-		showCancelButton: true,
-		textPrincipalButton: 'Enviar',
-		textCancelButton: 'Cancelar'
-	};
 
 	logoutConfirmation: BaseDialog = {
 		logo: 'warning',
@@ -101,19 +21,64 @@ export class DialogOptionService {
 		textCancelButton: 'Cancelar'
 	};
 
-	requestConfirmated: BaseDialog = {
-		logo: 'check',
-		title: 'Enviado',
-		text: 'La solicitud ha sido enviada',
-		showButtons: false
-	};
-
 	errorServer: BaseDialog = {
 		logo: 'error',
 		title: 'Ha ocurrido error',
 		text: 'Ha ocurrido un error al intentar realizar la petición',
 		showButtons: false
 	};
+
+	cancelRequest: BaseDialog = {
+		logo: 'warning',
+		title: 'Cancelar',
+		text: `Se procederá a salir al menu, ¿esta seguro?`,
+		showButtons: true,
+		showCancelButton: true,
+		textPrincipalButton: 'Salir',
+		textCancelButton: 'No'
+	};
+
+	sendForm(form: string) {
+		return {
+			logo: 'warning',
+			title: 'Confirmación',
+			text: `Se procederá a enviar la solicitud de ${form}`,
+			showButtons: true,
+			showCancelButton: true,
+			textPrincipalButton: 'Enviar',
+			textCancelButton: 'Cancelar'
+		};
+	}
+
+	confirmedForm(form: string) {
+		return {
+			logo: 'check',
+			title: 'Enviado',
+			text: `La solicitud de ${form} ha sido enviada`,
+			showButtons: false,
+		};
+	}
+
+	saveForm(form: string) {
+		return {
+			logo: 'warning',
+			title: 'Confirmación',
+			text: `Se procederá a guardar la solicitud de ${form}`,
+			showButtons: true,
+			showCancelButton: true,
+			textPrincipalButton: 'Guardar',
+			textCancelButton: 'Cancelar'
+		};
+	}
+
+	confirmedSavedForm(form: string) {
+		return {
+			logo: 'check',
+			title: 'Enviado',
+			text: `La solicitud de ${form} ha sido guardada`,
+			showButtons: false,
+		};
+	}
 
 	getInvalidControls(invalidControls: any[]) {
 		let text = '; los campos invalidos se encuentran en las sección o campo: \n';

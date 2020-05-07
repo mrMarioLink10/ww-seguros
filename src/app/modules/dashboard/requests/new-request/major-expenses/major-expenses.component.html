@@ -47,8 +47,8 @@
               <app-input class="mr-3" [group]="newRequest.get('contractor')" label="Correo" name='email'></app-input>
               <app-input class="mr-3" [group]="newRequest.get('contractor')" label="Actividad Comercial"
                 name='commercialActivity'></app-input>
-              <app-select class="mr-3" [options]="requestTypeOptions" [group]="newRequest.get('contractor')">
-              </app-select>
+              <!-- <app-select class="mr-3" [options]="requestTypeOptions" [group]="newRequest.get('contractor')">
+              </app-select> -->
             </div>
             <mat-divider class="divider"></mat-divider>
 
@@ -57,10 +57,14 @@
                 label="Nombres y Apellidos Representante Legal" name='name'></app-input>
               <app-input class="mr-3" [group]="newRequest.get('contractor').get('legalRepresentation')"
                 label="Cargo o relación con la Sociedad" name='position'></app-input>
+              <!-- <app-input class="mr-3" [group]="newRequest.get('contractor').get('legalRepresentation')"
+                label="Nacionalidad" name='nationality'></app-input> -->
+              <app-select class="mr-3" [options]="nationality"
+                [group]="newRequest.get('contractor').get('legalRepresentation')"></app-select>
+              <app-select class="mr-3" [options]="idType"
+                [group]="newRequest.get('contractor').get('legalRepresentation')"></app-select>
               <app-input class="mr-3" [group]="newRequest.get('contractor').get('legalRepresentation')"
-                label="Nacionalidad" name='nationality'></app-input>
-              <app-input class="mr-3" [group]="newRequest.get('contractor').get('legalRepresentation')"
-                label="Cédula / Pasaporte" name='id2'></app-input>
+                label="Documento de identidad" name='id2'></app-input>
               <app-input class="mr-3" [group]="newRequest.get('contractor').get('legalRepresentation')"
                 label="Póliza Existente (Si aplica)" name='policy'></app-input>
               <app-input class="mr-3" [group]="newRequest.get('contractor').get('legalRepresentation')" label="Correo"
@@ -74,21 +78,23 @@
               </app-input>
               <app-input class="mr-3" [group]="newRequest.get('person')" label="Segundo Nombre" name='secondName'>
               </app-input>
-              <app-input class="mr-3" [group]="newRequest.get('person')"
-                label="Primer y Segundo Apellido / Apellido de Ca." name='lastName'></app-input>
+              <app-input class="mr-3" [group]="newRequest.get('person')" label="Apellidos" name='lastName'></app-input>
               <app-date-picker class="mr-3" [group]="newRequest.get('person')" label="fecha" name='date'>
               </app-date-picker>
               <app-radio-button class="mr-3" [group]="newRequest.get('person')" name="sex" [options]="sex">
               </app-radio-button>
               <app-input class="mr-3" [group]="newRequest.get('person')" label="Nacionalidad" name='nationality'>
               </app-input>
-              <app-input class="mr-3" [group]="newRequest.get('person')" label="Cédula/Pasaporte" name='id2'>
+              <app-select class="mr-3" [options]="idType" [group]="newRequest.get('person')"></app-select>
+              <app-input class="mr-3" [group]="newRequest.get('person')" label="Documento de identidad" name='id2'>
               </app-input>
               <app-input class="mr-3" [group]="newRequest.get('person')" label="Edad" name='age'></app-input>
-              <div class="mr-3 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2">
+              <div class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2">
                 <app-input class="mr-3" [group]="newRequest.get('person')" label="Peso / lbs" name='weight'></app-input>
                 <app-input class="mr-3" [group]="newRequest.get('person')" label="Altura / Pies" name='height'>
                 </app-input>
+                <!-- <app-input disabled="true" class="mr-3" [group]="newRequest.get('person')" label="BMI" name='bmi'>
+                </app-input> -->
               </div>
               <app-select class="mr-3" [options]="status" [group]="newRequest.get('person')"></app-select>
               <app-select class="mr-3" [options]="country" [group]="newRequest.get('person')"></app-select>

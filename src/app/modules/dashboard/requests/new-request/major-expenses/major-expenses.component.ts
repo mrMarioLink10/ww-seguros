@@ -61,9 +61,41 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
         {
           value: 'Cambio de plan',
           viewValue: 'Cambio de plan',
+        },
+        {
+          value: 'Poliza Nueva',
+          viewValue: 'Póliza Nueva',
+        },
+        {
+          value: 'Adicion de Dependiente',
+          viewValue: 'Adición de Dependiente',
+        },
+        {
+          value: 'Rehabilitación',
+          viewValue: 'Rehabilitación',
+        },
+        {
+          value: 'Inclusión',
+          viewValue: 'Inclusión',
         }
       ],
       name: 'requestType',
+    };
+
+  idType: FieldConfig =
+    {
+      label: 'Tipo de documento de identidad',
+      options: [
+        {
+          value: 'Cedula',
+          viewValue: 'Cédula',
+        },
+        {
+          value: 'Pasaporte',
+          viewValue: 'Pasaporte',
+        }
+      ],
+      name: 'idType',
     };
 
   itIsCurrentOptions: FieldConfig =
@@ -113,23 +145,23 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
     ]
   };
   deducibles: FieldConfig = {
-    label: 'Frecuencia de Pago',
+    label: 'Deducibles',
     options: [
       {
-        value: 'RD$1,000',
-        viewValue: '1000'
+        value: '1000',
+        viewValue: 'RD$1,000'
       },
       {
-        value: 'RD$3,000',
-        viewValue: '3000'
+        value: '3000',
+        viewValue: 'RD$3,000'
       },
       {
-        value: 'RD$5,000',
-        viewValue: '5000'
+        value: '5000',
+        viewValue: 'RD$5,000'
       },
       {
         value: 'otro',
-        viewValue: 'Otr0'
+        viewValue: 'Otro'
       },
     ]
   };
@@ -139,6 +171,26 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
       {
         value: 'Signature Special',
         viewValue: 'Signature Special',
+      },
+      {
+        value: 'Excellence Special',
+        viewValue: 'Excellence Special',
+      },
+      {
+        value: 'Signature',
+        viewValue: 'Signature',
+      },
+      {
+        value: 'Excellence',
+        viewValue: 'Excellence',
+      },
+      {
+        value: 'Distinction',
+        viewValue: 'Distinction',
+      },
+      {
+        value: 'Otro',
+        viewValue: 'Otro',
       }
     ],
     name: 'plans',
@@ -157,6 +209,12 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
     label: 'País',
     options: $country,
     name: 'country',
+  };
+
+  nationality = {
+    label: 'Nacionalidad',
+    options: $country,
+    name: 'nationality',
   };
 
   status = {
@@ -334,11 +392,12 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
       requestType: ['', Validators.required],
       person: this.fb.group({
         firstName: ['', Validators.required],
-        secondName: ['', Validators.required],
+        secondName: [''],
         lastName: ['', Validators.required],
         date: [new Date(), Validators.required],
         sex: ['', Validators.required],
         nationality: ['', Validators.required],
+        idType: ['', Validators.required],
         id2: ['', Validators.required],
         age: ['', Validators.required],
         weight: ['', Validators.required],
@@ -347,36 +406,37 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
         country: ['', Validators.required],
         city: ['', Validators.required],
         direction: ['', Validators.required],
-        tel: ['', Validators.required],
+        tel: [''],
         cel: ['', Validators.required],
-        officeTel: ['', Validators.required],
-        fax: ['', Validators.required],
+        officeTel: [''],
+        fax: [''],
         email: ['', Validators.required],
         office: this.fb.group({
-          company: ['', Validators.required],
-          position: ['', Validators.required],
-          direction: ['', Validators.required],
-          economicActivity: ['', Validators.required],
-          sector: ['', Validators.required],
-          city: ['', Validators.required],
-          country: ['', Validators.required],
+          company: [''],
+          position: [''],
+          direction: [''],
+          economicActivity: [''],
+          sector: [''],
+          city: [''],
+          country: [''],
         })
       }),
       contractor: this.fb.group({
         societyName: ['', Validators.required],
-        commercialName: ['', Validators.required],
+        commercialName: [''],
         taxpayerNumber: ['', Validators.required],
-        socialHome: ['', Validators.required],
+        socialHome: [''],
         tel: ['', Validators.required],
         email: ['', Validators.required],
         commercialActivity: ['', Validators.required],
-        requestType: ['', Validators.required],
+        // requestType: ['', Validators.required],
         legalRepresentation: this.fb.group({
           name: ['', Validators.required],
           position: ['', Validators.required],
           nationality: ['', Validators.required],
+          idType: ['', Validators.required],
           id2: ['', Validators.required],
-          policy: ['', Validators.required],
+          policy: [''],
           email: ['', Validators.required]
         })
       }),

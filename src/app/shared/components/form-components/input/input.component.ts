@@ -5,7 +5,7 @@ import { FormGroup } from '@angular/forms';
 @Component({
 	selector: 'app-input',
 	templateUrl: './input.component.html',
-	styleUrls: [ './input.component.scss' ]
+	styleUrls: ['./input.component.scss']
 })
 export class InputComponent implements OnInit {
 	@Input() label: string;
@@ -14,9 +14,10 @@ export class InputComponent implements OnInit {
 	@Input() min: string;
 	@Input() max: string;
 	@Input() placeholder: string;
+	@Input() disabled?: boolean;
 	@Input() group: FormGroup;
 
-	constructor() {}
+	constructor() { }
 
-	ngOnInit() {}
+	ngOnInit() { }
 }

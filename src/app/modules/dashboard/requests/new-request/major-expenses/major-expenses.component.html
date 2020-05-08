@@ -432,17 +432,23 @@
                   parte de la Sección A o Sección B, por favor indique por escrito la siguiente información.</div>
                 <div *ngFor="let studies of informationList.controls; let i = index"
                   class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
-                  <app-input class="mr-3" [group]="newRequest.get('questionsB').get('information').get(i.toString())"
+                  <!-- <app-input class="mr-3" [group]="newRequest.get('questionsB').get('information').get(i.toString())"
                     name="name" label="Nombre del Paciente">
-                  </app-input>
-                  <!-- <mat-form-field [formGroup]="newRequest.get('questionsB').get('information').get(i.toString())">
-                    <mat-label>Favorite food</mat-label>
+                  </app-input> -->
+                  <mat-form-field class="mr-3" color="accent" appearance="outline"
+                    [formGroup]="newRequest.get('questionsB').get('information').get(i.toString())">
+                    <mat-label>Nombre del Paciente</mat-label>
                     <mat-select formControlName="name">
-                      <mat-option *ngFor="let food of foods" [value]="food.value">
-                        {{food.viewValue}}
+                      <mat-option
+                        value="{{newRequest.get('person').value.firstName}} {{newRequest.get('person').value.lastName}}">
+                        {{newRequest.get('person').value.firstName}} {{newRequest.get('person').value.lastName}}
+                      </mat-option>
+                      <mat-option *ngFor="let dpd of allDependents.controls; index as i"
+                        value="{{dpd.value.name}} {{dpd.value.lastName}}">
+                        {{dpd.value.name}} {{dpd.value.lastName}}
                       </mat-option>
                     </mat-select>
-                  </mat-form-field> -->
+                  </mat-form-field>
                   <app-input class="mr-3" [group]="newRequest.get('questionsB').get('information').get(i.toString())"
                     name="ailment" label="Padecimientos">
                   </app-input>

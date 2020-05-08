@@ -104,8 +104,8 @@ export class FormHandlerService {
 					dataOpen = this.dialogOption.sendForm('suscripcion Disability');
 					dataClosing = this.dialogOption.confirmedForm('suscripcion Disability');
 				} else if (type === 'save') {
-					dataOpen = this.dialogOption.sendForm('suscripcion Disability');
-					dataClosing = this.dialogOption.confirmedForm('suscripcion Disability');
+					dataOpen = this.dialogOption.saveForm('suscripcion Disability');
+					dataClosing = this.dialogOption.confirmedSavedForm('suscripcion Disability');
 				}
 				route = 'dashboard/requests';
 				break;

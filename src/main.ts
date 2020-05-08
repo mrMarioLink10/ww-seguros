@@ -40,12 +40,12 @@ keycloak.init({ onLoad: 'login-required' }).then((auth) => {
     keycloak.updateToken(480).then((refreshed) => {
       if (refreshed) {
         console.log('Token was successfully refreshed' + refreshed);
-        alert('Token was successfully refreshed' + refreshed);
+        // alert('Token was successfully refreshed' + refreshed);
       } else {
         console.warn('Token not refreshed, valid for '
           + Math.round(keycloak.tokenParsed.exp + keycloak.timeSkew - new Date().getTime() / 1000) + ' seconds');
-        alert('Token not refreshed, valid for '
-          + Math.round(keycloak.tokenParsed.exp + keycloak.timeSkew - new Date().getTime() / 1000) + ' seconds');
+        // alert('Token not refreshed, valid for '
+        //   + Math.round(keycloak.tokenParsed.exp + keycloak.timeSkew - new Date().getTime() / 1000) + ' seconds');
       }
     }).catch(() => {
       // window.location.reload();

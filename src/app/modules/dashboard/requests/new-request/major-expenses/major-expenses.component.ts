@@ -32,6 +32,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
   familyWithDiseasesList: FormArray;
   questions = questionsA;
   questionsB = questionsB;
+  routeSelected = 'gastos mayores';
   student = {
     name: ['', Validators.required],
     univercity: ['', Validators.required],
@@ -402,6 +403,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
         age: ['', Validators.required],
         weight: ['', Validators.required],
         height: ['', Validators.required],
+        bmi: [{ value: '', disabled: true }, Validators.required],
         status: ['', Validators.required],
         country: ['', Validators.required],
         city: ['', Validators.required],
@@ -486,7 +488,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
         hasFamilyWithHeartKidneyDisease: ['', Validators.required],
         hasDeclinedInsuranceCompany: ['', Validators.required],
         haveHadMedicalHealthInsurance: ['', Validators.required],
-        information: this.fb.array([this.createFormArray('medicInformation')]),
+        information: this.fb.array([]),
       }),
       primaryBenefits: this.fb.group({
         dependentsC: this.fb.array([this.formMethods.createItem(this.primaryBenefits)]),
@@ -542,7 +544,17 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
     this.questionsBFormArray = this.newRequest.get('questionsB') as FormArray;
     this.informationList = this.newRequest.get('questionsB').get('information') as FormArray;
     // this.setQuestionsA();
+    this.newRequest.get('person').get('weight').valueChanges.subscribe(value => {
+      this.getBmi(this.newRequest.get('person').value.height, value);
+    });
+
+    this.newRequest.get('person').get('height').valueChanges.subscribe(value => {
+      this.getBmi(value, this.newRequest.get('person').value.weight);
+    });
+
+
   }
+
 
   ngDoCheck() { }
 
@@ -987,6 +999,16 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
     }
   }
 
+  getBmi(height: any, weight: any) {
+    const bmi = weight / ((height / 100) * (height / 100));
+    console.log(bmi);
+
+    if (bmi !== Infinity) {
+      const value = parseFloat(`${bmi}`).toFixed(2);
+      this.newRequest.get('person').get('bmi').setValue(value);
+    }
+  }
+
   print() {
     console.log('solicitante: ', this.newRequest.get('questionsA'));
     console.log('dependientes: ', this.newRequest.get('dependents').value.allDependents);
@@ -996,14 +1018,14 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
     switch (type) {
       case 'medicInformation':
         return this.fb.group({
-          name: ['', Validators.required],
+          name: [''],
           ailment: ['', Validators.required],
           date: ['', Validators.required],
           threatment: ['', Validators.required],
-          time: ['', Validators.required],
-          duration: ['', Validators.required],
-          medicCenterName: ['', Validators.required],
-          medicCenterAddress: ['', Validators.required],
+          time: [''],
+          duration: [''],
+          medicCenterName: [''],
+          medicCenterAddress: [''],
         });
         break;
 

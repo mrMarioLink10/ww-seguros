@@ -124,7 +124,7 @@ export class FormHandlerService {
 		});
 
 		Dialog.afterClosed().subscribe((result) => {
-			this.sendedForm = form.value;
+			this.sendedForm = form.getRawValue();
 			const json = JSON.stringify(this.sendedForm);
 			console.log(json);
 

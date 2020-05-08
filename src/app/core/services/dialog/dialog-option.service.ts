@@ -38,6 +38,13 @@ export class DialogOptionService {
 		textCancelButton: 'No'
 	};
 
+	WIP: BaseDialog = {
+		logo: 'warning',
+		title: 'WIP',
+		text: `Esta funcionalidad todavía no esta disponible; puede guardar el formulario.`,
+		showButtons: false,
+	}
+
 	sendForm(form: string) {
 		return {
 			logo: 'warning',

@@ -37,14 +37,15 @@ keycloak.init({ onLoad: 'login-required' }).then((auth) => {
   localStorage.setItem('user-information', JSON.stringify(keycloak.tokenParsed));
 
   setTimeout(() => {
-    keycloak.updateToken(180).then((refreshed) => {
+    keycloak.updateToken(480).then((refreshed) => {
       if (refreshed) {
         console.log('Token was successfully refreshed' + refreshed);
-
+        alert('Token was successfully refreshed' + refreshed);
       } else {
         console.warn('Token not refreshed, valid for '
           + Math.round(keycloak.tokenParsed.exp + keycloak.timeSkew - new Date().getTime() / 1000) + ' seconds');
-
+        alert('Token not refreshed, valid for '
+          + Math.round(keycloak.tokenParsed.exp + keycloak.timeSkew - new Date().getTime() / 1000) + ' seconds');
       }
     }).catch(() => {
       // window.location.reload();
@@ -53,10 +54,11 @@ keycloak.init({ onLoad: 'login-required' }).then((auth) => {
     });
 
 
-  }, 180000);
+  }, 300000);
 
 }).catch((err) => {
   console.log(err);
+  window.location.reload();
 
   console.error('Authenticated Failed');
   // tslint:disable-next-line: max-line-length

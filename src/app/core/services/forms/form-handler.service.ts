@@ -197,92 +197,97 @@ export class FormHandlerService {
 				case 'send':
 					if (result === 'true') {
 						let dialog;
-						if (form.valid) {
-							switch (name) {
-								case 'claims-reclaim':
-									this.claimService.postClaim(json)
-										.subscribe(res => {
-											this.correctSend(res, dialog, dataClosing, route);
+						dialog = this.dialog.open(BaseDialogComponent, {
+							data: this.dialogOption.WIP,
+							minWidth: 385
+						});
+						this.closeDialog(dialog);
+						// if (form.valid) {
+						// 	switch (name) {
+						// 		case 'claims-reclaim':
+						// 			this.claimService.postClaim(json)
+						// 				.subscribe(res => {
+						// 					this.correctSend(res, dialog, dataClosing, route);
 
-										}, (err) => {
-											this.badSend(err, dialog);
+						// 				}, (err) => {
+						// 					this.badSend(err, dialog);
 
-										});
-									break;
+						// 				});
+						// 			break;
 
-								case 'claims-refund':
-									this.refundService.postClaim(json)
-										.subscribe(res => {
-											this.correctSend(res, dialog, dataClosing, route);
+						// 		case 'claims-refund':
+						// 			this.refundService.postClaim(json)
+						// 				.subscribe(res => {
+						// 					this.correctSend(res, dialog, dataClosing, route);
 
-										}, (err) => {
-											this.badSend(err, dialog);
+						// 				}, (err) => {
+						// 					this.badSend(err, dialog);
 
-										});
-									break;
+						// 				});
+						// 			break;
 
-								case 'new-authorization':
-									this.newAuthorizationService.postClaim(json)
-										.subscribe(res => {
-											this.correctSend(res, dialog, dataClosing, route);
+						// 		case 'new-authorization':
+						// 			this.newAuthorizationService.postClaim(json)
+						// 				.subscribe(res => {
+						// 					this.correctSend(res, dialog, dataClosing, route);
 
-										}, (err) => {
-											this.badSend(err, dialog);
+						// 				}, (err) => {
+						// 					this.badSend(err, dialog);
 
-										});
-									break;
+						// 				});
+						// 			break;
 
-								case 'life':
-									this.lifeService.postRequest(json)
-										.subscribe(res => {
-											this.correctSend(res, dialog, dataClosing, route);
+						// 		case 'life':
+						// 			this.lifeService.postRequest(json)
+						// 				.subscribe(res => {
+						// 					this.correctSend(res, dialog, dataClosing, route);
 
-										}, (err) => {
-											this.badSend(err, dialog);
+						// 				}, (err) => {
+						// 					this.badSend(err, dialog);
 
-										});
-									break;
+						// 				});
+						// 			break;
 
-								case 'major-expenses':
-									this.majorExpensesService.postRequest(json)
-										.subscribe(res => {
-											this.correctSend(res, dialog, dataClosing, route);
+						// 		case 'major-expenses':
+						// 			this.majorExpensesService.postRequest(json)
+						// 				.subscribe(res => {
+						// 					this.correctSend(res, dialog, dataClosing, route);
 
-										}, (err) => {
-											this.badSend(err, dialog);
+						// 				}, (err) => {
+						// 					this.badSend(err, dialog);
 
-										});
-									break;
+						// 				});
+						// 			break;
 
-								case 'disability':
-									this.disabilityService.postRequest(json)
-										.subscribe(res => {
-											this.correctSend(res, dialog, dataClosing, route);
+						// 		case 'disability':
+						// 			this.disabilityService.postRequest(json)
+						// 				.subscribe(res => {
+						// 					this.correctSend(res, dialog, dataClosing, route);
 
-										}, (err) => {
-											this.badSend(err, dialog);
+						// 				}, (err) => {
+						// 					this.badSend(err, dialog);
 
-										});
-									break;
+						// 				});
+						// 			break;
 
-								default:
-									break;
-							}
+						// 		default:
+						// 			break;
+						// 	}
 
-							console.log(JSON.stringify(this.sendedForm));
-						} else {
-							// console.log(this.findInvalidControls(form));
+						// 	console.log(JSON.stringify(this.sendedForm));
+						// } else {
+						// 	// console.log(this.findInvalidControls(form));
 
-							const invalidControls = [];
-							for (const control in this.findInvalidControls(form)) {
-								invalidControls.push(this.getName(this.findInvalidControls(form)[control]));
-							}
-							dialog = this.dialog.open(BaseDialogComponent, {
-								data: this.dialogOption.getInvalidControls(invalidControls),
-								minWidth: 385
-							});
-							this.closeDialog(dialog);
-						}
+						// 	const invalidControls = [];
+						// 	for (const control in this.findInvalidControls(form)) {
+						// 		invalidControls.push(this.getName(this.findInvalidControls(form)[control]));
+						// 	}
+						// 	dialog = this.dialog.open(BaseDialogComponent, {
+						// 		data: this.dialogOption.getInvalidControls(invalidControls),
+						// 		minWidth: 385
+						// 	});
+						// 	this.closeDialog(dialog);
+						// }
 					}
 					break;
 

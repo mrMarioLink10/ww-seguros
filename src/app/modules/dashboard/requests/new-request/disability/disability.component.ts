@@ -7,6 +7,7 @@ import { $country, $weightTypes, $heightTypes } from 'src/app/core/form/objects'
 import { FormHandlerService } from 'src/app/core/services/forms/form-handler.service';
 import { DiseaseService } from '../../../shared/components/disease/shared/disease/disease.service';
 import { UserService } from '../../../../../core/services/user/user.service';
+import { Router, ActivatedRoute } from '@angular/router';
 // tslint:disable: forin
 // tslint:disable: one-line
 
@@ -18,7 +19,7 @@ import { UserService } from '../../../../../core/services/user/user.service';
 export class DisabilityComponent implements OnInit {
   sicknessQuestions: any[];
   role: string;
-
+  routeSelected = 'disability';
   accordionTitles = [
     'Sección A. Datos del propuesto Asegurado y Estatus laboral',
     'Sección B. Datos del Contratante', 'Sección C. Cuestionario Médico',
@@ -216,7 +217,9 @@ export class DisabilityComponent implements OnInit {
     private disabilityService: DisabilityService,
     public formHandler: FormHandlerService,
     public diseaseService: DiseaseService,
-    public userService: UserService
+    public userService: UserService,
+    private router: Router,
+    private route: ActivatedRoute,
   ) { }
 
   ngOnInit() {
@@ -746,6 +749,25 @@ export class DisabilityComponent implements OnInit {
 
     }
     return { total, isDirty };
+  }
+
+  selectChangeUrl(event) {
+    switch (event) {
+      case 'vida':
+        this.router.navigate(['../life'], { relativeTo: this.route });
+        break;
+
+      case 'disability':
+        this.router.navigate(['../disability'], { relativeTo: this.route });
+        break;
+
+      case 'gastos mayores':
+        this.router.navigate(['../major-expenses'], { relativeTo: this.route });
+        break;
+
+      default:
+        break;
+    }
   }
 }
 

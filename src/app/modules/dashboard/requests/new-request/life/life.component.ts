@@ -24,7 +24,7 @@ export class LifeComponent implements OnInit, DoCheck {
   existingCoveragesList: FormArray;
   changingCoveragesList: FormArray;
   insuranceProposedList: FormArray;
-
+  routeSelected = 'vida';
   heartPainList: FormArray;
   respiratoryDisorderList: FormArray;
   mentalNervousDisorderList: FormArray;
@@ -407,6 +407,7 @@ export class LifeComponent implements OnInit, DoCheck {
     this.role = this.userService.getRoleCotizador();
 
     this.newRequest = this.fb.group({
+      NoC: ['', Validators.required],
       person: this.fb.group({
         firstName: ['', Validators.required],
         secondName: ['', Validators.required],

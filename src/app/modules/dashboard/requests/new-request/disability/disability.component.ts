@@ -281,29 +281,29 @@ export class DisabilityComponent implements OnInit {
       insured_data: this.fb.group({
         name: ['', Validators.required],
         last_name: ['', Validators.required],
-        birthdate: [new Date(), Validators.required],
+        birthdate: ['', Validators.required],
         gender: ['', Validators.required],
         job: ['', Validators.required],
         nationality: ['', Validators.required],
         id_passport: ['', Validators.required],
         contract: ['', Validators.required],
-        date_since: [new Date(), Validators.required],
-        date_until: [new Date(), Validators.required],
+        date_since: ['', Validators.required],
+        date_until: ['', Validators.required],
         position: ['', Validators.required],
-        salary: ['', [Validators.required, Validators.min(1)]],
+        salary: ['', Validators.required],
         currency: ['', Validators.required],
         address: ['', Validators.required],
         telephone: ['', Validators.required],
         email: ['', [Validators.required, Validators.email]],
         job_description: ['', Validators.required],
-        job_hours: ['', [Validators.required, Validators.min(1)]],
-        date: [new Date(), Validators.required],
+        job_hours: ['', Validators.required],
+        date: ['', Validators.required],
         reason_pension: [''],
-        office_hours: ['', [Validators.required, Validators.min(1)]],
+        office_hours: ['', Validators.required],
         company: ['', Validators.required],
         amount_pension: ['', Validators.min(1)],
         currency_pension: [''],
-        outside_hours: ['', [Validators.required, Validators.min(1)]],
+        outside_hours: ['', Validators.required],
         pension_radio: ['', Validators.required],
         pep_radio_insured: ['', Validators.required]
       }),
@@ -403,7 +403,7 @@ export class DisabilityComponent implements OnInit {
 
         case 'health_radio':
           formQ.addControl('health', this.fb.group({
-            date: [new Date(), Validators.required],
+            date: ['', Validators.required],
             reason: ['', Validators.required],
             therapy: ['', Validators.required]
           }));
@@ -411,7 +411,7 @@ export class DisabilityComponent implements OnInit {
 
         case 'therapy_radio':
           formQ.addControl('therapies', this.fb.group({
-            date: [new Date(), Validators.required],
+            date: ['', Validators.required],
             reason: ['', Validators.required],
             therapy: ['', Validators.required]
           }));
@@ -419,7 +419,7 @@ export class DisabilityComponent implements OnInit {
 
         case 'sick_pay_radio':
           formQ.addControl('sick_pay', this.fb.group({
-            date: [new Date(), Validators.required],
+            date: ['', Validators.required],
             reason: ['', Validators.required],
             therapy: ['', Validators.required]
           }));
@@ -427,42 +427,42 @@ export class DisabilityComponent implements OnInit {
 
         case 'analysis_radio':
           formQ.addControl('analysis', this.fb.group({
-            date: [new Date(), Validators.required],
+            date: ['', Validators.required],
             name: ['', Validators.required],
           }));
           break;
 
         case 'other_analysis_radio':
           formQ.addControl('other_analysis', this.fb.group({
-            date: [new Date(), Validators.required],
+            date: ['', Validators.required],
             reason: ['', Validators.required],
           }));
           break;
 
         case 'inpatientCare_radio':
           formQ.addControl('inpatientCare', this.fb.group({
-            date: [new Date(), Validators.required],
+            date: ['', Validators.required],
             reason: ['', Validators.required],
           }));
           break;
 
         case 'bloodSick_radio':
           formQ.addControl('bloodSick', this.fb.group({
-            date: [new Date(), Validators.required],
+            date: ['', Validators.required],
             reason: ['', Validators.required],
           }));
           break;
 
         case 'hospitalization_radio':
           formQ.addControl('hospitalization', this.fb.group({
-            date: [new Date(), Validators.required],
+            date: ['', Validators.required],
             reason: ['', Validators.required],
           }));
           break;
 
         case 'sicknessType_radio':
           formQ.addControl('sicknessType', this.fb.group({
-            date: [new Date(), Validators.required],
+            date: ['', Validators.required],
             description: ['', Validators.required],
             haveHypertension: ['', Validators.required],
             haveArthritis: ['', Validators.required],
@@ -523,14 +523,14 @@ export class DisabilityComponent implements OnInit {
 
         case 'VIH_radio':
           formQ.addControl('VIH', this.fb.group({
-            date: [new Date(), Validators.required],
+            date: ['', Validators.required],
             name: ['', Validators.required],
           }));
           break;
 
         case 'specialTherapy_radio':
           formQ.addControl('specialTherapy', this.fb.group({
-            date: [new Date(), Validators.required],
+            date: ['', Validators.required],
             reason: ['', Validators.required],
 
           }));
@@ -538,7 +538,7 @@ export class DisabilityComponent implements OnInit {
 
         case 'accident_radio':
           formQ.addControl('accident', this.fb.group({
-            date: [new Date(), Validators.required],
+            date: ['', Validators.required],
             reason: ['', Validators.required],
             effects: ['', Validators.required],
 

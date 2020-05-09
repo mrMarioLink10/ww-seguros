@@ -88,29 +88,25 @@
                 <div class="mt-10 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
 
                   <div class="-ml-3 -mr-8 sm:ml-0 sm:-mr-1 md:ml-0 md:mr-0 lg:-mr-5 lg:ml-0 xl:ml-0 xl:-mr-4">
-
-                    <div class="ml-4 mb-1">
+                    <div class="mb-1">
                       <label class="radio-button-label"> Tipo de contrato laboral </label>
                     </div>
-
                     <div class="">
                       <app-radio-button class="" [group]="disabilityGroup.get('insured_data')"
                         [options]="contractOPtions" name='contract'>
                       </app-radio-button>
                     </div>
-
                   </div>
-
                   <div class="mr-3 mt-5 md:mt-0 lg:mt-0 xl:mt-0">
-                    <app-date-picker [group]="disabilityGroup.get('insured_data')" label="Desde" name='date_since'>
+                    <app-date-picker [max]="disabilityGroup.get('insured_data').value.date_until"
+                      [group]="disabilityGroup.get('insured_data')" label="Desde" name='date_since'>
                     </app-date-picker>
                   </div>
-
                   <div class="mr-3 mt-5 md:mt-0 lg:mt-0 xl:mt-0">
-                    <app-date-picker [group]="disabilityGroup.get('insured_data')" label="Hasta" name='date_until'>
+                    <app-date-picker [min]="disabilityGroup.get('insured_data').value.date_since"
+                      [group]="disabilityGroup.get('insured_data')" label="Hasta" name='date_until'>
                     </app-date-picker>
                   </div>
-
                   <div class="mr-3 mt-5 md:mt-0 lg:mt-3 xl:mt-0">
                     <app-input [group]="disabilityGroup.get('insured_data')" label="Nombre de la posición"
                       name="position" placeholder="Por ej.: Contador, Secretaria, etc..."></app-input>
@@ -232,7 +228,8 @@
                         label="Fecha de ingreso a la compañía" name='date'> </app-date-picker>
                     </div>
 
-                    <div class="mr-3 mt-4 lg:mt-3 xl:mt-3" style="margin-top: 15px;">
+                    <div *ngIf="disabilityGroup.get('insured_data').value.pension_radio === 'si'"
+                      class="mr-3 mt-4 lg:mt-3 xl:mt-3" style="margin-top: 15px;">
                       <app-input [group]="disabilityGroup.get('insured_data')"
                         label="Naturaleza de la pensión o ingreso" name="reason_pension" placeholder=""></app-input>
                     </div>
@@ -258,20 +255,19 @@
                         <app-radio-button [group]="disabilityGroup.get('insured_data')" [options]="YesNo"
                           name='pep_radio_insured' (selected)="selectChange($event)">
                         </app-radio-button>
-
                         <div class="-mt-8">
                           <small> (Sí la respuesta es si, favor completar formulario "Conozca a su Cliente") </small>
                         </div>
                       </div>
                     </div>
-
-                    <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2">
-                      <div class="mr-3 lg:mt-0 xl:mt-0">
+                    <div *ngIf="disabilityGroup.get('insured_data').value.pension_radio === 'si'"
+                      class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2">
+                      <div class="mr-3 mt-5 lg:mt-0 ">
                         <app-number-input [group]="disabilityGroup.get('insured_data')"
                           label="Monto Mensual del ingreso o pensión" name="amount_pension" placeholder="Por ej: 20000"
                           min="1"></app-number-input>
                       </div>
-                      <div class="mr-3 lg:mt-0 xl:mt-0">
+                      <div class="mr-3 mt-5 lg:mt-0 ">
                         <app-select name="currency_pension" [options]="currencyOptions"
                           [group]="disabilityGroup.get('insured_data')"></app-select>
                       </div>

@@ -266,7 +266,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
     lastName: ['', Validators.required],
     family: ['', Validators.required],
     weight: ['', Validators.required],
-    date: [new Date(), Validators.required],
+    date: ['', Validators.required],
     height: ['', Validators.required],
     sex: ['', Validators.required],
     id2: ['', Validators.required],
@@ -312,7 +312,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
   DateQuestionGroup = {
     question: ['', Validators.required],
     answer: [false, Validators.required],
-    date: [new Date(), Validators.required],
+    date: ['', Validators.required],
     description: ['', Validators.required],
   };
   pregnant = {
@@ -324,7 +324,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
   formGroupProcedure = {
     patientsName: ['', Validators.required],
     procedures: ['', Validators.required],
-    date: [new Date(), Validators.required],
+    date: ['', Validators.required],
     treatment: ['', Validators.required],
     duration: ['', Validators.required],
     time: ['', Validators.required],
@@ -395,12 +395,12 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
         firstName: ['', Validators.required],
         secondName: [''],
         lastName: ['', Validators.required],
-        date: [new Date(), Validators.required],
+        date: ['', Validators.required],
         sex: ['', Validators.required],
         nationality: ['', Validators.required],
         idType: ['', Validators.required],
         id2: ['', Validators.required],
-        age: ['', Validators.required],
+        age: [{ value: '', disabled: true }, Validators.required],
         weight: ['', Validators.required],
         height: ['', Validators.required],
         bmi: [{ value: '', disabled: true }, Validators.required],
@@ -495,7 +495,8 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
         personBenefited: this.fb.group({
           name: [''],
           family: [''],
-          id2: ['']
+          id2: [''],
+          idType: [''],
         })
       }),
       contingentBeneficiary: this.fb.group({
@@ -503,7 +504,8 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
         personBenefited: this.fb.group({
           name: [''],
           family: [''],
-          id2: ['']
+          id2: [''],
+          idType: [''],
         })
       }),
       comentary: [''],
@@ -552,6 +554,12 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
       this.getBmi(value, this.newRequest.get('person').value.weight);
     });
 
+    this.newRequest.get('person').get('date').valueChanges.subscribe(value => {
+      const timeDiff = Math.abs(Date.now() - new Date(value).getTime());
+      const age = Math.floor(timeDiff / (1000 * 3600 * 24) / 365.25);
+      this.newRequest.get('person').get('age').setValue(age);
+    });
+
 
   }
 
@@ -564,6 +572,31 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
 
     console.log(this.newRequest);
 
+  }
+
+  isBenefitMinorThan100(group: string, subgroup: string): boolean {
+    const form = this.newRequest.get(group).get(subgroup) as FormGroup;
+
+    if (this.benefitFor(form).total < 100 && this.benefitFor(form).isDirty) { return true; } else { return false; }
+  }
+
+  isBenefitMajorThan100(group: string, subgroup: string): boolean {
+    const form = this.newRequest.get(group).get(subgroup) as FormGroup;
+
+    if (this.benefitFor(form).total > 100 && this.benefitFor(form).isDirty) { return true; } else { return false; }
+  }
+
+  benefitFor(form: FormGroup) {
+    let total = 0;
+    let isDirty = false;
+
+    // tslint:disable-next-line: forin
+    for (const dpd in form.value) {
+      if (form.controls[dpd].dirty) { isDirty = true; }
+      total += form.value[dpd].quantity;
+
+    }
+    return { total, isDirty };
   }
 
   // setQuestionsA(){

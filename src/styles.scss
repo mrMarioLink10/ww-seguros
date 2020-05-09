@@ -597,3 +597,26 @@ button.active:focus {
 .mat-tab-body-content {
   padding-bottom: 10px !important;
 }
+
+::ng-deep .mat-tab-labels {
+  margin-top: 20px;
+  background-color: #F2F2F2;
+}
+
+.mat-tab-label-active {
+  color: #18446B !important;
+  font-weight: bold;
+  font-size: 13px;
+  opacity: 100 !important;
+}
+
+.mat-ink-bar {
+  background-color: #007DB7 !important;
+}
+
+.mat-tab-label {
+  color: #007DB7;
+  font-weight: bold;
+  font-size: 13px;
+  opacity: 100 !important;
+}

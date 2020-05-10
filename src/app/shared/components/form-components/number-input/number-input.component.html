@@ -2,6 +2,6 @@
   [formGroup]="group">
   <mat-label>{{label}}</mat-label>
   <input [formControlName]="name" matInput class="" type="number" [min]="min" [max]="max" [placeholder]="placeholder">
-  <mat-error *ngIf="group.get(name).touched && !group.get(name).valid">Lo que ha ingresado en
-    {{label}} es incorrecto o el campo está vacío. Recuerde no agregar caracteres especiales.</mat-error>
+  <mat-error *ngIf="group.get(name).touched && !group.get(name).valid">Este campo es obligatorio. Recuerde no agregar
+    caracteres especiales.</mat-error>
 </mat-form-field>

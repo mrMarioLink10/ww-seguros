@@ -387,6 +387,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
     this.newRequest = this.fb.group({
 
       NoC: ['', Validators.required],
+      isComplete: [false, Validators.required],
       deducibles: ['', Validators.required],
       payment: ['', Validators.required],
       plans: ['', Validators.required],

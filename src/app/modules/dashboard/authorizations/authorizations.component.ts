@@ -60,8 +60,10 @@ export class AuthorizationsComponent implements OnInit {
 
 	statusTypes = [
 		'Enviado',
+		'Incompleto',
+		'Completo',
+		'Cancelado',
 		'Reembolsado',
-		'Denegado'
 	];
 
 	fillType = 'nroPoliza';

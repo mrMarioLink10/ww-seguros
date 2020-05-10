@@ -408,6 +408,8 @@ export class LifeComponent implements OnInit, DoCheck {
 
     this.newRequest = this.fb.group({
       NoC: ['', Validators.required],
+      isComplete: [false, Validators.required],
+
       person: this.fb.group({
         firstName: ['', Validators.required],
         secondName: ['', Validators.required],

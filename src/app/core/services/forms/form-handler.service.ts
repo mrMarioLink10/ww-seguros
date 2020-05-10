@@ -124,6 +124,12 @@ export class FormHandlerService {
 		});
 
 		Dialog.afterClosed().subscribe((result) => {
+			if (form.valid) {
+				form.get('isComplete').setValue(true);
+			} else {
+				form.get('isComplete').setValue(false);
+			}
+
 			this.sendedForm = form.getRawValue();
 			const json = JSON.stringify(this.sendedForm);
 			console.log(json);

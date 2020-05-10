@@ -15,7 +15,7 @@ import { ClaimService } from './../new-claim/claim-types/claim/services/claim.se
 
 export class ClaimsListComponent implements OnInit {
 
-	displayedColumns: string[] = ['no', 'nombre', 'tipoSeguro', 'tipoServicio', 'autorizadoPor', 'fechaDiagnostico', 'estatus', 'acciones'];
+	displayedColumns: string[] = ['no', 'nombre', 'tipoServicio', 'autorizadoPor', 'fechaDiagnostico', 'estatus', 'acciones'];
 
 	dataSource;
 	@Input() claims: any[];

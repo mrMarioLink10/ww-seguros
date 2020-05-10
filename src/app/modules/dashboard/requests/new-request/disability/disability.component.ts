@@ -277,6 +277,8 @@ export class DisabilityComponent implements OnInit {
       // know_client: this.fb.group({}),
 
       num_financial_quote: ['', Validators.required],
+      isComplete: [false, Validators.required],
+
       // typeRequest:[''],
       insured_data: this.fb.group({
         name: ['', Validators.required],

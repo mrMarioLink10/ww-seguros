@@ -23,19 +23,21 @@ export interface Requests {
   styleUrls: ['./requests.component.scss']
 })
 export class RequestsComponent implements OnInit {
-  
+
   statusTypes = [
     'Enviado',
-    'Por Completar',
+    'Incompleto',
+    'Completo',
+    'Cancelado',
     'Adjuntar Expediente'
   ];
 
   fillType = 'tipoSeguro';
 
   fills = {
-    status: this.statusTypes, 
+    status: this.statusTypes,
     fillType: this.fillType
-  }; 
+  };
 
 
   newRequestButtonOptions: MatProgressButtonOptions = {
@@ -52,26 +54,26 @@ export class RequestsComponent implements OnInit {
     customClass: 'dashboard-button'
   };
 
-  displayedColumns: string[] = ['no', 'nombre', 'apellidos', 'dependientes', 'seguro', 'plan', 'fecha', 'monto','estatus', 'acciones'];
+  displayedColumns: string[] = ['no', 'nombre', 'apellidos', 'dependientes', 'seguro', 'plan', 'fecha', 'monto', 'estatus', 'acciones'];
 
   dataSource;
-  requests:any;
+  requests: any;
 
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
   constructor(private router: Router, private _requestsService: RequestsService) { }
 
-  getRequests(params:HttpParams = new HttpParams){
+  getRequests(params: HttpParams = new HttpParams) {
     let data;
     this._requestsService.getRequests(params)
-    .subscribe(res => {
-      data = res;
-      this.requests = data.data;
-      this.dataSource = new MatTableDataSource(this.requests);
-      this.dataSource.sort = this.sort;
-      this.dataSource.paginator = this.paginator;
-    }, err => console.log(err)); 
+      .subscribe(res => {
+        data = res;
+        this.requests = data.data;
+        this.dataSource = new MatTableDataSource(this.requests);
+        this.dataSource.sort = this.sort;
+        this.dataSource.paginator = this.paginator;
+      }, err => console.log(err));
   }
 
   ngOnInit() {

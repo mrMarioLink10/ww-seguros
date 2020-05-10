@@ -2,6 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { MatFormField } from '@angular/material';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { HttpParams } from '@angular/common/http';
+import { MatProgressButtonOptions } from 'mat-progress-buttons';
 
 @Component({
 	selector: 'app-filter',
@@ -9,31 +10,47 @@ import { HttpParams } from '@angular/common/http';
 	styleUrls: ['./filter.component.scss']
 })
 export class FilterComponent implements OnInit {
-	@Input() fills: fills;
+	@Input() fills: Fills;
 	@Output() public childEvent = new EventEmitter();
 	filterForm: FormGroup;
 	test = true;
 
-	constructor(private _fb: FormBuilder) {
+	searchButton: MatProgressButtonOptions = {
+		active: false,
+		text: 'Buscar',
+		buttonIcon: {
+			fontIcon: 'search'
+		},
+		buttonColor: 'accent',
+		barColor: 'primary',
+		raised: true,
+		stroked: false,
+		mode: 'indeterminate',
+		value: 0,
+		disabled: false,
+		fullWidth: true,
+		customClass: 'dashboard-button'
+	};
+
+	constructor(private fb: FormBuilder) {
 	}
 
 	sendFilterParamsToParent(filterParams: FormData) {
-		let from = this.setDateFormatToYYYMMDD(this.filterForm.get('from').value);
-		let to = this.setDateFormatToYYYMMDD(this.filterForm.get('to').value);
+		const from = this.setDateFormatToYYYMMDD(this.filterForm.get('from').value);
+		const to = this.setDateFormatToYYYMMDD(this.filterForm.get('to').value);
 
 		let params = new HttpParams();
-		params = params.append('name', this.filterForm.get('name').value)
+		params = params.append('name', this.filterForm.get('name').value);
 		params = params.append('status', this.filterForm.get('status').value);
 
-		if (this.fills.fillType == 'tipoSeguro') {
+		if (this.fills.fillType === 'tipoSeguro') {
 			params = params.append('tipoSeguro', this.filterForm.get('tipoSeguro').value);
-		}
-		else {
+		} else {
 			params = params.append('nroPoliza', this.filterForm.get('nroPoliza').value);
 		}
 
-		if (from) params = params.append('from', from);
-		if (to) params = params.append('to', to);
+		if (from) { params = params.append('from', from); }
+		if (to) { params = params.append('to', to); }
 
 		this.childEvent.emit(params);
 	}
@@ -41,9 +58,9 @@ export class FilterComponent implements OnInit {
 	setDateFormatToYYYMMDD(datePickerValue) {
 		let date;
 		if (datePickerValue) {
-			let yyyy = datePickerValue.getFullYear();
-			let mm = datePickerValue.getMonth() + 1;
-			let dd = datePickerValue.getDate();
+			const yyyy = datePickerValue.getFullYear();
+			const mm = datePickerValue.getMonth() + 1;
+			const dd = datePickerValue.getDate();
 			date = (`${yyyy}-${mm}-${dd}`);
 		}
 
@@ -51,8 +68,8 @@ export class FilterComponent implements OnInit {
 	}
 
 	ngOnInit() {
-		if (this.fills.fillType == 'tipoSeguro') {
-			this.filterForm = this._fb.group({
+		if (this.fills.fillType === 'tipoSeguro') {
+			this.filterForm = this.fb.group({
 				from: [''],
 				to: [''],
 				name: [''],
@@ -60,7 +77,7 @@ export class FilterComponent implements OnInit {
 				tipoSeguro: ['']
 			});
 		} else {
-			this.filterForm = this._fb.group({
+			this.filterForm = this.fb.group({
 				from: [''],
 				to: [''],
 				name: [''],
@@ -69,9 +86,18 @@ export class FilterComponent implements OnInit {
 			});
 		}
 	}
+
+	isXlSize(): boolean {
+		if (window.screen.width > 1280) { // 768px portrait
+			return true;
+		} else {
+			return false;
+		}
+	}
 }
 
-interface fills {
-	status: [],
-	fillType: string
+
+interface Fills {
+	status: [];
+	fillType: string;
 }

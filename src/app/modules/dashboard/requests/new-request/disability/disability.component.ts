@@ -484,14 +484,14 @@ export class DisabilityComponent implements OnInit {
         case 'pep_radio_insured':
           console.log(this.role);
 
-          if (this.role === 'WWA') { formInsured.addControl('knowYourClient', this.fb.group({})); }
+          if (this.role === 'WMA') { formInsured.addControl('knowYourClient', this.fb.group({})); }
           else if (this.role === 'WWS') { formInsured.addControl('knowYourCustomer', this.fb.group({})); }
           break;
 
         case 'pep_radio_holder':
           console.log(this.role);
 
-          if (this.role === 'WWA') { formHolder.addControl('knowYourClient', this.fb.group({})); }
+          if (this.role === 'WMA') { formHolder.addControl('knowYourClient', this.fb.group({})); }
           else if (this.role === 'WWS') { formHolder.addControl('knowYourCustomer', this.fb.group({})); }
           break;
 

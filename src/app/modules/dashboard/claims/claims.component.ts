@@ -32,11 +32,11 @@ export interface Claims {
 export class ClaimsComponent implements OnInit {
 
 	statusTypes = [
-		'Enviado',
-		'Incompleto',
-		'Completo',
-		'Cancelado',
-		'Reembolsado',
+		{ value: 0, view: 'Incompleto' },
+		{ value: 1, view: 'Completo' },
+		{ value: 2, view: 'Enviado' },
+		{ value: 3, view: 'Cancelado' },
+		{ value: 4, view: 'Adjuntar Expediente' },
 	];
 
 	fillType = 'nroPoliza';

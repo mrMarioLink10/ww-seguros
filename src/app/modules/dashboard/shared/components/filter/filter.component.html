@@ -23,7 +23,7 @@
       <mat-form-field color="accent" appearance="outline" class="w-full" style="font-size: small !important;">
         <mat-label>Estatus</mat-label>
         <mat-select formControlName="status">
-          <mat-option *ngFor="let stat of fills.status" [value]="stat">{{stat | titlecase}}</mat-option>
+          <mat-option *ngFor="let stat of fills.status" [value]="stat.value">{{stat.view | titlecase}}</mat-option>
         </mat-select>
       </mat-form-field>
     </div>

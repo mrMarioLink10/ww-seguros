@@ -21,7 +21,13 @@ export class UserService {
 
   getRoleCotizador() {
     const user = this.getUserInformation();
+    for (const key in user.resource_access.cotizador.roles) {
+      if (user.resource_access.cotizador.roles.hasOwnProperty(key)) {
+        if (user.resource_access.cotizador.roles[key] === 'WWS' || user.resource_access.cotizador.roles[key] === 'WMA') {
+          return user.resource_access.cotizador.roles[key];
+        }
+      }
+    }
 
-    return user.resource_access.cotizador.roles[0];
   }
 }

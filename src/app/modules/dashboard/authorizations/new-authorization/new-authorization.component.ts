@@ -53,16 +53,8 @@ export class NewAuthorizationComponent implements OnInit {
 				viewValue: 'Hospitalización'
 			},
 			{
-				value: 'cirugia_electiva',
-				viewValue: 'Cirugía Electiva'
-			},
-			{
 				value: 'ambulatorio',
 				viewValue: 'Ambulatorio'
-			},
-			{
-				value: 'estudios_especiales',
-				viewValue: 'Estudios Especiales'
 			}
 		]
 	};
@@ -79,10 +71,10 @@ export class NewAuthorizationComponent implements OnInit {
 			switch (event.name) {
 				case 'otroSeguro':
 					form.addControl('seguro', this.fb.group({
-						nombre: ['', Validators.required],
-						noPoliza: ['', Validators.required],
-						fecha: [new Date(), Validators.required],
-						suma: ['', [Validators.required, Validators.min(1)]],
+						nombre: [''],
+						noPoliza: [''],
+						fecha: [''],
+						suma: ['', Validators.min(0)],
 					}));
 					break;
 				default:
@@ -112,16 +104,17 @@ export class NewAuthorizationComponent implements OnInit {
 		}
 
 		this.authorization = this.fb.group({
-			fecha: [new Date(), Validators.required],
+			fecha: ['', Validators.required],
 			informacionAsegurado: this.fb.group({
-				nombre: ['', Validators.required],
+				nombres: ['', Validators.required],
+				apellidos: ['', Validators.required],
 				noPoliza: ['', Validators.required],
 				sexo: ['', Validators.required],
 				correo: ['', Validators.required],
 				direccion: ['', Validators.required],
-				telefonoResidencia: ['', Validators.required],
+				telefonoResidencia: [''],
 				telefonoCelular: ['', Validators.required],
-				telefonoOficina: ['', Validators.required],
+				telefonoOficina: [''],
 				otroSeguro: ['', Validators.required],
 			}),
 			informacionMedica: this.fb.group({
@@ -129,21 +122,21 @@ export class NewAuthorizationComponent implements OnInit {
 				condicion: ['', Validators.required],
 				procedimiento: ['', Validators.required],
 				primerosSintomas: this.fb.group({
-					fecha: [new Date(), Validators.required],
+					fecha: ['', Validators.required],
 					nombreMedico: ['', Validators.required],
 					direccion: ['', Validators.required],
 					telefono: ['', Validators.required],
 				}),
 				admision: this.fb.group({
-					fecha: [new Date(), Validators.required],
+					fecha: ['', Validators.required],
 					nombreMedico: ['', Validators.required],
 					direccion: ['', Validators.required],
 					telefono: ['', Validators.required],
 				}),
 				tiempoEstadia: ['', Validators.required],
 				nombreServicio: ['', Validators.required],
-				direccion: ['', Validators.required],
-				telefono: ['', Validators.required],
+				// direccion: ['', Validators.required],
+				// telefono: ['', Validators.required],
 			}),
 			isComplete: [false, Validators.required]
 
@@ -187,7 +180,7 @@ export class NewAuthorizationComponent implements OnInit {
 				form.addControl('seguro', this.fb.group({
 					nombre: ['', Validators.required],
 					noPoliza: ['', Validators.required],
-					fecha: [new Date(), Validators.required],
+					fecha: ['', Validators.required],
 					suma: ['', [Validators.required, Validators.min(1)]],
 				}));
 				this.authorization['controls'].informacionAsegurado['controls'].seguro['controls'].nombre.setValue(data.data.informacionAsegurado.seguro.nombre)

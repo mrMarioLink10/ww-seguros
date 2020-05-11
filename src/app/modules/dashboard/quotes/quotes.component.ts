@@ -24,8 +24,8 @@ export interface Quotes {
 export class QuotesComponent implements OnInit {
 
   statusTypes = [
-    'Enviado',
-    'Por Enviar'
+    { value: 2, view: 'Enviado' },
+    { value: 5, view: 'Por Enviar' },
   ];
 
   fillType = 'tipoSeguro';

@@ -25,11 +25,11 @@ export interface Requests {
 export class RequestsComponent implements OnInit {
 
   statusTypes = [
-    'Enviado',
-    'Incompleto',
-    'Completo',
-    'Cancelado',
-    'Adjuntar Expediente'
+    { value: 0, view: 'Incompleto' },
+    { value: 1, view: 'Completo' },
+    { value: 2, view: 'Enviado' },
+    { value: 3, view: 'Cancelado' },
+    { value: 4, view: 'Adjuntar Expediente' },
   ];
 
   fillType = 'tipoSeguro';

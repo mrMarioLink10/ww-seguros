@@ -29,7 +29,8 @@
     <div class="mr-3 col-span-1 xl:col-span-4">
       <mat-form-field color="accent" appearance="outline" class="w-full" style="font-size: small !important;">
         <mat-label>Desde</mat-label>
-        <input formControlName="from" matInput [matDatepicker]="initialDate" placeholder="25/12/2019">
+        <input formControlName="from" [max]="filterForm.get('to').value" matInput [matDatepicker]="initialDate"
+          placeholder="25/12/2019">
         <mat-datepicker-toggle matSuffix [for]="initialDate"></mat-datepicker-toggle>
         <mat-datepicker #initialDate></mat-datepicker>
       </mat-form-field>
@@ -37,7 +38,8 @@
     <div class="mr-3 col-span-1 xl:col-span-4">
       <mat-form-field color="accent" appearance="outline" class="w-full" style="font-size: small !important;">
         <mat-label>Hasta</mat-label>
-        <input formControlName="to" matInput [matDatepicker]="finalDate" placeholder="04/03/2020">
+        <input formControlName="to" [min]="filterForm.get('from').value" matInput [matDatepicker]="finalDate"
+          placeholder="04/03/2020">
         <mat-datepicker-toggle matSuffix [for]="finalDate"></mat-datepicker-toggle>
         <mat-datepicker #finalDate></mat-datepicker>
       </mat-form-field>

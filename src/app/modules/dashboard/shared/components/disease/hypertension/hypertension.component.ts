@@ -89,7 +89,7 @@ export class HypertensionComponent implements OnInit {
   addBasicControls() {
     this.form.addControl('personInfo', this.fb.group({
       name: ['', Validators.required],
-      age: ['', Validators.required],
+      age: ['', [Validators.required, Validators.min(1)]],
       doctorName: ['', Validators.required],
       healthCenter: ['', Validators.required],
       hcNumber: ['', Validators.required],

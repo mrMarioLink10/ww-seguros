@@ -94,14 +94,14 @@ export class ClaimComponent implements OnInit {
 				documentoIdentidad: ['', Validators.required],
 				nombre: ['', Validators.required],
 				numero: ['', Validators.required],
-				edad: ['', Validators.required],
+				edad: ['', [Validators.required, Validators.min(1)]],
 				tipo: ['', Validators.required]
 			}),
 			proveedor: this.fb.group({
 				nombre: ['', Validators.required],
 				correo: ['', Validators.required],
 				codigo: ['', Validators.required],
-				noContrato: ['', Validators.required]
+				noContrato: ['', [Validators.required, Validators.min(1)]]
 			}),
 			reclamados: this.fb.array([this.createReclaimed()]),
 			casoHospitalizacion: this.fb.group({
@@ -121,9 +121,9 @@ export class ClaimComponent implements OnInit {
 		return this.fb.group({
 			codigoCpt: ['', Validators.required],
 			procedimiento: ['', Validators.required],
-			montoReclamado: ['', Validators.required],
-			montoAutorizado: ['', Validators.required],
-			montoDeducible: ['', Validators.required]
+			montoReclamado: ['', [Validators.required, Validators.min(0)]],
+			montoAutorizado: ['', [Validators.required, Validators.min(0)]],
+			montoDeducible: ['', [Validators.required, Validators.min(0)]]
 		});
 	}
 

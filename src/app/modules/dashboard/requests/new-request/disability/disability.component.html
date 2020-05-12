@@ -5,8 +5,8 @@
       <div class="filter-title">Info. Inicio</div>
       <div class="mt-3 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4">
         <div class="mr-3">
-          <app-input [group]="disabilityGroup" label="No. Cotización" name="num_financial_quote" placeholder="13257">
-          </app-input>
+          <app-number-input [group]="disabilityGroup" label="No. de Cotización" name="num_financial_quote" placeholder="13257" min="1">
+          </app-number-input>
         </div>
         <div></div>
         <div></div>
@@ -201,7 +201,12 @@
                           name='pension_radio'>
                         </app-radio-button>
 
-                        <div class="-mt-8">
+                        <div *ngIf="!disabilityGroup.get('insured_data').get('pension_radio').valid && !disabilityGroup.get('insured_data').get('pension_radio').touched || disabilityGroup.get('insured_data').get('pension_radio').valid && disabilityGroup.get('insured_data').get('pension_radio').touched || disabilityGroup.get('insured_data').get('pension_radio').valid && !disabilityGroup.get('insured_data').get('pension_radio').touched" 
+                        class="-mt-8">
+                          <small> En caso de pensión por discapacidad, anexar reportes descriptivos </small>
+                        </div>
+                        <div *ngIf="!disabilityGroup.get('insured_data').get('pension_radio').valid && disabilityGroup.get('insured_data').get('pension_radio').touched"
+                        class="-mt-2">
                           <small> En caso de pensión por discapacidad, anexar reportes descriptivos </small>
                         </div>
                       </div>
@@ -255,7 +260,12 @@
                         <app-radio-button [group]="disabilityGroup.get('insured_data')" [options]="YesNo"
                           name='pep_radio_insured' (selected)="selectChange($event)">
                         </app-radio-button>
-                        <div class="-mt-8" style="max-width: 85%;">
+                        <div style="max-width: 85%;" *ngIf="!disabilityGroup.get('insured_data').get('pep_radio_insured').valid && !disabilityGroup.get('insured_data').get('pep_radio_insured').touched || disabilityGroup.get('insured_data').get('pep_radio_insured').valid && disabilityGroup.get('insured_data').get('pep_radio_insured').touched || disabilityGroup.get('insured_data').get('pep_radio_insured').valid && !disabilityGroup.get('insured_data').get('pep_radio_insured').touched" 
+                        class="-mt-8">
+                          <small> (Sí la respuesta es si, favor completar formulario "Conozca a su Cliente") </small>
+                        </div>
+                        <div style="max-width: 85%;" *ngIf="!disabilityGroup.get('insured_data').get('pep_radio_insured').valid && disabilityGroup.get('insured_data').get('pep_radio_insured').touched"
+                        class="-mt-2">
                           <small> (Sí la respuesta es si, favor completar formulario "Conozca a su Cliente") </small>
                         </div>
                       </div>
@@ -336,12 +346,12 @@
 
                 <div class="grid grid-cols-2 mt-8 sm:mt-5 md:mt-8 md:pt-2 lg:pt-0 lg:mt-8 xl:pt-0 xl:mt-6">
 
-                  <div class="-mr-1">
+                  <div class="-mr-6">
                     <app-number-input [group]="disabilityGroup.get('policyholder')" label="Ingreso Anual"
                       name="annual_income" placeholder="Por ej: 360000" min="1"></app-number-input>
                   </div>
 
-                  <div class="ml-2 mr-3">
+                  <div class="ml-8 mr-3">
                     <app-select [group]="disabilityGroup.get('policyholder')" name="currency"
                       [options]='currencyOptions'> </app-select>
                   </div>
@@ -349,7 +359,7 @@
                 </div>
 
                 <div
-                  class="mr-12 mt-6 lg:col-span-1 xl:col-span-2 sm:mr-3 sm:mt-3 md:mt-6 md:pt-1 lg:pt-0 lg:mt-8 xl:pt-0 xl:mt-6">
+                  class=" mt-6 lg:col-span-1 xl:col-span-2 mr-3 sm:mt-3 md:mt-6 md:pt-1 lg:pt-0 lg:mt-8 xl:pt-0 xl:mt-6">
                   <app-input label="Dirección Residencial" [group]="disabilityGroup.get('policyholder')" name="address"
                     placeholder="Por ej: Calle 3, Casa #22, avenida..."> </app-input>
                 </div>
@@ -391,10 +401,14 @@
                     <app-radio-button [group]="disabilityGroup.get('policyholder')" (selected)="selectChange($event)"
                       [options]="YesNo" name='pep_radio_holder'>
                     </app-radio-button>
-
-                    <div class="-mt-8">
-                      <small> (Sí la respuesta es si, favor completar formulario "Conozca a su Cliente") </small>
-                    </div>
+                    <div style="max-width: 85%;" *ngIf="!disabilityGroup.get('policyholder').get('pep_radio_holder').valid && !disabilityGroup.get('policyholder').get('pep_radio_holder').touched || disabilityGroup.get('policyholder').get('pep_radio_holder').valid && disabilityGroup.get('policyholder').get('pep_radio_holder').touched || disabilityGroup.get('policyholder').get('pep_radio_holder').valid && !disabilityGroup.get('policyholder').get('pep_radio_holder').touched" 
+                        class="-mt-8">
+                          <small> (Sí la respuesta es si, favor completar formulario "Conozca a su Cliente") </small>
+                        </div>
+                        <div style="max-width: 85%;" *ngIf="!disabilityGroup.get('policyholder').get('pep_radio_holder').valid && disabilityGroup.get('policyholder').get('pep_radio_holder').touched"
+                        class="-mt-2">
+                          <small> (Sí la respuesta es si, favor completar formulario "Conozca a su Cliente") </small>
+                        </div>
                   </div>
 
                 </div>
@@ -454,22 +468,22 @@
                   </div>
                   <!-- </div> -->
                   <div class="grid grid-cols-2">
-                    <app-input class="mr-3" label="Peso" name="weight" [group]="disabilityGroup.get('questions')">
-                    </app-input>
+                    <app-number-input class="mr-3" label="Peso" name="weight" [group]="disabilityGroup.get('questions')" min="1">
+                    </app-number-input>
                     <app-select class="mr-3" name="weightUnit" [options]="weightList"
                       [group]="disabilityGroup.get('questions')">
                     </app-select>
                   </div>
                   <div class="grid grid-cols-2">
-                    <app-input class="mr-3" label="Estatura" name="height" [group]="disabilityGroup.get('questions')">
-                    </app-input>
+                    <app-number-input class="mr-3" label="Estatura" name="height" [group]="disabilityGroup.get('questions')" min="1">
+                    </app-number-input>
                     <app-select class="mr-3" name="heightUnit" [options]="heightList"
                       [group]="disabilityGroup.get('questions')">
                     </app-select>
                   </div>
                 </div>
                 <!-- Bloque 2 -->
-                <div class="mt-4">
+                <div class="mt-8">
                   <label class="formulary-labels"> Favor marcar SÍ o NO según corresponda. </label>
                   <!-- Cuerpo -->
                   <div class="mt-10">
@@ -958,9 +972,9 @@
                             </app-input>
                           </div>
                           <div class="mr-3 mt-5 sm:mt-2 md:mt-0 lg:mt-0 xl:mt-0">
-                            <app-number-input label="Número de poliza" name='num'
-                              [group]="disabilityGroup.get('questions').get('questionnaire').get('insurance')" min="1">
-                            </app-number-input>
+                            <app-input label="Número de poliza" name='num'
+                              [group]="disabilityGroup.get('questions').get('questionnaire').get('insurance')" >
+                            </app-input>
                           </div>
                           <div class="mr-3 mt-5 sm:mt-3 md:mt-5 lg:mt-0 xl:mt-0">
                             <app-input label="Nombre del Asegurado" name='name'

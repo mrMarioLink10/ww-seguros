@@ -1,6 +1,6 @@
 <div class="p-6 pl-6 pr-6 xs:pr-6 sm:pr-6 md:pr-12 lg:pr-12 xl:pr-12 bg-white">
   <h3 class="uppercase dashboard-page-title pt-20">solicitud - Seguro de Vida</h3>
-  <div class="mt-6 p-3 pb-0 info-cot">
+  <div class="mt-6 p-3 pb-4 info-cot">
     <div class="filter-title">Info. Inicio</div>
     <div class="mt-3 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4">
       <!-- <div class="mr-3">
@@ -10,7 +10,7 @@
           <input matInput class="">
         </mat-form-field>
       </div> -->
-      <app-input class="mr-3" [group]="newRequest" label="No. de Cotización" name='NoC'></app-input>
+      <app-number-input class="mr-3" [group]="newRequest" label="No. de Cotización" name='NoC'></app-number-input>
 
       <div></div>
       <div></div>
@@ -57,7 +57,7 @@
               </div>
               <app-input class="mr-3 pt-21" [group]="newRequest.get('person')" label="Cédula/Pasaporte" name='id2'>
               </app-input>
-              <app-input class="mr-3 pt-21" [group]="newRequest.get('person')" label="Edad" name='age'></app-input>
+              <app-number-input class="mr-3 pt-21" [group]="newRequest.get('person')" label="Edad" name='age' min="1"></app-number-input>
               <div class="mr-3 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2">
                 <app-input class="mr-3 pt-21" [group]="newRequest.get('person')" label="Peso / Lbs" name='weight'>
                 </app-input>
@@ -65,9 +65,9 @@
                 </app-input>
               </div>
               <div class="mr-3 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2">
-                <app-input class="mr-3 pt-21" [group]="newRequest.get('person')" label="Ingreso Anual"
-                  name='annualIncome'>
-                </app-input>
+                <app-number-input class="mr-3 pt-21" [group]="newRequest.get('person')" label="Ingreso Anual"
+                  name='annualIncome' min="1">
+                </app-number-input>
                 <app-select class="mr-3 pt-21" id="status" [options]="currency" [group]="newRequest.get('person')">
                 </app-select>
               </div>
@@ -86,12 +86,12 @@
                   placeholder='Provincia/Distrito/Corregimiento/Urbanización/Calle/Casa o Apto./Edificio.'
                   name='direction'></app-input>
               </div>
-              <app-input class="mr-3 pt-21" [group]="newRequest.get('person')" label="Tel. Residencia" name='tel'>
-              </app-input>
-              <app-input class="mr-3 pt-21" [group]="newRequest.get('person')" label="Tel. Celular" name='cel'>
-              </app-input>
-              <app-input class="mr-3 pt-21" [group]="newRequest.get('person')" label="Tel. Oficina" name='officeTel'>
-              </app-input>
+              <app-number-input class="mr-3 pt-21" [group]="newRequest.get('person')" label="Tel. Residencia" name='tel'>
+              </app-number-input>
+              <app-number-input class="mr-3 pt-21" [group]="newRequest.get('person')" label="Tel. Celular" name='cel'>
+              </app-number-input>
+              <app-number-input class="mr-3 pt-21" [group]="newRequest.get('person')" label="Tel. Oficina" name='officeTel'>
+              </app-number-input>
               <app-input class="mr-3 pt-21" [group]="newRequest.get('person')" label="Correo" name='email'></app-input>
             </div>
           </ng-template>
@@ -165,13 +165,13 @@
                   placeholderM='Provincia/Distrito/Corregimiento/Urbanización/Calle/Casa o Apto./Edificio.'
                   name='direction'></app-input>
               </div>
-              <app-input class="mr-3 pt-21" [group]="newRequest.get('contractor')" label="Tel. Residencia" name='tel'>
-              </app-input>
-              <app-input class="mr-3 pt-21" [group]="newRequest.get('contractor')" label="Tel. Celular" name='cel'>
-              </app-input>
-              <app-input class="mr-3 pt-21" [group]="newRequest.get('contractor')" label="Tel. Oficina"
+              <app-number-input class="mr-3 pt-21" [group]="newRequest.get('contractor')" label="Tel. Residencia" name='tel'>
+              </app-number-input>
+              <app-number-input class="mr-3 pt-21" [group]="newRequest.get('contractor')" label="Tel. Celular" name='cel'>
+              </app-number-input>
+              <app-number-input class="mr-3 pt-21" [group]="newRequest.get('contractor')" label="Tel. Oficina"
                 name='officeTel'>
-              </app-input>
+              </app-number-input>
               <app-input class="mr-3 pt-21" [group]="newRequest.get('contractor')" label="Fax" name='fax'></app-input>
               <app-input class="mr-3 pt-21" [group]="newRequest.get('contractor')" label="Correo" name='email'>
               </app-input>
@@ -253,12 +253,12 @@
                   placeholderM='Provincia/Distrito/Corregimiento/Urbanización/Calle/Casa o Apto./Edificio.'
                   name='direction'></app-input>
               </div>
-              <app-input class="mr-3 pt-21" [group]="newRequest.get('payer')" label="Tel. Residencia" name='tel'>
-              </app-input>
-              <app-input class="mr-3 pt-21" [group]="newRequest.get('payer')" label="Tel. Celular" name='cel'>
-              </app-input>
-              <app-input class="mr-3 pt-21" [group]="newRequest.get('payer')" label="Tel. Oficina" name='officeTel'>
-              </app-input>
+              <app-number-input class="mr-3 pt-21" [group]="newRequest.get('payer')" label="Tel. Residencia" name='tel'>
+              </app-number-input>
+              <app-number-input class="mr-3 pt-21" [group]="newRequest.get('payer')" label="Tel. Celular" name='cel'>
+              </app-number-input>
+              <app-number-input class="mr-3 pt-21" [group]="newRequest.get('payer')" label="Tel. Oficina" name='officeTel'>
+              </app-number-input>
               <app-input class="mr-3 pt-21" [group]="newRequest.get('payer')" label="Fax" name='fax'></app-input>
               <app-input class="mr-3 pt-21" [group]="newRequest.get('payer')" label="Correo" name='email'></app-input>
             </div>
@@ -322,8 +322,8 @@
                 <app-input class="mr-3" [group]="newRequest.get('exposedPerson')" label="Cargo actual o anterior"
                   name='lastPosition'></app-input>
                 <div class="grid grid-cols-2">
-                  <app-input class="mr-3" [group]="newRequest.get('exposedPerson')" label="Tiempo" name="timeNumber">
-                  </app-input>
+                  <app-number-input class="mr-3" [group]="newRequest.get('exposedPerson')" label="Tiempo" name="timeNumber">
+                  </app-number-input>
                   <app-select class="mr-3" [options]="year" [group]="newRequest.get('exposedPerson')"></app-select>
                 </div>
                 <app-radio-button class="mr-3" title="Asegurado" [group]="newRequest.get('exposedPerson')"
@@ -355,9 +355,9 @@
               <app-select class="mr-3" [group]="newRequest.get('releventPlanInformation')" [options]="planTypes">
               </app-select>
               <div class="grid grid-cols-2">
-                <app-input class="mr-3" [group]="newRequest.get('releventPlanInformation')" label="Tiempo"
-                  name="timeAmount">
-                </app-input>
+                <app-number-input class="mr-3" [group]="newRequest.get('releventPlanInformation')" label="Tiempo"
+                  name="timeAmount" min="1">
+                </app-number-input>
                 <app-select class="mr-3" [options]="year" [group]="newRequest.get('releventPlanInformation')">
                 </app-select>
               </div>
@@ -438,9 +438,9 @@
                       <app-select class="mr-3" [options]="family"
                         [group]="newRequest.get('primaryBenefits').get('dependentsC').get(index.toString())">
                       </app-select>
-                      <app-input class="mr-3"
+                      <app-number-input class="mr-3" min="1" max="100"
                         [group]="newRequest.get('primaryBenefits').get('dependentsC').get(index.toString())"
-                        label="Cant. en %" name='quantity'></app-input>
+                        label="Cant. en %" name='quantity'></app-number-input>
                     </div>
 
                     <div class="pb-5">
@@ -497,9 +497,9 @@
                       <app-select class="mr-3" [options]="family"
                         [group]="newRequest.get('contingentBeneficiary').get('dependentsC').get(index.toString())">
                       </app-select>
-                      <app-input class="mr-3"
+                      <app-number-input class="mr-3" min="1" max="100"
                         [group]="newRequest.get('contingentBeneficiary').get('dependentsC').get(index.toString())"
-                        label="Cant. en %" name='quantity'></app-input>
+                        label="Cant. en %" name='quantity'></app-number-input>
                     </div>
 
                     <div class="pb-5">
@@ -543,10 +543,10 @@
               <div class='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-4'>
                 <app-select class="mr-3" [options]="family"
                   [group]="newRequest.get('contingentBeneficiary').get('bankTransfer')"></app-select>
-                <app-input class="mr-3" [group]="newRequest.get('contingentBeneficiary').get('bankTransfer')"
-                  label="Suma cedida" name="amount"></app-input>
-                <app-input class="mr-3" [group]="newRequest.get('contingentBeneficiary').get('bankTransfer')"
-                  label="Contacto" name="contact"></app-input>
+                <app-number-input class="mr-3" [group]="newRequest.get('contingentBeneficiary').get('bankTransfer')"
+                  label="Suma cedida" name="amount" min="0"></app-number-input>
+                <app-number-input class="mr-3" [group]="newRequest.get('contingentBeneficiary').get('bankTransfer')"
+                  label="Contacto" name="contact"></app-number-input>
                 <div></div>
               </div>
             </div>
@@ -578,14 +578,14 @@
                     <div class="mr-3">
                       <app-input
                         [group]="newRequest.get('contingentBeneficiary').get('anotherCoverages').get(i.toString())"
-                        name="policeNo" label="No. de Póliza">
+                        name="policeNo" label="No. de Póliza" >
                       </app-input>
                     </div>
                     <div class="mr-3">
-                      <app-input
+                      <app-number-input
                         [group]="newRequest.get('contingentBeneficiary').get('anotherCoverages').get(i.toString())"
-                        name="ADBQuantity" label="Cantidad ADB">
-                      </app-input>
+                        name="ADBQuantity" label="Cantidad ADB" min="0">
+                      </app-number-input>
                     </div>
                     <div class="mr-3">
                       <app-date-picker
@@ -628,14 +628,14 @@
                     <div class="mr-3">
                       <app-input
                         [group]="newRequest.get('contingentBeneficiary').get('changingCoverages').get(i.toString())"
-                        name="policeNo" label="No. de Póliza">
+                        name="policeNo" label="No. de Póliza" >
                       </app-input>
                     </div>
                     <div class="mr-3">
-                      <app-input
+                      <app-number-input
                         [group]="newRequest.get('contingentBeneficiary').get('changingCoverages').get(i.toString())"
-                        name="ADBQuantity" label="Cantidad ADB">
-                      </app-input>
+                        name="ADBQuantity" label="Cantidad ADB" min="0">
+                      </app-number-input>
                     </div>
                     <div class="mr-3">
                       <app-date-picker
@@ -686,7 +686,7 @@
                   </app-radio-button>
                 </div>
                 <div *ngIf="question.name === 'consumeAlcohol'">
-                  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-4">
+                  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-4 mb-3">
                     <app-input class="mr-3" [group]="newRequest.get('generalInformation').get('alcohol')"
                       name="quantity" label="Cantidad">
                     </app-input>
@@ -826,7 +826,7 @@
                 <div
                   *ngIf="question.name !== 'haveHadWeightChanges' && question.name !== 'isWomen' && question.name !== 'listDoctors'">
                   <div *ngFor="let medic of this[question.array].controls; let i = index"
-                    class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
+                    class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4 lg:mb-8">
                     <app-input class="mr-3"
                       [group]="newRequest.get('medicalHistory').get('informations').get(question.group).get(i.toString())"
                       name="condition" label="Afección">
@@ -844,10 +844,10 @@
                       name="date" label="Fecha">
                     </app-date-picker>
                     <div class="grid grid-cols-2 mr-3">
-                      <app-input class="mr-3"
+                      <app-number-input class="mr-3"
                         [group]="newRequest.get('medicalHistory').get('informations').get(question.group).get(i.toString())"
-                        name="duration" label="Duración">
-                      </app-input>
+                        name="duration" label="Duración" min="1">
+                      </app-number-input>
                       <app-select [options]="year"
                         [group]="newRequest.get('medicalHistory').get('informations').get(question.group).get(i.toString())">
                       </app-select>
@@ -916,7 +916,7 @@
                   <div
                     *ngIf="newRequest.get('medicalHistory').get('informations').get('womenInformation').value.haveDisorder === 'si'">
                     <div *ngFor="let medic of womenDisordersList.controls; let i = index"
-                      class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
+                      class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4 lg:mb-8">
                       <app-input class="mr-3"
                         [group]="newRequest.get('medicalHistory').get('informations').get('womenInformation').get('disorders').get(i.toString())"
                         name="condition" label="Afección">
@@ -934,10 +934,10 @@
                         name="date" label="Fecha">
                       </app-date-picker>
                       <div class="grid grid-cols-2 mr-3">
-                        <app-input class="mr-3"
+                        <app-number-input class="mr-3"
                           [group]="newRequest.get('medicalHistory').get('informations').get('womenInformation').get('disorders').get(i.toString())"
-                          name="duration" label="Duración">
-                        </app-input>
+                          name="duration" label="Duración" min="1">
+                        </app-number-input>
                         <app-select [options]="year"
                           [group]="newRequest.get('medicalHistory').get('informations').get('womenInformation').get('disorders').get(i.toString())">
                         </app-select>
@@ -976,12 +976,12 @@
                   </div>
                   <div
                     *ngIf="newRequest.get('medicalHistory').get('informations').get('womenInformation').value.isPregnant === 'si'">
-                    <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
+                    <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4 mb-8">
                       <div class="grid grid-cols-2 mr-3">
-                        <app-input class="mr-3"
+                        <app-number-input class="mr-3"
                           [group]="newRequest.get('medicalHistory').get('informations').get('womenInformation').get('pregnantInformation')"
-                          name="quantity" label="Cantidad">
-                        </app-input>
+                          name="quantity" label="Cantidad" min="1">
+                        </app-number-input>
                         <app-select [options]="year"
                           [group]="newRequest.get('medicalHistory').get('informations').get('womenInformation').get('pregnantInformation')">
                         </app-select>
@@ -1070,9 +1070,9 @@
                 </app-radio-button>
                 <div class="grid grid-cols-2"
                   *ngIf="newRequest.get('agentReport').value.connectionType === 'cliente' || newRequest.get('agentReport').value.connectionType === 'amigo'">
-                  <app-input class="mr-3" [group]="newRequest.get('agentReport').get('connectionTypeInfo')"
-                    label="Tiempo" name="amount">
-                  </app-input>
+                  <app-number-input class="mr-3" [group]="newRequest.get('agentReport').get('connectionTypeInfo')"
+                    label="Tiempo" name="amount" min="1">
+                  </app-number-input>
                   <app-select class="mr-3" [options]="year"
                     [group]="newRequest.get('agentReport').get('connectionTypeInfo')"></app-select>
                 </div>
@@ -1099,7 +1099,7 @@
                   label="Nombre del cónyuge" class="mr-3">
                 </app-input>
                 <app-number-input [group]="newRequest.get('agentReport').get('marriedInformation')"
-                  name="spouseInsuranceAmount" label="Cantidad seguros del cónyuge" class="mr-3">
+                  name="spouseInsuranceAmount" label="Cantidad seguros del cónyuge" class="mr-3" min="0">
                 </app-number-input>
               </div>
               <hr class=" w-full mb-6 ww-divider">
@@ -1118,7 +1118,7 @@
                     <app-select class="mr-3" [options]="family"
                       [group]="newRequest.get('agentReport').get('familyInsurances').get(i.toString())"></app-select>
                     <app-number-input [group]="newRequest.get('agentReport').get('familyInsurances').get(i.toString())"
-                      name="amount" label="Cantidad de seguros" class="mr-3">
+                      name="amount" label="Cantidad de seguros" class="mr-3" min="0">
                     </app-number-input>
                     <div *ngIf="familyRelationshipInsurances.length > 1"
                       [ngClass]="{'': familyRelationshipInsurances.length === 1, 'col-span-1': familyRelationshipInsurances.length > 1} ">
@@ -1143,15 +1143,15 @@
                 monto correspondiente al Propuesto Asegurado
               </div>
               <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
-                <app-input [group]="newRequest.get('agentReport').get('amountProposed')" name="approximateNetWorth"
-                  label="Valor Neto aproximado de Patrimonio" class="mr-3">
-                </app-input>
-                <app-input [group]="newRequest.get('agentReport').get('amountProposed')" name="accruedIncome"
-                  label="Ingreso Devengado" class="mr-3">
-                </app-input>
-                <app-input [group]="newRequest.get('agentReport').get('amountProposed')" name="unearnedIncome"
-                  label="Ingreso No Devengado" class="mr-3">
-                </app-input>
+                <app-number-input [group]="newRequest.get('agentReport').get('amountProposed')" name="approximateNetWorth"
+                  label="Valor Neto aproximado de Patrimonio" class="mr-3" min="0">
+                </app-number-input>
+                <app-number-input [group]="newRequest.get('agentReport').get('amountProposed')" name="accruedIncome"
+                  label="Ingreso Devengado" class="mr-3" min="0">
+                </app-number-input>
+                <app-number-input [group]="newRequest.get('agentReport').get('amountProposed')" name="unearnedIncome"
+                  label="Ingreso No Devengado" class="mr-3" min="0">
+                </app-number-input>
                 <app-input [group]="newRequest.get('agentReport').get('amountProposed')" name="occupation"
                   label="Ocupación en los últimos 5 años" class="mr-3">
                 </app-input>

@@ -10,8 +10,8 @@
           </app-input>
         </div>
         <div class="mr-3">
-          <app-input [group]="form" label="Edad" name='edad' placeholder="34" type="number">
-          </app-input>
+          <app-number-input [group]="form" label="Edad" name='edad' placeholder="34" min="1">
+          </app-number-input>
         </div>
         <div class="mr-3">
           <app-input [group]="form" label="Nombre del Médico Tratante" name='nombreMedico'
@@ -24,8 +24,8 @@
           </app-input>
         </div>
         <div class="mr-3">
-          <app-input [group]="form" label="Teléfono del Centro" name='telefonoCentro' placeholder="8207776677">
-          </app-input>
+          <app-number-input [group]="form" label="Teléfono del Centro" name='telefonoCentro' placeholder="8207776677">
+          </app-number-input>
         </div>
       </div>
     </div>
@@ -163,7 +163,7 @@
         <div *ngIf="form.get('haveSmokingHabits').value === 'si'"
           class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
           <div class="mr-3">
-            <app-input [group]="form.get('smokingHabits')" name="cantidad" label="Cantidad por día" type="number">
+            <app-input [group]="form.get('smokingHabits')" name="cantidad" label="Cantidad por día" type="number" min="1">
             </app-input>
           </div>
         </div>

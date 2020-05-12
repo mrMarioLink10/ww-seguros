@@ -120,7 +120,7 @@ export class CardiovascularComponent implements OnInit {
 
 				case 'haveSmokingHabits':
 					this.form.addControl('smokingHabits', this.fb.group({
-						cantidad: ['', Validators.required]
+						cantidad: ['', [Validators.required, Validators.min(1)]]
 					}));
 					break;
 
@@ -276,7 +276,7 @@ export class CardiovascularComponent implements OnInit {
 
 	addBasicControls() {
 		this.form.addControl('nombre', this.fb.control('', Validators.required));
-		this.form.addControl('edad', this.fb.control('', Validators.required));
+		this.form.addControl('edad', this.fb.control('', [Validators.required, Validators.min(1)]));
 		this.form.addControl('nombreMedico', this.fb.control('', Validators.required));
 		this.form.addControl('centroSalud', this.fb.control('', Validators.required));
 		this.form.addControl('telefonoCentro', this.fb.control('', Validators.required));

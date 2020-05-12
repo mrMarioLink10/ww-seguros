@@ -137,7 +137,7 @@ export class MusculoskeletalComponent implements OnInit {
 
   episodeGroup ={
     date: [new Date(), Validators.required],
-    duration: ['', Validators.required],
+    duration: ['', [Validators.required, Validators.min(1)]],
     DayMonthYear: ['', Validators.required]
   }
 

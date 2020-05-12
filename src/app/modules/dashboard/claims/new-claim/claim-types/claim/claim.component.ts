@@ -7,6 +7,8 @@ import { ClaimModel } from '../models/claim';
 import { FieldConfig } from '../../../../../../shared/components/form-components/models/field-config';
 import { FormHandlerService } from '../../../../../../core/services/forms/form-handler.service';
 import { ClaimService } from './../claim/services/claim.service'
+import { Observable } from 'rxjs';
+import { DialogService } from '../../../../../../core/services/dialog/dialog.service';
 
 @Component({
 	selector: 'app-claim',
@@ -60,7 +62,12 @@ export class ClaimComponent implements OnInit {
 		]
 	};
 
-	constructor(private fb: FormBuilder, public dialog: MatDialog, public formHandler: FormHandlerService, private claim: ClaimService) { }
+	constructor(
+		private fb: FormBuilder,
+		public dialog: MatDialog,
+		public formHandler: FormHandlerService,
+		private claim: ClaimService,
+		private dialogModal: DialogService) { }
 
 	ID = null;
 	ngOnInit() {
@@ -137,6 +144,13 @@ export class ClaimComponent implements OnInit {
 
 	sendClaim() {
 		this.formHandler.sendForm(this.claimForm, 'claims-reclaim');
+	}
+
+	canDeactivate(): Observable<boolean> | boolean {
+
+		if (this.claimForm.dirty) {
+			return this.dialogModal.canDeactive();
+		}
 	}
 
 	getData(id) {

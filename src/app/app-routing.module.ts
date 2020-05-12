@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { DashboardLayoutComponent } from './modules/dashboard/shared/layouts/dashboard-layout/dashboard-layout.component';
 import { LoginComponent } from './modules/auth/login/login.component';
 import { AppAuthGuard } from './core/guards/app-auth.guard';
+import { CanExitGuard } from './core/guards/can-exit.guard';
 
 const routes: Routes = [
 	{
@@ -21,6 +22,6 @@ const routes: Routes = [
 @NgModule({
 	imports: [RouterModule.forRoot(routes)],
 	exports: [RouterModule],
-	providers: [AppAuthGuard]
+	providers: [AppAuthGuard, CanExitGuard]
 })
 export class AppRoutingModule { }

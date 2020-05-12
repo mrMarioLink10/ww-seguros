@@ -32,52 +32,27 @@ keycloak.init({ onLoad: 'login-required' }).then((auth) => {
   platformBrowserDynamic().bootstrapModule(AppModule)
     .catch(err => console.error(err));
 
-
   localStorage.setItem('ang-token', keycloak.token);
   localStorage.setItem('ang-refresh-token', keycloak.refreshToken);
   localStorage.setItem('user-information', JSON.stringify(keycloak.tokenParsed));
 
   setInterval(() => {
+
     keycloak.updateToken(300).then((refreshed) => {
       if (refreshed) {
-        console.log('Token was successfully refreshed , valid for '
-          + Math.round(keycloak.tokenParsed.exp + keycloak.timeSkew - new Date().getTime() / 1000) + ' seconds' + refreshed);
+        console.log('No te mentire, se ve muy fresco el pana token, se vence en: '
+          + Math.round(keycloak.tokenParsed.exp + keycloak.timeSkew - new Date().getTime() / 1000) + ' segundos');
+        localStorage.setItem('ang-token', keycloak.token);
+
       } else {
-        console.warn('Token not refreshed, valid for '
-          + Math.round(keycloak.tokenParsed.exp + keycloak.timeSkew - new Date().getTime() / 1000) + ' seconds');
+        console.warn('Token no refrescado, token no refrescado, donde estan sus padres? Se vence en: '
+          + Math.round(keycloak.tokenParsed.exp + keycloak.timeSkew - new Date().getTime() / 1000) + ' segundos');
       }
     }).catch(() => {
-      // window.location.reload();
       console.error('Failed to refresh token');
-      // tslint:disable-next-line: max-line-length
     });
 
   }, 180000);
-
-  setInterval(() => {
-    console.log(Math.round(keycloak.tokenParsed.exp + keycloak.timeSkew - new Date().getTime() / 1000) + ' seconds');
-
-
-  }, 2000);
-  // setTimeout(() => {
-  //   keycloak.updateToken(480).then((refreshed) => {
-  //     if (refreshed) {
-  //       console.log('Token was successfully refreshed' + refreshed);
-  //       alert('Token was successfully refreshed' + refreshed);
-  //     } else {
-  //       console.warn('Token not refreshed, valid for '
-  //         + Math.round(keycloak.tokenParsed.exp + keycloak.timeSkew - new Date().getTime() / 1000) + ' seconds');
-  //       alert('Token not refreshed, valid for '
-  //         + Math.round(keycloak.tokenParsed.exp + keycloak.timeSkew - new Date().getTime() / 1000) + ' seconds');
-  //     }
-  //   }).catch(() => {
-  //     // window.location.reload();
-  //     console.error('Failed to refresh token');
-  //     // tslint:disable-next-line: max-line-length
-  //   });
-
-
-  // }, 300000);
 
 }).catch((err) => {
   console.log(err);

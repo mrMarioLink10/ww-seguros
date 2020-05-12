@@ -18,15 +18,13 @@
 
       <ng-template #formTemplate>
         <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
+          <app-input class="mr-3" [group]="authorization.get('informacionAsegurado')" label="Nombres" name='nombres'>
+          </app-input>
+          <app-input class="mr-3" [group]="authorization.get('informacionAsegurado')" label="Apellidos"
+            name='apellidos'></app-input>
           <div class="mr-3">
-            <app-input [group]="authorization.get('informacionAsegurado')" label="Nombre completo asegurado"
-              name='nombre' placeholder="Juan Melo de los Santos"></app-input>
-          </div>
-          <div class="mr-3">
-
             <app-input [group]="authorization.get('informacionAsegurado')" label="No. póliza" name='noPoliza'
               placeholder="12345678"></app-input>
-
           </div>
           <div class="mr-3">
             <app-radio-button [group]="authorization.get('informacionAsegurado')" [options]="generos" name="sexo">
@@ -156,15 +154,15 @@
               name="tiempoEstadia">
             </app-input>
             <div class="my-4">
-              <label> <strong> Proveedor del servicio: </strong> </label>
+              <label> <strong> Centro del servicio: </strong> </label>
             </div>
             <app-input [group]="authorization.get('informacionMedica')" label="Nombre" name="nombreServicio">
             </app-input>
-            <app-input [group]="authorization.get('informacionMedica')" label="Dirección" name="direccion">
+            <!-- <app-input [group]="authorization.get('informacionMedica')" label="Dirección" name="direccion">
             </app-input>
 
-            <app-number-input [group]="authorization.get('informacionMedica')" label="Teléfono" name='telefono' placeholder="">
-            </app-number-input>
+            <app-input [group]="authorization.get('informacionMedica')" label="Teléfono" name='telefono' placeholder="">
+            </app-input> -->
           </div>
         </div>
       </ng-template>

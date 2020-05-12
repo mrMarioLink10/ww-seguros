@@ -131,11 +131,13 @@
         <div formGroupName="casoHospitalizacion"
           class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5">
           <div class="mr-0 md:mr-3 lg:mr-3 xl:mr-3">
-            <app-date-picker label="Fecha de Ingreso" name="ingreso" [group]="claimForm.get('casoHospitalizacion')">
+            <app-date-picker [max]="claimForm.get('casoHospitalizacion').value.egreso" label="Fecha de Ingreso"
+              name="ingreso" [group]="claimForm.get('casoHospitalizacion')">
             </app-date-picker>
           </div>
           <div>
-            <app-date-picker label="Fecha de Egreso" name="egreso" [group]="claimForm.get('casoHospitalizacion')">
+            <app-date-picker [min]="claimForm.get('casoHospitalizacion').value.ingreso" label="Fecha de Egreso"
+              name="egreso" [group]="claimForm.get('casoHospitalizacion')">
             </app-date-picker>
           </div>
         </div>

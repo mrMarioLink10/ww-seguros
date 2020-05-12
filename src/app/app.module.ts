@@ -16,6 +16,8 @@ import { RequestHandlerInterceptor } from './core/interceptor/request-handler.in
 import { SharedModule } from './modules/dashboard/shared/shared.module';
 import { GlobalSharedModule } from './shared/global-shared.module';
 import { MatTableModule } from '@angular/material/table';
+import { FormsModule } from '@angular/forms';
+import { MatProgressButtonsModule } from 'mat-progress-buttons';
 
 const keycloakService = new KeycloakService();
 
@@ -30,6 +32,8 @@ const keycloakService = new KeycloakService();
 		GlobalSharedModule,
 		MatTableModule,
 		MatSortModule,
+		FormsModule,
+		MatProgressButtonsModule
 	],
 	providers: [
 		{ provide: MatPaginatorIntl, useClass: MatPaginatorIntlCro },

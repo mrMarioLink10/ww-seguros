@@ -103,7 +103,8 @@ export class ClaimComponent implements OnInit {
 			}),
 			observaciones: this.fb.group({
 				observacion: ['']
-			})
+			}),
+			isComplete: [false, Validators.required]
 		});
 
 		this.reclaimedList = this.claimForm.get('reclamados') as FormArray;

@@ -53,16 +53,8 @@ export class NewAuthorizationComponent implements OnInit {
 				viewValue: 'Hospitalización'
 			},
 			{
-				value: 'cirugia_electiva',
-				viewValue: 'Cirugía Electiva'
-			},
-			{
 				value: 'ambulatorio',
 				viewValue: 'Ambulatorio'
-			},
-			{
-				value: 'estudios_especiales',
-				viewValue: 'Estudios Especiales'
 			}
 		]
 	};
@@ -79,10 +71,10 @@ export class NewAuthorizationComponent implements OnInit {
 			switch (event.name) {
 				case 'otroSeguro':
 					form.addControl('seguro', this.fb.group({
-						nombre: ['', Validators.required],
-						noPoliza: ['', Validators.required],
-						fecha: [new Date(), Validators.required],
-						suma: ['', [Validators.required, Validators.min(0)]],
+						nombre: [''],
+						noPoliza: [''],
+						fecha: [''],
+						suma: ['', Validators.min(0)],
 					}));
 					break;
 				default:
@@ -99,29 +91,30 @@ export class NewAuthorizationComponent implements OnInit {
 		}
 	}
 
-	ID=null;
+	ID = null;
 	ngOnInit() {
 
-		this.ID=this.newAuthorization.id;
-		if(this.ID!=null){
-			console.log("El ID es "+ this.ID);
+		this.ID = this.newAuthorization.id;
+		if (this.ID != null) {
+			console.log("El ID es " + this.ID);
 			this.getData(this.ID)
 		}
-		else if(this.ID==null){
+		else if (this.ID == null) {
 			console.log("ID esta vacio")
 		}
-		
+
 		this.authorization = this.fb.group({
-			fecha: [new Date(), Validators.required],
+			fecha: ['', Validators.required],
 			informacionAsegurado: this.fb.group({
-				nombre: ['', Validators.required],
+				nombres: ['', Validators.required],
+				apellidos: ['', Validators.required],
 				noPoliza: ['', Validators.required],
 				sexo: ['', Validators.required],
 				correo: ['', Validators.required],
 				direccion: ['', Validators.required],
-				telefonoResidencia: ['', Validators.required],
+				telefonoResidencia: [''],
 				telefonoCelular: ['', Validators.required],
-				telefonoOficina: ['', Validators.required],
+				telefonoOficina: [''],
 				otroSeguro: ['', Validators.required],
 			}),
 			informacionMedica: this.fb.group({
@@ -129,27 +122,29 @@ export class NewAuthorizationComponent implements OnInit {
 				condicion: ['', Validators.required],
 				procedimiento: ['', Validators.required],
 				primerosSintomas: this.fb.group({
-					fecha: [new Date(), Validators.required],
+					fecha: ['', Validators.required],
 					nombreMedico: ['', Validators.required],
 					direccion: ['', Validators.required],
 					telefono: ['', Validators.required],
 				}),
 				admision: this.fb.group({
-					fecha: [new Date(), Validators.required],
+					fecha: ['', Validators.required],
 					nombreMedico: ['', Validators.required],
 					direccion: ['', Validators.required],
 					telefono: ['', Validators.required],
 				}),
 				tiempoEstadia: ['', Validators.required],
 				nombreServicio: ['', Validators.required],
-				direccion: ['', Validators.required],
-				telefono: ['', Validators.required],
-			})
+				// direccion: ['', Validators.required],
+				// telefono: ['', Validators.required],
+			}),
+			isComplete: [false, Validators.required]
+
 		});
 	}
 
-	getData(id){
-		this.newAuthorization.returnData(id).subscribe(data=>{
+	getData(id) {
+		this.newAuthorization.returnData(id).subscribe(data => {
 			// console.log(data.data.informacionAsegurado.nombre)
 			// console.log(data)
 			// console.log(data.data.informacionMedica.primerosSintomas.nombreMedico);
@@ -180,13 +175,13 @@ export class NewAuthorizationComponent implements OnInit {
 			this.authorization['controls'].informacionMedica['controls'].direccion.setValue(data.data.informacionMedica.direccion)
 			this.authorization['controls'].informacionMedica['controls'].telefono.setValue(data.data.informacionMedica.telefono)
 
-			if(data.data.informacionAsegurado.otroSeguro=="si"){
+			if (data.data.informacionAsegurado.otroSeguro == "si") {
 				const form = this.authorization.get('informacionAsegurado') as FormGroup;
 				form.addControl('seguro', this.fb.group({
 					nombre: ['', Validators.required],
 					noPoliza: ['', Validators.required],
-					fecha: [new Date(), Validators.required],
-					suma: ['', [Validators.required, Validators.min(0)]],
+					fecha: ['', Validators.required],
+					suma: ['', [Validators.required, Validators.min(1)]],
 				}));
 				this.authorization['controls'].informacionAsegurado['controls'].seguro['controls'].nombre.setValue(data.data.informacionAsegurado.seguro.nombre)
 				this.authorization['controls'].informacionAsegurado['controls'].seguro['controls'].noPoliza.setValue(data.data.informacionAsegurado.seguro.noPoliza)
@@ -195,7 +190,7 @@ export class NewAuthorizationComponent implements OnInit {
 
 				console.log(JSON.stringify(this.authorization.value))
 			}
-			else if (data.data.informacionAsegurado.otroSeguro=="no"){
+			else if (data.data.informacionAsegurado.otroSeguro == "no") {
 				console.log("No hay que crear el control")
 			}
 			// console.log(data.data.id)
@@ -214,7 +209,7 @@ export class NewAuthorizationComponent implements OnInit {
 			formID1.addControl('id', this.fb.control(data.data.id, Validators.required));
 			// formID1.addControl('informacionAseguradoId', this.fb.control(data.data.informacionAseguradoId, Validators.required));
 			// formID1.addControl('informacionMedicaId', this.fb.control(data.data.informacionMedicaId, Validators.required));
-			
+
 			const formID2 = this.authorization.get('informacionAsegurado') as FormGroup;
 			formID2.addControl('id', this.fb.control(data.data.informacionAsegurado.id, Validators.required));
 
@@ -225,8 +220,8 @@ export class NewAuthorizationComponent implements OnInit {
 
 			const formID4 = this.authorization.get('informacionMedica').get('admision') as FormGroup;
 			formID4.addControl('id', this.fb.control(data.data.informacionMedica.admision.id, Validators.required));
-	
-			if(this.authorization.get('informacionAsegurado').get('seguro')){
+
+			if (this.authorization.get('informacionAsegurado').get('seguro')) {
 				const formID5 = this.authorization.get('informacionAsegurado').get('seguro') as FormGroup;
 				formID5.addControl('id', this.fb.control(data.data.informacionAsegurado.seguro.id, Validators.required));
 			}
@@ -236,7 +231,7 @@ export class NewAuthorizationComponent implements OnInit {
 
 			console.log(JSON.stringify(this.authorization.value))
 		})
-		this.newAuthorization.id=null;
-		console.log("this.newAuthorization.id es igual a "+this.newAuthorization.id);
-	  }
+		this.newAuthorization.id = null;
+		console.log("this.newAuthorization.id es igual a " + this.newAuthorization.id);
+	}
 }

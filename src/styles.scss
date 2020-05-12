@@ -475,6 +475,43 @@ body {
   border: #E5E5E5 1px solid;
 }
 
+.small-search-button {
+  width: 46px !important;
+  height: 46px !important;
+  background-color: #007DB7 !important;
+  border-radius: 50% !important;
+  outline: none !important;
+  outline-style: none !important
+}
+
+button:focus,
+button:active:focus,
+button.active:focus {
+  outline: none !important;
+  outline-style: none !important;
+}
+
+*:focus {
+  outline: none !important;
+  border: 0 !important;
+}
+
+.nofocus:focus {
+  outline: none !important;
+  outline-style: none !important;
+}
+
+.big-search-button {
+  background: #007DB7 !important;
+  color: white !important;
+  border: 2px solid #007DB7 !important;
+  border-radius: 35px !important;
+  font-size: 12px !important;
+  padding: 3px 39.5px !important;
+  font-weight: 900 !important;
+  width: 100% !important;
+}
+
 /** OVERWRITING ANOTHER CLASSES */
 /** OVERWRITING ANOTHER CLASSES */
 /** OVERWRITING ANOTHER CLASSES */
@@ -599,6 +636,11 @@ button.active:focus {
 }
 
 ::ng-deep .mat-tab-labels {
+  margin-top: 20px;
+  background-color: #F2F2F2;
+}
+
+.mat-tab-labels {
   margin-top: 20px;
   background-color: #F2F2F2;
 }

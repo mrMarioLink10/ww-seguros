@@ -3,6 +3,7 @@ import { MatProgressButtonOptions } from 'mat-progress-buttons';
 import { MatTableDataSource, MatSort, MatPaginator } from '@angular/material';
 import { QuotesService } from '../services/quotes/quotes.service';
 import { HttpParams } from '@angular/common/http';
+import { UserService } from '../../../core/services/user/user.service';
 
 export interface Quotes {
   noCotizacion: number;
@@ -24,8 +25,8 @@ export interface Quotes {
 export class QuotesComponent implements OnInit {
 
   statusTypes = [
-    'Enviado',
-    'Por Enviar'
+    { value: 2, view: 'Enviado' },
+    { value: 5, view: 'Por Enviar' },
   ];
 
   fillType = 'tipoSeguro';
@@ -59,6 +60,7 @@ export class QuotesComponent implements OnInit {
 
   constructor(
     private quotesService: QuotesService,
+    private userService: UserService
   ) { }
 
   getQuotes(params: HttpParams = new HttpParams()) {
@@ -78,7 +80,11 @@ export class QuotesComponent implements OnInit {
   }
 
   newQuote() {
-    window.open('https://cotizadores.wwseguros.com.do/', '_blank');
+    if (this.userService.getRoleCotizador() === 'WWS') {
+      window.open('https://cotizadores.wwseguros.com.do/?cia=wws', '_blank');
+    } else if (this.userService.getRoleCotizador() === 'WMA') {
+      window.open('https://cotizadores.wwseguros.com.do/?cia=wwm', '_blank');
+    }
   }
 
 }

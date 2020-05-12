@@ -83,6 +83,17 @@
         <mat-icon style="color: #18446B">add</mat-icon>
       </button>
     </div>
+    <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5">
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <mat-form-field color="accent" appearance="outline" class="w-full bg-transparente mr-3"
+        style="font-size: small !important;">
+        <mat-label>Monto Total</mat-label>
+        <input matInput class="" type="number" ([ngModel])="totalAmount" [value]="totalAmount" disabled>
+      </mat-form-field>
+    </div>
   </ng-template>
   <ng-template #formTemplate>
     <app-text-area label="Texto" name="comentario" [group]="refundForm"></app-text-area>

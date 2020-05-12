@@ -31,8 +31,8 @@
         <div formGroupName="asegurado"
           class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4">
           <div class="mr-3">
-            <app-number-input [group]="claimForm.get('asegurado')" label="No. Póliza" name='numeroPoliza'
-              placeholder="12345678"></app-number-input>
+            <app-input [group]="claimForm.get('asegurado')" label="No. Póliza" name='numeroPoliza'
+              placeholder="12345678"></app-input>
           </div>
           <div class="mr-3">
             <app-number-input [group]="claimForm.get('asegurado')" label="ID No." name='idNumero'
@@ -48,11 +48,11 @@
               placeholder="Ramon Capalla"></app-input>
           </div>
           <div class="mr-3">
-            <app-input [group]="claimForm.get('asegurado')" label="Número del Contacto" name='numero'
-              placeholder="8096546191"></app-input>
+            <app-number-input [group]="claimForm.get('asegurado')" label="Número del Contacto" name='numero'
+              placeholder="8096546191"></app-number-input>
           </div>
           <div class="mr-3">
-            <app-number-input [group]="claimForm.get('asegurado')" label="Edad" name='edad' placeholder="26">
+            <app-number-input [group]="claimForm.get('asegurado')" label="Edad" name='edad' placeholder="26" min="1">
             </app-number-input>
           </div>
           <div class="mr-3 mb-3 sm:mb-3 md:mb-0 lg:mb-0 xl:mb-0">
@@ -78,7 +78,7 @@
           </div>
           <div class="mr-3">
             <app-number-input [group]="claimForm.get('proveedor')" label="No. de Contrato" name='noContrato'
-              placeholder="900001092092"></app-number-input>
+              placeholder="900001092092" min="1"></app-number-input>
           </div>
         </div>
       </ng-template>
@@ -97,17 +97,17 @@
               </div>
               <div class="mr-3">
                 <app-number-input [group]="claimForm.get('reclamados').get(i.toString())" label="Monto Reclamado"
-                  name='montoReclamado' placeholder="20,000$ USD"></app-number-input>
+                  name='montoReclamado' placeholder="20,000$ USD" min="0"></app-number-input>
               </div>
               <div class="mr-3">
                 <app-number-input [group]="claimForm.get('reclamados').get(i.toString())" label="Monto Autorizado"
-                  name='montoAutorizado' placeholder="14,400$ USD"></app-number-input>
+                  name='montoAutorizado' placeholder="14,400$ USD" min="0"></app-number-input>
               </div>
               <div class="grid"
                 [ngClass]="{'grid-cols-1': reclaimedList.length === 1, 'grid-cols-2': reclaimedList.length > 1}">
                 <div class="mr-3">
                   <app-number-input [group]="claimForm.get('reclamados').get(i.toString())" label="Monto Deducible"
-                    name='montoDeducible' placeholder="1,200 $ USD"></app-number-input>
+                    name='montoDeducible' placeholder="1,200 $ USD" min="0"></app-number-input>
                 </div>
                 <div *ngIf="reclaimedList.length > 1">
                   <button mat-mini-fab aria-label="Eliminar reclamacion" (click)="removeReclaimed(i)" type="button"

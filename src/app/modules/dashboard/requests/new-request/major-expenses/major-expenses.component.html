@@ -38,8 +38,8 @@
                 name='societyName'></app-input>
               <app-input class="mr-3" [group]="newRequest.get('contractor')" label="Nombre Comercial"
                 name='commercialName'></app-input>
-              <app-input class="mr-3" [group]="newRequest.get('contractor')" label="Núm. Contribuyente o equivalente"
-                name='taxpayerNumber'></app-input>
+              <app-number-input class="mr-3" [group]="newRequest.get('contractor')" label="Núm. Contribuyente o equivalente"
+                name='taxpayerNumber'></app-number-input>
               <app-input class="mr-3" [group]="newRequest.get('contractor')" label="Domicilio Social" name='socialHome'>
               </app-input>
               <app-number-input class="mr-3" [group]="newRequest.get('contractor')" label="Teléfono" name='tel'>
@@ -160,9 +160,9 @@
                 <app-input class="mr-3" [group]="newRequest.get('exposedPerson').get('contractorExposedInfo')"
                   label="Cargo actual o anterior" name='lastPosition'></app-input>
                 <div class="grid grid-cols-2">
-                  <app-input class="mr-3" [group]="newRequest.get('exposedPerson').get('contractorExposedInfo')"
-                    label="Tiempo" name='timeNumber'>
-                  </app-input>
+                  <app-number-input class="mr-3" [group]="newRequest.get('exposedPerson').get('contractorExposedInfo')"
+                    label="Tiempo" name='timeNumber' min="1">
+                  </app-number-input>
                   <app-select class="mr-3" [options]="year"
                     [group]="newRequest.get('exposedPerson').get('contractorExposedInfo')"></app-select>
                 </div>
@@ -181,9 +181,9 @@
                 <app-input class="mr-3" [group]="newRequest.get('exposedPerson').get('headLineExposedInfo')"
                   label="Cargo actual o anterior" name='lastPosition'></app-input>
                 <div class="grid grid-cols-2">
-                  <app-input class="mr-3" [group]="newRequest.get('exposedPerson').get('headLineExposedInfo')"
-                    label="Tiempo" name='timeNumber'>
-                  </app-input>
+                  <app-number-input class="mr-3" [group]="newRequest.get('exposedPerson').get('headLineExposedInfo')"
+                    label="Tiempo" name='timeNumber' min="1">
+                  </app-number-input>
                   <app-select class="mr-3" [options]="year"
                     [group]="newRequest.get('exposedPerson').get('headLineExposedInfo')"></app-select>
                 </div>
@@ -224,12 +224,12 @@
                       [group]="newRequest.get('dependents').get('allDependents').get(index.toString())" name="sex"
                       [options]="sex"></app-radio-button>
                     <div class="mr-3 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2">
-                      <app-input class="mr-3"
+                      <app-number-input class="mr-3"
                         [group]="newRequest.get('dependents').get('allDependents').get(index.toString())"
-                        label="Peso / Kg" name='weight'></app-input>
-                      <app-input class="mr-3"
+                        label="Peso / Kg" name='weight' min="1"></app-number-input>
+                      <app-number-input class="mr-3"
                         [group]="newRequest.get('dependents').get('allDependents').get(index.toString())"
-                        label="Altura / Cm" name='height'></app-input>
+                        label="Altura / Cm" name='height' min="1"></app-number-input>
                     </div>
                     <!-- <app-input class="mr-3"
                       [group]="newRequest.get('dependents').get('allDependents').get(index.toString())"
@@ -467,9 +467,9 @@
                     name="threatment" label="Tratamiento">
                   </app-input>
                   <div class="grid grid-cols-2">
-                    <app-input class="mr-3" [group]="newRequest.get('questionsB').get('information').get(i.toString())"
-                      label="Duración" name='duration'>
-                    </app-input>
+                    <app-number-input class="mr-3" [group]="newRequest.get('questionsB').get('information').get(i.toString())"
+                      label="Duración" name='duration' min="1">
+                    </app-number-input>
                     <app-select class="mr-3" [options]="year"
                       [group]="newRequest.get('questionsB').get('information').get(i.toString())"></app-select>
                   </div>
@@ -531,7 +531,7 @@
                       name="companyName" label="Nombre de compañía">
                     </app-input>
                     <app-input class="mr-3" [group]=" newRequest.get('questionsB').get('medicalHealthInsurance')"
-                      name="policeNo" label="Número de Póliza">
+                      name="policeNo" label="Número de Póliza" >
                     </app-input>
                     <app-input class="mr-3" [group]=" newRequest.get('questionsB').get('medicalHealthInsurance')"
                       name="insureName" label="Nombre del Asegurado">
@@ -595,7 +595,7 @@
                       </app-select>
                       <app-number-input class="mr-3"
                         [group]="newRequest.get('primaryBenefits').get('dependentsC').get(index.toString())"
-                        label="Cantidad en %" name='quantity'></app-number-input>
+                        label="Cantidad en %" name='quantity' min="1" max="100"></app-number-input>
                     </div>
 
                     <div class="pb-5">
@@ -678,7 +678,7 @@
                       </app-select>
                       <app-number-input class="mr-3"
                         [group]="newRequest.get('contingentBeneficiary').get('dependentsC').get(index.toString())"
-                        label="Cantidad en %" name='quantity'></app-number-input>
+                        label="Cantidad en %" name='quantity' min="1" max="100"></app-number-input>
                     </div>
 
                     <div class="pb-5">

@@ -10,8 +10,8 @@
           </app-input>
         </div>
         <div class="mr-3">
-          <app-input [group]="form" label="Edad" name='edad' placeholder="34" type="number">
-          </app-input>
+          <app-number-input [group]="form" label="Edad" name='edad' placeholder="34" min="1">
+          </app-number-input>
         </div>
         <div class="mr-3">
           <app-input [group]="form" label="Nombre del Médico Tratante" name='nombreMedico'
@@ -24,8 +24,8 @@
           </app-input>
         </div>
         <div class="mr-3">
-          <app-input [group]="form" label="Teléfono del Centro" name='telefonoCentro' placeholder="8207776677">
-          </app-input>
+          <app-number-input [group]="form" label="Teléfono del Centro" name='telefonoCentro' placeholder="8207776677">
+          </app-number-input>
         </div>
       </div>
     </div>
@@ -165,7 +165,7 @@
                 </app-date-picker>
               </div>
               <div class="mr-3">
-                <app-input [group]="form.get('physiotherapies').get(i.toString())" name="quantity" type="number"
+                <app-input [group]="form.get('physiotherapies').get(i.toString())" name="quantity"
                   label="Cantidad">
                 </app-input>
               </div>

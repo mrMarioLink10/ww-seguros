@@ -68,7 +68,7 @@ export class RefundComponent implements OnInit {
 			fecha: [ '', Validators.required ],
 			informacion: this.fb.group({
 				noPoliza: [ '', Validators.required ],
-				idNumber: [ '', Validators.required ],
+				idNumber: [ '', [Validators.required, Validators.min(1)] ],
 				nombre: [ '', Validators.required ],
 				direccion: [ '', Validators.required ],
 				telefono: [ '', Validators.required ]
@@ -89,7 +89,7 @@ export class RefundComponent implements OnInit {
 				'infoTransferencia',
 				this.fb.group({
 					cedula: [ '', Validators.required ],
-					noCuenta: [ '', Validators.required ],
+					noCuenta: [ '', [Validators.required, Validators.min(1)] ],
 					tipoCuenta: [ '', Validators.required ],
 					bancoEmisor: [ '', Validators.required ],
 					correo: [ '', Validators.required ]
@@ -113,7 +113,7 @@ export class RefundComponent implements OnInit {
 			fecha: [ '', Validators.required ],
 			lugar: [ '', Validators.required ],
 			descripcion: [ '', Validators.required ],
-			monto: [ '', Validators.required ]
+			monto: [ '', [Validators.required, Validators.min(0)] ]
 		});
 	}
 

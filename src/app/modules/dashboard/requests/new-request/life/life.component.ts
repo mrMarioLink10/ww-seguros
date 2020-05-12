@@ -7,6 +7,7 @@ import { DiseaseService } from '../../../shared/components/disease/shared/diseas
 import { FormHandlerService } from 'src/app/core/services/forms/form-handler.service';
 import { UserService } from '../../../../../core/services/user/user.service';
 import { Router, ActivatedRoute } from '@angular/router';
+import { LifeService } from './services/life.service'
 // tslint:disable: one-line
 // tslint:disable: max-line-length
 
@@ -139,7 +140,7 @@ export class LifeComponent implements OnInit, DoCheck {
     nationality: ['', Validators.required],
     ocupation: ['', Validators.required],
     family: ['', Validators.required],
-    quantity: ['', Validators.required]
+    quantity: ['', [Validators.required, Validators.min(1), Validators.max(100)]]
   };
 
   annualIncomeValues = {
@@ -400,14 +401,16 @@ export class LifeComponent implements OnInit, DoCheck {
     public formHandler: FormHandlerService,
     private userService: UserService,
     private router: Router,
-    private route: ActivatedRoute,
+    private route: ActivatedRoute
   ) { }
 
+  ID=null;
   ngOnInit() {
+
     this.role = this.userService.getRoleCotizador();
 
     this.newRequest = this.fb.group({
-      NoC: ['', Validators.required],
+      NoC: ['', [Validators.required, Validators.min(1)]],
       person: this.fb.group({
         firstName: ['', Validators.required],
         secondName: ['', Validators.required],
@@ -416,11 +419,11 @@ export class LifeComponent implements OnInit, DoCheck {
         sex: ['', Validators.required],
         nationality: ['', Validators.required],
         id2: ['', Validators.required],
-        age: ['', Validators.required],
+        age: ['', [Validators.required, Validators.min(1)]],
         weight: ['', Validators.required],
         height: ['', Validators.required],
         status: ['', Validators.required],
-        annualIncome: ['', Validators.required],
+        annualIncome: ['', [Validators.required, Validators.min(1)]],
         currency: ['', Validators.required],
         countryOfResidence: ['', Validators.required],
         countryOfBirth: ['', Validators.required],
@@ -502,7 +505,7 @@ export class LifeComponent implements OnInit, DoCheck {
       }),
       releventPlanInformation: this.fb.group({
         type: ['', Validators.required],
-        timeAmount: ['', Validators.required],
+        timeAmount: ['', [Validators.required, Validators.min(1)]],
         time: ['', Validators.required],
         nicotineEstandar: ['', Validators.required],
         coverages: this.fb.group({
@@ -534,7 +537,7 @@ export class LifeComponent implements OnInit, DoCheck {
         }),
         bankTransfer: this.fb.group({
           family: [''],
-          amount: [''],
+          amount: ['', Validators.min(0)],
           contact: ['']
         }),
         hasAnotherCoverage: ['', Validators.required],
@@ -584,9 +587,9 @@ export class LifeComponent implements OnInit, DoCheck {
         isMarried: ['', Validators.required],
         isLessThan21: ['', Validators.required],
         amountProposed: this.fb.group({
-          approximateNetWorth: ['', Validators.required],
-          accruedIncome: ['', Validators.required],
-          unearnedIncome: ['', Validators.required],
+          approximateNetWorth: ['', [Validators.required, Validators.min(0)]],
+          accruedIncome: ['', [Validators.required, Validators.min(0)]],
+          unearnedIncome: ['', [Validators.required, Validators.min(0)]],
           occupation: ['', Validators.required],
         }),
         idInformation: this.fb.group({
@@ -870,15 +873,15 @@ export class LifeComponent implements OnInit, DoCheck {
           formAR.removeControl('connectionTypeInfo');
           formAR.addControl('connectionTypeInfo', this.fb.group({
             friendship: ['', Validators.required],
-            amount: ['', Validators.required],
+            amount: ['', [Validators.required, Validators.min(1)]],
             time: ['', Validators.required],
           }));
-          break;
+          break;  
 
         case 'cliente':
           formAR.removeControl('connectionTypeInfo');
           formAR.addControl('connectionTypeInfo', this.fb.group({
-            amount: ['', Validators.required],
+            amount: ['', [Validators.required, Validators.min(1)]],
             time: ['', Validators.required],
           }));
           break;
@@ -911,7 +914,7 @@ export class LifeComponent implements OnInit, DoCheck {
         case 'isMarried':
           formAR.addControl('marriedInformation', this.fb.group({
             spouseName: ['', Validators.required],
-            spouseInsuranceAmount: ['', Validators.required],
+            spouseInsuranceAmount: ['', [Validators.required, Validators.min(0)]],
           }));
           break;
 
@@ -992,7 +995,7 @@ export class LifeComponent implements OnInit, DoCheck {
 
         case 'isPregnant':
           formWI.addControl('pregnantInformation', this.fb.group({
-            quantity: ['', Validators.required],
+            quantity: ['', [Validators.required, Validators.min(1)]],
             time: ['', Validators.required],
           }));
           break;
@@ -1321,8 +1324,8 @@ export class LifeComponent implements OnInit, DoCheck {
         return this.fb.group({
           name: ['', Validators.required],
           amount: ['', Validators.required],
-          policeNo: ['', Validators.required],
-          ADBQuantity: ['', Validators.required],
+          policeNo: ['', [Validators.required, Validators.min(1)]],
+          ADBQuantity: ['', [Validators.required, Validators.min(0)]],
           date: ['', Validators.required],
         });
         break;
@@ -1340,7 +1343,7 @@ export class LifeComponent implements OnInit, DoCheck {
           treatment: ['', Validators.required],
           hospitalNameAdress: ['', Validators.required],
           date: ['', Validators.required],
-          duration: ['', Validators.required],
+          duration: ['', [Validators.required, Validators.min(1)]],
           time: ['', Validators.required],
           results: ['', Validators.required],
         });
@@ -1356,7 +1359,7 @@ export class LifeComponent implements OnInit, DoCheck {
       case 'familyInsurances':
         return this.fb.group({
           family: ['', Validators.required],
-          amount: ['', Validators.required],
+          amount: ['', [Validators.required, Validators.min(0)]],
         });
         break;
 
@@ -1443,4 +1446,5 @@ export class LifeComponent implements OnInit, DoCheck {
     console.log(this.newRequest);
     console.log('json', JSON.stringify(this.newRequest.get('releventPlanInformation').value));
   }
+
 }

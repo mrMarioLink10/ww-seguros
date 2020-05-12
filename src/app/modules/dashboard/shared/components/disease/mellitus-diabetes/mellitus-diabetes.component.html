@@ -50,9 +50,9 @@
               </app-input>
             </div>
             <div class="mr-3">
-              <app-input [group]="form.get('oralMedications').get(i.toString())" name="quantity"
-                label="Número de tomas al día">
-              </app-input>
+              <app-number-input [group]="form.get('oralMedications').get(i.toString())" name="quantity"
+                label="Número de tomas al día" min="1">
+              </app-number-input>
             </div>
             <div *ngIf="oralMedicationList.length > 1"
               [ngClass]="{'': oralMedicationList.length === 1, 'col-span-1': oralMedicationList.length > 1} ">
@@ -82,8 +82,8 @@
               </app-input>
             </div>
             <div class="mr-3">
-              <app-input [group]="form.get('insulin').get(i.toString())" name="quantity" label="Número de tomas al día">
-              </app-input>
+              <app-number-input [group]="form.get('insulin').get(i.toString())" name="quantity" label="Número de tomas al día" min="1">
+              </app-number-input>
             </div>
             <div *ngIf="insulinList.length > 1"
               [ngClass]="{'': insulinList.length === 1, 'col-span-1': insulinList.length > 1} ">
@@ -121,7 +121,7 @@
     <div *ngFor="let studies of bloodGlucoseAnalysisList.controls; let i = index"
       class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
       <div class="mr-3">
-        <app-input [group]="form.get('bloodGlucoseAnalysis').get(i.toString())" name="results" label="Results">
+        <app-input [group]="form.get('bloodGlucoseAnalysis').get(i.toString())" name="results" label="Resultados">
         </app-input>
       </div>
       <div class="mr-3">
@@ -151,7 +151,7 @@
     <div *ngFor="let studies of orineGlucoseAnalysisList.controls; let i = index"
       class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
       <div class="mr-3">
-        <app-input [group]="form.get('orineGlucoseAnalysis').get(i.toString())" name="results" label="Results">
+        <app-input [group]="form.get('orineGlucoseAnalysis').get(i.toString())" name="results" label="Resultados">
         </app-input>
       </div>
       <div class="mr-3">
@@ -180,7 +180,7 @@
     <div *ngFor="let studies of hbA1cResultsList.controls; let i = index"
       class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
       <div class="mr-3">
-        <app-input [group]="form.get('hbA1cResults').get(i.toString())" name="results" label="Results">
+        <app-input [group]="form.get('hbA1cResults').get(i.toString())" name="results" label="Resultados">
         </app-input>
       </div>
       <div class="mr-3">

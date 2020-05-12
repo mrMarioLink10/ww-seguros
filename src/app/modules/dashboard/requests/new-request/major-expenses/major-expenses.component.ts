@@ -265,9 +265,9 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
     name: ['', Validators.required],
     lastName: ['', Validators.required],
     family: ['', Validators.required],
-    weight: ['', Validators.required],
+    weight: ['', [Validators.required, Validators.min(1)]],
     date: ['', Validators.required],
-    height: ['', Validators.required],
+    height: ['', [Validators.required, Validators.min(1)]],
     sex: ['', Validators.required],
     id2: ['', Validators.required],
     nationality: ['', Validators.required],
@@ -338,7 +338,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
     nationality: ['', Validators.required],
     ocupation: ['', Validators.required],
     family: ['', Validators.required],
-    quantity: ['', Validators.required]
+    quantity: ['',[ Validators.required, Validators.min(1), Validators.max(100)]]
 
   };
   allFamily = $allFamily;
@@ -645,7 +645,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
           exposedPersonForm.addControl('contractorExposedInfo', this.fb.group({
             lastPosition: ['', Validators.required],
             time: ['', Validators.required],
-            timeNumber: ['', Validators.required]
+            timeNumber: ['', [Validators.required, Validators.min(1)]]
           }));
           break;
 
@@ -653,7 +653,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
           exposedPersonForm.addControl('headLineExposedInfo', this.fb.group({
             lastPosition: ['', Validators.required],
             time: ['', Validators.required],
-            timeNumber: ['', Validators.required]
+            timeNumber: ['', [Validators.required, Validators.min(1)]]
           }));
           break;
 
@@ -1056,7 +1056,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
           date: ['', Validators.required],
           threatment: ['', Validators.required],
           time: [''],
-          duration: [''],
+          duration: ['', Validators.min(1)],
           medicCenterName: [''],
           medicCenterAddress: [''],
         });

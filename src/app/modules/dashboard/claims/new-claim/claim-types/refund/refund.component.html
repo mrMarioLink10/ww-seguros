@@ -21,8 +21,8 @@
         </app-input>
       </div>
       <div class="mr-3">
-        <app-input [group]="refundForm.get('informacion')" label="ID Number" name='idNumber' placeholder="00010002">
-        </app-input>
+        <app-number-input [group]="refundForm.get('informacion')" label="ID Number" name='idNumber' placeholder="00010002" min="1">
+        </app-number-input>
       </div>
       <div class="mr-3">
         <app-input [group]="refundForm.get('informacion')" label="Nombre del Asegurado / Paciente" name='nombre'
@@ -34,10 +34,10 @@
           placeholder="Santo Domingo Norte">
         </app-input>
       </div>
-      <div class="mr-3">
-        <app-input [group]="refundForm.get('informacion')" label="No. de Telefono" name='telefono'
+      <div class="mr-3 xl:mt-6">
+        <app-number-input [group]="refundForm.get('informacion')" label="No. de Telefono" name='telefono'
           placeholder="8096546191">
-        </app-input>
+        </app-number-input>
       </div>
     </div>
   </ng-template>
@@ -65,7 +65,7 @@
         [ngClass]="{'grid-cols-1': diagnosticList.length === 1, 'grid-cols-5': diagnosticList.length > 1}">
         <div class="mr-3" [ngClass]="{'': diagnosticList.length === 1, 'col-span-4': diagnosticList.length > 1}">
           <app-number-input [group]=" refundForm.get('diagnosticos').get(i.toString())" name="monto"
-            label="Monto Reclamado" placeholder="10,000">
+            label="Monto Reclamado" placeholder="10,000" min="0">
           </app-number-input>
         </div>
         <div *ngIf="diagnosticList.length > 1"
@@ -107,9 +107,9 @@
         </app-input>
       </div>
       <div class="mr-3">
-        <app-input [group]="refundForm.get('infoTransferencia')" label="No. Cuenta" name='noCuenta'
-          placeholder="0828908801">
-        </app-input>
+        <app-number-input [group]="refundForm.get('infoTransferencia')" label="No. Cuenta" name='noCuenta'
+          placeholder="0828908801" min="1">
+        </app-number-input>
       </div>
       <div class="mr-3">
         <app-radio-button [group]="refundForm.get('infoTransferencia')" name="tipoCuenta" [options]="cuentaTipos">

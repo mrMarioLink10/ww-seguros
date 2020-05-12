@@ -82,7 +82,7 @@ export class NewAuthorizationComponent implements OnInit {
 						nombre: ['', Validators.required],
 						noPoliza: ['', Validators.required],
 						fecha: [new Date(), Validators.required],
-						suma: ['', [Validators.required, Validators.min(1)]],
+						suma: ['', [Validators.required, Validators.min(0)]],
 					}));
 					break;
 				default:
@@ -186,7 +186,7 @@ export class NewAuthorizationComponent implements OnInit {
 					nombre: ['', Validators.required],
 					noPoliza: ['', Validators.required],
 					fecha: [new Date(), Validators.required],
-					suma: ['', [Validators.required, Validators.min(1)]],
+					suma: ['', [Validators.required, Validators.min(0)]],
 				}));
 				this.authorization['controls'].informacionAsegurado['controls'].seguro['controls'].nombre.setValue(data.data.informacionAsegurado.seguro.nombre)
 				this.authorization['controls'].informacionAsegurado['controls'].seguro['controls'].noPoliza.setValue(data.data.informacionAsegurado.seguro.noPoliza)

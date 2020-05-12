@@ -4,7 +4,7 @@
 <app-forms-container [isQuestionnarie]="false"
   [titles]="['Cuestionario médico de evaluación prostática para hombres mayores de 50 años']">
   <ng-template #formTemplate>
-    <div class="mt-3 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4">
+    <div class="mt-3 mb-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4">
       <div class="mr-3">
         <app-input [group]="form" label="Nombre del asegurado" name='firstName'>
         </app-input>
@@ -18,7 +18,7 @@
         </app-date-picker>
       </div>
       <div class="">
-        <app-input [group]="form" label="Número de póliza" name='policeNo'>
+        <app-input [group]="form" label="Número de póliza" name='policeNo' >
         </app-input>
       </div>
     </div>
@@ -32,7 +32,7 @@
       </div>
       <div *ngIf="form.value[question.name] === 'si'">
         <div *ngIf="question.name === 'hasProstateEvaluation'">
-          <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4">
+          <div class="mb-3 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4">
             <div class="mr-3">
               <app-input [group]="form.get(question.group)" label="Nombre del médico tratante" name='doctorName'>
               </app-input>
@@ -47,8 +47,8 @@
               </app-input>
             </div>
             <div class="">
-              <app-input [group]="form.get(question.group)" label="Teléfono" name='phone'>
-              </app-input>
+              <app-number-input [group]="form.get(question.group)" label="Teléfono" name='phone'>
+              </app-number-input>
             </div>
           </div>
         </div>

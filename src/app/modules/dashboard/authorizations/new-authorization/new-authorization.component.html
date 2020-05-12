@@ -42,20 +42,20 @@
           </div>
           <div class="mr-3">
 
-            <app-input [group]="authorization.get('informacionAsegurado')" label="Teléfono residencia"
-              name='telefonoResidencia' placeholder=""></app-input>
+            <app-number-input [group]="authorization.get('informacionAsegurado')" label="Teléfono residencia"
+              name='telefonoResidencia' placeholder=""></app-number-input>
 
           </div>
           <div class="mr-3">
 
-            <app-input [group]="authorization.get('informacionAsegurado')" label="Teléfono celular"
-              name='telefonoCelular' placeholder=""></app-input>
+            <app-number-input [group]="authorization.get('informacionAsegurado')" label="Teléfono celular"
+              name='telefonoCelular' placeholder=""></app-number-input>
 
           </div>
           <div class="mr-3">
 
-            <app-input [group]="authorization.get('informacionAsegurado')" label="Teléfono oficina"
-              name='telefonoOficina' placeholder=""></app-input>
+            <app-number-input [group]="authorization.get('informacionAsegurado')" label="Teléfono oficina"
+              name='telefonoOficina' placeholder=""></app-number-input>
 
           </div>
         </div>
@@ -88,7 +88,7 @@
           </div>
           <div class="mr-3">
             <app-number-input [group]="authorization.get('informacionAsegurado').get('seguro')" label="Suma asegurada"
-              name='suma' placeholder="20,000$ USD" min="1"></app-number-input>
+              name='suma' placeholder="20,000$ USD" min="0"></app-number-input>
           </div>
         </div>
 
@@ -127,8 +127,8 @@
               name="direccion">
             </app-input>
 
-            <app-input [group]="authorization.get('informacionMedica').get('primerosSintomas')" label="Teléfono"
-              name='telefono' placeholder=""></app-input>
+            <app-number-input [group]="authorization.get('informacionMedica').get('primerosSintomas')" label="Teléfono"
+              name='telefono' placeholder=""></app-number-input>
           </div>
 
           <!--  TERCERA COLUMNA -->
@@ -146,8 +146,8 @@
               name="direccion">
             </app-input>
 
-            <app-input [group]="authorization.get('informacionMedica').get('admision')" label="Teléfono" name='telefono'
-              placeholder=""></app-input>
+            <app-number-input [group]="authorization.get('informacionMedica').get('admision')" label="Teléfono" name='telefono'
+              placeholder=""></app-number-input>
           </div>
 
           <!--  CUARTA COLUMNA -->
@@ -163,8 +163,8 @@
             <app-input [group]="authorization.get('informacionMedica')" label="Dirección" name="direccion">
             </app-input>
 
-            <app-input [group]="authorization.get('informacionMedica')" label="Teléfono" name='telefono' placeholder="">
-            </app-input>
+            <app-number-input [group]="authorization.get('informacionMedica')" label="Teléfono" name='telefono' placeholder="">
+            </app-number-input>
           </div>
         </div>
       </ng-template>

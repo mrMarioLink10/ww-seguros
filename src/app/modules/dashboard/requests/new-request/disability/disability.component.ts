@@ -276,7 +276,7 @@ export class DisabilityComponent implements OnInit {
       // money_laundering: this.fb.group({}),
       // know_client: this.fb.group({}),
 
-      num_financial_quote: ['', Validators.required],
+      num_financial_quote: ['', [Validators.required, Validators.min(1)]],
       // typeRequest:[''],
       insured_data: this.fb.group({
         name: ['', Validators.required],
@@ -290,20 +290,20 @@ export class DisabilityComponent implements OnInit {
         date_since: ['', Validators.required],
         date_until: ['', Validators.required],
         position: ['', Validators.required],
-        salary: ['', Validators.required],
+        salary: ['', [Validators.required, Validators.min(1)]],
         currency: ['', Validators.required],
         address: ['', Validators.required],
         telephone: ['', Validators.required],
         email: ['', [Validators.required, Validators.email]],
         job_description: ['', Validators.required],
-        job_hours: ['', Validators.required],
+        job_hours: ['', [Validators.required, Validators.min(1)]],
         date: ['', Validators.required],
         reason_pension: [''],
-        office_hours: ['', Validators.required],
+        office_hours: ['', [Validators.required, Validators.min(1)]],
         company: ['', Validators.required],
         amount_pension: ['', Validators.min(1)],
         currency_pension: [''],
-        outside_hours: ['', Validators.required],
+        outside_hours: ['', [Validators.required, Validators.min(1)]],
         pension_radio: ['', Validators.required],
         pep_radio_insured: ['', Validators.required]
       }),
@@ -330,8 +330,8 @@ export class DisabilityComponent implements OnInit {
       questions: this.fb.group({
         smoker_radio: ['', Validators.required],
         alcohol_radio: ['', Validators.required],
-        weight: ['', Validators.required],
-        height: ['', Validators.required],
+        weight: ['', [Validators.required, Validators.min(1)]],
+        height: ['', [Validators.required, Validators.min(1)]],
         weightUnit: ['', Validators.required],
         heightUnit: ['', Validators.required],
         questionnaire: this.fb.group({
@@ -555,7 +555,7 @@ export class DisabilityComponent implements OnInit {
         case 'insurance_radio':
           formQ.addControl('insurance', this.fb.group({
             company: ['', Validators.required],
-            num: ['', [Validators.required, Validators.min(1)]],
+            num: ['', Validators.required],
             name: ['', Validators.required],
             insured_company: ['', Validators.required],
             policy: ['', Validators.required],

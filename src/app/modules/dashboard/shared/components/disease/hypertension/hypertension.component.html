@@ -10,8 +10,8 @@
           </app-input>
         </div>
         <div class="mr-3">
-          <app-input [group]="form.get('personInfo')" label="Edad" name='age' placeholder="34" type="number">
-          </app-input>
+          <app-number-input [group]="form.get('personInfo')" label="Edad" name='age' placeholder="34" min="1">
+          </app-number-input>
         </div>
         <div class="mr-3">
           <app-input [group]="form.get('personInfo')" label="Nombre del Médico Tratante" name='doctorName'
@@ -24,9 +24,9 @@
           </app-input>
         </div>
         <div class="mr-3">
-          <app-input [group]="form.get('personInfo')" label="Teléfono del Centro" name='hcNumber'
+          <app-number-input [group]="form.get('personInfo')" label="Teléfono del Centro" name='hcNumber'
             placeholder="8207776677">
-          </app-input>
+          </app-number-input>
         </div>
       </div>
     </div>

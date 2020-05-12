@@ -54,8 +54,8 @@
 
           <div class="mr-3 mt-8 sm:mt-5 md:mt-8 lg:mt-2 xl:mt-5">
 
-            <app-input [group]="form.get('general_data')" label="Teléfono (s)" name='telephone'
-              min="1" placeholder=""></app-input>
+            <app-number-input [group]="form.get('general_data')" label="Teléfono (s)" name='telephone'
+              min="1" placeholder=""></app-number-input>
 
           </div>
 
@@ -119,15 +119,15 @@
 
           <div class="mr-3 mt-5 sm:mt-3 md:mt-5 lg:mt-2 xl:mt-2">
 
-            <app-input [group]="form.get('representative_data')" 
-            label="Teléfono Residencial" name='home_telephone' placeholder=""></app-input>
+            <app-number-input [group]="form.get('representative_data')" 
+            label="Teléfono Residencial" name='home_telephone' placeholder=""></app-number-input>
 
           </div>
 
           <div class="mr-3 mt-5 sm:mt-3 md:mt-5 lg:mt-2 xl:mt-2">
             
-            <app-input [group]="form.get('representative_data')" 
-            label="Celular" name='cellphone' placeholder=""></app-input>
+            <app-number-input [group]="form.get('representative_data')" 
+            label="Celular" name='cellphone' placeholder=""></app-number-input>
             
           </div>
 
@@ -309,14 +309,14 @@
 
             <div class="mt-5">
 
-              <label class="ml-8 mr-6 mt-3 radio-button-label" style="display: inline-block"> ¿Tiene la Sociedad dentro del órgano de gestión una Persona Políticamente Expuesta? </label>
+              <label class="ml-5 mr-6 mt-3 radio-button-label" style="display: inline-block"> ¿Tiene la Sociedad dentro del órgano de gestión una Persona Políticamente Expuesta? </label>
                 <app-radio-button class="float-right mt-3" style="display: inline-block" [group]="form.get('exposed')" [options]="exposed_politically"
                 name='exposed_person' (selected)="selectChangeExposedPerson($event)">
                 </app-radio-button>
 
             </div>
 
-            <div *ngIf="this.form.get('exposed').get('input')" class="ml-6 mt-4 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4">
+            <div *ngIf="this.form.get('exposed').get('input')" class=" mt-4 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4">
 
               <div>
 
@@ -340,7 +340,7 @@
             
           </div>
 
-          <hr class="ww-divider ml-6 mt-4">
+          <hr class="ww-divider mt-4">
           
 
           <!-- Bloque 2 -->
@@ -348,7 +348,7 @@
 
             <div class="mt-5 mb-6 pb-1">
 
-              <label class="ml-8 mr-6 mt-3 radio-button-label" style="display: inline-block"> ¿Cotiza la Sociedad en la Bolsa de Valores? </label>
+              <label class="ml-5 mr-6 mt-3 radio-button-label" style="display: inline-block"> ¿Cotiza la Sociedad en la Bolsa de Valores? </label>
                 <app-radio-button class="float-right mt-3" style="display: inline-block" [group]="form.get('exposed')" [options]="exposed_politically"
                 name='stock_Exchange'>
                 </app-radio-button>
@@ -357,20 +357,20 @@
 
           </div>
 
-          <hr class="ww-divider ml-6 mt-10 sm:mt-10 md:mt-10 lg:mt-0 xl:mt-0">
+          <hr class="ww-divider mt-10 sm:mt-10 md:mt-10 lg:mt-0 xl:mt-0">
         
 
           <!-- Bloque 3 -->
           <div class="mb-4">
 
             <div class="my-5">
-              <label class="ml-8 mr-6 mt-3 radio-button-label" style="display: inline-block"> ¿Tiene la Sociedad sucursales o afiliadas? </label>
+              <label class="ml-5 mr-6 mt-3 radio-button-label" style="display: inline-block"> ¿Tiene la Sociedad sucursales o afiliadas? </label>
                 <app-radio-button class="float-right mt-3" style="display: inline-block" [group]="form.get('exposed')" [options]="exposed_politically"
                 name='branch_office_radio' (selected)="selectChangeBranchOffice($event)"> <!-- (selected)="selectChangeBranchOffice($event)" -->
                 </app-radio-button>
             </div>
 
-            <div class="ml-8 mt-24" *ngIf="branchOfficeFormArray"> <!-- *ngIf="this.form.get('branch_office')" -->
+            <div class=" mt-24" *ngIf="branchOfficeFormArray"> <!-- *ngIf="this.form.get('branch_office')" -->
 
               
                     <div class="mt-8" *ngFor="let element of branchOfficeFormArray.controls; let index = index">
@@ -403,8 +403,8 @@
 
                       <div class="mr-3 "> 
                       
-                           <app-input [group]="form.get('exposed').get('branch_office').get('allBranch_office').get(index.toString())" 
-                    label="Teléfonos" name='telephone_branch_office' placeholder=""></app-input>
+                           <app-number-input [group]="form.get('exposed').get('branch_office').get('allBranch_office').get(index.toString())" 
+                    label="Teléfonos" name='telephone_branch_office' placeholder=""></app-number-input>
 
                       </div>
 
@@ -433,13 +433,13 @@
 
           </div>
 
-          <hr class="ww-divider ml-6 mt-10 sm:mt-10 md:mt-10 lg:mt-0 xl:mt-0">
+          <hr class="ww-divider mt-10 sm:mt-10 md:mt-10 lg:mt-0 xl:mt-0">
        
 
           <!-- Bloque 4 -->
           <div class="mt-8">
 
-            <div class="ml-8">
+            <div class="ml-5">
 
               <label class="mr-6 inline radio-button-label"> Indique si el Representante Legal, Apoderado o la Sociedad misma son o han sido objeto de investigación, indagación o condena por actividades ilícitas o delitos de lavado o blanqueo de dinero o financiamiento de terrorismo. </label>
                 <app-radio-button class="float-right inline" [group]="form.get('exposed')" [options]="exposed_politically"
@@ -448,7 +448,7 @@
 
             </div>
 
-            <div *ngIf="this.form.get('exposed').get('areatext')" class="ml-8 mt-2">
+            <div *ngIf="this.form.get('exposed').get('areatext')" class=" mt-2">
               
               <div class="mb-2 pt-8">
                 <label style="font-size: 12px;"> Especifique </label>

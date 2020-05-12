@@ -37,7 +37,7 @@ export class ArthritisComponent implements OnInit {
 
   addBasicControls() {
     this.form.addControl('name', this.fb.control('', Validators.required));
-    this.form.addControl('age', this.fb.control('', Validators.required));
+    this.form.addControl('age', this.fb.control('', [Validators.required, Validators.min(1)]));
     this.form.addControl('doctorName', this.fb.control('', Validators.required));
     this.form.addControl('healthCenter', this.fb.control('', Validators.required));
     this.form.addControl('hcNumber', this.fb.control('', Validators.required));

@@ -209,7 +209,7 @@ export class MellitusDiabetesComponent implements OnInit {
         return this.fb.group({
           medication: ['', Validators.required],
           dose: ['', Validators.required],
-          quantity: ['', Validators.required],
+          quantity: ['', [Validators.required, Validators.min(1)]],
         });
         break;
 

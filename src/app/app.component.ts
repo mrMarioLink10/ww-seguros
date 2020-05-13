@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Router, RouterEvent, NavigationStart, NavigationEnd, NavigationCancel, NavigationError } from '@angular/router';
+import { Router, RouterEvent, NavigationStart, NavigationEnd, NavigationCancel, NavigationError, ChildActivationStart } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -20,7 +20,7 @@ export class AppComponent {
 
   // Shows and hides the loading spinner during RouterEvent changes
   navigationInterceptor(event: RouterEvent): void {
-    if (event instanceof NavigationStart) {
+    if (event instanceof ChildActivationStart) {
       this.showOverlay = true;
     }
     if (event instanceof NavigationEnd) {

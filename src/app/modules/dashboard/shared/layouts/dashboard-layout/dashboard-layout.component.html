@@ -44,37 +44,48 @@
           </mat-list-item> -->
           <mat-list-item [routerLink]="['quotes']" routerLinkActive="router-link-active"
             style="color: white; max-height: 35px !important;" class="my-3">
-            <img *ngIf="activeRoute" style="max-height: 35px !important;"
+            <img style="max-height: 35px !important;"
               [src]="!activeRoute.includes('/dashboard/quotes') ? '../../../../../../assets/iconos/library_books-24px.svg' : '../../../../../../assets/iconos/library_books-24px-b.svg'"
               height="24px" width="24px" class="mr-1 ml-3">
+            <!-- <img *ngIf="!activeRoute" style="max-height: 35px !important;"
+              src="../../../../../../assets/iconos/library_books-24px.svg" height="24px" width="24px" class="mr-1 ml-3"> -->
             <div style="max-height: 35px !important;" class="text-xs uppercase">Cotizaciones</div>
           </mat-list-item>
           <mat-list-item [routerLink]="['requests']" routerLinkActive="router-link-active"
             style="color: white; max-height: 35px !important;" class="my-3">
-            <img *ngIf="activeRoute" style="max-height: 35px !important;"
+            <img style="max-height: 35px !important;"
               [src]="!activeRoute.includes('/dashboard/requests') ? '../../../../../../assets/iconos/library_add-24px.svg' : '../../../../../../assets/iconos/library_add-24px-b.svg'"
               height="24px" width="24px" class="mr-1 ml-3">
+            <!-- <img *ngIf="!activeRoute" style="max-height: 35px !important;"
+              src="../../../../../../assets/iconos/library_add-24px.svg" height="24px" width="24px" class="mr-1 ml-3"> -->
             <div style="max-height: 35px !important;" class="text-xs uppercase">Solicitudes</div>
           </mat-list-item>
           <mat-list-item [routerLink]="['claims']" routerLinkActive="router-link-active"
             style="color: white; max-height: 35px !important;" class="my-3">
-            <img *ngIf="activeRoute" style="max-height: 35px !important;"
+            <img style="max-height: 35px !important;"
               [src]="!activeRoute.includes('/dashboard/claims') ? '../../../../../../assets/iconos/announcement-24px.svg' : '../../../../../../assets/iconos/announcement-24px-b.svg'"
               height="24px" width="24px" class="mr-1 ml-3">
+            <!-- <img *ngIf="!activeRoute" style="max-height: 35px !important;"
+              src="../../../../../../assets/iconos/announcement-24px.svg" height="24px" width="24px" class="mr-1 ml-3"> -->
             <div style="max-height: 35px !important;" class="text-xs uppercase">Reclamos</div>
           </mat-list-item>
           <mat-list-item [routerLink]="['authorizations']" routerLinkActive="router-link-active"
             style="color: white; max-height: 35px !important;" class="my-3">
-            <img *ngIf="activeRoute" style="max-height: 35px !important;"
+            <img style="max-height: 35px !important;"
               [src]="!activeRoute.includes('/dashboard/authorizations') ? '../../../../../../assets/iconos/autorizacion2.svg' : '../../../../../../assets/iconos/autorizacion1.svg'"
               height="24px" width="24px" class="mr-1 ml-3">
+            <!-- <img *ngIf="!activeRoute" style="max-height: 35px !important;"
+              src="../../../../../../assets/iconos/autorizacion2.svg" height="24px" width="24px" class="mr-1 ml-3"> -->
             <div style="max-height: 35px !important;" class="text-xs uppercase">Autorizaciones</div>
           </mat-list-item>
           <mat-list-item [routerLink]="['information']" routerLinkActive="router-link-active"
             style="color: white; max-height: 35px !important;" class="my-3">
-            <img *ngIf="activeRoute" style="max-height: 35px !important;"
+            <img style="max-height: 35px !important;"
               [src]="!activeRoute.includes('/dashboard/information') ? '../../../../../../assets/iconos/perm_contact_calendar-24px.svg' : '../../../../../../assets/iconos/perm_contact_calendar-24px-b.svg'"
               height="24px" width="24px" class="mr-1 ml-3">
+            <!-- <img *ngIf="!activeRoute" style="max-height: 35px !important;"
+              src="../../../../../../assets/iconos/perm_contact_calendar-24px.svg" height="24px" width="24px"
+              class="mr-1 ml-3"> -->
             <div style="max-height: 35px !important;" class="text-xs uppercase">Datos</div>
           </mat-list-item>
           <mat-list-item style="color: white; max-height: 35px !important; padding-left: 0.75rem"
@@ -96,7 +107,7 @@
           </button>
         </div>
         <div class="flex flex-row justify-end flex-wrap w">
-          <button [matMenuTriggerFor]="menu" mat-mini-fab aria-label="Example icon-button with a heart icon"
+          <!-- <button [matMenuTriggerFor]="menu" mat-mini-fab aria-label="Example icon-button with a heart icon"
             class="dashboard-toolbar-buttons" style="margin-right: 0.50rem !important; ">
             <mat-icon style="color: #18446B">notification_important</mat-icon>
           </button>
@@ -120,17 +131,17 @@
                 <p class="title-13-blue">{{old.date}}</p>
               </div>
             </div>
-            <!-- <p>Anteriores</p>
+            <p>Anteriores</p>
            <div mat-menu-item class="menu-items" *ngFor="let old of oldNotification">
               <span class="">{{old.title}}  </span>
               <span class="">{{old.description}}</span>
               <p class="">{{old.date}}</p>
-            </div> -->
+            </div>
           </mat-menu>
 
           <button mat-mini-fab aria-label="Example icon-button with a heart icon" class="dashboard-toolbar-buttons">
             <mat-icon style="color: #18446B">settings</mat-icon>
-          </button>
+          </button> -->
         </div>
       </div>
     </mat-toolbar>

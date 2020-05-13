@@ -38,6 +38,16 @@ export class DialogOptionService {
 		textCancelButton: 'No'
 	};
 
+	exitConfirm: BaseDialog = {
+		logo: 'warning',
+		title: 'Tiene trabajo sin guardar',
+		text: `¿Está seguro de que quiere salir?`,
+		showButtons: true,
+		showCancelButton: true,
+		textPrincipalButton: 'Salir',
+		textCancelButton: 'Permanecer'
+	}
+
 	WIP: BaseDialog = {
 		logo: 'warning',
 		title: 'WIP',

@@ -1,6 +1,6 @@
 import { Component, OnInit, ChangeDetectorRef, OnDestroy } from '@angular/core';
 import { MediaMatcher } from '@angular/cdk/layout';
-import { Router } from '@angular/router';
+import { Router, NavigationEnd, RouterEvent } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Location } from '@angular/common';
 import { UserService } from '../../../../../core/services/user/user.service';
@@ -54,6 +54,7 @@ export class DashboardLayoutComponent implements OnInit, OnDestroy {
     public keycloakService: KeycloakService,
     private dialog: MatDialog,
     private dialogOption: DialogOptionService,
+    private location: Location
   ) {
     this.mobileQuery = media.matchMedia('(max-width: 600px)');
     this.mobileQueryListener = () => changeDetectorRef.detectChanges();
@@ -61,18 +62,27 @@ export class DashboardLayoutComponent implements OnInit, OnDestroy {
     this.mobileQuery.addListener(this.mobileQueryListener);
 
     this.watchRouter = router.events.subscribe((url: any) => {
-      this.activeRoute = url.url;
+      if (url.url !== undefined && url.url) {
+        if (this.navigationInterceptor(url) !== undefined) {
+          this.activeRoute = this.navigationInterceptor(url);
+        }
+      }
     });
   }
 
   ngOnInit() {
     this.userName = this.userService.getUserInformation().name;
     this.userEmail = this.userService.getUserInformation().email;
+  }
 
+  navigationInterceptor(event: RouterEvent): string {
+    if (event instanceof NavigationEnd) {
+      return event.url;
+    }
   }
 
   navigateBack() {
-    // this.location.back();
+    this.location.back();
   }
 
   ngOnDestroy() {

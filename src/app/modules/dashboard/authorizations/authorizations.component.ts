@@ -19,38 +19,6 @@ export interface Claims {
 	estatus: string;
 }
 
-const ELEMENT_DATA: Claims[] = [
-
-	{
-		no: 154546,
-		nombre: 'Isai Vargas',
-		seguro: 'Vida',
-		plan: 'Nombre del Plan',
-		fecha: new Date(),
-		monto: 2000,
-		estatus: 'Reembolsado'
-	},
-	{
-		no: 213214,
-		nombre: 'Pablo Quavo',
-		seguro: 'Salud',
-		plan: 'Nombre del Plan',
-		fecha: new Date(),
-		monto: 2000,
-		estatus: 'Enviado'
-	},
-	{
-		no: 768678,
-		nombre: 'Kevin David',
-		seguro: 'Salud',
-		plan: 'Nombre del Plan',
-		fecha: new Date(),
-		monto: 2000,
-		estatus: 'Enviado'
-	}
-];
-
-
 @Component({
 	selector: 'app-authorizations',
 	templateUrl: './authorizations.component.html',
@@ -88,9 +56,8 @@ export class AuthorizationsComponent implements OnInit {
 		customClass: 'dashboard-button'
 	};
 
-	//displayedColumns: string[] = ['no', 'nombre', 'seguro', 'plan', 'fecha', 'monto', 'estatus', 'acciones'];
 	displayedColumns: string[] = ['no', 'nombre', 'seguro', 'plan', 'condicion', 'estatus', 'acciones'];
-	//dataSource = new MatTableDataSource(ELEMENT_DATA);
+
 	dataSource;
 	authorizations: any[];
 
@@ -103,13 +70,14 @@ export class AuthorizationsComponent implements OnInit {
 
 	constructor(
 		private route: Router,
-		public _authorizationsService: AuthorizationsService,
-		public newAuthorization: NewAuthorizationService) { }
+		public authorizationsService: AuthorizationsService,
+		public newAuthorization: NewAuthorizationService
+	) { }
 
 
-	getAuthorizations(params: HttpParams = new HttpParams) {
+	getAuthorizations(params: HttpParams = new HttpParams()) {
 		let data;
-		this._authorizationsService.getAuthoriations(params)
+		this.authorizationsService.getAuthoriations(params)
 			.subscribe(res => {
 				data = res;
 				this.authorizations = data.data;

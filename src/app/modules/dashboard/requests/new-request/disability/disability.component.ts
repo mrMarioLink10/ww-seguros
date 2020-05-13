@@ -8,6 +8,12 @@ import { FormHandlerService } from 'src/app/core/services/forms/form-handler.ser
 import { DiseaseService } from '../../../shared/components/disease/shared/disease/disease.service';
 import { UserService } from '../../../../../core/services/user/user.service';
 import { Router, ActivatedRoute } from '@angular/router';
+import { DialogService } from 'src/app/core/services/dialog/dialog.service';
+import { DialogOptionService } from 'src/app/core/services/dialog/dialog-option.service';
+import { MatDialog } from '@angular/material';
+import { Observable } from 'rxjs';
+import { BaseDialogComponent } from 'src/app/shared/components/base-dialog/base-dialog.component';
+import { map, first } from 'rxjs/operators';
 // tslint:disable: forin
 // tslint:disable: one-line
 
@@ -220,6 +226,9 @@ export class DisabilityComponent implements OnInit {
     public userService: UserService,
     private router: Router,
     private route: ActivatedRoute,
+    public dialogModal: DialogService,
+    private dialogOption: DialogOptionService,
+    public dialog: MatDialog,
   ) { }
 
   ngOnInit() {
@@ -377,6 +386,22 @@ export class DisabilityComponent implements OnInit {
     this.contingentFormArray = this.disabilityGroup.get('contingent').get('contingent_array') as FormArray;
 
   }
+
+  canDeactivate(): Observable<boolean> | boolean {
+    if (this.disabilityGroup.dirty) {
+      const dialogRef = this.dialog.open(BaseDialogComponent, {
+        data: this.dialogOption.exitConfirm,
+        minWidth: 385,
+      });
+      return dialogRef.componentInstance.dialogRef.afterClosed().pipe(map(result => {
+        if (result === 'true') {
+          return true;
+        }
+      }), first());
+    }
+    return true;
+  }
+
 
   selectChange(event) {
     const form = this.disabilityGroup.get('questions') as FormGroup;

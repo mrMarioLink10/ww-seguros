@@ -8,6 +8,12 @@ import { FormHandlerService } from 'src/app/core/services/forms/form-handler.ser
 import { UserService } from '../../../../../core/services/user/user.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { LifeService } from './services/life.service'
+import { DialogService } from 'src/app/core/services/dialog/dialog.service';
+import { DialogOptionService } from 'src/app/core/services/dialog/dialog-option.service';
+import { MatDialog } from '@angular/material';
+import { Observable } from 'rxjs';
+import { BaseDialogComponent } from 'src/app/shared/components/base-dialog/base-dialog.component';
+import { map, first } from 'rxjs/operators';
 // tslint:disable: one-line
 // tslint:disable: max-line-length
 
@@ -402,10 +408,13 @@ export class LifeComponent implements OnInit, DoCheck {
     private userService: UserService,
     private router: Router,
     private route: ActivatedRoute,
+    public dialogModal: DialogService,
+    private dialogOption: DialogOptionService,
+    public dialog: MatDialog,
     private life:LifeService
   ) { }
 
-  ID=null;
+  ID = null;
   ngOnInit() {
 
     this.ID = this.life.id;
@@ -859,6 +868,22 @@ export class LifeComponent implements OnInit, DoCheck {
     this.maxWidth = window.matchMedia('(max-width: 11270px)');
   }
 
+  canDeactivate(): Observable<boolean> | boolean {
+    if (this.newRequest.dirty) {
+      const dialogRef = this.dialog.open(BaseDialogComponent, {
+        data: this.dialogOption.exitConfirm,
+        minWidth: 385,
+      });
+      return dialogRef.componentInstance.dialogRef.afterClosed().pipe(map(result => {
+        if (result === 'true') {
+          return true;
+        }
+      }), first());
+    }
+    return true;
+  }
+
+
   selectChange(event) {
     const formCB = this.newRequest.get('contingentBeneficiary') as FormGroup;
     const formQ = this.newRequest.get('questionnaires') as FormGroup;
@@ -888,7 +913,7 @@ export class LifeComponent implements OnInit, DoCheck {
             amount: ['', [Validators.required, Validators.min(1)]],
             time: ['', Validators.required],
           }));
-          break;  
+          break;
 
         case 'cliente':
           formAR.removeControl('connectionTypeInfo');

@@ -1,9 +1,17 @@
 import { Component, OnInit } from '@angular/core';
-import { FieldConfig } from '../../../../shared/components/form-components/models/field-config'
+import { FieldConfig } from '../../../../shared/components/form-components/models/field-config';
 import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
 import { FormHandlerService } from '../../../../core/services/forms/form-handler.service';
 import { $country } from 'src/app/core/form/objects';
 import { NewAuthorizationService } from '../new-authorization/services/new-authorization.service';
+import { DialogService } from 'src/app/core/services/dialog/dialog.service';
+import { DialogOptionService } from 'src/app/core/services/dialog/dialog-option.service';
+import { MatDialog } from '@angular/material';
+import { Observable } from 'rxjs';
+import { BaseDialogComponent } from 'src/app/shared/components/base-dialog/base-dialog.component';
+import { map, first } from 'rxjs/operators';
+// tslint:disable: no-string-literal
+// tslint:disable: max-line-length
 
 @Component({
 	selector: 'app-new-authorization',
@@ -11,6 +19,16 @@ import { NewAuthorizationService } from '../new-authorization/services/new-autho
 	styleUrls: ['./new-authorization.component.scss']
 })
 export class NewAuthorizationComponent implements OnInit {
+
+	constructor(
+		private fb: FormBuilder,
+		public formHandler: FormHandlerService,
+		private newAuthorization: NewAuthorizationService,
+		public dialogModal: DialogService,
+		private dialogOption: DialogOptionService,
+		public dialog: MatDialog,
+	) {
+	}
 
 	accordionTitles = [
 		'Información del Asegurado',
@@ -61,8 +79,7 @@ export class NewAuthorizationComponent implements OnInit {
 
 	authorization: FormGroup;
 
-	constructor(private fb: FormBuilder, public formHandler: FormHandlerService, private newAuthorization: NewAuthorizationService) {
-	}
+	ID = null;
 
 	selectChange(event: any) {
 		const form = this.authorization.get('informacionAsegurado') as FormGroup;
@@ -90,17 +107,14 @@ export class NewAuthorizationComponent implements OnInit {
 			}
 		}
 	}
-
-	ID = null;
 	ngOnInit() {
 
 		this.ID = this.newAuthorization.id;
 		if (this.ID != null) {
-			console.log("El ID es " + this.ID);
-			this.getData(this.ID)
-		}
-		else if (this.ID == null) {
-			console.log("ID esta vacio")
+			console.log('El ID es ' + this.ID);
+			this.getData(this.ID);
+		} else if (this.ID == null) {
+			console.log('ID esta vacio');
 		}
 
 		this.authorization = this.fb.group({
@@ -143,39 +157,54 @@ export class NewAuthorizationComponent implements OnInit {
 		});
 	}
 
+	canDeactivate(): Observable<boolean> | boolean {
+		if (this.authorization.dirty) {
+			const dialogRef = this.dialog.open(BaseDialogComponent, {
+				data: this.dialogOption.exitConfirm,
+				minWidth: 385,
+			});
+			return dialogRef.componentInstance.dialogRef.afterClosed().pipe(map(result => {
+				if (result === 'true') {
+					return true;
+				}
+			}), first());
+		}
+		return true;
+	}
+
 	getData(id) {
 		this.newAuthorization.returnData(id).subscribe(data => {
 			// console.log(data.data.informacionAsegurado.nombre)
 			// console.log(data)
 			// console.log(data.data.informacionMedica.primerosSintomas.nombreMedico);
 			// this.authorization.controls['informacionAsegurado'].setValue("")
-			this.authorization['controls'].fecha.setValue(data.data.fecha)
-			this.authorization['controls'].informacionAsegurado['controls'].nombre.setValue(data.data.informacionAsegurado.nombre)
-			this.authorization['controls'].informacionAsegurado['controls'].noPoliza.setValue(data.data.informacionAsegurado.noPoliza)
-			this.authorization['controls'].informacionAsegurado['controls'].sexo.setValue(data.data.informacionAsegurado.sexo)
-			this.authorization['controls'].informacionAsegurado['controls'].correo.setValue(data.data.informacionAsegurado.correo)
-			this.authorization['controls'].informacionAsegurado['controls'].direccion.setValue(data.data.informacionAsegurado.direccion)
-			this.authorization['controls'].informacionAsegurado['controls'].telefonoResidencia.setValue(data.data.informacionAsegurado.telefonoResidencia)
-			this.authorization['controls'].informacionAsegurado['controls'].telefonoCelular.setValue(data.data.informacionAsegurado.telefonoCelular)
-			this.authorization['controls'].informacionAsegurado['controls'].telefonoOficina.setValue(data.data.informacionAsegurado.telefonoOficina)
-			this.authorization['controls'].informacionAsegurado['controls'].otroSeguro.setValue(data.data.informacionAsegurado.otroSeguro)
-			this.authorization['controls'].informacionMedica['controls'].diagnostico.setValue(data.data.informacionMedica.diagnostico)
-			this.authorization['controls'].informacionMedica['controls'].condicion.setValue(data.data.informacionMedica.condicion)
-			this.authorization['controls'].informacionMedica['controls'].procedimiento.setValue(data.data.informacionMedica.procedimiento)
-			this.authorization['controls'].informacionMedica['controls'].primerosSintomas['controls'].fecha.setValue(data.data.informacionMedica.primerosSintomas.fecha)
-			this.authorization['controls'].informacionMedica['controls'].primerosSintomas['controls'].nombreMedico.setValue(data.data.informacionMedica.primerosSintomas.nombreMedico)
-			this.authorization['controls'].informacionMedica['controls'].primerosSintomas['controls'].direccion.setValue(data.data.informacionMedica.primerosSintomas.direccion)
-			this.authorization['controls'].informacionMedica['controls'].primerosSintomas['controls'].telefono.setValue(data.data.informacionMedica.primerosSintomas.telefono)
-			this.authorization['controls'].informacionMedica['controls'].admision['controls'].fecha.setValue(data.data.informacionMedica.admision.fecha)
-			this.authorization['controls'].informacionMedica['controls'].admision['controls'].nombreMedico.setValue(data.data.informacionMedica.admision.nombreMedico)
-			this.authorization['controls'].informacionMedica['controls'].admision['controls'].direccion.setValue(data.data.informacionMedica.admision.direccion)
-			this.authorization['controls'].informacionMedica['controls'].admision['controls'].telefono.setValue(data.data.informacionMedica.admision.telefono)
-			this.authorization['controls'].informacionMedica['controls'].tiempoEstadia.setValue(data.data.informacionMedica.tiempoEstadia)
-			this.authorization['controls'].informacionMedica['controls'].nombreServicio.setValue(data.data.informacionMedica.nombreServicio)
-			this.authorization['controls'].informacionMedica['controls'].direccion.setValue(data.data.informacionMedica.direccion)
-			this.authorization['controls'].informacionMedica['controls'].telefono.setValue(data.data.informacionMedica.telefono)
+			this.authorization['controls'].fecha.setValue(data.data.fecha);
+			this.authorization['controls'].informacionAsegurado['controls'].nombre.setValue(data.data.informacionAsegurado.nombre);
+			this.authorization['controls'].informacionAsegurado['controls'].noPoliza.setValue(data.data.informacionAsegurado.noPoliza);
+			this.authorization['controls'].informacionAsegurado['controls'].sexo.setValue(data.data.informacionAsegurado.sexo);
+			this.authorization['controls'].informacionAsegurado['controls'].correo.setValue(data.data.informacionAsegurado.correo);
+			this.authorization['controls'].informacionAsegurado['controls'].direccion.setValue(data.data.informacionAsegurado.direccion);
+			this.authorization['controls'].informacionAsegurado['controls'].telefonoResidencia.setValue(data.data.informacionAsegurado.telefonoResidencia);
+			this.authorization['controls'].informacionAsegurado['controls'].telefonoCelular.setValue(data.data.informacionAsegurado.telefonoCelular);
+			this.authorization['controls'].informacionAsegurado['controls'].telefonoOficina.setValue(data.data.informacionAsegurado.telefonoOficina);
+			this.authorization['controls'].informacionAsegurado['controls'].otroSeguro.setValue(data.data.informacionAsegurado.otroSeguro);
+			this.authorization['controls'].informacionMedica['controls'].diagnostico.setValue(data.data.informacionMedica.diagnostico);
+			this.authorization['controls'].informacionMedica['controls'].condicion.setValue(data.data.informacionMedica.condicion);
+			this.authorization['controls'].informacionMedica['controls'].procedimiento.setValue(data.data.informacionMedica.procedimiento);
+			this.authorization['controls'].informacionMedica['controls'].primerosSintomas['controls'].fecha.setValue(data.data.informacionMedica.primerosSintomas.fecha);
+			this.authorization['controls'].informacionMedica['controls'].primerosSintomas['controls'].nombreMedico.setValue(data.data.informacionMedica.primerosSintomas.nombreMedico);
+			this.authorization['controls'].informacionMedica['controls'].primerosSintomas['controls'].direccion.setValue(data.data.informacionMedica.primerosSintomas.direccion);
+			this.authorization['controls'].informacionMedica['controls'].primerosSintomas['controls'].telefono.setValue(data.data.informacionMedica.primerosSintomas.telefono);
+			this.authorization['controls'].informacionMedica['controls'].admision['controls'].fecha.setValue(data.data.informacionMedica.admision.fecha);
+			this.authorization['controls'].informacionMedica['controls'].admision['controls'].nombreMedico.setValue(data.data.informacionMedica.admision.nombreMedico);
+			this.authorization['controls'].informacionMedica['controls'].admision['controls'].direccion.setValue(data.data.informacionMedica.admision.direccion);
+			this.authorization['controls'].informacionMedica['controls'].admision['controls'].telefono.setValue(data.data.informacionMedica.admision.telefono);
+			this.authorization['controls'].informacionMedica['controls'].tiempoEstadia.setValue(data.data.informacionMedica.tiempoEstadia);
+			this.authorization['controls'].informacionMedica['controls'].nombreServicio.setValue(data.data.informacionMedica.nombreServicio);
+			this.authorization['controls'].informacionMedica['controls'].direccion.setValue(data.data.informacionMedica.direccion);
+			this.authorization['controls'].informacionMedica['controls'].telefono.setValue(data.data.informacionMedica.telefono);
 
-			if (data.data.informacionAsegurado.otroSeguro == "si") {
+			if (data.data.informacionAsegurado.otroSeguro === 'si') {
 				const form = this.authorization.get('informacionAsegurado') as FormGroup;
 				form.addControl('seguro', this.fb.group({
 					nombre: ['', Validators.required],
@@ -183,15 +212,14 @@ export class NewAuthorizationComponent implements OnInit {
 					fecha: ['', Validators.required],
 					suma: ['', [Validators.required, Validators.min(1)]],
 				}));
-				this.authorization['controls'].informacionAsegurado['controls'].seguro['controls'].nombre.setValue(data.data.informacionAsegurado.seguro.nombre)
-				this.authorization['controls'].informacionAsegurado['controls'].seguro['controls'].noPoliza.setValue(data.data.informacionAsegurado.seguro.noPoliza)
-				this.authorization['controls'].informacionAsegurado['controls'].seguro['controls'].fecha.setValue(data.data.informacionAsegurado.seguro.fecha)
-				this.authorization['controls'].informacionAsegurado['controls'].seguro['controls'].suma.setValue(data.data.informacionAsegurado.seguro.suma)
+				this.authorization['controls'].informacionAsegurado['controls'].seguro['controls'].nombre.setValue(data.data.informacionAsegurado.seguro.nombre);
+				this.authorization['controls'].informacionAsegurado['controls'].seguro['controls'].noPoliza.setValue(data.data.informacionAsegurado.seguro.noPoliza);
+				this.authorization['controls'].informacionAsegurado['controls'].seguro['controls'].fecha.setValue(data.data.informacionAsegurado.seguro.fecha);
+				this.authorization['controls'].informacionAsegurado['controls'].seguro['controls'].suma.setValue(data.data.informacionAsegurado.seguro.suma);
 
-				console.log(JSON.stringify(this.authorization.value))
-			}
-			else if (data.data.informacionAsegurado.otroSeguro == "no") {
-				console.log("No hay que crear el control")
+				console.log(JSON.stringify(this.authorization.value));
+			} else if (data.data.informacionAsegurado.otroSeguro === 'no') {
+				console.log('No hay que crear el control');
 			}
 			// console.log(data.data.id)
 			// console.log(data.data.informacionAseguradoId)
@@ -229,9 +257,9 @@ export class NewAuthorizationComponent implements OnInit {
 			const formID6 = this.authorization.get('informacionMedica').get('primerosSintomas') as FormGroup;
 			formID6.addControl('id', this.fb.control(data.data.informacionMedica.primerosSintomas.id, Validators.required));
 
-			console.log(JSON.stringify(this.authorization.value))
-		})
+			console.log(JSON.stringify(this.authorization.value));
+		});
 		this.newAuthorization.id = null;
-		console.log("this.newAuthorization.id es igual a " + this.newAuthorization.id);
+		console.log('this.newAuthorization.id es igual a ' + this.newAuthorization.id);
 	}
 }

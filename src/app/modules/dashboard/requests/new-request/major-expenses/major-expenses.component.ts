@@ -6,9 +6,14 @@ import { FormArrayGeneratorService } from 'src/app/core/services/forms/form-arra
 import { questionsA, questionsB } from './questions';
 import { Requests } from '../../requests.component';
 import { Router, ActivatedRoute } from '@angular/router';
-import { generate } from 'rxjs';
+import { generate, Observable } from 'rxjs';
 import { FormHandlerService } from 'src/app/core/services/forms/form-handler.service';
 import { DiseaseService } from '../../../shared/components/disease/shared/disease/disease.service';
+import { DialogService } from 'src/app/core/services/dialog/dialog.service';
+import { DialogOptionService } from 'src/app/core/services/dialog/dialog-option.service';
+import { MatDialog } from '@angular/material';
+import { BaseDialogComponent } from 'src/app/shared/components/base-dialog/base-dialog.component';
+import { map, first } from 'rxjs/operators';
 @Component({
   selector: 'app-major-expenses',
   templateUrl: './major-expenses.component.html',
@@ -338,7 +343,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
     nationality: ['', Validators.required],
     ocupation: ['', Validators.required],
     family: ['', Validators.required],
-    quantity: ['',[ Validators.required, Validators.min(1), Validators.max(100)]]
+    quantity: ['', [Validators.required, Validators.min(1), Validators.max(100)]]
 
   };
   allFamily = $allFamily;
@@ -377,7 +382,10 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
     private router: Router,
     private route: ActivatedRoute,
     public formHandler: FormHandlerService,
-    public diseaseService: DiseaseService
+    public diseaseService: DiseaseService,
+    public dialogModal: DialogService,
+    private dialogOption: DialogOptionService,
+    public dialog: MatDialog,
   ) { }
 
   ngOnInit() {
@@ -562,6 +570,21 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
     });
 
 
+  }
+
+  canDeactivate(): Observable<boolean> | boolean {
+    if (this.newRequest.dirty) {
+      const dialogRef = this.dialog.open(BaseDialogComponent, {
+        data: this.dialogOption.exitConfirm,
+        minWidth: 385,
+      });
+      return dialogRef.componentInstance.dialogRef.afterClosed().pipe(map(result => {
+        if (result === 'true') {
+          return true;
+        }
+      }), first());
+    }
+    return true;
   }
 
 

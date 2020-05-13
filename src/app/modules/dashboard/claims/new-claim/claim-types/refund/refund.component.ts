@@ -3,6 +3,12 @@ import { FormGroup, FormArray, FormBuilder, Validators } from '@angular/forms';
 import { FieldConfig, Validator } from '../../../../../../shared/components/form-components/models/field-config';
 import { FormHandlerService } from '../../../../../../core/services/forms/form-handler.service';
 import { RefundService } from '../../../../claims/new-claim/claim-types/refund/services/refund.service';
+import { Observable } from 'rxjs';
+import { BaseDialogComponent } from 'src/app/shared/components/base-dialog/base-dialog.component';
+import { map, first } from 'rxjs/operators';
+import { DialogService } from 'src/app/core/services/dialog/dialog.service';
+import { DialogOptionService } from 'src/app/core/services/dialog/dialog-option.service';
+import { MatDialog } from '@angular/material/dialog';
 // tslint:disable: no-string-literal
 @Component({
 	selector: 'app-refund',
@@ -51,7 +57,15 @@ export class RefundComponent implements OnInit {
 	refundForm: FormGroup;
 	diagnosticList: FormArray;
 
-	constructor(private fb: FormBuilder, public formHandler: FormHandlerService, private refund: RefundService) { }
+	constructor(
+		private fb: FormBuilder,
+		public formHandler: FormHandlerService,
+		private refund: RefundService,
+		public dialogModal: DialogService,
+		private dialogOption: DialogOptionService,
+		public dialog: MatDialog,
+
+	) { }
 
 	ID = null;
 	ngOnInit() {
@@ -135,6 +149,21 @@ export class RefundComponent implements OnInit {
 
 	removeDiagnostic(index) {
 		this.diagnosticList.removeAt(index);
+	}
+
+	canDeactivate(): Observable<boolean> | boolean {
+		if (this.refundForm.dirty) {
+			const dialogRef = this.dialog.open(BaseDialogComponent, {
+				data: this.dialogOption.exitConfirm,
+				minWidth: 385,
+			});
+			return dialogRef.componentInstance.dialogRef.afterClosed().pipe(map(result => {
+				if (result === 'true') {
+					return true;
+				}
+			}), first());
+		}
+		return true;
 	}
 
 	getData(id) {

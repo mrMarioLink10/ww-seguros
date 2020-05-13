@@ -113,7 +113,8 @@ export class FormHandlerService {
 		}
 
 		if (type === 'cancel') {
-			dataOpen = this.dialogOption.cancelRequest;
+			this.navigateToMenu(route);
+			return;
 		}
 
 		console.log(dataOpen, dataClosing);
@@ -297,11 +298,6 @@ export class FormHandlerService {
 					}
 					break;
 
-				case 'cancel':
-					if (result === 'true') {
-						this.navigateToMenu(route)
-					}
-					break;
 				default:
 					break;
 			}

@@ -4,6 +4,7 @@ import { MatTableDataSource, MatSort, MatPaginator } from '@angular/material';
 import { Router } from '@angular/router';
 import { RequestsService } from '../services/requests/requests.service';
 import { HttpParams } from '@angular/common/http';
+import { LifeService } from './new-request/life/services/life.service'
 
 export interface Requests {
   no: number;
@@ -62,7 +63,7 @@ export class RequestsComponent implements OnInit {
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
-  constructor(private router: Router, private _requestsService: RequestsService) { }
+  constructor(private router: Router, private _requestsService: RequestsService, public life:LifeService) { }
 
   getRequests(params: HttpParams = new HttpParams) {
     let data;

@@ -6,6 +6,7 @@ import { AuthorizationsComponent } from './authorizations.component';
 import { NewAuthorizationComponent } from './new-authorization/new-authorization.component';
 import { GlobalSharedModule } from '../../../shared/global-shared.module';
 import { SharedModule } from '../shared/shared.module';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -14,7 +15,9 @@ import { SharedModule } from '../shared/shared.module';
     CommonModule,
     AuthorizationsRoutingModule,
     GlobalSharedModule,
-    SharedModule
+    SharedModule,
+    ReactiveFormsModule,
+
   ]
 })
 export class AuthorizationsModule { }

@@ -10,7 +10,9 @@ import { Observable } from 'rxjs';
 })
 export class NewAuthorizationService {
 
-  constructor(private http: HttpClient, private route:Router) { }
+  constructor(private http: HttpClient, private route: Router) { }
+
+  id = null;
 
   postClaim(body) {
 
@@ -22,13 +24,12 @@ export class NewAuthorizationService {
     return this.http.post(`${environment.apiUrl}/api/Precertificado`, body, httpOptions);
   }
 
-  returnData(id):Observable<any>{
-    return this.http.get(`${environment.apiUrl}/api/Precertificado/${id}`)
+  returnData(id): Observable<any> {
+    return this.http.get(`${environment.apiUrl}/api/Precertificado/${id}`);
   }
 
-  id=null;
-  getID(id){
-    this.id=id;
+  getID(id) {
+    this.id = id;
     this.route.navigateByUrl('/dashboard/authorizations/new-authorization');
   }
 

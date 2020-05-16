@@ -1,11 +1,15 @@
 import { Injectable } from '@angular/core';
+import { environment } from 'src/environments/environment';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
 
-  constructor() { }
+  constructor(
+    private http: HttpClient
+  ) { }
 
   getAccessToken() {
     const token = localStorage.getItem('ang-token');
@@ -28,6 +32,9 @@ export class UserService {
         }
       }
     }
+  }
 
+  getInsurancePeople(idNumber: string) {
+    return this.http.get(`${environment.apiUrl}/api/DatosEmpresa/${idNumber}`);
   }
 }

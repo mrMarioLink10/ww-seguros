@@ -17,10 +17,10 @@
         <td class="padding-cell" mat-cell *matCellDef="let element"> {{element.informacion.idNumber}} </td>
       </ng-container>
 
-      <ng-container matColumnDef="bancoEmisor" style="margin-right: 15px !important">
-        <th class="padding-cell" mat-header-cell *matHeaderCellDef mat-sort-header> Banco Emisor </th>
+      <ng-container matColumnDef="totalAmount" style="margin-right: 15px !important">
+        <th class="padding-cell" mat-header-cell *matHeaderCellDef mat-sort-header> Monto </th>
         <td class="padding-cell" mat-cell *matCellDef="let element">
-          <div *ngIf="element.infoTransferencia"> {{element.infoTransferencia.bancoEmisor}} </div>
+          {{element.totalAmount | currency}}
         </td>
       </ng-container>
 
@@ -43,7 +43,7 @@
       <ng-container matColumnDef="estatus" style="margin-right: 15px !important">
         <th class="padding-cell" mat-header-cell *matHeaderCellDef mat-sort-header> Estatus </th>
         <td class="padding-cell" mat-cell *matCellDef="let element"
-          [ngClass]="{'text-color-yellow': element.estatus === 'Enviado', 'text-color-red': element.estatus === 'Cancelado'}">
+          [ngClass]="{'text-color-yellow': element.status === 0, 'text-color-red': element.status === 'Cancelado'}">
           {{element.status | tableStatus}} </td>
       </ng-container>
 

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { FieldConfig } from '../../../../shared/components/form-components/models/field-config';
 import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
 import { FormHandlerService } from '../../../../core/services/forms/form-handler.service';
@@ -10,6 +10,8 @@ import { MatDialog } from '@angular/material';
 import { Observable } from 'rxjs';
 import { BaseDialogComponent } from 'src/app/shared/components/base-dialog/base-dialog.component';
 import { map, first } from 'rxjs/operators';
+import { UserService } from '../../../../core/services/user/user.service';
+import { AppComponent } from '../../../../app.component';
 // tslint:disable: no-string-literal
 // tslint:disable: max-line-length
 
@@ -18,7 +20,7 @@ import { map, first } from 'rxjs/operators';
 	templateUrl: './new-authorization.component.html',
 	styleUrls: ['./new-authorization.component.scss']
 })
-export class NewAuthorizationComponent implements OnInit {
+export class NewAuthorizationComponent implements OnInit, OnDestroy {
 
 	constructor(
 		private fb: FormBuilder,
@@ -27,6 +29,8 @@ export class NewAuthorizationComponent implements OnInit {
 		public dialogModal: DialogService,
 		private dialogOption: DialogOptionService,
 		public dialog: MatDialog,
+		private userService: UserService,
+		private appComponent: AppComponent
 	) {
 	}
 
@@ -80,9 +84,18 @@ export class NewAuthorizationComponent implements OnInit {
 	authorization: FormGroup;
 
 	ID = null;
+	isMedicalEqualSB: any;
+	nombreMedicoSB: any;
+	telefonoSB: any;
+	direccionSB: any;
+	formSubmitted = false;
+	todayDate = new Date();
+
+	@ViewChild('form', { static: false }) form;
 
 	selectChange(event: any) {
 		const form = this.authorization.get('informacionAsegurado') as FormGroup;
+		console.log(event);
 
 		if (event.valor === 'si') {
 			switch (event.name) {
@@ -106,6 +119,10 @@ export class NewAuthorizationComponent implements OnInit {
 					break;
 			}
 		}
+
+		if (event.valor === 'ambulatorio') {
+			this.authorization.get('informacionMedica').get('tiempoEstadia').setValue(1);
+		}
 	}
 	ngOnInit() {
 
@@ -120,10 +137,11 @@ export class NewAuthorizationComponent implements OnInit {
 		this.authorization = this.fb.group({
 			fecha: ['', Validators.required],
 			informacionAsegurado: this.fb.group({
-				nombres: ['', Validators.required],
-				apellidos: ['', Validators.required],
-				noPoliza: ['', Validators.required],
-				sexo: ['', Validators.required],
+				nombres: [{ value: '', disabled: true }, [Validators.required]],
+				apellidos: [{ value: '', disabled: true }, [Validators.required]],
+				noPoliza: [{ value: '', disabled: true }, [Validators.required]],
+				idNumber: ['', Validators.required],
+				sexo: [{ value: '', disabled: true }, [Validators.required]],
 				correo: ['', Validators.required],
 				direccion: ['', Validators.required],
 				telefonoResidencia: [''],
@@ -138,27 +156,121 @@ export class NewAuthorizationComponent implements OnInit {
 				primerosSintomas: this.fb.group({
 					fecha: ['', Validators.required],
 					nombreMedico: ['', Validators.required],
-					direccion: ['', Validators.required],
+					direccion: [''],
 					telefono: ['', Validators.required],
 				}),
 				admision: this.fb.group({
 					fecha: ['', Validators.required],
 					nombreMedico: ['', Validators.required],
-					direccion: ['', Validators.required],
+					direccion: [''],
 					telefono: ['', Validators.required],
 				}),
 				tiempoEstadia: ['', Validators.required],
 				nombreServicio: ['', Validators.required],
+				isMedicalEqual: [''],
 				// direccion: ['', Validators.required],
 				// telefono: ['', Validators.required],
 			}),
 			isComplete: [false, Validators.required]
 
 		});
+
+		this.isMedicalEqualSB = this.authorization.get('informacionMedica').get('isMedicalEqual').valueChanges.subscribe(response => {
+			switch (response) {
+				case true:
+					this.authorization.get('informacionMedica').get('admision').get('nombreMedico').setValue(this.authorization.get('informacionMedica').get('primerosSintomas').get('nombreMedico').value);
+					this.authorization.get('informacionMedica').get('admision').get('telefono').setValue(this.authorization.get('informacionMedica').get('primerosSintomas').get('telefono').value);
+					this.authorization.get('informacionMedica').get('admision').get('direccion').setValue(this.authorization.get('informacionMedica').get('primerosSintomas').get('direccion').value);
+
+					this.nombreMedicoSB = this.authorization.get('informacionMedica').get('primerosSintomas').get('nombreMedico').valueChanges.subscribe(value => {
+						this.authorization.get('informacionMedica').get('admision').get('nombreMedico').setValue(value);
+					});
+
+					this.telefonoSB = this.authorization.get('informacionMedica').get('primerosSintomas').get('telefono').valueChanges.subscribe(value => {
+						this.authorization.get('informacionMedica').get('admision').get('telefono').setValue(value);
+					});
+
+					this.direccionSB = this.authorization.get('informacionMedica').get('primerosSintomas').get('direccion').valueChanges.subscribe(value => {
+						this.authorization.get('informacionMedica').get('admision').get('direccion').setValue(value);
+					});
+
+					this.authorization.get('informacionMedica').get('admision').get('nombreMedico').disable();
+					this.authorization.get('informacionMedica').get('admision').get('telefono').disable();
+					this.authorization.get('informacionMedica').get('admision').get('direccion').disable();
+					break;
+
+				case false:
+					this.nombreMedicoSB.unsubscribe();
+					this.telefonoSB.unsubscribe();
+					this.direccionSB.unsubscribe();
+
+					this.authorization.get('informacionMedica').get('admision').get('nombreMedico').enable();
+					this.authorization.get('informacionMedica').get('admision').get('telefono').enable();
+					this.authorization.get('informacionMedica').get('admision').get('direccion').enable();
+
+					break;
+
+				default:
+					break;
+			}
+		});
+	}
+
+	searchIdNumber(idNumber: string) {
+		this.appComponent.showOverlay = true;
+		this.userService.getInsurancePeople(idNumber)
+			.subscribe((response: any) => {
+				console.log(response);
+				this.appComponent.showOverlay = false;
+				if (response.data !== null) {
+					const dialogRef = this.dialog.open(BaseDialogComponent, {
+						data: this.dialogOption.idNumberFound(response.data),
+						minWidth: 385,
+					});
+					setTimeout(() => {
+						dialogRef.close();
+					}, 4000);
+
+					this.authorization.get('informacionAsegurado').get('nombres').setValue(response.data.asegurado.nombres_asegurado);
+					this.authorization.get('informacionAsegurado').get('apellidos').setValue(response.data.asegurado.apellidos_asegurado);
+					this.authorization.get('informacionAsegurado').get('noPoliza').setValue(response.data.asegurado.no_poliza);
+
+					switch (response.data.asegurado.sexo) {
+						case 'M':
+							this.authorization.get('informacionAsegurado').get('sexo').setValue('masculino');
+							break;
+
+						case 'F':
+							this.authorization.get('informacionAsegurado').get('sexo').setValue('femenino');
+							break;
+						default:
+							break;
+					}
+
+				} else {
+					const dialogRef = this.dialog.open(BaseDialogComponent, {
+						data: this.dialogOption.idNumberNotFound,
+						minWidth: 385,
+					});
+					setTimeout(() => {
+						dialogRef.close();
+					}, 4000);
+
+					this.authorization.get('informacionAsegurado').get('nombres').setValue('');
+					this.authorization.get('informacionAsegurado').get('apellidos').setValue('');
+					this.authorization.get('informacionAsegurado').get('noPoliza').setValue('');
+					this.authorization.get('informacionAsegurado').get('sexo').setValue('');
+
+				}
+			});
 	}
 
 	canDeactivate(): Observable<boolean> | boolean {
-		if (this.authorization.dirty) {
+		if (this.form.submitted) {
+			return true;
+		}
+
+		if (this.authorization.dirty && !this.form.submitted) {
 			const dialogRef = this.dialog.open(BaseDialogComponent, {
 				data: this.dialogOption.exitConfirm,
 				minWidth: 385,
@@ -170,6 +282,21 @@ export class NewAuthorizationComponent implements OnInit {
 			}), first());
 		}
 		return true;
+	}
+
+	ngOnDestroy(): void {
+		this.isMedicalEqualSB.unsubscribe();
+
+		if (this.nombreMedicoSB !== undefined) {
+			this.nombreMedicoSB.unsubscribe();
+		}
+		if (this.telefonoSB !== undefined) {
+			this.telefonoSB.unsubscribe();
+		}
+
+		if (this.direccionSB !== undefined) {
+			this.direccionSB.unsubscribe();
+		}
 	}
 
 	getData(id) {
@@ -261,5 +388,10 @@ export class NewAuthorizationComponent implements OnInit {
 		});
 		this.newAuthorization.id = null;
 		console.log('this.newAuthorization.id es igual a ' + this.newAuthorization.id);
+	}
+
+	sendForm(form: FormGroup, formType: string, sendType: string) {
+		this.formHandler.sendForm(form, formType, sendType);
+
 	}
 }

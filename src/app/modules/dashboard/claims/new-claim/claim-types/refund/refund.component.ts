@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormArray, FormBuilder, Validators } from '@angular/forms';
 import { FieldConfig, Validator } from '../../../../../../shared/components/form-components/models/field-config';
 import { FormHandlerService } from '../../../../../../core/services/forms/form-handler.service';
@@ -9,7 +9,11 @@ import { map, first } from 'rxjs/operators';
 import { DialogService } from 'src/app/core/services/dialog/dialog.service';
 import { DialogOptionService } from 'src/app/core/services/dialog/dialog-option.service';
 import { MatDialog } from '@angular/material/dialog';
+import { AppComponent } from '../../../../../../app.component';
+import { UserService } from '../../../../../../core/services/user/user.service';
 // tslint:disable: no-string-literal
+// tslint:disable: max-line-length
+
 @Component({
 	selector: 'app-refund',
 	templateUrl: './refund.component.html',
@@ -19,12 +23,13 @@ export class RefundComponent implements OnInit {
 	accordionTitles = [
 		'Información del Asegurado / Paciente',
 		'Diagnóstico o Naturaleza de condición Médica / Accidente',
-		'Comentarios adicionales',
 		'Información para fines de pago',
 		'Declaración'
 	];
 
 	totalAmount: number;
+	todayDate = new Date();
+	validDatesCounter = 0;
 
 	formaPago: FieldConfig = {
 		label: 'Especifique forma de pago',
@@ -56,6 +61,7 @@ export class RefundComponent implements OnInit {
 
 	refundForm: FormGroup;
 	diagnosticList: FormArray;
+	@ViewChild('form', { static: false }) form;
 
 	constructor(
 		private fb: FormBuilder,
@@ -64,10 +70,12 @@ export class RefundComponent implements OnInit {
 		public dialogModal: DialogService,
 		private dialogOption: DialogOptionService,
 		public dialog: MatDialog,
-
+		private appComponent: AppComponent,
+		private userService: UserService
 	) { }
 
 	ID = null;
+
 	ngOnInit() {
 		this.ID = this.refund.id;
 		if (this.ID != null) {
@@ -80,31 +88,68 @@ export class RefundComponent implements OnInit {
 		this.refundForm = this.fb.group({
 			fecha: ['', Validators.required],
 			informacion: this.fb.group({
-				noPoliza: ['', Validators.required],
+				noPoliza: [{ value: '', disabled: true }, [Validators.required]],
 				idNumber: ['', Validators.required],
-				nombre: ['', Validators.required],
+				nombre: [{ value: '', disabled: true }, [Validators.required]],
 				direccion: ['', Validators.required],
-				telefono: ['', Validators.required]
+				telefono: ['', Validators.required],
+				correo: ['', [Validators.required, Validators.email]],
 			}),
 			diagnosticos: this.fb.array([this.createDiagnostic()]),
-			comentario: [''],
+			haveAditionalComentary: [''],
+			comentary: [''],
 			forma: ['', Validators.required],
-			isComplete: [false, Validators.required]
-
+			totalAmount: ['', Validators.required],
+			agreeWithDeclaration: ['', [Validators.required, Validators.requiredTrue]],
+			isComplete: [false, Validators.required],
+			areDiagnosticDatesValid: [true, Validators.required],
 		});
 
 		this.diagnosticList = this.refundForm.get('diagnosticos') as FormArray;
 
 		this.refundForm.get('diagnosticos').valueChanges.subscribe(value => {
+			this.validDatesCounter = 0;
 			let total = 0;
+
 			for (const element in value) {
 				if (value.hasOwnProperty(element)) {
 					total += this.refundForm.get('diagnosticos').get(element.toString()).value.monto;
+
+					if (this.calculatedDate(this.refundForm.get('diagnosticos').get(element.toString()).value.fecha) >= 6) {
+						this.receiveDateValidator(false);
+
+					} else {
+						this.receiveDateValidator(true);
+
+					}
 				}
 			}
+			this.refundForm.get('totalAmount').setValue(total);
 			this.totalAmount = total;
-
 		});
+	}
+
+	calculatedDate(value: any) {
+		const date = this.todayDate.getTime() - value;
+		return Math.floor(date / (1000 * 3600 * 24) / 30.4375);
+	}
+
+	receiveDateValidator(value: any) {
+		const testing = [];
+
+		testing.push(value);
+
+		for (const key in testing) {
+			if (testing.hasOwnProperty(key)) {
+				console.log(testing[key]);
+				if (testing[key] === false) {
+					this.validDatesCounter++;
+				}
+			}
+		}
+
+		if (this.validDatesCounter > 0) { this.refundForm.get('areDiagnosticDatesValid').setValue(false); } else { this.refundForm.get('areDiagnosticDatesValid').setValue(true); }
+
 	}
 
 	changePayment(event) {
@@ -114,11 +159,9 @@ export class RefundComponent implements OnInit {
 			this.refundForm.addControl(
 				'infoTransferencia',
 				this.fb.group({
-					cedula: ['', Validators.required],
 					noCuenta: ['', Validators.required],
 					tipoCuenta: ['', Validators.required],
 					bancoEmisor: ['', Validators.required],
-					correo: ['', Validators.required]
 				})
 			);
 		}
@@ -152,7 +195,11 @@ export class RefundComponent implements OnInit {
 	}
 
 	canDeactivate(): Observable<boolean> | boolean {
-		if (this.refundForm.dirty) {
+		if (this.form.submitted) {
+			return true;
+		}
+
+		if (this.refundForm.dirty && !this.form.submitted) {
 			const dialogRef = this.dialog.open(BaseDialogComponent, {
 				data: this.dialogOption.exitConfirm,
 				minWidth: 385,
@@ -164,6 +211,40 @@ export class RefundComponent implements OnInit {
 			}), first());
 		}
 		return true;
+	}
+
+	searchIdNumber(idNumber: string) {
+		this.appComponent.showOverlay = true;
+		this.userService.getInsurancePeople(idNumber)
+			.subscribe((response: any) => {
+				console.log(response);
+				this.appComponent.showOverlay = false;
+				if (response.data !== null) {
+					const dialogRef = this.dialog.open(BaseDialogComponent, {
+						data: this.dialogOption.idNumberFound(response.data),
+						minWidth: 385,
+					});
+					setTimeout(() => {
+						dialogRef.close();
+					}, 4000);
+
+					this.refundForm.get('informacion').get('nombre').setValue(`${response.data.asegurado.nombres_asegurado} ${response.data.asegurado.apellidos_asegurado}`);
+					this.refundForm.get('informacion').get('noPoliza').setValue(response.data.asegurado.no_poliza);
+
+				} else {
+					const dialogRef = this.dialog.open(BaseDialogComponent, {
+						data: this.dialogOption.idNumberNotFound,
+						minWidth: 385,
+					});
+					setTimeout(() => {
+						dialogRef.close();
+					}, 4000);
+
+					this.refundForm.get('informacion').get('nombre').setValue('');
+					this.refundForm.get('informacion').get('noPoliza').setValue('');
+
+				}
+			});
 	}
 
 	getData(id) {

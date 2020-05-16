@@ -16,7 +16,7 @@ import { RefundService } from './../new-claim/claim-types/refund/services/refund
 
 export class RefundsListComponent implements OnInit {
 
-	displayedColumns: string[] = ['no', 'nombre', 'cedula', 'bancoEmisor', 'forma', 'estatus', 'acciones'];
+	displayedColumns: string[] = ['no', 'nombre', 'cedula', 'totalAmount', 'forma', 'estatus', 'acciones'];
 
 	dataSource;
 	@Input() refunds: any[];

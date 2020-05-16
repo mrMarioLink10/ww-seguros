@@ -46,14 +46,21 @@ export class DialogOptionService {
 		showCancelButton: true,
 		textPrincipalButton: 'Salir',
 		textCancelButton: 'Permanecer'
-	}
+	};
 
 	WIP: BaseDialog = {
 		logo: 'warning',
 		title: 'WIP',
 		text: `Esta funcionalidad todavía no esta disponible; puede guardar el formulario.`,
 		showButtons: false,
-	}
+	};
+
+	idNumberNotFound: BaseDialog = {
+		logo: 'warning',
+		title: 'No se ha encontrado ningún asegurado',
+		text: `Intente con otro numero de ID`,
+		showButtons: false,
+	};
 
 	sendForm(form: string) {
 		return {
@@ -72,6 +79,15 @@ export class DialogOptionService {
 			logo: 'check',
 			title: 'Enviado',
 			text: `La solicitud de ${form} ha sido enviada`,
+			showButtons: false,
+		};
+	}
+
+	idNumberFound(data: any) {
+		return {
+			logo: 'check',
+			title: `${data.asegurado.nombres_asegurado} ${data.asegurado.apellidos_asegurado}`,
+			text: `Se encontró el siguiente asegurado`,
 			showButtons: false,
 		};
 	}

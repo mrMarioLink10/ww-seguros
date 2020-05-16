@@ -29,7 +29,8 @@
 
         <ng-container matColumnDef="nombre" style="margin-right: 15px !important">
           <th class="padding-cell" mat-header-cell *matHeaderCellDef mat-sort-header> Nombre Asegurado</th>
-          <td class="padding-cell" mat-cell *matCellDef="let element"> {{element.informacionAsegurado.nombre}} </td>
+          <td class="padding-cell" mat-cell *matCellDef="let element"> {{element.informacionAsegurado.nombres}}
+            {{element.informacionAsegurado.apellidos}} </td>
         </ng-container>
 
         <ng-container matColumnDef="seguro" style="margin-right: 15px !important">
@@ -51,7 +52,7 @@
         <ng-container matColumnDef="estatus" style="margin-right: 15px !important">
           <th class="padding-cell" mat-header-cell *matHeaderCellDef mat-sort-header> Estatus </th>
           <td class="padding-cell" mat-cell *matCellDef="let element"
-            [ngClass]="{'text-color-yellow': element.estatus === 'Enviado', 'text-color-red': element.estatus === 'Denegado'}">
+            [ngClass]="{'text-color-yellow': element.estatus === 0, 'text-color-red': element.estatus === 'Denegado'}">
             {{element.statusStr}} </td>
         </ng-container>
 

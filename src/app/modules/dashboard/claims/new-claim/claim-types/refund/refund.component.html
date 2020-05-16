@@ -2,7 +2,16 @@
 
 <div class="p-3 pb-0 mb-4" style="background-color: #F2F2F2">
   <div class="mt-3 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 xl:grid-cols-5">
-    <app-date-picker [group]="refundForm" name="fecha" label="Fecha"></app-date-picker>
+    <app-date-picker class="mr-3" [group]="refundForm" name="fecha" label="Fecha"></app-date-picker>
+    <div class="mr-3">
+      <app-number-input [group]="refundForm.get('informacion')" label="ID Number" name='idNumber' placeholder="00010002"
+        min="1">
+      </app-number-input>
+    </div>
+    <button (click)="searchIdNumber(refundForm.get('informacion').value.idNumber)" type="submit"
+      class="nofocus flex justify-center small-search-button">
+      <img src="/assets/iconos/search-icon.svg">
+    </button>
   </div>
 </div>
 
@@ -21,10 +30,6 @@
         </app-input>
       </div>
       <div class="mr-3">
-        <app-number-input [group]="refundForm.get('informacion')" label="ID Number" name='idNumber' placeholder="00010002" min="1">
-        </app-number-input>
-      </div>
-      <div class="mr-3">
         <app-input [group]="refundForm.get('informacion')" label="Nombre del Asegurado / Paciente" name='nombre'
           placeholder="Alberto Matias">
         </app-input>
@@ -34,18 +39,21 @@
           placeholder="Santo Domingo Norte">
         </app-input>
       </div>
-      <div class="mr-3 xl:mt-6">
+      <div class="mr-3">
         <app-number-input [group]="refundForm.get('informacion')" label="No. de Telefono" name='telefono'
           placeholder="8096546191">
         </app-number-input>
       </div>
+      <app-input class="mr-3" [group]="refundForm.get('informacion')" label="Correo Electrónico" name='correo'
+        placeholder="correo@email.com" type="email">
+      </app-input>
     </div>
   </ng-template>
   <ng-template #formTemplate>
     <div *ngFor="let reclaimed of diagnosticList.controls; let i = index"
       class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5">
       <div class="mr-3">
-        <app-date-picker [group]="refundForm.get('diagnosticos').get(i.toString())" name="fecha"
+        <app-date-picker [max]="todayDate" [group]="refundForm.get('diagnosticos').get(i.toString())" name="fecha"
           label="Fecha del Servicio">
         </app-date-picker>
       </div>
@@ -63,7 +71,7 @@
       </div>
       <div class="grid"
         [ngClass]="{'grid-cols-1': diagnosticList.length === 1, 'grid-cols-5': diagnosticList.length > 1}">
-        <div class="mr-3" [ngClass]="{'': diagnosticList.length === 1, 'col-span-4': diagnosticList.length > 1}">
+        <div class="" [ngClass]="{'': diagnosticList.length === 1, 'col-span-4': diagnosticList.length > 1}">
           <app-number-input [group]=" refundForm.get('diagnosticos').get(i.toString())" name="monto"
             label="Monto Reclamado" placeholder="10,000" min="0">
           </app-number-input>
@@ -94,9 +102,15 @@
         <input matInput class="" type="number" ([ngModel])="totalAmount" [value]="totalAmount" disabled>
       </mat-form-field>
     </div>
-  </ng-template>
-  <ng-template #formTemplate>
-    <app-text-area label="Texto" name="comentario" [group]="refundForm"></app-text-area>
+    <hr class="w-full ww-divider">
+
+    <div class="my-4" [formGroup]="refundForm">
+      <mat-checkbox formControlName="haveAditionalComentary">
+        Agregar comentario adicional </mat-checkbox>
+    </div>
+    <app-text-area *ngIf="refundForm.value.haveAditionalComentary === true" label="Comentarios adicionales"
+      name="comentary" [group]="refundForm"></app-text-area>
+
   </ng-template>
   <ng-template #formTemplate>
     <!-- <app-radio-button [group]="refundForm" name="forma" [options]="formaPago">
@@ -110,13 +124,12 @@
       </mat-radio-group>
     </div>
 
-    <div style="padding-left: 15px !important;"
-      class="mt-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
       *ngIf="refundForm.get('forma').value === 'transferencia'">
-      <div class="mr-3">
+      <!-- <div class="mr-3">
         <app-input [group]="refundForm.get('infoTransferencia')" label="Cédula" name='cedula' placeholder="0828908801">
         </app-input>
-      </div>
+      </div> -->
       <div class="mr-3">
         <app-number-input [group]="refundForm.get('infoTransferencia')" label="No. Cuenta" name='noCuenta'
           placeholder="0828908801" min="1">
@@ -131,11 +144,7 @@
           placeholder="BHD Leon">
         </app-input>
       </div>
-      <div class="mr-3">
-        <app-input [group]="refundForm.get('infoTransferencia')" label="Correo Electrónico" name='correo'
-          placeholder="correo@email.com">
-        </app-input>
-      </div>
+
 
     </div>
   </ng-template>
@@ -165,13 +174,19 @@
         </div>
       </div>
     </div>
+    <div [formGroup]="refundForm">
+      <mat-checkbox formControlName="agreeWithDeclaration">
+        Estoy de acuerdo </mat-checkbox>
+    </div>
   </ng-template>
 </app-forms-container>
-<div class="mt-8">
-  <button mat-button class="cancel-form-button" style="margin-right: 7.5px !important;"
-    (click)="formHandler.sendForm(refundForm, 'claims-refund', 'cancel')" type="submit">Cancelar</button>
-  <button mat-button class="save-button" style="margin-right: 7.5px !important;"
-    (click)="formHandler.sendForm(refundForm, 'claims-refund', 'save')" type="submit">Guardar</button>
-  <button mat-button class="send-button" (click)="formHandler.sendForm(refundForm, 'claims-refund', 'send')"
-    type="submit">Enviar</button>
-</div>
+<form #form="ngForm" [formGroup]="refundForm">
+  <div class="mt-8 mb-4">
+    <button mat-button class="cancel-form-button" style="margin-right: 7.5px !important;"
+      (click)="formHandler.sendForm(refundForm, 'claims-refund', 'cancel')" type="submit">Cancelar</button>
+    <button mat-button class="save-button" style="margin-right: 7.5px !important;"
+      (click)="formHandler.sendForm(refundForm, 'claims-refund', 'save')" type="submit">Guardar</button>
+    <button mat-button class="send-button" (click)="formHandler.sendForm(refundForm, 'claims-refund', 'send')"
+      type="submit">Enviar</button>
+  </div>
+</form>

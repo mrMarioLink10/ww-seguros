@@ -5,10 +5,16 @@
   <div class="pt-3 pb-0 mt-5 ml-1" style="background-color: #F2F2F2">
 
     <div class="mt-3 grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4">
-      <div class="ml-5 pl-5 sm:ml-3 pr-8 xl:mr-3 mb-3 mt-2 m:ml-8 m:pl-8">
+      <div class="ml-5 mr-3">
         <app-date-picker [group]="authorization" label="Fecha" name="fecha">
         </app-date-picker>
       </div>
+      <app-input class="mr-3" [group]="authorization.get('informacionAsegurado')" label="ID Number" name='idNumber'
+        placeholder=""></app-input>
+      <button (click)="searchIdNumber(authorization.get('informacionAsegurado').value.idNumber)" type="submit"
+        class="nofocus flex justify-center small-search-button">
+        <img src="/assets/iconos/search-icon.svg">
+      </button>
     </div>
   </div>
 
@@ -39,22 +45,16 @@
               placeholder="Calle 5, Casa #50, ..."></app-input>
           </div>
           <div class="mr-3">
-
             <app-number-input [group]="authorization.get('informacionAsegurado')" label="Teléfono residencia"
               name='telefonoResidencia' placeholder=""></app-number-input>
-
           </div>
           <div class="mr-3">
-
             <app-number-input [group]="authorization.get('informacionAsegurado')" label="Teléfono celular"
               name='telefonoCelular' placeholder=""></app-number-input>
-
           </div>
           <div class="mr-3">
-
             <app-number-input [group]="authorization.get('informacionAsegurado')" label="Teléfono oficina"
               name='telefonoOficina' placeholder=""></app-number-input>
-
           </div>
         </div>
 
@@ -81,7 +81,7 @@
           </div>
           <div class="mr-3">
             <app-date-picker [group]="authorization.get('informacionAsegurado').get('seguro')" label="Fecha de emisión"
-              name="fecha">
+              name="fecha" [max]="todayDate">
             </app-date-picker>
           </div>
           <div class="mr-3">
@@ -101,19 +101,19 @@
               placeholder="Dolor de cabeza">
             </app-input>
             <div class="-mr-10" style="max-width: 180px;">
-              <app-radio-button [group]="authorization.get('informacionMedica')" [options]="condiciones"
-                name="condicion">
+              <app-radio-button (selected)="selectChange($event)" [group]="authorization.get('informacionMedica')"
+                [options]="condiciones" name="condicion">
               </app-radio-button>
             </div>
-            <app-input [group]="authorization.get('informacionMedica')" label="Procedimiento a realizar"
-              name='procedimiento' placeholder="Operación ...">
-            </app-input>
+            <app-number-input [group]="authorization.get('informacionMedica')" label="Tiempo probable estadía (días)"
+              name="tiempoEstadia">
+            </app-number-input>
           </div>
 
           <!--  SEGUNDA COLUMNA -->
           <div class="mr-12">
             <app-date-picker [group]="authorization.get('informacionMedica').get('primerosSintomas')"
-              label="Fecha primeros síntomas" name="fecha">
+              label="Fecha primeros síntomas" name="fecha" [max]="todayDate">
             </app-date-picker>
             <div class="my-4">
               <label> <strong> Médico tratante: </strong> </label>
@@ -144,14 +144,19 @@
               name="direccion">
             </app-input>
 
-            <app-number-input [group]="authorization.get('informacionMedica').get('admision')" label="Teléfono" name='telefono'
-              placeholder=""></app-number-input>
+            <app-number-input [group]="authorization.get('informacionMedica').get('admision')" label="Teléfono"
+              name='telefono' placeholder=""></app-number-input>
+            <div class="my-4" [formGroup]="authorization.get('informacionMedica')">
+              <mat-checkbox formControlName="isMedicalEqual">
+                ¿Medico tratante es que refiere? </mat-checkbox>
+            </div>
           </div>
 
           <!--  CUARTA COLUMNA -->
           <div class="mr-12">
-            <app-input [group]="authorization.get('informacionMedica')" label="Tiempo probable estadía (días)"
-              name="tiempoEstadia">
+
+            <app-input [group]="authorization.get('informacionMedica')" label="Procedimiento a realizar"
+              name='procedimiento' placeholder="Operación ...">
             </app-input>
             <div class="my-4">
               <label> <strong> Centro del servicio: </strong> </label>
@@ -170,12 +175,14 @@
     </app-forms-container>
 
   </div>
-  <div class="mt-8">
-    <button mat-button class="cancel-form-button" style="margin-right: 7.5px !important;"
-      (click)="formHandler.sendForm(authorization, 'new-authorization', 'cancel')" type="submit">Cancelar</button>
-    <button mat-button class="save-button" style="margin-right: 7.5px !important;"
-      (click)="formHandler.sendForm(authorization, 'new-authorization', 'save')" type="submit">Guardar</button>
-    <button mat-button class="send-button" (click)="formHandler.sendForm(authorization, 'new-authorization', 'send')"
-      type="submit">Enviar</button>
-  </div>
+  <form #form="ngForm" [formGroup]="authorization">
+    <div class="mt-8 mb-4">
+      <button mat-button class="cancel-form-button" style="margin-right: 7.5px !important;"
+        (click)="formHandler.sendForm(authorization, 'new-authorization', 'cancel')" type="submit">Cancelar</button>
+      <button #saveButton name="saveButton" mat-button class="save-button" style="margin-right: 7.5px !important;"
+        (click)="sendForm(authorization, 'new-authorization', 'save')" type="submit">Guardar</button>
+      <button mat-button class="send-button" (click)="sendForm(authorization, 'new-authorization', 'send')"
+        type="submit">Enviar</button>
+    </div>
+  </form>
 </div>

@@ -8,7 +8,8 @@
         min="1">
       </app-number-input>
     </div>
-    <button (click)="searchIdNumber(refundForm.get('informacion').value.idNumber)" type="submit"
+    <button *ngIf="ID === null || ID === undefined"
+      (click)="searchIdNumber(refundForm.get('informacion').value.idNumber)" type="submit"
       class="nofocus flex justify-center small-search-button">
       <img src="/assets/iconos/search-icon.svg">
     </button>

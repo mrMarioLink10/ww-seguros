@@ -46,26 +46,32 @@
 
         <ng-container matColumnDef="condicion" style="margin-right: 15px !important">
           <th class="padding-cell" mat-header-cell *matHeaderCellDef mat-sort-header> Condición </th>
-          <td class="padding-cell" mat-cell *matCellDef="let element"> {{element.informacionMedica.condicion}} </td>
+          <td class="padding-cell" mat-cell *matCellDef="let element">
+            {{element.informacionMedica.condicion | titlecase}} </td>
         </ng-container>
 
         <ng-container matColumnDef="estatus" style="margin-right: 15px !important">
           <th class="padding-cell" mat-header-cell *matHeaderCellDef mat-sort-header> Estatus </th>
           <td class="padding-cell" mat-cell *matCellDef="let element"
-            [ngClass]="{'text-color-yellow': element.estatus === 0, 'text-color-red': element.estatus === 'Denegado'}">
-            {{element.statusStr}} </td>
+            [ngClass]="{'text-color-yellow': element.status === 0, 'text-color-red': element.status === 4}">
+            {{element.status | tableStatus}} </td>
         </ng-container>
 
         <ng-container matColumnDef="acciones" style="text-align: end !important; margin-right: 15px !important; ">
           <th class="padding-cell" mat-header-cell *matHeaderCellDef mat-sort-header
             style="max-width: 110px !important;"> Acciones </th>
-          <td class="padding-cell" mat-cell *matCellDef="let element" style="max-width: 110px !important;">
+          <td class="padding-cell" mat-cell *matCellDef="let element"
+            style="max-width: 110px !important; min-width: 68px !important;">
             <!-- <button mat-mini-fab aria-label="Ver mas" class="dashboard-table-buttons">
               <img src="../../../../assets/iconos/eye.svg">
             </button> -->
             <button (click)="this.newAuthorization.getID(element.id)" mat-mini-fab aria-label="Editar"
               class="dashboard-table-buttons">
               <img src="../../../../assets/iconos/edit.svg">
+            </button>
+            <button (click)="deleteAuthorization(element.id)" mat-mini-fab aria-label="Eliminar"
+              *ngIf="element.estatus !== 'Enviado'" class="dashboard-table-buttons">
+              <img src="../../../../assets/iconos/trash.svg">
             </button>
           </td>
         </ng-container>

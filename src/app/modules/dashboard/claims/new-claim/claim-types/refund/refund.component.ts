@@ -11,6 +11,7 @@ import { DialogOptionService } from 'src/app/core/services/dialog/dialog-option.
 import { MatDialog } from '@angular/material/dialog';
 import { AppComponent } from '../../../../../../app.component';
 import { UserService } from '../../../../../../core/services/user/user.service';
+import { ActivatedRoute } from '@angular/router';
 // tslint:disable: no-string-literal
 // tslint:disable: max-line-length
 
@@ -71,13 +72,17 @@ export class RefundComponent implements OnInit {
 		private dialogOption: DialogOptionService,
 		public dialog: MatDialog,
 		private appComponent: AppComponent,
-		private userService: UserService
+		private userService: UserService,
+		private route: ActivatedRoute
 	) { }
 
 	ID = null;
 
 	ngOnInit() {
-		this.ID = this.refund.id;
+		this.route.params.subscribe(res => {
+			this.ID = res.id;
+		});
+
 		if (this.ID != null) {
 			console.log('El ID es ' + this.ID);
 			this.getData(this.ID);
@@ -85,8 +90,11 @@ export class RefundComponent implements OnInit {
 			console.log('ID esta vacio');
 		}
 
+		console.log(this.ID);
+
+
 		this.refundForm = this.fb.group({
-			fecha: ['', Validators.required],
+			fecha: [new Date(), Validators.required],
 			informacion: this.fb.group({
 				noPoliza: [{ value: '', disabled: true }, [Validators.required]],
 				idNumber: ['', Validators.required],
@@ -249,10 +257,12 @@ export class RefundComponent implements OnInit {
 
 	getData(id) {
 		this.refund.returnData(id).subscribe(data => {
-			console.log(data.data.informacion.nombre);
 			console.log(data);
+			this.refundForm.get('informacion').get('idNumber').disable();
+
+
 			for (let x = 0; x < data.data.diagnosticos.length; x++) {
-				console.log('hola, soy id numero ' + data.data.diagnosticos[x].id);
+				// console.log('hola, soy id numero ' + data.data.diagnosticos[x].id);
 				// console.log("Hola, soy la descripcion de la posicion " + x + ", y mi valor es " + data.data.diagnosticos[x].descripcion)
 				if (x >= 1) {
 					// console.log('Hola, soy yo, ' + x)
@@ -267,9 +277,12 @@ export class RefundComponent implements OnInit {
 				formID4.addControl('id', this.fb.control(data.data.diagnosticos[x].id, Validators.required));
 			}
 
-			this.refundForm['controls'].comentario.setValue(data.data.comentario);
+			this.refundForm['controls'].haveAditionalComentary.setValue(data.data.haveAditionalComentary);
+			this.refundForm['controls'].comentary.setValue(data.data.comentary);
 			this.refundForm['controls'].fecha.setValue(data.data.fecha);
 			this.refundForm['controls'].forma.setValue(data.data.forma);
+			this.refundForm['controls'].agreeWithDeclaration.setValue(data.data.agreeWithDeclaration);
+			this.refundForm['controls'].areDiagnosticDatesValid.setValue(data.data.areDiagnosticDatesValid);
 
 			const sd = {
 				value: data.data.forma
@@ -278,11 +291,9 @@ export class RefundComponent implements OnInit {
 			if (sd.value != null) {
 				this.changePayment(sd);
 				if (this.refundForm.get('infoTransferencia')) {
-					this.refundForm['controls'].infoTransferencia['controls'].cedula.setValue(data.data.infoTransferencia.cedula);
 					this.refundForm['controls'].infoTransferencia['controls'].noCuenta.setValue(data.data.infoTransferencia.noCuenta);
 					this.refundForm['controls'].infoTransferencia['controls'].tipoCuenta.setValue(data.data.infoTransferencia.tipoCuenta);
 					this.refundForm['controls'].infoTransferencia['controls'].bancoEmisor.setValue(data.data.infoTransferencia.bancoEmisor);
-					this.refundForm['controls'].infoTransferencia['controls'].correo.setValue(data.data.infoTransferencia.correo);
 				}
 			} else if (sd.value == null) {
 				console.log('No hay que crear el control');
@@ -293,14 +304,8 @@ export class RefundComponent implements OnInit {
 			this.refundForm['controls'].informacion['controls'].noPoliza.setValue(data.data.informacion.noPoliza);
 			this.refundForm['controls'].informacion['controls'].nombre.setValue(data.data.informacion.nombre);
 			this.refundForm['controls'].informacion['controls'].telefono.setValue(data.data.informacion.telefono);
-			// console.log("El largo es "+ data.data.diagnosticos.length)
-			// console.log(data.data.id)
-			// console.log(data.data.infoTransferenciaId)
-			// console.log(data.data.informacionId)
-			// if(data.data.infoTransferencia.id!=null){
-			// 	console.log(data.data.infoTransferencia.id)
-			// }
-			// console.log(data.data.informacion.id)
+			this.refundForm['controls'].informacion['controls'].correo.setValue(data.data.informacion.correo);
+
 			const formID1 = this.refundForm as FormGroup;
 			formID1.addControl('id', this.fb.control(data.data.id, Validators.required));
 			// formID1.addControl('infoTransferenciaId', this.fb.control(data.data.infoTransferenciaId, Validators.required));

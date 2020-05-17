@@ -11,7 +11,8 @@
       </div>
       <app-input class="mr-3" [group]="authorization.get('informacionAsegurado')" label="ID Number" name='idNumber'
         placeholder=""></app-input>
-      <button (click)="searchIdNumber(authorization.get('informacionAsegurado').value.idNumber)" type="submit"
+      <button *ngIf="ID === null || ID === undefined"
+        (click)="searchIdNumber(authorization.get('informacionAsegurado').value.idNumber)" type="submit"
         class="nofocus flex justify-center small-search-button">
         <img src="/assets/iconos/search-icon.svg">
       </button>

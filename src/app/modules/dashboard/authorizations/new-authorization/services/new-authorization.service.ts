@@ -30,7 +30,7 @@ export class NewAuthorizationService {
 
   getID(id) {
     this.id = id;
-    this.route.navigateByUrl('/dashboard/authorizations/new-authorization');
+    this.route.navigateByUrl(`/dashboard/authorizations/new-authorization/${id}`);
   }
 
 }

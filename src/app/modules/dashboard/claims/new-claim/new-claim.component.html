@@ -1,5 +1,5 @@
 <div class="pl-6 pr-6 xs:pr-6 sm:pr-6 md:pr-12 lg:pr-12 xl:pr-12 bg-white">
-  <div class="uppercase dashboard-page-title pt-20"> Reclamos</div>
+  <!-- <div class="uppercase dashboard-page-title pt-20"> Reclamos</div>
   <div class="mt-6 w-full">
     <div class="p-3 pb-0" style="background-color: #F2F2F2">
       <div class="filter-title">Filtro tipo de reclamo</div>
@@ -8,15 +8,15 @@
           <mat-form-field color="accent" appearance="outline" class="w-full" style="font-size: small !important;">
             <mat-label>Tipo de Reclamo</mat-label>
             <mat-select (selectionChange)="selectChange($event.value)">
-              <!-- <mat-option value="reclamacion">Reclamación</mat-option> -->
+              <mat-option value="reclamacion">Reclamación</mat-option>
               <mat-option value="rembolso">Reembolso del Asegurado</mat-option>
             </mat-select>
           </mat-form-field>
         </div>
       </div>
     </div>
-  </div>
-  <div class="mt-6 pb-8 w-full ">
+  </div> -->
+  <div class="mt-12 pb-8 w-full ">
     <router-outlet></router-outlet>
   </div>
 </div>

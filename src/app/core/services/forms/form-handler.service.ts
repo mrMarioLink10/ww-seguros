@@ -10,6 +10,8 @@ import { NewAuthorizationService } from '../../../modules/dashboard/authorizatio
 import { LifeService } from 'src/app/modules/dashboard/requests/new-request/life/services/life.service';
 import { MajorExpensesService } from '../../../modules/dashboard/requests/new-request/major-expenses/services/major-expenses.service';
 import { DisabilityService } from '../../../modules/dashboard/requests/new-request/disability/services/disability.service';
+import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../../environments/environment';
 // tslint:disable: forin
 // tslint:disable: variable-name
 
@@ -30,6 +32,7 @@ export class FormHandlerService {
 		private lifeService: LifeService,
 		private majorExpensesService: MajorExpensesService,
 		private disabilityService: DisabilityService,
+		private http: HttpClient,
 	) { }
 
 	sendForm(form: FormGroup, name: string, type?: string) {
@@ -333,6 +336,23 @@ export class FormHandlerService {
 
 	navigateToMenu(route) {
 		this.route.navigateByUrl(route);
+	}
+
+	deleteRequest(id: number, type: string, title: string) {
+		const dialogRef = this.dialog.open(BaseDialogComponent, {
+			data: this.dialogOption.deleteConfirm(title),
+			minWidth: 385,
+		});
+
+		dialogRef.afterClosed().subscribe((result) => {
+			if (result === 'true') {
+				this.http.delete(`${environment.apiUrl}/api/${type}/${id}`)
+					.subscribe(response => {
+						console.log(response);
+
+					});
+			}
+		});
 	}
 
 	findInvalidControls(_input: AbstractControl, _invalidControls?: AbstractControl[]): AbstractControl[] {

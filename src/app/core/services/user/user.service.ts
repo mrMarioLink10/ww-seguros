@@ -37,4 +37,8 @@ export class UserService {
   getInsurancePeople(idNumber: string) {
     return this.http.get(`${environment.apiUrl}/api/DatosEmpresa/${idNumber}`);
   }
+
+  getWholeInsurancePeople() {
+    return this.http.get(`${environment.apiUrl}/api/DatosEmpresa`);
+  }
 }

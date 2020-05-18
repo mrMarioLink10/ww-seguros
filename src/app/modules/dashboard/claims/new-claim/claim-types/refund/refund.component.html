@@ -51,40 +51,71 @@
     </div>
   </ng-template>
   <ng-template #formTemplate>
-    <div *ngFor="let reclaimed of diagnosticList.controls; let i = index"
-      class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5">
-      <div class="mr-3">
-        <app-date-picker [max]="todayDate" [group]="refundForm.get('diagnosticos').get(i.toString())" name="fecha"
-          label="Fecha del Servicio">
-        </app-date-picker>
-      </div>
-      <div class="mr-3">
-        <app-input [group]="refundForm.get('diagnosticos').get(i.toString())" name="lugar" label="Lugar del Servicio">
-        </app-input>
-      </div>
-      <div class="mr-3 extern-description">
-        Descripción completa de los procedimientos o asistencia médica suministrados en cada fecha indicada
-      </div>
-      <div class="mr-3">
-        <app-text-area [group]="refundForm.get('diagnosticos').get(i.toString())" name="descripcion"
-          label="Descripción">
-        </app-text-area>
-      </div>
-      <div class="grid"
-        [ngClass]="{'grid-cols-1': diagnosticList.length === 1, 'grid-cols-5': diagnosticList.length > 1}">
-        <div class="" [ngClass]="{'': diagnosticList.length === 1, 'col-span-4': diagnosticList.length > 1}">
-          <app-number-input [group]=" refundForm.get('diagnosticos').get(i.toString())" name="monto"
-            label="Monto Reclamado" placeholder="10,000" min="0">
-          </app-number-input>
+    <div *ngFor="let reclaimed of diagnosticList.controls; let i = index">
+      <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5">
+        <div class="mr-3">
+          <app-date-picker [max]="todayDate" [group]="refundForm.get('diagnosticos').get(i.toString())" name="fecha"
+            label="Fecha del Servicio">
+          </app-date-picker>
         </div>
-        <div *ngIf="diagnosticList.length > 1"
-          [ngClass]="{'': diagnosticList.length === 1, 'col-span-1': diagnosticList.length > 1} ">
-          <button mat-mini-fab aria-label=" Eliminar reclamacion" (click)="removeDiagnostic(i)" type="button"
-            class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
-            <mat-icon style="color: #18446B">remove</mat-icon>
-          </button>
+        <div class="mr-3">
+          <app-input [group]="refundForm.get('diagnosticos').get(i.toString())" name="lugar" label="Lugar del Servicio">
+          </app-input>
+        </div>
+        <div class="mr-3 extern-description">
+          Descripción completa de los procedimientos o asistencia médica suministrados en cada fecha indicada
+        </div>
+        <div class="mr-3">
+          <app-text-area [group]="refundForm.get('diagnosticos').get(i.toString())" name="descripcion"
+            label="Descripción">
+          </app-text-area>
+        </div>
+        <div class="grid"
+          [ngClass]="{'grid-cols-1': diagnosticList.length === 1, 'grid-cols-5': diagnosticList.length > 1}">
+          <div class="" [ngClass]="{'': diagnosticList.length === 1, 'col-span-4 mr-3': diagnosticList.length > 1}">
+            <app-number-input [group]=" refundForm.get('diagnosticos').get(i.toString())" name="monto"
+              label="Monto Reclamado" placeholder="10,000" min="0">
+            </app-number-input>
+          </div>
+          <div *ngIf="diagnosticList.length > 1"
+            [ngClass]="{'': diagnosticList.length === 1, 'col-span-1': diagnosticList.length > 1} ">
+            <button mat-mini-fab aria-label=" Eliminar reclamacion" (click)="removeDiagnostic(i)" type="button"
+              class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
+              <mat-icon style="color: #18446B">remove</mat-icon>
+            </button>
+          </div>
         </div>
       </div>
+      <div class="mt-3 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5">
+        <mat-form-field class="mr-3" appearance="outline">
+          <mat-label>Facturas</mat-label>
+          <ngx-mat-file-input placeholder="Basic outline placeholder" (change)="onFileChange($event, 'invoices', i)">
+          </ngx-mat-file-input>
+          <mat-icon style="color: #e2e2e2;" matSuffix>publish</mat-icon>
+        </mat-form-field>
+        <mat-form-field class="mr-3" appearance="outline">
+          <mat-label>Indicaciones médicas</mat-label>
+          <ngx-mat-file-input placeholder="Basic outline placeholder" (change)="onFileChange($event, 'indications', i)">
+          </ngx-mat-file-input>
+          <mat-icon style="color: #e2e2e2;" matSuffix>publish</mat-icon>
+        </mat-form-field>
+        <mat-form-field class="mr-3" appearance="outline">
+          <mat-label>Comprobante de pagos</mat-label>
+          <ngx-mat-file-input placeholder="Basic outline placeholder"
+            (change)="onFileChange($event, 'medicReports', i)">
+          </ngx-mat-file-input>
+          <mat-icon style="color: #e2e2e2;" matSuffix>publish</mat-icon>
+        </mat-form-field>
+        <mat-form-field class="mr-3" appearance="outline">
+          <mat-label>Informe médico</mat-label>
+          <ngx-mat-file-input placeholder="Basic outline placeholder"
+            (change)="onFileChange($event, 'paymentVouchers', i)">
+          </ngx-mat-file-input>
+          <mat-icon style="color: #e2e2e2;" matSuffix>publish</mat-icon>
+        </mat-form-field>
+      </div>
+      <hr class=" mb-8 w-full ww-divider">
+
     </div>
     <div>
       <button mat-mini-fab aria-label="Agregar reclamacion" (click)="addDiagnostic()" type="button"
@@ -185,9 +216,13 @@
   <div class="mt-8 mb-4">
     <button mat-button class="cancel-form-button" style="margin-right: 7.5px !important;"
       (click)="formHandler.sendForm(refundForm, 'claims-refund', 'cancel')" type="submit">Cancelar</button>
-    <button mat-button class="save-button" style="margin-right: 7.5px !important;"
+    <!-- <button mat-button class="save-button" style="margin-right: 7.5px !important;"
       (click)="formHandler.sendForm(refundForm, 'claims-refund', 'save')" type="submit">Guardar</button>
     <button mat-button class="send-button" (click)="formHandler.sendForm(refundForm, 'claims-refund', 'send')"
+      type="submit">Enviar</button> -->
+    <button #saveButton name="saveButton" mat-button class="save-button" style="margin-right: 7.5px !important;"
+      (click)="sendForm(refundForm, 'claims-refund', 'save')" type="submit">Guardar</button>
+    <button mat-button class="send-button" (click)="sendForm(refundForm, 'claims-refund', 'send', ID)"
       type="submit">Enviar</button>
   </div>
 </form>

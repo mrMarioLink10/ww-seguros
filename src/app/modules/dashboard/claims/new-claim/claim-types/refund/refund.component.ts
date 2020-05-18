@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { FormGroup, FormArray, FormBuilder, Validators } from '@angular/forms';
 import { FieldConfig, Validator } from '../../../../../../shared/components/form-components/models/field-config';
 import { FormHandlerService } from '../../../../../../core/services/forms/form-handler.service';
@@ -73,7 +73,9 @@ export class RefundComponent implements OnInit {
 		public dialog: MatDialog,
 		private appComponent: AppComponent,
 		private userService: UserService,
-		private route: ActivatedRoute
+		private route: ActivatedRoute,
+		private cd: ChangeDetectorRef
+
 	) { }
 
 	ID = null;
@@ -137,6 +139,24 @@ export class RefundComponent implements OnInit {
 		});
 	}
 
+	onFileChange(event, formName, index) {
+		const reader = new FileReader();
+
+		if (event.target.files && event.target.files.length) {
+			const [file] = event.target.files;
+			reader.readAsDataURL(file);
+
+			reader.onload = () => {
+				this.refundForm.get('diagnosticos').get(index.toString()).get('files').patchValue({
+					[formName]: reader.result
+				});
+
+				// need to run CD since file load runs outside of zone
+				this.cd.markForCheck();
+			};
+		}
+	}
+
 	calculatedDate(value: any) {
 		const date = this.todayDate.getTime() - value;
 		return Math.floor(date / (1000 * 3600 * 24) / 30.4375);
@@ -190,7 +210,13 @@ export class RefundComponent implements OnInit {
 			fecha: ['', Validators.required],
 			lugar: ['', Validators.required],
 			descripcion: ['', Validators.required],
-			monto: ['', Validators.required]
+			monto: ['', Validators.required],
+			files: this.fb.group({
+				invoices: [''],
+				indications: [''],
+				medicReports: [''],
+				paymentVouchers: [''],
+			})
 		});
 	}
 
@@ -272,6 +298,10 @@ export class RefundComponent implements OnInit {
 				this.refundForm['controls'].diagnosticos['controls'][x]['controls'].fecha.setValue(data.data.diagnosticos[x].fecha);
 				this.refundForm['controls'].diagnosticos['controls'][x]['controls'].lugar.setValue(data.data.diagnosticos[x].lugar);
 				this.refundForm['controls'].diagnosticos['controls'][x]['controls'].monto.setValue(data.data.diagnosticos[x].monto);
+				this.refundForm['controls'].diagnosticos['controls'][x]['controls'].files['controls'].indications.setValue(data.data.diagnosticos[x].files.indications);
+				this.refundForm['controls'].diagnosticos['controls'][x]['controls'].files['controls'].invoices.setValue(data.data.diagnosticos[x].files.invoices);
+				this.refundForm['controls'].diagnosticos['controls'][x]['controls'].files['controls'].medicReports.setValue(data.data.diagnosticos[x].files.medicReports);
+				this.refundForm['controls'].diagnosticos['controls'][x]['controls'].files['controls'].paymentVouchers.setValue(data.data.diagnosticos[x].files.paymentVouchers);
 
 				const formID4 = this.refundForm.get('diagnosticos').get([x]) as FormGroup;
 				formID4.addControl('id', this.fb.control(data.data.diagnosticos[x].id, Validators.required));
@@ -319,9 +349,18 @@ export class RefundComponent implements OnInit {
 			const formID3 = this.refundForm.get('informacion') as FormGroup;
 			formID3.addControl('id', this.fb.control(data.data.informacion.id, Validators.required));
 
-			console.log(JSON.stringify(this.refundForm.value));
+			this.cd.markForCheck();
+
 		});
 		this.refund.id = null;
 		console.log('this.refund.id es igual a ' + this.refund.id);
+	}
+
+
+	sendForm(form: FormGroup, formType: string, sendType: string, id?: number) {
+		console.log(id);
+
+		this.formHandler.sendForm(form, formType, sendType, id, this.appComponent);
+
 	}
 }

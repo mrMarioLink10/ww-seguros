@@ -7,6 +7,7 @@ import { AuthorizationsService } from '../services/authorizations/authorizations
 import { HttpParams } from '@angular/common/http';
 import { NewAuthorizationService } from '../../../modules/dashboard/authorizations/new-authorization/services/new-authorization.service';
 import { FormHandlerService } from '../../../core/services/forms/form-handler.service';
+import { AppComponent } from '../../../app.component';
 
 
 
@@ -73,7 +74,8 @@ export class AuthorizationsComponent implements OnInit {
 		private route: Router,
 		public authorizationsService: AuthorizationsService,
 		public newAuthorization: NewAuthorizationService,
-		public formHandlerService: FormHandlerService
+		public formHandlerService: FormHandlerService,
+		private appComponent: AppComponent
 	) { }
 
 
@@ -90,8 +92,13 @@ export class AuthorizationsComponent implements OnInit {
 	}
 
 	deleteAuthorization(id: number) {
+		this.formHandlerService.deleteRequest(id, 'Precertificado', 'Autorización', this.appComponent);
 		this.getAuthorizations();
-		this.formHandlerService.deleteRequest(id, 'Precertificado', 'Autorización');
+	}
+
+	directSendAuthorization(id: number) {
+		this.formHandlerService.directSendRequest(id, 'Precertificado', 'Autorización', this.appComponent);
+		this.getAuthorizations();
 	}
 
 	ngOnInit() {

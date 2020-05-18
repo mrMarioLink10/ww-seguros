@@ -74,6 +74,15 @@ export class DialogOptionService {
 		};
 	}
 
+	deleteConfirmed(title: string) {
+		return {
+			logo: 'check',
+			title: `Se ha eliminado correctamente la solicitud de ${title}`,
+			text: ``,
+			showButtons: false,
+		};
+	}
+
 	sendForm(form: string) {
 		return {
 			logo: 'warning',

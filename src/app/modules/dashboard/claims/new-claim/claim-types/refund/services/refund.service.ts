@@ -29,6 +29,10 @@ export class RefundService {
     return this.http.get(`${environment.apiUrl}/api/Reembolsos/${id}`);
   }
 
+  sendRefund(id): Observable<any> {
+    return this.http.post(`${environment.apiUrl}/api/Reembolsos/confirm/${id}`, id);
+  }
+
   getID(id) {
     this.id = id;
     this.route.navigateByUrl(`/dashboard/claims/new-claim/refund/${id}`);

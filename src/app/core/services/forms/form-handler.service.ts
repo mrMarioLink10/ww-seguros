@@ -233,7 +233,6 @@ export class FormHandlerService {
 										appComponent.showOverlay = true;
 										this.refundService.sendRefund(ID)
 											.subscribe(res => {
-												console.log(res);
 												appComponent.showOverlay = false;
 												this.correctSend(res, dialog, dataClosing, route);
 											}, (err) => {
@@ -244,7 +243,6 @@ export class FormHandlerService {
 										appComponent.showOverlay = true;
 										this.refundService.postClaim(json)
 											.subscribe((res: any) => {
-												console.log(res.data.id);
 												if (res.data.id) {
 													this.refundService.sendRefund(res.data.id)
 														.subscribe(response => {
@@ -264,7 +262,6 @@ export class FormHandlerService {
 										appComponent.showOverlay = true;
 										this.newAuthorizationService.sendAuthorization(ID)
 											.subscribe(res => {
-												console.log(res);
 												appComponent.showOverlay = false;
 
 												this.correctSend(res, dialog, dataClosing, route);
@@ -277,7 +274,6 @@ export class FormHandlerService {
 										appComponent.showOverlay = true;
 										this.newAuthorizationService.postClaim(json)
 											.subscribe((res: any) => {
-												console.log(res.data.id);
 												if (res.data.id) {
 													this.newAuthorizationService.sendAuthorization(res.data.id)
 														.subscribe(response => {

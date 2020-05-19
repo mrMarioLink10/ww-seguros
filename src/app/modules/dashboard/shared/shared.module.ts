@@ -25,6 +25,7 @@ import { DivingComponent } from './components/disease/diving/diving.component';
 import { FinancialStatusComponent } from './components/disease/financial-status/financial-status.component';
 import { KnowYourCustomerComponent } from './components/disease/know-your-customer/know-your-customer.component';
 import { TableStatusPipe } from '../../../core/pipes/table-status.pipe';
+import { MaterialFileInputModule } from 'ngx-material-file-input';
 
 @NgModule({
   declarations: [
@@ -49,7 +50,7 @@ import { TableStatusPipe } from '../../../core/pipes/table-status.pipe';
     KnowYourCustomerComponent,
     TableStatusPipe
   ],
-  imports: [CommonModule, MaterialModule, GlobalSharedModule, FormsModule, ReactiveFormsModule, HttpClientModule],
+  imports: [CommonModule, MaterialModule, GlobalSharedModule, FormsModule, ReactiveFormsModule, HttpClientModule, MaterialFileInputModule],
   exports: [
     FilterComponent,
     FormsContainerComponent,
@@ -70,7 +71,8 @@ import { TableStatusPipe } from '../../../core/pipes/table-status.pipe';
     DivingComponent,
     FinancialStatusComponent,
     KnowYourCustomerComponent,
-    TableStatusPipe
+    TableStatusPipe,
+    MaterialFileInputModule
   ]
 })
 export class SharedModule { }

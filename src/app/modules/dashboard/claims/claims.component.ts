@@ -114,7 +114,7 @@ export class ClaimsComponent implements OnInit {
 
 	newClaim() {
 		this.newClaimButtonOptions.active = true;
-		this.route.navigateByUrl('/dashboard/claims/new-claim');
+		this.route.navigateByUrl('/dashboard/claims/new-claim/refund');
 	}
 }
 

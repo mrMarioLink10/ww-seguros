@@ -25,7 +25,9 @@ const routes: Routes = [
 		},
 		children: [
 			{ path: 'claim', component: ClaimComponent, canDeactivate: [CanExitGuard] },
+			{ path: 'claim/:id', component: ClaimComponent, canDeactivate: [CanExitGuard] },
 			{ path: 'refund', component: RefundComponent, canDeactivate: [CanExitGuard] },
+			{ path: 'refund/:id', component: RefundComponent, canDeactivate: [CanExitGuard] },
 		]
 	}
 ];

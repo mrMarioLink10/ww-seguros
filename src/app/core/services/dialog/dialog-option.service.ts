@@ -62,6 +62,27 @@ export class DialogOptionService {
 		showButtons: false,
 	};
 
+	deleteConfirm(title: string) {
+		return {
+			logo: 'warning',
+			title: `¿Esta seguro de que desea borrar esta solicitud de ${title}?`,
+			text: `Esta acción no se podra revertir`,
+			showButtons: true,
+			showCancelButton: true,
+			textPrincipalButton: 'Eliminar',
+			textCancelButton: 'Cancelar'
+		};
+	}
+
+	deleteConfirmed(title: string) {
+		return {
+			logo: 'check',
+			title: `Se ha eliminado correctamente la solicitud de ${title}`,
+			text: ``,
+			showButtons: false,
+		};
+	}
+
 	sendForm(form: string) {
 		return {
 			logo: 'warning',

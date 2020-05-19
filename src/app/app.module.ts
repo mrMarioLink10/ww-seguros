@@ -18,6 +18,7 @@ import { GlobalSharedModule } from './shared/global-shared.module';
 import { MatTableModule } from '@angular/material/table';
 import { FormsModule } from '@angular/forms';
 import { MatProgressButtonsModule } from 'mat-progress-buttons';
+import { MaterialFileInputModule } from 'ngx-material-file-input';
 
 const keycloakService = new KeycloakService();
 
@@ -33,7 +34,8 @@ const keycloakService = new KeycloakService();
 		MatTableModule,
 		MatSortModule,
 		FormsModule,
-		MatProgressButtonsModule
+		MatProgressButtonsModule,
+		MaterialFileInputModule
 	],
 	providers: [
 		{ provide: MatPaginatorIntl, useClass: MatPaginatorIntlCro },

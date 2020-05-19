@@ -10,6 +10,9 @@ import { NewAuthorizationService } from '../../../modules/dashboard/authorizatio
 import { LifeService } from 'src/app/modules/dashboard/requests/new-request/life/services/life.service';
 import { MajorExpensesService } from '../../../modules/dashboard/requests/new-request/major-expenses/services/major-expenses.service';
 import { DisabilityService } from '../../../modules/dashboard/requests/new-request/disability/services/disability.service';
+import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../../environments/environment';
+import { AppComponent } from 'src/app/app.component';
 // tslint:disable: forin
 // tslint:disable: variable-name
 
@@ -19,7 +22,6 @@ import { DisabilityService } from '../../../modules/dashboard/requests/new-reque
 export class FormHandlerService {
 	sendedForm;
 	errorServer = this.dialogOption.errorServer;
-
 	constructor(
 		private dialog: MatDialog,
 		private dialogOption: DialogOptionService,
@@ -30,18 +32,24 @@ export class FormHandlerService {
 		private lifeService: LifeService,
 		private majorExpensesService: MajorExpensesService,
 		private disabilityService: DisabilityService,
+		private http: HttpClient,
 	) { }
 
-	sendForm(form: FormGroup, name: string, type?: string) {
+	sendForm(form: FormGroup, name: string, type?: string, id?: number, appComponent?: any) {
 		console.log('Impresion de formulario down here: ', form);
-		this.dialogHandler(form, name, type);
+		this.dialogHandler(form, name, type, id, appComponent);
+		console.log(appComponent);
 	}
 
-	dialogHandler(form: FormGroup, name: string, type: string) {
+	dialogHandler(form: FormGroup, name: string, type: string, id?: number, appComponent?: any) {
 		let Dialog;
 		let dataOpen;
 		let dataClosing;
 		let route;
+
+		const ID = id;
+
+		console.log(ID);
 
 		switch (name) {
 			case 'claims-reclaim':
@@ -116,8 +124,6 @@ export class FormHandlerService {
 			this.navigateToMenu(route);
 			return;
 		}
-
-		console.log(dataOpen, dataClosing);
 
 		Dialog = this.dialog.open(BaseDialogComponent, {
 			data: dataOpen,
@@ -204,97 +210,140 @@ export class FormHandlerService {
 				case 'send':
 					if (result === 'true') {
 						let dialog;
-						dialog = this.dialog.open(BaseDialogComponent, {
-							data: this.dialogOption.WIP,
-							minWidth: 385
-						});
-						this.closeDialog(dialog);
-						// if (form.valid) {
-						// 	switch (name) {
-						// 		case 'claims-reclaim':
-						// 			this.claimService.postClaim(json)
-						// 				.subscribe(res => {
-						// 					this.correctSend(res, dialog, dataClosing, route);
+						// dialog = this.dialog.open(BaseDialogComponent, {
+						// 	data: dataOpen,
+						// 	minWidth: 385
+						// });
+						// this.closeDialog(dialog);
+						if (form.valid) {
+							switch (name) {
+								case 'claims-reclaim':
+									this.claimService.postClaim(json)
+										.subscribe(res => {
+											this.correctSend(res, dialog, dataClosing, route);
 
-						// 				}, (err) => {
-						// 					this.badSend(err, dialog);
+										}, (err) => {
+											this.badSend(err, dialog);
 
-						// 				});
-						// 			break;
+										});
+									break;
 
-						// 		case 'claims-refund':
-						// 			this.refundService.postClaim(json)
-						// 				.subscribe(res => {
-						// 					this.correctSend(res, dialog, dataClosing, route);
+								case 'claims-refund':
+									if (ID) {
+										appComponent.showOverlay = true;
+										this.refundService.sendRefund(ID)
+											.subscribe(res => {
+												appComponent.showOverlay = false;
+												this.correctSend(res, dialog, dataClosing, route);
+											}, (err) => {
+												appComponent.showOverlay = false;
+												this.badSend(err, dialog);
+											});
+									} else {
+										appComponent.showOverlay = true;
+										this.refundService.postClaim(json)
+											.subscribe((res: any) => {
+												if (res.data.id) {
+													this.refundService.sendRefund(res.data.id)
+														.subscribe(response => {
+															appComponent.showOverlay = false;
+															this.correctSend(response, dialog, dataClosing, route);
+														});
+												}
+											}, (err) => {
+												appComponent.showOverlay = false;
+												this.badSend(err, dialog);
+											});
+									}
+									break;
 
-						// 				}, (err) => {
-						// 					this.badSend(err, dialog);
+								case 'new-authorization':
+									if (ID) {
+										appComponent.showOverlay = true;
+										this.newAuthorizationService.sendAuthorization(ID)
+											.subscribe(res => {
+												appComponent.showOverlay = false;
 
-						// 				});
-						// 			break;
+												this.correctSend(res, dialog, dataClosing, route);
+											}, (err) => {
+												appComponent.showOverlay = false;
+												this.badSend(err, dialog);
 
-						// 		case 'new-authorization':
-						// 			this.newAuthorizationService.postClaim(json)
-						// 				.subscribe(res => {
-						// 					this.correctSend(res, dialog, dataClosing, route);
+											});
+									} else {
+										appComponent.showOverlay = true;
+										this.newAuthorizationService.postClaim(json)
+											.subscribe((res: any) => {
+												if (res.data.id) {
+													this.newAuthorizationService.sendAuthorization(res.data.id)
+														.subscribe(response => {
+															appComponent.showOverlay = false;
+															console.log(response);
+															this.correctSend(response, dialog, dataClosing, route);
 
-						// 				}, (err) => {
-						// 					this.badSend(err, dialog);
+														});
+												}
+												// this.correctSend(res, dialog, dataClosing, route);
 
-						// 				});
-						// 			break;
+											}, (err) => {
+												appComponent.showOverlay = false;
+												this.badSend(err, dialog);
 
-						// 		case 'life':
-						// 			this.lifeService.postRequest(json)
-						// 				.subscribe(res => {
-						// 					this.correctSend(res, dialog, dataClosing, route);
+											});
+									}
+									break;
 
-						// 				}, (err) => {
-						// 					this.badSend(err, dialog);
+								case 'life':
+									this.lifeService.postRequest(json)
+										.subscribe(res => {
+											this.correctSend(res, dialog, dataClosing, route);
 
-						// 				});
-						// 			break;
+										}, (err) => {
+											this.badSend(err, dialog);
 
-						// 		case 'major-expenses':
-						// 			this.majorExpensesService.postRequest(json)
-						// 				.subscribe(res => {
-						// 					this.correctSend(res, dialog, dataClosing, route);
+										});
+									break;
 
-						// 				}, (err) => {
-						// 					this.badSend(err, dialog);
+								case 'major-expenses':
+									this.majorExpensesService.postRequest(json)
+										.subscribe(res => {
+											this.correctSend(res, dialog, dataClosing, route);
 
-						// 				});
-						// 			break;
+										}, (err) => {
+											this.badSend(err, dialog);
 
-						// 		case 'disability':
-						// 			this.disabilityService.postRequest(json)
-						// 				.subscribe(res => {
-						// 					this.correctSend(res, dialog, dataClosing, route);
+										});
+									break;
 
-						// 				}, (err) => {
-						// 					this.badSend(err, dialog);
+								case 'disability':
+									this.disabilityService.postRequest(json)
+										.subscribe(res => {
+											this.correctSend(res, dialog, dataClosing, route);
 
-						// 				});
-						// 			break;
+										}, (err) => {
+											this.badSend(err, dialog);
 
-						// 		default:
-						// 			break;
-						// 	}
+										});
+									break;
 
-						// 	console.log(JSON.stringify(this.sendedForm));
-						// } else {
-						// 	// console.log(this.findInvalidControls(form));
+								default:
+									break;
+							}
 
-						// 	const invalidControls = [];
-						// 	for (const control in this.findInvalidControls(form)) {
-						// 		invalidControls.push(this.getName(this.findInvalidControls(form)[control]));
-						// 	}
-						// 	dialog = this.dialog.open(BaseDialogComponent, {
-						// 		data: this.dialogOption.getInvalidControls(invalidControls),
-						// 		minWidth: 385
-						// 	});
-						// 	this.closeDialog(dialog);
-						// }
+							console.log(JSON.stringify(this.sendedForm));
+						} else {
+							// console.log(this.findInvalidControls(form));
+
+							const invalidControls = [];
+							for (const control in this.findInvalidControls(form)) {
+								invalidControls.push(this.getName(this.findInvalidControls(form)[control]));
+							}
+							dialog = this.dialog.open(BaseDialogComponent, {
+								data: this.dialogOption.getInvalidControls(invalidControls),
+								minWidth: 385
+							});
+							this.closeDialog(dialog);
+						}
 					}
 					break;
 
@@ -314,14 +363,14 @@ export class FormHandlerService {
 		this.navigateToMenu(route);
 	}
 
-	badSend(err, dialog) {
+	badSend(err, dialog?) {
 		console.log(err);
 
-		dialog = this.dialog.open(BaseDialogComponent, {
+		const dialogRef = this.dialog.open(BaseDialogComponent, {
 			data: this.errorServer,
 			minWidth: 385
 		});
-		this.closeDialog(dialog);
+		this.closeDialog(dialogRef);
 	}
 
 	closeDialog(dialog) {
@@ -333,6 +382,62 @@ export class FormHandlerService {
 
 	navigateToMenu(route) {
 		this.route.navigateByUrl(route);
+	}
+
+	directSendRequest(id: number, type: string, title: string, appComponent: any) {
+		const dialogRef = this.dialog.open(BaseDialogComponent, {
+			data: this.dialogOption.sendForm(title),
+			minWidth: 385,
+		});
+
+		dialogRef.afterClosed().subscribe((result) => {
+			if (result === 'true') {
+				appComponent.showOverlay = true;
+				this.http.post(`${environment.apiUrl}/api/${type}/confirm/${id}`, id)
+					.subscribe(response => {
+						appComponent.showOverlay = false;
+						console.log(response);
+
+						const dialog = this.dialog.open(BaseDialogComponent, {
+							data: this.dialogOption.confirmedForm(title),
+							minWidth: 385
+						});
+						this.closeDialog(dialog);
+
+					}, (err) => {
+						this.badSend(err);
+
+					});
+			}
+		});
+	}
+
+	deleteRequest(id: number, type: string, title: string, appComponent: any) {
+		const dialogRef = this.dialog.open(BaseDialogComponent, {
+			data: this.dialogOption.deleteConfirm(title),
+			minWidth: 385,
+		});
+
+		dialogRef.afterClosed().subscribe((result) => {
+			if (result === 'true') {
+				appComponent.showOverlay = true;
+
+				this.http.delete(`${environment.apiUrl}/api/${type}/${id}`)
+					.subscribe(response => {
+						console.log(response);
+						appComponent.showOverlay = false;
+
+						const dialog = this.dialog.open(BaseDialogComponent, {
+							data: this.dialogOption.deleteConfirmed(title),
+							minWidth: 385
+						});
+						this.closeDialog(dialog);
+					}, (err) => {
+						this.badSend(err);
+
+					});
+			}
+		});
 	}
 
 	findInvalidControls(_input: AbstractControl, _invalidControls?: AbstractControl[]): AbstractControl[] {

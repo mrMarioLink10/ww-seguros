@@ -28,9 +28,13 @@ export class NewAuthorizationService {
     return this.http.get(`${environment.apiUrl}/api/Precertificado/${id}`);
   }
 
+  sendAuthorization(id): Observable<any> {
+    return this.http.post(`${environment.apiUrl}/api/Precertificado/confirm/${id}`, id);
+  }
+
   getID(id) {
     this.id = id;
-    this.route.navigateByUrl('/dashboard/authorizations/new-authorization');
+    this.route.navigateByUrl(`/dashboard/authorizations/new-authorization/${id}`);
   }
 
 }

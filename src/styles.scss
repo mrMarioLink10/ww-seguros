@@ -484,18 +484,6 @@ body {
   outline-style: none !important
 }
 
-button:focus,
-button:active:focus,
-button.active:focus {
-  outline: none !important;
-  outline-style: none !important;
-}
-
-*:focus {
-  outline: none !important;
-  border: 0 !important;
-}
-
 .nofocus:focus {
   outline: none !important;
   outline-style: none !important;

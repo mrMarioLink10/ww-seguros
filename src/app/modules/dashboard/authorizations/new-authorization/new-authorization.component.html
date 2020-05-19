@@ -9,9 +9,10 @@
         <app-date-picker [group]="authorization" label="Fecha" name="fecha">
         </app-date-picker>
       </div>
-      <app-input class="mr-3" [group]="authorization.get('informacionAsegurado')" label="ID Number" name='idNumber'
-        placeholder=""></app-input>
-      <button (click)="searchIdNumber(authorization.get('informacionAsegurado').value.idNumber)" type="submit"
+      <app-number-input class="mr-3" [group]="authorization.get('informacionAsegurado')" label="ID Number"
+        name='idNumber' placeholder=""></app-number-input>
+      <button *ngIf="ID === null || ID === undefined"
+        (click)="searchIdNumber(authorization.get('informacionAsegurado').value.idNumber)" type="submit"
         class="nofocus flex justify-center small-search-button">
         <img src="/assets/iconos/search-icon.svg">
       </button>
@@ -172,6 +173,29 @@
         </div>
       </ng-template>
 
+      <ng-template #formTemplate>
+        <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
+          <!-- <input id="file" type="file" class="form-control"> -->
+          <mat-form-field class="mr-3" appearance="outline">
+            <mat-label>Informe médico</mat-label>
+            <ngx-mat-file-input placeholder="Basic outline placeholder" (change)="onFileChange($event, 'medicReport')">
+            </ngx-mat-file-input>
+            <mat-icon style="color: #e2e2e2;" matSuffix>publish</mat-icon>
+          </mat-form-field>
+          <mat-form-field class="mr-3" appearance="outline">
+            <mat-label>Estudios</mat-label>
+            <ngx-mat-file-input placeholder="Estudios" (change)="onFileChange($event, 'studies')">
+            </ngx-mat-file-input>
+            <mat-icon style="color: #e2e2e2;" matSuffix>publish</mat-icon>
+          </mat-form-field>
+          <mat-form-field class="mr-3" appearance="outline">
+            <mat-label>Indicacion</mat-label>
+            <ngx-mat-file-input placeholder="Indicacion" (change)="onFileChange($event, 'indication')">
+            </ngx-mat-file-input>
+            <mat-icon style="color: #e2e2e2;" matSuffix>publish</mat-icon>
+          </mat-form-field>
+        </div>
+      </ng-template>
     </app-forms-container>
 
   </div>
@@ -181,7 +205,7 @@
         (click)="formHandler.sendForm(authorization, 'new-authorization', 'cancel')" type="submit">Cancelar</button>
       <button #saveButton name="saveButton" mat-button class="save-button" style="margin-right: 7.5px !important;"
         (click)="sendForm(authorization, 'new-authorization', 'save')" type="submit">Guardar</button>
-      <button mat-button class="send-button" (click)="sendForm(authorization, 'new-authorization', 'send')"
+      <button mat-button class="send-button" (click)="sendForm(authorization, 'new-authorization', 'send', ID)"
         type="submit">Enviar</button>
     </div>
   </form>

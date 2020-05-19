@@ -6,6 +6,8 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ClaimsService } from '../../services/claims/claims.service';
 import { HttpParams } from '@angular/common/http';
 import { RefundService } from './../new-claim/claim-types/refund/services/refund.service'
+import { FormHandlerService } from 'src/app/core/services/forms/form-handler.service';
+import { AppComponent } from 'src/app/app.component';
 
 
 @Component({
@@ -28,7 +30,14 @@ export class RefundsListComponent implements OnInit {
 
 	testForm: FormGroup;
 
-	constructor(private route: Router, private fb: FormBuilder, public claimsService: ClaimsService, public refund: RefundService) { }
+	constructor(
+		private route: Router,
+		private fb: FormBuilder,
+		public claimsService: ClaimsService,
+		public refund: RefundService,
+		public formHandlerService: FormHandlerService,
+		private appComponent: AppComponent
+	) { }
 
 	getRefunds(params: HttpParams = new HttpParams()) {
 		let data;
@@ -43,6 +52,16 @@ export class RefundsListComponent implements OnInit {
 	}
 
 	ngOnInit() {
+		this.getRefunds();
+	}
+
+	deleteRefund(id: number) {
+		this.formHandlerService.deleteRequest(id, 'Reembolsos', 'Reembolso', this.appComponent);
+		this.getRefunds();
+	}
+
+	directSendRefund(id: number) {
+		this.formHandlerService.directSendRequest(id, 'Reembolsos', 'Reembolso', this.appComponent);
 		this.getRefunds();
 	}
 

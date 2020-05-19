@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Router, RouterEvent, NavigationStart, NavigationEnd, NavigationCancel, NavigationError, ChildActivationStart } from '@angular/router';
+import { Router, RouterEvent, NavigationEnd, NavigationCancel, NavigationError, ChildActivationStart } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -11,7 +11,9 @@ export class AppComponent {
 
   public showOverlay = true;
 
-  constructor(private router: Router) {
+  constructor(
+    private router: Router,
+  ) {
 
     router.events.subscribe((event: RouterEvent) => {
       this.navigationInterceptor(event);

@@ -10,18 +10,16 @@ const routes: Routes = [
 		path: '',
 		pathMatch: 'full',
 		component: AuthorizationsComponent,
-		data: {
-			slug: 'authorization',
-			name: 'Autorizacion'
-		}
 	},
 	{
 		path: 'new-authorization',
 		component: NewAuthorizationComponent,
-		data: {
-			slug: 'new-authorization',
-			name: 'Nueva Autorizacion'
-		},
+		canDeactivate: [CanExitGuard]
+	}
+	,
+	{
+		path: 'new-authorization/:id',
+		component: NewAuthorizationComponent,
 		canDeactivate: [CanExitGuard]
 	}
 ];

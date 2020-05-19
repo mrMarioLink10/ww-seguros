@@ -6,6 +6,8 @@ import { FormGroup, Validators } from '@angular/forms';
 import { AuthorizationsService } from '../services/authorizations/authorizations.service';
 import { HttpParams } from '@angular/common/http';
 import { NewAuthorizationService } from '../../../modules/dashboard/authorizations/new-authorization/services/new-authorization.service';
+import { FormHandlerService } from '../../../core/services/forms/form-handler.service';
+import { AppComponent } from '../../../app.component';
 
 
 
@@ -71,7 +73,9 @@ export class AuthorizationsComponent implements OnInit {
 	constructor(
 		private route: Router,
 		public authorizationsService: AuthorizationsService,
-		public newAuthorization: NewAuthorizationService
+		public newAuthorization: NewAuthorizationService,
+		public formHandlerService: FormHandlerService,
+		private appComponent: AppComponent
 	) { }
 
 
@@ -85,6 +89,16 @@ export class AuthorizationsComponent implements OnInit {
 				this.dataSource.sort = this.sort;
 				this.dataSource.paginator = this.paginator;
 			}, err => console.log(err));
+	}
+
+	deleteAuthorization(id: number) {
+		this.formHandlerService.deleteRequest(id, 'Precertificado', 'Autorización', this.appComponent);
+		this.getAuthorizations();
+	}
+
+	directSendAuthorization(id: number) {
+		this.formHandlerService.directSendRequest(id, 'Precertificado', 'Autorización', this.appComponent);
+		this.getAuthorizations();
 	}
 
 	ngOnInit() {

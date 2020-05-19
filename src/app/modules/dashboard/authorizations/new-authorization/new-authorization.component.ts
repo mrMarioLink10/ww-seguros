@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { FieldConfig } from '../../../../shared/components/form-components/models/field-config';
 import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
 import { FormHandlerService } from '../../../../core/services/forms/form-handler.service';
@@ -9,9 +9,10 @@ import { DialogOptionService } from 'src/app/core/services/dialog/dialog-option.
 import { MatDialog } from '@angular/material';
 import { Observable } from 'rxjs';
 import { BaseDialogComponent } from 'src/app/shared/components/base-dialog/base-dialog.component';
-import { map, first } from 'rxjs/operators';
+import { map, first, switchMap } from 'rxjs/operators';
 import { UserService } from '../../../../core/services/user/user.service';
 import { AppComponent } from '../../../../app.component';
+import { ParamMap, ActivatedRoute, Router } from '@angular/router';
 // tslint:disable: no-string-literal
 // tslint:disable: max-line-length
 
@@ -30,13 +31,17 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy {
 		private dialogOption: DialogOptionService,
 		public dialog: MatDialog,
 		private userService: UserService,
-		private appComponent: AppComponent
+		private appComponent: AppComponent,
+		private route: ActivatedRoute,
+		private router: Router,
+		private cd: ChangeDetectorRef
 	) {
 	}
 
 	accordionTitles = [
 		'Información del Asegurado',
-		'Información médica'
+		'Información médica',
+		'Archivos adjuntos'
 	];
 
 	seguros: FieldConfig = {
@@ -125,8 +130,11 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy {
 		}
 	}
 	ngOnInit() {
+		this.route.params.subscribe(res => {
+			this.ID = res.id;
+		});
 
-		this.ID = this.newAuthorization.id;
+		// this.ID = this.newAuthorization.id;
 		if (this.ID != null) {
 			console.log('El ID es ' + this.ID);
 			this.getData(this.ID);
@@ -135,7 +143,7 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy {
 		}
 
 		this.authorization = this.fb.group({
-			fecha: ['', Validators.required],
+			fecha: [new Date(), Validators.required],
 			informacionAsegurado: this.fb.group({
 				nombres: [{ value: '', disabled: true }, [Validators.required]],
 				apellidos: [{ value: '', disabled: true }, [Validators.required]],
@@ -170,6 +178,11 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy {
 				isMedicalEqual: [''],
 				// direccion: ['', Validators.required],
 				// telefono: ['', Validators.required],
+			}),
+			files: this.fb.group({
+				medicReport: [''],
+				studies: [''],
+				indication: [''],
 			}),
 			isComplete: [false, Validators.required]
 
@@ -216,8 +229,27 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy {
 		});
 	}
 
+	onFileChange(event, formName) {
+		const reader = new FileReader();
+
+		if (event.target.files && event.target.files.length) {
+			const [file] = event.target.files;
+			reader.readAsDataURL(file);
+
+			reader.onload = () => {
+				this.authorization.get('files').patchValue({
+					[formName]: reader.result
+				});
+
+				// need to run CD since file load runs outside of zone
+				this.cd.markForCheck();
+			};
+		}
+	}
+
 	searchIdNumber(idNumber: string) {
 		this.appComponent.showOverlay = true;
+
 		this.userService.getInsurancePeople(idNumber)
 			.subscribe((response: any) => {
 				console.log(response);
@@ -301,13 +333,26 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy {
 
 	getData(id) {
 		this.newAuthorization.returnData(id).subscribe(data => {
-			// console.log(data.data.informacionAsegurado.nombre)
-			// console.log(data)
-			// console.log(data.data.informacionMedica.primerosSintomas.nombreMedico);
-			// this.authorization.controls['informacionAsegurado'].setValue("")
+			console.log(data);
+			this.authorization.get('informacionAsegurado').get('idNumber').disable();
+
+			switch (data.data.informacionAsegurado.sexo) {
+				case 'M':
+					this.authorization.get('informacionAsegurado').get('sexo').setValue('masculino');
+					break;
+
+				case 'F':
+					this.authorization.get('informacionAsegurado').get('sexo').setValue('femenino');
+					break;
+				default:
+					break;
+			}
+
 			this.authorization['controls'].fecha.setValue(data.data.fecha);
-			this.authorization['controls'].informacionAsegurado['controls'].nombre.setValue(data.data.informacionAsegurado.nombre);
+			this.authorization['controls'].informacionAsegurado['controls'].nombres.setValue(data.data.informacionAsegurado.nombres);
+			this.authorization['controls'].informacionAsegurado['controls'].apellidos.setValue(data.data.informacionAsegurado.apellidos);
 			this.authorization['controls'].informacionAsegurado['controls'].noPoliza.setValue(data.data.informacionAsegurado.noPoliza);
+			this.authorization['controls'].informacionAsegurado['controls'].idNumber.setValue(data.data.informacionAsegurado.idNumber);
 			this.authorization['controls'].informacionAsegurado['controls'].sexo.setValue(data.data.informacionAsegurado.sexo);
 			this.authorization['controls'].informacionAsegurado['controls'].correo.setValue(data.data.informacionAsegurado.correo);
 			this.authorization['controls'].informacionAsegurado['controls'].direccion.setValue(data.data.informacionAsegurado.direccion);
@@ -328,8 +373,28 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy {
 			this.authorization['controls'].informacionMedica['controls'].admision['controls'].telefono.setValue(data.data.informacionMedica.admision.telefono);
 			this.authorization['controls'].informacionMedica['controls'].tiempoEstadia.setValue(data.data.informacionMedica.tiempoEstadia);
 			this.authorization['controls'].informacionMedica['controls'].nombreServicio.setValue(data.data.informacionMedica.nombreServicio);
-			this.authorization['controls'].informacionMedica['controls'].direccion.setValue(data.data.informacionMedica.direccion);
-			this.authorization['controls'].informacionMedica['controls'].telefono.setValue(data.data.informacionMedica.telefono);
+			this.authorization['controls'].informacionMedica['controls'].isMedicalEqual.setValue(data.data.informacionMedica.isMedicalEqual);
+			// this.authorization['controls'].files['controls'].medicReport.setValue(data.data.files.medicReport);
+			if (data.data.files) {
+				if (data.data.files.medicReport) {
+					this.authorization.get('files').patchValue({
+						medicReport: data.data.files.medicReport
+					});
+				}
+				if (data.data.files.studies) {
+					this.authorization.get('files').patchValue({
+						studies: data.data.files.studies
+					});
+				}
+				if (data.data.files.indication) {
+					this.authorization.get('files').patchValue({
+						indication: data.data.files.indication
+					});
+				}
+			}
+
+			// this.authorization['controls'].files['controls'].studies.setValue(data.data.files.studies);
+			// this.authorization['controls'].files['controls'].indication.setValue(data.data.files.indication);
 
 			if (data.data.informacionAsegurado.otroSeguro === 'si') {
 				const form = this.authorization.get('informacionAsegurado') as FormGroup;
@@ -344,22 +409,11 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy {
 				this.authorization['controls'].informacionAsegurado['controls'].seguro['controls'].fecha.setValue(data.data.informacionAsegurado.seguro.fecha);
 				this.authorization['controls'].informacionAsegurado['controls'].seguro['controls'].suma.setValue(data.data.informacionAsegurado.seguro.suma);
 
-				console.log(JSON.stringify(this.authorization.value));
+				// console.log(JSON.stringify(this.authorization.value));
 			} else if (data.data.informacionAsegurado.otroSeguro === 'no') {
 				console.log('No hay que crear el control');
 			}
-			// console.log(data.data.id)
-			// console.log(data.data.informacionAseguradoId)
-			// console.log(data.data.informacionMedicaId)
-			// console.log(data.data.informacionAsegurado.id)
-			// if(data.data.informacionAsegurado.seguro.id!=null){
-			// 	console.log(data.data.informacionAsegurado.seguro.id)
-			// }
-			// console.log(data.data.informacionMedica.admisionId)
-			// console.log(data.data.informacionMedica.id)
-			// console.log(data.data.informacionMedica.primerosSintomasId)
-			// console.log(data.data.informacionMedica.admision.id)
-			// console.log(data.data.informacionMedica.primerosSintomas.id)
+
 			const formID1 = this.authorization as FormGroup;
 			formID1.addControl('id', this.fb.control(data.data.id, Validators.required));
 			// formID1.addControl('informacionAseguradoId', this.fb.control(data.data.informacionAseguradoId, Validators.required));
@@ -369,9 +423,9 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy {
 			formID2.addControl('id', this.fb.control(data.data.informacionAsegurado.id, Validators.required));
 
 			const formID3 = this.authorization.get('informacionMedica') as FormGroup;
-			formID3.addControl('admisionId', this.fb.control(data.data.informacionMedica.admisionId, Validators.required));
+			// formID3.addControl('admisionId', this.fb.control(data.data.informacionMedica.admisionId, Validators.required));
 			formID3.addControl('id', this.fb.control(data.data.informacionMedica.id, Validators.required));
-			formID3.addControl('primerosSintomasId', this.fb.control(data.data.informacionMedica.primerosSintomasId, Validators.required));
+			// formID3.addControl('primerosSintomasId', this.fb.control(data.data.informacionMedica.primerosSintomasId, Validators.required));
 
 			const formID4 = this.authorization.get('informacionMedica').get('admision') as FormGroup;
 			formID4.addControl('id', this.fb.control(data.data.informacionMedica.admision.id, Validators.required));
@@ -390,8 +444,10 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy {
 		console.log('this.newAuthorization.id es igual a ' + this.newAuthorization.id);
 	}
 
-	sendForm(form: FormGroup, formType: string, sendType: string) {
-		this.formHandler.sendForm(form, formType, sendType);
+	sendForm(form: FormGroup, formType: string, sendType: string, id?: number) {
+		console.log(id);
+
+		this.formHandler.sendForm(form, formType, sendType, id, this.appComponent);
 
 	}
 }

@@ -14,6 +14,7 @@ import { MatDialog } from '@angular/material';
 import { Observable } from 'rxjs';
 import { BaseDialogComponent } from 'src/app/shared/components/base-dialog/base-dialog.component';
 import { map, first } from 'rxjs/operators';
+import { KnowYourCustomerComponent } from '../../../shared/components/disease/know-your-customer/know-your-customer.component';
 // tslint:disable: one-line
 // tslint:disable: max-line-length
 
@@ -411,7 +412,8 @@ export class LifeComponent implements OnInit, DoCheck {
     public dialogModal: DialogService,
     private dialogOption: DialogOptionService,
     public dialog: MatDialog,
-    private life:LifeService
+    private life:LifeService,
+    private know:KnowYourCustomerComponent
   ) { }
 
   ID = null;
@@ -589,12 +591,12 @@ export class LifeComponent implements OnInit, DoCheck {
         haveEyesNoseThroatProblem: ['', Validators.required],
         haveBloodDisorder: ['', Validators.required],
         haveBirthDefect: ['', Validators.required],
-        HaveMedicalProcedures: ['', Validators.required],
+        haveMedicalProcedures: ['', Validators.required],
         haveBeenAPatient: ['', Validators.required],
         haveHadSpecializedTests: ['', Validators.required],
         haveNotCarriedOut: ['', Validators.required],
         haveTakenInLast12Months: ['', Validators.required],
-        haveTestedPositiveForHIV: ['', Validators.required],
+        haveTestedPositiveForHiv: ['', Validators.required],
         havePlanToObtainMedicalTreatment: ['', Validators.required],
         haveDiabetesDiagnosis: ['', Validators.required],
         haveHadWeightChanges: ['', Validators.required],
@@ -742,7 +744,7 @@ export class LifeComponent implements OnInit, DoCheck {
       },
       {
         label: 'l. ¿Ha tenido un examen médico, consulta, enfermedad, lesión o procedimientos médicos ambulatorios o intrahospitalarios?',
-        name: 'HaveMedicalProcedures',
+        name: 'haveMedicalProcedures',
         array: 'medicalProceduresList',
         group: 'medicalProcedures'
       },
@@ -778,7 +780,7 @@ export class LifeComponent implements OnInit, DoCheck {
       },
       {
         label: '5. ¿Ha tenido resultado positivos por haber sido expuesto a la infección del VIH o ha sido diagnosticado con el complejo relacionado con el SIDA por causa de infección VIH u otra enfermedad o condición derivada de dicha infección?',
-        name: 'haveTestedPositiveForHIV',
+        name: 'haveTestedPositiveForHiv',
         array: 'testedPositiveForHIVList',
         group: 'testedPositiveForHIV'
       },
@@ -864,9 +866,45 @@ export class LifeComponent implements OnInit, DoCheck {
       },
     ];
   }
+
+  x=0;
   ngDoCheck(): void {
     this.maxWidth = window.matchMedia('(max-width: 11270px)');
-  }
+
+    if(this.ID!=null){
+      if(this.x<30){
+        if(this.newRequest.get('questionnaires').get('solicitudHipertensionArterial')){
+          // console.log("EXIIIIIISSTEEEEEEEEEEEEEE!!!!!")
+          this.getDataSubFormsHypertension(this.ID, 'solicitudHipertensionArterial')
+        }
+        else {
+          // console.log("NOOOOOOOOOOOOOOOOOOOOOOOOOoo  EXIIIIIISSTEEEEEEEEEEEEEE!!!!!")
+        }
+  
+        if(this.newRequest.get('contractorQuestionnaires').get('knowYourCustomer')){
+          // console.log("EXIIIIIISSTEEEEEEEEEEEEEE!!!!!")
+          this.getDataSubFormsHypertension(this.ID, 'knowYourCustomer')
+          // this.know.addBasicControls();
+        }
+        else {
+          // console.log("NOOOOOOOOOOOOOOOOOOOOOOOOOoo  EXIIIIIISSTEEEEEEEEEEEEEE!!!!!")
+        }
+          
+        if(this.newRequest.get('questionnaires').get('solicitudEstadoFinancieroConfidencial')){
+          // console.log("EXIIIIIISSTEEEEEEEEEEEEEE!!!!!")
+          this.getDataSubFormsHypertension(this.ID, 'solicitudEstadoFinancieroConfidencial')
+        }
+        else {
+          // console.log("NOOOOOOOOOOOOOOOOOOOOOOOOOoo  EXIIIIIISSTEEEEEEEEEEEEEE!!!!!")
+        }
+        this.x++;   
+      }
+    }
+    else {
+      // console.log("this.ID es igual a " + this.ID + ", por tanto, no se va hacer lo de ngDoCheck()")
+    }
+    
+  }  
 
   canDeactivate(): Observable<boolean> | boolean {
     if (this.newRequest.dirty) {
@@ -1051,7 +1089,7 @@ export class LifeComponent implements OnInit, DoCheck {
 
 
         case 'haveHeartPain':
-          formQ.addControl('hypertension', this.fb.group({}));
+          formQ.addControl('solicitudHipertensionArterial', this.fb.group({}));
 
           formHMI.addControl('heartPain', this.fb.array([this.createFormArray('medicalInfo')]));
           this.heartPainList = formHMI.get('heartPain') as FormArray;
@@ -1073,7 +1111,7 @@ export class LifeComponent implements OnInit, DoCheck {
           break;
 
         case 'haveEndocrineDisorder':
-          formQ.addControl('diabetes', this.fb.group({}));
+          formQ.addControl('solicitudDiabetes', this.fb.group({}));
 
           formHMI.addControl('endocrineDisorder', this.fb.array([this.createFormArray('medicalInfo')]));
           this.endocrineDisorderList = formHMI.get('endocrineDisorder') as FormArray;
@@ -1109,7 +1147,7 @@ export class LifeComponent implements OnInit, DoCheck {
           this.birthDefectList = formHMI.get('birthDefect') as FormArray;
           break;
 
-        case 'HaveMedicalProcedures':
+        case 'haveMedicalProcedures':
           formHMI.addControl('medicalProcedures', this.fb.array([this.createFormArray('medicalInfo')]));
           this.medicalProceduresList = formHMI.get('medicalProcedures') as FormArray;
           break;
@@ -1139,7 +1177,7 @@ export class LifeComponent implements OnInit, DoCheck {
           this.planToObtainMedicalTreatmentList = formHMI.get('planToObtainMedicalTreatment') as FormArray;
           break;
 
-        case 'haveTestedPositiveForHIV':
+        case 'haveTestedPositiveForHiv':
           formHMI.addControl('testedPositiveForHIV', this.fb.array([this.createFormArray('medicalInfo')]));
           this.testedPositiveForHIVList = formHMI.get('testedPositiveForHIV') as FormArray;
           break;
@@ -1236,7 +1274,7 @@ export class LifeComponent implements OnInit, DoCheck {
           break;
 
         case 'haveHeartPain':
-          formQ.removeControl('hypertension');
+          formQ.removeControl('solicitudHipertensionArterial');
 
           formHMI.removeControl('heartPain');
           this.heartPainList = undefined;
@@ -1254,7 +1292,7 @@ export class LifeComponent implements OnInit, DoCheck {
           this.stomachDisorderList = undefined;
           break;
         case 'haveEndocrineDisorder':
-          formQ.removeControl('diabetes');
+          formQ.removeControl('solicitudDiabetes');
 
 
           formHMI.removeControl('endocrineDisorder');
@@ -1290,7 +1328,7 @@ export class LifeComponent implements OnInit, DoCheck {
           this.birthDefectList = undefined;
           break;
 
-        case 'HaveMedicalProcedures':
+        case 'haveMedicalProcedures':
           formHMI.removeControl('medicalProcedures');
           this.medicalProceduresList = undefined;
           break;
@@ -1320,7 +1358,7 @@ export class LifeComponent implements OnInit, DoCheck {
           this.planToObtainMedicalTreatmentList = undefined;
           break;
 
-        case 'haveTestedPositiveForHIV':
+        case 'haveTestedPositiveForHiv':
           formHMI.removeControl('testedPositiveForHIV');
           this.testedPositiveForHIVList = undefined;
           break;
@@ -1362,7 +1400,7 @@ export class LifeComponent implements OnInit, DoCheck {
           name: ['', Validators.required],
           amount: ['', Validators.required],
           policeNo: ['', [Validators.required, Validators.min(1)]],
-          ADBQuantity: ['', [Validators.required, Validators.min(0)]],
+          adbQuantity: ['', [Validators.required, Validators.min(0)]],
           date: ['', Validators.required],
         });
         break;
@@ -1415,7 +1453,7 @@ export class LifeComponent implements OnInit, DoCheck {
   }
 
   questionsLength() {
-    if (this.newRequest.get('questionnaires').get('financialStatus')) {
+    if (this.newRequest.get('questionnaires').get('solicitudEstadoFinancieroConfidencial')) {
       return Object.keys(this.newRequest.get('questionnaires').value).length - 1;
     } else {
       return Object.keys(this.newRequest.get('questionnaires').value).length;
@@ -1434,9 +1472,9 @@ export class LifeComponent implements OnInit, DoCheck {
     const formQ = this.newRequest.get('questionnaires') as FormGroup;
 
     if ((quantity >= 500000 && currency === 'usd') || (quantity >= 27370000 && currency === 'dop')) {
-      formQ.addControl('financialStatus', this.fb.group({}));
+      formQ.addControl('solicitudEstadoFinancieroConfidencial', this.fb.group({}));
     } else {
-      formQ.removeControl('financialStatus');
+      formQ.removeControl('solicitudEstadoFinancieroConfidencial');
     }
   }
 
@@ -1484,24 +1522,345 @@ export class LifeComponent implements OnInit, DoCheck {
     console.log('json', JSON.stringify(this.newRequest.get('releventPlanInformation').value));
   }
 
+  getDataSubFormsHypertension(id, name) {
+    this.life.returnData(id).subscribe(data => {
+      // console.log(data)
+      // if(data.data.person.city){
+      //   delete data.data.person.city;
+      // }
+      // console.log(data.data.person)
+      // console.log(data.data.employer)
+      // console.log(data.data.contractor).get('personInfo')
+      // console.log(data.data.contractor.company)
+      // let res= data;
+      // console.log("res: ", res.data.person)
+      if(name=="solicitudHipertensionArterial"){
+        if(this.newRequest.get('questionnaires').get('solicitudHipertensionArterial')){
+          // console.log("MYYYYYYYYYYYYY NAMEEEEEEEEEEEEEEE IS YOKOTO MASAKA ONI WAAAAAAA!!!")
+        this.newRequest['controls'].questionnaires['controls'].solicitudHipertensionArterial['controls'].personInfo['controls'].name.setValue('Rhailin Amable Made Puello');
+        }
+        else {
+          // console.log("NAAAAAAAAAAAAAADA que ver aqui, sigan en lo que estaban.")
+        }
+      }
+      // 
+      if(name=="solicitudEstadoFinancieroConfidencial"){
+        if(this.newRequest.get('questionnaires').get('solicitudEstadoFinancieroConfidencial')){
+          // console.log("MYYYYYYYYYYYYY NAMEEEEEEEEEEEEEEE IS YOKOTO MASAKA ONI WAAAAAAA!!!")
+        // this.newRequest['controls'].questionnaires['controls'].solicitudEstadoFinancieroConfidencial['controls'].name.setValue('Rhailin Amable Made Puello');
+        }
+        else {
+          // console.log("NAAAAAAAAAAAAAADA que ver aqui, sigan en lo que estaban.")
+        }
+      }
+
+      if(name=="knowYourCustomer"){
+        if(this.newRequest.get('contractorQuestionnaires').get('knowYourCustomer')){
+          // console.log("EXIIIIIISSTEEEEEEEEEEEEEE!!!!!")
+          this.newRequest['controls'].contractorQuestionnaires['controls'].knowYourCustomer['controls'].request.setValue(data.data.contractorQuestionnaires.knowYourCustomer.request);
+          // this.newRequest['controls'].contractorQuestionnaires['controls'].knowYourCustomer['controls'].general_data['controls'].first_name.setValue(data.data.contractorQuestionnaires.knowYourCustomer.general_data.first_name);
+          const controlsForms32 = this.newRequest['controls'].contractorQuestionnaires['controls'].knowYourCustomer['controls'].general_data['controls'];
+          console.log(controlsForms32)
+    
+          for(const nameControls in controlsForms32){
+            
+            const dataControls = data.data.contractorQuestionnaires.knowYourCustomer.general_data;
+            for(const nameDataControls in dataControls){
+              
+              if (nameDataControls != nameControls ) {
+                // console.log(`No, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) no son iguales`)
+                // console.log("No debe de setearse.")
+              }
+              else if(nameDataControls == nameControls){
+                // console.log(`Si, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) son iguales`)
+                controlsForms32[nameControls].setValue(dataControls[nameDataControls])  
+              }
+              // console.log(nameDataControls)
+              // console.log(nameControls);
+            }
+            // console.log(controles[nameControles]);
+          }
+
+          const controlsForms33 = this.newRequest['controls'].contractorQuestionnaires['controls'].knowYourCustomer['controls'].professional_data['controls'];
+          console.log(controlsForms33)
+    
+          for(const nameControls in controlsForms33){
+            
+            const dataControls = data.data.contractorQuestionnaires.knowYourCustomer.professional_data;
+            for(const nameDataControls in dataControls){
+              
+              if (nameDataControls != nameControls ) {
+                // console.log(`No, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) no son iguales`)
+                // console.log("No debe de setearse.")
+              }
+              else if(nameDataControls == nameControls){
+                // console.log(`Si, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) son iguales`)
+                controlsForms33[nameControls].setValue(dataControls[nameDataControls])  
+              }
+              // console.log(nameDataControls)
+              // console.log(nameControls);
+            }
+            // console.log(controles[nameControles]);
+          }
+
+          this.newRequest['controls'].contractorQuestionnaires['controls'].knowYourCustomer['controls'].exposed['controls'].exposed_person_radio.setValue(data.data.contractorQuestionnaires.knowYourCustomer.exposed.exposed_person_radio);
+
+          if(this.newRequest.get('contractorQuestionnaires').get('knowYourCustomer').get('exposed').get('position')){
+            this.newRequest['controls'].contractorQuestionnaires['controls'].knowYourCustomer['controls'].exposed['controls'].position['controls'].info.setValue(data.data.contractorQuestionnaires.knowYourCustomer.exposed.position.info);
+          }
+
+          this.newRequest['controls'].contractorQuestionnaires['controls'].knowYourCustomer['controls'].policy['controls'].total_policy_radio.setValue(data.data.contractorQuestionnaires.knowYourCustomer.policy.total_policy_radio);
+          // const varPolicy = {
+          //   valor: data.data.contractorQuestionnaires.knowYourCustomer.policy.total_policy_radio,
+          //   name:'total_policy_radio'
+          // };
+          // if(this.newRequest.get('contractorQuestionnaires').get('knowYourCustomer')){
+          //   if(this.newRequest.get('contractorQuestionnaires').get('knowYourCustomer').get('exposed')){
+              // if(varPolicy!=null){
+              //   this.know.selectChange(varPolicy);
+              // }
+          //   }
+          // }
+          if(this.newRequest.get('contractorQuestionnaires').get('knowYourCustomer').get('questions')){
+            this.newRequest['controls'].contractorQuestionnaires['controls'].knowYourCustomer['controls'].questions['controls'].transaction['controls'].details.setValue(data.data.contractorQuestionnaires.knowYourCustomer.questions.transaction.details);
+            this.newRequest['controls'].contractorQuestionnaires['controls'].knowYourCustomer['controls'].questions['controls'].transaction['controls'].investigation_radio.setValue(data.data.contractorQuestionnaires.knowYourCustomer.questions.transaction.investigation_radio);
+
+            if(this.newRequest.get('contractorQuestionnaires').get('knowYourCustomer').get('questions').get('transaction').get('investigation')){
+              this.newRequest['controls'].contractorQuestionnaires['controls'].knowYourCustomer['controls'].questions['controls'].transaction['controls'].investigation['controls'].info.setValue(data.data.contractorQuestionnaires.knowYourCustomer.questions.transaction.investigation.info);
+            }
+
+            if(this.newRequest.get('contractorQuestionnaires').get('knowYourCustomer').get('questions').get('finance')){
+              this.newRequest['controls'].contractorQuestionnaires['controls'].knowYourCustomer['controls'].questions['controls'].finance['controls'].main_annual_income.setValue(data.data.contractorQuestionnaires.knowYourCustomer.questions.finance.main_annual_income);
+              this.newRequest['controls'].contractorQuestionnaires['controls'].knowYourCustomer['controls'].questions['controls'].finance['controls'].annual_income_others.setValue(data.data.contractorQuestionnaires.knowYourCustomer.questions.finance.annual_income_others);
+            }
+
+            if(this.newRequest.get('contractorQuestionnaires').get('knowYourCustomer').get('questions').get('bank')){
+              for (let xx = 0; xx < data.data.contractorQuestionnaires.knowYourCustomer.questions.bank.bank_array.length; xx++) {
+                console.log("hola, esto es data.data.contractorQuestionnaires.knowYourCustomer.questions.bank.bank_array, y soy id numero "+data.data.contractorQuestionnaires.knowYourCustomer.questions.bank.bank_array[xx].id)
+                if (xx >= 1) {
+                  console.log('Hola, esto es data.data.contractorQuestionnaires.knowYourCustomer.questions.bank.bank_array, y soy yo, ' + xx)
+                 this.know.bankFormArray = this.newRequest.get('contractorQuestionnaires').get('knowYourCustomer').get('questions').get('bank').get('bank_array') as FormArray; 
+                  this.know.addFormArray(this.know.bankFormArray,'bank_array');
+                  if(this.know.bankFormArray.length >data.data.contractorQuestionnaires.knowYourCustomer.questions.bank.bank_array.length){
+                    this.know.removeFormArray((this.know.bankFormArray.length-1) , this.know.bankFormArray) 
+                  }
+                  // const increment = this.know.bankFormArray.length + 1;
+                  // this.know.bankFormArray = this.know.formMethods.addElement(this.know.bankFormArray, increment, this.know.createFormArray('bank_array')).formArray;
+                  // addFormArray(bankFormArray,'bank_array')
+                }
+                
+                const controlsForms34 = this.newRequest['controls'].contractorQuestionnaires['controls'].knowYourCustomer['controls'].questions['controls'].bank['controls'].bank_array['controls'][xx]['controls'];
+                  console.log(controlsForms34)
+        
+                  for(const nameControls in controlsForms34){
+                  
+                    const dataControls = data.data.contractorQuestionnaires.knowYourCustomer.questions.bank.bank_array[xx];
+                    for(const nameDataControls in dataControls){
+        
+                      if (nameDataControls != nameControls ) {
+                        // console.log(`No, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) no son iguales`)
+                        console.log("No debe de setearse.")
+                      }
+                      else if(nameDataControls == nameControls){
+                        // console.log(`Si, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) son iguales`)
+                        controlsForms34[nameControls].setValue(dataControls[nameDataControls])  
+                      }
+                      // console.log(nameDataControls)
+                      // console.log(nameControls);
+                    }
+                    // console.log(controles[nameControles]);
+                  }
+                // this.newRequest['controls'].generalInformation['controls'].insuranceProposed['controls'][x]['controls'].name.setValue(res.data.primaryBenefits.dependentsC[x].name)
+        
+                // const formID7 = this.claimForm.get('reclamados').get([x]) as FormGroup;
+                // formID7.addControl('id', this.fb.control(data.data.reclamados[x].id, Validators.required));
+              }
+            }
+
+            if(this.newRequest.get('contractorQuestionnaires').get('knowYourCustomer').get('questions').get('commercial')){
+              for (let xx = 0; xx < data.data.contractorQuestionnaires.knowYourCustomer.questions.commercial.commercial_array.length; xx++) {
+                console.log("hola, esto es data.data.contractorQuestionnaires.knowYourCustomer.questions.commercial.commercial_array, y soy id numero "+data.data.contractorQuestionnaires.knowYourCustomer.questions.commercial.commercial_array[xx].id)
+                if (xx >= 1) {
+                  console.log('Hola, esto es data.data.contractorQuestionnaires.knowYourCustomer.questions.commercial.commercial_array, y soy yo, ' + xx)
+                 this.know.commercialFormArray = this.newRequest.get('contractorQuestionnaires').get('knowYourCustomer').get('questions').get('commercial').get('commercial_array') as FormArray; 
+                  this.know.addFormArray(this.know.commercialFormArray,'commercial_array');
+                  if(this.know.commercialFormArray.length >data.data.contractorQuestionnaires.knowYourCustomer.questions.commercial.commercial_array.length){
+                    this.know.removeFormArray((this.know.commercialFormArray.length-1) , this.know.commercialFormArray) 
+                  }
+                  // const increment = this.know.commercialFormArray.length + 1;
+                  // this.know.commercialFormArray = this.know.formMethods.addElement(this.know.commercialFormArray, increment, this.know.createFormArray('commercial_array')).formArray;
+                  // addFormArray(commercialFormArray,'commercial_array')
+                }
+                
+                const controlsForms35 = this.newRequest['controls'].contractorQuestionnaires['controls'].knowYourCustomer['controls'].questions['controls'].commercial['controls'].commercial_array['controls'][xx]['controls'];
+                  console.log(controlsForms35)
+        
+                  for(const nameControls in controlsForms35){
+                  
+                    const dataControls = data.data.contractorQuestionnaires.knowYourCustomer.questions.commercial.commercial_array[xx];
+                    for(const nameDataControls in dataControls){
+        
+                      if (nameDataControls != nameControls ) {
+                        // console.log(`No, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) no son iguales`)
+                        console.log("No debe de setearse.")
+                      }
+                      else if(nameDataControls == nameControls){
+                        // console.log(`Si, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) son iguales`)
+                        controlsForms35[nameControls].setValue(dataControls[nameDataControls])  
+                      }
+                      // console.log(nameDataControls)
+                      // console.log(nameControls);
+                    }
+                    // console.log(controles[nameControles]);
+                  }
+                // this.newRequest['controls'].generalInformation['controls'].insuranceProposed['controls'][x]['controls'].name.setValue(res.data.primaryBenefits.dependentsC[x].name)
+        
+                // const formID7 = this.claimForm.get('reclamados').get([x]) as FormGroup;
+                // formID7.addControl('id', this.fb.control(data.data.reclamados[x].id, Validators.required));
+              }
+            }
+
+            if(this.newRequest.get('contractorQuestionnaires').get('knowYourCustomer').get('questions').get('personal')){
+              for (let xx = 0; xx < data.data.contractorQuestionnaires.knowYourCustomer.questions.personal.personal_array.length; xx++) {
+                console.log("hola, esto es data.data.contractorQuestionnaires.knowYourCustomer.questions.personal.personal_array, y soy id numero "+data.data.contractorQuestionnaires.knowYourCustomer.questions.personal.personal_array[xx].id)
+                if (xx >= 1) {
+                  console.log('Hola, esto es data.data.contractorQuestionnaires.knowYourCustomer.questions.personal.personal_array, y soy yo, ' + xx)
+                 this.know.personalFormArray = this.newRequest.get('contractorQuestionnaires').get('knowYourCustomer').get('questions').get('personal').get('personal_array') as FormArray; 
+                  this.know.addFormArray(this.know.personalFormArray,'personal_array');
+                  if(this.know.personalFormArray.length >data.data.contractorQuestionnaires.knowYourCustomer.questions.personal.personal_array.length){
+                    this.know.removeFormArray((this.know.personalFormArray.length-1) , this.know.personalFormArray) 
+                  }
+                  // const increment = this.know.personalFormArray.length + 1;
+                  // this.know.personalFormArray = this.know.formMethods.addElement(this.know.personalFormArray, increment, this.know.createFormArray('personal_array')).formArray;
+                  // addFormArray(personalFormArray,'personal_array')
+                }
+                
+                const controlsForms36 = this.newRequest['controls'].contractorQuestionnaires['controls'].knowYourCustomer['controls'].questions['controls'].personal['controls'].personal_array['controls'][xx]['controls'];
+                  console.log(controlsForms36)
+        
+                  for(const nameControls in controlsForms36){
+                  
+                    const dataControls = data.data.contractorQuestionnaires.knowYourCustomer.questions.personal.personal_array[xx];
+                    for(const nameDataControls in dataControls){
+        
+                      if (nameDataControls != nameControls ) {
+                        // console.log(`No, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) no son iguales`)
+                        console.log("No debe de setearse.")
+                      }
+                      else if(nameDataControls == nameControls){
+                        // console.log(`Si, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) son iguales`)
+                        controlsForms36[nameControls].setValue(dataControls[nameDataControls])  
+                      }
+                      // console.log(nameDataControls)
+                      // console.log(nameControls);
+                    }
+                    // console.log(controles[nameControles]);
+                  }
+                // this.newRequest['controls'].generalInformation['controls'].insuranceProposed['controls'][x]['controls'].name.setValue(res.data.primaryBenefits.dependentsC[x].name)
+        
+                // const formID7 = this.claimForm.get('reclamados').get([x]) as FormGroup;
+                // formID7.addControl('id', this.fb.control(data.data.reclamados[x].id, Validators.required));
+              }
+            }
+            
+            if(this.newRequest.get('contractorQuestionnaires').get('knowYourCustomer').get('questions').get('documents')){
+              const controlsForms37 = this.newRequest['controls'].contractorQuestionnaires['controls'].knowYourCustomer['controls'].questions['controls'].documents['controls'];
+                  console.log(controlsForms37)
+        
+                  for(const nameControls in controlsForms37){
+                  
+                    const dataControls = data.data.contractorQuestionnaires.knowYourCustomer.questions.documents;
+                    for(const nameDataControls in dataControls){
+        
+                      if (nameDataControls != nameControls ) {
+                        // console.log(`No, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) no son iguales`)
+                        console.log("No debe de setearse.")
+                      }
+                      else if(nameDataControls == nameControls){
+                        // console.log(`Si, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) son iguales`)
+                        controlsForms37[nameControls].setValue(dataControls[nameDataControls])  
+                      }
+                      // console.log(nameDataControls)
+                      // console.log(nameControls);
+                    }
+                    // console.log(controles[nameControles]);
+                  }
+              }
+          }
+
+          const controlsForms38 = this.newRequest['controls'].contractorQuestionnaires['controls'].knowYourCustomer['controls'].broker['controls'];
+          console.log(controlsForms38)
+    
+          for(const nameControls in controlsForms38){
+            
+            const dataControls = data.data.contractorQuestionnaires.knowYourCustomer.broker;
+            for(const nameDataControls in dataControls){
+              
+              if (nameDataControls != nameControls ) {
+                // console.log(`No, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) no son iguales`)
+                // console.log("No debe de setearse.")
+              }
+              else if(nameDataControls == nameControls){
+                // console.log(`Si, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) son iguales`)
+                controlsForms38[nameControls].setValue(dataControls[nameDataControls])  
+              }
+              // console.log(nameDataControls)
+              // console.log(nameControls);
+            }
+            // console.log(controles[nameControles]);
+          }
+
+          const controlsForms39 = this.newRequest['controls'].contractorQuestionnaires['controls'].knowYourCustomer['controls'].info_for_the_insurance_carrier['controls'];
+          console.log(controlsForms39)
+    
+          for(const nameControls in controlsForms39){
+            
+            const dataControls = data.data.contractorQuestionnaires.knowYourCustomer.info_for_the_insurance_carrier;
+            for(const nameDataControls in dataControls){
+              
+              if (nameDataControls != nameControls ) {
+                // console.log(`No, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) no son iguales`)
+                // console.log("No debe de setearse.")
+              }
+              else if(nameDataControls == nameControls){
+                // console.log(`Si, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) son iguales`)
+                controlsForms39[nameControls].setValue(dataControls[nameDataControls])  
+              }
+              // console.log(nameDataControls)
+              // console.log(nameControls);
+            }
+            // console.log(controles[nameControles]);
+          }  
+        }
+        // else {
+        //   // console.log("NAAAAAAAAAAAAAADA que ver aqui, sigan en lo que estaban.")
+        // }
+      }
+
+    })
+  }
+
   getData(id) {
 		this.life.returnData(id).subscribe(data => {
 			// console.log(data.data.asegurado.documentoIdentidad)
       console.log(data)
-      delete data.data.person.city;
-      console.log(data.data.person)
-      console.log(data.data.employer)
-      console.log(data.data.contractor)
-      console.log(data.data.contractor.company)
+      
+      if(data.data.person.city){
+        delete data.data.person.city;
+      }
+      // console.log(data.data.person)
+      // console.log(data.data.employer)
+      // console.log(data.data.contractor)
+      // console.log(data.data.contractor.company)
 
       let res= data;
-      console.log("res: ", res.data.person)
+      // console.log("res: ", res.data.person)
 
       this.newRequest['controls'].NoC.setValue(data.data.noC)
       // console.log(data.data.noC)
 
-      const formID1 = this.newRequest.get('person') as FormGroup;
-      formID1.addControl('id', this.fb.control(''));
+      // const formID1 = this.newRequest.get('person') as FormGroup;
+      // formID1.addControl('id', this.fb.control(''));
       // formID1.addControl('city', this.fb.control(''));
       const controlsForms = this.newRequest['controls'].person['controls'];
       console.log(controlsForms)
@@ -1548,6 +1907,36 @@ export class LifeComponent implements OnInit, DoCheck {
 				// console.log(controles[nameControles]);
       }
 
+      // res.data.contractor['status']= res.data.contractor.statusStr
+
+      // delete res.data.contractor.statusStr
+
+      // console.log("res.data.contractor['status'] es igual a " + res.data.contractor['status'])
+
+      // console.log("Se borro statusStr, la nueva data ahora es igual a ", res.data.contractor)
+
+      const controlsForms3 = this.newRequest['controls'].contractor['controls'];
+      console.log(controlsForms3)
+
+      for(const nameControls in controlsForms3){
+				
+				const dataControls = res.data.contractor;
+				for(const nameDataControls in dataControls){
+          
+          if (nameDataControls != nameControls ) {
+            // console.log(`No, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) no son iguales`)
+						console.log("No debe de setearse.")
+          }
+				  else if(nameDataControls == nameControls && nameControls!='company'){
+            // console.log(`Si, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) son iguales`)
+            controlsForms3[nameControls].setValue(dataControls[nameDataControls])  
+					}
+					// console.log(nameDataControls)
+					// console.log(nameControls);
+				}
+				// console.log(controles[nameControles]);
+      }
+
       const controlsForms4 = this.newRequest['controls'].contractor['controls'].company['controls'];
       console.log(controlsForms4)
 
@@ -1570,35 +1959,35 @@ export class LifeComponent implements OnInit, DoCheck {
 				// console.log(controles[nameControles]);
       }
 
-      // res.data.contractor['status']= res.data.contractor.statusStr
+      // res.data.payer['status']= res.data.payer.statusStr
 
-      // delete res.data.contractor.statusStr
+      // delete res.data.payer.statusStr
 
-      // console.log("res.data.contractor['status'] es igual a " + res.data.contractor['status'])
+      // console.log("res.data.payer['status'] es igual a " + res.data.payer['status'])
 
-      // console.log("Se borro statusStr, la nueva data ahora es igual a ", res.data.contractor)
+      // console.log("Se borro statusStr, la nueva data ahora es igual a ", res.data.payer)
 
-      // const controlsForms3 = this.newRequest['controls'].contractor['controls'];
-      // console.log(controlsForms3)
+      const controlsForms5 = this.newRequest['controls'].payer['controls'];
+      console.log(controlsForms5)
 
-      // for(const nameControls in controlsForms3){
+      for(const nameControls in controlsForms5){
 				
-			// 	const dataControls = res.data.contractor;
-			// 	for(const nameDataControls in dataControls){
+				const dataControls = res.data.payer;
+				for(const nameDataControls in dataControls){
           
-      //     if (nameDataControls != nameControls ) {
-      //       // console.log(`No, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) no son iguales`)
-			// 			console.log("No debe de setearse.")
-      //     }
-			// 	  else if(nameDataControls == nameControls){
-      //       // console.log(`Si, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) son iguales`)
-      //       controlsForms3[nameControls].setValue(dataControls[nameDataControls])  
-			// 		}
-			// 		// console.log(nameDataControls)
-			// 		// console.log(nameControls);
-			// 	}
-			// 	// console.log(controles[nameControles]);
-      // }
+          if (nameDataControls != nameControls ) {
+            // console.log(`No, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) no son iguales`)
+						console.log("No debe de setearse.")
+          }
+				  else if(nameDataControls == nameControls && nameControls!='company'){
+            // console.log(`Si, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) son iguales`)
+            controlsForms5[nameControls].setValue(dataControls[nameDataControls])  
+					}
+					// console.log(nameDataControls)
+					// console.log(nameControls);
+				}
+				// console.log(controles[nameControles]);
+      }
 
       const controlsForms6 = this.newRequest['controls'].payer['controls'].company['controls'];
       console.log(controlsForms6)
@@ -1622,28 +2011,6 @@ export class LifeComponent implements OnInit, DoCheck {
 				// console.log(controles[nameControles]);
       }
 
-      // const controlsForms5 = this.newRequest['controls'].payer['controls'];
-      // console.log(controlsForms5)
-
-      // for(const nameControls in controlsForms5){
-				
-			// 	const dataControls = res.data.payer;
-			// 	for(const nameDataControls in dataControls){
-          
-      //     if (nameDataControls != nameControls ) {
-      //       // console.log(`No, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) no son iguales`)
-			// 			console.log("No debe de setearse.")
-      //     }
-			// 	  else if(nameDataControls == nameControls){
-      //       // console.log(`Si, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) son iguales`)
-      //       controlsForms5[nameControls].setValue(dataControls[nameDataControls])  
-			// 		}
-			// 		// console.log(nameDataControls)
-			// 		// console.log(nameControls);
-			// 	}
-			// 	// console.log(controles[nameControles]);
-      // }
-
       const sd = {
         valor: res.data.person.isExposed,
         name:'isExposed'
@@ -1653,27 +2020,52 @@ export class LifeComponent implements OnInit, DoCheck {
 				this.selectChange(sd);
 				if (this.newRequest.get('exposedPerson')) {
 
-          // const controlsForms7 = this.newRequest['controls'].exposedPerson['controls'];
-          // console.log(controlsForms7)
+          if(res.data.exposedPerson.contractor=='true'){
+            res.data.exposedPerson.contractor=true;
+          }
+          else if(res.data.exposedPerson.contractor=='false'){
+            res.data.exposedPerson.contractor=false;
+          }
+          console.log("res.data.exposedPerson.contractor es igual a " + res.data.exposedPerson.contractor)
 
-          // for(const nameControls in controlsForms7){
+          if(res.data.exposedPerson.insured=='true'){
+            res.data.exposedPerson.insured=true;
+          }
+          else if(res.data.exposedPerson.insured=='false'){
+            res.data.exposedPerson.insured=false;
+          }
+          console.log("res.data.exposedPerson.insured es igual a " + res.data.exposedPerson.insured)
+
+          if(res.data.exposedPerson.payer=='true'){
+            res.data.exposedPerson.payer=true;
+          }
+          else if(res.data.exposedPerson.payer=='false'){
+            res.data.exposedPerson.payer=false;
+          }
+          console.log("res.data.exposedPerson.payer es igual a " + res.data.exposedPerson.payer)
+
+          const controlsForms7 = this.newRequest['controls'].exposedPerson['controls'];
+          console.log(controlsForms7)
+
+          for(const nameControls in controlsForms7){
           
-			    // 	const dataControls = res.data.exposedPerson;
-			    // 	for(const nameDataControls in dataControls){
+			    	const dataControls = res.data.exposedPerson;
+			    	for(const nameDataControls in dataControls){
 
-          //     if (nameDataControls != nameControls ) {
-          //       // console.log(`No, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) no son iguales`)
-			    // 			console.log("No debe de setearse.")
-          //     }
-			    // 	  else if(nameDataControls == nameControls){
-          //       // console.log(`Si, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) son iguales`)
-          //       controlsForms7[nameControls].setValue(dataControls[nameDataControls])  
-			    // 		}
-			    // 		// console.log(nameDataControls)
-			    // 		// console.log(nameControls);
-			    // 	}
-			    // 	// console.log(controles[nameControles]);
-          // }
+              if (nameDataControls != nameControls ) {
+                // console.log(`No, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) no son iguales`)
+			    			console.log("No debe de setearse.")
+              }
+			    	  else if(nameDataControls == nameControls){
+                // console.log(`Si, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) son iguales`)
+                controlsForms7[nameControls].setValue(dataControls[nameDataControls])  
+			    		}
+			    		// console.log(nameDataControls)
+			    		// console.log(nameControls);
+			    	}
+			    	// console.log(controles[nameControles]);
+          }
+          
           console.log('Control exposedPerson CREADOOOOOOOO!');
 				}
 			} else if (sd.valor == null || sd.valor == "no") {
@@ -1701,6 +2093,8 @@ export class LifeComponent implements OnInit, DoCheck {
 			    	}
 			    	// console.log(controles[nameControles]);
           }
+
+          //ESTO   LO   HICE   MANUAL (y automatico el sub grupo),   POR   TANTO   IGNORAR   ESTOS   FOR   INs!
 
           // const controlsForms9 = this.newRequest['controls'].releventPlanInformation['controls'];
           // console.log(controlsForms9)
@@ -1752,6 +2146,7 @@ export class LifeComponent implements OnInit, DoCheck {
 			    	}
 			    	// console.log(controles[nameControles]);
           }
+          this.needFinancialStatusCalculator()
 
           this.newRequest['controls'].IncomeMainActivity.setValue(res.data.incomeMainActivity)
 
@@ -1903,39 +2298,37 @@ export class LifeComponent implements OnInit, DoCheck {
             this.selectChange(var1);
             if (this.newRequest.get('contingentBeneficiary').get('anotherCoverages')) {
     
-              // for (let x = 0; x < res.data.contingentBeneficiary.anotherCoverages.length; x++) {
-              //   console.log("hola, esto es res.data.contingentBeneficiary.anotherCoverages, y soy id numero "+res.data.contingentBeneficiary.anotherCoverages[x].id)
-              //   if (x >= 1) {
-              //     console.log('Hola, esto es res.data.contingentBeneficiary.anotherCoverages, y soy yo, ' + x)
-              //     this.addToList(this.existingCoveragesList, 'coverages');
-              //   }
+              for (let x = 0; x < res.data.contingentBeneficiary.anotherCoverages.length; x++) {
+                console.log("hola, esto es res.data.contingentBeneficiary.anotherCoverages, y soy id numero "+res.data.contingentBeneficiary.anotherCoverages[x].id)
+                if (x >= 1) {
+                  console.log('Hola, esto es res.data.contingentBeneficiary.anotherCoverages, y soy yo, ' + x)
+                  this.addToList(this.existingCoveragesList, 'coverages');
+                }
                 
-              //   const controlsForms16 = this.newRequest['controls'].contingentBeneficiary['controls'].anotherCoverages['controls'][x]['controls'];
-              //     console.log(controlsForms16)
+                const controlsForms16 = this.newRequest['controls'].contingentBeneficiary['controls'].anotherCoverages['controls'][x]['controls'];
+                  console.log(controlsForms16)
         
-              //     for(const nameControls in controlsForms16){
+                  for(const nameControls in controlsForms16){
                   
-              //       const dataControls = res.data.contingentBeneficiary.anotherCoverages[x];
-              //       for(const nameDataControls in dataControls){
+                    const dataControls = res.data.contingentBeneficiary.anotherCoverages[x];
+                    for(const nameDataControls in dataControls){
         
-              //         if (nameDataControls != nameControls ) {
-              //           // console.log(`No, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) no son iguales`)
-              //           console.log("No debe de setearse.")
-              //         }
-              //         else if(nameDataControls == nameControls){
-              //           // console.log(`Si, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) son iguales`)
-              //           controlsForms16[nameControls].setValue(dataControls[nameDataControls])  
-              //         }
-              //         // console.log(nameDataControls)
-              //         // console.log(nameControls);
-              //       }
-              //       // console.log(controles[nameControles]);
-              //     }
-              //   // this.newRequest['controls'].contingentBeneficiary['controls'].anotherCoverages['controls'][x]['controls'].name.setValue(res.data.primaryBenefits.dependentsC[x].name)
-        
-              //   // const formID7 = this.claimForm.get('reclamados').get([x]) as FormGroup;
-              //   // formID7.addControl('id', this.fb.control(data.data.reclamados[x].id, Validators.required));
-              // }
+                      if (nameDataControls != nameControls ) {
+                        // console.log(`No, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) no son iguales`)
+                        console.log("No debe de setearse.")
+                      }
+                      else if(nameDataControls == nameControls){
+                        // console.log(`Si, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) son iguales`)
+                        controlsForms16[nameControls].setValue(dataControls[nameDataControls])  
+                      }
+                      // console.log(nameDataControls)
+                      // console.log(nameControls);
+                    }
+                    // console.log(controles[nameControles]);
+                  }
+                // this.newRequest['controls'].contingentBeneficiary['controls'].anotherCoverages['controls'][x]['controls'].name.setValue("Holaaaaaaaaaaaaaaaaaa")
+              }
+              // this.newRequest['controls'].contingentBeneficiary['controls'].anotherCoverages['controls'][0]['controls'].name.setValue("Holaaaaaaaaaaaaaaaaaa")
               console.log('Control anotherCoverages CREADOOOOOOOO!');
             }
           } else if (var1.valor == null || var1.valor == "no") {
@@ -1951,45 +2344,635 @@ export class LifeComponent implements OnInit, DoCheck {
             this.selectChange(var2);
             if (this.newRequest.get('contingentBeneficiary').get('changingCoverages')) {
     
-              // for (let x = 0; x < res.data.contingentBeneficiary.changingCoverages.length; x++) {
-              //   console.log("hola, esto es res.data.contingentBeneficiary.changingCoverages, y soy id numero "+res.data.contingentBeneficiary.changingCoverages[x].id)
-              //   if (x >= 1) {
-              //     console.log('Hola, esto es res.data.contingentBeneficiary.changingCoverages, y soy yo, ' + x)
-              //     this.addToList(this.changingCoveragesList, 'coverages');
-              //   }
+              for (let x = 0; x < res.data.contingentBeneficiary.changingCoverages.length; x++) {
+                console.log("hola, esto es res.data.contingentBeneficiary.changingCoverages, y soy id numero "+res.data.contingentBeneficiary.changingCoverages[x].id)
+                if (x >= 1) {
+                  console.log('Hola, esto es res.data.contingentBeneficiary.changingCoverages, y soy yo, ' + x)
+                  this.addToList(this.changingCoveragesList, 'coverages');
+                }
                 
-              //   const controlsForms17 = this.newRequest['controls'].contingentBeneficiary['controls'].changingCoverages['controls'][x]['controls'];
-              //     console.log(controlsForms17)
+                const controlsForms17 = this.newRequest['controls'].contingentBeneficiary['controls'].changingCoverages['controls'][x]['controls'];
+                  console.log(controlsForms17)
         
-              //     for(const nameControls in controlsForms17){
+                  for(const nameControls in controlsForms17){
                   
-              //       const dataControls = res.data.contingentBeneficiary.changingCoverages[x];
-              //       for(const nameDataControls in dataControls){
+                    const dataControls = res.data.contingentBeneficiary.changingCoverages[x];
+                    for(const nameDataControls in dataControls){
         
-              //         if (nameDataControls != nameControls ) {
-              //           // console.log(`No, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) no son iguales`)
-              //           console.log("No debe de setearse.")
-              //         }
-              //         else if(nameDataControls == nameControls){
-              //           // console.log(`Si, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) son iguales`)
-              //           controlsForms17[nameControls].setValue(dataControls[nameDataControls])  
-              //         }
-              //         // console.log(nameDataControls)
-              //         // console.log(nameControls);
-              //       }
-              //       // console.log(controles[nameControles]);
-              //     }
-              //   // this.newRequest['controls'].contingentBeneficiary['controls'].changingCoverages['controls'][x]['controls'].name.setValue(res.data.primaryBenefits.dependentsC[x].name)
-        
-              //   // const formID7 = this.claimForm.get('reclamados').get([x]) as FormGroup;
-              //   // formID7.addControl('id', this.fb.control(data.data.reclamados[x].id, Validators.required));
-              // }
+                      if (nameDataControls != nameControls ) {
+                        // console.log(`No, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) no son iguales`)
+                        console.log("No debe de setearse.")
+                      }
+                      else if(nameDataControls == nameControls){
+                        // console.log(`Si, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) son iguales`)
+                        controlsForms17[nameControls].setValue(dataControls[nameDataControls])  
+                      }
+                      // console.log(nameDataControls)
+                      // console.log(nameControls);
+                    }
+                    // console.log(controles[nameControles]);
+                  }
+                // this.newRequest['controls'].contingentBeneficiary['controls'].changingCoverages['controls'][x]['controls'].name.setValue("Holaaaaaaaaaaaaaaaaaa")
+              }
+              // this.newRequest['controls'].contingentBeneficiary['controls'].changingCoverages['controls'][0]['controls'].name.setValue("Holaaaaaaaaaaaaaaaaaa")
               console.log('Control changingCoverages CREADOOOOOOOO!');
             }
           } else if (var2.valor == null || var2.valor == "no") {
             console.log('No hay que crear el control changingCoverages');
           }
-      
+
+          const controlsForms18 = this.newRequest['controls'].generalInformation['controls'];
+          console.log(controlsForms18)
+
+          for(const nameControls in controlsForms18){
+          
+			    	const dataControls = res.data.generalInformation;
+			    	for(const nameDataControls in dataControls){
+
+              if (nameDataControls != nameControls ) {
+                // console.log(`No, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) no son iguales`)
+			    			console.log("No debe de setearse.")
+              }
+			    	  else if(nameDataControls == nameControls){
+                // console.log(`Si, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) son iguales`)
+                controlsForms18[nameControls].setValue(dataControls[nameDataControls])  
+			    		}
+			    		// console.log(nameDataControls)
+              // console.log(nameControls);
+              const var3 = {
+                valor: dataControls[nameDataControls],
+                name: nameDataControls
+              };
+
+              if (var3.valor != null) {
+                if (!this.newRequest.get('generalInformation').get('smoked') || 
+                !this.newRequest.get('generalInformation').get('alcohol') || 
+                !this.newRequest.get('generalInformation').get('travelInformation') || 
+                !this.newRequest.get('generalInformation').get('alcoholTreatment') ||
+                !this.newRequest.get('generalInformation').get('diseaseCoverageInformation') ||
+                !this.newRequest.get('generalInformation').get('arrestedInformation') || 
+                !this.newRequest.get('generalInformation').get('lostDriveLicense') || 
+                !this.newRequest.get('generalInformation').get('xtremeSports') ||
+                !this.newRequest.get('generalInformation').get('insuranceProposed')) {
+                
+                  this.selectChange(var3);
+              }
+              else{
+                console.log(`No hay que crear el control ${nameDataControls} porque ya existe.`);
+              }
+
+            }
+            
+            else {
+              console.log(`No se va a crear ningun control porque no es necesario.`);
+            }
+			    	// console.log(controles[nameControles]);
+          }
+        }
+
+        if(this.newRequest.get('generalInformation').get('smoked')){
+          this.newRequest['controls'].generalInformation['controls'].smoked.setValue(res.data.generalInformation.smoked)
+          console.log('Control smoked CREADOOOOOOOO!');
+        }
+        if(this.newRequest.get('generalInformation').get('alcohol')){
+          this.newRequest['controls'].generalInformation['controls'].alcohol['controls'].quantity.setValue(res.data.generalInformation.alcohol.quantity)
+          this.newRequest['controls'].generalInformation['controls'].alcohol['controls'].frequency.setValue(res.data.generalInformation.alcohol.frequency)
+          console.log('Control alcohol CREADOOOOOOOO!');
+        }
+        if(this.newRequest.get('generalInformation').get('travelInformation')){
+          this.newRequest['controls'].generalInformation['controls'].travelInformation.setValue(res.data.generalInformation.travelInformation)
+          console.log('Control travelInformation CREADOOOOOOOO!');
+        }
+        if(this.newRequest.get('generalInformation').get('alcoholTreatment')){
+          this.newRequest['controls'].generalInformation['controls'].alcoholTreatment.setValue(res.data.generalInformation.alcoholTreatment)
+          console.log('Control alcoholTreatment CREADOOOOOOOO!');
+        }
+        if(this.newRequest.get('generalInformation').get('diseaseCoverageInformation')){
+          this.newRequest['controls'].generalInformation['controls'].diseaseCoverageInformation.setValue(res.data.generalInformation.diseaseCoverageInformation)
+          console.log('Control diseaseCoverageInformation CREADOOOOOOOO!');
+        }
+        if(this.newRequest.get('generalInformation').get('arrestedInformation')){
+          this.newRequest['controls'].generalInformation['controls'].arrestedInformation.setValue(res.data.generalInformation.arrestedInformation)
+          console.log('Control arrestedInformation CREADOOOOOOOO!');
+        }
+        if(this.newRequest.get('generalInformation').get('lostDriveLicense')){
+          console.log('Control lostDriveLicense CREADOOOOOOOO!');
+
+          const controlsForms19 = this.newRequest['controls'].generalInformation['controls'].lostDriveLicense['controls'];
+             console.log(controlsForms19)
+  
+             for(const nameControls in controlsForms19){
+             
+               const dataControls = res.data.generalInformation.lostDriveLicense;
+               for(const nameDataControls in dataControls){
+  
+                 if (nameDataControls != nameControls ) {
+                   // console.log(`No, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) no son iguales`)
+                   console.log("No debe de setearse.")
+                 }
+                 else if(nameDataControls == nameControls){
+                   // console.log(`Si, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) son iguales`)
+                   controlsForms19[nameControls].setValue(dataControls[nameDataControls])  
+                 }
+                 // console.log(nameDataControls)
+                 // console.log(nameControls);
+               }
+               // console.log(controles[nameControles]);
+             }
+        }
+        if(this.newRequest.get('generalInformation').get('xtremeSports')){
+          console.log('Control xtremeSports CREADOOOOOOOO!');
+
+          const controlsForms20 = this.newRequest['controls'].generalInformation['controls'].xtremeSports['controls'];
+             console.log(controlsForms20)
+  
+             for(const nameControls in controlsForms20){
+             
+               const dataControls = res.data.generalInformation.xtremeSports;
+               for(const nameDataControls in dataControls){
+  
+                 if (nameDataControls != nameControls ) {
+                   // console.log(`No, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) no son iguales`)
+                   console.log("No debe de setearse.")
+                 }
+                 else if(nameDataControls == nameControls){
+                   // console.log(`Si, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) son iguales`)
+                   controlsForms20[nameControls].setValue(dataControls[nameDataControls])  
+                 }
+                 // console.log(nameDataControls)
+                 // console.log(nameControls);
+               }
+               // console.log(controles[nameControles]);
+             }
+        }
+
+        if(this.newRequest.get('generalInformation').get('insuranceProposed')){
+          console.log('Control insuranceProposed CREADOOOOOOOO!');
+
+          for (let x = 0; x < res.data.generalInformation.insuranceProposed.length; x++) {
+                console.log("hola, esto es res.data.generalInformation.insuranceProposed, y soy id numero "+res.data.generalInformation.insuranceProposed[x].id)
+                if (x >= 1) {
+                  console.log('Hola, esto es res.data.generalInformation.insuranceProposed, y soy yo, ' + x)
+                  this.addToList(this.insuranceProposedList, 'insurance');
+                }
+                
+                const controlsForms21 = this.newRequest['controls'].generalInformation['controls'].insuranceProposed['controls'][x]['controls'];
+                  console.log(controlsForms21)
+        
+                  for(const nameControls in controlsForms21){
+                  
+                    const dataControls = res.data.generalInformation.insuranceProposed[x];
+                    for(const nameDataControls in dataControls){
+        
+                      if (nameDataControls != nameControls ) {
+                        // console.log(`No, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) no son iguales`)
+                        console.log("No debe de setearse.")
+                      }
+                      else if(nameDataControls == nameControls){
+                        // console.log(`Si, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) son iguales`)
+                        controlsForms21[nameControls].setValue(dataControls[nameDataControls])  
+                      }
+                      // console.log(nameDataControls)
+                      // console.log(nameControls);
+                    }
+                    // console.log(controles[nameControles]);
+                  }
+                // this.newRequest['controls'].generalInformation['controls'].insuranceProposed['controls'][x]['controls'].name.setValue(res.data.primaryBenefits.dependentsC[x].name)
+        
+                // const formID7 = this.claimForm.get('reclamados').get([x]) as FormGroup;
+                // formID7.addControl('id', this.fb.control(data.data.reclamados[x].id, Validators.required));
+              }
+        }
+
+        const controlsForms22 = this.newRequest['controls'].medicalHistory['controls'];
+          console.log(controlsForms22)
+
+          for(const nameControls in controlsForms22){
+          
+			    	const dataControls = res.data.medicalHistory;
+			    	for(const nameDataControls in dataControls){
+
+              if (nameDataControls != nameControls ) {
+                // console.log(`No, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) no son iguales`)
+			    			console.log("No debe de setearse.")
+              }
+			    	  else if(nameDataControls == nameControls && nameControls!="informations"){
+                // console.log(`Si, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) son iguales`)
+                controlsForms22[nameControls].setValue(dataControls[nameDataControls])  
+			    		}
+			    		// console.log(nameDataControls)
+              // console.log(nameControls);
+              const var4 = {
+                valor: dataControls[nameDataControls],
+                name: nameDataControls
+              };
+              // informations: this.fb.group({}),
+              if (var4.valor != null) {
+                  this.selectChange(var4);
+            }
+            else {
+              console.log(`No se va a crear ningun control porque no es necesario.`);
+            }
+
+			    	}
+			    	// console.log(controles[nameControles]);
+          }
+
+          const prove =['heartPain','respiratoryDisorder','mentalNervousDisorder','stomachDisorder',
+          'endocrineDisorder','spineDisorder','unexplainedDisease','renalDisorder','eyesNoseThroatProblem',
+          'bloodDisorder','birthDefect','medicalProcedures','beenAPatient','hadSpecializedTests','notCarriedOut',
+          'takenInLast12Months','planToObtainMedicalTreatment','testedPositiveForHIV','diabetesDiagnosis']
+
+        //   console.log(prove[4])
+        //   for(let x=0; x< prove.length; x++){
+        //   console.log(res.data.medicalHistory.informations[prove[x]])
+        // }
+          // console.log(res.data.medicalHistory.informations[prove[4]])
+          // this.newRequest['controls'].medicalHistory['controls'].informations['controls'][prove[4]]['controls'][0]['controls'].condition.setValue("Rhailin enfermo");;
+
+          for(let y = 0; y < prove.length; y++){
+            // console.log(prove[y])
+            if (this.newRequest.get('medicalHistory').get('informations').get(prove[y])) {
+    
+              for (let x = 0; x < res.data.medicalHistory.informations[prove[y]].length; x++) {
+                console.log("hola, esto es res.data.medicalHistory.informations.prove[y], y soy id numero "+res.data.medicalHistory.informations[prove[y]][x].id)
+                if (x >= 1) {
+                  console.log('Hola, esto es res.data.medicalHistory.informations.prove[y], y soy yo, ' + x)
+                  this.addToList(this[prove[y]+'List'], 'medicalInfo');
+                }
+                
+                const controlsForms23 = this.newRequest['controls'].medicalHistory['controls'].informations['controls'][prove[y]]['controls'][x]['controls'];
+                  console.log(controlsForms23)
+              // this.newRequest['controls'].medicalHistory['controls'].informations['controls'].heartPain['controls'][0]['controls'].condition.setValue("Rhailin enfermo");
+                  for(const nameControls in controlsForms23){
+                  
+                    const dataControls = res.data.medicalHistory.informations[prove[y]][x];
+                    for(const nameDataControls in dataControls){
+        
+                      if (nameDataControls != nameControls ) {
+                        // console.log(`No, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) no son iguales`)
+                        console.log("No debe de setearse.")
+                      }
+                      else if(nameDataControls == nameControls){
+                        // console.log(`Si, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) son iguales`)
+                        controlsForms23[nameControls].setValue(dataControls[nameDataControls])  
+                      }
+                      // console.log(nameDataControls)
+                      // console.log(nameControls);
+                    }
+                    // console.log(controles[nameControles]);
+                  }
+                // this.newRequest['controls'].contingentBeneficiary['controls'].changingCoverages['controls'][x]['controls'].name.setValue(res.data.primaryBenefits.dependentsC[x].name)
+        
+                // const formID7 = this.claimForm.get('reclamados').get([x]) as FormGroup;
+                // formID7.addControl('id', this.fb.control(data.data.reclamados[x].id, Validators.required));
+              }
+              console.log(`Control formArray ${prove[y]} CREADOOOOOOOO!`);
+            }
+            else {
+              console.log(`Control formArray ${prove[y]} NO HA SIDO creado!`);
+            }
+          }
+          // this.newRequest['controls'].medicalHistory['controls'].informations['controls'].heartPain['controls'][0]['controls'].condition.setValue("Rhailin enfermo");
+
+          if(this.newRequest.get('medicalHistory').get('informations').get('weightChanges')){ 
+            console.log(`Control weightChanges CREADOOOOOOOO!`);
+            this.newRequest['controls'].medicalHistory['controls'].informations['controls'].weightChanges['controls'].type.setValue(res.data.medicalHistory.informations.weightChanges.type)
+            this.newRequest['controls'].medicalHistory['controls'].informations['controls'].weightChanges['controls'].detail.setValue(res.data.medicalHistory.informations.weightChanges.detail)
+            // this.newRequest['controls'].medicalHistory['controls'].informations['controls'].weightChanges['controls'].detail.setValue("Hola, quiero pizza")
+          }
+          else {
+            console.log(`Control weightChanges NO HA SIDO creado!`);
+          }
+
+          if(this.newRequest.get('medicalHistory').get('informations').get('womenInformation')){ 
+            console.log(`Control womenInformation CREADOOOOOOOO!`);
+            this.newRequest['controls'].medicalHistory['controls'].informations['controls'].womenInformation['controls'].haveDisorder.setValue(res.data.medicalHistory.informations.womenInformation.haveDisorder)
+            this.newRequest['controls'].medicalHistory['controls'].informations['controls'].womenInformation['controls'].isPregnant.setValue(res.data.medicalHistory.informations.womenInformation.isPregnant)
+            // this.newRequest['controls'].medicalHistory['controls'].informations['controls'].womenInformation['controls'].haveDisorder.setValue('si')
+            // this.newRequest['controls'].medicalHistory['controls'].informations['controls'].womenInformation['controls'].isPregnant.setValue('si')
+            const var5 = {
+              valor: res.data.medicalHistory.informations.womenInformation.haveDisorder,
+              name: 'haveDisorder'
+            };
+            
+            if (var5.valor != null) {
+                this.selectChange(var5);
+            }
+            else {
+              console.log(`No se va a crear ningun control porque no es necesario.`);
+            }
+
+            const var6 = {
+              valor: res.data.medicalHistory.informations.womenInformation.isPregnant,
+              name: 'isPregnant'
+            };
+            
+            if (var6.valor != null) {
+                this.selectChange(var6);
+            }
+            else {
+              console.log(`No se va a crear ningun control porque no es necesario.`);
+            }
+
+            if(this.newRequest.get('medicalHistory').get('informations').get('womenInformation').get('pregnantInformation')){
+              this.newRequest['controls'].medicalHistory['controls'].informations['controls'].womenInformation['controls'].pregnantInformation['controls'].quantity.setValue(res.data.medicalHistory.informations.womenInformation.pregnantInformation.quantity)
+              this.newRequest['controls'].medicalHistory['controls'].informations['controls'].womenInformation['controls'].pregnantInformation['controls'].time.setValue(res.data.medicalHistory.informations.womenInformation.pregnantInformation.time)
+              console.log(`Control pregnantInformation HA SIDO creado!`);
+            }
+         
+            if(this.newRequest.get('medicalHistory').get('informations').get('womenInformation').get('disorders')){
+  
+              for (let x = 0; x < res.data.medicalHistory.informations.womenInformation.disorders.length; x++) {
+                  console.log("hola, esto es res.data.medicalHistory.informations.womenInformation.disorders, y soy id numero "+res.data.medicalHistory.informations.womenInformation.disorders[x].id)
+                  if (x >= 1) {
+                    console.log('Hola, esto es res.data.medicalHistory.informations.womenInformation.disorders, y soy yo, ' + x)
+                    this.addToList(this.womenDisordersList, 'medicalInfo');
+                  }
+                  
+                  const controlsForms24 = this.newRequest['controls'].medicalHistory['controls'].informations['controls'].womenInformation['controls'].disorders['controls'][x]['controls'];
+                    console.log(controlsForms24)
+          
+                    for(const nameControls in controlsForms24){
+                    
+                      const dataControls = res.data.medicalHistory.informations.womenInformation.disorders[x];
+                      for(const nameDataControls in dataControls){
+          
+                        if (nameDataControls != nameControls ) {
+                          // console.log(`No, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) no son iguales`)
+                          console.log("No debe de setearse.")
+                        }
+                        else if(nameDataControls == nameControls){
+                          // console.log(`Si, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) son iguales`)
+                          controlsForms24[nameControls].setValue(dataControls[nameDataControls])  
+                        }
+                        // console.log(nameDataControls)
+                        // console.log(nameControls);
+                      }
+                      // console.log(controles[nameControles]);
+                    }        
+                  // const formID7 = this.claimForm.get('reclamados').get([x]) as FormGroup;
+                  // formID7.addControl('id', this.fb.control(data.data.reclamados[x].id, Validators.required));
+                }
+              console.log('el grupo array disorders existe');
+              // this.newRequest['controls'].medicalHistory['controls'].informations['controls'].womenInformation['controls'].disorders['controls'][0]['controls'].condition.setValue("Rhailin enfermo 2.0")
+              // this.newRequest['controls'].medicalHistory['controls'].informations['controls'].womenInformation['controls'].disorders['controls'][0]['controls'].condition.setValue("Hola, tengo asma");
+            }
+
+          }
+          else {
+            console.log(`Control womenInformation NO HA SIDO creado!`);
+          }
+          // ME QUEDE REVISANDO EL DE ABAJO, EL ultimo que revise FUE this.newRequest['controls'].medicalHistory['controls'].informations['controls'].womenInformation['controls']
+          
+          if(this.newRequest.get('medicalHistory').get('informations').get('doctors')){
+            for (let x = 0; x < res.data.medicalHistory.informations.doctors.length; x++) {
+                console.log("hola, esto es res.data.medicalHistory.informations.doctors, y soy id numero "+res.data.medicalHistory.informations.doctors[x].id)
+                if (x >= 1) {
+                  console.log('Hola, esto es res.data.medicalHistory.informations.doctors, y soy yo, ' + x)
+                  this.addToList(this.doctorList, 'doctorInfo');
+                }
+                
+                const controlsForms25 = this.newRequest['controls'].medicalHistory['controls'].informations['controls'].doctors['controls'][x]['controls'];
+                  console.log(controlsForms25)
+        
+                  for(const nameControls in controlsForms25){
+                  
+                    const dataControls = res.data.medicalHistory.informations.doctors[x];
+                    for(const nameDataControls in dataControls){
+        
+                      if (nameDataControls != nameControls ) {
+                        // console.log(`No, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) no son iguales`)
+                        console.log("No debe de setearse.")
+                      }
+                      else if(nameDataControls == nameControls){
+                        // console.log(`Si, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) son iguales`)
+                        controlsForms25[nameControls].setValue(dataControls[nameDataControls])  
+                      }
+                      // console.log(nameDataControls)
+                      // console.log(nameControls);
+                    }
+                    // console.log(controles[nameControles]);
+                  }        
+                // const formID7 = this.claimForm.get('reclamados').get([x]) as FormGroup;
+                // formID7.addControl('id', this.fb.control(data.data.reclamados[x].id, Validators.required));
+              }
+            console.log('el grupo array doctors existe');
+            // this.newRequest['controls'].medicalHistory['controls'].informations['controls'].doctors['controls'][0]['controls'].name.setValue("Hola, soy Rhailin");
+          }
+
+          const controlsForms26 = this.newRequest['controls'].agentReport['controls'];
+            console.log(controlsForms26)
+  
+            for(const nameControls in controlsForms26){
+            
+              const dataControls = res.data.agentReport;
+              for(const nameDataControls in dataControls){
+  
+                if (nameDataControls != nameControls ) {
+                  // console.log(`No, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) no son iguales`)
+                  console.log("No debe de setearse.")
+                }                
+                
+                else if(nameDataControls == nameControls && nameControls!= 'amountProposed' && nameControls!= 'idInformation' && nameControls!= 'agentInformation'){
+                  // console.log(`Si, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) son iguales`)
+                  controlsForms26[nameControls].setValue(dataControls[nameDataControls])  
+                }
+                // console.log(nameDataControls)
+                // console.log(nameControls);
+              }
+              // console.log(controles[nameControles]);
+            }   
+            
+              const var7 = {
+                valor: res.data.agentReport.connectionType,
+                name: 'connectionType'
+              };
+              if (var7.valor != null) {
+                  this.selectChange(var7);
+              }
+              else {
+                console.log(`No se va a crear ningun control porque no es necesario.`);
+              }    
+              
+              const var8 = {
+                valor: res.data.agentReport.isMarried,
+                name: 'isMarried'
+              };
+              if (var8.valor != null) {
+                  this.selectChange(var8);
+              }
+              else {
+                console.log(`No se va a crear ningun control porque no es necesario.`);
+              }  
+
+              const var9 = {
+                valor: res.data.agentReport.isLessThan21,
+                name: 'isLessThan21'
+              };
+              if (var9.valor != null) {
+                  this.selectChange(var9);
+              }
+              else {
+                console.log(`No se va a crear ningun control porque no es necesario.`);
+              }  
+              
+              if(this.newRequest['controls'].agentReport['controls'].familyInsurances){
+              for (let x = 0; x < res.data.agentReport.familyInsurances.length; x++) {
+                console.log("hola, esto es res.data.agentReport.familyInsurances, y soy id numero "+res.data.agentReport.familyInsurances[x].id)
+                if (x >= 1) {
+                  console.log('Hola, esto es res.data.agentReport.familyInsurances, y soy yo, ' + x)
+                  this.addToList(this.familyRelationshipInsurances, 'familyInsurances');
+                }
+                
+                const controlsForms27 = this.newRequest['controls'].agentReport['controls'].familyInsurances['controls'][x]['controls'];
+                  console.log(controlsForms27)
+        
+                  for(const nameControls in controlsForms27){
+                  
+                    const dataControls = res.data.agentReport.familyInsurances[x];
+                    for(const nameDataControls in dataControls){
+        
+                      if (nameDataControls != nameControls ) {
+                        // console.log(`No, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) no son iguales`)
+                        console.log("No debe de setearse.")
+                      }
+                      else if(nameDataControls == nameControls){
+                        // console.log(`Si, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) son iguales`)
+                        controlsForms27[nameControls].setValue(dataControls[nameDataControls])  
+                      }
+                      // console.log(nameDataControls)
+                      // console.log(nameControls);
+                    }
+                    // console.log(controles[nameControles]);
+                  }        
+              //   // const formID7 = this.claimForm.get('reclamados').get([x]) as FormGroup;
+              //   // formID7.addControl('id', this.fb.control(data.data.reclamados[x].id, Validators.required));
+              }
+            }
+
+            const controlsForms28 = this.newRequest['controls'].agentReport['controls'].amountProposed['controls'];
+            console.log(controlsForms28)
+  
+            for(const nameControls in controlsForms28){
+            
+              const dataControls = res.data.agentReport.amountProposed;
+              for(const nameDataControls in dataControls){
+  
+                if (nameDataControls != nameControls ) {
+                  // console.log(`No, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) no son iguales`)
+                  console.log("No debe de setearse.")
+                }                
+                
+                else if(nameDataControls == nameControls){
+                  // console.log(`Si, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) son iguales`)
+                  controlsForms28[nameControls].setValue(dataControls[nameDataControls])  
+                }
+                // console.log(nameDataControls)
+                // console.log(nameControls);
+              }
+              // console.log(controles[nameControles]);
+            }   
+          
+            const controlsForms29 = this.newRequest['controls'].agentReport['controls'].idInformation['controls'];
+            console.log(controlsForms29)
+  
+            for(const nameControls in controlsForms29){
+            
+              const dataControls = res.data.agentReport.idInformation;
+              for(const nameDataControls in dataControls){
+  
+                if (nameDataControls != nameControls ) {
+                  // console.log(`No, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) no son iguales`)
+                  console.log("No debe de setearse.")
+                }                
+                
+                else if(nameDataControls == nameControls){
+                  // console.log(`Si, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) son iguales`)
+                  controlsForms29[nameControls].setValue(dataControls[nameDataControls])  
+                }
+                // console.log(nameDataControls)
+                // console.log(nameControls);
+              }
+              // console.log(controles[nameControles]);
+            }   
+
+            const controlsForms30 = this.newRequest['controls'].agentReport['controls'].agentInformation['controls'];
+            console.log(controlsForms30)
+  
+            for(const nameControls in controlsForms30){
+            
+              const dataControls = res.data.agentReport.agentInformation;
+              for(const nameDataControls in dataControls){
+  
+                if (nameDataControls != nameControls ) {
+                  // console.log(`No, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) no son iguales`)
+                  console.log("No debe de setearse.")
+                }                
+                
+                else if(nameDataControls == nameControls){
+                  // console.log(`Si, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) son iguales`)
+                  controlsForms30[nameControls].setValue(dataControls[nameDataControls])  
+                }
+                // console.log(nameDataControls)
+                // console.log(nameControls);
+              }
+              // console.log(controles[nameControles]);
+            }  
+
+            if(this.newRequest.get('agentReport').get('connectionTypeInfo') && res.data.agentReport.connectionType=="familia"){
+              this.newRequest['controls'].agentReport['controls'].connectionTypeInfo['controls'].relationship.setValue(res.data.agentReport.connectionTypeInfo.relationship);
+            }
+            else if(this.newRequest.get('agentReport').get('connectionTypeInfo') && res.data.agentReport.connectionType=="amigo"){
+              this.newRequest['controls'].agentReport['controls'].connectionTypeInfo['controls'].friendship.setValue(res.data.agentReport.connectionTypeInfo.friendship);
+              this.newRequest['controls'].agentReport['controls'].connectionTypeInfo['controls'].amount.setValue(res.data.agentReport.connectionTypeInfo.amount);
+              this.newRequest['controls'].agentReport['controls'].connectionTypeInfo['controls'].time.setValue(res.data.agentReport.connectionTypeInfo.time);
+            }
+            else if(this.newRequest.get('agentReport').get('connectionTypeInfo') && res.data.agentReport.connectionType=="cliente"){
+              this.newRequest['controls'].agentReport['controls'].connectionTypeInfo['controls'].amount.setValue(res.data.agentReport.connectionTypeInfo.amount);
+              this.newRequest['controls'].agentReport['controls'].connectionTypeInfo['controls'].time.setValue(res.data.agentReport.connectionTypeInfo.time);  
+            }
+            else if(this.newRequest.get('agentReport').get('connectionTypeInfo') && res.data.agentReport.connectionType=="acabado de conocer"){
+              this.newRequest['controls'].agentReport['controls'].connectionTypeInfo['controls'].how.setValue(res.data.agentReport.connectionTypeInfo.how);
+            }
+
+            if(this.newRequest.get('agentReport').get('marriedInformation')){
+              this.newRequest['controls'].agentReport['controls'].marriedInformation['controls'].spouseName.setValue(res.data.agentReport.marriedInformation.spouseName);
+              this.newRequest['controls'].agentReport['controls'].marriedInformation['controls'].spouseInsuranceAmount.setValue(res.data.agentReport.marriedInformation.spouseInsuranceAmount);
+            }
+          //  if(this.newRequest.get('questionnaires').get('solicitudHipertensionArterial')){
+          //   // this.newRequest['controls'].questionnaires['controls'].solicitudHipertensionArterial['controls'].personInfo['controls'].name.setValue('Rhailin Amable Made Puello');
+          //   console.log('HOOOOOOLLAAAAAAA, MMMGGGGGGGGGGGG!!!!')
+          //   // this.pruebaLoop(this.newRequest['controls'].questionnaires['controls'].solicitudHipertensionArterial['controls'])
+          //   // console.log(this.newRequest['controls']['questionnaires']['controls']['solicitudHipertensionArterial']['controls']['diagnosticStudies']['controls'])
+          //   console.log(res.data.agentReport)
+          //   this.life.captureData(res.data.agentReport);
+          //   console.log("retorno data capturada:",this.life.dataCapturedProperty)
+          //   console.log("retorno data capturada amountProposed.occupation:",this.life.dataCapturedProperty.amountProposed.occupation)
+          // }
+          
+          // const controlsForms31 = this.newRequest['controls'].questionnaires['controls'].solicitudHipertensionArterial['controls'];
+          //   console.log(controlsForms31.diagnosticStudies)
+          //   for(const nameControls in controlsForms31){
+            
+          //     // const dataControls = res.data.agentReport.agentInformation;
+          //     // for(const nameDataControls in dataControls){
+  
+          //     //   if (nameDataControls != nameControls ) {
+          //     //     // console.log(`No, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) no son iguales`)
+          //     //     console.log("No debe de setearse.")
+          //     //   }                
+                
+          //     //   else if(nameDataControls == nameControls){
+          //     //     // console.log(`Si, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) son iguales`)
+          //     //     controlsForms31[nameControls].setValue(dataControls[nameDataControls])  
+          //     //   }
+          //     //   // console.log(nameDataControls)
+          //     //   // console.log(nameControls);
+          //     // }
+          //     console.log("controlesssss",nameControls);
+          //   }  
+            
 			// this.claimForm['controls'].asegurado['controls'].documentoIdentidad.setValue(data.data.asegurado.documentoIdentidad)
 			// this.claimForm['controls'].asegurado['controls'].edad.setValue(data.data.asegurado.edad)
 			// this.claimForm['controls'].asegurado['controls'].idNumero.setValue(data.data.asegurado.idNumero)
@@ -2038,6 +3021,21 @@ export class LifeComponent implements OnInit, DoCheck {
 		})
 		this.life.id = null;
 		console.log("this.life.id es igual a " + this.life.id);
-	}
+  }
 
+  pruebaLoop(group:FormGroup){
+
+		Object.keys(group.controls).forEach((key)=>{
+
+			const abstractControl = group.get(key);
+			if(abstractControl instanceof FormGroup){
+				this.pruebaLoop(abstractControl)
+			}
+			else{
+				console.log('key = ' + key + ', value = ' + abstractControl.value)
+			}
+		})
+
+	  }
+  
 }

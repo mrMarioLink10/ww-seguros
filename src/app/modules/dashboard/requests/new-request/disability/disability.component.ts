@@ -231,7 +231,18 @@ export class DisabilityComponent implements OnInit {
     public dialog: MatDialog,
   ) { }
 
+  ID = null;
   ngOnInit() {
+
+    this.ID = this.disabilityService.id;
+		if (this.ID != null) {
+			console.log("El ID es " + this.ID);
+			this.getData(this.ID)
+		}
+		else if (this.ID == null) {
+			console.log("ID esta vacio")
+		}
+
     this.role = this.userService.getRoleCotizador();
 
     this.sicknessQuestions = [
@@ -796,5 +807,19 @@ export class DisabilityComponent implements OnInit {
         break;
     }
   }
+
+  getData(id) {
+		this.disabilityService.returnData(id).subscribe(data => {
+			// console.log(data.data.asegurado.documentoIdentidad)
+      console.log(data)
+
+      this.disabilityGroup['controls'].num_financial_quote.setValue(data.data.num_financial_quote)
+
+    })
+
+    this.disabilityService.id = null;
+		console.log("this.disabilityService.id es igual a " + this.disabilityService.id);
+  }
+
 }
 

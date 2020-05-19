@@ -584,7 +584,7 @@
                     <div class="mr-3">
                       <app-number-input
                         [group]="newRequest.get('contingentBeneficiary').get('anotherCoverages').get(i.toString())"
-                        name="ADBQuantity" label="Cantidad ADB" min="0">
+                        name="adbQuantity" label="Cantidad ADB" min="0">
                       </app-number-input>
                     </div>
                     <div class="mr-3">
@@ -634,7 +634,7 @@
                     <div class="mr-3">
                       <app-number-input
                         [group]="newRequest.get('contingentBeneficiary').get('changingCoverages').get(i.toString())"
-                        name="ADBQuantity" label="Cantidad ADB" min="0">
+                        name="adbQuantity" label="Cantidad ADB" min="0">
                       </app-number-input>
                     </div>
                     <div class="mr-3">
@@ -1207,15 +1207,15 @@
 
       </mat-tab>
       <mat-tab label="Cuestionarios Médicos" *ngIf="questionsLength() > 0" class="mat-tab-forms">
-        <app-hypertension *ngIf="newRequest.get('questionnaires').get('hypertension')"
-          [form]="newRequest.get('questionnaires').get('hypertension')"></app-hypertension>
-        <app-mellitus-diabetes *ngIf="newRequest.get('questionnaires').get('diabetes')"
-          [form]="newRequest.get('questionnaires').get('diabetes')"></app-mellitus-diabetes>
+        <app-hypertension *ngIf="newRequest.get('questionnaires').get('solicitudHipertensionArterial')"
+          [form]="newRequest.get('questionnaires').get('solicitudHipertensionArterial')"></app-hypertension>
+        <app-mellitus-diabetes *ngIf="newRequest.get('questionnaires').get('solicitudDiabetes')"
+          [form]="newRequest.get('questionnaires').get('solicitudDiabetes')"></app-mellitus-diabetes>
       </mat-tab>
-      <mat-tab label="Formulario de Estado Financiero" *ngIf="newRequest.get('questionnaires').get('financialStatus')"
+      <mat-tab label="Formulario de Estado Financiero" *ngIf="newRequest.get('questionnaires').get('solicitudEstadoFinancieroConfidencial')"
         class="mat-tab-forms">
-        <app-financial-status *ngIf="newRequest.get('questionnaires').get('financialStatus')"
-          [form]="newRequest.get('questionnaires').get('financialStatus')"></app-financial-status>
+        <app-financial-status *ngIf="newRequest.get('questionnaires').get('solicitudEstadoFinancieroConfidencial')"
+          [form]="newRequest.get('questionnaires').get('solicitudEstadoFinancieroConfidencial')"></app-financial-status>
       </mat-tab>
       <mat-tab
         *ngIf="isFormValid('contractor') && (newRequest.get('contractorQuestionnaires').get('knowYourClient') || newRequest.get('contractorQuestionnaires').get('knowYourCustomer'))"

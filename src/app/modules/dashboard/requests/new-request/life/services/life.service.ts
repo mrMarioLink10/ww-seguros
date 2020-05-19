@@ -26,9 +26,16 @@ export class LifeService {
   }
   
   id=null;
+  idKNOWCustomer=null;
   getID(id){
       this.id=id;
+      this.idKNOWCustomer=id;
       console.log("hola, soy ",id);
       this.route.navigateByUrl('/dashboard/requests/new-requests/life');
   }
+
+  // dataCapturedProperty=null;
+  // captureData(dataCaptured){
+  //     this.dataCapturedProperty=dataCaptured;
+  // }
 }

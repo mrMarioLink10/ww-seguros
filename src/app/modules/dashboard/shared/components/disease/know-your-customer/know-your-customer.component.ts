@@ -1,15 +1,16 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, DoCheck } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { FieldConfig } from 'src/app/shared/components/form-components/models/field-config';
 import { $country } from 'src/app/core/form/objects';
 import { FormArrayGeneratorService } from 'src/app/core/services/forms/form-array-generator.service';
+import { LifeService } from '../../../../requests/new-request/life/services/life.service';
 
 @Component({
   selector: 'app-know-your-customer',
   templateUrl: './know-your-customer.component.html',
   styleUrls: []
 })
-export class KnowYourCustomerComponent implements OnInit {
+export class KnowYourCustomerComponent implements OnInit, DoCheck {
 
   @Input() form:FormGroup;
 
@@ -145,7 +146,7 @@ export class KnowYourCustomerComponent implements OnInit {
     telephone: ['', Validators.required]
   }
 
-  constructor(private fb:FormBuilder, public formMethods: FormArrayGeneratorService) { }
+  constructor(private fb:FormBuilder, public formMethods: FormArrayGeneratorService, private life:LifeService) { }
 
   ngOnInit() {
     
@@ -222,6 +223,52 @@ export class KnowYourCustomerComponent implements OnInit {
 
   }
 
+  x=0;
+  iD;
+  ngDoCheck(): void {
+
+    if(this.life.idKNOWCustomer!=null){
+      console.log("this.iD es igual a "+this.life.idKNOWCustomer)
+      // if(!this.form){
+      //   // this.x=1;
+      //  this.addBasicControls(); 
+      //  console.log("HOllaLALALALKALSLAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA!!!!")
+      // }
+      if(this.x<40){
+        if(this.form.get('policy').get('total_policy_radio').value=="si"){
+          const varPolicy = {
+            valor: 'si',
+            name:'total_policy_radio'
+          };
+          this.selectChange(varPolicy)
+        }
+        if(this.form.get('exposed').get('exposed_person_radio').value=="si"){
+          const varExposed = {
+            valor: 'si',
+            name:'exposed_person_radio'
+          };
+          this.selectChange(varExposed)
+        }
+        // this.newRequest['controls'].contractorQuestionnaires['controls'].knowYourCustomer['controls'].exposed['controls'].exposed_person_radio.setValue(data.data.contractorQuestionnaires.knowYourCustomer.exposed.exposed_person_radio);
+        if(this.form.get('questions')){
+          if(this.form.get('questions').get('transaction').get('investigation_radio').value=="si"){
+            const varInvestigation = {
+              valor: 'si',
+              name:'investigation_radio'
+            };
+            this.selectChange(varInvestigation)
+          }
+          // this.bankFormArray = this.form.get('questions').get('bank').get('bank_array') as FormArray;
+          // this.commercialFormArray = this.form.get('questions').get('commercial').get('commercial_array') as FormArray;
+          // this.personalFormArray = this.form.get('questions').get('personal').get('personal_array') as FormArray;  
+        }
+        this.x++
+        console.log("WEOOOOOOOOOOOOOOOOOOOO, CALLENSEEEEEEEEEEEEEEEEEEEE!!!")
+      }
+      this.life.idKNOWCustomer==null;
+    }
+  }
+
   addBasicControls(){
     
 
@@ -289,10 +336,9 @@ export class KnowYourCustomerComponent implements OnInit {
   prueba = 'No Existen';
   selectChange(event) {
 
-		const formP = this.form.get('exposed') as FormGroup;
-    const formQ = this.form as FormGroup;
+		let formP = this.form.get('exposed') as FormGroup;
+    let formQ = this.form as FormGroup;
     let formI;
-
 
 		if (event.valor === 'si') {
 
@@ -440,7 +486,7 @@ export class KnowYourCustomerComponent implements OnInit {
       const increment = array.length + 1;
       array = this.formMethods.addElement(array, increment, this.createFormArray(name)).formArray;
       
-      console.log(JSON.stringify(this.form.value));
+      // console.log(JSON.stringify(this.form.value));
       // array.push(this.createFormArray(name));
       
     }

@@ -134,6 +134,47 @@
               </app-select>
             </div>
           </ng-template>
+          <!-- CONTRATANTE -->
+          <ng-template #formTemplate>
+            <div class="mt-3 grid grid-cols-1 sm:grid-cols-3 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
+              <app-input class="mr-3" [group]="newRequest.get('contractor')" label="Nombre de la Sociedad"
+                name='societyName'></app-input>
+              <app-input class="mr-3" [group]="newRequest.get('contractor')" label="Nombre Comercial"
+                name='commercialName'></app-input>
+              <app-number-input class="mr-3" [group]="newRequest.get('contractor')" label="Núm. Contribuyente o equivalente"
+                name='taxpayerNumber'></app-number-input>
+              <app-input class="mr-3" [group]="newRequest.get('contractor')" label="Domicilio Social" name='socialHome'>
+              </app-input>
+              <app-number-input class="mr-3" [group]="newRequest.get('contractor')" label="Teléfono" name='tel'>
+              </app-number-input>
+              <app-input class="mr-3" [group]="newRequest.get('contractor')" label="Correo" name='email'></app-input>
+              <app-input class="mr-3" [group]="newRequest.get('contractor')" label="Actividad Comercial"
+                name='commercialActivity'></app-input>
+              <!-- <app-select class="mr-3" [options]="requestTypeOptions" [group]="newRequest.get('contractor')">
+              </app-select> -->
+            </div>
+            <mat-divider class="divider"></mat-divider>
+
+            <div class="mt-4 grid grid-cols-1 sm:grid-cols-3 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
+              <app-input class="mr-3" [group]="newRequest.get('contractor').get('legalRepresentation')"
+                label="Nombres y Apellidos Representante Legal" name='name'></app-input>
+              <app-input class="mr-3" [group]="newRequest.get('contractor').get('legalRepresentation')"
+                label="Cargo o relación con la Sociedad" name='position'></app-input>
+              <!-- <app-input class="mr-3" [group]="newRequest.get('contractor').get('legalRepresentation')"
+                label="Nacionalidad" name='nationality'></app-input> -->
+              <app-select class="mr-3" [options]="nationality"
+                [group]="newRequest.get('contractor').get('legalRepresentation')"></app-select>
+              <app-select class="mr-3" [options]="idType"
+                [group]="newRequest.get('contractor').get('legalRepresentation')"></app-select>
+              <app-input class="mr-3" [group]="newRequest.get('contractor').get('legalRepresentation')"
+                label="Documento de identidad" name='id2'></app-input>
+              <app-input class="mr-3" [group]="newRequest.get('contractor').get('legalRepresentation')"
+                label="Póliza Existente (Si aplica)" name='policy'></app-input>
+              <app-input class="mr-3" [group]="newRequest.get('contractor').get('legalRepresentation')" label="Correo"
+                name='email'></app-input>
+            </div>
+          </ng-template>
+
           <!-- POLITICAMENTE EXPUESTAS -->
           <ng-template #formTemplate>
             <div class="colorb">

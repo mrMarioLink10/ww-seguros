@@ -163,8 +163,12 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
         viewValue: 'Semestral'
       },
       {
-        value: 'otro',
-        viewValue: 'Otra'
+        value: 'Trimestral',
+        viewValue: 'Trimestral'
+      },
+      {
+        value: 'Mensual',
+        viewValue: 'Mensual'
       },
     ]
   };
@@ -672,26 +676,25 @@ TitleConozcaClienteContratante = "Conoca Su Cliente (Contratante)";
       {
         this.titles = FormValidationsConstant.titlesForMajorExpensesComplete;
       }
-      console.log(this.isContractor);
     });
     this.isContractorPep = false;
     this.newRequest.get('exposedPerson').get('contractor').valueChanges.subscribe(value => {
-console.log(value);
+
       this.isContractorPep = false;
       if (value === "si")      {
         this.isContractorPep = true;
       }
-      console.log(this.isContractorPep);
+
     });
 
     this.isSolicitantePep = false;
     this.newRequest.get('exposedPerson').get('headLine').valueChanges.subscribe(value => {
-      console.log(value);
+
       this.isSolicitantePep = false;
       if (value === "si")      {
         this.isSolicitantePep = true;
       }
-      console.log(this.isSolicitantePep);
+
     });
     this.isJuridica = false;
     this.newRequest.get('person').get('isJuridica').valueChanges.subscribe(value => {
@@ -704,7 +707,7 @@ console.log(value);
       {
         this.titles = FormValidationsConstant.titlesForMajorExpensesComplete;
       }
-      console.log(this.isSolicitantePep);
+
     });
   }
 
@@ -731,16 +734,24 @@ isContractorPep=true;
   ngDoCheck() { }
 
   add(dependentsFormArray, group) {
-    console.log(group);
+
     const increment = dependentsFormArray.length + 1;
     dependentsFormArray = this.formMethods.addElement(dependentsFormArray, increment, group).formArray;
 
-    console.log(this.newRequest);
+
     this.AddEventOnEachDependentVariable();
   }
 AddEventOnEachDependentVariable()
 {
-  for(let index in this.dependentsFormArray.controls)
+  /*for(let index = 0;index < this.newRequest.get('dependents').get('allDependents').length;index++)
+  {
+    console.log(index);
+  }*/
+  //for(let index in this.dependentsFormArray.controls)
+  if (this.newRequest.get('dependents').get('allDependents') !== undefined)
+{
+  var arrayElement = this.newRequest.get('dependents').get('allDependents') as FormArray ;
+  for(let index = 0;index < arrayElement.length;index++)
   { let isBmiEventAssigned = this.newRequest.get('dependents').get('allDependents').get(index.toString()).get('isBmiEventAssigned').value;
 
     if (isBmiEventAssigned == false)
@@ -790,11 +801,12 @@ AddEventOnEachDependentVariable()
     .setValue(true);
   }
   }
+
+}
 }
 getBmiValue(height: any, weight: any) {
   const bmi = weight / ((height / 100) * (height / 100));
-  console.log(bmi);
-  console.log(height);console.log(weight);
+
   if (bmi !== Infinity) {
     const value = parseFloat(`${bmi}`).toFixed(2);
     return value;
@@ -863,7 +875,7 @@ getBmiValue(height: any, weight: any) {
     const mhiForm = this.newRequest.get('questionsB').get('medicalHealthInsurance') as FormGroup;
     const exposedPersonForm = this.newRequest.get('exposedPerson') as FormGroup;
 
-    console.log(event);
+
     if (event.valor === 'si') {
       switch (event.name) {
 
@@ -1260,8 +1272,6 @@ getBmiValue(height: any, weight: any) {
 
   getBmi(height: any, weight: any) {
     const bmi = weight / ((height / 100) * (height / 100));
-    console.log(bmi);
-
     if (bmi !== Infinity) {
       const value = parseFloat(`${bmi}`).toFixed(2);
       this.newRequest.get('person').get('bmi').setValue(value);
@@ -1328,7 +1338,8 @@ getBmiValue(height: any, weight: any) {
   getDataCotizaciones(id)
   {
     this.quotesService.returnDataSalud(id).subscribe(data => {
-     if (data !== undefined && data.data != undefined && data.data.nombre !== undefined)
+
+     if (data !== undefined && data.data !== null && data.data != undefined && data.data.nombre !== undefined)
      {
       const dialogRef = this.dialog.open(BaseDialogComponent, {
         data: this.dialogOption.QuoteFound(data.data),
@@ -1339,7 +1350,7 @@ getBmiValue(height: any, weight: any) {
       }, 4000);
       this.isFormValidToFill = true;
       this.notFoundQuote = false;
-      console.log(data.data.fecha_nacimiento);
+
       this.newRequest.get('person').get('date').setValue(data.data.fecha_nacimiento);
       this.newRequest.get('person').get('firstName').setValue(data.data.nombre);
      }
@@ -1365,9 +1376,166 @@ getBmiValue(height: any, weight: any) {
     }
     window.open(FormValidationsConstant.linkCotizadores+company, "_blank");
   }
+  has(object: any, key : any) {
+    return object ? this.hasOwnProperty.call(object, key) : false;
+ }
+
+ iterateThroughtAllObject(obj: any, groupControl: any)
+ {
+   const formDataGroup = groupControl as FormGroup;
+   Object.keys(obj).forEach(e =>
+     {
+       let key = e;
+       let value = obj[key];
+       if (obj[key] !== null && obj[e] !== undefined && (typeof obj[e]) != "object")
+       {
+         //console.log(this.has(formDataGroup['controls'], key));
+         if ( value !== undefined && value !== null && value !== '')
+         {
+           if (!this.has(formDataGroup['controls'], key))
+           {
+             formDataGroup.addControl(key, this.fb.control(value));
+           }
+           else
+           {
+
+           const valueFormControl = formDataGroup['controls'][key] as FormControl;
+           valueFormControl.setValue (value);
+         }
+         }
+       }
+       else if (obj[key] !== null && obj[key] !== undefined && (typeof obj[key]) === "object")
+       {
+         if (Array.isArray(obj[key] ))
+         {
+          if (!this.has(formDataGroup['controls'], key))
+          {
+            formDataGroup.removeControl(key);
+          }
+          if(obj[key].length > 0)
+          {
+
+              let form = formDataGroup.get(key);
+              let arrayForm = [];
+              obj[key].forEach( (element) =>{
+                let fbGroup = this.fb.group({
+                  id: ['', Validators.required]
+                });
+
+                this.iterateThroughtAllObject(element,  fbGroup);
+                arrayForm.push(fbGroup);
+              });
+
+
+              formDataGroup.addControl(key, this.fb.array(arrayForm));
+          }
+         }
+         else
+         {
+          if (!this.has(formDataGroup['controls'], key))
+          {
+            formDataGroup.addControl(key, this.fb.group({
+              id: ['', Validators.required]
+            }));
+          }
+
+          let form = formDataGroup.get(key);
+
+          this.iterateThroughtAllObject(obj[key], form);
+          return form;
+         }
+
+       }
+
+   });
+ }
+  iterateThroughtObject(obj: any, groupControl: any)
+  {
+    const formDataGroup = groupControl as FormGroup;
+    Object.keys(obj).forEach(e =>
+      {
+        let key = e;
+        let value = obj[e];
+        if (obj[e] !== undefined && (typeof obj[e]) != "object")
+        {
+        //  console.log(this.has(formDataGroup['controls'], key));
+          if ( value !== undefined && value !== null && value !== '')
+          {
+            if (!this.has(formDataGroup['controls'], key))
+            {
+              formDataGroup.addControl(key, this.fb.control(value));
+            }
+            else
+            {
+
+            const valueFormControl = formDataGroup['controls'][e] as FormControl;
+            valueFormControl.setValue (value);
+          }
+          }
+        }
+    });
+  }
 	getData(id) {
     this.majorExpensesService.returnData(id).subscribe(data => {
-      console.log(data);
+      //console.log(data);
+      //console.log( this.newRequest);
+      if (data !== undefined && data.data !== null &&
+         data.data != undefined )
+      {
+        this.ID = data.data.id;
+        this.iterateThroughtAllObject(data.data, this.newRequest);
+        this.AddEventOnEachDependentVariable();
+        this.isFormValidToFill = true;
+        /*let person = this.newRequest.get('person');
+        this.iterateThroughtObject(data.data.person, person);
+/// Person
+        let personOffice = this.newRequest.get('person').get('office');
+        this.iterateThroughtObject(data.data.person.office, personOffice);
+        let personaConozcaSuClientePersona = this.newRequest.get('person').get('conozcaSuClientePersona');
+        this.iterateThroughtObject(data.data.person.conozcaSuClientePersona, personaConozcaSuClientePersona);
+/// Contractor
+        let contractor = this.newRequest.get('contractor');
+        this.iterateThroughtObject(data.data.contractor, contractor);
+        let contractorOffice = this.newRequest.get('contractor').get('office');
+        this.iterateThroughtObject(data.data.contractor.office, contractorOffice);
+        let ContractorConozcaSuClientePersona = this.newRequest.get('contractor').get('conozcaSuClientePersona');
+        this.iterateThroughtObject(data.data.contractor.conozcaSuClientePersona, ContractorConozcaSuClientePersona);
+        let ContractorConozcaSuClientePersonaJuridica = this.newRequest.get('contractor').get('conozcaSuClientePersonaJuridica');
+        this.iterateThroughtObject(data.data.contractor.conozcaSuClientePersonaJuridica, ContractorConozcaSuClientePersonaJuridica);
+
+/// ExpoxedPerson
+let exposedPerson = this.newRequest.get('exposedPerson');
+this.iterateThroughtObject(data.data.exposedPerson, exposedPerson);
+let contractorExposedInfo = this.newRequest.get('exposedPerson').get('contractorExposedInfo');
+this.iterateThroughtObject(data.data.exposedPerson.contractorExposedInfo, contractorExposedInfo);
+let headLineExposedInfo = this.newRequest.get('exposedPerson').get('headLineExposedInfo');
+this.iterateThroughtObject(data.data.exposedPerson.headLineExposedInfo, headLineExposedInfo);
+
+/// Incomes
+let incomes = this.newRequest.get('incomes');
+this.iterateThroughtObject(data.data.incomes, incomes);
+if (data.data.dependents !== null)
+{
+// Dependents
+let dependents = this.newRequest.get('dependents');
+this.iterateThroughtObject(data.data.dependents, dependents);
+
+if(data.data.dependents.allDependents !== null && data.data.dependents.allDependents.length > 0)
+{
+data.data.dependents.allDependents.foreach( (element) =>{
+  this.iterateThroughtObject(element, dependents)
+  });
+}
+if(data.data.dependents.students !== null && data.data.dependents.students.length > 0)
+{
+data.data.dependents.students.foreach( (element) =>{
+  this.iterateThroughtObject(element, dependents)
+  });
+}
+}*/
+      }
+
+
     });
 	}
 

@@ -6,7 +6,9 @@
       <div class="mt-3 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4">
       <!--  <app-input class="mr-3" [group]="newRequest" label="No. de Cotización" name='NoC'></app-input> -->
       <div class="mr-3">
-      <app-number-input class="mr-3" [group]="newRequest" label="No. de Cotización" name='NoC'></app-number-input>
+      <app-number-input class="mr-3" [group]="newRequest"
+      label="No. de Cotización" name='NoC'
+      ></app-number-input>
       </div>
       <button *ngIf="ID === null || ID === undefined" [disabled]="isNotValidToSearch"
         (click)="searchQuote(newRequest.value.NoC)" type="button"

@@ -121,7 +121,7 @@ export class DialogOptionService {
   QuoteFound(data: any) {
 		return {
 			logo: 'check',
-			title: `${data.nombre} Para Tipo Seguro ${data.person.tiposeguro}`,
+			title: `${data.nombre} Para Tipo Seguro ${data.tipoSeguro}`,
 			text: `Se encontró el siguiente asegurado`,
 			showButtons: false,
 		};

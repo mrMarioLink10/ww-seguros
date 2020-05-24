@@ -64,7 +64,8 @@ export class RequestsComponent implements OnInit {
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
-  constructor(private router: Router, private _requestsService: RequestsService, public life:LifeService, public disability:DisabilityService) { }
+  constructor(private router: Router, private _requestsService: RequestsService, public life:LifeService,
+    public disability:DisabilityService) { }
 
   getRequests(params: HttpParams = new HttpParams) {
     let data;
@@ -86,6 +87,9 @@ export class RequestsComponent implements OnInit {
     this.newRequestButtonOptions.active = true;
     this.router.navigateByUrl('/dashboard/requests/new-requests');
   }
-
+  navigateToSalud(id) {
+    this.newRequestButtonOptions.active = true;
+    this.router.navigateByUrl(`/dashboard/requests/new-requests/major-expenses/${id}`);
+  }
 }
 

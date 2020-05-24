@@ -50,8 +50,8 @@
               <div class="mb-3 -mr-8"> <label> <strong> Fecha del diagnóstico </strong> </label> </div>
 
               <div>
-                <app-date-picker [group]="form.get('data').get('diagnosis')" label="Fecha" name='date'>
-                </app-date-picker>
+                <datepicker-month fieldId="date"  [group]="form.get('data').get('diagnosis')" label="Fecha" name='date'>
+                </datepicker-month >
               </div>
 
             </div>
@@ -88,8 +88,8 @@
                 <div class="mb-3"> <label> <strong> Fecha de inicio </strong> </label> </div>
 
                 <div>
-                  <app-date-picker [group]="form.get('data').get('symptom')" label="Fecha" name='date'>
-                  </app-date-picker>
+                  <datepicker-month fieldId="date"  [group]="form.get('data').get('symptom')" label="Fecha" name='date'>
+                  </datepicker-month>
                 </div>
 
               </div>
@@ -126,8 +126,8 @@
             </div>
 
             <div class="mt-4 mr-3">
-              <app-date-picker [group]="form.get('data').get('last_time_symptom')" label="Fecha" name='date'>
-              </app-date-picker>
+              <datepicker-month fieldId="date"   [group]="form.get('data').get('last_time_symptom')" label="Fecha" name='date'>
+              </datepicker-month>
             </div>
 
           </div>
@@ -170,8 +170,8 @@
 
               <div class="mr-3">
 
-                <app-date-picker [group]="form.get('data').get('analysis').get('analysis_array').get(in.toString())"
-                  label="Fecha" name='date'> </app-date-picker>
+                <datepicker-month fieldId="date"  [group]="form.get('data').get('analysis').get('analysis_array').get(in.toString())"
+                  label="Fecha" name='date'> </datepicker-month>
 
               </div>
 
@@ -314,8 +314,8 @@
 
               <div>
 
-                <app-date-picker [group]="form.get('data').get('medical_consultation')" label="Fecha" name='date'>
-                </app-date-picker>
+                <datepicker-month fieldId="date" [group]="form.get('data').get('medical_consultation')" label="Fecha" name='date'>
+                </datepicker-month>
 
               </div>
 

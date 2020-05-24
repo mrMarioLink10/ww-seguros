@@ -6,6 +6,7 @@ import { FormArrayGeneratorService } from 'src/app/core/services/forms/form-arra
 import { questionsA, questionsB } from './questions';
 import { Requests } from '../../requests.component';
 import { Router, ActivatedRoute } from '@angular/router';
+import { UserService } from '../../../../../core/services/user/user.service';
 import { generate, Observable } from 'rxjs';
 import { FormHandlerService } from 'src/app/core/services/forms/form-handler.service';
 import { DiseaseService } from '../../../shared/components/disease/shared/disease/disease.service';
@@ -16,7 +17,7 @@ import { BaseDialogComponent } from 'src/app/shared/components/base-dialog/base-
 import { map, first } from 'rxjs/operators';
 import {MajorExpensesService} from './services/major-expenses.service';
 import {QuotesService} from '../../../services/quotes/quotes.service';
-import {FormValidationsConstant} from '../../../../../../environments/environment';
+import {FormValidationsConstant, environment} from '../../../../../../environments/environment';
 @Component({
   selector: 'app-major-expenses',
   templateUrl: './major-expenses.component.html',
@@ -67,25 +68,10 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
     {
       label: 'Tipo de Solicitud',
       options: [
-        {
-          value: 'Cambio de plan',
-          viewValue: 'Cambio de plan',
-        },
+
         {
           value: 'Poliza Nueva',
           viewValue: 'Póliza Nueva',
-        },
-        {
-          value: 'Adicion de Dependiente',
-          viewValue: 'Adición de Dependiente',
-        },
-        {
-          value: 'Rehabilitación',
-          viewValue: 'Rehabilitación',
-        },
-        {
-          value: 'Inclusión',
-          viewValue: 'Inclusión',
         }
       ],
       name: 'requestType',
@@ -225,10 +211,6 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
       {
         value: 'Distinction',
         viewValue: 'Distinction',
-      },
-      {
-        value: 'Otro',
-        viewValue: 'Otro',
       }
     ],
     name: 'plans',
@@ -301,6 +283,8 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
     sex: ['', Validators.required],
     id2: ['', Validators.required],
     nationality: ['', Validators.required],
+    age: [{ value: '', disabled: true }, Validators.required],
+    bmi: [{ value: '', disabled: true }, Validators.required],
     haveMusculoskeletal: [false, Validators.required],
     haveCerebrovascular: [false, Validators.required],
     haveNervousSystem: [false, Validators.required],
@@ -324,6 +308,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
     haveHighRiskSport: [false, Validators.required],
     havePregnant: [false, Validators.required],
     haveReproductiveOrganDisorders: [false, Validators.required],
+    isBmiEventAssigned: [false, Validators.required]
   };
   questionsGroup = {
     question: ['', Validators.required],
@@ -403,6 +388,8 @@ TitleConozcaClienteContratante = "Conoca Su Cliente (Contratante)";
   ID = null;
   noCotizacion = null;
   policy: FormGroup;
+  isFormValidToFill = false;
+  isNotValidToSearch = true;
   // tslint:disable-next-line: max-line-length
   constructor(
     private fb: FormBuilder,
@@ -413,12 +400,23 @@ TitleConozcaClienteContratante = "Conoca Su Cliente (Contratante)";
     public diseaseService: DiseaseService,
     public dialogModal: DialogService,
     private dialogOption: DialogOptionService,
+    private userService: UserService,
     private quotesService : QuotesService,
     private majorExpensesService : MajorExpensesService,
     public dialog: MatDialog,
   ) { }
-
+  role = "";
+  searchQuote(noCotizacion)
+  {
+    if (noCotizacion !== undefined && noCotizacion !== '')
+    {
+      this.getDataCotizaciones(noCotizacion);
+    }
+  }
   ngOnInit() {
+
+    this.role = this.userService.getRoleCotizador();
+    this.isFormValidToFill = false;
     this.route.params.subscribe(res => {
 			this.ID = res.id;
 		});
@@ -642,6 +640,15 @@ TitleConozcaClienteContratante = "Conoca Su Cliente (Contratante)";
     this.newRequest.get('person').get('weight').valueChanges.subscribe(value => {
       this.getBmi(this.newRequest.get('person').value.height, value);
     });
+    this.newRequest.get('NoC').valueChanges.subscribe(value => {
+      if (value !== "" && value != undefined)  {
+        this.isNotValidToSearch = false;
+      }
+      else
+      {
+        this.isNotValidToSearch = true;
+      }
+    });
 
     this.newRequest.get('person').get('height').valueChanges.subscribe(value => {
       this.getBmi(value, this.newRequest.get('person').value.weight);
@@ -724,13 +731,75 @@ isContractorPep=true;
   ngDoCheck() { }
 
   add(dependentsFormArray, group) {
+    console.log(group);
     const increment = dependentsFormArray.length + 1;
     dependentsFormArray = this.formMethods.addElement(dependentsFormArray, increment, group).formArray;
 
     console.log(this.newRequest);
-
+    this.AddEventOnEachDependentVariable();
   }
+AddEventOnEachDependentVariable()
+{
+  for(let index in this.dependentsFormArray.controls)
+  { let isBmiEventAssigned = this.newRequest.get('dependents').get('allDependents').get(index.toString()).get('isBmiEventAssigned').value;
 
+    if (isBmiEventAssigned == false)
+    {
+          this.newRequest
+          .get('dependents')
+          .get('allDependents')
+          .get(index.toString())
+          .get('isBmiEventAssigned')
+          .setValue(true);
+          this.newRequest.get('dependents').get('allDependents').get(index.toString()).get('date').valueChanges.subscribe(value => {
+            const timeDiff = Math.abs(Date.now() - new Date(value).getTime());
+            const age = Math.floor(timeDiff / (1000 * 3600 * 24) / 365.25);
+            this.newRequest.get('dependents').get('allDependents').get(index.toString()).get('age').setValue(age);
+
+          });
+    this.newRequest.get('dependents').get('allDependents').get(index.toString()).get('height').valueChanges.subscribe(value => {
+      let weight = this.newRequest.get('dependents').get('allDependents').get(index.toString()).get('weight').value;
+      let result = this.getBmiValue(value, weight);
+      this.newRequest
+          .get('dependents')
+          .get('allDependents')
+          .get(index.toString())
+          .get('bmi')
+          .setValue(result);
+
+    });
+    this.newRequest.get('dependents').get('allDependents').get(index.toString()).get('weight').valueChanges.subscribe(value => {
+      let height = this.newRequest.get('dependents').get('allDependents').get(index.toString()).get('height').value;
+      let result = this.getBmiValue(height, value);
+            this.newRequest
+            .get('dependents')
+            .get('allDependents')
+            .get(index.toString())
+            .get('bmi')
+            .setValue(result);
+
+    });
+  }
+  else
+  {
+    this.newRequest
+    .get('dependents')
+    .get('allDependents')
+    .get(index.toString())
+    .get('isBmiEventAssigned')
+    .setValue(true);
+  }
+  }
+}
+getBmiValue(height: any, weight: any) {
+  const bmi = weight / ((height / 100) * (height / 100));
+  console.log(bmi);
+  console.log(height);console.log(weight);
+  if (bmi !== Infinity) {
+    const value = parseFloat(`${bmi}`).toFixed(2);
+    return value;
+  }
+}
   isBenefitMinorThan100(group: string, subgroup: string): boolean {
     const form = this.newRequest.get(group).get(subgroup) as FormGroup;
 
@@ -1255,15 +1324,46 @@ isContractorPep=true;
   {
     this.formHandler.sendForm(newRequestReq, 'major-expenses', 'send')
   }
+  notFoundQuote = false;
   getDataCotizaciones(id)
   {
     this.quotesService.returnDataSalud(id).subscribe(data => {
-      console.log(data);
+     if (data !== undefined && data.data != undefined && data.data.nombre !== undefined)
+     {
+      const dialogRef = this.dialog.open(BaseDialogComponent, {
+        data: this.dialogOption.QuoteFound(data.data),
+        minWidth: 385,
+      });
+      setTimeout(() => {
+        dialogRef.close();
+      }, 4000);
+      this.isFormValidToFill = true;
+      this.notFoundQuote = false;
       console.log(data.data.fecha_nacimiento);
       this.newRequest.get('person').get('date').setValue(data.data.fecha_nacimiento);
       this.newRequest.get('person').get('firstName').setValue(data.data.nombre);
+     }
+     else
+     {
+      this.notFoundQuote = true;
+      const dialogRef = this.dialog.open(BaseDialogComponent, {
+        data: this.dialogOption.QuoteNotFound,
+        minWidth: 385,
+      });
+      setTimeout(() => {
+        dialogRef.close();
+      }, 4000);
+     }
     });
 
+  }
+  onNavigate()
+  {
+    let company = 'wwm';
+    if (this.role === 'WWS'){
+      company = 'wws';
+    }
+    window.open(FormValidationsConstant.linkCotizadores+company, "_blank");
   }
 	getData(id) {
     this.majorExpensesService.returnData(id).subscribe(data => {

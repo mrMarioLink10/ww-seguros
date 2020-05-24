@@ -34,8 +34,8 @@
       <div class="body-13 mb-10" style="color: black !important;">¿Cuándo tuvo por primera vez los síntomas?
       </div>
       <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5">
-        <app-date-picker [group]="form" name="dateFirstSymptoms" label="Fecha de primeros sintomas">
-        </app-date-picker>
+        <datepicker-month fieldId="dateFirstSymptoms"  [group]="form" name="dateFirstSymptoms" label="Fecha de primeros sintomas">
+        </datepicker-month>
       </div>
       <div class="body-13 mb-2">Describa los síntomas
       </div>
@@ -47,8 +47,8 @@
         padecimiento?
       </div>
       <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5">
-        <app-date-picker [group]="form" name="dateFirstDiagnosis" label="Fecha de diagnostico">
-        </app-date-picker>
+        <datepicker-month fieldId="dateFirstDiagnosis"  [group]="form" name="dateFirstDiagnosis" label="Fecha de diagnostico">
+        </datepicker-month>
       </div>
       <hr class="w-full mb-6 ww-divider">
       <!-- SEGMENTO DE ESPALDA-->
@@ -76,8 +76,8 @@
           </app-select>
         </div>
         <div class="mr-3">
-          <app-date-picker [group]="form.get('appliedStudies').get(i.toString())" name="date" label="Fecha del estudio">
-          </app-date-picker>
+          <datepicker-month fieldId="date"  [group]="form.get('appliedStudies').get(i.toString())" name="date"   label="Fecha del estudio">
+          </datepicker-month>
         </div>
         <div class="mr-3">
           <app-input [group]="form.get('appliedStudies').get(i.toString())" name="result" label="Resultado">
@@ -103,8 +103,8 @@
         síntomas?</div>
       <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
         <div class="mr-3">
-          <app-date-picker [group]="form" name="dateLastSymptoms" label="Fecha de ultima vez">
-          </app-date-picker>
+          <datepicker-month fieldId="dateLastSymptoms" [group]="form" name="dateLastSymptoms" label="Fecha de ultima vez">
+          </datepicker-month>
         </div>
         <div class="mr-3">
           <app-input [group]="form" name="frequencySymptoms" label="Frecuencia de los síntomas">
@@ -161,8 +161,8 @@
             <div *ngFor="let studies of physiotherapyList.controls; let i = index"
               class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
               <div class="mr-3">
-                <app-date-picker [group]="form.get('physiotherapies').get(i.toString())" name="date" label="Fecha">
-                </app-date-picker>
+                <datepicker-month fieldId="date" [group]="form.get('physiotherapies').get(i.toString())" name="date" label="Fecha">
+                </datepicker-month>
               </div>
               <div class="mr-3">
                 <app-input [group]="form.get('physiotherapies').get(i.toString())" name="quantity"

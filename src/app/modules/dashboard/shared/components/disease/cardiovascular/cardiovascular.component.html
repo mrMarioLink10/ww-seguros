@@ -188,9 +188,9 @@
                 </app-select>
               </div>
               <div class="mr-3">
-                <app-date-picker [group]="form.get('hypertensionStudies').get(i.toString())" name="fecha"
+                <datepicker-month fieldId="fecha"  [group]="form.get('hypertensionStudies').get(i.toString())" name="fecha"
                   label="Fecha del estudio">
-                </app-date-picker>
+                </datepicker-month>
               </div>
               <div class="mr-3">
                 <app-input [group]="form.get('hypertensionStudies').get(i.toString())" name="resultado"
@@ -295,8 +295,8 @@
         </div>
         <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
           <div class="mr-3">
-            <app-date-picker [group]="form.get('lastMedicalConsultation')" name="fecha"
-              label="Fecha última consulta médico"></app-date-picker>
+            <datepicker-month fieldId="fecha"  [group]="form.get('lastMedicalConsultation')" name="fecha"
+              label="Fecha última consulta médico"></datepicker-month >
           </div>
           <div class="mr-3">
             <app-input [group]="form.get('lastMedicalConsultation')" name="resultado"
@@ -321,8 +321,8 @@
           <div *ngFor="let hyStudies of liquidAnomalyList.controls; let i = index">
             <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
               <div class="mr-3">
-                <app-date-picker [group]="form.get('liquidAnomaly').get(i.toString())" name="fecha" label="Fecha">
-                </app-date-picker>
+                <datepicker-month fieldId="fecha"   [group]="form.get('liquidAnomaly').get(i.toString())" name="fecha" label="Fecha">
+                </datepicker-month>
               </div>
               <div *ngIf="liquidAnomalyList.length > 1"
                 [ngClass]="{'': liquidAnomalyList.length === 1, 'col-span-1': liquidAnomalyList.length > 1} ">

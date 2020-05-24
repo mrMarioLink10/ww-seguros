@@ -57,8 +57,8 @@
           *ngIf="question.name === 'hasPSATotal' || question.name === 'hasProstateUltrasound' || question.name === 'hasBiopsy'">
           <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4">
             <div class="mr-3">
-              <app-date-picker [group]="form.get(question.group)" label="Fecha del estudio" name='date'>
-              </app-date-picker>
+              <datepicker-month fieldId="date"  [group]="form.get(question.group)" label="Fecha del estudio" name='date'>
+              </datepicker-month >
             </div>
             <div class="mr-3"></div>
             <div class="mr-3">
@@ -109,8 +109,8 @@
     <div *ngFor="let studies of studiesList.controls; let i = index"
       class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
       <div class="mr-3">
-        <app-date-picker [group]="form.get('studies').get(i.toString())" name="date" label="Fecha del estudio">
-        </app-date-picker>
+        <datepicker-month fieldId="date"  [group]="form.get('studies').get(i.toString())" name="date" label="Fecha del estudio">
+        </datepicker-month >
       </div>
       <div class="mr-3">
         <app-input [group]="form.get('studies').get(i.toString())" name="results" label="Resultado del estudio">

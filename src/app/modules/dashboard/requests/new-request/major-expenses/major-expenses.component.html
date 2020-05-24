@@ -5,10 +5,21 @@
       <div class="filter-title">Info. Inicio</div>
       <div class="mt-3 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4">
       <!--  <app-input class="mr-3" [group]="newRequest" label="No. de Cotización" name='NoC'></app-input> -->
-        <app-number-input class="mr-3" [group]="newRequest" label="No. de Cotización" name='NoC'></app-number-input>
+      <div class="mr-3">
+      <app-number-input class="mr-3" [group]="newRequest" label="No. de Cotización" name='NoC'></app-number-input>
+      </div>
+      <button *ngIf="ID === null || ID === undefined" [disabled]="isNotValidToSearch"
+        (click)="searchQuote(newRequest.value.NoC)" type="button"
+        class="nofocus flex justify-center small-search-button">
+        <img src="/assets/iconos/search-icon.svg">
+      </button>
+      <button *ngIf="notFoundQuote" (click)="onNavigate()" type="button"
+        class="nofocus flex justify-center small-search-button">
+        <img src="/assets/iconos/search-icon.svg">
+      </button>
         <div></div>
         <div></div>
-        <div class="mr-3">
+        <div *ngIf="isFormValidToFill" class="mr-3">
           <mat-form-field color="accent" appearance="outline" class="w-full" style="font-size: small !important;">
             <mat-label>Tipo de Solicitud</mat-label>
             <mat-select [(value)]="routeSelected" (selectionChange)="selectChangeUrl($event.value)">
@@ -20,7 +31,7 @@
         </div>
       </div>
     </div>
-    <mat-tab-group>
+    <mat-tab-group *ngIf="isFormValidToFill">
       <mat-tab label="Asegurado">
         <div class="mt-6 p-3 pb-0 info-home">
           <div class="mt-3 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4">
@@ -251,6 +262,9 @@
                       [group]="newRequest.get('dependents').get('allDependents').get(index.toString())"
                       label="Fecha de Nacimiento" name='date'>
                     </app-date-picker>
+                    <app-input class="mr-3" [group]="newRequest.get('dependents').get('allDependents').get(index.toString())"
+                    label="Edad" name='age'></app-input>
+
                     <app-radio-button class="mr-3"
                       [group]="newRequest.get('dependents').get('allDependents').get(index.toString())" name="sex"
                       [options]="sex"></app-radio-button>
@@ -261,6 +275,10 @@
                       <app-number-input class="mr-3"
                         [group]="newRequest.get('dependents').get('allDependents').get(index.toString())"
                         label="Altura / Cm" name='height' min="1"></app-number-input>
+                           <app-input disabled="true" class="mr-3"
+                           [group]="newRequest.get('dependents').get('allDependents').get(index.toString())"
+                           label="BMI" name='bmi'>
+                      </app-input>
                     </div>
                     <!-- <app-input class="mr-3"
                       [group]="newRequest.get('dependents').get('allDependents').get(index.toString())"
@@ -402,9 +420,9 @@
                   fumando</label>
                 <div class='grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2'>
                   <div class='grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2'>
-                    <app-input class="mr-3" [group]="newRequest.get('questionsA').get('nicotine')"
+                    <app-number-input class="mr-3" [group]="newRequest.get('questionsA').get('nicotine')"
                       label="Cantidad por día" name='quantity'>
-                    </app-input>
+                    </app-number-input>
                     <div class='grid grid-cols-2'>
                       <app-input class="mr-3" [group]="newRequest.get('questionsA').get('nicotine')" label="Tiempo"
                         name='timerange'>
@@ -420,9 +438,9 @@
               <div *ngIf="newRequest.get('questionsA').value.havePregnant === true && question.name === 'havePregnant'">
                 <label class="my-2 text-xs">Favor indicar semanas de embarazo</label>
                 <div style="width: 200px;">
-                  <app-input class="mr-3" [group]="newRequest.get('questionsA').get('pregnant')" type="number"
+                  <app-number-input class="mr-3" [group]="newRequest.get('questionsA').get('pregnant')" type="number"
                     label="Semanas" name='time'>
-                  </app-input>
+                  </app-number-input>
                 </div>
               </div>
               <!-- SI PRACTICA DEPORTE DE ALTO RIESGO -->
@@ -877,7 +895,7 @@
     </mat-tab-group>
 
   </form>
-  <div class="mt-8">
+  <div class="mt-8" *ngIf="isFormValidToFill">
     <button mat-button class="cancel-form-button" style="margin-right: 7.5px !important;"
       (click)="formHandler.sendForm(newRequest, 'major-expenses', 'cancel')" type="submit">Cancelar</button>
     <button mat-button class="save-button" style="margin-right: 7.5px !important;"

@@ -17,6 +17,7 @@ export const environment = {
 export const FormValidationsConstant = {
   maxMenAge: 50,
 MaleSexCode: "M",
+linkCotizadores: "https://cotizadores.wwseguros.com.do/?cia=",
 titlesForMajorExpenses: [
   'Solicitante',
   'Persona políticamente expuesta',

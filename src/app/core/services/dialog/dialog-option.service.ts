@@ -111,8 +111,21 @@ export class DialogOptionService {
 			text: `Se encontró el siguiente asegurado`,
 			showButtons: false,
 		};
+  }
+  QuoteNotFound: BaseDialog = {
+		logo: 'warning',
+		title: 'No se ha encontrado ningún asegurado',
+		text: `Intente con otro numero de ID`,
+		showButtons: false,
+	};
+  QuoteFound(data: any) {
+		return {
+			logo: 'check',
+			title: `${data.nombre} Para Tipo Seguro ${data.person.tiposeguro}`,
+			text: `Se encontró el siguiente asegurado`,
+			showButtons: false,
+		};
 	}
-
 	saveForm(form: string) {
 		return {
 			logo: 'warning',

@@ -77,8 +77,8 @@
 
                 <div>
 
-                  <app-date-picker [group]="form.get('data').get('disorder')" label="Fecha" name='date'>
-                  </app-date-picker>
+                  <datepicker-month fieldId="date" [group]="form.get('data').get('disorder')" label="Fecha" name='date'>
+                  </datepicker-month>
 
                 </div>
 
@@ -149,7 +149,7 @@
 
                 <div>
 
-                  <app-date-picker [group]="form.get('data')" label="Fecha" name='date'> </app-date-picker>
+                  <datepicker-month fieldId="date" [group]="form.get('data')" label="Fecha" name='date'> </datepicker-month>
 
                 </div>
 
@@ -202,8 +202,8 @@
 
                     <div>
 
-                      <app-date-picker [group]="form.get('data').get('episode').get('episode_array').get(in.toString())"
-                        label="Fecha" name='date'> </app-date-picker>
+                      <datepicker-month fieldId="date" [group]="form.get('data').get('episode').get('episode_array').get(in.toString())"
+                        label="Fecha" name='date'> </datepicker-month>
 
                     </div>
 
@@ -303,8 +303,8 @@
 
                     <div>
 
-                      <app-date-picker [group]="form.get('data').get('surgery').get('surgery_array').get(in.toString())"
-                        label="Fecha" name='date'> </app-date-picker>
+                      <datepicker-month fieldId="date"  [group]="form.get('data').get('surgery').get('surgery_array').get(in.toString())"
+                        label="Fecha" name='date'> </datepicker-month>
 
                     </div>
 
@@ -388,8 +388,8 @@
 
                     <div class="mr-3">
 
-                      <app-date-picker [group]="form.get('data').get('therapy').get('therapy_array').get(in.toString())"
-                        label="Fecha" name='date'> </app-date-picker>
+                      <datepicker-month fieldId="date" [group]="form.get('data').get('therapy').get('therapy_array').get(in.toString())"
+                        label="Fecha" name='date'> </datepicker-month>
 
                     </div>
 

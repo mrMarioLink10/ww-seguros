@@ -14,6 +14,9 @@ import { DialogOptionService } from 'src/app/core/services/dialog/dialog-option.
 import { MatDialog } from '@angular/material';
 import { BaseDialogComponent } from 'src/app/shared/components/base-dialog/base-dialog.component';
 import { map, first } from 'rxjs/operators';
+import {MajorExpensesService} from './services/major-expenses.service';
+import {QuotesService} from '../../../services/quotes/quotes.service';
+import {FormValidationsConstant} from '../../../../../../environments/environment';
 @Component({
   selector: 'app-major-expenses',
   templateUrl: './major-expenses.component.html',
@@ -87,7 +90,36 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
       ],
       name: 'requestType',
     };
-
+    isJuridicaData: FieldConfig =
+    {
+      label: 'Es el Contratante Persona Juridica?',
+      options: [
+        {
+          value: 'Si',
+          viewValue: 'Sí',
+        },
+        {
+          value: 'No',
+          viewValue: 'No',
+        }
+      ],
+      name: 'idType',
+    };
+    isContractorData: FieldConfig =
+    {
+      label: 'Es el Contractante?',
+      options: [
+        {
+          value: 'Si',
+          viewValue: 'Sí',
+        },
+        {
+          value: 'No',
+          viewValue: 'No',
+        }
+      ],
+      name: 'idType',
+    };
   idType: FieldConfig =
     {
       label: 'Tipo de documento de identidad',
@@ -202,14 +234,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
     name: 'plans',
   };
   // tslint:disable-next-line: max-line-length
-  titles = [
-    'Contratante', 'Solicitante',
-    'Persona políticamente expuesta',
-    'Perfil Financiero', 'Dependientes',
-    'Sección A', 'Sección B',
-    'Sección C Beneficiarios Primarios',
-    'Beneficiario(s) Contingente(s)',
-    'Comentarios adicionales'];
+  titles = FormValidationsConstant.titlesForMajorExpensesComplete;
 
   country = {
     label: 'País',
@@ -347,7 +372,8 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
 
   };
   allFamily = $allFamily;
-
+TitleConozcaClienteAsegurado = "Conoca Su Cliente (Asegurado)";
+TitleConozcaClienteContratante = "Conoca Su Cliente (Contratante)";
   haveSomeone = {
     haveMusculoskeletal: '',
     haveCerebrovascular: '',
@@ -374,6 +400,8 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
     haveReproductiveOrganDisorders: '',
   };
 
+  ID = null;
+  noCotizacion = null;
   policy: FormGroup;
   // tslint:disable-next-line: max-line-length
   constructor(
@@ -385,22 +413,80 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
     public diseaseService: DiseaseService,
     public dialogModal: DialogService,
     private dialogOption: DialogOptionService,
+    private quotesService : QuotesService,
+    private majorExpensesService : MajorExpensesService,
     public dialog: MatDialog,
   ) { }
 
   ngOnInit() {
-
+    this.route.params.subscribe(res => {
+			this.ID = res.id;
+		});
+    this.route.params.subscribe(res => {
+			this.noCotizacion = res.noCotizacion;
+    });
+    if (this.ID != null) {
+			console.log('El ID es ' + this.ID);
+			this.getData(this.ID);
+		} else if (this.ID == null) {
+			console.log('ID esta vacio');
+		}
+    if (this.noCotizacion != null) {
+			this.getDataCotizaciones(this.noCotizacion);
+			console.log('El noCotizacion es ' + this.noCotizacion);
+			//this.getData(this.ID);
+		} else if (this.noCotizacion == null) {
+      console.log('noCotizacion esta vacio');
+      this.noCotizacion = '';
+		}
     this.procedures = this.fb.array([this.formMethods.createItem(this.formGroupProcedure)]);
 
     this.newRequest = this.fb.group({
 
-      NoC: ['', Validators.required],
+      NoC: [{ value: this.noCotizacion, disabled: ((this.noCotizacion === '')? false : true) }, Validators.required],
       isComplete: [false, Validators.required],
       deducibles: ['', Validators.required],
       payment: ['', Validators.required],
       plans: ['', Validators.required],
       requestType: ['', Validators.required],
       person: this.fb.group({
+        conozcaSuClientePersona: this.fb.group({}),
+        firstName: ['', Validators.required],
+        secondName: [''],
+        lastName: ['', Validators.required],
+        date: ['', Validators.required],
+        sex: ['', Validators.required],
+        isContractor: ['', Validators.required],
+        isJuridica: ['', Validators.required],
+        nationality: ['', Validators.required],
+        idType: ['', Validators.required],
+        id2: ['', Validators.required],
+        age: [{ value: '', disabled: true }, Validators.required],
+        weight: ['', Validators.required],
+        height: ['', Validators.required],
+        bmi: [{ value: '', disabled: true }, Validators.required],
+        status: ['', Validators.required],
+        country: ['', Validators.required],
+        city: ['', Validators.required],
+        direction: ['', Validators.required],
+        tel: [''],
+        cel: ['', Validators.required],
+        officeTel: [''],
+        fax: [''],
+        email: ['', Validators.required],
+        office: this.fb.group({
+          company: [''],
+          position: [''],
+          direction: [''],
+          economicActivity: [''],
+          sector: [''],
+          city: [''],
+          country: [''],
+        })
+      }),
+      contractor: this.fb.group({
+        conozcaSuClientePersonaJuridica: this.fb.group({}),
+        conozcaSuClientePersona: this.fb.group({}),
         firstName: ['', Validators.required],
         secondName: [''],
         lastName: ['', Validators.required],
@@ -431,9 +517,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
           city: [''],
           country: [''],
         })
-      }),
-      contractor: this.fb.group({
-        societyName: ['', Validators.required],
+        /*societyName: ['', Validators.required],
         commercialName: [''],
         taxpayerNumber: ['', Validators.required],
         socialHome: [''],
@@ -449,7 +533,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
           id2: ['', Validators.required],
           policy: [''],
           email: ['', Validators.required]
-        })
+        })*/
       }),
       exposedPerson: this.fb.group({
         contractor: ['', Validators.required],
@@ -567,11 +651,60 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
       const timeDiff = Math.abs(Date.now() - new Date(value).getTime());
       const age = Math.floor(timeDiff / (1000 * 3600 * 24) / 365.25);
       this.newRequest.get('person').get('age').setValue(age);
+
+    });
+    this.isContractor = true;
+    this.newRequest.get('person').get('isContractor').valueChanges.subscribe(value => {
+
+      this.isContractor = true;
+      if (value === "Si")      {
+        this.isContractor = false;
+        this.titles = FormValidationsConstant.titlesForMajorExpenses;
+      }
+      else
+      {
+        this.titles = FormValidationsConstant.titlesForMajorExpensesComplete;
+      }
+      console.log(this.isContractor);
+    });
+    this.isContractorPep = false;
+    this.newRequest.get('exposedPerson').get('contractor').valueChanges.subscribe(value => {
+console.log(value);
+      this.isContractorPep = false;
+      if (value === "si")      {
+        this.isContractorPep = true;
+      }
+      console.log(this.isContractorPep);
     });
 
-
+    this.isSolicitantePep = false;
+    this.newRequest.get('exposedPerson').get('headLine').valueChanges.subscribe(value => {
+      console.log(value);
+      this.isSolicitantePep = false;
+      if (value === "si")      {
+        this.isSolicitantePep = true;
+      }
+      console.log(this.isSolicitantePep);
+    });
+    this.isJuridica = false;
+    this.newRequest.get('person').get('isJuridica').valueChanges.subscribe(value => {
+      this.isJuridica = false;
+      if (value === "si")      {
+        this.isJuridica = true;
+        this.titles = FormValidationsConstant.titlesForMajorExpenses;
+      }
+      else
+      {
+        this.titles = FormValidationsConstant.titlesForMajorExpensesComplete;
+      }
+      console.log(this.isSolicitantePep);
+    });
   }
 
+isContractor=true;
+isJuridica=false;
+isSolicitantePep=true;
+isContractorPep=true;
   canDeactivate(): Observable<boolean> | boolean {
     if (this.newRequest.dirty) {
       const dialogRef = this.dialog.open(BaseDialogComponent, {
@@ -882,7 +1015,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
             break;
 
           case 'haveMaleReproductiveOrgans':
-            if (this.person.value.age > 50) {
+            if (this.person.value.age > FormValidationsConstant.maxMenAge) {
               this.questionnairesGastosMayores.addControl('prostatic', this.fb.group({}));
             }
 
@@ -960,7 +1093,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
             break;
 
           case 'haveMaleReproductiveOrgans':
-            if (this.person.value.age > 50) {
+            if (this.person.value.age > FormValidationsConstant.maxMenAge) {
               questionnaire.addControl('prostatic', this.fb.group({}));
             }
 
@@ -1117,6 +1250,26 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
   get person(): FormGroup {
     return this.newRequest.get('person') as FormGroup;
   }
+
+  SaveForm(newRequestReq: FormGroup)
+  {
+    this.formHandler.sendForm(newRequestReq, 'major-expenses', 'send')
+  }
+  getDataCotizaciones(id)
+  {
+    this.quotesService.returnDataSalud(id).subscribe(data => {
+      console.log(data);
+      console.log(data.data.fecha_nacimiento);
+      this.newRequest.get('person').get('date').setValue(data.data.fecha_nacimiento);
+      this.newRequest.get('person').get('firstName').setValue(data.data.nombre);
+    });
+
+  }
+	getData(id) {
+    this.majorExpensesService.returnData(id).subscribe(data => {
+      console.log(data);
+    });
+	}
 
 }
 

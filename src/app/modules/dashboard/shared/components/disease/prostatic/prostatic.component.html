@@ -4,8 +4,8 @@
 <app-forms-container [isQuestionnarie]="false"
   [titles]="['Cuestionario médico de evaluación prostática para hombres mayores de 50 años']">
   <ng-template #formTemplate>
-    <div class="mt-3 mb-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4">
-      <div class="mr-3">
+    <!--  <div class="mt-3 mb-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4">
+     <div class="mr-3">
         <app-input [group]="form" label="Nombre del asegurado" name='firstName'>
         </app-input>
       </div>
@@ -21,7 +21,7 @@
         <app-input [group]="form" label="Número de póliza" name='policeNo' >
         </app-input>
       </div>
-    </div>
+    </div> -->
     <div *ngFor="let question of questions">
       <div
         class="w-full xl:flex xl:justify-between lg:flex lg:justify-between md:flex md:justify-between sm:flex sm:justify-between">

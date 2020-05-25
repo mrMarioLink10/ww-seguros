@@ -13,6 +13,7 @@ import { LifeService } from '../../../../requests/new-request/life/services/life
 export class KnowYourCustomerComponent implements OnInit, DoCheck {
 
   @Input() form:FormGroup;
+  @Input() title:string;
 
   // accordionTitles=['Datos Generales','Datos Profesionales', 'Persona políticamente expuesta', 'Pólizas con prima anual, igual o mayor a US$10,000.00','Declaración de fuente y origen de recursos de la transacción','Perfil financiero', 'Referencias bancarias', 'Referencias comerciales', 'Referencias personales', 'Documentos Necesarios (Indicar con una ✓)','Datos del corredor (Quien declara haber revisado los datos dados por el cliente o contratante)','Para uso de la aseguradora', 'Declaración']
 
@@ -104,21 +105,21 @@ export class KnowYourCustomerComponent implements OnInit, DoCheck {
   };
 
   documents= [
-    
+
       {
     		viewValue:'1. Copia de Documento de Identidad o pasaporte',
-  		}, 
+  		},
  	    {
     		viewValue:'2. Estados financieros auditados de los dos(2) últimos ejercicios',
   		},
    		{
     		viewValue:'3. Cartas de referencias bancarias',
-  		}, 
+  		},
   		{
     		viewValue:'4. Documentación que pruebe la fuente y origen de recursos de transacción',
-  		}, 
+  		},
 	   ]
-  
+
   bankFormArray:FormArray;
   bank_property;
 
@@ -127,7 +128,7 @@ export class KnowYourCustomerComponent implements OnInit, DoCheck {
     products: ['', Validators.required],
     telephone: ['', Validators.required]
   }
-  
+
   commercialFormArray:FormArray;
   commercial_property;
 
@@ -149,7 +150,7 @@ export class KnowYourCustomerComponent implements OnInit, DoCheck {
   constructor(private fb:FormBuilder, public formMethods: FormArrayGeneratorService, private life:LifeService) { }
 
   ngOnInit() {
-    
+
     this.bank_property = this.fb.array([this.formMethods.createItem(this.bankGroup)]);
     this.commercial_property = this.fb.array([this.formMethods.createItem(this.commercialGroup)]);
     this.personal_property = this.fb.array([this.formMethods.createItem(this.personalGroup)]);
@@ -178,7 +179,7 @@ export class KnowYourCustomerComponent implements OnInit, DoCheck {
     //     email:['', [Validators.required, Validators.email]],
 
     //   }),
-      
+
     //   professional_data: this.fb.group({
 
     //     profession:['', Validators.required],
@@ -216,7 +217,7 @@ export class KnowYourCustomerComponent implements OnInit, DoCheck {
 
     //     fullname_functionary:['', Validators.required],
     //     position_functionary:['', Validators.required]
-        
+
     //   }),
 
     // })
@@ -231,7 +232,7 @@ export class KnowYourCustomerComponent implements OnInit, DoCheck {
       console.log("this.iD es igual a "+this.life.idKNOWCustomer)
       // if(!this.form){
       //   // this.x=1;
-      //  this.addBasicControls(); 
+      //  this.addBasicControls();
       //  console.log("HOllaLALALALKALSLAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA!!!!")
       // }
       if(this.x<40){
@@ -260,7 +261,7 @@ export class KnowYourCustomerComponent implements OnInit, DoCheck {
           }
           // this.bankFormArray = this.form.get('questions').get('bank').get('bank_array') as FormArray;
           // this.commercialFormArray = this.form.get('questions').get('commercial').get('commercial_array') as FormArray;
-          // this.personalFormArray = this.form.get('questions').get('personal').get('personal_array') as FormArray;  
+          // this.personalFormArray = this.form.get('questions').get('personal').get('personal_array') as FormArray;
         }
         this.x++
         console.log("WEOOOOOOOOOOOOOOOOOOOO, CALLENSEEEEEEEEEEEEEEEEEEEE!!!")
@@ -270,7 +271,7 @@ export class KnowYourCustomerComponent implements OnInit, DoCheck {
   }
 
   addBasicControls(){
-    
+
 
     this.form.addControl('request', this.fb.control('', [Validators.required, Validators.min(1)]));
     this.form.addControl('general_data', this.fb.group({
@@ -308,7 +309,7 @@ export class KnowYourCustomerComponent implements OnInit, DoCheck {
     this.form.addControl('exposed', this.fb.group({
 
       exposed_person_radio:['', Validators.required]
-      
+
     }));
 
     this.form.addControl('policy', this.fb.group({
@@ -343,9 +344,9 @@ export class KnowYourCustomerComponent implements OnInit, DoCheck {
 		if (event.valor === 'si') {
 
       switch(event.name){
-        
+
         case'exposed_person_radio':
-		
+
 					formP.addControl('position', this.fb.group({
             info: ['', Validators.required]
           }));
@@ -354,7 +355,7 @@ export class KnowYourCustomerComponent implements OnInit, DoCheck {
           break;
 
         case'total_policy_radio':
-        
+
 
           formQ.addControl('questions', this.fb.group({
 
@@ -375,7 +376,7 @@ export class KnowYourCustomerComponent implements OnInit, DoCheck {
             bank:  this.fb.group({
 
               bank_array: this.fb.array([this.formMethods.createItem(this.bankGroup)])
-  
+
           }),
 
             commercial:  this.fb.group({
@@ -398,22 +399,22 @@ export class KnowYourCustomerComponent implements OnInit, DoCheck {
 				    transaction_source_documentation:[false],
 
           }),
-          
+
           }));
           this.bankFormArray = this.form.get('questions').get('bank').get('bank_array') as FormArray;
           this.commercialFormArray = this.form.get('questions').get('commercial').get('commercial_array') as FormArray;
-          this.personalFormArray = this.form.get('questions').get('personal').get('personal_array') as FormArray;          
-          
+          this.personalFormArray = this.form.get('questions').get('personal').get('personal_array') as FormArray;
+
 					this.prueba="Existen";
           console.log(this.prueba);
 
           break;
-          
+
 
         case'investigation_radio':
 
         formI= this.form.get('questions').get('transaction') as FormGroup;
-		
+
         formI.addControl('investigation', this.fb.group({
             info: ['', Validators.required]
           }));
@@ -427,15 +428,15 @@ export class KnowYourCustomerComponent implements OnInit, DoCheck {
       switch(event.name){
 
         case'exposed_person_radio':
-	
+
           formP.removeControl('position');
-          
+
           break;
 
         case'total_policy_radio':
-    
+
           formQ.removeControl('questions');
-          
+
           this.bankFormArray = undefined;
           this.commercialFormArray = undefined;
           this.personalFormArray = undefined;
@@ -448,16 +449,16 @@ export class KnowYourCustomerComponent implements OnInit, DoCheck {
         case'investigation_radio':
 
           formI= this.form.get('questions').get('transaction') as FormGroup;
-	
+
           formI.removeControl('investigation');
-          
+
           break;
 
         }
 			}
-		
+
   }
-  
+
   createFormArray(name: string) {
 
 		switch (name) {
@@ -485,10 +486,10 @@ export class KnowYourCustomerComponent implements OnInit, DoCheck {
 
       const increment = array.length + 1;
       array = this.formMethods.addElement(array, increment, this.createFormArray(name)).formArray;
-      
+
       // console.log(JSON.stringify(this.form.value));
       // array.push(this.createFormArray(name));
-      
+
     }
 
     removeFormArray(index, array: any) {

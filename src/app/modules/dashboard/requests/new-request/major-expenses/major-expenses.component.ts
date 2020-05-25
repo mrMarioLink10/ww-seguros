@@ -17,7 +17,8 @@ import { BaseDialogComponent } from 'src/app/shared/components/base-dialog/base-
 import { map, first } from 'rxjs/operators';
 import {MajorExpensesService} from './services/major-expenses.service';
 import {QuotesService} from '../../../services/quotes/quotes.service';
-import {FormValidationsConstant, environment} from '../../../../../../environments/environment';
+import { environment} from '../../../../../../environments/environment';
+import {FormValidationsConstant} from 'src/app/shared/ShareConstant/shareConstantFile';
 @Component({
   selector: 'app-major-expenses',
   templateUrl: './major-expenses.component.html',

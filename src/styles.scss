@@ -481,7 +481,9 @@ body {
   background-color: #007DB7 !important;
   border-radius: 50% !important;
   outline: none !important;
-  outline-style: none !important
+  outline-style: none !important;
+  display: flex;
+  justify-content: center;
 }
 
 .nofocus:focus {

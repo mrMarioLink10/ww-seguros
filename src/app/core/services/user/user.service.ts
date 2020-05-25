@@ -41,4 +41,12 @@ export class UserService {
   getWholeInsurancePeople() {
     return this.http.get(`${environment.apiUrl}/api/DatosEmpresa`);
   }
+
+  getQuotes(idNumber: string, requestType: string) {
+    return this.http.get(`${environment.apiUrl}/api/Cotizaciones/${idNumber}/${requestType}`);
+  }
+
+  getWholeQuotes() {
+    return this.http.get(`${environment.apiUrl}/api/Cotizaciones`);
+  }
 }

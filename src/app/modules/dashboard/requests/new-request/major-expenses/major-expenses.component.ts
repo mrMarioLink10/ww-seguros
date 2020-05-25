@@ -15,10 +15,11 @@ import { DialogOptionService } from 'src/app/core/services/dialog/dialog-option.
 import { MatDialog } from '@angular/material';
 import { BaseDialogComponent } from 'src/app/shared/components/base-dialog/base-dialog.component';
 import { map, first } from 'rxjs/operators';
-import {MajorExpensesService} from './services/major-expenses.service';
-import {QuotesService} from '../../../services/quotes/quotes.service';
-import { environment} from '../../../../../../environments/environment';
-import {FormValidationsConstant} from 'src/app/shared/ShareConstant/shareConstantFile';
+import { AppComponent } from 'src/app/app.component';
+import { MajorExpensesService } from './services/major-expenses.service';
+import { QuotesService } from '../../../services/quotes/quotes.service';
+import { environment } from '../../../../../../environments/environment';
+import { FormValidationsConstant } from 'src/app/shared/ShareConstant/shareConstantFile';
 @Component({
   selector: 'app-major-expenses',
   templateUrl: './major-expenses.component.html',
@@ -26,6 +27,39 @@ import {FormValidationsConstant} from 'src/app/shared/ShareConstant/shareConstan
 })
 
 export class MajorExpensesComponent implements OnInit, DoCheck {
+  // tslint:disable-next-line: max-line-length
+  constructor(
+    private fb: FormBuilder,
+    public formMethods: FormArrayGeneratorService,
+    private router: Router,
+    private route: ActivatedRoute,
+    public formHandler: FormHandlerService,
+    public diseaseService: DiseaseService,
+    public dialogModal: DialogService,
+    private dialogOption: DialogOptionService,
+    private userService: UserService,
+    private quotesService: QuotesService,
+    private majorExpensesService: MajorExpensesService,
+    public dialog: MatDialog,
+    private appComponent: AppComponent,
+  ) { }
+
+  get allDependents(): FormArray {
+    return this.newRequest.get('dependents').get('allDependents') as FormArray;
+  }
+
+
+  get questionnairesGastosMayores(): FormGroup {
+    return this.newRequest.get('questionsA').get('questionnairesGastosMayores') as FormGroup;
+  }
+
+  get questionsA(): FormGroup {
+    return this.newRequest.get('questionsA') as FormGroup;
+  }
+
+  get person(): FormGroup {
+    return this.newRequest.get('person') as FormGroup;
+  }
   pruebaCheck: any;
   visible = false;
   primaryBenefitsArray: FormArray;
@@ -77,7 +111,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
       ],
       name: 'requestType',
     };
-    isJuridicaData: FieldConfig =
+  isJuridicaData: FieldConfig =
     {
       label: 'Es el Contratante Persona Juridica?',
       options: [
@@ -92,7 +126,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
       ],
       name: 'idType',
     };
-    isContractorData: FieldConfig =
+  isContractorData: FieldConfig =
     {
       label: 'Es el Contractante?',
       options: [
@@ -167,10 +201,6 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
         value: 'Trimestral',
         viewValue: 'Trimestral'
       },
-      {
-        value: 'Mensual',
-        viewValue: 'Mensual'
-      },
     ]
   };
   deducibles: FieldConfig = {
@@ -206,6 +236,10 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
         viewValue: 'Excellence Special',
       },
       {
+        value: 'Distinction Premium',
+        viewValue: 'Distinction Premium',
+      },
+      {
         value: 'Signature',
         viewValue: 'Signature',
       },
@@ -216,6 +250,14 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
       {
         value: 'Distinction',
         viewValue: 'Distinction',
+      },
+      {
+        value: 'Plan Estudiantil',
+        viewValue: 'Plan Estudiantil',
+      },
+      {
+        value: 'Otro',
+        viewValue: 'Otro',
       }
     ],
     name: 'plans',
@@ -362,8 +404,8 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
 
   };
   allFamily = $allFamily;
-TitleConozcaClienteAsegurado = "Conoca Su Cliente (Asegurado)";
-TitleConozcaClienteContratante = "Conoca Su Cliente (Contratante)";
+  TitleConozcaClienteAsegurado = 'Conoca Su Cliente (Asegurado)';
+  TitleConozcaClienteContratante = 'Conoca Su Cliente (Contratante)';
   haveSomeone = {
     haveMusculoskeletal: '',
     haveCerebrovascular: '',
@@ -395,62 +437,55 @@ TitleConozcaClienteContratante = "Conoca Su Cliente (Contratante)";
   policy: FormGroup;
   isFormValidToFill = false;
   isNotValidToSearch = true;
-  // tslint:disable-next-line: max-line-length
-  constructor(
-    private fb: FormBuilder,
-    public formMethods: FormArrayGeneratorService,
-    private router: Router,
-    private route: ActivatedRoute,
-    public formHandler: FormHandlerService,
-    public diseaseService: DiseaseService,
-    public dialogModal: DialogService,
-    private dialogOption: DialogOptionService,
-    private userService: UserService,
-    private quotesService : QuotesService,
-    private majorExpensesService : MajorExpensesService,
-    public dialog: MatDialog,
-  ) { }
-  role = "";
-  searchQuote(noCotizacion)
-  {
-    if (noCotizacion !== undefined && noCotizacion !== '')
-    {
+  role = '';
+
+  isContractor = true;
+  isJuridica = false;
+  isSolicitantePep = true;
+  isContractorPep = true;
+  notFoundQuote = false;
+  searchQuote(noCotizacion) {
+    if (noCotizacion !== undefined && noCotizacion !== '') {
       this.getDataCotizaciones(noCotizacion);
     }
   }
   ngOnInit() {
+    this.userService.getWholeQuotes()
+      .subscribe(res => {
+        console.log(res);
+      });
 
     this.role = this.userService.getRoleCotizador();
     this.isFormValidToFill = false;
     this.route.params.subscribe(res => {
-			this.ID = res.id;
-		});
+      this.ID = res.id;
+    });
     this.route.params.subscribe(res => {
-			this.noCotizacion = res.noCotizacion;
+      this.noCotizacion = res.noCotizacion;
     });
     if (this.ID != null) {
-			console.log('El ID es ' + this.ID);
-			this.getData(this.ID);
-		} else if (this.ID == null) {
-			console.log('ID esta vacio');
-		}
+      console.log('El ID es ' + this.ID);
+      this.getData(this.ID);
+    } else if (this.ID == null) {
+      console.log('ID esta vacio');
+    }
     if (this.noCotizacion != null) {
-			this.getDataCotizaciones(this.noCotizacion);
-			console.log('El noCotizacion es ' + this.noCotizacion);
-			//this.getData(this.ID);
-		} else if (this.noCotizacion == null) {
+      this.getDataCotizaciones(this.noCotizacion);
+      console.log('El noCotizacion es ' + this.noCotizacion);
+      // this.getData(this.ID);
+    } else if (this.noCotizacion == null) {
       console.log('noCotizacion esta vacio');
       this.noCotizacion = '';
-		}
+    }
     this.procedures = this.fb.array([this.formMethods.createItem(this.formGroupProcedure)]);
 
     this.newRequest = this.fb.group({
 
-      NoC: [{ value: this.noCotizacion, disabled: ((this.noCotizacion === '')? false : true) }, Validators.required],
+      NoC: [{ value: this.noCotizacion, disabled: ((this.noCotizacion === '') ? false : true) }, Validators.required],
       isComplete: [false, Validators.required],
       deducibles: ['', Validators.required],
-      payment: ['', Validators.required],
-      plans: ['', Validators.required],
+      payment: [{ value: '', disabled: true }, Validators.required],
+      plans: [{ value: '', disabled: true }, Validators.required],
       requestType: ['', Validators.required],
       person: this.fb.group({
         conozcaSuClientePersona: this.fb.group({}),
@@ -646,11 +681,9 @@ TitleConozcaClienteContratante = "Conoca Su Cliente (Contratante)";
       this.getBmi(this.newRequest.get('person').value.height, value);
     });
     this.newRequest.get('NoC').valueChanges.subscribe(value => {
-      if (value !== "" && value != undefined)  {
+      if (value !== '' && value !== undefined) {
         this.isNotValidToSearch = false;
-      }
-      else
-      {
+      } else {
         this.isNotValidToSearch = true;
       }
     });
@@ -669,12 +702,10 @@ TitleConozcaClienteContratante = "Conoca Su Cliente (Contratante)";
     this.newRequest.get('person').get('isContractor').valueChanges.subscribe(value => {
 
       this.isContractor = true;
-      if (value === "Si")      {
+      if (value === 'Si') {
         this.isContractor = false;
         this.titles = FormValidationsConstant.titlesForMajorExpenses;
-      }
-      else
-      {
+      } else {
         this.titles = FormValidationsConstant.titlesForMajorExpensesComplete;
       }
     });
@@ -682,7 +713,7 @@ TitleConozcaClienteContratante = "Conoca Su Cliente (Contratante)";
     this.newRequest.get('exposedPerson').get('contractor').valueChanges.subscribe(value => {
 
       this.isContractorPep = false;
-      if (value === "si")      {
+      if (value === 'si') {
         this.isContractorPep = true;
       }
 
@@ -692,7 +723,7 @@ TitleConozcaClienteContratante = "Conoca Su Cliente (Contratante)";
     this.newRequest.get('exposedPerson').get('headLine').valueChanges.subscribe(value => {
 
       this.isSolicitantePep = false;
-      if (value === "si")      {
+      if (value === 'si') {
         this.isSolicitantePep = true;
       }
 
@@ -700,22 +731,59 @@ TitleConozcaClienteContratante = "Conoca Su Cliente (Contratante)";
     this.isJuridica = false;
     this.newRequest.get('person').get('isJuridica').valueChanges.subscribe(value => {
       this.isJuridica = false;
-      if (value === "si")      {
+      if (value === 'si') {
         this.isJuridica = true;
         this.titles = FormValidationsConstant.titlesForMajorExpenses;
-      }
-      else
-      {
+      } else {
         this.titles = FormValidationsConstant.titlesForMajorExpensesComplete;
       }
 
     });
   }
 
-isContractor=true;
-isJuridica=false;
-isSolicitantePep=true;
-isContractorPep=true;
+  searchIdNumber(idNumber: string) {
+    this.appComponent.showOverlay = true;
+
+    this.userService.getQuotes(idNumber, 'salud')
+      .subscribe((response: any) => {
+        console.log(response);
+        this.appComponent.showOverlay = false;
+        if (response.data !== null) {
+          const dialogRef = this.dialog.open(BaseDialogComponent, {
+            data: this.dialogOption.noCFound(response.data),
+            minWidth: 385,
+          });
+          setTimeout(() => {
+            dialogRef.close();
+          }, 4000);
+          this.newRequest.get('payment').setValue(response.data.formaPago);
+          this.newRequest.get('plans').setValue(response.data.plan);
+          this.newRequest.get('person').get('firstName').setValue(response.data.nombre);
+          this.newRequest.get('person').get('date').setValue(response.data.fecha_nacimiento);
+        } else {
+          this.newRequest.get('payment').reset();
+          this.newRequest.get('plans').reset();
+          this.newRequest.get('person').get('firstName').reset();
+          this.newRequest.get('person').get('date').reset();
+          const dialogRef = this.dialog.open(BaseDialogComponent, {
+            data: this.dialogOption.noCNotFound,
+            minWidth: 385,
+          });
+          setTimeout(() => {
+            dialogRef.close();
+          }, 4000);
+
+        }
+      });
+  }
+
+  newQuote() {
+    if (this.userService.getRoleCotizador() === 'WWS') {
+      window.open('https://cotizadores.wwseguros.com.do/?cia=wws', '_blank');
+    } else if (this.userService.getRoleCotizador() === 'WMA') {
+      window.open('https://cotizadores.wwseguros.com.do/?cia=wwm', '_blank');
+    }
+  }
   canDeactivate(): Observable<boolean> | boolean {
     if (this.newRequest.dirty) {
       const dialogRef = this.dialog.open(BaseDialogComponent, {
@@ -742,78 +810,73 @@ isContractorPep=true;
 
     this.AddEventOnEachDependentVariable();
   }
-AddEventOnEachDependentVariable()
-{
-  /*for(let index = 0;index < this.newRequest.get('dependents').get('allDependents').length;index++)
-  {
-    console.log(index);
-  }*/
-  //for(let index in this.dependentsFormArray.controls)
-  if (this.newRequest.get('dependents').get('allDependents') !== undefined)
-{
-  var arrayElement = this.newRequest.get('dependents').get('allDependents') as FormArray ;
-  for(let index = 0;index < arrayElement.length;index++)
-  {
-    let isBmiEventAssigned = this.newRequest.get('dependents').get('allDependents').get(index.toString()).get('isBmiEventAssigned').value;
-
-    if (isBmiEventAssigned == false)
+  AddEventOnEachDependentVariable() {
+    /*for(let index = 0;index < this.newRequest.get('dependents').get('allDependents').length;index++)
     {
+      console.log(index);
+    }*/
+    // for(let index in this.dependentsFormArray.controls)
+    if (this.newRequest.get('dependents').get('allDependents') !== undefined) {
+      const arrayElement = this.newRequest.get('dependents').get('allDependents') as FormArray;
+      for (let index = 0; index < arrayElement.length; index++) {
+        // tslint:disable-next-line: max-line-length
+        const isBmiEventAssigned = this.newRequest.get('dependents').get('allDependents').get(index.toString()).get('isBmiEventAssigned').value;
+
+        if (isBmiEventAssigned == false) {
           this.newRequest
-          .get('dependents')
-          .get('allDependents')
-          .get(index.toString())
-          .get('isBmiEventAssigned')
-          .setValue(true);
+            .get('dependents')
+            .get('allDependents')
+            .get(index.toString())
+            .get('isBmiEventAssigned')
+            .setValue(true);
           this.newRequest.get('dependents').get('allDependents').get(index.toString()).get('date').valueChanges.subscribe(value => {
             const timeDiff = Math.abs(Date.now() - new Date(value).getTime());
             const age = Math.floor(timeDiff / (1000 * 3600 * 24) / 365.25);
             this.newRequest.get('dependents').get('allDependents').get(index.toString()).get('age').setValue(age);
 
           });
-    this.newRequest.get('dependents').get('allDependents').get(index.toString()).get('height').valueChanges.subscribe(value => {
-      let weight = this.newRequest.get('dependents').get('allDependents').get(index.toString()).get('weight').value;
-      let result = this.getBmiValue(value, weight);
-      this.newRequest
-          .get('dependents')
-          .get('allDependents')
-          .get(index.toString())
-          .get('bmi')
-          .setValue(result);
-
-    });
-    this.newRequest.get('dependents').get('allDependents').get(index.toString()).get('weight').valueChanges.subscribe(value => {
-      let height = this.newRequest.get('dependents').get('allDependents').get(index.toString()).get('height').value;
-      let result = this.getBmiValue(height, value);
+          this.newRequest.get('dependents').get('allDependents').get(index.toString()).get('height').valueChanges.subscribe(value => {
+            const weight = this.newRequest.get('dependents').get('allDependents').get(index.toString()).get('weight').value;
+            const result = this.getBmiValue(value, weight);
             this.newRequest
+              .get('dependents')
+              .get('allDependents')
+              .get(index.toString())
+              .get('bmi')
+              .setValue(result);
+
+          });
+          this.newRequest.get('dependents').get('allDependents').get(index.toString()).get('weight').valueChanges.subscribe(value => {
+            const height = this.newRequest.get('dependents').get('allDependents').get(index.toString()).get('height').value;
+            const result = this.getBmiValue(height, value);
+            this.newRequest
+              .get('dependents')
+              .get('allDependents')
+              .get(index.toString())
+              .get('bmi')
+              .setValue(result);
+
+          });
+        } else {
+          this.newRequest
             .get('dependents')
             .get('allDependents')
             .get(index.toString())
-            .get('bmi')
-            .setValue(result);
+            .get('isBmiEventAssigned')
+            .setValue(true);
+        }
+      }
 
-    });
+    }
   }
-  else
-  {
-    this.newRequest
-    .get('dependents')
-    .get('allDependents')
-    .get(index.toString())
-    .get('isBmiEventAssigned')
-    .setValue(true);
-  }
-  }
+  getBmiValue(height: any, weight: any) {
+    const bmi = weight / ((height / 100) * (height / 100));
 
-}
-}
-getBmiValue(height: any, weight: any) {
-  const bmi = weight / ((height / 100) * (height / 100));
-
-  if (bmi !== Infinity) {
-    const value = parseFloat(`${bmi}`).toFixed(2);
-    return value;
+    if (bmi !== Infinity) {
+      const value = parseFloat(`${bmi}`).toFixed(2);
+      return value;
+    }
   }
-}
   isBenefitMinorThan100(group: string, subgroup: string): boolean {
     const form = this.newRequest.get(group).get(subgroup) as FormGroup;
 
@@ -1315,174 +1378,121 @@ getBmiValue(height: any, weight: any) {
     list.push(this.createFormArray(type));
   }
 
-  get allDependents(): FormArray {
-    return this.newRequest.get('dependents').get('allDependents') as FormArray;
+  SaveForm(newRequestReq: FormGroup) {
+    this.formHandler.sendForm(newRequestReq, 'major-expenses', 'send');
   }
-
-
-  get questionnairesGastosMayores(): FormGroup {
-    return this.newRequest.get('questionsA').get('questionnairesGastosMayores') as FormGroup;
-  }
-
-  get questionsA(): FormGroup {
-    return this.newRequest.get('questionsA') as FormGroup;
-  }
-
-  get person(): FormGroup {
-    return this.newRequest.get('person') as FormGroup;
-  }
-
-  SaveForm(newRequestReq: FormGroup)
-  {
-    this.formHandler.sendForm(newRequestReq, 'major-expenses', 'send')
-  }
-  notFoundQuote = false;
-  getDataCotizaciones(id)
-  {
+  getDataCotizaciones(id) {
     this.quotesService.returnDataSalud(id).subscribe(data => {
 
-     if (data !== undefined && data.data !== null && data.data != undefined && data.data.nombre !== undefined)
-     {
-      const dialogRef = this.dialog.open(BaseDialogComponent, {
-        data: this.dialogOption.QuoteFound(data.data),
-        minWidth: 385,
-      });
-      setTimeout(() => {
-        dialogRef.close();
-      }, 4000);
-      this.isFormValidToFill = true;
-      this.notFoundQuote = false;
+      if (data !== undefined && data.data !== null && data.data !== undefined && data.data.nombre !== undefined) {
+        const dialogRef = this.dialog.open(BaseDialogComponent, {
+          data: this.dialogOption.noCFound(data.data),
+          minWidth: 385,
+        });
+        setTimeout(() => {
+          dialogRef.close();
+        }, 4000);
+        this.isFormValidToFill = true;
+        this.notFoundQuote = false;
 
-      this.newRequest.get('person').get('date').setValue(data.data.fecha_nacimiento);
-      this.newRequest.get('person').get('firstName').setValue(data.data.nombre);
-     }
-     else
-     {
-      this.notFoundQuote = true;
-      const dialogRef = this.dialog.open(BaseDialogComponent, {
-        data: this.dialogOption.QuoteNotFound,
-        minWidth: 385,
-      });
-      setTimeout(() => {
-        dialogRef.close();
-      }, 4000);
-     }
+        this.newRequest.get('person').get('date').setValue(data.data.fecha_nacimiento);
+        this.newRequest.get('person').get('firstName').setValue(data.data.nombre);
+      } else {
+        this.notFoundQuote = true;
+        const dialogRef = this.dialog.open(BaseDialogComponent, {
+          data: this.dialogOption.noCNotFound,
+          minWidth: 385,
+        });
+        setTimeout(() => {
+          dialogRef.close();
+        }, 4000);
+      }
     });
 
   }
-  onNavigate()
-  {
-    let company = 'wwm';
-    if (this.role === 'WWS'){
-      company = 'wws';
-    }
-    window.open(FormValidationsConstant.linkCotizadores+company, "_blank");
-  }
-  has(object: any, key : any) {
+
+  has(object: any, key: any) {
     return object ? this.hasOwnProperty.call(object, key) : false;
- }
+  }
 
- iterateThroughtAllObject(obj: any, groupControl: any)
- {
-   const formDataGroup = groupControl as FormGroup;
-   Object.keys(obj).forEach(e =>
-     {
-       let key = e;
-       let value = obj[key];
-       if (obj[key] !== null && obj[e] !== undefined && (typeof obj[e]) != "object")
-       {
-         if ( value !== undefined && value !== null && value !== '')
-         {
-           if (!this.has(formDataGroup['controls'], key))
-           {
-             formDataGroup.addControl(key, this.fb.control(value));
-           }
-           else
-           {
+  iterateThroughtAllObject(obj: any, groupControl: any) {
+    const formDataGroup = groupControl as FormGroup;
+    Object.keys(obj).forEach(e => {
+      const key = e;
+      const value = obj[key];
+      if (obj[key] !== null && obj[e] !== undefined && (typeof obj[e]) !== 'object') {
+        if (value !== undefined && value !== null && value !== '') {
+          if (!this.has(formDataGroup.controls, key)) {
+            formDataGroup.addControl(key, this.fb.control(value));
+          } else {
 
-           const valueFormControl = formDataGroup['controls'][key] as FormControl;
-           valueFormControl.setValue (value);
-         }
-         }
-       }
-       else if (obj[key] !== null && obj[key] !== undefined && (typeof obj[key]) === "object")
-       {
-         if (Array.isArray(obj[key] ))
-         {
-          if (!this.has(formDataGroup['controls'], key))
-          {
+            const valueFormControl = formDataGroup.controls[key] as FormControl;
+            valueFormControl.setValue(value);
+          }
+        }
+      } else if (obj[key] !== null && obj[key] !== undefined && (typeof obj[key]) === 'object') {
+        if (Array.isArray(obj[key])) {
+          if (!this.has(formDataGroup.controls, key)) {
             formDataGroup.removeControl(key);
           }
-          if(obj[key].length > 0)
-          {
+          if (obj[key].length > 0) {
 
-              let form = formDataGroup.get(key);
-              let arrayForm = [];
-              obj[key].forEach( (element) =>{
-                let fbGroup = this.fb.group({
-                  id: ['', Validators.required]
-                });
-
-                this.iterateThroughtAllObject(element,  fbGroup);
-                arrayForm.push(fbGroup);
+            const form = formDataGroup.get(key);
+            const arrayForm = [];
+            obj[key].forEach((element) => {
+              const fbGroup = this.fb.group({
+                id: ['', Validators.required]
               });
 
+              this.iterateThroughtAllObject(element, fbGroup);
+              arrayForm.push(fbGroup);
+            });
 
-              formDataGroup.addControl(key, this.fb.array(arrayForm));
+
+            formDataGroup.addControl(key, this.fb.array(arrayForm));
           }
-         }
-         else
-         {
-          if (!this.has(formDataGroup['controls'], key))
-          {
+        } else {
+          if (!this.has(formDataGroup.controls, key)) {
             formDataGroup.addControl(key, this.fb.group({
               id: ['', Validators.required]
             }));
           }
 
-          let form = formDataGroup.get(key);
+          const form = formDataGroup.get(key);
 
           this.iterateThroughtAllObject(obj[key], form);
           return form;
-         }
-
-       }
-
-   });
- }
-  iterateThroughtObject(obj: any, groupControl: any)
-  {
-    const formDataGroup = groupControl as FormGroup;
-    Object.keys(obj).forEach(e =>
-      {
-        let key = e;
-        let value = obj[e];
-        if (obj[e] !== undefined && (typeof obj[e]) != "object")
-        {
-        //  console.log(this.has(formDataGroup['controls'], key));
-          if ( value !== undefined && value !== null && value !== '')
-          {
-            if (!this.has(formDataGroup['controls'], key))
-            {
-              formDataGroup.addControl(key, this.fb.control(value));
-            }
-            else
-            {
-
-            const valueFormControl = formDataGroup['controls'][e] as FormControl;
-            valueFormControl.setValue (value);
-          }
-          }
         }
+
+      }
+
     });
   }
-	getData(id) {
+  iterateThroughtObject(obj: any, groupControl: any) {
+    const formDataGroup = groupControl as FormGroup;
+    Object.keys(obj).forEach(e => {
+      const key = e;
+      const value = obj[e];
+      if (obj[e] !== undefined && (typeof obj[e]) !== 'object') {
+        //  console.log(this.has(formDataGroup['controls'], key));
+        if (value !== undefined && value !== null && value !== '') {
+          if (!this.has(formDataGroup.controls, key)) {
+            formDataGroup.addControl(key, this.fb.control(value));
+          } else {
+
+            const valueFormControl = formDataGroup.controls[e] as FormControl;
+            valueFormControl.setValue(value);
+          }
+        }
+      }
+    });
+  }
+  getData(id) {
     this.majorExpensesService.returnData(id).subscribe(data => {
-      //console.log(data);
-      //console.log( this.newRequest);
+      // console.log(data);
+      // console.log( this.newRequest);
       if (data !== undefined && data.data !== null &&
-         data.data != undefined )
-      {
+        data.data !== undefined) {
         this.ID = data.data.id;
         this.iterateThroughtAllObject(data.data, this.newRequest);
         this.AddEventOnEachDependentVariable();
@@ -1538,7 +1548,7 @@ data.data.dependents.students.foreach( (element) =>{
 
 
     });
-	}
+  }
 
 }
 

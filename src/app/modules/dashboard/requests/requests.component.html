@@ -86,7 +86,7 @@
             </button> -->
             <div *ngIf="element.seguro == 'Vida'">
               <button mat-mini-fab aria-label="Editar" *ngIf="element.estatus !== 'Enviado'"
-                class="dashboard-table-buttons"  (click)="this.life.getID(element.id)"> <!--  -->
+                class="dashboard-table-buttons"  (click)="navigateToLife(element.id)"> <!--  -->
                 <img src="../../../../assets/iconos/edit.svg">
               </button>
               <!-- <p> Hola, soy vida </p> -->

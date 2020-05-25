@@ -413,7 +413,7 @@ export class LifeComponent implements OnInit, DoCheck {
     'Beneficiario(s) Contingente(s)', 'Información general', 'Historial Médico', 'Firmas', 'Reporte del agente'];
 
   newRequest: FormGroup;
-
+  noCotizacion;
   dependentsNumber = 0;
 
   ID = null;
@@ -421,15 +421,27 @@ export class LifeComponent implements OnInit, DoCheck {
   x = 0;
   ngOnInit() {
 
-    this.ID = this.life.id;
-		  if (this.ID != null) {
+    this.route.params.subscribe(res => {
+			this.ID = res.id;
+		});
+    this.route.params.subscribe(res => {
+			this.noCotizacion = res.noCotizacion;
+    });
+
+		if (this.ID != null) {
 			console.log("El ID es " + this.ID);
 			this.getData(this.ID);
 		}
 		else if (this.ID == null) {
 			console.log("ID esta vacio");
 		}
-
+    if (this.noCotizacion != null) {
+			//this.getDataCotizaciones(this.noCotizacion);
+			console.log('El noCotizacion es ' + this.noCotizacion);
+		} else if (this.noCotizacion == null) {
+      console.log('noCotizacion esta vacio');
+      this.noCotizacion = '';
+		}
     this.role = this.userService.getRoleCotizador();
 
     this.newRequest = this.fb.group({
@@ -2260,7 +2272,7 @@ export class LifeComponent implements OnInit, DoCheck {
           //     }
 			    // 	  else if(nameDataControls == nameControls){
           //       // console.log(`Si, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) son iguales`)
-          //       controlsForms9[nameControls].setValue(dataControls[nameDataControls])  
+          //       controlsForms9[nameControls].setValue(dataControls[nameDataControls])
 			    // 		}
 			    // 		// console.log(nameDataControls)
 			    // 		// console.log(nameControls);
@@ -3145,7 +3157,7 @@ export class LifeComponent implements OnInit, DoCheck {
 
           //     //   else if(nameDataControls == nameControls){
           //     //     // console.log(`Si, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) son iguales`)
-          //     //     controlsForms31[nameControls].setValue(dataControls[nameDataControls])  
+          //     //     controlsForms31[nameControls].setValue(dataControls[nameDataControls])
           //     //   }
           //     //   // console.log(nameDataControls)
           //     //   // console.log(nameControls);

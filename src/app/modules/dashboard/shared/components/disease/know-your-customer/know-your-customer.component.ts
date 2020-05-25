@@ -12,7 +12,8 @@ import { LifeService } from '../../../../requests/new-request/life/services/life
 })
 export class KnowYourCustomerComponent implements OnInit, DoCheck {
 
-  @Input() form: FormGroup;
+  @Input() form:FormGroup;
+  @Input() title:string;
 
   // accordionTitles=['Datos Generales','Datos Profesionales', 'Persona políticamente expuesta',
   // 'Pólizas con prima anual, igual o mayor a US$10,000.00','Declaración de fuente y origen de
@@ -264,7 +265,7 @@ export class KnowYourCustomerComponent implements OnInit, DoCheck {
           }
           // this.bankFormArray = this.form.get('questions').get('bank').get('bank_array') as FormArray;
           // this.commercialFormArray = this.form.get('questions').get('commercial').get('commercial_array') as FormArray;
-          // this.personalFormArray = this.form.get('questions').get('personal').get('personal_array') as FormArray;  
+          // this.personalFormArray = this.form.get('questions').get('personal').get('personal_array') as FormArray;
         }
         this.x++;
         console.log('WEOOOOOOOOOOOOOOOOOOOO, CALLENSEEEEEEEEEEEEEEEEEEEE!!!');
@@ -274,7 +275,7 @@ export class KnowYourCustomerComponent implements OnInit, DoCheck {
     }
   }
 
- addBasicControls() {
+  addBasicControls(){
 
 
     this.form.addControl('request', this.fb.control('', [Validators.required, Validators.min(1)]));

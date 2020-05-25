@@ -84,21 +84,21 @@
               class="dashboard-table-buttons">
               <img src="../../../../assets/iconos/trash.svg">
             </button> -->
-            <div *ngIf="element.plan == 'Vida'">
+            <div *ngIf="element.seguro == 'Vida'">
               <button mat-mini-fab aria-label="Editar" *ngIf="element.estatus !== 'Enviado'"
                 class="dashboard-table-buttons"  (click)="this.life.getID(element.id)"> <!--  -->
                 <img src="../../../../assets/iconos/edit.svg">
               </button>
               <!-- <p> Hola, soy vida </p> -->
             </div>
-            <div *ngIf="element.plan == 'Salud'">
+            <div *ngIf="element.seguro == 'Salud'">
               <button mat-mini-fab aria-label="Editar" *ngIf="element.estatus !== 'Enviado'"
-              class="dashboard-table-buttons" >  <!-- (click)="this.life.getID(element)" -->
+              class="dashboard-table-buttons"  (click)="navigateToSalud(element.id)">
               <img src="../../../../assets/iconos/edit.svg">
               </button>
               <!-- <p> Hola, soy Salud </p> -->
             </div>
-            <div *ngIf="element.plan == 'Disability'">
+            <div *ngIf="element.seguro == 'Disability'">
               <button mat-mini-fab aria-label="Editar" *ngIf="element.estatus !== 'Enviado'"
               class="dashboard-table-buttons" (click)="this.disability.getID(element.id)"> <!-- (click)="this.life.getID(element)" -->
               <img src="../../../../assets/iconos/edit.svg">

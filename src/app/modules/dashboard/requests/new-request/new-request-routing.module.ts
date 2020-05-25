@@ -18,6 +18,8 @@ const routes: Routes = [
     }
   },
   { path: 'major-expenses', component: MajorExpensesComponent, canDeactivate: [CanExitGuard] },
+  { path: 'major-expenses/cotizacion/:noCotizacion', component: MajorExpensesComponent, canDeactivate: [CanExitGuard] },
+  { path: 'major-expenses/:id', component: MajorExpensesComponent, canDeactivate: [CanExitGuard] },
   { path: 'life', component: LifeComponent, canDeactivate: [CanExitGuard] },
   { path: 'disability', component: DisabilityComponent, canDeactivate: [CanExitGuard] }
 ];

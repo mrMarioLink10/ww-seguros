@@ -6,6 +6,7 @@ import { FormArrayGeneratorService } from 'src/app/core/services/forms/form-arra
 import { questionsA, questionsB } from './questions';
 import { Requests } from '../../requests.component';
 import { Router, ActivatedRoute } from '@angular/router';
+import { UserService } from '../../../../../core/services/user/user.service';
 import { generate, Observable } from 'rxjs';
 import { FormHandlerService } from 'src/app/core/services/forms/form-handler.service';
 import { DiseaseService } from '../../../shared/components/disease/shared/disease/disease.service';
@@ -14,6 +15,9 @@ import { DialogOptionService } from 'src/app/core/services/dialog/dialog-option.
 import { MatDialog } from '@angular/material';
 import { BaseDialogComponent } from 'src/app/shared/components/base-dialog/base-dialog.component';
 import { map, first } from 'rxjs/operators';
+import {MajorExpensesService} from './services/major-expenses.service';
+import {QuotesService} from '../../../services/quotes/quotes.service';
+import {FormValidationsConstant, environment} from '../../../../../../environments/environment';
 @Component({
   selector: 'app-major-expenses',
   templateUrl: './major-expenses.component.html',
@@ -64,30 +68,44 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
     {
       label: 'Tipo de Solicitud',
       options: [
-        {
-          value: 'Cambio de plan',
-          viewValue: 'Cambio de plan',
-        },
+
         {
           value: 'Poliza Nueva',
           viewValue: 'Póliza Nueva',
-        },
-        {
-          value: 'Adicion de Dependiente',
-          viewValue: 'Adición de Dependiente',
-        },
-        {
-          value: 'Rehabilitación',
-          viewValue: 'Rehabilitación',
-        },
-        {
-          value: 'Inclusión',
-          viewValue: 'Inclusión',
         }
       ],
       name: 'requestType',
     };
-
+    isJuridicaData: FieldConfig =
+    {
+      label: 'Es el Contratante Persona Juridica?',
+      options: [
+        {
+          value: 'Si',
+          viewValue: 'Sí',
+        },
+        {
+          value: 'No',
+          viewValue: 'No',
+        }
+      ],
+      name: 'idType',
+    };
+    isContractorData: FieldConfig =
+    {
+      label: 'Es el Contractante?',
+      options: [
+        {
+          value: 'Si',
+          viewValue: 'Sí',
+        },
+        {
+          value: 'No',
+          viewValue: 'No',
+        }
+      ],
+      name: 'idType',
+    };
   idType: FieldConfig =
     {
       label: 'Tipo de documento de identidad',
@@ -145,8 +163,12 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
         viewValue: 'Semestral'
       },
       {
-        value: 'otro',
-        viewValue: 'Otra'
+        value: 'Trimestral',
+        viewValue: 'Trimestral'
+      },
+      {
+        value: 'Mensual',
+        viewValue: 'Mensual'
       },
     ]
   };
@@ -193,23 +215,12 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
       {
         value: 'Distinction',
         viewValue: 'Distinction',
-      },
-      {
-        value: 'Otro',
-        viewValue: 'Otro',
       }
     ],
     name: 'plans',
   };
   // tslint:disable-next-line: max-line-length
-  titles = [
-    'Contratante', 'Solicitante',
-    'Persona políticamente expuesta',
-    'Perfil Financiero', 'Dependientes',
-    'Sección A', 'Sección B',
-    'Sección C Beneficiarios Primarios',
-    'Beneficiario(s) Contingente(s)',
-    'Comentarios adicionales'];
+  titles = FormValidationsConstant.titlesForMajorExpensesComplete;
 
   country = {
     label: 'País',
@@ -276,6 +287,8 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
     sex: ['', Validators.required],
     id2: ['', Validators.required],
     nationality: ['', Validators.required],
+    age: [{ value: '', disabled: true }, Validators.required],
+    bmi: [{ value: '', disabled: true }, Validators.required],
     haveMusculoskeletal: [false, Validators.required],
     haveCerebrovascular: [false, Validators.required],
     haveNervousSystem: [false, Validators.required],
@@ -299,6 +312,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
     haveHighRiskSport: [false, Validators.required],
     havePregnant: [false, Validators.required],
     haveReproductiveOrganDisorders: [false, Validators.required],
+    isBmiEventAssigned: [false, Validators.required]
   };
   questionsGroup = {
     question: ['', Validators.required],
@@ -347,7 +361,8 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
 
   };
   allFamily = $allFamily;
-
+TitleConozcaClienteAsegurado = "Conoca Su Cliente (Asegurado)";
+TitleConozcaClienteContratante = "Conoca Su Cliente (Contratante)";
   haveSomeone = {
     haveMusculoskeletal: '',
     haveCerebrovascular: '',
@@ -374,7 +389,11 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
     haveReproductiveOrganDisorders: '',
   };
 
+  ID = null;
+  noCotizacion = null;
   policy: FormGroup;
+  isFormValidToFill = false;
+  isNotValidToSearch = true;
   // tslint:disable-next-line: max-line-length
   constructor(
     private fb: FormBuilder,
@@ -385,22 +404,91 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
     public diseaseService: DiseaseService,
     public dialogModal: DialogService,
     private dialogOption: DialogOptionService,
+    private userService: UserService,
+    private quotesService : QuotesService,
+    private majorExpensesService : MajorExpensesService,
     public dialog: MatDialog,
   ) { }
-
+  role = "";
+  searchQuote(noCotizacion)
+  {
+    if (noCotizacion !== undefined && noCotizacion !== '')
+    {
+      this.getDataCotizaciones(noCotizacion);
+    }
+  }
   ngOnInit() {
 
+    this.role = this.userService.getRoleCotizador();
+    this.isFormValidToFill = false;
+    this.route.params.subscribe(res => {
+			this.ID = res.id;
+		});
+    this.route.params.subscribe(res => {
+			this.noCotizacion = res.noCotizacion;
+    });
+    if (this.ID != null) {
+			console.log('El ID es ' + this.ID);
+			this.getData(this.ID);
+		} else if (this.ID == null) {
+			console.log('ID esta vacio');
+		}
+    if (this.noCotizacion != null) {
+			this.getDataCotizaciones(this.noCotizacion);
+			console.log('El noCotizacion es ' + this.noCotizacion);
+			//this.getData(this.ID);
+		} else if (this.noCotizacion == null) {
+      console.log('noCotizacion esta vacio');
+      this.noCotizacion = '';
+		}
     this.procedures = this.fb.array([this.formMethods.createItem(this.formGroupProcedure)]);
 
     this.newRequest = this.fb.group({
 
-      NoC: ['', Validators.required],
+      NoC: [{ value: this.noCotizacion, disabled: ((this.noCotizacion === '')? false : true) }, Validators.required],
       isComplete: [false, Validators.required],
       deducibles: ['', Validators.required],
       payment: ['', Validators.required],
       plans: ['', Validators.required],
       requestType: ['', Validators.required],
       person: this.fb.group({
+        conozcaSuClientePersona: this.fb.group({}),
+        firstName: ['', Validators.required],
+        secondName: [''],
+        lastName: ['', Validators.required],
+        date: ['', Validators.required],
+        sex: ['', Validators.required],
+        isContractor: ['', Validators.required],
+        isJuridica: ['', Validators.required],
+        nationality: ['', Validators.required],
+        idType: ['', Validators.required],
+        id2: ['', Validators.required],
+        age: [{ value: '', disabled: true }, Validators.required],
+        weight: ['', Validators.required],
+        height: ['', Validators.required],
+        bmi: [{ value: '', disabled: true }, Validators.required],
+        status: ['', Validators.required],
+        country: ['', Validators.required],
+        city: ['', Validators.required],
+        direction: ['', Validators.required],
+        tel: [''],
+        cel: ['', Validators.required],
+        officeTel: [''],
+        fax: [''],
+        email: ['', Validators.required],
+        office: this.fb.group({
+          company: [''],
+          position: [''],
+          direction: [''],
+          economicActivity: [''],
+          sector: [''],
+          city: [''],
+          country: [''],
+        })
+      }),
+      contractor: this.fb.group({
+        conozcaSuClientePersonaJuridica: this.fb.group({}),
+        conozcaSuClientePersona: this.fb.group({}),
         firstName: ['', Validators.required],
         secondName: [''],
         lastName: ['', Validators.required],
@@ -431,9 +519,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
           city: [''],
           country: [''],
         })
-      }),
-      contractor: this.fb.group({
-        societyName: ['', Validators.required],
+        /*societyName: ['', Validators.required],
         commercialName: [''],
         taxpayerNumber: ['', Validators.required],
         socialHome: [''],
@@ -449,7 +535,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
           id2: ['', Validators.required],
           policy: [''],
           email: ['', Validators.required]
-        })
+        })*/
       }),
       exposedPerson: this.fb.group({
         contractor: ['', Validators.required],
@@ -558,6 +644,15 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
     this.newRequest.get('person').get('weight').valueChanges.subscribe(value => {
       this.getBmi(this.newRequest.get('person').value.height, value);
     });
+    this.newRequest.get('NoC').valueChanges.subscribe(value => {
+      if (value !== "" && value != undefined)  {
+        this.isNotValidToSearch = false;
+      }
+      else
+      {
+        this.isNotValidToSearch = true;
+      }
+    });
 
     this.newRequest.get('person').get('height').valueChanges.subscribe(value => {
       this.getBmi(value, this.newRequest.get('person').value.weight);
@@ -567,11 +662,59 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
       const timeDiff = Math.abs(Date.now() - new Date(value).getTime());
       const age = Math.floor(timeDiff / (1000 * 3600 * 24) / 365.25);
       this.newRequest.get('person').get('age').setValue(age);
+
+    });
+    this.isContractor = true;
+    this.newRequest.get('person').get('isContractor').valueChanges.subscribe(value => {
+
+      this.isContractor = true;
+      if (value === "Si")      {
+        this.isContractor = false;
+        this.titles = FormValidationsConstant.titlesForMajorExpenses;
+      }
+      else
+      {
+        this.titles = FormValidationsConstant.titlesForMajorExpensesComplete;
+      }
+    });
+    this.isContractorPep = false;
+    this.newRequest.get('exposedPerson').get('contractor').valueChanges.subscribe(value => {
+
+      this.isContractorPep = false;
+      if (value === "si")      {
+        this.isContractorPep = true;
+      }
+
     });
 
+    this.isSolicitantePep = false;
+    this.newRequest.get('exposedPerson').get('headLine').valueChanges.subscribe(value => {
 
+      this.isSolicitantePep = false;
+      if (value === "si")      {
+        this.isSolicitantePep = true;
+      }
+
+    });
+    this.isJuridica = false;
+    this.newRequest.get('person').get('isJuridica').valueChanges.subscribe(value => {
+      this.isJuridica = false;
+      if (value === "si")      {
+        this.isJuridica = true;
+        this.titles = FormValidationsConstant.titlesForMajorExpenses;
+      }
+      else
+      {
+        this.titles = FormValidationsConstant.titlesForMajorExpensesComplete;
+      }
+
+    });
   }
 
+isContractor=true;
+isJuridica=false;
+isSolicitantePep=true;
+isContractorPep=true;
   canDeactivate(): Observable<boolean> | boolean {
     if (this.newRequest.dirty) {
       const dialogRef = this.dialog.open(BaseDialogComponent, {
@@ -591,13 +734,84 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
   ngDoCheck() { }
 
   add(dependentsFormArray, group) {
+
     const increment = dependentsFormArray.length + 1;
     dependentsFormArray = this.formMethods.addElement(dependentsFormArray, increment, group).formArray;
 
-    console.log(this.newRequest);
 
+    this.AddEventOnEachDependentVariable();
+  }
+AddEventOnEachDependentVariable()
+{
+  /*for(let index = 0;index < this.newRequest.get('dependents').get('allDependents').length;index++)
+  {
+    console.log(index);
+  }*/
+  //for(let index in this.dependentsFormArray.controls)
+  if (this.newRequest.get('dependents').get('allDependents') !== undefined)
+{
+  var arrayElement = this.newRequest.get('dependents').get('allDependents') as FormArray ;
+  for(let index = 0;index < arrayElement.length;index++)
+  { let isBmiEventAssigned = this.newRequest.get('dependents').get('allDependents').get(index.toString()).get('isBmiEventAssigned').value;
+
+    if (isBmiEventAssigned == false)
+    {
+          this.newRequest
+          .get('dependents')
+          .get('allDependents')
+          .get(index.toString())
+          .get('isBmiEventAssigned')
+          .setValue(true);
+          this.newRequest.get('dependents').get('allDependents').get(index.toString()).get('date').valueChanges.subscribe(value => {
+            const timeDiff = Math.abs(Date.now() - new Date(value).getTime());
+            const age = Math.floor(timeDiff / (1000 * 3600 * 24) / 365.25);
+            this.newRequest.get('dependents').get('allDependents').get(index.toString()).get('age').setValue(age);
+
+          });
+    this.newRequest.get('dependents').get('allDependents').get(index.toString()).get('height').valueChanges.subscribe(value => {
+      let weight = this.newRequest.get('dependents').get('allDependents').get(index.toString()).get('weight').value;
+      let result = this.getBmiValue(value, weight);
+      this.newRequest
+          .get('dependents')
+          .get('allDependents')
+          .get(index.toString())
+          .get('bmi')
+          .setValue(result);
+
+    });
+    this.newRequest.get('dependents').get('allDependents').get(index.toString()).get('weight').valueChanges.subscribe(value => {
+      let height = this.newRequest.get('dependents').get('allDependents').get(index.toString()).get('height').value;
+      let result = this.getBmiValue(height, value);
+            this.newRequest
+            .get('dependents')
+            .get('allDependents')
+            .get(index.toString())
+            .get('bmi')
+            .setValue(result);
+
+    });
+  }
+  else
+  {
+    this.newRequest
+    .get('dependents')
+    .get('allDependents')
+    .get(index.toString())
+    .get('isBmiEventAssigned')
+    .setValue(true);
+  }
   }
 
+}
+}
+getBmiValue(height: any, weight: any) {
+  const bmi = weight / ((height / 100) * (height / 100));
+
+  if (bmi !== Infinity) {
+    const value = parseFloat(`${bmi}`).toFixed(2);
+    return value;
+  }
+}
   isBenefitMinorThan100(group: string, subgroup: string): boolean {
     const form = this.newRequest.get(group).get(subgroup) as FormGroup;
 
@@ -661,7 +875,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
     const mhiForm = this.newRequest.get('questionsB').get('medicalHealthInsurance') as FormGroup;
     const exposedPersonForm = this.newRequest.get('exposedPerson') as FormGroup;
 
-    console.log(event);
+
     if (event.valor === 'si') {
       switch (event.name) {
 
@@ -882,7 +1096,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
             break;
 
           case 'haveMaleReproductiveOrgans':
-            if (this.person.value.age > 50) {
+            if (this.person.value.age > FormValidationsConstant.maxMenAge) {
               this.questionnairesGastosMayores.addControl('prostatic', this.fb.group({}));
             }
 
@@ -960,7 +1174,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
             break;
 
           case 'haveMaleReproductiveOrgans':
-            if (this.person.value.age > 50) {
+            if (this.person.value.age > FormValidationsConstant.maxMenAge) {
               questionnaire.addControl('prostatic', this.fb.group({}));
             }
 
@@ -1058,8 +1272,6 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
 
   getBmi(height: any, weight: any) {
     const bmi = weight / ((height / 100) * (height / 100));
-    console.log(bmi);
-
     if (bmi !== Infinity) {
       const value = parseFloat(`${bmi}`).toFixed(2);
       this.newRequest.get('person').get('bmi').setValue(value);
@@ -1117,6 +1329,215 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
   get person(): FormGroup {
     return this.newRequest.get('person') as FormGroup;
   }
+
+  SaveForm(newRequestReq: FormGroup)
+  {
+    this.formHandler.sendForm(newRequestReq, 'major-expenses', 'send')
+  }
+  notFoundQuote = false;
+  getDataCotizaciones(id)
+  {
+    this.quotesService.returnDataSalud(id).subscribe(data => {
+
+     if (data !== undefined && data.data !== null && data.data != undefined && data.data.nombre !== undefined)
+     {
+      const dialogRef = this.dialog.open(BaseDialogComponent, {
+        data: this.dialogOption.QuoteFound(data.data),
+        minWidth: 385,
+      });
+      setTimeout(() => {
+        dialogRef.close();
+      }, 4000);
+      this.isFormValidToFill = true;
+      this.notFoundQuote = false;
+
+      this.newRequest.get('person').get('date').setValue(data.data.fecha_nacimiento);
+      this.newRequest.get('person').get('firstName').setValue(data.data.nombre);
+     }
+     else
+     {
+      this.notFoundQuote = true;
+      const dialogRef = this.dialog.open(BaseDialogComponent, {
+        data: this.dialogOption.QuoteNotFound,
+        minWidth: 385,
+      });
+      setTimeout(() => {
+        dialogRef.close();
+      }, 4000);
+     }
+    });
+
+  }
+  onNavigate()
+  {
+    let company = 'wwm';
+    if (this.role === 'WWS'){
+      company = 'wws';
+    }
+    window.open(FormValidationsConstant.linkCotizadores+company, "_blank");
+  }
+  has(object: any, key : any) {
+    return object ? this.hasOwnProperty.call(object, key) : false;
+ }
+
+ iterateThroughtAllObject(obj: any, groupControl: any)
+ {
+   const formDataGroup = groupControl as FormGroup;
+   Object.keys(obj).forEach(e =>
+     {
+       let key = e;
+       let value = obj[key];
+       if (obj[key] !== null && obj[e] !== undefined && (typeof obj[e]) != "object")
+       {
+         //console.log(this.has(formDataGroup['controls'], key));
+         if ( value !== undefined && value !== null && value !== '')
+         {
+           if (!this.has(formDataGroup['controls'], key))
+           {
+             formDataGroup.addControl(key, this.fb.control(value));
+           }
+           else
+           {
+
+           const valueFormControl = formDataGroup['controls'][key] as FormControl;
+           valueFormControl.setValue (value);
+         }
+         }
+       }
+       else if (obj[key] !== null && obj[key] !== undefined && (typeof obj[key]) === "object")
+       {
+         if (Array.isArray(obj[key] ))
+         {
+          if (!this.has(formDataGroup['controls'], key))
+          {
+            formDataGroup.removeControl(key);
+          }
+          if(obj[key].length > 0)
+          {
+
+              let form = formDataGroup.get(key);
+              let arrayForm = [];
+              obj[key].forEach( (element) =>{
+                let fbGroup = this.fb.group({
+                  id: ['', Validators.required]
+                });
+
+                this.iterateThroughtAllObject(element,  fbGroup);
+                arrayForm.push(fbGroup);
+              });
+
+
+              formDataGroup.addControl(key, this.fb.array(arrayForm));
+          }
+         }
+         else
+         {
+          if (!this.has(formDataGroup['controls'], key))
+          {
+            formDataGroup.addControl(key, this.fb.group({
+              id: ['', Validators.required]
+            }));
+          }
+
+          let form = formDataGroup.get(key);
+
+          this.iterateThroughtAllObject(obj[key], form);
+          return form;
+         }
+
+       }
+
+   });
+ }
+  iterateThroughtObject(obj: any, groupControl: any)
+  {
+    const formDataGroup = groupControl as FormGroup;
+    Object.keys(obj).forEach(e =>
+      {
+        let key = e;
+        let value = obj[e];
+        if (obj[e] !== undefined && (typeof obj[e]) != "object")
+        {
+        //  console.log(this.has(formDataGroup['controls'], key));
+          if ( value !== undefined && value !== null && value !== '')
+          {
+            if (!this.has(formDataGroup['controls'], key))
+            {
+              formDataGroup.addControl(key, this.fb.control(value));
+            }
+            else
+            {
+
+            const valueFormControl = formDataGroup['controls'][e] as FormControl;
+            valueFormControl.setValue (value);
+          }
+          }
+        }
+    });
+  }
+	getData(id) {
+    this.majorExpensesService.returnData(id).subscribe(data => {
+      //console.log(data);
+      //console.log( this.newRequest);
+      if (data !== undefined && data.data !== null &&
+         data.data != undefined )
+      {
+        this.ID = data.data.id;
+        this.iterateThroughtAllObject(data.data, this.newRequest);
+        this.AddEventOnEachDependentVariable();
+        this.isFormValidToFill = true;
+        /*let person = this.newRequest.get('person');
+        this.iterateThroughtObject(data.data.person, person);
+/// Person
+        let personOffice = this.newRequest.get('person').get('office');
+        this.iterateThroughtObject(data.data.person.office, personOffice);
+        let personaConozcaSuClientePersona = this.newRequest.get('person').get('conozcaSuClientePersona');
+        this.iterateThroughtObject(data.data.person.conozcaSuClientePersona, personaConozcaSuClientePersona);
+/// Contractor
+        let contractor = this.newRequest.get('contractor');
+        this.iterateThroughtObject(data.data.contractor, contractor);
+        let contractorOffice = this.newRequest.get('contractor').get('office');
+        this.iterateThroughtObject(data.data.contractor.office, contractorOffice);
+        let ContractorConozcaSuClientePersona = this.newRequest.get('contractor').get('conozcaSuClientePersona');
+        this.iterateThroughtObject(data.data.contractor.conozcaSuClientePersona, ContractorConozcaSuClientePersona);
+        let ContractorConozcaSuClientePersonaJuridica = this.newRequest.get('contractor').get('conozcaSuClientePersonaJuridica');
+        this.iterateThroughtObject(data.data.contractor.conozcaSuClientePersonaJuridica, ContractorConozcaSuClientePersonaJuridica);
+
+/// ExpoxedPerson
+let exposedPerson = this.newRequest.get('exposedPerson');
+this.iterateThroughtObject(data.data.exposedPerson, exposedPerson);
+let contractorExposedInfo = this.newRequest.get('exposedPerson').get('contractorExposedInfo');
+this.iterateThroughtObject(data.data.exposedPerson.contractorExposedInfo, contractorExposedInfo);
+let headLineExposedInfo = this.newRequest.get('exposedPerson').get('headLineExposedInfo');
+this.iterateThroughtObject(data.data.exposedPerson.headLineExposedInfo, headLineExposedInfo);
+
+/// Incomes
+let incomes = this.newRequest.get('incomes');
+this.iterateThroughtObject(data.data.incomes, incomes);
+if (data.data.dependents !== null)
+{
+// Dependents
+let dependents = this.newRequest.get('dependents');
+this.iterateThroughtObject(data.data.dependents, dependents);
+
+if(data.data.dependents.allDependents !== null && data.data.dependents.allDependents.length > 0)
+{
+data.data.dependents.allDependents.foreach( (element) =>{
+  this.iterateThroughtObject(element, dependents)
+  });
+}
+if(data.data.dependents.students !== null && data.data.dependents.students.length > 0)
+{
+data.data.dependents.students.foreach( (element) =>{
+  this.iterateThroughtObject(element, dependents)
+  });
+}
+}*/
+      }
+
+
+    });
+	}
 
 }
 

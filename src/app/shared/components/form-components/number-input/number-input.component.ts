@@ -11,9 +11,9 @@ export class NumberInputComponent implements OnInit {
   @Input() name: string;
   @Input() min: string;
   @Input() max: string;
+  @Input() isMoney?: string;
   @Input() placeholder: string;
   @Input() group: FormGroup;
-
   constructor() { }
 
   ngOnInit() {

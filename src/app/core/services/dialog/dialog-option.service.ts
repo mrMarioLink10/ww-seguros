@@ -62,6 +62,13 @@ export class DialogOptionService {
 		showButtons: false,
 	};
 
+	noCNotFound: BaseDialog = {
+		logo: 'warning',
+		title: 'No se ha encontrado ningúna cotización',
+		text: `Intente con otro numero de cotización o solicite una nueva cotización`,
+		showButtons: false,
+	};
+
 	deleteConfirm(title: string) {
 		return {
 			logo: 'warning',
@@ -109,6 +116,15 @@ export class DialogOptionService {
 			logo: 'check',
 			title: `${data.asegurado.nombres_asegurado} ${data.asegurado.apellidos_asegurado}`,
 			text: `Se encontró el siguiente asegurado`,
+			showButtons: false,
+		};
+	}
+
+	noCFound(data: any) {
+		return {
+			logo: 'check',
+			title: `Cotización encontrada`,
+			text: `Se encontró la cotización asignada a ${data.nombre}`,
 			showButtons: false,
 		};
 	}

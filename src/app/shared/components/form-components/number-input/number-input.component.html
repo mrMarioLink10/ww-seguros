@@ -1,6 +1,7 @@
 <mat-form-field color="accent" appearance="outline" class="w-full bg-transparente" style="font-size: small !important;"
   [formGroup]="group">
   <mat-label>{{label}}</mat-label>
+  <span *ngIf="isMoney" matPrefix>US$ &nbsp;</span>
   <input [formControlName]="name" matInput class="" type="number" [min]="min" [max]="max" [placeholder]="placeholder">
   <mat-error *ngIf="group.get(name).touched && !group.get(name).valid">Este campo es obligatorio. Recuerde no agregar
     caracteres especiales.</mat-error>

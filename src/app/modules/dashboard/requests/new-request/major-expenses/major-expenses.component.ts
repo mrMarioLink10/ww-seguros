@@ -14,6 +14,8 @@ import { DialogOptionService } from 'src/app/core/services/dialog/dialog-option.
 import { MatDialog } from '@angular/material';
 import { BaseDialogComponent } from 'src/app/shared/components/base-dialog/base-dialog.component';
 import { map, first } from 'rxjs/operators';
+import { AppComponent } from 'src/app/app.component';
+import { UserService } from '../../../../../core/services/user/user.service';
 @Component({
   selector: 'app-major-expenses',
   templateUrl: './major-expenses.component.html',
@@ -145,8 +147,8 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
         viewValue: 'Semestral'
       },
       {
-        value: 'otro',
-        viewValue: 'Otra'
+        value: 'Trimestral',
+        viewValue: 'Trimestral'
       },
     ]
   };
@@ -183,6 +185,10 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
         viewValue: 'Excellence Special',
       },
       {
+        value: 'Distinction Premium',
+        viewValue: 'Distinction Premium',
+      },
+      {
         value: 'Signature',
         viewValue: 'Signature',
       },
@@ -193,6 +199,10 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
       {
         value: 'Distinction',
         viewValue: 'Distinction',
+      },
+      {
+        value: 'Plan Estudiantil',
+        viewValue: 'Plan Estudiantil',
       },
       {
         value: 'Otro',
@@ -386,9 +396,15 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
     public dialogModal: DialogService,
     private dialogOption: DialogOptionService,
     public dialog: MatDialog,
+    private appComponent: AppComponent,
+    private userService: UserService
   ) { }
 
   ngOnInit() {
+    this.userService.getWholeQuotes()
+      .subscribe(res => {
+        console.log(res);
+      });
 
     this.procedures = this.fb.array([this.formMethods.createItem(this.formGroupProcedure)]);
 
@@ -397,8 +413,8 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
       NoC: ['', Validators.required],
       isComplete: [false, Validators.required],
       deducibles: ['', Validators.required],
-      payment: ['', Validators.required],
-      plans: ['', Validators.required],
+      payment: [{ value: '', disabled: true }, Validators.required],
+      plans: [{ value: '', disabled: true }, Validators.required],
       requestType: ['', Validators.required],
       person: this.fb.group({
         firstName: ['', Validators.required],
@@ -570,6 +586,50 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
     });
 
 
+  }
+
+  searchIdNumber(idNumber: string) {
+    this.appComponent.showOverlay = true;
+
+    this.userService.getQuotes(idNumber, 'salud')
+      .subscribe((response: any) => {
+        console.log(response);
+        this.appComponent.showOverlay = false;
+        if (response.data !== null) {
+          const dialogRef = this.dialog.open(BaseDialogComponent, {
+            data: this.dialogOption.noCFound(response.data),
+            minWidth: 385,
+          });
+          setTimeout(() => {
+            dialogRef.close();
+          }, 4000);
+          this.newRequest.get('payment').setValue(response.data.formaPago);
+          this.newRequest.get('plans').setValue(response.data.plan);
+          this.newRequest.get('person').get('firstName').setValue(response.data.nombre);
+          this.newRequest.get('person').get('date').setValue(response.data.fecha_nacimiento);
+        } else {
+          this.newRequest.get('payment').reset();
+          this.newRequest.get('plans').reset();
+          this.newRequest.get('person').get('firstName').reset();
+          this.newRequest.get('person').get('date').reset();
+          const dialogRef = this.dialog.open(BaseDialogComponent, {
+            data: this.dialogOption.noCNotFound,
+            minWidth: 385,
+          });
+          setTimeout(() => {
+            dialogRef.close();
+          }, 4000);
+
+        }
+      });
+  }
+
+  newQuote() {
+    if (this.userService.getRoleCotizador() === 'WWS') {
+      window.open('https://cotizadores.wwseguros.com.do/?cia=wws', '_blank');
+    } else if (this.userService.getRoleCotizador() === 'WMA') {
+      window.open('https://cotizadores.wwseguros.com.do/?cia=wwm', '_blank');
+    }
   }
 
   canDeactivate(): Observable<boolean> | boolean {

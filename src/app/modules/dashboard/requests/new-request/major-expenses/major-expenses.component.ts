@@ -750,7 +750,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
         this.appComponent.showOverlay = false;
         if (response.data !== null) {
           const dialogRef = this.dialog.open(BaseDialogComponent, {
-            data: this.dialogOption.QuoteFound(response.data),
+            data: this.dialogOption.noCFound(response.data),
             minWidth: 385,
           });
           setTimeout(() => {
@@ -1386,7 +1386,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
 
       if (data !== undefined && data.data !== null && data.data !== undefined && data.data.nombre !== undefined) {
         const dialogRef = this.dialog.open(BaseDialogComponent, {
-          data: this.dialogOption.QuoteFound(data.data),
+          data: this.dialogOption.noCFound(data.data),
           minWidth: 385,
         });
         setTimeout(() => {
@@ -1400,7 +1400,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
       } else {
         this.notFoundQuote = true;
         const dialogRef = this.dialog.open(BaseDialogComponent, {
-          data: this.dialogOption.QuoteNotFound,
+          data: this.dialogOption.noCNotFound,
           minWidth: 385,
         });
         setTimeout(() => {

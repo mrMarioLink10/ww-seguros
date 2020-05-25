@@ -91,5 +91,9 @@ export class RequestsComponent implements OnInit {
     this.newRequestButtonOptions.active = true;
     this.router.navigateByUrl(`/dashboard/requests/new-requests/major-expenses/${id}`);
   }
+  navigateToDisability(id) {
+    this.newRequestButtonOptions.active = true;
+    this.router.navigateByUrl(`/dashboard/requests/new-requests/disability/${id}`);
+  }
 }
 

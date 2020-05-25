@@ -1,5 +1,5 @@
 import { Component, OnInit, Output, EventEmitter, Input, DoCheck } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormArray, FormControl } from '@angular/forms';
 import { FormArrayGeneratorService } from 'src/app/core/services/forms/form-array-generator.service';
 import { FieldConfig } from 'src/app/shared/components/form-components/models/field-config';
 import { DisabilityService } from '../disability/services/disability.service';
@@ -474,6 +474,7 @@ export class DisabilityComponent implements OnInit, DoCheck {
     claim_radio: ['', Validators.required]
   };
 
+  noCotizacion;
   constructor(
     private fb: FormBuilder,
     public formMethods: FormArrayGeneratorService,
@@ -492,11 +493,17 @@ export class DisabilityComponent implements OnInit, DoCheck {
   ngOnInit() {
 
     this.ID = this.disabilityService.id;
-		  if (this.ID != null) {
+
+    this.route.params.subscribe(res => {
+			this.ID = res.id;
+		});
+    this.route.params.subscribe(res => {
+			this.noCotizacion = res.noCotizacion;
+    });
+    if (this.ID != null) {
 			console.log('El ID es ' + this.ID);
 			this.getData(this.ID);
-		}
-		else if (this.ID == null) {
+		} else if (this.ID == null) {
 			console.log('ID esta vacio');
 		}
 
@@ -1333,13 +1340,90 @@ export class DisabilityComponent implements OnInit, DoCheck {
         break;
     }
   }
+  has(object: any, key : any) {
+    return object ? this.hasOwnProperty.call(object, key) : false;
+ }
 
+ iterateThroughtAllObject(obj: any, groupControl: any)
+ {
+   const formDataGroup = groupControl as FormGroup;
+   Object.keys(obj).forEach(e =>
+     {
+       let key = e;
+       let value = obj[key];
+       if (obj[key] !== null && obj[e] !== undefined && (typeof obj[e]) != "object")
+       {
+         if ( value !== undefined && value !== null && value !== '')
+         {
+           if (!this.has(formDataGroup['controls'], key))
+           {
+             formDataGroup.addControl(key, this.fb.control(value));
+           }
+           else
+           {
+
+           const valueFormControl = formDataGroup['controls'][key] as FormControl;
+           valueFormControl.setValue (value);
+         }
+         }
+       }
+       else if (obj[key] !== null && obj[key] !== undefined && (typeof obj[key]) === "object")
+       {
+         if (Array.isArray(obj[key] ))
+         {
+          if (!this.has(formDataGroup['controls'], key))
+          {
+            formDataGroup.removeControl(key);
+          }
+          if(obj[key].length > 0)
+          {
+
+              let form = formDataGroup.get(key);
+              let arrayForm = [];
+              obj[key].forEach( (element) =>{
+                let fbGroup = this.fb.group({
+                  id: ['', Validators.required]
+                });
+
+                this.iterateThroughtAllObject(element,  fbGroup);
+                arrayForm.push(fbGroup);
+              });
+
+
+              formDataGroup.addControl(key, this.fb.array(arrayForm));
+          }
+         }
+         else
+         {
+          if (!this.has(formDataGroup['controls'], key))
+          {
+            formDataGroup.addControl(key, this.fb.group({
+              id: ['', Validators.required]
+            }));
+          }
+
+          let form = formDataGroup.get(key);
+
+          this.iterateThroughtAllObject(obj[key], form);
+          return form;
+         }
+
+       }
+
+   });
+ }
   getData(id) {
 		this.disabilityService.returnData(id).subscribe(data => {
 			// console.log(data.data.asegurado.documentoIdentidad)
-      console.log(data);
+      console.log(data)
+      if (data !== undefined && data.data !== null &&
+        data.data != undefined )
+     {
+       this.ID = data.data.id;
+       this.iterateThroughtAllObject(data.data, this.disabilityGroup);
 
-      this.disabilityGroup.controls.num_financial_quote.setValue(data.data.num_financial_quote);
+      //this.disabilityGroup['controls'].num_financial_quote.setValue(data.data.num_financial_quote)
+     }
 
     });
 

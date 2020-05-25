@@ -17,7 +17,8 @@ import { BaseDialogComponent } from 'src/app/shared/components/base-dialog/base-
 import { map, first } from 'rxjs/operators';
 import {MajorExpensesService} from './services/major-expenses.service';
 import {QuotesService} from '../../../services/quotes/quotes.service';
-import {FormValidationsConstant, environment} from '../../../../../../environments/environment';
+import { environment} from '../../../../../../environments/environment';
+import {FormValidationsConstant} from 'src/app/shared/ShareConstant/shareConstantFile';
 @Component({
   selector: 'app-major-expenses',
   templateUrl: './major-expenses.component.html',
@@ -752,7 +753,8 @@ AddEventOnEachDependentVariable()
 {
   var arrayElement = this.newRequest.get('dependents').get('allDependents') as FormArray ;
   for(let index = 0;index < arrayElement.length;index++)
-  { let isBmiEventAssigned = this.newRequest.get('dependents').get('allDependents').get(index.toString()).get('isBmiEventAssigned').value;
+  {
+    let isBmiEventAssigned = this.newRequest.get('dependents').get('allDependents').get(index.toString()).get('isBmiEventAssigned').value;
 
     if (isBmiEventAssigned == false)
     {
@@ -1389,7 +1391,6 @@ getBmiValue(height: any, weight: any) {
        let value = obj[key];
        if (obj[key] !== null && obj[e] !== undefined && (typeof obj[e]) != "object")
        {
-         //console.log(this.has(formDataGroup['controls'], key));
          if ( value !== undefined && value !== null && value !== '')
          {
            if (!this.has(formDataGroup['controls'], key))

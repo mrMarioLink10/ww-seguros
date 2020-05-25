@@ -100,7 +100,7 @@
             </div>
             <div *ngIf="element.seguro == 'Disability'">
               <button mat-mini-fab aria-label="Editar" *ngIf="element.estatus !== 'Enviado'"
-              class="dashboard-table-buttons" (click)="this.disability.getID(element.id)"> <!-- (click)="this.life.getID(element)" -->
+              class="dashboard-table-buttons" (click)="navigateToDisability(element.id)"> <!-- (click)="this.life.getID(element)" -->
               <img src="../../../../assets/iconos/edit.svg">
               </button>
               <!-- <p> Hola, soy Disability </p> -->

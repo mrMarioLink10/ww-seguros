@@ -21,7 +21,10 @@ const routes: Routes = [
   { path: 'major-expenses/cotizacion/:noCotizacion', component: MajorExpensesComponent, canDeactivate: [CanExitGuard] },
   { path: 'major-expenses/:id', component: MajorExpensesComponent, canDeactivate: [CanExitGuard] },
   { path: 'life', component: LifeComponent, canDeactivate: [CanExitGuard] },
-  { path: 'disability', component: DisabilityComponent, canDeactivate: [CanExitGuard] }
+  { path: 'life/cotizacion/:noCotizacion', component: LifeComponent, canDeactivate: [CanExitGuard] },
+  { path: 'life/:id', component: LifeComponent, canDeactivate: [CanExitGuard] },
+  { path: 'disability', component: DisabilityComponent, canDeactivate: [CanExitGuard] },
+  { path: 'disability/:id', component: DisabilityComponent, canDeactivate: [CanExitGuard] },
 ];
 
 @NgModule({

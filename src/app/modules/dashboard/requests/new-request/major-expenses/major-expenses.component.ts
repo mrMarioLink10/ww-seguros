@@ -753,7 +753,8 @@ AddEventOnEachDependentVariable()
 {
   var arrayElement = this.newRequest.get('dependents').get('allDependents') as FormArray ;
   for(let index = 0;index < arrayElement.length;index++)
-  { let isBmiEventAssigned = this.newRequest.get('dependents').get('allDependents').get(index.toString()).get('isBmiEventAssigned').value;
+  {
+    let isBmiEventAssigned = this.newRequest.get('dependents').get('allDependents').get(index.toString()).get('isBmiEventAssigned').value;
 
     if (isBmiEventAssigned == false)
     {
@@ -1390,7 +1391,6 @@ getBmiValue(height: any, weight: any) {
        let value = obj[key];
        if (obj[key] !== null && obj[e] !== undefined && (typeof obj[e]) != "object")
        {
-         //console.log(this.has(formDataGroup['controls'], key));
          if ( value !== undefined && value !== null && value !== '')
          {
            if (!this.has(formDataGroup['controls'], key))

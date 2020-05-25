@@ -186,7 +186,38 @@ export class DisabilityService {
     }
   ];
 
-  constructor(private http: HttpClient, private route:Router) { }
+  testArray = [
+    {
+      value: 'hemograma',
+      viewValue: 'Hemograma'
+    },
+    {
+      value: 'electrocardiograma',
+      viewValue: 'Electrocardiograma'
+    },
+    {
+      value: 'rayos X',
+      viewValue: 'Rayos X'
+    },
+    {
+      value: 'endoscopia',
+      viewValue: 'Endoscopia'
+    },
+    {
+      value: 'ultrasonido',
+      viewValue: 'Ultrasonido'
+    },
+    {
+      value: 'scan',
+      viewValue: 'Scan'
+    },
+    {
+      value: 'resonancia magnética',
+      viewValue: 'Resonancia magnética'
+    }
+  ];
+
+  constructor(private http: HttpClient, private route: Router) { }
 
   postRequest(body) {
 
@@ -198,14 +229,14 @@ export class DisabilityService {
     return this.http.post(`${environment.apiUrl}/api/Solicitudes/disability`, body, httpOptions);
   }
 
-  returnData(id):Observable<any>{
-    return this.http.get(`${environment.apiUrl}/api/Solicitudes/disability/${id}`)
+  returnData(id): Observable<any> {
+    return this.http.get(`${environment.apiUrl}/api/Solicitudes/disability/${id}`);
   }
-  
-  id=null;
-  getID(id){
-      this.id=id;
-      console.log("hola, soy ",id);
+
+  id = null;
+  getID(id) {
+      this.id = id;
+      console.log('hola, soy ', id);
       this.route.navigateByUrl('/dashboard/requests/new-requests/disability');
   }
 

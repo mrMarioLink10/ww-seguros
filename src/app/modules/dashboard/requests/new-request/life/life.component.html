@@ -1218,10 +1218,10 @@
           [form]="newRequest.get('questionnaires').get('solicitudEstadoFinancieroConfidencial')"></app-financial-status>
       </mat-tab>
       <mat-tab
-        *ngIf="isFormValid('contractor') && (newRequest.get('contractorQuestionnaires').get('knowYourClient') || newRequest.get('contractorQuestionnaires').get('knowYourCustomer'))"
+        *ngIf="isFormValid('contractor') && (newRequest.get('contractorQuestionnaires').get('solicitudConozcaASuCliente') || newRequest.get('contractorQuestionnaires').get('knowYourCustomer'))"
         label="Conozca a su cliente - Contratante">
         <app-know-your-client *ngIf="this.role === 'WMA'"
-          [form]="newRequest.get('contractorQuestionnaires').get('knowYourClient')">
+          [form]="newRequest.get('contractorQuestionnaires').get('solicitudConozcaASuCliente')">
         </app-know-your-client>
         <app-know-your-customer *ngIf="this.role === 'WWS'"
           [form]="newRequest.get('contractorQuestionnaires').get('knowYourCustomer')">

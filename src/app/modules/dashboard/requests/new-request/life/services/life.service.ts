@@ -21,16 +21,16 @@ export class LifeService {
     return this.http.post(`${environment.apiUrl}/api/Solicitudes/vida`, body, httpOptions);
   }
 
-  returnData(id):Observable<any>{
+  returnData(id): Observable<any> {
     return this.http.get(`${environment.apiUrl}/api/Solicitudes/vida/${id}`)
   }
-  
-  id=null;
-  idKNOWCustomer=null;
-  getID(id){
-      this.id=id;
-      this.idKNOWCustomer=id;
-      console.log("hola, soy ",id);
+
+  id = null;
+  idKNOWCustomer = null;
+  getID(id) {
+      this.id = id;
+      this.idKNOWCustomer = id;
+      console.log('hola, soy ', id);
       this.route.navigateByUrl('/dashboard/requests/new-requests/life');
   }
 

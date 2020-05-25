@@ -7,7 +7,7 @@ import { DiseaseService } from '../../../shared/components/disease/shared/diseas
 import { FormHandlerService } from 'src/app/core/services/forms/form-handler.service';
 import { UserService } from '../../../../../core/services/user/user.service';
 import { Router, ActivatedRoute } from '@angular/router';
-import { LifeService } from './services/life.service'
+import { LifeService } from './services/life.service';
 import { DialogService } from 'src/app/core/services/dialog/dialog.service';
 import { DialogOptionService } from 'src/app/core/services/dialog/dialog-option.service';
 import { MatDialog } from '@angular/material';
@@ -24,6 +24,21 @@ import { KnowYourCustomerComponent } from '../../../shared/components/disease/kn
   styleUrls: ['./life.component.scss']
 })
 export class LifeComponent implements OnInit, DoCheck {
+
+  constructor(
+    private fb: FormBuilder,
+    public formMethods: FormArrayGeneratorService,
+    public diseaseService: DiseaseService,
+    public formHandler: FormHandlerService,
+    private userService: UserService,
+    private router: Router,
+    private route: ActivatedRoute,
+    public dialogModal: DialogService,
+    private dialogOption: DialogOptionService,
+    public dialog: MatDialog,
+    private life: LifeService,
+    private know: KnowYourCustomerComponent
+  ) { }
   role: string;
   maxWidth: any;
   primaryBenefitsArray: FormArray;
@@ -401,31 +416,18 @@ export class LifeComponent implements OnInit, DoCheck {
 
   dependentsNumber = 0;
 
-  constructor(
-    private fb: FormBuilder,
-    public formMethods: FormArrayGeneratorService,
-    public diseaseService: DiseaseService,
-    public formHandler: FormHandlerService,
-    private userService: UserService,
-    private router: Router,
-    private route: ActivatedRoute,
-    public dialogModal: DialogService,
-    private dialogOption: DialogOptionService,
-    public dialog: MatDialog,
-    private life:LifeService,
-    private know:KnowYourCustomerComponent
-  ) { }
-
   ID = null;
+
+  x = 0;
   ngOnInit() {
 
     this.ID = this.life.id;
-		if (this.ID != null) {
+		  if (this.ID != null) {
 			console.log("El ID es " + this.ID);
-			this.getData(this.ID)
+			this.getData(this.ID);
 		}
 		else if (this.ID == null) {
-			console.log("ID esta vacio")
+			console.log("ID esta vacio");
 		}
 
     this.role = this.userService.getRoleCotizador();
@@ -866,45 +868,52 @@ export class LifeComponent implements OnInit, DoCheck {
       },
     ];
   }
-
-  x=0;
   ngDoCheck(): void {
     this.maxWidth = window.matchMedia('(max-width: 11270px)');
 
-    if(this.ID!=null){
-      if(this.x<30){
-        if(this.newRequest.get('questionnaires').get('solicitudHipertensionArterial')){
+    if (this.ID != null){
+      if (this.x < 30){
+        if (this.newRequest.get('questionnaires').get('solicitudHipertensionArterial')){
           // console.log("EXIIIIIISSTEEEEEEEEEEEEEE!!!!!")
-          this.getDataSubFormsHypertension(this.ID, 'solicitudHipertensionArterial')
+          this.getDataSubFormsHypertension(this.ID, 'solicitudHipertensionArterial');
         }
         else {
           // console.log("NOOOOOOOOOOOOOOOOOOOOOOOOOoo  EXIIIIIISSTEEEEEEEEEEEEEE!!!!!")
         }
-  
-        if(this.newRequest.get('contractorQuestionnaires').get('knowYourCustomer')){
+
+        if (this.newRequest.get('contractorQuestionnaires').get('knowYourCustomer')){
           // console.log("EXIIIIIISSTEEEEEEEEEEEEEE!!!!!")
-          this.getDataSubFormsHypertension(this.ID, 'knowYourCustomer')
+          this.getDataSubFormsHypertension(this.ID, 'knowYourCustomer');
           // this.know.addBasicControls();
         }
         else {
           // console.log("NOOOOOOOOOOOOOOOOOOOOOOOOOoo  EXIIIIIISSTEEEEEEEEEEEEEE!!!!!")
         }
-          
-        if(this.newRequest.get('questionnaires').get('solicitudEstadoFinancieroConfidencial')){
+
+        if (this.newRequest.get('contractorQuestionnaires').get('solicitudConozcaASuCliente')){
           // console.log("EXIIIIIISSTEEEEEEEEEEEEEE!!!!!")
-          this.getDataSubFormsHypertension(this.ID, 'solicitudEstadoFinancieroConfidencial')
+          this.getDataSubFormsHypertension(this.ID, 'solicitudConozcaASuCliente');
+          // this.know.addBasicControls();
         }
         else {
           // console.log("NOOOOOOOOOOOOOOOOOOOOOOOOOoo  EXIIIIIISSTEEEEEEEEEEEEEE!!!!!")
         }
-        this.x++;   
+
+        if (this.newRequest.get('questionnaires').get('solicitudEstadoFinancieroConfidencial')){
+          // console.log("EXIIIIIISSTEEEEEEEEEEEEEE!!!!!")
+          this.getDataSubFormsHypertension(this.ID, 'solicitudEstadoFinancieroConfidencial');
+        }
+        else {
+          // console.log("NOOOOOOOOOOOOOOOOOOOOOOOOOoo  EXIIIIIISSTEEEEEEEEEEEEEE!!!!!")
+        }
+        this.x++;
       }
     }
     else {
       // console.log("this.ID es igual a " + this.ID + ", por tanto, no se va hacer lo de ngDoCheck()")
     }
-    
-  }  
+
+  }
 
   canDeactivate(): Observable<boolean> | boolean {
     if (this.newRequest.dirty) {
@@ -1486,12 +1495,12 @@ export class LifeComponent implements OnInit, DoCheck {
     const getForm = form === 'payer' ? contractor : payer;
 
     if (isValid) {
-      if (this.role === 'WMA') { getForm.addControl('knowYourClient', this.fb.group({})); }
+      if (this.role === 'WMA') { getForm.addControl('solicitudConozcaASuCliente', this.fb.group({})); }
       else if (this.role === 'WWS') { getForm.addControl('knowYourCustomer', this.fb.group({})); }
 
       return true;
     } else {
-      if (this.role === 'WMA') { getForm.removeControl('knowYourClient'); }
+      if (this.role === 'WMA') { getForm.removeControl('solicitudConozcaASuCliente'); }
       else if (this.role === 'WWS') { getForm.removeControl('knowYourCustomer'); }
 
       return false;
@@ -1534,9 +1543,10 @@ export class LifeComponent implements OnInit, DoCheck {
       // console.log(data.data.contractor.company)
       // let res= data;
       // console.log("res: ", res.data.person)
-      if(name=="solicitudHipertensionArterial"){
-        if(this.newRequest.get('questionnaires').get('solicitudHipertensionArterial')){
+      if (name == 'solicitudHipertensionArterial'){
+        if (this.newRequest.get('questionnaires').get('solicitudHipertensionArterial')){
           // console.log("MYYYYYYYYYYYYY NAMEEEEEEEEEEEEEEE IS YOKOTO MASAKA ONI WAAAAAAA!!!")
+        // tslint:disable-next-line: no-string-literal
         this.newRequest['controls'].questionnaires['controls'].solicitudHipertensionArterial['controls'].personInfo['controls'].name.setValue('Rhailin Amable Made Puello');
         }
         else {
@@ -1544,58 +1554,176 @@ export class LifeComponent implements OnInit, DoCheck {
         }
       }
       // 
-      if(name=="solicitudEstadoFinancieroConfidencial"){
-        if(this.newRequest.get('questionnaires').get('solicitudEstadoFinancieroConfidencial')){
+      if (name == 'solicitudEstadoFinancieroConfidencial'){
+        if (this.newRequest.get('questionnaires').get('solicitudEstadoFinancieroConfidencial')){
           // console.log("MYYYYYYYYYYYYY NAMEEEEEEEEEEEEEEE IS YOKOTO MASAKA ONI WAAAAAAA!!!")
         // this.newRequest['controls'].questionnaires['controls'].solicitudEstadoFinancieroConfidencial['controls'].name.setValue('Rhailin Amable Made Puello');
+
+        // tslint:disable-next-line: no-string-literal
+        const controlsForms40 = this.newRequest['controls'].questionnaires['controls'].solicitudEstadoFinancieroConfidencial['controls'];
+          // tslint:disable-next-line: align
+          console.log(controlsForms40);
+
+          // tslint:disable-next-line: forin tslint:disable-next-line: align
+          for (const nameControls in controlsForms40) {
+
+            const dataControls = data.data.questionnaires.solicitudEstadoFinancieroConfidencial;
+            for (const nameDataControls in dataControls){
+
+              if (nameDataControls != nameControls ) {
+                // console.log(`No, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) no son iguales`)
+                // console.log("No debe de setearse.")
+              }
+              else if (nameDataControls == nameControls && nameControls != 'incomeTable' && nameControls != 'table'){
+                // console.log(`Si, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) son iguales`)
+                controlsForms40[nameControls].setValue(dataControls[nameDataControls]);
+              }
+              // console.log(nameDataControls)
+              // console.log(nameControls);
+            }
+            // console.log(controles[nameControles]);
+          }
+
+          // tslint:disable-next-line: no-string-literal tslint:disable-next-line: align
+          const controlsForms41 = this.newRequest['controls'].questionnaires['controls'].solicitudEstadoFinancieroConfidencial['controls'].table['controls'].active['controls'];
+          // tslint:disable-next-line: align
+          console.log(controlsForms41);
+          // tslint:disable-next-line: forin tslint:disable-next-line: align
+          for (const nameControls in controlsForms41) {
+
+            const dataControls = data.data.questionnaires.solicitudEstadoFinancieroConfidencial.table.active;
+            for (const nameDataControls in dataControls){
+
+              if (nameDataControls != nameControls ) {
+                // console.log(`No, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) no son iguales`)
+                // console.log("No debe de setearse.")
+              }
+              else if (nameDataControls == nameControls){
+                // console.log(`Si, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) son iguales`)
+                controlsForms41[nameControls].setValue(dataControls[nameDataControls]);
+              }
+              // console.log(nameDataControls)
+              // console.log(nameControls);
+            }
+            // console.log(controles[nameControles]);
+          }
+// tslint:disable-next-line: no-string-literal tslint:disable-next-line: align
+        const controlsForms42 = this.newRequest['controls'].questionnaires['controls'].solicitudEstadoFinancieroConfidencial['controls'].table['controls'].pasive['controls'];
+        console.log(controlsForms42);
+          // tslint:disable-next-line: forin tslint:disable-next-line: align
+          for (const nameControls in controlsForms42) {
+
+            const dataControls = data.data.questionnaires.solicitudEstadoFinancieroConfidencial.table.pasive;
+            for (const nameDataControls in dataControls){
+
+              if (nameDataControls != nameControls) {
+                // console.log(`No, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) no son iguales`)
+                // console.log("No debe de setearse.")
+              }
+              else if (nameDataControls == nameControls){
+                // console.log(`Si, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) son iguales`)
+                controlsForms42[nameControls].setValue(dataControls[nameDataControls]);
+              }
+              // console.log(nameDataControls)
+              // console.log(nameControls);
+            }
+            // console.log(controles[nameControles]);
+          }
+// tslint:disable-next-line: no-string-literal tslint:disable-next-line: align
+        const controlsForms43 = this.newRequest['controls'].questionnaires['controls'].solicitudEstadoFinancieroConfidencial['controls'].incomeTable['controls'].lastYear['controls'];
+        console.log(controlsForms43);
+// tslint:disable-next-line: forin tslint:disable-next-line: align
+          for (const nameControls in controlsForms43) {
+
+            const dataControls = data.data.questionnaires.solicitudEstadoFinancieroConfidencial.incomeTable.lastYear;
+            for (const nameDataControls in dataControls){
+
+              if (nameDataControls != nameControls ) {
+                // console.log(`No, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) no son iguales`)
+                // console.log("No debe de setearse.")
+              }
+              else if (nameDataControls == nameControls){
+                // console.log(`Si, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) son iguales`)
+                controlsForms43[nameControls].setValue(dataControls[nameDataControls]);
+              }
+              // console.log(nameDataControls)
+              // console.log(nameControls);
+            }
+            // console.log(controles[nameControles]);
+          }
+// tslint:disable-next-line: no-string-literal tslint:disable-next-line: align
+        const controlsForms44 = this.newRequest['controls'].questionnaires['controls'].solicitudEstadoFinancieroConfidencial['controls'].incomeTable['controls'].beforeLastYear['controls'];
+        console.log(controlsForms44);
+// tslint:disable-next-line: forin tslint:disable-next-line: align
+          for (const nameControls in controlsForms44) {
+
+            const dataControls = data.data.questionnaires.solicitudEstadoFinancieroConfidencial.incomeTable.beforeLastYear;
+            for (const nameDataControls in dataControls){
+
+              if (nameDataControls != nameControls ) {
+                // console.log(`No, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) no son iguales`)
+                // console.log("No debe de setearse.")
+              }
+              else if (nameDataControls == nameControls){
+                // console.log(`Si, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) son iguales`)
+                controlsForms44[nameControls].setValue(dataControls[nameDataControls]);
+              }
+              // console.log(nameDataControls)
+              // console.log(nameControls);
+            }
+            // console.log(controles[nameControles]);
+          }
+
         }
         else {
           // console.log("NAAAAAAAAAAAAAADA que ver aqui, sigan en lo que estaban.")
         }
       }
 
-      if(name=="knowYourCustomer"){
-        if(this.newRequest.get('contractorQuestionnaires').get('knowYourCustomer')){
+      if (name == 'knowYourCustomer'){
+        if (this.newRequest.get('contractorQuestionnaires').get('knowYourCustomer')){
           // console.log("EXIIIIIISSTEEEEEEEEEEEEEE!!!!!")
+          // tslint:disable-next-line: no-string-literal tslint:disable-next-line: align
           this.newRequest['controls'].contractorQuestionnaires['controls'].knowYourCustomer['controls'].request.setValue(data.data.contractorQuestionnaires.knowYourCustomer.request);
           // this.newRequest['controls'].contractorQuestionnaires['controls'].knowYourCustomer['controls'].general_data['controls'].first_name.setValue(data.data.contractorQuestionnaires.knowYourCustomer.general_data.first_name);
+          // tslint:disable-next-line: no-string-literal tslint:disable-next-line: align
           const controlsForms32 = this.newRequest['controls'].contractorQuestionnaires['controls'].knowYourCustomer['controls'].general_data['controls'];
-          console.log(controlsForms32)
-    
-          for(const nameControls in controlsForms32){
-            
+          console.log(controlsForms32);
+// tslint:disable-next-line: forin tslint:disable-next-line: align
+          for (const nameControls in controlsForms32) {
+
             const dataControls = data.data.contractorQuestionnaires.knowYourCustomer.general_data;
-            for(const nameDataControls in dataControls){
-              
+            for (const nameDataControls in dataControls){
+
               if (nameDataControls != nameControls ) {
                 // console.log(`No, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) no son iguales`)
                 // console.log("No debe de setearse.")
               }
-              else if(nameDataControls == nameControls){
+              else if (nameDataControls == nameControls){
                 // console.log(`Si, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) son iguales`)
-                controlsForms32[nameControls].setValue(dataControls[nameDataControls])  
+                controlsForms32[nameControls].setValue(dataControls[nameDataControls]);
               }
               // console.log(nameDataControls)
               // console.log(nameControls);
             }
             // console.log(controles[nameControles]);
           }
-
+// tslint:disable-next-line: no-string-literal tslint:disable-next-line: align
           const controlsForms33 = this.newRequest['controls'].contractorQuestionnaires['controls'].knowYourCustomer['controls'].professional_data['controls'];
-          console.log(controlsForms33)
-    
-          for(const nameControls in controlsForms33){
-            
+          console.log(controlsForms33);
+// tslint:disable-next-line: forin tslint:disable-next-line: align
+          for (const nameControls in controlsForms33){
+
             const dataControls = data.data.contractorQuestionnaires.knowYourCustomer.professional_data;
-            for(const nameDataControls in dataControls){
-              
+            for (const nameDataControls in dataControls){
+
               if (nameDataControls != nameControls ) {
                 // console.log(`No, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) no son iguales`)
                 // console.log("No debe de setearse.")
               }
-              else if(nameDataControls == nameControls){
+              else if (nameDataControls == nameControls){
                 // console.log(`Si, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) son iguales`)
-                controlsForms33[nameControls].setValue(dataControls[nameDataControls])  
+                controlsForms33[nameControls].setValue(dataControls[nameDataControls]);
               }
               // console.log(nameDataControls)
               // console.log(nameControls);
@@ -1603,12 +1731,12 @@ export class LifeComponent implements OnInit, DoCheck {
             // console.log(controles[nameControles]);
           }
 
-          this.newRequest['controls'].contractorQuestionnaires['controls'].knowYourCustomer['controls'].exposed['controls'].exposed_person_radio.setValue(data.data.contractorQuestionnaires.knowYourCustomer.exposed.exposed_person_radio);
+          // this.newRequest['controls'].contractorQuestionnaires['controls'].knowYourCustomer['controls'].exposed['controls'].exposed_person_radio.setValue(data.data.contractorQuestionnaires.knowYourCustomer.exposed.exposed_person_radio);
 
-          if(this.newRequest.get('contractorQuestionnaires').get('knowYourCustomer').get('exposed').get('position')){
-            this.newRequest['controls'].contractorQuestionnaires['controls'].knowYourCustomer['controls'].exposed['controls'].position['controls'].info.setValue(data.data.contractorQuestionnaires.knowYourCustomer.exposed.position.info);
-          }
-
+          // if(this.newRequest.get('contractorQuestionnaires').get('knowYourCustomer').get('exposed').get('position')){
+          //   this.newRequest['controls'].contractorQuestionnaires['controls'].knowYourCustomer['controls'].exposed['controls'].position['controls'].info.setValue(data.data.contractorQuestionnaires.knowYourCustomer.exposed.position.info);
+          // }
+// tslint:disable-next-line: no-string-literal tslint:disable-next-line: align
           this.newRequest['controls'].contractorQuestionnaires['controls'].knowYourCustomer['controls'].policy['controls'].total_policy_radio.setValue(data.data.contractorQuestionnaires.knowYourCustomer.policy.total_policy_radio);
           // const varPolicy = {
           //   valor: data.data.contractorQuestionnaires.knowYourCustomer.policy.total_policy_radio,
@@ -1621,49 +1749,55 @@ export class LifeComponent implements OnInit, DoCheck {
               // }
           //   }
           // }
-          if(this.newRequest.get('contractorQuestionnaires').get('knowYourCustomer').get('questions')){
+          if (this.newRequest.get('contractorQuestionnaires').get('knowYourCustomer').get('questions')){
+            // tslint:disable-next-line: no-string-literal tslint:disable-next-line: align
             this.newRequest['controls'].contractorQuestionnaires['controls'].knowYourCustomer['controls'].questions['controls'].transaction['controls'].details.setValue(data.data.contractorQuestionnaires.knowYourCustomer.questions.transaction.details);
+            // tslint:disable-next-line: no-string-literal tslint:disable-next-line: align
             this.newRequest['controls'].contractorQuestionnaires['controls'].knowYourCustomer['controls'].questions['controls'].transaction['controls'].investigation_radio.setValue(data.data.contractorQuestionnaires.knowYourCustomer.questions.transaction.investigation_radio);
 
-            if(this.newRequest.get('contractorQuestionnaires').get('knowYourCustomer').get('questions').get('transaction').get('investigation')){
+            if (this.newRequest.get('contractorQuestionnaires').get('knowYourCustomer').get('questions').get('transaction').get('investigation')){
+              // tslint:disable-next-line: no-string-literal tslint:disable-next-line: align
               this.newRequest['controls'].contractorQuestionnaires['controls'].knowYourCustomer['controls'].questions['controls'].transaction['controls'].investigation['controls'].info.setValue(data.data.contractorQuestionnaires.knowYourCustomer.questions.transaction.investigation.info);
             }
 
-            if(this.newRequest.get('contractorQuestionnaires').get('knowYourCustomer').get('questions').get('finance')){
+            if (this.newRequest.get('contractorQuestionnaires').get('knowYourCustomer').get('questions').get('finance')){
+              // tslint:disable-next-line: no-string-literal tslint:disable-next-line: align
               this.newRequest['controls'].contractorQuestionnaires['controls'].knowYourCustomer['controls'].questions['controls'].finance['controls'].main_annual_income.setValue(data.data.contractorQuestionnaires.knowYourCustomer.questions.finance.main_annual_income);
+              // tslint:disable-next-line: no-string-literal tslint:disable-next-line: align
               this.newRequest['controls'].contractorQuestionnaires['controls'].knowYourCustomer['controls'].questions['controls'].finance['controls'].annual_income_others.setValue(data.data.contractorQuestionnaires.knowYourCustomer.questions.finance.annual_income_others);
             }
 
-            if(this.newRequest.get('contractorQuestionnaires').get('knowYourCustomer').get('questions').get('bank')){
+            if (this.newRequest.get('contractorQuestionnaires').get('knowYourCustomer').get('questions').get('bank')){
               for (let xx = 0; xx < data.data.contractorQuestionnaires.knowYourCustomer.questions.bank.bank_array.length; xx++) {
-                console.log("hola, esto es data.data.contractorQuestionnaires.knowYourCustomer.questions.bank.bank_array, y soy id numero "+data.data.contractorQuestionnaires.knowYourCustomer.questions.bank.bank_array[xx].id)
+                console.log('hola, esto es data.data.contractorQuestionnaires.knowYourCustomer.questions.bank.bank_array, y soy id numero ' + data.data.contractorQuestionnaires.knowYourCustomer.questions.bank.bank_array[xx].id);
                 if (xx >= 1) {
-                  console.log('Hola, esto es data.data.contractorQuestionnaires.knowYourCustomer.questions.bank.bank_array, y soy yo, ' + xx)
-                 this.know.bankFormArray = this.newRequest.get('contractorQuestionnaires').get('knowYourCustomer').get('questions').get('bank').get('bank_array') as FormArray; 
-                  this.know.addFormArray(this.know.bankFormArray,'bank_array');
-                  if(this.know.bankFormArray.length >data.data.contractorQuestionnaires.knowYourCustomer.questions.bank.bank_array.length){
-                    this.know.removeFormArray((this.know.bankFormArray.length-1) , this.know.bankFormArray) 
+                  console.log('Hola, esto es data.data.contractorQuestionnaires.knowYourCustomer.questions.bank.bank_array, y soy yo, ' + xx);
+                  this.know.bankFormArray = this.newRequest.get('contractorQuestionnaires').get('knowYourCustomer').get('questions').get('bank').get('bank_array') as FormArray; 
+                  this.know.addFormArray(this.know.bankFormArray, 'bank_array');
+                  if (this.know.bankFormArray.length > data.data.contractorQuestionnaires.knowYourCustomer.questions.bank.bank_array.length){
+                    this.know.removeFormArray((this.know.bankFormArray.length - 1) , this.know.bankFormArray); 
                   }
                   // const increment = this.know.bankFormArray.length + 1;
                   // this.know.bankFormArray = this.know.formMethods.addElement(this.know.bankFormArray, increment, this.know.createFormArray('bank_array')).formArray;
                   // addFormArray(bankFormArray,'bank_array')
                 }
-                
+// tslint:disable-next-line: no-string-literal tslint:disable-next-line: align
                 const controlsForms34 = this.newRequest['controls'].contractorQuestionnaires['controls'].knowYourCustomer['controls'].questions['controls'].bank['controls'].bank_array['controls'][xx]['controls'];
-                  console.log(controlsForms34)
-        
-                  for(const nameControls in controlsForms34){
-                  
+                  // tslint:disable-next-line: align
+                  console.log(controlsForms34);
+// tslint:disable-next-line: forin tslint:disable-next-line: align
+                  for (const nameControls in controlsForms34){
+
                     const dataControls = data.data.contractorQuestionnaires.knowYourCustomer.questions.bank.bank_array[xx];
-                    for(const nameDataControls in dataControls){
-        
+                    for (const nameDataControls in dataControls){
+
                       if (nameDataControls != nameControls ) {
                         // console.log(`No, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) no son iguales`)
-                        console.log("No debe de setearse.")
+                        console.log('No debe de setearse.');
                       }
-                      else if(nameDataControls == nameControls){
+                      else if (nameDataControls == nameControls){
                         // console.log(`Si, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) son iguales`)
-                        controlsForms34[nameControls].setValue(dataControls[nameDataControls])  
+                        controlsForms34[nameControls].setValue(dataControls[nameDataControls]);
                       }
                       // console.log(nameDataControls)
                       // console.log(nameControls);
@@ -1671,42 +1805,43 @@ export class LifeComponent implements OnInit, DoCheck {
                     // console.log(controles[nameControles]);
                   }
                 // this.newRequest['controls'].generalInformation['controls'].insuranceProposed['controls'][x]['controls'].name.setValue(res.data.primaryBenefits.dependentsC[x].name)
-        
+
                 // const formID7 = this.claimForm.get('reclamados').get([x]) as FormGroup;
                 // formID7.addControl('id', this.fb.control(data.data.reclamados[x].id, Validators.required));
               }
             }
 
-            if(this.newRequest.get('contractorQuestionnaires').get('knowYourCustomer').get('questions').get('commercial')){
+            if (this.newRequest.get('contractorQuestionnaires').get('knowYourCustomer').get('questions').get('commercial')){
               for (let xx = 0; xx < data.data.contractorQuestionnaires.knowYourCustomer.questions.commercial.commercial_array.length; xx++) {
-                console.log("hola, esto es data.data.contractorQuestionnaires.knowYourCustomer.questions.commercial.commercial_array, y soy id numero "+data.data.contractorQuestionnaires.knowYourCustomer.questions.commercial.commercial_array[xx].id)
+                console.log('hola, esto es data.data.contractorQuestionnaires.knowYourCustomer.questions.commercial.commercial_array, y soy id numero ' + data.data.contractorQuestionnaires.knowYourCustomer.questions.commercial.commercial_array[xx].id);
                 if (xx >= 1) {
-                  console.log('Hola, esto es data.data.contractorQuestionnaires.knowYourCustomer.questions.commercial.commercial_array, y soy yo, ' + xx)
-                 this.know.commercialFormArray = this.newRequest.get('contractorQuestionnaires').get('knowYourCustomer').get('questions').get('commercial').get('commercial_array') as FormArray; 
-                  this.know.addFormArray(this.know.commercialFormArray,'commercial_array');
-                  if(this.know.commercialFormArray.length >data.data.contractorQuestionnaires.knowYourCustomer.questions.commercial.commercial_array.length){
-                    this.know.removeFormArray((this.know.commercialFormArray.length-1) , this.know.commercialFormArray) 
+                  console.log('Hola, esto es data.data.contractorQuestionnaires.knowYourCustomer.questions.commercial.commercial_array, y soy yo, ' + xx);
+                  this.know.commercialFormArray = this.newRequest.get('contractorQuestionnaires').get('knowYourCustomer').get('questions').get('commercial').get('commercial_array') as FormArray; 
+                  this.know.addFormArray(this.know.commercialFormArray, 'commercial_array');
+                  if (this.know.commercialFormArray.length > data.data.contractorQuestionnaires.knowYourCustomer.questions.commercial.commercial_array.length){
+                    this.know.removeFormArray((this.know.commercialFormArray.length - 1) , this.know.commercialFormArray); 
                   }
                   // const increment = this.know.commercialFormArray.length + 1;
                   // this.know.commercialFormArray = this.know.formMethods.addElement(this.know.commercialFormArray, increment, this.know.createFormArray('commercial_array')).formArray;
                   // addFormArray(commercialFormArray,'commercial_array')
                 }
-                
+// tslint:disable-next-line: no-string-literal tslint:disable-next-line: align
                 const controlsForms35 = this.newRequest['controls'].contractorQuestionnaires['controls'].knowYourCustomer['controls'].questions['controls'].commercial['controls'].commercial_array['controls'][xx]['controls'];
-                  console.log(controlsForms35)
-        
-                  for(const nameControls in controlsForms35){
-                  
+                  // tslint:disable-next-line: align
+                  console.log(controlsForms35);
+// tslint:disable-next-line: forin tslint:disable-next-line: align
+                  for (const nameControls in controlsForms35){
+
                     const dataControls = data.data.contractorQuestionnaires.knowYourCustomer.questions.commercial.commercial_array[xx];
-                    for(const nameDataControls in dataControls){
-        
+                    for (const nameDataControls in dataControls){
+
                       if (nameDataControls != nameControls ) {
                         // console.log(`No, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) no son iguales`)
-                        console.log("No debe de setearse.")
+                        console.log('No debe de setearse.');
                       }
-                      else if(nameDataControls == nameControls){
+                      else if (nameDataControls == nameControls){
                         // console.log(`Si, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) son iguales`)
-                        controlsForms35[nameControls].setValue(dataControls[nameDataControls])  
+                        controlsForms35[nameControls].setValue(dataControls[nameDataControls]);
                       }
                       // console.log(nameDataControls)
                       // console.log(nameControls);
@@ -1714,42 +1849,43 @@ export class LifeComponent implements OnInit, DoCheck {
                     // console.log(controles[nameControles]);
                   }
                 // this.newRequest['controls'].generalInformation['controls'].insuranceProposed['controls'][x]['controls'].name.setValue(res.data.primaryBenefits.dependentsC[x].name)
-        
+
                 // const formID7 = this.claimForm.get('reclamados').get([x]) as FormGroup;
                 // formID7.addControl('id', this.fb.control(data.data.reclamados[x].id, Validators.required));
               }
             }
 
-            if(this.newRequest.get('contractorQuestionnaires').get('knowYourCustomer').get('questions').get('personal')){
+            if (this.newRequest.get('contractorQuestionnaires').get('knowYourCustomer').get('questions').get('personal')){
               for (let xx = 0; xx < data.data.contractorQuestionnaires.knowYourCustomer.questions.personal.personal_array.length; xx++) {
-                console.log("hola, esto es data.data.contractorQuestionnaires.knowYourCustomer.questions.personal.personal_array, y soy id numero "+data.data.contractorQuestionnaires.knowYourCustomer.questions.personal.personal_array[xx].id)
+                console.log('hola, esto es data.data.contractorQuestionnaires.knowYourCustomer.questions.personal.personal_array, y soy id numero ' + data.data.contractorQuestionnaires.knowYourCustomer.questions.personal.personal_array[xx].id);
                 if (xx >= 1) {
-                  console.log('Hola, esto es data.data.contractorQuestionnaires.knowYourCustomer.questions.personal.personal_array, y soy yo, ' + xx)
-                 this.know.personalFormArray = this.newRequest.get('contractorQuestionnaires').get('knowYourCustomer').get('questions').get('personal').get('personal_array') as FormArray; 
-                  this.know.addFormArray(this.know.personalFormArray,'personal_array');
-                  if(this.know.personalFormArray.length >data.data.contractorQuestionnaires.knowYourCustomer.questions.personal.personal_array.length){
-                    this.know.removeFormArray((this.know.personalFormArray.length-1) , this.know.personalFormArray) 
+                  console.log('Hola, esto es data.data.contractorQuestionnaires.knowYourCustomer.questions.personal.personal_array, y soy yo, ' + xx);
+                  this.know.personalFormArray = this.newRequest.get('contractorQuestionnaires').get('knowYourCustomer').get('questions').get('personal').get('personal_array') as FormArray; 
+                  this.know.addFormArray(this.know.personalFormArray, 'personal_array');
+                  if (this.know.personalFormArray.length > data.data.contractorQuestionnaires.knowYourCustomer.questions.personal.personal_array.length){
+                    this.know.removeFormArray((this.know.personalFormArray.length - 1) , this.know.personalFormArray); 
                   }
                   // const increment = this.know.personalFormArray.length + 1;
                   // this.know.personalFormArray = this.know.formMethods.addElement(this.know.personalFormArray, increment, this.know.createFormArray('personal_array')).formArray;
                   // addFormArray(personalFormArray,'personal_array')
                 }
-                
+// tslint:disable-next-line: no-string-literal tslint:disable-next-line: align
                 const controlsForms36 = this.newRequest['controls'].contractorQuestionnaires['controls'].knowYourCustomer['controls'].questions['controls'].personal['controls'].personal_array['controls'][xx]['controls'];
-                  console.log(controlsForms36)
-        
-                  for(const nameControls in controlsForms36){
-                  
+                  // tslint:disable-next-line: align
+                  console.log(controlsForms36);
+// tslint:disable-next-line: forin tslint:disable-next-line: align
+                  for (const nameControls in controlsForms36){
+
                     const dataControls = data.data.contractorQuestionnaires.knowYourCustomer.questions.personal.personal_array[xx];
-                    for(const nameDataControls in dataControls){
-        
+                    for (const nameDataControls in dataControls){
+
                       if (nameDataControls != nameControls ) {
                         // console.log(`No, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) no son iguales`)
-                        console.log("No debe de setearse.")
+                        console.log('No debe de setearse.');
                       }
-                      else if(nameDataControls == nameControls){
+                      else if (nameDataControls == nameControls){
                         // console.log(`Si, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) son iguales`)
-                        controlsForms36[nameControls].setValue(dataControls[nameDataControls])  
+                        controlsForms36[nameControls].setValue(dataControls[nameDataControls]);
                       }
                       // console.log(nameDataControls)
                       // console.log(nameControls);
@@ -1757,28 +1893,30 @@ export class LifeComponent implements OnInit, DoCheck {
                     // console.log(controles[nameControles]);
                   }
                 // this.newRequest['controls'].generalInformation['controls'].insuranceProposed['controls'][x]['controls'].name.setValue(res.data.primaryBenefits.dependentsC[x].name)
-        
+
                 // const formID7 = this.claimForm.get('reclamados').get([x]) as FormGroup;
                 // formID7.addControl('id', this.fb.control(data.data.reclamados[x].id, Validators.required));
               }
             }
-            
-            if(this.newRequest.get('contractorQuestionnaires').get('knowYourCustomer').get('questions').get('documents')){
+
+            if (this.newRequest.get('contractorQuestionnaires').get('knowYourCustomer').get('questions').get('documents')){
+              // tslint:disable-next-line: no-string-literal tslint:disable-next-line: align
               const controlsForms37 = this.newRequest['controls'].contractorQuestionnaires['controls'].knowYourCustomer['controls'].questions['controls'].documents['controls'];
-                  console.log(controlsForms37)
-        
-                  for(const nameControls in controlsForms37){
-                  
+                  // tslint:disable-next-line: align
+                  console.log(controlsForms37);
+// tslint:disable-next-line: forin tslint:disable-next-line: align
+                  for (const nameControls in controlsForms37){
+
                     const dataControls = data.data.contractorQuestionnaires.knowYourCustomer.questions.documents;
-                    for(const nameDataControls in dataControls){
-        
+                    for (const nameDataControls in dataControls){
+
                       if (nameDataControls != nameControls ) {
                         // console.log(`No, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) no son iguales`)
-                        console.log("No debe de setearse.")
+                        console.log('No debe de setearse.');
                       }
-                      else if(nameDataControls == nameControls){
+                      else if (nameDataControls == nameControls){
                         // console.log(`Si, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) son iguales`)
-                        controlsForms37[nameControls].setValue(dataControls[nameDataControls])  
+                        controlsForms37[nameControls].setValue(dataControls[nameDataControls]);
                       }
                       // console.log(nameDataControls)
                       // console.log(nameControls);
@@ -1787,65 +1925,73 @@ export class LifeComponent implements OnInit, DoCheck {
                   }
               }
           }
-
+// tslint:disable-next-line: no-string-literal tslint:disable-next-line: align
           const controlsForms38 = this.newRequest['controls'].contractorQuestionnaires['controls'].knowYourCustomer['controls'].broker['controls'];
-          console.log(controlsForms38)
-    
-          for(const nameControls in controlsForms38){
-            
+          console.log(controlsForms38);
+// tslint:disable-next-line: forin tslint:disable-next-line: align
+          for (const nameControls in controlsForms38){
+
             const dataControls = data.data.contractorQuestionnaires.knowYourCustomer.broker;
-            for(const nameDataControls in dataControls){
-              
+            for (const nameDataControls in dataControls){
+
               if (nameDataControls != nameControls ) {
                 // console.log(`No, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) no son iguales`)
                 // console.log("No debe de setearse.")
               }
-              else if(nameDataControls == nameControls){
+              else if (nameDataControls == nameControls){
                 // console.log(`Si, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) son iguales`)
-                controlsForms38[nameControls].setValue(dataControls[nameDataControls])  
+                controlsForms38[nameControls].setValue(dataControls[nameDataControls]);
               }
               // console.log(nameDataControls)
               // console.log(nameControls);
             }
             // console.log(controles[nameControles]);
           }
-
+// tslint:disable-next-line: no-string-literal tslint:disable-next-line: align
           const controlsForms39 = this.newRequest['controls'].contractorQuestionnaires['controls'].knowYourCustomer['controls'].info_for_the_insurance_carrier['controls'];
-          console.log(controlsForms39)
-    
-          for(const nameControls in controlsForms39){
-            
+          console.log(controlsForms39);
+// tslint:disable-next-line: forin tslint:disable-next-line: align
+          for (const nameControls in controlsForms39){
+
             const dataControls = data.data.contractorQuestionnaires.knowYourCustomer.info_for_the_insurance_carrier;
-            for(const nameDataControls in dataControls){
-              
+            for (const nameDataControls in dataControls){
+
               if (nameDataControls != nameControls ) {
                 // console.log(`No, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) no son iguales`)
                 // console.log("No debe de setearse.")
               }
-              else if(nameDataControls == nameControls){
+              else if (nameDataControls == nameControls){
                 // console.log(`Si, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) son iguales`)
-                controlsForms39[nameControls].setValue(dataControls[nameDataControls])  
+                controlsForms39[nameControls].setValue(dataControls[nameDataControls]);
               }
               // console.log(nameDataControls)
               // console.log(nameControls);
             }
             // console.log(controles[nameControles]);
-          }  
+          }
         }
         // else {
         //   // console.log("NAAAAAAAAAAAAAADA que ver aqui, sigan en lo que estaban.")
         // }
       }
 
-    })
+      if (name == 'solicitudConozcaASuCliente'){
+        if (this.newRequest.get('contractorQuestionnaires').get('solicitudConozcaASuCliente')){
+
+          // this.newRequest['controls'].contractorQuestionnaires['controls'].solicitudConozcaASuCliente['controls'].request.setValue(data.data.contractorQuestionnaires.solicitudConozcaASuCliente.request);
+
+        }
+      }
+
+    });
   }
 
   getData(id) {
 		this.life.returnData(id).subscribe(data => {
 			// console.log(data.data.asegurado.documentoIdentidad)
-      console.log(data)
-      
-      if(data.data.person.city){
+      console.log(data);
+
+      if (data.data.person.city){
         delete data.data.person.city;
       }
       // console.log(data.data.person)
@@ -1853,53 +1999,55 @@ export class LifeComponent implements OnInit, DoCheck {
       // console.log(data.data.contractor)
       // console.log(data.data.contractor.company)
 
-      let res= data;
+      const res = data;
       // console.log("res: ", res.data.person)
-
-      this.newRequest['controls'].NoC.setValue(data.data.noC)
+// tslint:disable-next-line: no-string-literal tslint:disable-next-line: align
+      this.newRequest['controls'].NoC.setValue(data.data.noC);
       // console.log(data.data.noC)
 
       // const formID1 = this.newRequest.get('person') as FormGroup;
       // formID1.addControl('id', this.fb.control(''));
       // formID1.addControl('city', this.fb.control(''));
+      // tslint:disable-next-line: no-string-literal tslint:disable-next-line: align
       const controlsForms = this.newRequest['controls'].person['controls'];
-      console.log(controlsForms)
+      console.log(controlsForms);
+// tslint:disable-next-line: forin tslint:disable-next-line: align
+			for (const nameControls in controlsForms){
 
-			for(const nameControls in controlsForms){
-				
 				const dataControls = res.data.person;
-				for(const nameDataControls in dataControls){
-          
+				for (const nameDataControls in dataControls){
+
           if (nameDataControls != nameControls ) {
             // console.log(`No, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) no son iguales`)
-						console.log("No debe de setearse.")
+						console.log('No debe de setearse.');
           }
-				  else if(nameDataControls == nameControls){
+				  else if (nameDataControls == nameControls){
             // console.log(`Si, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) son iguales`)
-            controlsForms[nameControls].setValue(dataControls[nameDataControls])  
+            controlsForms[nameControls].setValue(dataControls[nameDataControls]);
 					}
 					// console.log(nameDataControls)
 					// console.log(nameControls);
 				}
 				// console.log(controles[nameControles]);
       }
-
+// tslint:disable-next-line: no-string-literal tslint:disable-next-line: align
       const controlsForms2 = this.newRequest['controls'].employer['controls'];
-      console.log(controlsForms2)
-
+      console.log(controlsForms2);
+      // tslint:disable-next-line: no-string-literal tslint:disable-next-line: align
       this.newRequest['controls'].employer['controls'].CompanyName.setValue( res.data.employer.companyName);
-      for(const nameControls in controlsForms2){
-				
+      // tslint:disable-next-line: forin tslint:disable-next-line: align
+      for (const nameControls in controlsForms2){
+
 				const dataControls = res.data.employer;
-				for(const nameDataControls in dataControls){
-          
+				for (const nameDataControls in dataControls){
+
           if (nameDataControls != nameControls ) {
             // console.log(`No, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) no son iguales`)
-						console.log("No debe de setearse.")
+						console.log('No debe de setearse.');
           }
-				  else if(nameDataControls == nameControls){
+				  else if (nameDataControls == nameControls){
             // console.log(`Si, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) son iguales`)
-            controlsForms2[nameControls].setValue(dataControls[nameDataControls])  
+            controlsForms2[nameControls].setValue(dataControls[nameDataControls]);
 					}
 					// console.log(nameDataControls)
 					// console.log(nameControls);
@@ -1914,44 +2062,44 @@ export class LifeComponent implements OnInit, DoCheck {
       // console.log("res.data.contractor['status'] es igual a " + res.data.contractor['status'])
 
       // console.log("Se borro statusStr, la nueva data ahora es igual a ", res.data.contractor)
-
+// tslint:disable-next-line: no-string-literal tslint:disable-next-line: align
       const controlsForms3 = this.newRequest['controls'].contractor['controls'];
-      console.log(controlsForms3)
+      console.log(controlsForms3);
+// tslint:disable-next-line: forin tslint:disable-next-line: align
+      for (const nameControls in controlsForms3){
 
-      for(const nameControls in controlsForms3){
-				
 				const dataControls = res.data.contractor;
-				for(const nameDataControls in dataControls){
-          
+				for (const nameDataControls in dataControls){
+
           if (nameDataControls != nameControls ) {
             // console.log(`No, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) no son iguales`)
-						console.log("No debe de setearse.")
+						console.log('No debe de setearse.');
           }
-				  else if(nameDataControls == nameControls && nameControls!='company'){
+				  else if (nameDataControls == nameControls && nameControls != 'company'){
             // console.log(`Si, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) son iguales`)
-            controlsForms3[nameControls].setValue(dataControls[nameDataControls])  
+            controlsForms3[nameControls].setValue(dataControls[nameDataControls]);
 					}
 					// console.log(nameDataControls)
 					// console.log(nameControls);
 				}
 				// console.log(controles[nameControles]);
       }
-
+// tslint:disable-next-line: no-string-literal tslint:disable-next-line: align
       const controlsForms4 = this.newRequest['controls'].contractor['controls'].company['controls'];
-      console.log(controlsForms4)
+      console.log(controlsForms4);
+// tslint:disable-next-line: forin tslint:disable-next-line: align
+      for (const nameControls in controlsForms4){
 
-      for(const nameControls in controlsForms4){
-				
 				const dataControls = res.data.contractor.company;
-				for(const nameDataControls in dataControls){
-          
+				for (const nameDataControls in dataControls){
+
           if (nameDataControls != nameControls ) {
             // console.log(`No, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) no son iguales`)
-						console.log("No debe de setearse.")
+						console.log('No debe de setearse.');
           }
-				  else if(nameDataControls == nameControls){
+				  else if (nameDataControls == nameControls){
             // console.log(`Si, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) son iguales`)
-            controlsForms4[nameControls].setValue(dataControls[nameDataControls])  
+            controlsForms4[nameControls].setValue(dataControls[nameDataControls]);
 					}
 					// console.log(nameDataControls)
 					// console.log(nameControls);
@@ -1966,44 +2114,44 @@ export class LifeComponent implements OnInit, DoCheck {
       // console.log("res.data.payer['status'] es igual a " + res.data.payer['status'])
 
       // console.log("Se borro statusStr, la nueva data ahora es igual a ", res.data.payer)
-
+// tslint:disable-next-line: no-string-literal tslint:disable-next-line: align
       const controlsForms5 = this.newRequest['controls'].payer['controls'];
-      console.log(controlsForms5)
+      console.log(controlsForms5);
+// tslint:disable-next-line: forin tslint:disable-next-line: align
+      for (const nameControls in controlsForms5){
 
-      for(const nameControls in controlsForms5){
-				
 				const dataControls = res.data.payer;
-				for(const nameDataControls in dataControls){
-          
+				for (const nameDataControls in dataControls){
+
           if (nameDataControls != nameControls ) {
             // console.log(`No, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) no son iguales`)
-						console.log("No debe de setearse.")
+						console.log('No debe de setearse.');
           }
-				  else if(nameDataControls == nameControls && nameControls!='company'){
+				  else if (nameDataControls == nameControls && nameControls != 'company'){
             // console.log(`Si, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) son iguales`)
-            controlsForms5[nameControls].setValue(dataControls[nameDataControls])  
+            controlsForms5[nameControls].setValue(dataControls[nameDataControls]);
 					}
 					// console.log(nameDataControls)
 					// console.log(nameControls);
 				}
 				// console.log(controles[nameControles]);
       }
-
+// tslint:disable-next-line: no-string-literal tslint:disable-next-line: align
       const controlsForms6 = this.newRequest['controls'].payer['controls'].company['controls'];
-      console.log(controlsForms6)
+      console.log(controlsForms6);
+// tslint:disable-next-line: forin tslint:disable-next-line: align
+      for (const nameControls in controlsForms6){
 
-      for(const nameControls in controlsForms6){
-				
 				const dataControls = res.data.payer.company;
-				for(const nameDataControls in dataControls){
-          
+				for (const nameDataControls in dataControls){
+
           if (nameDataControls != nameControls ) {
             // console.log(`No, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) no son iguales`)
-						console.log("No debe de setearse.")
+						console.log('No debe de setearse.');
           }
-				  else if(nameDataControls == nameControls){
+				  else if (nameDataControls == nameControls){
             // console.log(`Si, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) son iguales`)
-            controlsForms6[nameControls].setValue(dataControls[nameDataControls])  
+            controlsForms6[nameControls].setValue(dataControls[nameDataControls]);
 					}
 					// console.log(nameDataControls)
 					// console.log(nameControls);
@@ -2013,80 +2161,82 @@ export class LifeComponent implements OnInit, DoCheck {
 
       const sd = {
         valor: res.data.person.isExposed,
-        name:'isExposed'
+        name: 'isExposed'
 			};
 
+			// tslint:disable-next-line: align
 			if (sd.valor != null) {
 				this.selectChange(sd);
 				if (this.newRequest.get('exposedPerson')) {
 
-          if(res.data.exposedPerson.contractor=='true'){
-            res.data.exposedPerson.contractor=true;
+          if (res.data.exposedPerson.contractor == 'true'){
+            res.data.exposedPerson.contractor = true;
           }
-          else if(res.data.exposedPerson.contractor=='false'){
-            res.data.exposedPerson.contractor=false;
+          else if (res.data.exposedPerson.contractor == 'false'){
+            res.data.exposedPerson.contractor = false;
           }
-          console.log("res.data.exposedPerson.contractor es igual a " + res.data.exposedPerson.contractor)
+          console.log('res.data.exposedPerson.contractor es igual a ' + res.data.exposedPerson.contractor);
 
-          if(res.data.exposedPerson.insured=='true'){
-            res.data.exposedPerson.insured=true;
+          if (res.data.exposedPerson.insured == 'true'){
+            res.data.exposedPerson.insured = true;
           }
-          else if(res.data.exposedPerson.insured=='false'){
-            res.data.exposedPerson.insured=false;
+          else if (res.data.exposedPerson.insured == 'false'){
+            res.data.exposedPerson.insured = false;
           }
-          console.log("res.data.exposedPerson.insured es igual a " + res.data.exposedPerson.insured)
+          console.log('res.data.exposedPerson.insured es igual a ' + res.data.exposedPerson.insured);
 
-          if(res.data.exposedPerson.payer=='true'){
-            res.data.exposedPerson.payer=true;
+          if (res.data.exposedPerson.payer == 'true'){
+            res.data.exposedPerson.payer = true;
           }
-          else if(res.data.exposedPerson.payer=='false'){
-            res.data.exposedPerson.payer=false;
+          else if (res.data.exposedPerson.payer == 'false'){
+            res.data.exposedPerson.payer = false;
           }
-          console.log("res.data.exposedPerson.payer es igual a " + res.data.exposedPerson.payer)
-
+          console.log('res.data.exposedPerson.payer es igual a ' + res.data.exposedPerson.payer);
+// tslint:disable-next-line: no-string-literal tslint:disable-next-line: align
           const controlsForms7 = this.newRequest['controls'].exposedPerson['controls'];
-          console.log(controlsForms7)
+          console.log(controlsForms7);
+// tslint:disable-next-line: forin tslint:disable-next-line: align
+          for (const nameControls in controlsForms7){
 
-          for(const nameControls in controlsForms7){
-          
 			    	const dataControls = res.data.exposedPerson;
-			    	for(const nameDataControls in dataControls){
+			    	for (const nameDataControls in dataControls){
 
               if (nameDataControls != nameControls ) {
                 // console.log(`No, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) no son iguales`)
-			    			console.log("No debe de setearse.")
+			    			console.log('No debe de setearse.');
               }
-			    	  else if(nameDataControls == nameControls){
+			    	  else if (nameDataControls == nameControls){
                 // console.log(`Si, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) son iguales`)
-                controlsForms7[nameControls].setValue(dataControls[nameDataControls])  
+                controlsForms7[nameControls].setValue(dataControls[nameDataControls]);
 			    		}
 			    		// console.log(nameDataControls)
 			    		// console.log(nameControls);
 			    	}
 			    	// console.log(controles[nameControles]);
           }
-          
+
           console.log('Control exposedPerson CREADOOOOOOOO!');
 				}
-			} else if (sd.valor == null || sd.valor == "no") {
+			} else if (sd.valor == null || sd.valor == 'no') {
 				console.log('No hay que crear el control exposedPerson');
 			}
-      
+// tslint:disable-next-line: no-string-literal tslint:disable-next-line: align
       const controlsForms8 = this.newRequest['controls'].financialProfile['controls'];
-          console.log(controlsForms8)
+          // tslint:disable-next-line: align
+          console.log(controlsForms8);
+// tslint:disable-next-line: forin tslint:disable-next-line: align
+          for (const nameControls in controlsForms8){
 
-          for(const nameControls in controlsForms8){
-          
 			    	const dataControls = res.data.financialProfile;
-			    	for(const nameDataControls in dataControls){
+			    	for (const nameDataControls in dataControls){
 
               if (nameDataControls != nameControls ) {
                 // console.log(`No, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) no son iguales`)
-			    			console.log("No debe de setearse.")
+			    			console.log('No debe de setearse.');
               }
-			    	  else if(nameDataControls == nameControls){
+			    	  else if (nameDataControls == nameControls){
                 // console.log(`Si, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) son iguales`)
-                controlsForms8[nameControls].setValue(dataControls[nameDataControls])  
+                controlsForms8[nameControls].setValue(dataControls[nameDataControls]);
 			    		}
 			    		// console.log(nameDataControls)
 			    		// console.log(nameControls);
@@ -2094,13 +2244,13 @@ export class LifeComponent implements OnInit, DoCheck {
 			    	// console.log(controles[nameControles]);
           }
 
-          //ESTO   LO   HICE   MANUAL (y automatico el sub grupo),   POR   TANTO   IGNORAR   ESTOS   FOR   INs!
+          // ESTO   LO   HICE   MANUAL (y automatico el sub grupo),   POR   TANTO   IGNORAR   ESTOS   FOR   INs!
 
           // const controlsForms9 = this.newRequest['controls'].releventPlanInformation['controls'];
           // console.log(controlsForms9)
 
           // for(const nameControls in controlsForms9){
-          
+
 			    // 	const dataControls = res.data.releventPlanInformation;
 			    // 	for(const nameDataControls in dataControls){
 
@@ -2120,58 +2270,62 @@ export class LifeComponent implements OnInit, DoCheck {
 
           // const formID9 = this.newRequest.get('releventPlanInformation') as FormGroup;
           // formID9.addControl('id', this.fb.control(''));
-          this.newRequest['controls'].releventPlanInformation['controls'].type.setValue(res.data.releventPlanInformation.type)
-          this.newRequest['controls'].releventPlanInformation['controls'].timeAmount.setValue(res.data.releventPlanInformation.timeAmount)
-          this.newRequest['controls'].releventPlanInformation['controls'].time.setValue(res.data.releventPlanInformation.time)
-          this.newRequest['controls'].releventPlanInformation['controls'].nicotineEstandar.setValue(res.data.releventPlanInformation.nicotineEstandar)
+          // tslint:disable-next-line: no-string-literal tslint:disable-next-line: align
+      this.newRequest['controls'].releventPlanInformation['controls'].type.setValue(res.data.releventPlanInformation.type);
+      // tslint:disable-next-line: no-string-literal tslint:disable-next-line: align
+      this.newRequest['controls'].releventPlanInformation['controls'].timeAmount.setValue(res.data.releventPlanInformation.timeAmount);
+      // tslint:disable-next-line: no-string-literal tslint:disable-next-line: align
+      this.newRequest['controls'].releventPlanInformation['controls'].time.setValue(res.data.releventPlanInformation.time);
+      // tslint:disable-next-line: no-string-literal tslint:disable-next-line: align
+      this.newRequest['controls'].releventPlanInformation['controls'].nicotineEstandar.setValue(res.data.releventPlanInformation.nicotineEstandar);
+// tslint:disable-next-line: no-string-literal tslint:disable-next-line: align
+      const controlsForms10 = this.newRequest['controls'].releventPlanInformation['controls'].coverages['controls'];
+      console.log(controlsForms10);
+// tslint:disable-next-line: forin tslint:disable-next-line: align
+          for (const nameControls in controlsForms10){
 
-          const controlsForms10 = this.newRequest['controls'].releventPlanInformation['controls'].coverages['controls'];
-          console.log(controlsForms10)
-
-          for(const nameControls in controlsForms10){
-          
 			    	const dataControls = res.data.releventPlanInformation.coverages;
-			    	for(const nameDataControls in dataControls){
+			    	for (const nameDataControls in dataControls){
 
               if (nameDataControls != nameControls ) {
                 // console.log(`No, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) no son iguales`)
-			    			console.log("No debe de setearse.")
+			    			console.log('No debe de setearse.');
               }
-			    	  else if(nameDataControls == nameControls){
+			    	  else if (nameDataControls == nameControls){
                 // console.log(`Si, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) son iguales`)
-                controlsForms10[nameControls].setValue(dataControls[nameDataControls])  
+                controlsForms10[nameControls].setValue(dataControls[nameDataControls]);
 			    		}
 			    		// console.log(nameDataControls)
 			    		// console.log(nameControls);
 			    	}
 			    	// console.log(controles[nameControles]);
           }
-          this.needFinancialStatusCalculator()
+      this.needFinancialStatusCalculator();
+// tslint:disable-next-line: no-string-literal tslint:disable-next-line: align
+      this.newRequest['controls'].IncomeMainActivity.setValue(res.data.incomeMainActivity);
 
-          this.newRequest['controls'].IncomeMainActivity.setValue(res.data.incomeMainActivity)
-
-          for (let x = 0; x < res.data.primaryBenefits.dependentsC.length; x++) {
-            console.log("hola, esto es res.data.primaryBenefits.dependentsC, y soy id numero "+res.data.primaryBenefits.dependentsC[x].id)
+      for (let x = 0; x < res.data.primaryBenefits.dependentsC.length; x++) {
+            console.log('hola, esto es res.data.primaryBenefits.dependentsC, y soy id numero ' + res.data.primaryBenefits.dependentsC[x].id);
             if (x >= 1) {
-              console.log('Hola, esto es res.data.primaryBenefits.dependentsC, y soy yo, ' + x)
-              this.add(this.primaryBenefitsArray,this.primaryBenefits);
+              console.log('Hola, esto es res.data.primaryBenefits.dependentsC, y soy yo, ' + x);
+              this.add(this.primaryBenefitsArray, this.primaryBenefits);
             }
-            
+// tslint:disable-next-line: no-string-literal tslint:disable-next-line: align
             const controlsForms11 = this.newRequest['controls'].primaryBenefits['controls'].dependentsC['controls'][x]['controls'];
-              console.log(controlsForms11)
-    
-              for(const nameControls in controlsForms11){
-              
+            console.log(controlsForms11);
+// tslint:disable-next-line: forin tslint:disable-next-line: align
+              for (const nameControls in controlsForms11){
+
                 const dataControls = res.data.primaryBenefits.dependentsC[x];
-                for(const nameDataControls in dataControls){
-    
+                for (const nameDataControls in dataControls){
+
                   if (nameDataControls != nameControls ) {
                     // console.log(`No, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) no son iguales`)
-                    console.log("No debe de setearse.")
+                    console.log('No debe de setearse.');
                   }
-                  else if(nameDataControls == nameControls){
+                  else if (nameDataControls == nameControls){
                     // console.log(`Si, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) son iguales`)
-                    controlsForms11[nameControls].setValue(dataControls[nameDataControls])  
+                    controlsForms11[nameControls].setValue(dataControls[nameDataControls]);
                   }
                   // console.log(nameDataControls)
                   // console.log(nameControls);
@@ -2179,57 +2333,57 @@ export class LifeComponent implements OnInit, DoCheck {
                 // console.log(controles[nameControles]);
               }
             // this.newRequest['controls'].primaryBenefits['controls'].dependentsC['controls'][x]['controls'].name.setValue(res.data.primaryBenefits.dependentsC[x].name)
-    
+
             // const formID7 = this.claimForm.get('reclamados').get([x]) as FormGroup;
             // formID7.addControl('id', this.fb.control(data.data.reclamados[x].id, Validators.required));
           }
+// tslint:disable-next-line: no-string-literal tslint:disable-next-line: align
+      const controlsForms12 = this.newRequest['controls'].primaryBenefits['controls'].personBenefited['controls'];
+      console.log(controlsForms12);
+// tslint:disable-next-line: forin tslint:disable-next-line: align
+          for (const nameControls in controlsForms12){
 
-          const controlsForms12 = this.newRequest['controls'].primaryBenefits['controls'].personBenefited['controls'];
-          console.log(controlsForms12)
-
-          for(const nameControls in controlsForms12){
-          
 			    	const dataControls = res.data.primaryBenefits.personBenefited;
-			    	for(const nameDataControls in dataControls){
+			    	for (const nameDataControls in dataControls){
 
               if (nameDataControls != nameControls ) {
                 // console.log(`No, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) no son iguales`)
-			    			console.log("No debe de setearse.")
+			    			console.log('No debe de setearse.');
               }
-			    	  else if(nameDataControls == nameControls){
+			    	  else if (nameDataControls == nameControls){
                 // console.log(`Si, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) son iguales`)
-                controlsForms12[nameControls].setValue(dataControls[nameDataControls])  
+                controlsForms12[nameControls].setValue(dataControls[nameDataControls]);
 			    		}
 			    		// console.log(nameDataControls)
 			    		// console.log(nameControls);
 			    	}
 			    	// console.log(controles[nameControles]);
           }
-   
-      // console.log("Si veo esto, me vale verga esa propiedad city igual a null. Y si no, bueno, que puedo hacer? Hay que resolver, xD!")
-      
-      for (let x = 0; x < res.data.contingentBeneficiary.dependentsC.length; x++) {
-        console.log("hola, esto es res.data.contingentBeneficiary.dependentsC, y soy id numero "+res.data.contingentBeneficiary.dependentsC[x].id)
-        if (x >= 1) {
-          console.log('Hola, esto es res.data.contingentBeneficiary.dependentsC, y soy yo, ' + x)
-          this.add(this.contingentBeneficiaryArray,this.primaryBenefits);
-        }
-        
-        const controlsForms13 = this.newRequest['controls'].contingentBeneficiary['controls'].dependentsC['controls'][x]['controls'];
-          console.log(controlsForms13)
 
-          for(const nameControls in controlsForms13){
-          
+      // console.log("Si veo esto, me vale verga esa propiedad city igual a null. Y si no, bueno, que puedo hacer? Hay que resolver, xD!")
+
+      for (let x = 0; x < res.data.contingentBeneficiary.dependentsC.length; x++) {
+        console.log('hola, esto es res.data.contingentBeneficiary.dependentsC, y soy id numero ' + res.data.contingentBeneficiary.dependentsC[x].id);
+        if (x >= 1) {
+          console.log('Hola, esto es res.data.contingentBeneficiary.dependentsC, y soy yo, ' + x);
+          this.add(this.contingentBeneficiaryArray, this.primaryBenefits);
+        }
+// tslint:disable-next-line: no-string-literal tslint:disable-next-line: align
+        const controlsForms13 = this.newRequest['controls'].contingentBeneficiary['controls'].dependentsC['controls'][x]['controls'];
+        console.log(controlsForms13);
+
+          for (const nameControls in controlsForms13){
+// tslint:disable-next-line: forin tslint:disable-next-line: align
             const dataControls = res.data.contingentBeneficiary.dependentsC[x];
-            for(const nameDataControls in dataControls){
+            for (const nameDataControls in dataControls){
 
               if (nameDataControls != nameControls ) {
                 // console.log(`No, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) no son iguales`)
-                console.log("No debe de setearse.")
+                console.log('No debe de setearse.');
               }
-              else if(nameDataControls == nameControls){
+              else if (nameDataControls == nameControls){
                 // console.log(`Si, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) son iguales`)
-                controlsForms13[nameControls].setValue(dataControls[nameDataControls])  
+                controlsForms13[nameControls].setValue(dataControls[nameDataControls]);
               }
               // console.log(nameDataControls)
               // console.log(nameControls);
@@ -2241,85 +2395,86 @@ export class LifeComponent implements OnInit, DoCheck {
         // const formID7 = this.claimForm.get('reclamados').get([x]) as FormGroup;
         // formID7.addControl('id', this.fb.control(data.data.reclamados[x].id, Validators.required));
       }
-
+// tslint:disable-next-line: no-string-literal tslint:disable-next-line: align
       const controlsForms14 = this.newRequest['controls'].contingentBeneficiary['controls'].personBenefited['controls'];
-          console.log(controlsForms14)
+      console.log(controlsForms14);
+// tslint:disable-next-line: forin tslint:disable-next-line: align
+          for (const nameControls in controlsForms14){
 
-          for(const nameControls in controlsForms14){
-          
 			    	const dataControls = res.data.contingentBeneficiary.personBenefited;
-			    	for(const nameDataControls in dataControls){
+			    	for (const nameDataControls in dataControls){
 
               if (nameDataControls != nameControls ) {
                 // console.log(`No, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) no son iguales`)
-			    			console.log("No debe de setearse.")
+			    			console.log('No debe de setearse.');
               }
-			    	  else if(nameDataControls == nameControls){
+			    	  else if (nameDataControls == nameControls){
                 // console.log(`Si, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) son iguales`)
-                controlsForms14[nameControls].setValue(dataControls[nameDataControls])  
+                controlsForms14[nameControls].setValue(dataControls[nameDataControls]);
 			    		}
 			    		// console.log(nameDataControls)
 			    		// console.log(nameControls);
 			    	}
 			    	// console.log(controles[nameControles]);
           }
+// tslint:disable-next-line: no-string-literal tslint:disable-next-line: align
+      const controlsForms15 = this.newRequest['controls'].contingentBeneficiary['controls'].bankTransfer['controls'];
+      console.log(controlsForms15);
+// tslint:disable-next-line: forin tslint:disable-next-line: align
+          for (const nameControls in controlsForms15){
 
-          const controlsForms15 = this.newRequest['controls'].contingentBeneficiary['controls'].bankTransfer['controls'];
-          console.log(controlsForms15)
-
-          for(const nameControls in controlsForms15){
-          
 			    	const dataControls = res.data.contingentBeneficiary.bankTransfer;
-			    	for(const nameDataControls in dataControls){
+			    	for (const nameDataControls in dataControls){
 
               if (nameDataControls != nameControls ) {
                 // console.log(`No, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) no son iguales`)
-			    			console.log("No debe de setearse.")
+			    			console.log('No debe de setearse.');
               }
-			    	  else if(nameDataControls == nameControls){
+			    	  else if (nameDataControls == nameControls){
                 // console.log(`Si, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) son iguales`)
-                controlsForms15[nameControls].setValue(dataControls[nameDataControls])  
+                controlsForms15[nameControls].setValue(dataControls[nameDataControls]);
 			    		}
 			    		// console.log(nameDataControls)
 			    		// console.log(nameControls);
 			    	}
 			    	// console.log(controles[nameControles]);
           }
+// tslint:disable-next-line: no-string-literal tslint:disable-next-line: align
+      this.newRequest['controls'].contingentBeneficiary['controls'].hasAnotherCoverage.setValue(res.data.contingentBeneficiary.hasAnotherCoverage);
+      // tslint:disable-next-line: no-string-literal tslint:disable-next-line: align
+      this.newRequest['controls'].contingentBeneficiary['controls'].changeAnotherCoverage.setValue(res.data.contingentBeneficiary.changeAnotherCoverage);
 
-          this.newRequest['controls'].contingentBeneficiary['controls'].hasAnotherCoverage.setValue(res.data.contingentBeneficiary.hasAnotherCoverage)
-          this.newRequest['controls'].contingentBeneficiary['controls'].changeAnotherCoverage.setValue(res.data.contingentBeneficiary.changeAnotherCoverage)
-
-          const var1 = {
+      const var1 = {
             valor: res.data.contingentBeneficiary.hasAnotherCoverage,
-            name:'hasAnotherCoverage'
+            name: 'hasAnotherCoverage'
           };
-    
-          if (var1.valor != null) {
+
+      if (var1.valor != null) {
             this.selectChange(var1);
             if (this.newRequest.get('contingentBeneficiary').get('anotherCoverages')) {
-    
+
               for (let x = 0; x < res.data.contingentBeneficiary.anotherCoverages.length; x++) {
-                console.log("hola, esto es res.data.contingentBeneficiary.anotherCoverages, y soy id numero "+res.data.contingentBeneficiary.anotherCoverages[x].id)
+                console.log('hola, esto es res.data.contingentBeneficiary.anotherCoverages, y soy id numero ' + res.data.contingentBeneficiary.anotherCoverages[x].id);
                 if (x >= 1) {
-                  console.log('Hola, esto es res.data.contingentBeneficiary.anotherCoverages, y soy yo, ' + x)
+                  console.log('Hola, esto es res.data.contingentBeneficiary.anotherCoverages, y soy yo, ' + x);
                   this.addToList(this.existingCoveragesList, 'coverages');
                 }
-                
+// tslint:disable-next-line: no-string-literal tslint:disable-next-line: align
                 const controlsForms16 = this.newRequest['controls'].contingentBeneficiary['controls'].anotherCoverages['controls'][x]['controls'];
-                  console.log(controlsForms16)
-        
-                  for(const nameControls in controlsForms16){
-                  
+                console.log(controlsForms16);
+// tslint:disable-next-line: forin tslint:disable-next-line: align
+                  for (const nameControls in controlsForms16){
+
                     const dataControls = res.data.contingentBeneficiary.anotherCoverages[x];
-                    for(const nameDataControls in dataControls){
-        
+                    for (const nameDataControls in dataControls){
+
                       if (nameDataControls != nameControls ) {
                         // console.log(`No, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) no son iguales`)
-                        console.log("No debe de setearse.")
+                        console.log('No debe de setearse.');
                       }
-                      else if(nameDataControls == nameControls){
+                      else if (nameDataControls == nameControls){
                         // console.log(`Si, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) son iguales`)
-                        controlsForms16[nameControls].setValue(dataControls[nameDataControls])  
+                        controlsForms16[nameControls].setValue(dataControls[nameDataControls]);
                       }
                       // console.log(nameDataControls)
                       // console.log(nameControls);
@@ -2331,41 +2486,41 @@ export class LifeComponent implements OnInit, DoCheck {
               // this.newRequest['controls'].contingentBeneficiary['controls'].anotherCoverages['controls'][0]['controls'].name.setValue("Holaaaaaaaaaaaaaaaaaa")
               console.log('Control anotherCoverages CREADOOOOOOOO!');
             }
-          } else if (var1.valor == null || var1.valor == "no") {
+          } else if (var1.valor == null || var1.valor == 'no') {
             console.log('No hay que crear el control anotherCoverages');
           }
 
-          const var2 = {
+      const var2 = {
             valor: res.data.contingentBeneficiary.changeAnotherCoverage,
-            name:'changeAnotherCoverage'
+            name: 'changeAnotherCoverage'
           };
-    
-          if (var2.valor != null) {
+
+      if (var2.valor != null) {
             this.selectChange(var2);
             if (this.newRequest.get('contingentBeneficiary').get('changingCoverages')) {
-    
+
               for (let x = 0; x < res.data.contingentBeneficiary.changingCoverages.length; x++) {
-                console.log("hola, esto es res.data.contingentBeneficiary.changingCoverages, y soy id numero "+res.data.contingentBeneficiary.changingCoverages[x].id)
+                console.log('hola, esto es res.data.contingentBeneficiary.changingCoverages, y soy id numero ' + res.data.contingentBeneficiary.changingCoverages[x].id);
                 if (x >= 1) {
-                  console.log('Hola, esto es res.data.contingentBeneficiary.changingCoverages, y soy yo, ' + x)
+                  console.log('Hola, esto es res.data.contingentBeneficiary.changingCoverages, y soy yo, ' + x);
                   this.addToList(this.changingCoveragesList, 'coverages');
                 }
-                
+// tslint:disable-next-line: no-string-literal tslint:disable-next-line: align
                 const controlsForms17 = this.newRequest['controls'].contingentBeneficiary['controls'].changingCoverages['controls'][x]['controls'];
-                  console.log(controlsForms17)
-        
-                  for(const nameControls in controlsForms17){
-                  
+                console.log(controlsForms17);
+// tslint:disable-next-line: forin tslint:disable-next-line: align
+                  for (const nameControls in controlsForms17){
+
                     const dataControls = res.data.contingentBeneficiary.changingCoverages[x];
-                    for(const nameDataControls in dataControls){
-        
+                    for (const nameDataControls in dataControls){
+
                       if (nameDataControls != nameControls ) {
                         // console.log(`No, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) no son iguales`)
-                        console.log("No debe de setearse.")
+                        console.log('No debe de setearse.');
                       }
-                      else if(nameDataControls == nameControls){
+                      else if (nameDataControls == nameControls){
                         // console.log(`Si, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) son iguales`)
-                        controlsForms17[nameControls].setValue(dataControls[nameDataControls])  
+                        controlsForms17[nameControls].setValue(dataControls[nameDataControls]);
                       }
                       // console.log(nameDataControls)
                       // console.log(nameControls);
@@ -2377,25 +2532,25 @@ export class LifeComponent implements OnInit, DoCheck {
               // this.newRequest['controls'].contingentBeneficiary['controls'].changingCoverages['controls'][0]['controls'].name.setValue("Holaaaaaaaaaaaaaaaaaa")
               console.log('Control changingCoverages CREADOOOOOOOO!');
             }
-          } else if (var2.valor == null || var2.valor == "no") {
+          } else if (var2.valor == null || var2.valor == 'no') {
             console.log('No hay que crear el control changingCoverages');
           }
-
-          const controlsForms18 = this.newRequest['controls'].generalInformation['controls'];
-          console.log(controlsForms18)
-
-          for(const nameControls in controlsForms18){
-          
-			    	const dataControls = res.data.generalInformation;
-			    	for(const nameDataControls in dataControls){
+// tslint:disable-next-line: no-string-literal tslint:disable-next-line: align
+      const controlsForms18 = this.newRequest['controls'].generalInformation['controls'];
+      console.log(controlsForms18);
+// tslint:disable-next-line: forin tslint:disable-next-line: align
+          for (const nameControls in controlsForms18){
+            const dataControls = res.data.generalInformation;
+            // tslint:disable-next-line: forin tslint:disable-next-line: align
+			    	for (const nameDataControls in dataControls){
 
               if (nameDataControls != nameControls ) {
                 // console.log(`No, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) no son iguales`)
-			    			console.log("No debe de setearse.")
+			    			console.log('No debe de setearse.');
               }
-			    	  else if(nameDataControls == nameControls){
+			    	  else if (nameDataControls == nameControls){
                 // console.log(`Si, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) son iguales`)
-                controlsForms18[nameControls].setValue(dataControls[nameDataControls])  
+                controlsForms18[nameControls].setValue(dataControls[nameDataControls]);
 			    		}
 			    		// console.log(nameDataControls)
               // console.log(nameControls);
@@ -2405,16 +2560,16 @@ export class LifeComponent implements OnInit, DoCheck {
               };
 
               if (var3.valor != null) {
-                if (!this.newRequest.get('generalInformation').get('smoked') || 
-                !this.newRequest.get('generalInformation').get('alcohol') || 
-                !this.newRequest.get('generalInformation').get('travelInformation') || 
+                if (!this.newRequest.get('generalInformation').get('smoked') ||
+                !this.newRequest.get('generalInformation').get('alcohol') ||
+                !this.newRequest.get('generalInformation').get('travelInformation') ||
                 !this.newRequest.get('generalInformation').get('alcoholTreatment') ||
                 !this.newRequest.get('generalInformation').get('diseaseCoverageInformation') ||
-                !this.newRequest.get('generalInformation').get('arrestedInformation') || 
-                !this.newRequest.get('generalInformation').get('lostDriveLicense') || 
+                !this.newRequest.get('generalInformation').get('arrestedInformation') ||
+                !this.newRequest.get('generalInformation').get('lostDriveLicense') ||
                 !this.newRequest.get('generalInformation').get('xtremeSports') ||
                 !this.newRequest.get('generalInformation').get('insuranceProposed')) {
-                
+
                   this.selectChange(var3);
               }
               else{
@@ -2422,7 +2577,7 @@ export class LifeComponent implements OnInit, DoCheck {
               }
 
             }
-            
+
             else {
               console.log(`No se va a crear ningun control porque no es necesario.`);
             }
@@ -2430,49 +2585,56 @@ export class LifeComponent implements OnInit, DoCheck {
           }
         }
 
-        if(this.newRequest.get('generalInformation').get('smoked')){
-          this.newRequest['controls'].generalInformation['controls'].smoked.setValue(res.data.generalInformation.smoked)
+      if (this.newRequest.get('generalInformation').get('smoked')){
+        // tslint:disable-next-line: no-string-literal tslint:disable-next-line: align
+          this.newRequest['controls'].generalInformation['controls'].smoked.setValue(res.data.generalInformation.smoked);
           console.log('Control smoked CREADOOOOOOOO!');
         }
-        if(this.newRequest.get('generalInformation').get('alcohol')){
-          this.newRequest['controls'].generalInformation['controls'].alcohol['controls'].quantity.setValue(res.data.generalInformation.alcohol.quantity)
-          this.newRequest['controls'].generalInformation['controls'].alcohol['controls'].frequency.setValue(res.data.generalInformation.alcohol.frequency)
+      if (this.newRequest.get('generalInformation').get('alcohol')){
+        // tslint:disable-next-line: no-string-literal tslint:disable-next-line: align
+          this.newRequest['controls'].generalInformation['controls'].alcohol['controls'].quantity.setValue(res.data.generalInformation.alcohol.quantity);
+          // tslint:disable-next-line: no-string-literal tslint:disable-next-line: align
+          this.newRequest['controls'].generalInformation['controls'].alcohol['controls'].frequency.setValue(res.data.generalInformation.alcohol.frequency);
           console.log('Control alcohol CREADOOOOOOOO!');
         }
-        if(this.newRequest.get('generalInformation').get('travelInformation')){
-          this.newRequest['controls'].generalInformation['controls'].travelInformation.setValue(res.data.generalInformation.travelInformation)
+      if (this.newRequest.get('generalInformation').get('travelInformation')){
+        // tslint:disable-next-line: no-string-literal tslint:disable-next-line: align
+          this.newRequest['controls'].generalInformation['controls'].travelInformation.setValue(res.data.generalInformation.travelInformation);
           console.log('Control travelInformation CREADOOOOOOOO!');
         }
-        if(this.newRequest.get('generalInformation').get('alcoholTreatment')){
-          this.newRequest['controls'].generalInformation['controls'].alcoholTreatment.setValue(res.data.generalInformation.alcoholTreatment)
+      if (this.newRequest.get('generalInformation').get('alcoholTreatment')){
+        // tslint:disable-next-line: no-string-literal tslint:disable-next-line: align
+          this.newRequest['controls'].generalInformation['controls'].alcoholTreatment.setValue(res.data.generalInformation.alcoholTreatment);
           console.log('Control alcoholTreatment CREADOOOOOOOO!');
         }
-        if(this.newRequest.get('generalInformation').get('diseaseCoverageInformation')){
-          this.newRequest['controls'].generalInformation['controls'].diseaseCoverageInformation.setValue(res.data.generalInformation.diseaseCoverageInformation)
+      if (this.newRequest.get('generalInformation').get('diseaseCoverageInformation')){
+        // tslint:disable-next-line: no-string-literal tslint:disable-next-line: align
+          this.newRequest['controls'].generalInformation['controls'].diseaseCoverageInformation.setValue(res.data.generalInformation.diseaseCoverageInformation);
           console.log('Control diseaseCoverageInformation CREADOOOOOOOO!');
         }
-        if(this.newRequest.get('generalInformation').get('arrestedInformation')){
-          this.newRequest['controls'].generalInformation['controls'].arrestedInformation.setValue(res.data.generalInformation.arrestedInformation)
+      if (this.newRequest.get('generalInformation').get('arrestedInformation')){
+        // tslint:disable-next-line: no-string-literal tslint:disable-next-line: align
+          this.newRequest['controls'].generalInformation['controls'].arrestedInformation.setValue(res.data.generalInformation.arrestedInformation);
           console.log('Control arrestedInformation CREADOOOOOOOO!');
         }
-        if(this.newRequest.get('generalInformation').get('lostDriveLicense')){
+      if (this.newRequest.get('generalInformation').get('lostDriveLicense')){
           console.log('Control lostDriveLicense CREADOOOOOOOO!');
-
+// tslint:disable-next-line: no-string-literal tslint:disable-next-line: align
           const controlsForms19 = this.newRequest['controls'].generalInformation['controls'].lostDriveLicense['controls'];
-             console.log(controlsForms19)
-  
-             for(const nameControls in controlsForms19){
-             
+          console.log(controlsForms19);
+  // tslint:disable-next-line: forin tslint:disable-next-line: align
+             for (const nameControls in controlsForms19){
+
                const dataControls = res.data.generalInformation.lostDriveLicense;
-               for(const nameDataControls in dataControls){
-  
+               for (const nameDataControls in dataControls){
+
                  if (nameDataControls != nameControls ) {
                    // console.log(`No, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) no son iguales`)
-                   console.log("No debe de setearse.")
+                   console.log('No debe de setearse.');
                  }
-                 else if(nameDataControls == nameControls){
+                 else if (nameDataControls == nameControls){
                    // console.log(`Si, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) son iguales`)
-                   controlsForms19[nameControls].setValue(dataControls[nameDataControls])  
+                   controlsForms19[nameControls].setValue(dataControls[nameDataControls]);
                  }
                  // console.log(nameDataControls)
                  // console.log(nameControls);
@@ -2480,24 +2642,24 @@ export class LifeComponent implements OnInit, DoCheck {
                // console.log(controles[nameControles]);
              }
         }
-        if(this.newRequest.get('generalInformation').get('xtremeSports')){
+      if (this.newRequest.get('generalInformation').get('xtremeSports')){
           console.log('Control xtremeSports CREADOOOOOOOO!');
-
+// tslint:disable-next-line: no-string-literal tslint:disable-next-line: align
           const controlsForms20 = this.newRequest['controls'].generalInformation['controls'].xtremeSports['controls'];
-             console.log(controlsForms20)
-  
-             for(const nameControls in controlsForms20){
-             
+          console.log(controlsForms20);
+  // tslint:disable-next-line: forin tslint:disable-next-line: align
+             for (const nameControls in controlsForms20){
+
                const dataControls = res.data.generalInformation.xtremeSports;
-               for(const nameDataControls in dataControls){
-  
+               for (const nameDataControls in dataControls){
+
                  if (nameDataControls != nameControls ) {
                    // console.log(`No, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) no son iguales`)
-                   console.log("No debe de setearse.")
+                   console.log('No debe de setearse.');
                  }
-                 else if(nameDataControls == nameControls){
+                 else if (nameDataControls == nameControls){
                    // console.log(`Si, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) son iguales`)
-                   controlsForms20[nameControls].setValue(dataControls[nameDataControls])  
+                   controlsForms20[nameControls].setValue(dataControls[nameDataControls]);
                  }
                  // console.log(nameDataControls)
                  // console.log(nameControls);
@@ -2506,31 +2668,31 @@ export class LifeComponent implements OnInit, DoCheck {
              }
         }
 
-        if(this.newRequest.get('generalInformation').get('insuranceProposed')){
+      if (this.newRequest.get('generalInformation').get('insuranceProposed')){
           console.log('Control insuranceProposed CREADOOOOOOOO!');
 
           for (let x = 0; x < res.data.generalInformation.insuranceProposed.length; x++) {
-                console.log("hola, esto es res.data.generalInformation.insuranceProposed, y soy id numero "+res.data.generalInformation.insuranceProposed[x].id)
+                console.log('hola, esto es res.data.generalInformation.insuranceProposed, y soy id numero ' + res.data.generalInformation.insuranceProposed[x].id);
                 if (x >= 1) {
-                  console.log('Hola, esto es res.data.generalInformation.insuranceProposed, y soy yo, ' + x)
+                  console.log('Hola, esto es res.data.generalInformation.insuranceProposed, y soy yo, ' + x);
                   this.addToList(this.insuranceProposedList, 'insurance');
                 }
-                
+// tslint:disable-next-line: no-string-literal tslint:disable-next-line: align
                 const controlsForms21 = this.newRequest['controls'].generalInformation['controls'].insuranceProposed['controls'][x]['controls'];
-                  console.log(controlsForms21)
-        
-                  for(const nameControls in controlsForms21){
-                  
+                console.log(controlsForms21);
+// tslint:disable-next-line: forin tslint:disable-next-line: align
+                  for (const nameControls in controlsForms21){
+
                     const dataControls = res.data.generalInformation.insuranceProposed[x];
-                    for(const nameDataControls in dataControls){
-        
+                    for (const nameDataControls in dataControls){
+
                       if (nameDataControls != nameControls ) {
                         // console.log(`No, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) no son iguales`)
-                        console.log("No debe de setearse.")
+                        console.log('No debe de setearse.');
                       }
-                      else if(nameDataControls == nameControls){
+                      else if (nameDataControls == nameControls){
                         // console.log(`Si, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) son iguales`)
-                        controlsForms21[nameControls].setValue(dataControls[nameDataControls])  
+                        controlsForms21[nameControls].setValue(dataControls[nameDataControls]);
                       }
                       // console.log(nameDataControls)
                       // console.log(nameControls);
@@ -2538,27 +2700,28 @@ export class LifeComponent implements OnInit, DoCheck {
                     // console.log(controles[nameControles]);
                   }
                 // this.newRequest['controls'].generalInformation['controls'].insuranceProposed['controls'][x]['controls'].name.setValue(res.data.primaryBenefits.dependentsC[x].name)
-        
+
                 // const formID7 = this.claimForm.get('reclamados').get([x]) as FormGroup;
                 // formID7.addControl('id', this.fb.control(data.data.reclamados[x].id, Validators.required));
               }
         }
+// tslint:disable-next-line: no-string-literal tslint:disable-next-line: align
+      const controlsForms22 = this.newRequest['controls'].medicalHistory['controls'];
+      console.log(controlsForms22);
+// tslint:disable-next-line: forin tslint:disable-next-line: align
+          for (const nameControls in controlsForms22){
 
-        const controlsForms22 = this.newRequest['controls'].medicalHistory['controls'];
-          console.log(controlsForms22)
-
-          for(const nameControls in controlsForms22){
-          
-			    	const dataControls = res.data.medicalHistory;
-			    	for(const nameDataControls in dataControls){
+            const dataControls = res.data.medicalHistory;
+            // tslint:disable-next-line: forin tslint:disable-next-line: align
+			    	for (const nameDataControls in dataControls){
 
               if (nameDataControls != nameControls ) {
                 // console.log(`No, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) no son iguales`)
-			    			console.log("No debe de setearse.")
+			    			console.log('No debe de setearse.');
               }
-			    	  else if(nameDataControls == nameControls && nameControls!="informations"){
+			    	  else if (nameDataControls == nameControls && nameControls != 'informations'){
                 // console.log(`Si, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) son iguales`)
-                controlsForms22[nameControls].setValue(dataControls[nameDataControls])  
+                controlsForms22[nameControls].setValue(dataControls[nameDataControls]);
 			    		}
 			    		// console.log(nameDataControls)
               // console.log(nameControls);
@@ -2578,10 +2741,10 @@ export class LifeComponent implements OnInit, DoCheck {
 			    	// console.log(controles[nameControles]);
           }
 
-          const prove =['heartPain','respiratoryDisorder','mentalNervousDisorder','stomachDisorder',
-          'endocrineDisorder','spineDisorder','unexplainedDisease','renalDisorder','eyesNoseThroatProblem',
-          'bloodDisorder','birthDefect','medicalProcedures','beenAPatient','hadSpecializedTests','notCarriedOut',
-          'takenInLast12Months','planToObtainMedicalTreatment','testedPositiveForHIV','diabetesDiagnosis']
+      const prove = ['heartPain', 'respiratoryDisorder', 'mentalNervousDisorder', 'stomachDisorder',
+          'endocrineDisorder', 'spineDisorder', 'unexplainedDisease', 'renalDisorder', 'eyesNoseThroatProblem',
+          'bloodDisorder', 'birthDefect', 'medicalProcedures', 'beenAPatient', 'hadSpecializedTests', 'notCarriedOut',
+          'takenInLast12Months', 'planToObtainMedicalTreatment', 'testedPositiveForHIV', 'diabetesDiagnosis'];
 
         //   console.log(prove[4])
         //   for(let x=0; x< prove.length; x++){
@@ -2590,32 +2753,34 @@ export class LifeComponent implements OnInit, DoCheck {
           // console.log(res.data.medicalHistory.informations[prove[4]])
           // this.newRequest['controls'].medicalHistory['controls'].informations['controls'][prove[4]]['controls'][0]['controls'].condition.setValue("Rhailin enfermo");;
 
-          for(let y = 0; y < prove.length; y++){
+      // tslint:disable-next-line: prefer-for-of
+      for (let y = 0; y < prove.length; y++){
             // console.log(prove[y])
             if (this.newRequest.get('medicalHistory').get('informations').get(prove[y])) {
-    
+
               for (let x = 0; x < res.data.medicalHistory.informations[prove[y]].length; x++) {
-                console.log("hola, esto es res.data.medicalHistory.informations.prove[y], y soy id numero "+res.data.medicalHistory.informations[prove[y]][x].id)
+                console.log('hola, esto es res.data.medicalHistory.informations.prove[y], y soy id numero ' + res.data.medicalHistory.informations[prove[y]][x].id);
                 if (x >= 1) {
-                  console.log('Hola, esto es res.data.medicalHistory.informations.prove[y], y soy yo, ' + x)
-                  this.addToList(this[prove[y]+'List'], 'medicalInfo');
+                  console.log('Hola, esto es res.data.medicalHistory.informations.prove[y], y soy yo, ' + x);
+                  this.addToList(this[prove[y] + 'List'], 'medicalInfo');
                 }
-                
+// tslint:disable-next-line: no-string-literal tslint:disable-next-line: align
                 const controlsForms23 = this.newRequest['controls'].medicalHistory['controls'].informations['controls'][prove[y]]['controls'][x]['controls'];
-                  console.log(controlsForms23)
+                console.log(controlsForms23);
               // this.newRequest['controls'].medicalHistory['controls'].informations['controls'].heartPain['controls'][0]['controls'].condition.setValue("Rhailin enfermo");
-                  for(const nameControls in controlsForms23){
-                  
+              // tslint:disable-next-line: forin tslint:disable-next-line: align
+                  for (const nameControls in controlsForms23){
+
                     const dataControls = res.data.medicalHistory.informations[prove[y]][x];
-                    for(const nameDataControls in dataControls){
-        
+                    for (const nameDataControls in dataControls){
+
                       if (nameDataControls != nameControls ) {
                         // console.log(`No, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) no son iguales`)
-                        console.log("No debe de setearse.")
+                        console.log('No debe de setearse.');
                       }
-                      else if(nameDataControls == nameControls){
+                      else if (nameDataControls == nameControls){
                         // console.log(`Si, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) son iguales`)
-                        controlsForms23[nameControls].setValue(dataControls[nameDataControls])  
+                        controlsForms23[nameControls].setValue(dataControls[nameDataControls]);
                       }
                       // console.log(nameDataControls)
                       // console.log(nameControls);
@@ -2623,7 +2788,7 @@ export class LifeComponent implements OnInit, DoCheck {
                     // console.log(controles[nameControles]);
                   }
                 // this.newRequest['controls'].contingentBeneficiary['controls'].changingCoverages['controls'][x]['controls'].name.setValue(res.data.primaryBenefits.dependentsC[x].name)
-        
+
                 // const formID7 = this.claimForm.get('reclamados').get([x]) as FormGroup;
                 // formID7.addControl('id', this.fb.control(data.data.reclamados[x].id, Validators.required));
               }
@@ -2635,27 +2800,31 @@ export class LifeComponent implements OnInit, DoCheck {
           }
           // this.newRequest['controls'].medicalHistory['controls'].informations['controls'].heartPain['controls'][0]['controls'].condition.setValue("Rhailin enfermo");
 
-          if(this.newRequest.get('medicalHistory').get('informations').get('weightChanges')){ 
+      if (this.newRequest.get('medicalHistory').get('informations').get('weightChanges')){
             console.log(`Control weightChanges CREADOOOOOOOO!`);
-            this.newRequest['controls'].medicalHistory['controls'].informations['controls'].weightChanges['controls'].type.setValue(res.data.medicalHistory.informations.weightChanges.type)
-            this.newRequest['controls'].medicalHistory['controls'].informations['controls'].weightChanges['controls'].detail.setValue(res.data.medicalHistory.informations.weightChanges.detail)
+            // tslint:disable-next-line: no-string-literal tslint:disable-next-line: align
+            this.newRequest['controls'].medicalHistory['controls'].informations['controls'].weightChanges['controls'].type.setValue(res.data.medicalHistory.informations.weightChanges.type);
+            // tslint:disable-next-line: no-string-literal tslint:disable-next-line: align
+            this.newRequest['controls'].medicalHistory['controls'].informations['controls'].weightChanges['controls'].detail.setValue(res.data.medicalHistory.informations.weightChanges.detail);
             // this.newRequest['controls'].medicalHistory['controls'].informations['controls'].weightChanges['controls'].detail.setValue("Hola, quiero pizza")
           }
           else {
             console.log(`Control weightChanges NO HA SIDO creado!`);
           }
 
-          if(this.newRequest.get('medicalHistory').get('informations').get('womenInformation')){ 
+      if (this.newRequest.get('medicalHistory').get('informations').get('womenInformation')){ 
             console.log(`Control womenInformation CREADOOOOOOOO!`);
-            this.newRequest['controls'].medicalHistory['controls'].informations['controls'].womenInformation['controls'].haveDisorder.setValue(res.data.medicalHistory.informations.womenInformation.haveDisorder)
-            this.newRequest['controls'].medicalHistory['controls'].informations['controls'].womenInformation['controls'].isPregnant.setValue(res.data.medicalHistory.informations.womenInformation.isPregnant)
+            // tslint:disable-next-line: no-string-literal tslint:disable-next-line: align
+            this.newRequest['controls'].medicalHistory['controls'].informations['controls'].womenInformation['controls'].haveDisorder.setValue(res.data.medicalHistory.informations.womenInformation.haveDisorder);
+            // tslint:disable-next-line: no-string-literal tslint:disable-next-line: align
+            this.newRequest['controls'].medicalHistory['controls'].informations['controls'].womenInformation['controls'].isPregnant.setValue(res.data.medicalHistory.informations.womenInformation.isPregnant);
             // this.newRequest['controls'].medicalHistory['controls'].informations['controls'].womenInformation['controls'].haveDisorder.setValue('si')
             // this.newRequest['controls'].medicalHistory['controls'].informations['controls'].womenInformation['controls'].isPregnant.setValue('si')
             const var5 = {
               valor: res.data.medicalHistory.informations.womenInformation.haveDisorder,
               name: 'haveDisorder'
             };
-            
+
             if (var5.valor != null) {
                 this.selectChange(var5);
             }
@@ -2667,7 +2836,7 @@ export class LifeComponent implements OnInit, DoCheck {
               valor: res.data.medicalHistory.informations.womenInformation.isPregnant,
               name: 'isPregnant'
             };
-            
+
             if (var6.valor != null) {
                 this.selectChange(var6);
             }
@@ -2675,42 +2844,44 @@ export class LifeComponent implements OnInit, DoCheck {
               console.log(`No se va a crear ningun control porque no es necesario.`);
             }
 
-            if(this.newRequest.get('medicalHistory').get('informations').get('womenInformation').get('pregnantInformation')){
-              this.newRequest['controls'].medicalHistory['controls'].informations['controls'].womenInformation['controls'].pregnantInformation['controls'].quantity.setValue(res.data.medicalHistory.informations.womenInformation.pregnantInformation.quantity)
-              this.newRequest['controls'].medicalHistory['controls'].informations['controls'].womenInformation['controls'].pregnantInformation['controls'].time.setValue(res.data.medicalHistory.informations.womenInformation.pregnantInformation.time)
+            if (this.newRequest.get('medicalHistory').get('informations').get('womenInformation').get('pregnantInformation')){
+              // tslint:disable-next-line: no-string-literal tslint:disable-next-line: align
+              this.newRequest['controls'].medicalHistory['controls'].informations['controls'].womenInformation['controls'].pregnantInformation['controls'].quantity.setValue(res.data.medicalHistory.informations.womenInformation.pregnantInformation.quantity);
+              // tslint:disable-next-line: no-string-literal tslint:disable-next-line: align
+              this.newRequest['controls'].medicalHistory['controls'].informations['controls'].womenInformation['controls'].pregnantInformation['controls'].time.setValue(res.data.medicalHistory.informations.womenInformation.pregnantInformation.time);
               console.log(`Control pregnantInformation HA SIDO creado!`);
             }
-         
-            if(this.newRequest.get('medicalHistory').get('informations').get('womenInformation').get('disorders')){
-  
+
+            if (this.newRequest.get('medicalHistory').get('informations').get('womenInformation').get('disorders')){
+
               for (let x = 0; x < res.data.medicalHistory.informations.womenInformation.disorders.length; x++) {
-                  console.log("hola, esto es res.data.medicalHistory.informations.womenInformation.disorders, y soy id numero "+res.data.medicalHistory.informations.womenInformation.disorders[x].id)
+                  console.log('hola, esto es res.data.medicalHistory.informations.womenInformation.disorders, y soy id numero ' + res.data.medicalHistory.informations.womenInformation.disorders[x].id);
                   if (x >= 1) {
-                    console.log('Hola, esto es res.data.medicalHistory.informations.womenInformation.disorders, y soy yo, ' + x)
+                    console.log('Hola, esto es res.data.medicalHistory.informations.womenInformation.disorders, y soy yo, ' + x);
                     this.addToList(this.womenDisordersList, 'medicalInfo');
                   }
-                  
+// tslint:disable-next-line: no-string-literal tslint:disable-next-line: align
                   const controlsForms24 = this.newRequest['controls'].medicalHistory['controls'].informations['controls'].womenInformation['controls'].disorders['controls'][x]['controls'];
-                    console.log(controlsForms24)
-          
-                    for(const nameControls in controlsForms24){
-                    
+                  console.log(controlsForms24);
+// tslint:disable-next-line: forin tslint:disable-next-line: align
+                    for (const nameControls in controlsForms24){
+
                       const dataControls = res.data.medicalHistory.informations.womenInformation.disorders[x];
-                      for(const nameDataControls in dataControls){
-          
+                      for (const nameDataControls in dataControls){
+
                         if (nameDataControls != nameControls ) {
                           // console.log(`No, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) no son iguales`)
-                          console.log("No debe de setearse.")
+                          console.log('No debe de setearse.');
                         }
-                        else if(nameDataControls == nameControls){
+                        else if (nameDataControls == nameControls){
                           // console.log(`Si, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) son iguales`)
-                          controlsForms24[nameControls].setValue(dataControls[nameDataControls])  
+                          controlsForms24[nameControls].setValue(dataControls[nameDataControls]);
                         }
                         // console.log(nameDataControls)
                         // console.log(nameControls);
                       }
                       // console.log(controles[nameControles]);
-                    }        
+                    }
                   // const formID7 = this.claimForm.get('reclamados').get([x]) as FormGroup;
                   // formID7.addControl('id', this.fb.control(data.data.reclamados[x].id, Validators.required));
                 }
@@ -2724,220 +2895,229 @@ export class LifeComponent implements OnInit, DoCheck {
             console.log(`Control womenInformation NO HA SIDO creado!`);
           }
           // ME QUEDE REVISANDO EL DE ABAJO, EL ultimo que revise FUE this.newRequest['controls'].medicalHistory['controls'].informations['controls'].womenInformation['controls']
-          
-          if(this.newRequest.get('medicalHistory').get('informations').get('doctors')){
+
+      if (this.newRequest.get('medicalHistory').get('informations').get('doctors')){
             for (let x = 0; x < res.data.medicalHistory.informations.doctors.length; x++) {
-                console.log("hola, esto es res.data.medicalHistory.informations.doctors, y soy id numero "+res.data.medicalHistory.informations.doctors[x].id)
+                console.log('hola, esto es res.data.medicalHistory.informations.doctors, y soy id numero ' + res.data.medicalHistory.informations.doctors[x].id);
                 if (x >= 1) {
-                  console.log('Hola, esto es res.data.medicalHistory.informations.doctors, y soy yo, ' + x)
+                  console.log('Hola, esto es res.data.medicalHistory.informations.doctors, y soy yo, ' + x);
                   this.addToList(this.doctorList, 'doctorInfo');
                 }
-                
+// tslint:disable-next-line: no-string-literal tslint:disable-next-line: align
                 const controlsForms25 = this.newRequest['controls'].medicalHistory['controls'].informations['controls'].doctors['controls'][x]['controls'];
-                  console.log(controlsForms25)
-        
-                  for(const nameControls in controlsForms25){
-                  
+                console.log(controlsForms25);
+// tslint:disable-next-line: forin tslint:disable-next-line: align
+                  for (const nameControls in controlsForms25){
+
                     const dataControls = res.data.medicalHistory.informations.doctors[x];
-                    for(const nameDataControls in dataControls){
-        
+                    for (const nameDataControls in dataControls){
+
                       if (nameDataControls != nameControls ) {
                         // console.log(`No, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) no son iguales`)
-                        console.log("No debe de setearse.")
+                        console.log('No debe de setearse.');
                       }
-                      else if(nameDataControls == nameControls){
+                      else if (nameDataControls == nameControls){
                         // console.log(`Si, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) son iguales`)
-                        controlsForms25[nameControls].setValue(dataControls[nameDataControls])  
+                        controlsForms25[nameControls].setValue(dataControls[nameDataControls]);
                       }
                       // console.log(nameDataControls)
                       // console.log(nameControls);
                     }
                     // console.log(controles[nameControles]);
-                  }        
+                  }
                 // const formID7 = this.claimForm.get('reclamados').get([x]) as FormGroup;
                 // formID7.addControl('id', this.fb.control(data.data.reclamados[x].id, Validators.required));
               }
             console.log('el grupo array doctors existe');
             // this.newRequest['controls'].medicalHistory['controls'].informations['controls'].doctors['controls'][0]['controls'].name.setValue("Hola, soy Rhailin");
           }
+// tslint:disable-next-line: no-string-literal tslint:disable-next-line: align
+      const controlsForms26 = this.newRequest['controls'].agentReport['controls'];
+      console.log(controlsForms26);
+// tslint:disable-next-line: forin tslint:disable-next-line: align
+            for (const nameControls in controlsForms26){
 
-          const controlsForms26 = this.newRequest['controls'].agentReport['controls'];
-            console.log(controlsForms26)
-  
-            for(const nameControls in controlsForms26){
-            
               const dataControls = res.data.agentReport;
-              for(const nameDataControls in dataControls){
-  
+              for (const nameDataControls in dataControls){
+
                 if (nameDataControls != nameControls ) {
                   // console.log(`No, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) no son iguales`)
-                  console.log("No debe de setearse.")
-                }                
-                
-                else if(nameDataControls == nameControls && nameControls!= 'amountProposed' && nameControls!= 'idInformation' && nameControls!= 'agentInformation'){
+                  console.log('No debe de setearse.');
+                }
+
+                else if (nameDataControls == nameControls && nameControls != 'amountProposed' && nameControls != 'idInformation' && nameControls != 'agentInformation'){
                   // console.log(`Si, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) son iguales`)
-                  controlsForms26[nameControls].setValue(dataControls[nameDataControls])  
+                  controlsForms26[nameControls].setValue(dataControls[nameDataControls]);
                 }
                 // console.log(nameDataControls)
                 // console.log(nameControls);
               }
               // console.log(controles[nameControles]);
-            }   
-            
-              const var7 = {
+            }
+
+      const var7 = {
                 valor: res.data.agentReport.connectionType,
                 name: 'connectionType'
               };
-              if (var7.valor != null) {
+      if (var7.valor != null) {
                   this.selectChange(var7);
               }
               else {
                 console.log(`No se va a crear ningun control porque no es necesario.`);
-              }    
-              
-              const var8 = {
+              }
+
+      const var8 = {
                 valor: res.data.agentReport.isMarried,
                 name: 'isMarried'
               };
-              if (var8.valor != null) {
+      if (var8.valor != null) {
                   this.selectChange(var8);
               }
               else {
                 console.log(`No se va a crear ningun control porque no es necesario.`);
-              }  
+              }
 
-              const var9 = {
+      const var9 = {
                 valor: res.data.agentReport.isLessThan21,
                 name: 'isLessThan21'
               };
-              if (var9.valor != null) {
+      if (var9.valor != null) {
                   this.selectChange(var9);
               }
               else {
                 console.log(`No se va a crear ningun control porque no es necesario.`);
-              }  
-              
-              if(this.newRequest['controls'].agentReport['controls'].familyInsurances){
+              }
+// tslint:disable-next-line: no-string-literal tslint:disable-next-line: align
+      if (this.newRequest['controls'].agentReport['controls'].familyInsurances){
               for (let x = 0; x < res.data.agentReport.familyInsurances.length; x++) {
-                console.log("hola, esto es res.data.agentReport.familyInsurances, y soy id numero "+res.data.agentReport.familyInsurances[x].id)
+                console.log('hola, esto es res.data.agentReport.familyInsurances, y soy id numero ' + res.data.agentReport.familyInsurances[x].id);
                 if (x >= 1) {
-                  console.log('Hola, esto es res.data.agentReport.familyInsurances, y soy yo, ' + x)
+                  console.log('Hola, esto es res.data.agentReport.familyInsurances, y soy yo, ' + x);
                   this.addToList(this.familyRelationshipInsurances, 'familyInsurances');
                 }
-                
+// tslint:disable-next-line: no-string-literal tslint:disable-next-line: align
                 const controlsForms27 = this.newRequest['controls'].agentReport['controls'].familyInsurances['controls'][x]['controls'];
-                  console.log(controlsForms27)
-        
-                  for(const nameControls in controlsForms27){
-                  
+                console.log(controlsForms27);
+// tslint:disable-next-line: forin tslint:disable-next-line: align
+                  for (const nameControls in controlsForms27){
+
                     const dataControls = res.data.agentReport.familyInsurances[x];
-                    for(const nameDataControls in dataControls){
-        
+                    for (const nameDataControls in dataControls){
+
                       if (nameDataControls != nameControls ) {
                         // console.log(`No, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) no son iguales`)
-                        console.log("No debe de setearse.")
+                        console.log('No debe de setearse.');
                       }
-                      else if(nameDataControls == nameControls){
+                      else if (nameDataControls == nameControls){
                         // console.log(`Si, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) son iguales`)
-                        controlsForms27[nameControls].setValue(dataControls[nameDataControls])  
+                        controlsForms27[nameControls].setValue(dataControls[nameDataControls]);
                       }
                       // console.log(nameDataControls)
                       // console.log(nameControls);
                     }
                     // console.log(controles[nameControles]);
-                  }        
+                  }
               //   // const formID7 = this.claimForm.get('reclamados').get([x]) as FormGroup;
               //   // formID7.addControl('id', this.fb.control(data.data.reclamados[x].id, Validators.required));
               }
             }
+// tslint:disable-next-line: no-string-literal tslint:disable-next-line: align
+      const controlsForms28 = this.newRequest['controls'].agentReport['controls'].amountProposed['controls'];
+      console.log(controlsForms28);
+// tslint:disable-next-line: forin tslint:disable-next-line: align
+            for (const nameControls in controlsForms28){
 
-            const controlsForms28 = this.newRequest['controls'].agentReport['controls'].amountProposed['controls'];
-            console.log(controlsForms28)
-  
-            for(const nameControls in controlsForms28){
-            
               const dataControls = res.data.agentReport.amountProposed;
-              for(const nameDataControls in dataControls){
-  
+              for (const nameDataControls in dataControls){
+
                 if (nameDataControls != nameControls ) {
                   // console.log(`No, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) no son iguales`)
-                  console.log("No debe de setearse.")
-                }                
-                
-                else if(nameDataControls == nameControls){
+                  console.log('No debe de setearse.');
+                }
+
+                else if (nameDataControls == nameControls){
                   // console.log(`Si, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) son iguales`)
-                  controlsForms28[nameControls].setValue(dataControls[nameDataControls])  
+                  controlsForms28[nameControls].setValue(dataControls[nameDataControls]);
                 }
                 // console.log(nameDataControls)
                 // console.log(nameControls);
               }
               // console.log(controles[nameControles]);
-            }   
-          
-            const controlsForms29 = this.newRequest['controls'].agentReport['controls'].idInformation['controls'];
-            console.log(controlsForms29)
-  
-            for(const nameControls in controlsForms29){
-            
+            }
+// tslint:disable-next-line: no-string-literal tslint:disable-next-line: align
+      const controlsForms29 = this.newRequest['controls'].agentReport['controls'].idInformation['controls'];
+      console.log(controlsForms29);
+// tslint:disable-next-line: forin tslint:disable-next-line: align
+            for (const nameControls in controlsForms29){
+
               const dataControls = res.data.agentReport.idInformation;
-              for(const nameDataControls in dataControls){
-  
+              for (const nameDataControls in dataControls){
+
                 if (nameDataControls != nameControls ) {
                   // console.log(`No, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) no son iguales`)
-                  console.log("No debe de setearse.")
-                }                
-                
-                else if(nameDataControls == nameControls){
+                  console.log('No debe de setearse.');
+                }
+
+                else if (nameDataControls == nameControls){
                   // console.log(`Si, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) son iguales`)
-                  controlsForms29[nameControls].setValue(dataControls[nameDataControls])  
+                  controlsForms29[nameControls].setValue(dataControls[nameDataControls]);
                 }
                 // console.log(nameDataControls)
                 // console.log(nameControls);
               }
               // console.log(controles[nameControles]);
-            }   
+            }
+// tslint:disable-next-line: no-string-literal tslint:disable-next-line: align
+      const controlsForms30 = this.newRequest['controls'].agentReport['controls'].agentInformation['controls'];
+      console.log(controlsForms30);
+// tslint:disable-next-line: forin tslint:disable-next-line: align
+            for (const nameControls in controlsForms30){
 
-            const controlsForms30 = this.newRequest['controls'].agentReport['controls'].agentInformation['controls'];
-            console.log(controlsForms30)
-  
-            for(const nameControls in controlsForms30){
-            
               const dataControls = res.data.agentReport.agentInformation;
-              for(const nameDataControls in dataControls){
-  
+              for (const nameDataControls in dataControls){
+
                 if (nameDataControls != nameControls ) {
                   // console.log(`No, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) no son iguales`)
-                  console.log("No debe de setearse.")
-                }                
-                
-                else if(nameDataControls == nameControls){
+                  console.log('No debe de setearse.');
+                }
+
+                else if (nameDataControls == nameControls){
                   // console.log(`Si, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) son iguales`)
-                  controlsForms30[nameControls].setValue(dataControls[nameDataControls])  
+                  controlsForms30[nameControls].setValue(dataControls[nameDataControls]);
                 }
                 // console.log(nameDataControls)
                 // console.log(nameControls);
               }
               // console.log(controles[nameControles]);
-            }  
+            }
 
-            if(this.newRequest.get('agentReport').get('connectionTypeInfo') && res.data.agentReport.connectionType=="familia"){
+      if (this.newRequest.get('agentReport').get('connectionTypeInfo') && res.data.agentReport.connectionType == "familia"){
+        // tslint:disable-next-line: no-string-literal tslint:disable-next-line: align
               this.newRequest['controls'].agentReport['controls'].connectionTypeInfo['controls'].relationship.setValue(res.data.agentReport.connectionTypeInfo.relationship);
             }
-            else if(this.newRequest.get('agentReport').get('connectionTypeInfo') && res.data.agentReport.connectionType=="amigo"){
+            else if (this.newRequest.get('agentReport').get('connectionTypeInfo') && res.data.agentReport.connectionType == "amigo"){
+              // tslint:disable-next-line: no-string-literal tslint:disable-next-line: align
               this.newRequest['controls'].agentReport['controls'].connectionTypeInfo['controls'].friendship.setValue(res.data.agentReport.connectionTypeInfo.friendship);
+              // tslint:disable-next-line: no-string-literal tslint:disable-next-line: align
               this.newRequest['controls'].agentReport['controls'].connectionTypeInfo['controls'].amount.setValue(res.data.agentReport.connectionTypeInfo.amount);
+              // tslint:disable-next-line: no-string-literal tslint:disable-next-line: align
               this.newRequest['controls'].agentReport['controls'].connectionTypeInfo['controls'].time.setValue(res.data.agentReport.connectionTypeInfo.time);
             }
-            else if(this.newRequest.get('agentReport').get('connectionTypeInfo') && res.data.agentReport.connectionType=="cliente"){
+            else if (this.newRequest.get('agentReport').get('connectionTypeInfo') && res.data.agentReport.connectionType == "cliente"){
+              // tslint:disable-next-line: no-string-literal tslint:disable-next-line: align
               this.newRequest['controls'].agentReport['controls'].connectionTypeInfo['controls'].amount.setValue(res.data.agentReport.connectionTypeInfo.amount);
+              // tslint:disable-next-line: no-string-literal tslint:disable-next-line: align
               this.newRequest['controls'].agentReport['controls'].connectionTypeInfo['controls'].time.setValue(res.data.agentReport.connectionTypeInfo.time);  
             }
-            else if(this.newRequest.get('agentReport').get('connectionTypeInfo') && res.data.agentReport.connectionType=="acabado de conocer"){
+            else if (this.newRequest.get('agentReport').get('connectionTypeInfo') && res.data.agentReport.connectionType == "acabado de conocer"){
+              // tslint:disable-next-line: no-string-literal tslint:disable-next-line: align
               this.newRequest['controls'].agentReport['controls'].connectionTypeInfo['controls'].how.setValue(res.data.agentReport.connectionTypeInfo.how);
             }
 
-            if(this.newRequest.get('agentReport').get('marriedInformation')){
+      if (this.newRequest.get('agentReport').get('marriedInformation')){
+        // tslint:disable-next-line: no-string-literal tslint:disable-next-line: align
               this.newRequest['controls'].agentReport['controls'].marriedInformation['controls'].spouseName.setValue(res.data.agentReport.marriedInformation.spouseName);
+              // tslint:disable-next-line: no-string-literal tslint:disable-next-line: align
               this.newRequest['controls'].agentReport['controls'].marriedInformation['controls'].spouseInsuranceAmount.setValue(res.data.agentReport.marriedInformation.spouseInsuranceAmount);
             }
           //  if(this.newRequest.get('questionnaires').get('solicitudHipertensionArterial')){
@@ -2950,19 +3130,19 @@ export class LifeComponent implements OnInit, DoCheck {
           //   console.log("retorno data capturada:",this.life.dataCapturedProperty)
           //   console.log("retorno data capturada amountProposed.occupation:",this.life.dataCapturedProperty.amountProposed.occupation)
           // }
-          
+
           // const controlsForms31 = this.newRequest['controls'].questionnaires['controls'].solicitudHipertensionArterial['controls'];
           //   console.log(controlsForms31.diagnosticStudies)
           //   for(const nameControls in controlsForms31){
-            
+
           //     // const dataControls = res.data.agentReport.agentInformation;
           //     // for(const nameDataControls in dataControls){
-  
+
           //     //   if (nameDataControls != nameControls ) {
           //     //     // console.log(`No, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) no son iguales`)
           //     //     console.log("No debe de setearse.")
-          //     //   }                
-                
+          //     //   }
+
           //     //   else if(nameDataControls == nameControls){
           //     //     // console.log(`Si, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) son iguales`)
           //     //     controlsForms31[nameControls].setValue(dataControls[nameDataControls])  
@@ -2971,8 +3151,8 @@ export class LifeComponent implements OnInit, DoCheck {
           //     //   // console.log(nameControls);
           //     // }
           //     console.log("controlesssss",nameControls);
-          //   }  
-            
+          //   }
+
 			// this.claimForm['controls'].asegurado['controls'].documentoIdentidad.setValue(data.data.asegurado.documentoIdentidad)
 			// this.claimForm['controls'].asegurado['controls'].edad.setValue(data.data.asegurado.edad)
 			// this.claimForm['controls'].asegurado['controls'].idNumero.setValue(data.data.asegurado.idNumero)
@@ -3018,24 +3198,19 @@ export class LifeComponent implements OnInit, DoCheck {
 			// formID6.addControl('id', this.fb.control(data.data.reclamacion.id, Validators.required));
 
 			// console.log(JSON.stringify(this.claimForm.value))
-		})
+		});
 		this.life.id = null;
-		console.log("this.life.id es igual a " + this.life.id);
+		console.log('this.life.id es igual a ' + this.life.id);
   }
-
-  pruebaLoop(group:FormGroup){
-
-		Object.keys(group.controls).forEach((key)=>{
-
-			const abstractControl = group.get(key);
-			if(abstractControl instanceof FormGroup){
-				this.pruebaLoop(abstractControl)
-			}
-			else{
-				console.log('key = ' + key + ', value = ' + abstractControl.value)
-			}
-		})
-
-	  }
-  
+  // pruebaLoop(group: FormGroup){
+	// 	Object.keys(group.controls).forEach((key) => {
+	// 		const abstractControl = group.get(key);
+	// 		if (abstractControl instanceof FormGroup){
+	// 			this.pruebaLoop(abstractControl);
+	// 		}
+	// 		else{
+	// 			console.log('key = ' + key + ', value = ' + abstractControl.value);
+	// 		}
+	// 	});
+	//   }
 }

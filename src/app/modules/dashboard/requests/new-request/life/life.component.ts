@@ -398,7 +398,7 @@ export class LifeComponent implements OnInit, DoCheck {
     'Beneficiario(s) Contingente(s)', 'Información general', 'Historial Médico', 'Firmas', 'Reporte del agente'];
 
   newRequest: FormGroup;
-
+  noCotizacion;
   dependentsNumber = 0;
 
   constructor(
@@ -419,7 +419,13 @@ export class LifeComponent implements OnInit, DoCheck {
   ID = null;
   ngOnInit() {
 
-    this.ID = this.life.id;
+    this.route.params.subscribe(res => {
+			this.ID = res.id;
+		});
+    this.route.params.subscribe(res => {
+			this.noCotizacion = res.noCotizacion;
+    });
+
 		if (this.ID != null) {
 			console.log("El ID es " + this.ID);
 			this.getData(this.ID)
@@ -427,7 +433,13 @@ export class LifeComponent implements OnInit, DoCheck {
 		else if (this.ID == null) {
 			console.log("ID esta vacio")
 		}
-
+    if (this.noCotizacion != null) {
+			//this.getDataCotizaciones(this.noCotizacion);
+			console.log('El noCotizacion es ' + this.noCotizacion);
+		} else if (this.noCotizacion == null) {
+      console.log('noCotizacion esta vacio');
+      this.noCotizacion = '';
+		}
     this.role = this.userService.getRoleCotizador();
 
     this.newRequest = this.fb.group({
@@ -880,7 +892,7 @@ export class LifeComponent implements OnInit, DoCheck {
         else {
           // console.log("NOOOOOOOOOOOOOOOOOOOOOOOOOoo  EXIIIIIISSTEEEEEEEEEEEEEE!!!!!")
         }
-  
+
         if(this.newRequest.get('contractorQuestionnaires').get('knowYourCustomer')){
           // console.log("EXIIIIIISSTEEEEEEEEEEEEEE!!!!!")
           this.getDataSubFormsHypertension(this.ID, 'knowYourCustomer')
@@ -889,7 +901,7 @@ export class LifeComponent implements OnInit, DoCheck {
         else {
           // console.log("NOOOOOOOOOOOOOOOOOOOOOOOOOoo  EXIIIIIISSTEEEEEEEEEEEEEE!!!!!")
         }
-          
+
         if(this.newRequest.get('questionnaires').get('solicitudEstadoFinancieroConfidencial')){
           // console.log("EXIIIIIISSTEEEEEEEEEEEEEE!!!!!")
           this.getDataSubFormsHypertension(this.ID, 'solicitudEstadoFinancieroConfidencial')
@@ -897,14 +909,14 @@ export class LifeComponent implements OnInit, DoCheck {
         else {
           // console.log("NOOOOOOOOOOOOOOOOOOOOOOOOOoo  EXIIIIIISSTEEEEEEEEEEEEEE!!!!!")
         }
-        this.x++;   
+        this.x++;
       }
     }
     else {
       // console.log("this.ID es igual a " + this.ID + ", por tanto, no se va hacer lo de ngDoCheck()")
     }
-    
-  }  
+
+  }
 
   canDeactivate(): Observable<boolean> | boolean {
     if (this.newRequest.dirty) {
@@ -1543,7 +1555,7 @@ export class LifeComponent implements OnInit, DoCheck {
           // console.log("NAAAAAAAAAAAAAADA que ver aqui, sigan en lo que estaban.")
         }
       }
-      // 
+      //
       if(name=="solicitudEstadoFinancieroConfidencial"){
         if(this.newRequest.get('questionnaires').get('solicitudEstadoFinancieroConfidencial')){
           // console.log("MYYYYYYYYYYYYY NAMEEEEEEEEEEEEEEE IS YOKOTO MASAKA ONI WAAAAAAA!!!")
@@ -1561,19 +1573,19 @@ export class LifeComponent implements OnInit, DoCheck {
           // this.newRequest['controls'].contractorQuestionnaires['controls'].knowYourCustomer['controls'].general_data['controls'].first_name.setValue(data.data.contractorQuestionnaires.knowYourCustomer.general_data.first_name);
           const controlsForms32 = this.newRequest['controls'].contractorQuestionnaires['controls'].knowYourCustomer['controls'].general_data['controls'];
           console.log(controlsForms32)
-    
+
           for(const nameControls in controlsForms32){
-            
+
             const dataControls = data.data.contractorQuestionnaires.knowYourCustomer.general_data;
             for(const nameDataControls in dataControls){
-              
+
               if (nameDataControls != nameControls ) {
                 // console.log(`No, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) no son iguales`)
                 // console.log("No debe de setearse.")
               }
               else if(nameDataControls == nameControls){
                 // console.log(`Si, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) son iguales`)
-                controlsForms32[nameControls].setValue(dataControls[nameDataControls])  
+                controlsForms32[nameControls].setValue(dataControls[nameDataControls])
               }
               // console.log(nameDataControls)
               // console.log(nameControls);
@@ -1583,19 +1595,19 @@ export class LifeComponent implements OnInit, DoCheck {
 
           const controlsForms33 = this.newRequest['controls'].contractorQuestionnaires['controls'].knowYourCustomer['controls'].professional_data['controls'];
           console.log(controlsForms33)
-    
+
           for(const nameControls in controlsForms33){
-            
+
             const dataControls = data.data.contractorQuestionnaires.knowYourCustomer.professional_data;
             for(const nameDataControls in dataControls){
-              
+
               if (nameDataControls != nameControls ) {
                 // console.log(`No, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) no son iguales`)
                 // console.log("No debe de setearse.")
               }
               else if(nameDataControls == nameControls){
                 // console.log(`Si, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) son iguales`)
-                controlsForms33[nameControls].setValue(dataControls[nameDataControls])  
+                controlsForms33[nameControls].setValue(dataControls[nameDataControls])
               }
               // console.log(nameDataControls)
               // console.log(nameControls);
@@ -1639,31 +1651,31 @@ export class LifeComponent implements OnInit, DoCheck {
                 console.log("hola, esto es data.data.contractorQuestionnaires.knowYourCustomer.questions.bank.bank_array, y soy id numero "+data.data.contractorQuestionnaires.knowYourCustomer.questions.bank.bank_array[xx].id)
                 if (xx >= 1) {
                   console.log('Hola, esto es data.data.contractorQuestionnaires.knowYourCustomer.questions.bank.bank_array, y soy yo, ' + xx)
-                 this.know.bankFormArray = this.newRequest.get('contractorQuestionnaires').get('knowYourCustomer').get('questions').get('bank').get('bank_array') as FormArray; 
+                 this.know.bankFormArray = this.newRequest.get('contractorQuestionnaires').get('knowYourCustomer').get('questions').get('bank').get('bank_array') as FormArray;
                   this.know.addFormArray(this.know.bankFormArray,'bank_array');
                   if(this.know.bankFormArray.length >data.data.contractorQuestionnaires.knowYourCustomer.questions.bank.bank_array.length){
-                    this.know.removeFormArray((this.know.bankFormArray.length-1) , this.know.bankFormArray) 
+                    this.know.removeFormArray((this.know.bankFormArray.length-1) , this.know.bankFormArray)
                   }
                   // const increment = this.know.bankFormArray.length + 1;
                   // this.know.bankFormArray = this.know.formMethods.addElement(this.know.bankFormArray, increment, this.know.createFormArray('bank_array')).formArray;
                   // addFormArray(bankFormArray,'bank_array')
                 }
-                
+
                 const controlsForms34 = this.newRequest['controls'].contractorQuestionnaires['controls'].knowYourCustomer['controls'].questions['controls'].bank['controls'].bank_array['controls'][xx]['controls'];
                   console.log(controlsForms34)
-        
+
                   for(const nameControls in controlsForms34){
-                  
+
                     const dataControls = data.data.contractorQuestionnaires.knowYourCustomer.questions.bank.bank_array[xx];
                     for(const nameDataControls in dataControls){
-        
+
                       if (nameDataControls != nameControls ) {
                         // console.log(`No, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) no son iguales`)
                         console.log("No debe de setearse.")
                       }
                       else if(nameDataControls == nameControls){
                         // console.log(`Si, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) son iguales`)
-                        controlsForms34[nameControls].setValue(dataControls[nameDataControls])  
+                        controlsForms34[nameControls].setValue(dataControls[nameDataControls])
                       }
                       // console.log(nameDataControls)
                       // console.log(nameControls);
@@ -1671,7 +1683,7 @@ export class LifeComponent implements OnInit, DoCheck {
                     // console.log(controles[nameControles]);
                   }
                 // this.newRequest['controls'].generalInformation['controls'].insuranceProposed['controls'][x]['controls'].name.setValue(res.data.primaryBenefits.dependentsC[x].name)
-        
+
                 // const formID7 = this.claimForm.get('reclamados').get([x]) as FormGroup;
                 // formID7.addControl('id', this.fb.control(data.data.reclamados[x].id, Validators.required));
               }
@@ -1682,31 +1694,31 @@ export class LifeComponent implements OnInit, DoCheck {
                 console.log("hola, esto es data.data.contractorQuestionnaires.knowYourCustomer.questions.commercial.commercial_array, y soy id numero "+data.data.contractorQuestionnaires.knowYourCustomer.questions.commercial.commercial_array[xx].id)
                 if (xx >= 1) {
                   console.log('Hola, esto es data.data.contractorQuestionnaires.knowYourCustomer.questions.commercial.commercial_array, y soy yo, ' + xx)
-                 this.know.commercialFormArray = this.newRequest.get('contractorQuestionnaires').get('knowYourCustomer').get('questions').get('commercial').get('commercial_array') as FormArray; 
+                 this.know.commercialFormArray = this.newRequest.get('contractorQuestionnaires').get('knowYourCustomer').get('questions').get('commercial').get('commercial_array') as FormArray;
                   this.know.addFormArray(this.know.commercialFormArray,'commercial_array');
                   if(this.know.commercialFormArray.length >data.data.contractorQuestionnaires.knowYourCustomer.questions.commercial.commercial_array.length){
-                    this.know.removeFormArray((this.know.commercialFormArray.length-1) , this.know.commercialFormArray) 
+                    this.know.removeFormArray((this.know.commercialFormArray.length-1) , this.know.commercialFormArray)
                   }
                   // const increment = this.know.commercialFormArray.length + 1;
                   // this.know.commercialFormArray = this.know.formMethods.addElement(this.know.commercialFormArray, increment, this.know.createFormArray('commercial_array')).formArray;
                   // addFormArray(commercialFormArray,'commercial_array')
                 }
-                
+
                 const controlsForms35 = this.newRequest['controls'].contractorQuestionnaires['controls'].knowYourCustomer['controls'].questions['controls'].commercial['controls'].commercial_array['controls'][xx]['controls'];
                   console.log(controlsForms35)
-        
+
                   for(const nameControls in controlsForms35){
-                  
+
                     const dataControls = data.data.contractorQuestionnaires.knowYourCustomer.questions.commercial.commercial_array[xx];
                     for(const nameDataControls in dataControls){
-        
+
                       if (nameDataControls != nameControls ) {
                         // console.log(`No, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) no son iguales`)
                         console.log("No debe de setearse.")
                       }
                       else if(nameDataControls == nameControls){
                         // console.log(`Si, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) son iguales`)
-                        controlsForms35[nameControls].setValue(dataControls[nameDataControls])  
+                        controlsForms35[nameControls].setValue(dataControls[nameDataControls])
                       }
                       // console.log(nameDataControls)
                       // console.log(nameControls);
@@ -1714,7 +1726,7 @@ export class LifeComponent implements OnInit, DoCheck {
                     // console.log(controles[nameControles]);
                   }
                 // this.newRequest['controls'].generalInformation['controls'].insuranceProposed['controls'][x]['controls'].name.setValue(res.data.primaryBenefits.dependentsC[x].name)
-        
+
                 // const formID7 = this.claimForm.get('reclamados').get([x]) as FormGroup;
                 // formID7.addControl('id', this.fb.control(data.data.reclamados[x].id, Validators.required));
               }
@@ -1725,31 +1737,31 @@ export class LifeComponent implements OnInit, DoCheck {
                 console.log("hola, esto es data.data.contractorQuestionnaires.knowYourCustomer.questions.personal.personal_array, y soy id numero "+data.data.contractorQuestionnaires.knowYourCustomer.questions.personal.personal_array[xx].id)
                 if (xx >= 1) {
                   console.log('Hola, esto es data.data.contractorQuestionnaires.knowYourCustomer.questions.personal.personal_array, y soy yo, ' + xx)
-                 this.know.personalFormArray = this.newRequest.get('contractorQuestionnaires').get('knowYourCustomer').get('questions').get('personal').get('personal_array') as FormArray; 
+                 this.know.personalFormArray = this.newRequest.get('contractorQuestionnaires').get('knowYourCustomer').get('questions').get('personal').get('personal_array') as FormArray;
                   this.know.addFormArray(this.know.personalFormArray,'personal_array');
                   if(this.know.personalFormArray.length >data.data.contractorQuestionnaires.knowYourCustomer.questions.personal.personal_array.length){
-                    this.know.removeFormArray((this.know.personalFormArray.length-1) , this.know.personalFormArray) 
+                    this.know.removeFormArray((this.know.personalFormArray.length-1) , this.know.personalFormArray)
                   }
                   // const increment = this.know.personalFormArray.length + 1;
                   // this.know.personalFormArray = this.know.formMethods.addElement(this.know.personalFormArray, increment, this.know.createFormArray('personal_array')).formArray;
                   // addFormArray(personalFormArray,'personal_array')
                 }
-                
+
                 const controlsForms36 = this.newRequest['controls'].contractorQuestionnaires['controls'].knowYourCustomer['controls'].questions['controls'].personal['controls'].personal_array['controls'][xx]['controls'];
                   console.log(controlsForms36)
-        
+
                   for(const nameControls in controlsForms36){
-                  
+
                     const dataControls = data.data.contractorQuestionnaires.knowYourCustomer.questions.personal.personal_array[xx];
                     for(const nameDataControls in dataControls){
-        
+
                       if (nameDataControls != nameControls ) {
                         // console.log(`No, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) no son iguales`)
                         console.log("No debe de setearse.")
                       }
                       else if(nameDataControls == nameControls){
                         // console.log(`Si, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) son iguales`)
-                        controlsForms36[nameControls].setValue(dataControls[nameDataControls])  
+                        controlsForms36[nameControls].setValue(dataControls[nameDataControls])
                       }
                       // console.log(nameDataControls)
                       // console.log(nameControls);
@@ -1757,28 +1769,28 @@ export class LifeComponent implements OnInit, DoCheck {
                     // console.log(controles[nameControles]);
                   }
                 // this.newRequest['controls'].generalInformation['controls'].insuranceProposed['controls'][x]['controls'].name.setValue(res.data.primaryBenefits.dependentsC[x].name)
-        
+
                 // const formID7 = this.claimForm.get('reclamados').get([x]) as FormGroup;
                 // formID7.addControl('id', this.fb.control(data.data.reclamados[x].id, Validators.required));
               }
             }
-            
+
             if(this.newRequest.get('contractorQuestionnaires').get('knowYourCustomer').get('questions').get('documents')){
               const controlsForms37 = this.newRequest['controls'].contractorQuestionnaires['controls'].knowYourCustomer['controls'].questions['controls'].documents['controls'];
                   console.log(controlsForms37)
-        
+
                   for(const nameControls in controlsForms37){
-                  
+
                     const dataControls = data.data.contractorQuestionnaires.knowYourCustomer.questions.documents;
                     for(const nameDataControls in dataControls){
-        
+
                       if (nameDataControls != nameControls ) {
                         // console.log(`No, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) no son iguales`)
                         console.log("No debe de setearse.")
                       }
                       else if(nameDataControls == nameControls){
                         // console.log(`Si, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) son iguales`)
-                        controlsForms37[nameControls].setValue(dataControls[nameDataControls])  
+                        controlsForms37[nameControls].setValue(dataControls[nameDataControls])
                       }
                       // console.log(nameDataControls)
                       // console.log(nameControls);
@@ -1790,19 +1802,19 @@ export class LifeComponent implements OnInit, DoCheck {
 
           const controlsForms38 = this.newRequest['controls'].contractorQuestionnaires['controls'].knowYourCustomer['controls'].broker['controls'];
           console.log(controlsForms38)
-    
+
           for(const nameControls in controlsForms38){
-            
+
             const dataControls = data.data.contractorQuestionnaires.knowYourCustomer.broker;
             for(const nameDataControls in dataControls){
-              
+
               if (nameDataControls != nameControls ) {
                 // console.log(`No, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) no son iguales`)
                 // console.log("No debe de setearse.")
               }
               else if(nameDataControls == nameControls){
                 // console.log(`Si, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) son iguales`)
-                controlsForms38[nameControls].setValue(dataControls[nameDataControls])  
+                controlsForms38[nameControls].setValue(dataControls[nameDataControls])
               }
               // console.log(nameDataControls)
               // console.log(nameControls);
@@ -1812,25 +1824,25 @@ export class LifeComponent implements OnInit, DoCheck {
 
           const controlsForms39 = this.newRequest['controls'].contractorQuestionnaires['controls'].knowYourCustomer['controls'].info_for_the_insurance_carrier['controls'];
           console.log(controlsForms39)
-    
+
           for(const nameControls in controlsForms39){
-            
+
             const dataControls = data.data.contractorQuestionnaires.knowYourCustomer.info_for_the_insurance_carrier;
             for(const nameDataControls in dataControls){
-              
+
               if (nameDataControls != nameControls ) {
                 // console.log(`No, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) no son iguales`)
                 // console.log("No debe de setearse.")
               }
               else if(nameDataControls == nameControls){
                 // console.log(`Si, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) son iguales`)
-                controlsForms39[nameControls].setValue(dataControls[nameDataControls])  
+                controlsForms39[nameControls].setValue(dataControls[nameDataControls])
               }
               // console.log(nameDataControls)
               // console.log(nameControls);
             }
             // console.log(controles[nameControles]);
-          }  
+          }
         }
         // else {
         //   // console.log("NAAAAAAAAAAAAAADA que ver aqui, sigan en lo que estaban.")
@@ -1844,7 +1856,7 @@ export class LifeComponent implements OnInit, DoCheck {
 		this.life.returnData(id).subscribe(data => {
 			// console.log(data.data.asegurado.documentoIdentidad)
       console.log(data)
-      
+
       if(data.data.person.city){
         delete data.data.person.city;
       }
@@ -1866,17 +1878,17 @@ export class LifeComponent implements OnInit, DoCheck {
       console.log(controlsForms)
 
 			for(const nameControls in controlsForms){
-				
+
 				const dataControls = res.data.person;
 				for(const nameDataControls in dataControls){
-          
+
           if (nameDataControls != nameControls ) {
             // console.log(`No, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) no son iguales`)
 						console.log("No debe de setearse.")
           }
 				  else if(nameDataControls == nameControls){
             // console.log(`Si, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) son iguales`)
-            controlsForms[nameControls].setValue(dataControls[nameDataControls])  
+            controlsForms[nameControls].setValue(dataControls[nameDataControls])
 					}
 					// console.log(nameDataControls)
 					// console.log(nameControls);
@@ -1889,17 +1901,17 @@ export class LifeComponent implements OnInit, DoCheck {
 
       this.newRequest['controls'].employer['controls'].CompanyName.setValue( res.data.employer.companyName);
       for(const nameControls in controlsForms2){
-				
+
 				const dataControls = res.data.employer;
 				for(const nameDataControls in dataControls){
-          
+
           if (nameDataControls != nameControls ) {
             // console.log(`No, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) no son iguales`)
 						console.log("No debe de setearse.")
           }
 				  else if(nameDataControls == nameControls){
             // console.log(`Si, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) son iguales`)
-            controlsForms2[nameControls].setValue(dataControls[nameDataControls])  
+            controlsForms2[nameControls].setValue(dataControls[nameDataControls])
 					}
 					// console.log(nameDataControls)
 					// console.log(nameControls);
@@ -1919,17 +1931,17 @@ export class LifeComponent implements OnInit, DoCheck {
       console.log(controlsForms3)
 
       for(const nameControls in controlsForms3){
-				
+
 				const dataControls = res.data.contractor;
 				for(const nameDataControls in dataControls){
-          
+
           if (nameDataControls != nameControls ) {
             // console.log(`No, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) no son iguales`)
 						console.log("No debe de setearse.")
           }
 				  else if(nameDataControls == nameControls && nameControls!='company'){
             // console.log(`Si, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) son iguales`)
-            controlsForms3[nameControls].setValue(dataControls[nameDataControls])  
+            controlsForms3[nameControls].setValue(dataControls[nameDataControls])
 					}
 					// console.log(nameDataControls)
 					// console.log(nameControls);
@@ -1941,17 +1953,17 @@ export class LifeComponent implements OnInit, DoCheck {
       console.log(controlsForms4)
 
       for(const nameControls in controlsForms4){
-				
+
 				const dataControls = res.data.contractor.company;
 				for(const nameDataControls in dataControls){
-          
+
           if (nameDataControls != nameControls ) {
             // console.log(`No, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) no son iguales`)
 						console.log("No debe de setearse.")
           }
 				  else if(nameDataControls == nameControls){
             // console.log(`Si, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) son iguales`)
-            controlsForms4[nameControls].setValue(dataControls[nameDataControls])  
+            controlsForms4[nameControls].setValue(dataControls[nameDataControls])
 					}
 					// console.log(nameDataControls)
 					// console.log(nameControls);
@@ -1971,17 +1983,17 @@ export class LifeComponent implements OnInit, DoCheck {
       console.log(controlsForms5)
 
       for(const nameControls in controlsForms5){
-				
+
 				const dataControls = res.data.payer;
 				for(const nameDataControls in dataControls){
-          
+
           if (nameDataControls != nameControls ) {
             // console.log(`No, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) no son iguales`)
 						console.log("No debe de setearse.")
           }
 				  else if(nameDataControls == nameControls && nameControls!='company'){
             // console.log(`Si, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) son iguales`)
-            controlsForms5[nameControls].setValue(dataControls[nameDataControls])  
+            controlsForms5[nameControls].setValue(dataControls[nameDataControls])
 					}
 					// console.log(nameDataControls)
 					// console.log(nameControls);
@@ -1993,17 +2005,17 @@ export class LifeComponent implements OnInit, DoCheck {
       console.log(controlsForms6)
 
       for(const nameControls in controlsForms6){
-				
+
 				const dataControls = res.data.payer.company;
 				for(const nameDataControls in dataControls){
-          
+
           if (nameDataControls != nameControls ) {
             // console.log(`No, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) no son iguales`)
 						console.log("No debe de setearse.")
           }
 				  else if(nameDataControls == nameControls){
             // console.log(`Si, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) son iguales`)
-            controlsForms6[nameControls].setValue(dataControls[nameDataControls])  
+            controlsForms6[nameControls].setValue(dataControls[nameDataControls])
 					}
 					// console.log(nameDataControls)
 					// console.log(nameControls);
@@ -2048,7 +2060,7 @@ export class LifeComponent implements OnInit, DoCheck {
           console.log(controlsForms7)
 
           for(const nameControls in controlsForms7){
-          
+
 			    	const dataControls = res.data.exposedPerson;
 			    	for(const nameDataControls in dataControls){
 
@@ -2058,25 +2070,25 @@ export class LifeComponent implements OnInit, DoCheck {
               }
 			    	  else if(nameDataControls == nameControls){
                 // console.log(`Si, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) son iguales`)
-                controlsForms7[nameControls].setValue(dataControls[nameDataControls])  
+                controlsForms7[nameControls].setValue(dataControls[nameDataControls])
 			    		}
 			    		// console.log(nameDataControls)
 			    		// console.log(nameControls);
 			    	}
 			    	// console.log(controles[nameControles]);
           }
-          
+
           console.log('Control exposedPerson CREADOOOOOOOO!');
 				}
 			} else if (sd.valor == null || sd.valor == "no") {
 				console.log('No hay que crear el control exposedPerson');
 			}
-      
+
       const controlsForms8 = this.newRequest['controls'].financialProfile['controls'];
           console.log(controlsForms8)
 
           for(const nameControls in controlsForms8){
-          
+
 			    	const dataControls = res.data.financialProfile;
 			    	for(const nameDataControls in dataControls){
 
@@ -2086,7 +2098,7 @@ export class LifeComponent implements OnInit, DoCheck {
               }
 			    	  else if(nameDataControls == nameControls){
                 // console.log(`Si, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) son iguales`)
-                controlsForms8[nameControls].setValue(dataControls[nameDataControls])  
+                controlsForms8[nameControls].setValue(dataControls[nameDataControls])
 			    		}
 			    		// console.log(nameDataControls)
 			    		// console.log(nameControls);
@@ -2100,7 +2112,7 @@ export class LifeComponent implements OnInit, DoCheck {
           // console.log(controlsForms9)
 
           // for(const nameControls in controlsForms9){
-          
+
 			    // 	const dataControls = res.data.releventPlanInformation;
 			    // 	for(const nameDataControls in dataControls){
 
@@ -2110,7 +2122,7 @@ export class LifeComponent implements OnInit, DoCheck {
           //     }
 			    // 	  else if(nameDataControls == nameControls){
           //       // console.log(`Si, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) son iguales`)
-          //       controlsForms9[nameControls].setValue(dataControls[nameDataControls])  
+          //       controlsForms9[nameControls].setValue(dataControls[nameDataControls])
 			    // 		}
 			    // 		// console.log(nameDataControls)
 			    // 		// console.log(nameControls);
@@ -2129,7 +2141,7 @@ export class LifeComponent implements OnInit, DoCheck {
           console.log(controlsForms10)
 
           for(const nameControls in controlsForms10){
-          
+
 			    	const dataControls = res.data.releventPlanInformation.coverages;
 			    	for(const nameDataControls in dataControls){
 
@@ -2139,7 +2151,7 @@ export class LifeComponent implements OnInit, DoCheck {
               }
 			    	  else if(nameDataControls == nameControls){
                 // console.log(`Si, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) son iguales`)
-                controlsForms10[nameControls].setValue(dataControls[nameDataControls])  
+                controlsForms10[nameControls].setValue(dataControls[nameDataControls])
 			    		}
 			    		// console.log(nameDataControls)
 			    		// console.log(nameControls);
@@ -2156,22 +2168,22 @@ export class LifeComponent implements OnInit, DoCheck {
               console.log('Hola, esto es res.data.primaryBenefits.dependentsC, y soy yo, ' + x)
               this.add(this.primaryBenefitsArray,this.primaryBenefits);
             }
-            
+
             const controlsForms11 = this.newRequest['controls'].primaryBenefits['controls'].dependentsC['controls'][x]['controls'];
               console.log(controlsForms11)
-    
+
               for(const nameControls in controlsForms11){
-              
+
                 const dataControls = res.data.primaryBenefits.dependentsC[x];
                 for(const nameDataControls in dataControls){
-    
+
                   if (nameDataControls != nameControls ) {
                     // console.log(`No, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) no son iguales`)
                     console.log("No debe de setearse.")
                   }
                   else if(nameDataControls == nameControls){
                     // console.log(`Si, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) son iguales`)
-                    controlsForms11[nameControls].setValue(dataControls[nameDataControls])  
+                    controlsForms11[nameControls].setValue(dataControls[nameDataControls])
                   }
                   // console.log(nameDataControls)
                   // console.log(nameControls);
@@ -2179,7 +2191,7 @@ export class LifeComponent implements OnInit, DoCheck {
                 // console.log(controles[nameControles]);
               }
             // this.newRequest['controls'].primaryBenefits['controls'].dependentsC['controls'][x]['controls'].name.setValue(res.data.primaryBenefits.dependentsC[x].name)
-    
+
             // const formID7 = this.claimForm.get('reclamados').get([x]) as FormGroup;
             // formID7.addControl('id', this.fb.control(data.data.reclamados[x].id, Validators.required));
           }
@@ -2188,7 +2200,7 @@ export class LifeComponent implements OnInit, DoCheck {
           console.log(controlsForms12)
 
           for(const nameControls in controlsForms12){
-          
+
 			    	const dataControls = res.data.primaryBenefits.personBenefited;
 			    	for(const nameDataControls in dataControls){
 
@@ -2198,28 +2210,28 @@ export class LifeComponent implements OnInit, DoCheck {
               }
 			    	  else if(nameDataControls == nameControls){
                 // console.log(`Si, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) son iguales`)
-                controlsForms12[nameControls].setValue(dataControls[nameDataControls])  
+                controlsForms12[nameControls].setValue(dataControls[nameDataControls])
 			    		}
 			    		// console.log(nameDataControls)
 			    		// console.log(nameControls);
 			    	}
 			    	// console.log(controles[nameControles]);
           }
-   
+
       // console.log("Si veo esto, me vale verga esa propiedad city igual a null. Y si no, bueno, que puedo hacer? Hay que resolver, xD!")
-      
+
       for (let x = 0; x < res.data.contingentBeneficiary.dependentsC.length; x++) {
         console.log("hola, esto es res.data.contingentBeneficiary.dependentsC, y soy id numero "+res.data.contingentBeneficiary.dependentsC[x].id)
         if (x >= 1) {
           console.log('Hola, esto es res.data.contingentBeneficiary.dependentsC, y soy yo, ' + x)
           this.add(this.contingentBeneficiaryArray,this.primaryBenefits);
         }
-        
+
         const controlsForms13 = this.newRequest['controls'].contingentBeneficiary['controls'].dependentsC['controls'][x]['controls'];
           console.log(controlsForms13)
 
           for(const nameControls in controlsForms13){
-          
+
             const dataControls = res.data.contingentBeneficiary.dependentsC[x];
             for(const nameDataControls in dataControls){
 
@@ -2229,7 +2241,7 @@ export class LifeComponent implements OnInit, DoCheck {
               }
               else if(nameDataControls == nameControls){
                 // console.log(`Si, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) son iguales`)
-                controlsForms13[nameControls].setValue(dataControls[nameDataControls])  
+                controlsForms13[nameControls].setValue(dataControls[nameDataControls])
               }
               // console.log(nameDataControls)
               // console.log(nameControls);
@@ -2246,7 +2258,7 @@ export class LifeComponent implements OnInit, DoCheck {
           console.log(controlsForms14)
 
           for(const nameControls in controlsForms14){
-          
+
 			    	const dataControls = res.data.contingentBeneficiary.personBenefited;
 			    	for(const nameDataControls in dataControls){
 
@@ -2256,7 +2268,7 @@ export class LifeComponent implements OnInit, DoCheck {
               }
 			    	  else if(nameDataControls == nameControls){
                 // console.log(`Si, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) son iguales`)
-                controlsForms14[nameControls].setValue(dataControls[nameDataControls])  
+                controlsForms14[nameControls].setValue(dataControls[nameDataControls])
 			    		}
 			    		// console.log(nameDataControls)
 			    		// console.log(nameControls);
@@ -2268,7 +2280,7 @@ export class LifeComponent implements OnInit, DoCheck {
           console.log(controlsForms15)
 
           for(const nameControls in controlsForms15){
-          
+
 			    	const dataControls = res.data.contingentBeneficiary.bankTransfer;
 			    	for(const nameDataControls in dataControls){
 
@@ -2278,7 +2290,7 @@ export class LifeComponent implements OnInit, DoCheck {
               }
 			    	  else if(nameDataControls == nameControls){
                 // console.log(`Si, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) son iguales`)
-                controlsForms15[nameControls].setValue(dataControls[nameDataControls])  
+                controlsForms15[nameControls].setValue(dataControls[nameDataControls])
 			    		}
 			    		// console.log(nameDataControls)
 			    		// console.log(nameControls);
@@ -2293,33 +2305,33 @@ export class LifeComponent implements OnInit, DoCheck {
             valor: res.data.contingentBeneficiary.hasAnotherCoverage,
             name:'hasAnotherCoverage'
           };
-    
+
           if (var1.valor != null) {
             this.selectChange(var1);
             if (this.newRequest.get('contingentBeneficiary').get('anotherCoverages')) {
-    
+
               for (let x = 0; x < res.data.contingentBeneficiary.anotherCoverages.length; x++) {
                 console.log("hola, esto es res.data.contingentBeneficiary.anotherCoverages, y soy id numero "+res.data.contingentBeneficiary.anotherCoverages[x].id)
                 if (x >= 1) {
                   console.log('Hola, esto es res.data.contingentBeneficiary.anotherCoverages, y soy yo, ' + x)
                   this.addToList(this.existingCoveragesList, 'coverages');
                 }
-                
+
                 const controlsForms16 = this.newRequest['controls'].contingentBeneficiary['controls'].anotherCoverages['controls'][x]['controls'];
                   console.log(controlsForms16)
-        
+
                   for(const nameControls in controlsForms16){
-                  
+
                     const dataControls = res.data.contingentBeneficiary.anotherCoverages[x];
                     for(const nameDataControls in dataControls){
-        
+
                       if (nameDataControls != nameControls ) {
                         // console.log(`No, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) no son iguales`)
                         console.log("No debe de setearse.")
                       }
                       else if(nameDataControls == nameControls){
                         // console.log(`Si, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) son iguales`)
-                        controlsForms16[nameControls].setValue(dataControls[nameDataControls])  
+                        controlsForms16[nameControls].setValue(dataControls[nameDataControls])
                       }
                       // console.log(nameDataControls)
                       // console.log(nameControls);
@@ -2339,33 +2351,33 @@ export class LifeComponent implements OnInit, DoCheck {
             valor: res.data.contingentBeneficiary.changeAnotherCoverage,
             name:'changeAnotherCoverage'
           };
-    
+
           if (var2.valor != null) {
             this.selectChange(var2);
             if (this.newRequest.get('contingentBeneficiary').get('changingCoverages')) {
-    
+
               for (let x = 0; x < res.data.contingentBeneficiary.changingCoverages.length; x++) {
                 console.log("hola, esto es res.data.contingentBeneficiary.changingCoverages, y soy id numero "+res.data.contingentBeneficiary.changingCoverages[x].id)
                 if (x >= 1) {
                   console.log('Hola, esto es res.data.contingentBeneficiary.changingCoverages, y soy yo, ' + x)
                   this.addToList(this.changingCoveragesList, 'coverages');
                 }
-                
+
                 const controlsForms17 = this.newRequest['controls'].contingentBeneficiary['controls'].changingCoverages['controls'][x]['controls'];
                   console.log(controlsForms17)
-        
+
                   for(const nameControls in controlsForms17){
-                  
+
                     const dataControls = res.data.contingentBeneficiary.changingCoverages[x];
                     for(const nameDataControls in dataControls){
-        
+
                       if (nameDataControls != nameControls ) {
                         // console.log(`No, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) no son iguales`)
                         console.log("No debe de setearse.")
                       }
                       else if(nameDataControls == nameControls){
                         // console.log(`Si, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) son iguales`)
-                        controlsForms17[nameControls].setValue(dataControls[nameDataControls])  
+                        controlsForms17[nameControls].setValue(dataControls[nameDataControls])
                       }
                       // console.log(nameDataControls)
                       // console.log(nameControls);
@@ -2385,7 +2397,7 @@ export class LifeComponent implements OnInit, DoCheck {
           console.log(controlsForms18)
 
           for(const nameControls in controlsForms18){
-          
+
 			    	const dataControls = res.data.generalInformation;
 			    	for(const nameDataControls in dataControls){
 
@@ -2395,7 +2407,7 @@ export class LifeComponent implements OnInit, DoCheck {
               }
 			    	  else if(nameDataControls == nameControls){
                 // console.log(`Si, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) son iguales`)
-                controlsForms18[nameControls].setValue(dataControls[nameDataControls])  
+                controlsForms18[nameControls].setValue(dataControls[nameDataControls])
 			    		}
 			    		// console.log(nameDataControls)
               // console.log(nameControls);
@@ -2405,16 +2417,16 @@ export class LifeComponent implements OnInit, DoCheck {
               };
 
               if (var3.valor != null) {
-                if (!this.newRequest.get('generalInformation').get('smoked') || 
-                !this.newRequest.get('generalInformation').get('alcohol') || 
-                !this.newRequest.get('generalInformation').get('travelInformation') || 
+                if (!this.newRequest.get('generalInformation').get('smoked') ||
+                !this.newRequest.get('generalInformation').get('alcohol') ||
+                !this.newRequest.get('generalInformation').get('travelInformation') ||
                 !this.newRequest.get('generalInformation').get('alcoholTreatment') ||
                 !this.newRequest.get('generalInformation').get('diseaseCoverageInformation') ||
-                !this.newRequest.get('generalInformation').get('arrestedInformation') || 
-                !this.newRequest.get('generalInformation').get('lostDriveLicense') || 
+                !this.newRequest.get('generalInformation').get('arrestedInformation') ||
+                !this.newRequest.get('generalInformation').get('lostDriveLicense') ||
                 !this.newRequest.get('generalInformation').get('xtremeSports') ||
                 !this.newRequest.get('generalInformation').get('insuranceProposed')) {
-                
+
                   this.selectChange(var3);
               }
               else{
@@ -2422,7 +2434,7 @@ export class LifeComponent implements OnInit, DoCheck {
               }
 
             }
-            
+
             else {
               console.log(`No se va a crear ningun control porque no es necesario.`);
             }
@@ -2460,19 +2472,19 @@ export class LifeComponent implements OnInit, DoCheck {
 
           const controlsForms19 = this.newRequest['controls'].generalInformation['controls'].lostDriveLicense['controls'];
              console.log(controlsForms19)
-  
+
              for(const nameControls in controlsForms19){
-             
+
                const dataControls = res.data.generalInformation.lostDriveLicense;
                for(const nameDataControls in dataControls){
-  
+
                  if (nameDataControls != nameControls ) {
                    // console.log(`No, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) no son iguales`)
                    console.log("No debe de setearse.")
                  }
                  else if(nameDataControls == nameControls){
                    // console.log(`Si, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) son iguales`)
-                   controlsForms19[nameControls].setValue(dataControls[nameDataControls])  
+                   controlsForms19[nameControls].setValue(dataControls[nameDataControls])
                  }
                  // console.log(nameDataControls)
                  // console.log(nameControls);
@@ -2485,19 +2497,19 @@ export class LifeComponent implements OnInit, DoCheck {
 
           const controlsForms20 = this.newRequest['controls'].generalInformation['controls'].xtremeSports['controls'];
              console.log(controlsForms20)
-  
+
              for(const nameControls in controlsForms20){
-             
+
                const dataControls = res.data.generalInformation.xtremeSports;
                for(const nameDataControls in dataControls){
-  
+
                  if (nameDataControls != nameControls ) {
                    // console.log(`No, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) no son iguales`)
                    console.log("No debe de setearse.")
                  }
                  else if(nameDataControls == nameControls){
                    // console.log(`Si, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) son iguales`)
-                   controlsForms20[nameControls].setValue(dataControls[nameDataControls])  
+                   controlsForms20[nameControls].setValue(dataControls[nameDataControls])
                  }
                  // console.log(nameDataControls)
                  // console.log(nameControls);
@@ -2515,22 +2527,22 @@ export class LifeComponent implements OnInit, DoCheck {
                   console.log('Hola, esto es res.data.generalInformation.insuranceProposed, y soy yo, ' + x)
                   this.addToList(this.insuranceProposedList, 'insurance');
                 }
-                
+
                 const controlsForms21 = this.newRequest['controls'].generalInformation['controls'].insuranceProposed['controls'][x]['controls'];
                   console.log(controlsForms21)
-        
+
                   for(const nameControls in controlsForms21){
-                  
+
                     const dataControls = res.data.generalInformation.insuranceProposed[x];
                     for(const nameDataControls in dataControls){
-        
+
                       if (nameDataControls != nameControls ) {
                         // console.log(`No, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) no son iguales`)
                         console.log("No debe de setearse.")
                       }
                       else if(nameDataControls == nameControls){
                         // console.log(`Si, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) son iguales`)
-                        controlsForms21[nameControls].setValue(dataControls[nameDataControls])  
+                        controlsForms21[nameControls].setValue(dataControls[nameDataControls])
                       }
                       // console.log(nameDataControls)
                       // console.log(nameControls);
@@ -2538,7 +2550,7 @@ export class LifeComponent implements OnInit, DoCheck {
                     // console.log(controles[nameControles]);
                   }
                 // this.newRequest['controls'].generalInformation['controls'].insuranceProposed['controls'][x]['controls'].name.setValue(res.data.primaryBenefits.dependentsC[x].name)
-        
+
                 // const formID7 = this.claimForm.get('reclamados').get([x]) as FormGroup;
                 // formID7.addControl('id', this.fb.control(data.data.reclamados[x].id, Validators.required));
               }
@@ -2548,7 +2560,7 @@ export class LifeComponent implements OnInit, DoCheck {
           console.log(controlsForms22)
 
           for(const nameControls in controlsForms22){
-          
+
 			    	const dataControls = res.data.medicalHistory;
 			    	for(const nameDataControls in dataControls){
 
@@ -2558,7 +2570,7 @@ export class LifeComponent implements OnInit, DoCheck {
               }
 			    	  else if(nameDataControls == nameControls && nameControls!="informations"){
                 // console.log(`Si, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) son iguales`)
-                controlsForms22[nameControls].setValue(dataControls[nameDataControls])  
+                controlsForms22[nameControls].setValue(dataControls[nameDataControls])
 			    		}
 			    		// console.log(nameDataControls)
               // console.log(nameControls);
@@ -2593,29 +2605,29 @@ export class LifeComponent implements OnInit, DoCheck {
           for(let y = 0; y < prove.length; y++){
             // console.log(prove[y])
             if (this.newRequest.get('medicalHistory').get('informations').get(prove[y])) {
-    
+
               for (let x = 0; x < res.data.medicalHistory.informations[prove[y]].length; x++) {
                 console.log("hola, esto es res.data.medicalHistory.informations.prove[y], y soy id numero "+res.data.medicalHistory.informations[prove[y]][x].id)
                 if (x >= 1) {
                   console.log('Hola, esto es res.data.medicalHistory.informations.prove[y], y soy yo, ' + x)
                   this.addToList(this[prove[y]+'List'], 'medicalInfo');
                 }
-                
+
                 const controlsForms23 = this.newRequest['controls'].medicalHistory['controls'].informations['controls'][prove[y]]['controls'][x]['controls'];
                   console.log(controlsForms23)
               // this.newRequest['controls'].medicalHistory['controls'].informations['controls'].heartPain['controls'][0]['controls'].condition.setValue("Rhailin enfermo");
                   for(const nameControls in controlsForms23){
-                  
+
                     const dataControls = res.data.medicalHistory.informations[prove[y]][x];
                     for(const nameDataControls in dataControls){
-        
+
                       if (nameDataControls != nameControls ) {
                         // console.log(`No, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) no son iguales`)
                         console.log("No debe de setearse.")
                       }
                       else if(nameDataControls == nameControls){
                         // console.log(`Si, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) son iguales`)
-                        controlsForms23[nameControls].setValue(dataControls[nameDataControls])  
+                        controlsForms23[nameControls].setValue(dataControls[nameDataControls])
                       }
                       // console.log(nameDataControls)
                       // console.log(nameControls);
@@ -2623,7 +2635,7 @@ export class LifeComponent implements OnInit, DoCheck {
                     // console.log(controles[nameControles]);
                   }
                 // this.newRequest['controls'].contingentBeneficiary['controls'].changingCoverages['controls'][x]['controls'].name.setValue(res.data.primaryBenefits.dependentsC[x].name)
-        
+
                 // const formID7 = this.claimForm.get('reclamados').get([x]) as FormGroup;
                 // formID7.addControl('id', this.fb.control(data.data.reclamados[x].id, Validators.required));
               }
@@ -2635,7 +2647,7 @@ export class LifeComponent implements OnInit, DoCheck {
           }
           // this.newRequest['controls'].medicalHistory['controls'].informations['controls'].heartPain['controls'][0]['controls'].condition.setValue("Rhailin enfermo");
 
-          if(this.newRequest.get('medicalHistory').get('informations').get('weightChanges')){ 
+          if(this.newRequest.get('medicalHistory').get('informations').get('weightChanges')){
             console.log(`Control weightChanges CREADOOOOOOOO!`);
             this.newRequest['controls'].medicalHistory['controls'].informations['controls'].weightChanges['controls'].type.setValue(res.data.medicalHistory.informations.weightChanges.type)
             this.newRequest['controls'].medicalHistory['controls'].informations['controls'].weightChanges['controls'].detail.setValue(res.data.medicalHistory.informations.weightChanges.detail)
@@ -2645,7 +2657,7 @@ export class LifeComponent implements OnInit, DoCheck {
             console.log(`Control weightChanges NO HA SIDO creado!`);
           }
 
-          if(this.newRequest.get('medicalHistory').get('informations').get('womenInformation')){ 
+          if(this.newRequest.get('medicalHistory').get('informations').get('womenInformation')){
             console.log(`Control womenInformation CREADOOOOOOOO!`);
             this.newRequest['controls'].medicalHistory['controls'].informations['controls'].womenInformation['controls'].haveDisorder.setValue(res.data.medicalHistory.informations.womenInformation.haveDisorder)
             this.newRequest['controls'].medicalHistory['controls'].informations['controls'].womenInformation['controls'].isPregnant.setValue(res.data.medicalHistory.informations.womenInformation.isPregnant)
@@ -2655,7 +2667,7 @@ export class LifeComponent implements OnInit, DoCheck {
               valor: res.data.medicalHistory.informations.womenInformation.haveDisorder,
               name: 'haveDisorder'
             };
-            
+
             if (var5.valor != null) {
                 this.selectChange(var5);
             }
@@ -2667,7 +2679,7 @@ export class LifeComponent implements OnInit, DoCheck {
               valor: res.data.medicalHistory.informations.womenInformation.isPregnant,
               name: 'isPregnant'
             };
-            
+
             if (var6.valor != null) {
                 this.selectChange(var6);
             }
@@ -2680,37 +2692,37 @@ export class LifeComponent implements OnInit, DoCheck {
               this.newRequest['controls'].medicalHistory['controls'].informations['controls'].womenInformation['controls'].pregnantInformation['controls'].time.setValue(res.data.medicalHistory.informations.womenInformation.pregnantInformation.time)
               console.log(`Control pregnantInformation HA SIDO creado!`);
             }
-         
+
             if(this.newRequest.get('medicalHistory').get('informations').get('womenInformation').get('disorders')){
-  
+
               for (let x = 0; x < res.data.medicalHistory.informations.womenInformation.disorders.length; x++) {
                   console.log("hola, esto es res.data.medicalHistory.informations.womenInformation.disorders, y soy id numero "+res.data.medicalHistory.informations.womenInformation.disorders[x].id)
                   if (x >= 1) {
                     console.log('Hola, esto es res.data.medicalHistory.informations.womenInformation.disorders, y soy yo, ' + x)
                     this.addToList(this.womenDisordersList, 'medicalInfo');
                   }
-                  
+
                   const controlsForms24 = this.newRequest['controls'].medicalHistory['controls'].informations['controls'].womenInformation['controls'].disorders['controls'][x]['controls'];
                     console.log(controlsForms24)
-          
+
                     for(const nameControls in controlsForms24){
-                    
+
                       const dataControls = res.data.medicalHistory.informations.womenInformation.disorders[x];
                       for(const nameDataControls in dataControls){
-          
+
                         if (nameDataControls != nameControls ) {
                           // console.log(`No, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) no son iguales`)
                           console.log("No debe de setearse.")
                         }
                         else if(nameDataControls == nameControls){
                           // console.log(`Si, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) son iguales`)
-                          controlsForms24[nameControls].setValue(dataControls[nameDataControls])  
+                          controlsForms24[nameControls].setValue(dataControls[nameDataControls])
                         }
                         // console.log(nameDataControls)
                         // console.log(nameControls);
                       }
                       // console.log(controles[nameControles]);
-                    }        
+                    }
                   // const formID7 = this.claimForm.get('reclamados').get([x]) as FormGroup;
                   // formID7.addControl('id', this.fb.control(data.data.reclamados[x].id, Validators.required));
                 }
@@ -2724,7 +2736,7 @@ export class LifeComponent implements OnInit, DoCheck {
             console.log(`Control womenInformation NO HA SIDO creado!`);
           }
           // ME QUEDE REVISANDO EL DE ABAJO, EL ultimo que revise FUE this.newRequest['controls'].medicalHistory['controls'].informations['controls'].womenInformation['controls']
-          
+
           if(this.newRequest.get('medicalHistory').get('informations').get('doctors')){
             for (let x = 0; x < res.data.medicalHistory.informations.doctors.length; x++) {
                 console.log("hola, esto es res.data.medicalHistory.informations.doctors, y soy id numero "+res.data.medicalHistory.informations.doctors[x].id)
@@ -2732,28 +2744,28 @@ export class LifeComponent implements OnInit, DoCheck {
                   console.log('Hola, esto es res.data.medicalHistory.informations.doctors, y soy yo, ' + x)
                   this.addToList(this.doctorList, 'doctorInfo');
                 }
-                
+
                 const controlsForms25 = this.newRequest['controls'].medicalHistory['controls'].informations['controls'].doctors['controls'][x]['controls'];
                   console.log(controlsForms25)
-        
+
                   for(const nameControls in controlsForms25){
-                  
+
                     const dataControls = res.data.medicalHistory.informations.doctors[x];
                     for(const nameDataControls in dataControls){
-        
+
                       if (nameDataControls != nameControls ) {
                         // console.log(`No, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) no son iguales`)
                         console.log("No debe de setearse.")
                       }
                       else if(nameDataControls == nameControls){
                         // console.log(`Si, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) son iguales`)
-                        controlsForms25[nameControls].setValue(dataControls[nameDataControls])  
+                        controlsForms25[nameControls].setValue(dataControls[nameDataControls])
                       }
                       // console.log(nameDataControls)
                       // console.log(nameControls);
                     }
                     // console.log(controles[nameControles]);
-                  }        
+                  }
                 // const formID7 = this.claimForm.get('reclamados').get([x]) as FormGroup;
                 // formID7.addControl('id', this.fb.control(data.data.reclamados[x].id, Validators.required));
               }
@@ -2763,27 +2775,27 @@ export class LifeComponent implements OnInit, DoCheck {
 
           const controlsForms26 = this.newRequest['controls'].agentReport['controls'];
             console.log(controlsForms26)
-  
+
             for(const nameControls in controlsForms26){
-            
+
               const dataControls = res.data.agentReport;
               for(const nameDataControls in dataControls){
-  
+
                 if (nameDataControls != nameControls ) {
                   // console.log(`No, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) no son iguales`)
                   console.log("No debe de setearse.")
-                }                
-                
+                }
+
                 else if(nameDataControls == nameControls && nameControls!= 'amountProposed' && nameControls!= 'idInformation' && nameControls!= 'agentInformation'){
                   // console.log(`Si, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) son iguales`)
-                  controlsForms26[nameControls].setValue(dataControls[nameDataControls])  
+                  controlsForms26[nameControls].setValue(dataControls[nameDataControls])
                 }
                 // console.log(nameDataControls)
                 // console.log(nameControls);
               }
               // console.log(controles[nameControles]);
-            }   
-            
+            }
+
               const var7 = {
                 valor: res.data.agentReport.connectionType,
                 name: 'connectionType'
@@ -2793,8 +2805,8 @@ export class LifeComponent implements OnInit, DoCheck {
               }
               else {
                 console.log(`No se va a crear ningun control porque no es necesario.`);
-              }    
-              
+              }
+
               const var8 = {
                 valor: res.data.agentReport.isMarried,
                 name: 'isMarried'
@@ -2804,7 +2816,7 @@ export class LifeComponent implements OnInit, DoCheck {
               }
               else {
                 console.log(`No se va a crear ningun control porque no es necesario.`);
-              }  
+              }
 
               const var9 = {
                 valor: res.data.agentReport.isLessThan21,
@@ -2815,8 +2827,8 @@ export class LifeComponent implements OnInit, DoCheck {
               }
               else {
                 console.log(`No se va a crear ningun control porque no es necesario.`);
-              }  
-              
+              }
+
               if(this.newRequest['controls'].agentReport['controls'].familyInsurances){
               for (let x = 0; x < res.data.agentReport.familyInsurances.length; x++) {
                 console.log("hola, esto es res.data.agentReport.familyInsurances, y soy id numero "+res.data.agentReport.familyInsurances[x].id)
@@ -2824,28 +2836,28 @@ export class LifeComponent implements OnInit, DoCheck {
                   console.log('Hola, esto es res.data.agentReport.familyInsurances, y soy yo, ' + x)
                   this.addToList(this.familyRelationshipInsurances, 'familyInsurances');
                 }
-                
+
                 const controlsForms27 = this.newRequest['controls'].agentReport['controls'].familyInsurances['controls'][x]['controls'];
                   console.log(controlsForms27)
-        
+
                   for(const nameControls in controlsForms27){
-                  
+
                     const dataControls = res.data.agentReport.familyInsurances[x];
                     for(const nameDataControls in dataControls){
-        
+
                       if (nameDataControls != nameControls ) {
                         // console.log(`No, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) no son iguales`)
                         console.log("No debe de setearse.")
                       }
                       else if(nameDataControls == nameControls){
                         // console.log(`Si, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) son iguales`)
-                        controlsForms27[nameControls].setValue(dataControls[nameDataControls])  
+                        controlsForms27[nameControls].setValue(dataControls[nameDataControls])
                       }
                       // console.log(nameDataControls)
                       // console.log(nameControls);
                     }
                     // console.log(controles[nameControles]);
-                  }        
+                  }
               //   // const formID7 = this.claimForm.get('reclamados').get([x]) as FormGroup;
               //   // formID7.addControl('id', this.fb.control(data.data.reclamados[x].id, Validators.required));
               }
@@ -2853,72 +2865,72 @@ export class LifeComponent implements OnInit, DoCheck {
 
             const controlsForms28 = this.newRequest['controls'].agentReport['controls'].amountProposed['controls'];
             console.log(controlsForms28)
-  
+
             for(const nameControls in controlsForms28){
-            
+
               const dataControls = res.data.agentReport.amountProposed;
               for(const nameDataControls in dataControls){
-  
+
                 if (nameDataControls != nameControls ) {
                   // console.log(`No, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) no son iguales`)
                   console.log("No debe de setearse.")
-                }                
-                
+                }
+
                 else if(nameDataControls == nameControls){
                   // console.log(`Si, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) son iguales`)
-                  controlsForms28[nameControls].setValue(dataControls[nameDataControls])  
+                  controlsForms28[nameControls].setValue(dataControls[nameDataControls])
                 }
                 // console.log(nameDataControls)
                 // console.log(nameControls);
               }
               // console.log(controles[nameControles]);
-            }   
-          
+            }
+
             const controlsForms29 = this.newRequest['controls'].agentReport['controls'].idInformation['controls'];
             console.log(controlsForms29)
-  
+
             for(const nameControls in controlsForms29){
-            
+
               const dataControls = res.data.agentReport.idInformation;
               for(const nameDataControls in dataControls){
-  
+
                 if (nameDataControls != nameControls ) {
                   // console.log(`No, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) no son iguales`)
                   console.log("No debe de setearse.")
-                }                
-                
+                }
+
                 else if(nameDataControls == nameControls){
                   // console.log(`Si, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) son iguales`)
-                  controlsForms29[nameControls].setValue(dataControls[nameDataControls])  
+                  controlsForms29[nameControls].setValue(dataControls[nameDataControls])
                 }
                 // console.log(nameDataControls)
                 // console.log(nameControls);
               }
               // console.log(controles[nameControles]);
-            }   
+            }
 
             const controlsForms30 = this.newRequest['controls'].agentReport['controls'].agentInformation['controls'];
             console.log(controlsForms30)
-  
+
             for(const nameControls in controlsForms30){
-            
+
               const dataControls = res.data.agentReport.agentInformation;
               for(const nameDataControls in dataControls){
-  
+
                 if (nameDataControls != nameControls ) {
                   // console.log(`No, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) no son iguales`)
                   console.log("No debe de setearse.")
-                }                
-                
+                }
+
                 else if(nameDataControls == nameControls){
                   // console.log(`Si, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) son iguales`)
-                  controlsForms30[nameControls].setValue(dataControls[nameDataControls])  
+                  controlsForms30[nameControls].setValue(dataControls[nameDataControls])
                 }
                 // console.log(nameDataControls)
                 // console.log(nameControls);
               }
               // console.log(controles[nameControles]);
-            }  
+            }
 
             if(this.newRequest.get('agentReport').get('connectionTypeInfo') && res.data.agentReport.connectionType=="familia"){
               this.newRequest['controls'].agentReport['controls'].connectionTypeInfo['controls'].relationship.setValue(res.data.agentReport.connectionTypeInfo.relationship);
@@ -2930,7 +2942,7 @@ export class LifeComponent implements OnInit, DoCheck {
             }
             else if(this.newRequest.get('agentReport').get('connectionTypeInfo') && res.data.agentReport.connectionType=="cliente"){
               this.newRequest['controls'].agentReport['controls'].connectionTypeInfo['controls'].amount.setValue(res.data.agentReport.connectionTypeInfo.amount);
-              this.newRequest['controls'].agentReport['controls'].connectionTypeInfo['controls'].time.setValue(res.data.agentReport.connectionTypeInfo.time);  
+              this.newRequest['controls'].agentReport['controls'].connectionTypeInfo['controls'].time.setValue(res.data.agentReport.connectionTypeInfo.time);
             }
             else if(this.newRequest.get('agentReport').get('connectionTypeInfo') && res.data.agentReport.connectionType=="acabado de conocer"){
               this.newRequest['controls'].agentReport['controls'].connectionTypeInfo['controls'].how.setValue(res.data.agentReport.connectionTypeInfo.how);
@@ -2950,29 +2962,29 @@ export class LifeComponent implements OnInit, DoCheck {
           //   console.log("retorno data capturada:",this.life.dataCapturedProperty)
           //   console.log("retorno data capturada amountProposed.occupation:",this.life.dataCapturedProperty.amountProposed.occupation)
           // }
-          
+
           // const controlsForms31 = this.newRequest['controls'].questionnaires['controls'].solicitudHipertensionArterial['controls'];
           //   console.log(controlsForms31.diagnosticStudies)
           //   for(const nameControls in controlsForms31){
-            
+
           //     // const dataControls = res.data.agentReport.agentInformation;
           //     // for(const nameDataControls in dataControls){
-  
+
           //     //   if (nameDataControls != nameControls ) {
           //     //     // console.log(`No, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) no son iguales`)
           //     //     console.log("No debe de setearse.")
-          //     //   }                
-                
+          //     //   }
+
           //     //   else if(nameDataControls == nameControls){
           //     //     // console.log(`Si, ${nameDataControls} (nameDataControls) y ${nameControls} (nameControls) son iguales`)
-          //     //     controlsForms31[nameControls].setValue(dataControls[nameDataControls])  
+          //     //     controlsForms31[nameControls].setValue(dataControls[nameDataControls])
           //     //   }
           //     //   // console.log(nameDataControls)
           //     //   // console.log(nameControls);
           //     // }
           //     console.log("controlesssss",nameControls);
-          //   }  
-            
+          //   }
+
 			// this.claimForm['controls'].asegurado['controls'].documentoIdentidad.setValue(data.data.asegurado.documentoIdentidad)
 			// this.claimForm['controls'].asegurado['controls'].edad.setValue(data.data.asegurado.edad)
 			// this.claimForm['controls'].asegurado['controls'].idNumero.setValue(data.data.asegurado.idNumero)
@@ -3037,5 +3049,5 @@ export class LifeComponent implements OnInit, DoCheck {
 		})
 
 	  }
-  
+
 }

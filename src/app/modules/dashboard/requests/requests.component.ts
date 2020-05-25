@@ -87,6 +87,10 @@ export class RequestsComponent implements OnInit {
     this.newRequestButtonOptions.active = true;
     this.router.navigateByUrl('/dashboard/requests/new-requests');
   }
+  navigateToLife(id) {
+    this.newRequestButtonOptions.active = true;
+    this.router.navigateByUrl(`/dashboard/requests/new-requests/life/${id}`);
+  }
   navigateToSalud(id) {
     this.newRequestButtonOptions.active = true;
     this.router.navigateByUrl(`/dashboard/requests/new-requests/major-expenses/${id}`);

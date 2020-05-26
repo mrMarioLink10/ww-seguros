@@ -6,19 +6,19 @@
   <div class="pb-1 mt-4">
 
     <app-forms-container [isQuestionnarie]="false" [titles]="['Formulario Política Conozca a su Cliente (Know Your Customer) (Persona Jurídica)']">
-      
+
       <ng-template #formTemplate>
 
-        <div class="pt-12 pb-12 mt-5 ml-1" style="background-color: #F2F2F2">
+        <!-- <div class="pt-12 pb-12 mt-5 ml-1" style="background-color: #F2F2F2">
 
-          <div class="ml-8 mr-10 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4"> 
-      
+         <div class="ml-8 mr-10 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4">
+
             <app-number-input [group]="form" label="Solicitud No." name='request'
             min="1" placeholder="12345678"></app-number-input>
-      
+
           </div>
-      
-        </div>
+
+        </div>-->
 
         <!-- Sección Datos Generales -->
 
@@ -28,7 +28,7 @@
 
         </div>
 
-        <div class="mt-4 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4"> 
+        <div class="mt-4 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4">
 
           <div class="mr-3">
             <app-input [group]="form.get('general_data')" label="Nombre de la sociedad"
@@ -44,7 +44,7 @@
 
             <app-number-input [group]="form.get('general_data')" label="Núm. Contribuyente o equivalente" name='contributor_num'
               min="1" placeholder=""></app-number-input>
-              
+
           </div>
 
           <div class="mr-3 mt-8 sm:mt-5 md:mt-8 lg:mt-2 xl:mt-0">
@@ -83,7 +83,7 @@
 
         </div>
 
-        <div class="mt-4 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4"> 
+        <div class="mt-4 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4">
 
           <div class="mr-3 xl:mt-8">
             <app-input [group]="form.get('representative_data')" label="Nombre (s) y Apellido (s)"
@@ -119,16 +119,16 @@
 
           <div class="mr-3 mt-5 sm:mt-3 md:mt-5 lg:mt-2 xl:mt-2">
 
-            <app-number-input [group]="form.get('representative_data')" 
+            <app-number-input [group]="form.get('representative_data')"
             label="Teléfono Residencial" name='home_telephone' placeholder=""></app-number-input>
 
           </div>
 
           <div class="mr-3 mt-5 sm:mt-3 md:mt-5 lg:mt-2 xl:mt-2">
-            
-            <app-number-input [group]="form.get('representative_data')" 
+
+            <app-number-input [group]="form.get('representative_data')"
             label="Celular" name='cellphone' placeholder=""></app-number-input>
-            
+
           </div>
 
           <div class="mr-3 mt-5 sm:mt-3 md:mt-5 lg:mt-2 xl:mt-2">
@@ -162,26 +162,26 @@
 
               <div [formGroupName]="index" class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4">
 
-                <div class="mr-3"> 
-                  <app-input 
+                <div class="mr-3">
+                  <app-input
                    [group]="form.get('management_body_composition').get('allMembers').get(index.toString())"
                    label="Nombre (s) y Apellido (s)" name='name_lastname'></app-input>
                 </div>
 
-                <div class="mr-3 mt-3 sm:mt-3 md:mt-0 lg:mt-0 xl:mt-0"> 
-                  <app-input 
+                <div class="mr-3 mt-3 sm:mt-3 md:mt-0 lg:mt-0 xl:mt-0">
+                  <app-input
                    [group]="form.get('management_body_composition').get('allMembers').get(index.toString())"
                    label="Cargo" name='position'></app-input>
                 </div>
-                
+
                 <div class="mr-3 mt-3 sm:mt-3 md:mt-3 lg:mt-0 xl:mt-0">
-                  <app-input 
+                  <app-input
                    [group]="form.get('management_body_composition').get('allMembers').get(index.toString())"
                    label="Cédula / Pasaporte" name='id_passport_management_body'></app-input>
                </div>
 
-               <div class="mr-3 mt-3 sm:mt-3 md:mt-3 lg:mt-0 xl:mt-0"> 
-                <app-input 
+               <div class="mr-3 mt-3 sm:mt-3 md:mt-3 lg:mt-0 xl:mt-0">
+                <app-input
                    [group]="form.get('management_body_composition').get('allMembers').get(index.toString())"
                    label="Nacionalidad" name='nationality_management_body'></app-input>
               </div>
@@ -217,34 +217,34 @@
 
         </div>
 
-    <div class=""> 
+    <div class="">
             <div [formGroup]="form.get('shareholders')">
               <div formArrayName="allShareholders">
                 <div class="mt-8" *ngFor="let element of shareholdersFormArray.controls; let index = index">
-    
+
                   <div [formGroupName]="index" class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4">
-    
-                    <div class="mr-3 "> 
-                      <app-input 
+
+                    <div class="mr-3 ">
+                      <app-input
                        [group]="form.get('shareholders').get('allShareholders').get(index.toString())"
                        label="Nombre (s) y Apellido (s)" name='name_lastname_shareholder'></app-input>
                     </div>
 
-                    <div class="mr-3 mt-8 sm:mt-5 md:mt-0 lg:mt-0 xl:mt-0"> 
-                      
-                       <app-number-input [group]="form.get('shareholders').get('allShareholders').get(index.toString())" 
+                    <div class="mr-3 mt-8 sm:mt-5 md:mt-0 lg:mt-0 xl:mt-0">
+
+                       <app-number-input [group]="form.get('shareholders').get('allShareholders').get(index.toString())"
                        label="% de Participación" name='participation_percentage' min="1" max="100" placeholder=""></app-number-input>
-                       
+
                     </div>
-                    
+
                     <div class="mr-3 mt-8 sm:mt-5 md:mt-8 lg:mt-3 xl:mt-0">
-                      <app-input 
+                      <app-input
                        [group]="form.get('shareholders').get('allShareholders').get(index.toString())"
                        label="Cédula / Pasaporte" name='id_passport_shareholder'></app-input>
                    </div>
 
-                   <div class="mr-3 mt-8 sm:mt-5 md:mt-8 lg:mt-3 xl:mt-0"> 
-                    <app-input 
+                   <div class="mr-3 mt-8 sm:mt-5 md:mt-8 lg:mt-3 xl:mt-0">
+                    <app-input
                        [group]="form.get('shareholders').get('allShareholders').get(index.toString())"
                        label="Nacionalidad" name='nationality_shareholder'></app-input>
                   </div>
@@ -271,14 +271,14 @@
               </div>
 
               <div>
-                
+
               </div>
 
               <div class="mr-3 mt-8 mb-6 sm:mb-4 sm:mt-8 md:mb-0 md:mt-8 lg:mb-0 lg:mt-8 xl:mb-0 xl:mt-0">
 
-                <app-number-input [group]="form.get('shareholders')" 
+                <app-number-input [group]="form.get('shareholders')"
                     label="Núm. de Empleados" name='employee_numbers' min="1" placeholder=""></app-number-input>
-                
+
               </div>
             </div>
 
@@ -297,14 +297,14 @@
           <!-- Bloque 1 -->
           <div class="grid grid-cols-1">
             <div class=" py-5" style="background-color: #E6E7E8;">
-            
-              <p class="pl-10 pr-8" style="font-size: 12px;"> Las Personas Políticamente Expuestas son aquéllas que desempeñan o han desempeñado funciones 
-                públicas destacadas en un país extranjero o en su propio país, ej. Jefes de Estado o de gobierno, políticos de 
-                alta jerarquía, funcionarios gubernamentales, judiciales o militares de alta jerarquía, altos ejecutivos de 
-                empresas estatales, funcionarios importantes de partidos políticos. La designación de PEP incluye a su cónyuge y 
+
+              <p class="pl-10 pr-8" style="font-size: 12px;"> Las Personas Políticamente Expuestas son aquéllas que desempeñan o han desempeñado funciones
+                públicas destacadas en un país extranjero o en su propio país, ej. Jefes de Estado o de gobierno, políticos de
+                alta jerarquía, funcionarios gubernamentales, judiciales o militares de alta jerarquía, altos ejecutivos de
+                empresas estatales, funcionarios importantes de partidos políticos. La designación de PEP incluye a su cónyuge y
                 familiares hasta el segundo grado de consanguineidad y segundo de aﬁnidad.
                  </p>
-               
+
             </div>
 
             <div class="mt-5">
@@ -337,11 +337,11 @@
               </div>
 
             </div>
-            
+
           </div>
 
           <hr class="ww-divider mt-4">
-          
+
 
           <!-- Bloque 2 -->
           <div>
@@ -358,7 +358,7 @@
           </div>
 
           <hr class="ww-divider mt-10 sm:mt-10 md:mt-10 lg:mt-0 xl:mt-0">
-        
+
 
           <!-- Bloque 3 -->
           <div class="mb-4">
@@ -372,44 +372,44 @@
 
             <div class=" mt-24" *ngIf="branchOfficeFormArray"> <!-- *ngIf="this.form.get('branch_office')" -->
 
-              
+
                     <div class="mt-8" *ngFor="let element of branchOfficeFormArray.controls; let index = index">
-        
+
                       <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4">
-        
-                        <div class="mr-3 "> 
-                          <app-input 
+
+                        <div class="mr-3 ">
+                          <app-input
                            [group]="form.get('exposed').get('branch_office').get('allBranch_office').get(index.toString())"
                            label="Sucursales o aﬁliadas" name='branch_office_name'></app-input>
                         </div>
-    
-                        <div class="mr-3 "> 
-                          <app-input 
+
+                        <div class="mr-3 ">
+                          <app-input
                            [group]="form.get('exposed').get('branch_office').get('allBranch_office').get(index.toString())"
                            label="Dirección" name='branch_office_address'></app-input>
                         </div>
-                        
+
                         <div class="mr-3 ">
-                           <app-select name="list_countrys_branch_office" [options]="countryList" 
+                           <app-select name="list_countrys_branch_office" [options]="countryList"
                            [group]="form.get('exposed').get('branch_office').get('allBranch_office').get(index.toString())"></app-select>
                        </div>
-    
-                       <div class="mr-3 "> 
 
-                           <app-number-input [group]="form.get('exposed').get('branch_office').get('allBranch_office').get(index.toString())" 
+                       <div class="mr-3 ">
+
+                           <app-number-input [group]="form.get('exposed').get('branch_office').get('allBranch_office').get(index.toString())"
                     label="Número de registro" name='register_number_branch_office' min="1" placeholder="12345"></app-number-input>
-                      
+
                     </div>
 
-                      <div class="mr-3 "> 
-                      
-                           <app-number-input [group]="form.get('exposed').get('branch_office').get('allBranch_office').get(index.toString())" 
+                      <div class="mr-3 ">
+
+                           <app-number-input [group]="form.get('exposed').get('branch_office').get('allBranch_office').get(index.toString())"
                     label="Teléfonos" name='telephone_branch_office' placeholder=""></app-number-input>
 
                       </div>
 
-                      <div class="mr-3 "> 
-                        <app-input 
+                      <div class="mr-3 ">
+                        <app-input
                            [group]="form.get('exposed').get('branch_office').get('allBranch_office').get(index.toString())"
                            label="Otros" name='other_info_branch_office'></app-input>
                       </div>
@@ -427,14 +427,14 @@
                           <mat-icon style="color: #18446B">remove</mat-icon>
                         </button>
                       </div>
-        
+
                     </div>
                   </div>
 
           </div>
 
           <hr class="ww-divider mt-10 sm:mt-10 md:mt-10 lg:mt-0 xl:mt-0">
-       
+
 
           <!-- Bloque 4 -->
           <div class="mt-8">
@@ -449,11 +449,11 @@
             </div>
 
             <div *ngIf="this.form.get('exposed').get('areatext')" class=" mt-2">
-              
+
               <div class="mb-2 pt-8">
                 <label style="font-size: 12px;"> Especifique </label>
               </div>
-              
+
               <div>
                 <app-text-area  label="Texto" name='specify_investigated_representative' [group]="form.get('exposed').get('areatext')"></app-text-area>
               </div>
@@ -490,7 +490,7 @@
         </div>
 
         <hr class="ww-divider">
-   
+
 
         <!-- Bloque 2 -->
         <div class="mt-8">
@@ -499,42 +499,42 @@
 
 
           <div class="grid grid-cols-1  mt-6">
-            
-            <div class="grid grid-cols-1 xl:grid-cols-2"> 
-              <div class="xl:mr-64 xl:pr-4"> 
+
+            <div class="grid grid-cols-1 xl:grid-cols-2">
+              <div class="xl:mr-64 xl:pr-4">
                 <form [formGroup]="form.get('finance').get('documents')">
                     <mat-checkbox class="radio-button-label"
-                    formControlName="mercantile_register_document"> <span style="white-space: normal;"> {{documents[0].viewValue}} </span> </mat-checkbox> 
+                    formControlName="mercantile_register_document"> <span style="white-space: normal;"> {{documents[0].viewValue}} </span> </mat-checkbox>
                 </form>
               </div>
 
-              <div class="mt-5 xl:-ml-3 xl:-mr-4 xl:mt-0"> 
+              <div class="mt-5 xl:-ml-3 xl:-mr-4 xl:mt-0">
                 <form [formGroup]="form.get('finance').get('documents')">
                   <mat-checkbox class="radio-button-label"
-                  formControlName="id_shareholder_document"> <span style="white-space: normal;"> {{documents[2].viewValue}} </span> </mat-checkbox> 
+                  formControlName="id_shareholder_document"> <span style="white-space: normal;"> {{documents[2].viewValue}} </span> </mat-checkbox>
                 </form>
               </div>
             </div>
 
-            <div class="grid grid-cols-1 xl:grid-cols-2 xl:mt-5"> 
-              <div class="mt-5 xl:mr-6 xl:mt-0"> 
+            <div class="grid grid-cols-1 xl:grid-cols-2 xl:mt-5">
+              <div class="mt-5 xl:mr-6 xl:mt-0">
                   <form [formGroup]="form.get('finance').get('documents')">
                     <mat-checkbox class="radio-button-label"
-                    formControlName="id_representative_document"> <span style="white-space: normal;"> {{documents[1].viewValue}} </span> </mat-checkbox> 
+                    formControlName="id_representative_document"> <span style="white-space: normal;"> {{documents[1].viewValue}} </span> </mat-checkbox>
                   </form>
               </div>
 
               <div class="mt-5 xl:-ml-3 xl:mr-16 xl:pr-3 xl:mt-0">
                 <form [formGroup]="form.get('finance').get('documents')">
                   <mat-checkbox class="radio-button-label"
-                  formControlName="managemente_body_document"> <span style="white-space: normal;"> {{documents[3].viewValue}} </span> </mat-checkbox> 
+                  formControlName="managemente_body_document"> <span style="white-space: normal;"> {{documents[3].viewValue}} </span> </mat-checkbox>
                 </form>
               </div>
             </div>
 
           </div>
 
-        </div> 
+        </div>
 
         <!-- Sección Declaración -->
 
@@ -545,10 +545,10 @@
         </div>
 
         <div class="mt-6" style="background-color: #E6E7E8;">
-          <p class="py-5 px-8" style="font-size: 12px;"> Por la presente declaro bajo la fe de juramento que los datos suministrados anteriormente y 
-            contenidos en este formulario son verdaderos, correctos y actualizados; y que no he omitido ninguna 
-            información requerida explícita o implícitamente en este formulario, y que todas las actividades de la 
-            sociedad son ejercidas dentro de las normas legales y que los recursos utilizados para el pago de los 
+          <p class="py-5 px-8" style="font-size: 12px;"> Por la presente declaro bajo la fe de juramento que los datos suministrados anteriormente y
+            contenidos en este formulario son verdaderos, correctos y actualizados; y que no he omitido ninguna
+            información requerida explícita o implícitamente en este formulario, y que todas las actividades de la
+            sociedad son ejercidas dentro de las normas legales y que los recursos utilizados para el pago de los
             seguros en mención, provienen de la actividad comercial declarada. </p>
         </div>
 
@@ -564,7 +564,7 @@
 
           <div class="mr-3">
 
-            <app-input [group]="form.get('broker')" label="Nombre/Razón Social" name='social_name' placeholder=""></app-input> 
+            <app-input [group]="form.get('broker')" label="Nombre/Razón Social" name='social_name' placeholder=""></app-input>
 
           </div>
 
@@ -572,7 +572,7 @@
 
             <!-- <app-input [group]="form.get('broker')" label="No. Licencia" name='license_num' type="number" placeholder=""></app-input>  -->
 
-            <app-number-input [group]="form.get('broker')" 
+            <app-number-input [group]="form.get('broker')"
                     label="No. Licencia" name='license_num' placeholder="1" min="1"></app-number-input>
 
           </div>
@@ -591,13 +591,13 @@
 
           <div class="mr-3">
 
-            <app-input [group]="form.get('info_for_the_insurance_carrier')" label="Nombre completo funcionario" name='fullname_functionary' placeholder=""></app-input> 
+            <app-input [group]="form.get('info_for_the_insurance_carrier')" label="Nombre completo funcionario" name='fullname_functionary' placeholder=""></app-input>
 
           </div>
 
           <div class="mr-3 mt-5 sm:mt-3 md:mt-0 lg:mt-0 xl:mt-0">
 
-            <app-input [group]="form.get('info_for_the_insurance_carrier')" label="Cargo" name='position_functionary' placeholder=""></app-input> 
+            <app-input [group]="form.get('info_for_the_insurance_carrier')" label="Cargo" name='position_functionary' placeholder=""></app-input>
 
           </div>
 

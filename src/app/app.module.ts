@@ -19,6 +19,7 @@ import { MatTableModule } from '@angular/material/table';
 import { FormsModule } from '@angular/forms';
 import { MatProgressButtonsModule } from 'mat-progress-buttons';
 import { MaterialFileInputModule } from 'ngx-material-file-input';
+import {CurrencyPipe} from '@angular/common'
 
 const keycloakService = new KeycloakService();
 
@@ -37,7 +38,7 @@ const keycloakService = new KeycloakService();
 		MatProgressButtonsModule,
 		MaterialFileInputModule
 	],
-	providers: [
+	providers: [ CurrencyPipe,
 		{ provide: MatPaginatorIntl, useClass: MatPaginatorIntlCro },
 		InvalidControlEnhancerPipe,
 		{

@@ -20,6 +20,7 @@ import { MajorExpensesService } from './services/major-expenses.service';
 import { QuotesService } from '../../../services/quotes/quotes.service';
 import { environment } from '../../../../../../environments/environment';
 import { FormValidationsConstant } from 'src/app/shared/ShareConstant/shareConstantFile';
+import {CurrencyPipe} from '@angular/common'
 @Component({
   selector: 'app-major-expenses',
   templateUrl: './major-expenses.component.html',
@@ -42,6 +43,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
     private majorExpensesService: MajorExpensesService,
     public dialog: MatDialog,
     private appComponent: AppComponent,
+    private currencyPipe: CurrencyPipe
   ) { }
 
   get allDependents(): FormArray {
@@ -731,7 +733,8 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
     this.isJuridica = false;
     this.newRequest.get('person').get('isJuridica').valueChanges.subscribe(value => {
       this.isJuridica = false;
-      if (value === 'si') {
+      console.log(value);
+      if (value === 'Si') {
         this.isJuridica = true;
         this.titles = FormValidationsConstant.titlesForMajorExpenses;
       } else {
@@ -1395,6 +1398,8 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
         this.isFormValidToFill = true;
         this.notFoundQuote = false;
 
+        this.newRequest.get('payment').setValue(this.currencyPipe.transform (data.data.monto));
+        this.newRequest.get('plans').setValue(data.data.plan);
         this.newRequest.get('person').get('date').setValue(data.data.fecha_nacimiento);
         this.newRequest.get('person').get('firstName').setValue(data.data.nombre);
       } else {

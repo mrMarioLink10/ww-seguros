@@ -1747,12 +1747,12 @@ export class LifeComponent implements OnInit, DoCheck {
     const getForm = form === 'payer' ? contractor : payer;
 
     if (isValid) {
-      if (this.role === 'WMA') { getForm.addControl('knowYourClient', this.fb.group({})); }
+      if (this.role === 'WMA') { getForm.addControl('solicitudConozcaASuCliente', this.fb.group({})); }
       else if (this.role === 'WWS') { getForm.addControl('knowYourCustomer', this.fb.group({})); }
 
       return true;
     } else {
-      if (this.role === 'WMA') { getForm.removeControl('knowYourClient'); }
+      if (this.role === 'WMA') { getForm.removeControl('solicitudConozcaASuCliente'); }
       else if (this.role === 'WWS') { getForm.removeControl('knowYourCustomer'); }
 
       return false;

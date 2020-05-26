@@ -12,7 +12,7 @@ import { SharedDirectivesModule } from 'src/app/core/directive';
 import { ServicesModule } from 'src/app/core/services/services.module';
 import { NewRequestComponent } from './new-request.component';
 import { DisabilityComponent } from './disability/disability.component';
-import { KnowYourCustomerComponent } from '../../shared/components/disease/know-your-customer/know-your-customer.component'
+import { KnowYourCustomerComponent } from '../../shared/components/disease/know-your-customer/know-your-customer.component';
 
 
 @NgModule({

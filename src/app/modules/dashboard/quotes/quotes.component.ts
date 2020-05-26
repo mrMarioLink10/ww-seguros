@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 import { MatProgressButtonOptions } from 'mat-progress-buttons';
 import { MatTableDataSource, MatSort, MatPaginator } from '@angular/material';
 import { QuotesService } from '../services/quotes/quotes.service';
@@ -59,6 +60,7 @@ export class QuotesComponent implements OnInit {
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
   constructor(
+    private router: Router,
     private quotesService: QuotesService,
     private userService: UserService
   ) { }
@@ -78,7 +80,12 @@ export class QuotesComponent implements OnInit {
   ngOnInit() {
     this.getQuotes();
   }
-
+  navigateToLife(id) {
+    this.router.navigateByUrl(`/dashboard/requests/new-requests/life/cotizacion/${id}`);
+  }
+  navigateToSalud(id) {
+    this.router.navigateByUrl(`/dashboard/requests/new-requests/major-expenses/cotizacion/${id}`);
+  }
   newQuote() {
     if (this.userService.getRoleCotizador() === 'WWS') {
       window.open('https://cotizadores.wwseguros.com.do/?cia=wws', '_blank');

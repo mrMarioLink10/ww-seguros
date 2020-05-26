@@ -32,7 +32,7 @@ export class DisabilityComponent implements OnInit, DoCheck {
     'Sección A. Datos del propuesto Asegurado y Estatus laboral',
     'Sección B. Datos del Contratante', 'Sección C. Cuestionario Médico',
     'Sección D. Opción del Plan', 'Sección E. Beneficiarios Primarios',
-    'Beneficiario(s) Contigente(s)'];
+    'Beneficiario(s) Contigente(s)', 'En caso de Cesión Bancaria'];
   bmi: number;
   // massName = 'PESO';
   // heightName = 'ALTURA';
@@ -475,6 +475,7 @@ export class DisabilityComponent implements OnInit, DoCheck {
   };
 
   noCotizacion;
+  age;
   constructor(
     private fb: FormBuilder,
     public formMethods: FormArrayGeneratorService,
@@ -662,19 +663,26 @@ export class DisabilityComponent implements OnInit, DoCheck {
         family: ['', Validators.required],
         id_passport: ['', Validators.required],
         contingent_array: this.fb.array([this.formMethods.createItem(this.contingentGroup)]),
-        bankTransfer: this.fb.group({
-          family: [''],
-          amount: ['', Validators.min(0)],
-          contact: ['']
-        }),
         hasAnotherCoverage: ['', Validators.required],
         changeAnotherCoverage: ['', Validators.required],
+      }),
+      bankTransfer: this.fb.group({
+        bankEntity: [''],
+        amount: ['', Validators.min(0)],
+        contact: ['']
       }),
       questionnaires: this.fb.group({})
     });
 
     this.mainFormArray = this.disabilityGroup.get('main').get('main_array') as FormArray;
     this.contingentFormArray = this.disabilityGroup.get('contingent').get('contingent_array') as FormArray;
+
+    this.disabilityGroup.get('insured_data').get('birthdate').valueChanges.subscribe(value => {
+      const timeDiff = Math.abs(Date.now() - new Date(value).getTime());
+      this.age = Math.floor(timeDiff / (1000 * 3600 * 24) / 365.25);
+      // this.disabilityGroup.get('person').get('this.age').setValue(this.age);
+      console.log('La persona tiene ' + this.age + ' de edad');
+    });
 
   }
 
@@ -695,6 +703,8 @@ export class DisabilityComponent implements OnInit, DoCheck {
 
   // actualValue;
   y = 0
+  x = 0;
+  xx = 0;
   ngDoCheck(): void{
 
     if (this.disabilityGroup.get('questions').get('weightUnit').value != '' &&
@@ -733,37 +743,42 @@ export class DisabilityComponent implements OnInit, DoCheck {
       // console.log('this.bmi =======  aaaaaaaaaaaaaaaaaa ' + this.bmi);
     }
 
-    const plan = this.disabilityGroup.get('plan') as FormGroup;
+    let valueSalary;
+    // const plan = this.disabilityGroup.get('plan') as FormGroup;
     // console.log(this.disabilityGroup.get('insured_data').get('salary').value * 0.7 );
     // tslint:disable-next-line: prefer-for-of
-    if ((this.disabilityGroup.get('insured_data').get('salary').value != null ||
-    this.disabilityGroup.get('insured_data').get('salary').value != undefined) &&
-    this.disabilityGroup.get('insured_data').get('salary').value > 0 &&
-    this.disabilityGroup.get('insured_data').valid){
-      // this.actualValue = this.disabilityGroup.get('insured_data').get('salary').value;
+    if (this.disabilityGroup.get('insured_data').get('salary').valueChanges){
+      valueSalary = this.disabilityGroup.get('insured_data').get('salary').value;
+      this.y = 0;
+    }
+
+    if ((valueSalary != null ||
+    valueSalary != undefined) &&
+    valueSalary > 0){
+      // this.actualValue = valueSalary;
       // console.log(this.actualValue);
-      if ((12000 < (this.disabilityGroup.get('insured_data').get('salary').value * 0.7 )) && this.y == 0){
+      if ((1000 < (valueSalary * 0.7 )) && this.y == 0){
         for (let x = 0; x < this.trashArray.length; x++){
           // tslint:disable-next-line: radix
           if (this.rentArray[x] == (null || undefined) &&
           // tslint:disable-next-line: radix
           (Number.parseInt(this.trashArray[x].value.slice(3).replace(',', ''))) <
-          (this.disabilityGroup.get('insured_data').get('salary').value * 0.7 )) {
+          (valueSalary * 0.7 )) {
 
             this.rentArray.push(this.trashArray[x]);
             // tslint:disable-next-line: radix
             // console.log(Number.parseInt(this.rentArray[x].value.slice(3).replace(',', '')));
           }
         }
-        plan.removeControl('rent');
-        // this.actualValue = this.disabilityGroup.get('insured_data').get('salary').value;
+        // plan.removeControl('rent');
+        // this.actualValue = valueSalary;
         this.y = 1;
-        plan.addControl('rent', this.fb.control(['', Validators.required]));
+        // plan.addControl('rent', this.fb.control(['', Validators.required]));
       }
       for (let x = 0; x < this.rentArray.length; x++){
             // tslint:disable-next-line: radix
         if ((Number.parseInt(this.rentArray[x].value.slice(3).replace(',', ''))) >
-        (this.disabilityGroup.get('insured_data').get('salary').value * 0.7 )) {
+        (valueSalary * 0.7 )) {
 
           this.rentArray.splice(x, 1);
           this.y = 0;
@@ -773,6 +788,52 @@ export class DisabilityComponent implements OnInit, DoCheck {
       }
     }
     // console.log(this.rentArray);
+
+      // tslint:disable-next-line: align
+      if (this.age >= 50 && this.disabilityGroup.get('insured_data').get('gender').value == 'masculino'){
+        if (this.xx != 0){
+          this.xx = 0;
+        }
+        const questionnaires = this.disabilityGroup.get('questionnaires') as FormGroup;
+        if (this.x == 0){
+          if (!this.disabilityGroup.get('questionnaires').get('prostatic')){
+            questionnaires.addControl('prostatic', this.fb.group({}));
+          }
+          this.disabilityGroup.get('questions').get('questionnaire').get('sicknessType_radio').setValue('si');
+
+          const var1 = {
+            name: 'sicknessType_radio', valor: 'si'
+          };
+
+          this.selectChange(var1);
+
+          if (this.disabilityGroup.get('questions').get('questionnaire').get('sicknessType')){
+            this.disabilityGroup.get('questions').get('questionnaire').get('sicknessType').get('haveProstatics').setValue('si');
+            this.x++;
+          }
+        }
+      }
+      else if (this.age < 50 || this.disabilityGroup.get('insured_data').get('gender').value == 'femenino') {
+        if (this.xx == 0){
+          this.x++;
+        }
+        const questionnaires = this.disabilityGroup.get('questionnaires') as FormGroup;
+        if (this.x != 0){
+          if (this.disabilityGroup.get('questionnaires').get('prostatic')){
+            questionnaires.removeControl('prostatic');
+          }
+          if (this.disabilityGroup.get('questions').get('questionnaire').get('sicknessType')){
+            this.disabilityGroup.get('questions').get('questionnaire').get('sicknessType').get('haveProstatics').setValue('no');
+            this.x = 0;
+            this.xx++;
+          }
+        }
+        if (!this.disabilityGroup.get('questionnaires').get('prostatic') &&
+        !this.disabilityGroup.get('questions').get('questionnaire').get('sicknessType')){
+          this.x = 0;
+        }
+      }
+
   }
 
   selectChange(event, position?) {
@@ -973,7 +1034,7 @@ export class DisabilityComponent implements OnInit, DoCheck {
           this.accordionTitles = [
             'Sección A. Datos del propuesto Asegurado y Estatus laboral', 'Sección C. Cuestionario Médico',
             'Sección D. Opción del Plan', 'Sección E. Beneficiarios Primarios',
-            'Beneficiario(s) Contigente(s)'];
+            'Beneficiario(s) Contigente(s)', 'En caso de Cesión Bancaria'];
           formGeneral.removeControl('policyholder');
           break;
 
@@ -984,7 +1045,7 @@ export class DisabilityComponent implements OnInit, DoCheck {
           this.accordionTitles = [
             'Sección A. Datos del propuesto Asegurado y Estatus laboral', 'Sección C. Cuestionario Médico',
             'Sección D. Opción del Plan', 'Sección E. Beneficiarios Primarios',
-            'Beneficiario(s) Contigente(s)'];
+            'Beneficiario(s) Contigente(s)', 'En caso de Cesión Bancaria'];
           formGeneral.removeControl('policyholder');
           formInsured.addControl('knowYourClientSecond', this.fb.group({}));
           break;
@@ -1124,7 +1185,7 @@ export class DisabilityComponent implements OnInit, DoCheck {
               'Sección A. Datos del propuesto Asegurado y Estatus laboral',
               'Sección B. Datos del Contratante', 'Sección C. Cuestionario Médico',
               'Sección D. Opción del Plan', 'Sección E. Beneficiarios Primarios',
-              'Beneficiario(s) Contigente(s)'];
+              'Beneficiario(s) Contigente(s)', 'En caso de Cesión Bancaria'];
           }
           else {
             console.log('Ya existe, por tanto no hay que crear a policyholder de nuevo.');
@@ -1139,7 +1200,7 @@ export class DisabilityComponent implements OnInit, DoCheck {
               'Sección A. Datos del propuesto Asegurado y Estatus laboral',
               'Sección B. Datos del Contratante', 'Sección C. Cuestionario Médico',
               'Sección D. Opción del Plan', 'Sección E. Beneficiarios Primarios',
-              'Beneficiario(s) Contigente(s)'];
+              'Beneficiario(s) Contigente(s)', 'En caso de Cesión Bancaria'];
           }
           else {
             console.log('Ya existe, por tanto no hay que crear a policyholder de nuevo.');
@@ -1153,6 +1214,9 @@ export class DisabilityComponent implements OnInit, DoCheck {
         case 'hasAnotherCoverage':
           formCB.removeControl('anotherCoverages');
           this.existingCoveragesList = undefined;
+          formCB.get('changeAnotherCoverage').reset();
+          formCB.removeControl('changingCoverages');
+          this.changingCoveragesList = undefined;
           break;
 
         case 'changeAnotherCoverage':

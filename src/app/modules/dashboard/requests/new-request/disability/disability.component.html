@@ -1672,9 +1672,9 @@
                   </div>
                 </div>
 
-                <hr class="ww-divider mt-6">
+                <!-- <hr class="ww-divider mt-6"> -->
 
-                <div class="mt-6">
+                <!-- <div class="mt-6">
                   <label style="font-size: 12px;"> En caso de Cesión Bancaria, complete los siguientes datos: </label>
                 </div>
 
@@ -1686,122 +1686,129 @@
                   <app-number-input class="mr-3" [group]="disabilityGroup.get('contingent').get('bankTransfer')"
                     label="Contacto" name="contact"></app-number-input>
                   <div></div>
-                </div>
+                </div> -->
 
                 <hr class="ww-divider mt-6 mb-6">
 
-                <div *ngFor="let question of coveragesQuestions">
-                  <div
-                    class="w-full xl:flex xl:justify-between lg:flex lg:justify-between md:flex md:justify-between sm:flex sm:justify-between">
-                    <div class="radio-button-label" style="font-size: 12px !important;">{{question.label}}</div>
-                    <app-radio-button [group]="disabilityGroup.get('contingent')" [name]="question.name"
-                      [options]="YesNo" (selected)="selectChange($event)">
-                    </app-radio-button>
-                  </div>
-                  <div *ngIf="disabilityGroup.get('contingent').value[question.name] === 'si'">
-                    <div *ngIf="question.name === 'hasAnotherCoverage'">
-                      <div *ngFor="let studies of existingCoveragesList.controls; let i = index"
-                        class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
-                        <div class="mr-3">
-                          <app-input
-                            [group]="disabilityGroup.get('contingent').get('anotherCoverages').get(i.toString())"
-                            name="name" label="Nombre de la Compañia">
-                          </app-input>
-                        </div>
-                        <div class="mr-3">
-                          <app-number-input
-                            [group]="disabilityGroup.get('contingent').get('anotherCoverages').get(i.toString())"
-                            name="amount" label="Monto del Seguro">
-                          </app-number-input>
-                        </div>
-                        <div class="mr-3">
-                          <app-input
-                            [group]="disabilityGroup.get('contingent').get('anotherCoverages').get(i.toString())"
-                            name="policeNo" label="No. de Póliza" >
-                          </app-input>
-                        </div>
-                        <div class="mr-3">
-                          <app-number-input
-                            [group]="disabilityGroup.get('contingent').get('anotherCoverages').get(i.toString())"
-                            name="adbQuantity" label="Cantidad ADB" min="0">
-                          </app-number-input>
-                        </div>
-                        <div class="mr-3">
-                          <app-date-picker
-                            [group]="disabilityGroup.get('contingent').get('anotherCoverages').get(i.toString())"
-                            name="date" label="Fecha de Solicitud">
-                          </app-date-picker>
-                        </div>
-                        <div *ngIf="existingCoveragesList.length > 1"
-                          [ngClass]="{'': existingCoveragesList.length === 1, 'col-span-1': existingCoveragesList.length > 1} ">
-                          <button mat-mini-fab aria-label=" Eliminar estudio"
-                            (click)="removeFormArray(i, existingCoveragesList)" type="button"
-                            class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
-                            <mat-icon style="color: #18446B">remove</mat-icon>
-                          </button>
-                        </div>
-                      </div>
-                      <div class="mb-8">
-                        <button mat-mini-fab aria-label="Agregar estudio"
-                          (click)="addToList(existingCoveragesList, 'coverages')" type="button"
-                          class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
-                          <mat-icon style="color: #18446B">add</mat-icon>
-                        </button>
-                      </div>
-                    </div>
-                    <div *ngIf="question.name === 'changeAnotherCoverage'">
-                      <div *ngFor="let studies of changingCoveragesList.controls; let i = index"
-                        class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
-                        <div class="mr-3">
-                          <app-input
-                            [group]="disabilityGroup.get('contingent').get('changingCoverages').get(i.toString())"
-                            name="name" label="Nombre de la Compañia">
-                          </app-input>
-                        </div>
-                        <div class="mr-3">
-                          <app-number-input
-                            [group]="disabilityGroup.get('contingent').get('changingCoverages').get(i.toString())"
-                            name="amount" label="Monto del Seguro">
-                          </app-number-input>
-                        </div>
-                        <div class="mr-3">
-                          <app-input
-                            [group]="disabilityGroup.get('contingent').get('changingCoverages').get(i.toString())"
-                            name="policeNo" label="No. de Póliza" >
-                          </app-input>
-                        </div>
-                        <div class="mr-3">
-                          <app-number-input
-                            [group]="disabilityGroup.get('contingent').get('changingCoverages').get(i.toString())"
-                            name="adbQuantity" label="Cantidad ADB" min="0">
-                          </app-number-input>
-                        </div>
-                        <div class="mr-3">
-                          <app-date-picker
-                            [group]="disabilityGroup.get('contingent').get('changingCoverages').get(i.toString())"
-                            name="date" label="Fecha de Solicitud">
-                          </app-date-picker>
-                        </div>
-                        <div *ngIf="changingCoveragesList.length > 1"
-                          [ngClass]="{'': changingCoveragesList.length === 1, 'col-span-1': changingCoveragesList.length > 1} ">
-                          <button mat-mini-fab aria-label=" Eliminar estudio"
-                            (click)="removeFormArray(i, changingCoveragesList)" type="button"
-                            class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
-                            <mat-icon style="color: #18446B">remove</mat-icon>
-                          </button>
-                        </div>
-                      </div>
-                      <div class="mb-8">
-                        <button mat-mini-fab aria-label="Agregar estudio"
-                          (click)="addToList(changingCoveragesList, 'coverages')" type="button"
-                          class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
-                          <mat-icon style="color: #18446B">add</mat-icon>
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                  <hr class=" w-full mb-6 ww-divider">
+                <div
+              class="w-full xl:flex xl:justify-between lg:flex lg:justify-between md:flex md:justify-between sm:flex sm:justify-between">
+              <div class="radio-button-label" style="font-size: 12px !important; max-width: 60vw;">1.a. ¿La persona
+                propuesta para seguro
+                tiene alguna cobertura existente, o alguna solicitud pendiente para seguro de vida o anualidad con esta
+                compañía o cualquier otra?</div>
+              <app-radio-button [group]="disabilityGroup.get('contingent')" name="hasAnotherCoverage"
+                [options]="YesNo" (selected)="selectChange($event)">
+              </app-radio-button>
+            </div>
+            <div *ngIf="disabilityGroup.get('contingent').value.hasAnotherCoverage === 'si'">
+              <div *ngFor="let studies of existingCoveragesList.controls; let i = index"
+                class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
+                <div class="mr-3">
+                  <app-input [group]="disabilityGroup.get('contingent').get('anotherCoverages').get(i.toString())"
+                    name="name" label="Nombre de la Compañia">
+                  </app-input>
                 </div>
+                <div class="mr-3">
+                  <app-number-input
+                    [group]="disabilityGroup.get('contingent').get('anotherCoverages').get(i.toString())"
+                    name="amount" label="Monto del Seguro">
+                  </app-number-input>
+                </div>
+                <div class="mr-3">
+                  <app-input [group]="disabilityGroup.get('contingent').get('anotherCoverages').get(i.toString())"
+                    name="policeNo" label="No. de Póliza">
+                  </app-input>
+                </div>
+                <div class="mr-3">
+                  <app-number-input
+                    [group]="disabilityGroup.get('contingent').get('anotherCoverages').get(i.toString())"
+                    name="adbQuantity" label="Cantidad ADB" min="0">
+                  </app-number-input>
+                </div>
+                <div class="mr-3">
+                  <app-date-picker
+                    [group]="disabilityGroup.get('contingent').get('anotherCoverages').get(i.toString())"
+                    name="date" label="Fecha de Solicitud">
+                  </app-date-picker>
+                </div>
+                <div *ngIf="existingCoveragesList.length > 1"
+                  [ngClass]="{'': existingCoveragesList.length === 1, 'col-span-1': existingCoveragesList.length > 1} ">
+                  <button mat-mini-fab aria-label=" Eliminar estudio"
+                    (click)="removeFormArray(i, existingCoveragesList)" type="button"
+                    class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
+                    <mat-icon style="color: #18446B">remove</mat-icon>
+                  </button>
+                </div>
+              </div>
+              <div class="mb-8">
+                <button mat-mini-fab aria-label="Agregar estudio"
+                  (click)="addToList(existingCoveragesList, 'coverages')" type="button"
+                  class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
+                  <mat-icon style="color: #18446B">add</mat-icon>
+                </button>
+              </div>
+              <hr class=" w-full mb-6 ww-divider">
+              <div
+                class="w-full xl:flex xl:justify-between lg:flex lg:justify-between md:flex md:justify-between sm:flex sm:justify-between">
+                <div class="radio-button-label" style="font-size: 12px !important; max-width: 60vw;">1.b. ¿Tiene la
+                  persona propuesta
+                  para seguro la intención de remplazar, descontinuar o cambiar alguna de estas coberturas?</div>
+                <app-radio-button [group]="disabilityGroup.get('contingent')" name="changeAnotherCoverage"
+                  [options]="YesNo" (selected)="selectChange($event)">
+                </app-radio-button>
+              </div>
+              <div *ngIf="disabilityGroup.get('contingent').value.changeAnotherCoverage === 'si'">
+                <div *ngFor="let studies of changingCoveragesList.controls; let i = index"
+                  class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
+                  <div class="mr-3">
+                    <app-input
+                      [group]="disabilityGroup.get('contingent').get('changingCoverages').get(i.toString())"
+                      name="name" label="Nombre de la Compañia">
+                    </app-input>
+                  </div>
+                  <div class="mr-3">
+                    <app-number-input
+                      [group]="disabilityGroup.get('contingent').get('changingCoverages').get(i.toString())"
+                      name="amount" label="Monto del Seguro">
+                    </app-number-input>
+                  </div>
+                  <div class="mr-3">
+                    <app-input
+                      [group]="disabilityGroup.get('contingent').get('changingCoverages').get(i.toString())"
+                      name="policeNo" label="No. de Póliza">
+                    </app-input>
+                  </div>
+                  <div class="mr-3">
+                    <app-number-input
+                      [group]="disabilityGroup.get('contingent').get('changingCoverages').get(i.toString())"
+                      name="adbQuantity" label="Cantidad ADB" min="0">
+                    </app-number-input>
+                  </div>
+                  <div class="mr-3">
+                    <app-date-picker
+                      [group]="disabilityGroup.get('contingent').get('changingCoverages').get(i.toString())"
+                      name="date" label="Fecha de Solicitud">
+                    </app-date-picker>
+                  </div>
+                  <div *ngIf="changingCoveragesList.length > 1"
+                    [ngClass]="{'': changingCoveragesList.length === 1, 'col-span-1': changingCoveragesList.length > 1} ">
+                    <button mat-mini-fab aria-label=" Eliminar estudio"
+                      (click)="removeFormArray(i, changingCoveragesList)" type="button"
+                      class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
+                      <mat-icon style="color: #18446B">remove</mat-icon>
+                    </button>
+                  </div>
+                </div>
+                <div class="mb-8">
+                  <button mat-mini-fab aria-label="Agregar estudio"
+                    (click)="addToList(changingCoveragesList, 'coverages')" type="button"
+                    class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
+                    <mat-icon style="color: #18446B">add</mat-icon>
+                  </button>
+                </div>
+              </div>
+            </div>
+            <hr class=" w-full mb-6 ww-divider">
 
                 <div > <!-- class="mt-6" -->
                   <label class="formulary-labels"> Nota: En caso de no establecer los datos del(de los) beneficiario(s),
@@ -1838,6 +1845,25 @@
                 </div>
               </div>
             </ng-template>
+            
+            <!-- Seccion G -->
+            <ng-template #formTemplate>
+              <div class="ml-3">
+                <div class="mt-0">
+                  <label style="font-size: 12px;"> En caso de Cesión Bancaria, complete los siguientes datos: </label>
+                </div>
+                <div class='mt-5 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4'>
+                  <app-input class="mr-3" label='Entidad Financiera' name="bankEntity"
+                    [group]="disabilityGroup.get('bankTransfer')"></app-input>
+                  <app-number-input class="mr-3" [group]="disabilityGroup.get('bankTransfer')"
+                    label="Suma cedida" name="amount" min="0"></app-number-input>
+                  <app-number-input class="mr-3" [group]="disabilityGroup.get('bankTransfer')"
+                    label="Contacto" name="contact"></app-number-input>
+                  <div></div>
+                </div>
+              </div>
+            </ng-template>
+
           </app-forms-container>
         </div>
       </mat-tab>

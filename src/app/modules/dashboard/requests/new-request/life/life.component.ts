@@ -26,6 +26,7 @@ import { MatProgressButtonOptions } from 'mat-progress-buttons';
   styleUrls: ['./life.component.scss']
 })
 export class LifeComponent implements OnInit, DoCheck {
+  step: number;
 
   role: string;
   maxWidth: any;
@@ -469,11 +470,11 @@ export class LifeComponent implements OnInit, DoCheck {
     });
 
     if (this.ID != null) {
-      console.log("El ID es " + this.ID);
+      console.log('El ID es ' + this.ID);
       // this.getData(this.ID);
     }
     else if (this.ID == null) {
-      console.log("ID esta vacio")
+      console.log('ID esta vacio');
     }
     if (this.noCotizacion != null) {
       this.searchIdNumber(this.noCotizacion);
@@ -588,13 +589,11 @@ export class LifeComponent implements OnInit, DoCheck {
       releventPlanInformation: this.fb.group({
         type: [{ value: '', disabled: true }, [Validators.required]],
         bonus: ['', [Validators.required]],
-        timeAmount: ['', [Validators.required, Validators.min(1)]],
+        timeAmount: ['', [Validators.required, Validators.min(1), Validators.max(90)]],
         nicotineEstandar: ['', Validators.required],
         coverages: this.fb.group({
-          basicLifeAssuredAmount: ['', Validators.required],
-          basicLifeBonus: ['', Validators.required],
-          survivalAssuredAmount: ['', Validators.required],
-          survivalBonus: ['', Validators.required],
+          basicLife: ['', Validators.required],
+          survival: ['', Validators.required],
         })
       }),
       relevantPaymentInformation: this.fb.group({
@@ -926,9 +925,37 @@ export class LifeComponent implements OnInit, DoCheck {
 
 
     const ageSubscriber = this.newRequest.get('person').get('date').valueChanges.subscribe(value => {
+      const form = this.newRequest.get('releventPlanInformation').get('coverages') as FormGroup;
+
       const timeDiff = Math.abs(Date.now() - new Date(value).getTime());
       const age = Math.floor(timeDiff / (1000 * 3600 * 24) / 365.25);
       this.newRequest.get('person').get('age').setValue(age);
+
+      form.removeControl('advancePaymentOfCapital');
+      form.removeControl('accidentalDeathDismemberment');
+      form.removeControl('disability');
+      form.removeControl('seriousIllnesses');
+      form.removeControl('waiverPremiumPayment');
+
+      if (age >= 18 && age <= 70) {
+        form.addControl('advancePaymentOfCapital', this.fb.control('', Validators.required));
+        form.addControl('accidentalDeathDismemberment', this.fb.control('', Validators.required));
+        form.addControl('disability', this.fb.control('', Validators.required));
+        form.addControl('seriousIllnesses', this.fb.control('', Validators.required));
+        form.addControl('waiverPremiumPayment', this.fb.control('', Validators.required));
+      } else if (age >= 18 && age <= 65) {
+        form.addControl('accidentalDeathDismemberment', this.fb.control('', Validators.required));
+        form.addControl('disability', this.fb.control('', Validators.required));
+        form.addControl('seriousIllnesses', this.fb.control('', Validators.required));
+        form.addControl('waiverPremiumPayment', this.fb.control('', Validators.required));
+      } else if (age >= 18 && age <= 59) {
+        form.addControl('disability', this.fb.control('', Validators.required));
+        form.addControl('seriousIllnesses', this.fb.control('', Validators.required));
+        form.addControl('waiverPremiumPayment', this.fb.control('', Validators.required));
+      } else if (age >= 18 && age <= 55) {
+        form.addControl('waiverPremiumPayment', this.fb.control('', Validators.required));
+      }
+
     });
 
     const weightBmiSubscriber = this.newRequest.get('person').get('weight').valueChanges.subscribe(value => {
@@ -955,6 +982,14 @@ export class LifeComponent implements OnInit, DoCheck {
       this.getBmi();
     });
 
+  }
+
+  setStep(index: number) {
+    this.step = index;
+  }
+  nextStep() {
+
+    this.step++;
   }
 
   getBmi() {

@@ -26,6 +26,7 @@ import { MatProgressButtonOptions } from 'mat-progress-buttons';
   styleUrls: ['./life.component.scss']
 })
 export class LifeComponent implements OnInit, DoCheck {
+  step: number;
 
   role: string;
   maxWidth: any;
@@ -469,11 +470,11 @@ export class LifeComponent implements OnInit, DoCheck {
     });
 
     if (this.ID != null) {
-      console.log("El ID es " + this.ID);
-      this.getData(this.ID);
+      console.log('El ID es ' + this.ID);
+      // this.getData(this.ID);
     }
     else if (this.ID == null) {
-      console.log("ID esta vacio")
+      console.log('ID esta vacio');
     }
     if (this.noCotizacion != null) {
       this.searchIdNumber(this.noCotizacion);
@@ -524,62 +525,6 @@ export class LifeComponent implements OnInit, DoCheck {
         jobDuties: ['', Validators.required],
         countryOfResidence: ['', Validators.required],
       }),
-      contractor: this.fb.group({
-        firstName: ['', Validators.required],
-        secondName: ['', Validators.required],
-        lastName: ['', Validators.required],
-        date: ['', Validators.required],
-        sex: ['', Validators.required],
-        nationality: ['', Validators.required],
-        id2: ['', Validators.required],
-        countryOfResidence: ['', Validators.required],
-        status: ['', Validators.required],
-        countryOfBirth: ['', Validators.required],
-        direction: ['', Validators.required],
-        tel: ['', Validators.required],
-        cel: ['', Validators.required],
-        officeTel: ['', Validators.required],
-        fax: ['', Validators.required],
-        email: ['', Validators.required],
-        company: this.fb.group({
-          name: ['', Validators.required],
-          position: ['', Validators.required],
-          direction: ['', Validators.required],
-          economicActivity: ['', Validators.required],
-          city: ['', Validators.required],
-          country: ['', Validators.required],
-          insurancePurpose: ['', Validators.required],
-          contractorCountry: ['', Validators.required],
-        }),
-      }),
-      payer: this.fb.group({
-        firstName: ['', Validators.required],
-        secondName: ['', Validators.required],
-        lastName: ['', Validators.required],
-        date: ['', Validators.required],
-        sex: ['', Validators.required],
-        nationality: ['', Validators.required],
-        id2: ['', Validators.required],
-        countryOfResidence: ['', Validators.required],
-        status: ['', Validators.required],
-        countryOfBirth: ['', Validators.required],
-        direction: ['', Validators.required],
-        tel: ['', Validators.required],
-        cel: ['', Validators.required],
-        officeTel: ['', Validators.required],
-        fax: ['', Validators.required],
-        email: ['', Validators.required],
-        company: this.fb.group({
-          name: ['', Validators.required],
-          position: ['', Validators.required],
-          direction: ['', Validators.required],
-          economicActivity: ['', Validators.required],
-          city: ['', Validators.required],
-          country: ['', Validators.required],
-          kinship: ['', Validators.required],
-          contractorCountry: ['', Validators.required],
-        }),
-      }),
       financialProfile: this.fb.group({
         annualIncome: ['', Validators.required],
         othersAnnualIncome: ['', Validators.required],
@@ -588,13 +533,11 @@ export class LifeComponent implements OnInit, DoCheck {
       releventPlanInformation: this.fb.group({
         type: [{ value: '', disabled: true }, [Validators.required]],
         bonus: ['', [Validators.required]],
-        timeAmount: ['', [Validators.required, Validators.min(1)]],
+        timeAmount: ['', [Validators.required, Validators.min(1), Validators.max(90)]],
         nicotineEstandar: ['', Validators.required],
         coverages: this.fb.group({
-          basicLifeAssuredAmount: ['', Validators.required],
-          basicLifeBonus: ['', Validators.required],
-          survivalAssuredAmount: ['', Validators.required],
-          survivalBonus: ['', Validators.required],
+          basicLife: ['', Validators.required],
+          survival: ['', Validators.required],
         })
       }),
       relevantPaymentInformation: this.fb.group({
@@ -926,9 +869,37 @@ export class LifeComponent implements OnInit, DoCheck {
 
 
     const ageSubscriber = this.newRequest.get('person').get('date').valueChanges.subscribe(value => {
+      const form = this.newRequest.get('releventPlanInformation').get('coverages') as FormGroup;
+
       const timeDiff = Math.abs(Date.now() - new Date(value).getTime());
       const age = Math.floor(timeDiff / (1000 * 3600 * 24) / 365.25);
       this.newRequest.get('person').get('age').setValue(age);
+
+      form.removeControl('advancePaymentOfCapital');
+      form.removeControl('accidentalDeathDismemberment');
+      form.removeControl('disability');
+      form.removeControl('seriousIllnesses');
+      form.removeControl('waiverPremiumPayment');
+
+      if (age >= 18 && age <= 70) {
+        form.addControl('advancePaymentOfCapital', this.fb.control('', Validators.required));
+        form.addControl('accidentalDeathDismemberment', this.fb.control('', Validators.required));
+        form.addControl('disability', this.fb.control('', Validators.required));
+        form.addControl('seriousIllnesses', this.fb.control('', Validators.required));
+        form.addControl('waiverPremiumPayment', this.fb.control('', Validators.required));
+      } else if (age >= 18 && age <= 65) {
+        form.addControl('accidentalDeathDismemberment', this.fb.control('', Validators.required));
+        form.addControl('disability', this.fb.control('', Validators.required));
+        form.addControl('seriousIllnesses', this.fb.control('', Validators.required));
+        form.addControl('waiverPremiumPayment', this.fb.control('', Validators.required));
+      } else if (age >= 18 && age <= 59) {
+        form.addControl('disability', this.fb.control('', Validators.required));
+        form.addControl('seriousIllnesses', this.fb.control('', Validators.required));
+        form.addControl('waiverPremiumPayment', this.fb.control('', Validators.required));
+      } else if (age >= 18 && age <= 55) {
+        form.addControl('waiverPremiumPayment', this.fb.control('', Validators.required));
+      }
+
     });
 
     const weightBmiSubscriber = this.newRequest.get('person').get('weight').valueChanges.subscribe(value => {
@@ -955,6 +926,35 @@ export class LifeComponent implements OnInit, DoCheck {
       this.getBmi();
     });
 
+  }
+
+  setStep(index: number) {
+    this.step = index;
+  }
+  nextStep(panel?: string) {
+    if (panel === 'laborales') {
+      console.log(!this.newRequest.get('contractor'));
+      console.log(!this.newRequest.get('payer'));
+      console.log((!this.newRequest.get('contractor') && !this.newRequest.get('payer')));
+
+      if (!this.newRequest.get('contractor') && !this.newRequest.get('payer')) {
+        this.step += 3;
+      } else if ((!this.newRequest.get('contractor'))) {
+        this.step += 2;
+      } else if ((!this.newRequest.get('payer'))) {
+        this.step++;
+      } else {
+        this.step++;
+      }
+    } else if (panel === 'contractor') {
+      if (!this.newRequest.get('payer')) {
+        this.step += 2;
+      } else {
+        this.step++;
+      }
+    } else {
+      this.step++;
+    }
   }
 
   getBmi() {
@@ -1078,6 +1078,7 @@ export class LifeComponent implements OnInit, DoCheck {
     const formAQ = this.newRequest.get('activitiesQuestionnaires') as FormGroup;
     const formEP = this.newRequest.get('exposedPerson') as FormGroup;
     const formAR = this.newRequest.get('agentReport') as FormGroup;
+    const formP = this.newRequest.get('person') as FormGroup;
     const formGI = this.newRequest.get('generalInformation') as FormGroup;
     const formHMI = this.newRequest.get('medicalHistory').get('informations') as FormGroup;
     const formWI = this.newRequest.get('medicalHistory').get('informations').get('womenInformation') as FormGroup;
@@ -1169,12 +1170,28 @@ export class LifeComponent implements OnInit, DoCheck {
 
         case 'sameAsPayer':
           formEP.removeControl('payer');
+          this.newRequest.removeControl('payer');
           formEP.removeControl('isPayerExposed');
+          formP.removeControl('payerIsLegalEntity');
+          break;
+
+        case 'payerIsLegalEntity':
+          this.newRequest.removeControl('payer');
+          formP.addControl('payerLegalEntity', this.fb.group({}));
+
           break;
 
         case 'sameAsContractor':
           formEP.removeControl('contractor');
+          this.newRequest.removeControl('contractor');
           formEP.removeControl('isContractorExposed');
+          formP.removeControl('contractorIsLegalEntity');
+          break;
+
+        case 'contractorIsLegalEntity':
+          this.newRequest.removeControl('contractor');
+          formP.addControl('contractorLegalEntity', this.fb.group({}));
+
           break;
 
         case 'isMarried':
@@ -1421,11 +1438,144 @@ export class LifeComponent implements OnInit, DoCheck {
 
         case 'sameAsPayer':
           formEP.addControl('isPayerExposed', this.fb.control('', Validators.required));
+          formP.addControl('payerIsLegalEntity', this.fb.control('', Validators.required));
+
+          this.newRequest.addControl('payer', this.fb.group({
+            firstName: ['', Validators.required],
+            secondName: ['', Validators.required],
+            lastName: ['', Validators.required],
+            date: ['', Validators.required],
+            sex: ['', Validators.required],
+            nationality: ['', Validators.required],
+            id2: ['', Validators.required],
+            countryOfResidence: ['', Validators.required],
+            status: ['', Validators.required],
+            countryOfBirth: ['', Validators.required],
+            direction: ['', Validators.required],
+            tel: ['', Validators.required],
+            cel: ['', Validators.required],
+            officeTel: ['', Validators.required],
+            fax: ['', Validators.required],
+            email: ['', Validators.required],
+            company: this.fb.group({
+              name: ['', Validators.required],
+              position: ['', Validators.required],
+              direction: ['', Validators.required],
+              economicActivity: ['', Validators.required],
+              city: ['', Validators.required],
+              country: ['', Validators.required],
+              kinship: ['', Validators.required],
+              contractorCountry: ['', Validators.required],
+            })
+          }));
           break;
 
         case 'sameAsContractor':
           formEP.addControl('isContractorExposed', this.fb.control('', Validators.required));
+          formP.addControl('contractorIsLegalEntity', this.fb.control('', Validators.required));
+
+          this.newRequest.addControl('contractor', this.fb.group({
+            firstName: ['', Validators.required],
+            secondName: ['', Validators.required],
+            lastName: ['', Validators.required],
+            date: ['', Validators.required],
+            sex: ['', Validators.required],
+            nationality: ['', Validators.required],
+            id2: ['', Validators.required],
+            countryOfResidence: ['', Validators.required],
+            status: ['', Validators.required],
+            countryOfBirth: ['', Validators.required],
+            direction: ['', Validators.required],
+            tel: ['', Validators.required],
+            cel: ['', Validators.required],
+            officeTel: ['', Validators.required],
+            fax: ['', Validators.required],
+            email: ['', Validators.required],
+            company: this.fb.group({
+              name: ['', Validators.required],
+              position: ['', Validators.required],
+              direction: ['', Validators.required],
+              economicActivity: ['', Validators.required],
+              city: ['', Validators.required],
+              country: ['', Validators.required],
+              insurancePurpose: ['', Validators.required],
+              contractorCountry: ['', Validators.required],
+            }),
+          }));
           break;
+
+        case 'contractorIsLegalEntity':
+          if (!this.newRequest.get('contractor')) {
+            this.newRequest.addControl('contractor', this.fb.group({
+              firstName: ['', Validators.required],
+              secondName: ['', Validators.required],
+              lastName: ['', Validators.required],
+              date: ['', Validators.required],
+              sex: ['', Validators.required],
+              nationality: ['', Validators.required],
+              id2: ['', Validators.required],
+              countryOfResidence: ['', Validators.required],
+              status: ['', Validators.required],
+              countryOfBirth: ['', Validators.required],
+              direction: ['', Validators.required],
+              tel: ['', Validators.required],
+              cel: ['', Validators.required],
+              officeTel: ['', Validators.required],
+              fax: ['', Validators.required],
+              email: ['', Validators.required],
+              company: this.fb.group({
+                name: ['', Validators.required],
+                position: ['', Validators.required],
+                direction: ['', Validators.required],
+                economicActivity: ['', Validators.required],
+                city: ['', Validators.required],
+                country: ['', Validators.required],
+                insurancePurpose: ['', Validators.required],
+                contractorCountry: ['', Validators.required],
+              }),
+            }));
+          }
+
+          formP.removeControl('payerLegalEntity');
+
+          break;
+
+        case 'payerIsLegalEntity':
+          if (!this.newRequest.get('payer')) {
+            this.newRequest.addControl('payer', this.fb.group({
+              firstName: ['', Validators.required],
+              secondName: ['', Validators.required],
+              lastName: ['', Validators.required],
+              date: ['', Validators.required],
+              sex: ['', Validators.required],
+              nationality: ['', Validators.required],
+              id2: ['', Validators.required],
+              countryOfResidence: ['', Validators.required],
+              status: ['', Validators.required],
+              countryOfBirth: ['', Validators.required],
+              direction: ['', Validators.required],
+              tel: ['', Validators.required],
+              cel: ['', Validators.required],
+              officeTel: ['', Validators.required],
+              fax: ['', Validators.required],
+              email: ['', Validators.required],
+              company: this.fb.group({
+                name: ['', Validators.required],
+                position: ['', Validators.required],
+                direction: ['', Validators.required],
+                economicActivity: ['', Validators.required],
+                city: ['', Validators.required],
+                country: ['', Validators.required],
+                kinship: ['', Validators.required],
+                contractorCountry: ['', Validators.required],
+              })
+            }));
+          }
+
+          formP.removeControl('contractorLegalEntity');
+
+          break;
+
 
         case 'isMarried':
           formAR.removeControl('marriedInformation');

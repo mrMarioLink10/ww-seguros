@@ -1439,9 +1439,9 @@
                       </app-select>
                     </div>
 
-                    <div *ngIf="disabilityGroup.get('plan').get('rent')" class="mr-3">
+                    <div class="mr-3">
 
-                      <mat-form-field color="accent" appearance="outline" class="w-full" style="font-size: small !important;"
+                      <!-- <mat-form-field color="accent" appearance="outline" class="w-full" style="font-size: small !important;"
                         formGroup="disabilityGroup.get('plan')">
                         <mat-label>Renta Disability</mat-label>
                         <mat-select formControlName="rent">
@@ -1450,10 +1450,10 @@
                         </mat-select>
                         <mat-error *ngIf="disabilityGroup.get('plan').get('rent').touched && !disabilityGroup.get('plan').get('rent').valid ">Debe llenar el campo de Renta Disability
                         </mat-error>
-                      </mat-form-field>
-<!-- 
+                      </mat-form-field> -->
+
                       <app-select name="rent" [options]="rentOptions" [group]="disabilityGroup.get('plan')">
-                      </app-select> -->
+                      </app-select>
                     </div>
 
                   </div>
@@ -1868,22 +1868,22 @@
         </div>
       </mat-tab>
       <mat-tab label="Cuestionarios médicos" *ngIf="questionsLength() > 0" class="mat-tab-forms">
-        <app-hypertension *ngIf="disabilityGroup.get('questionnaires').get('hypertension')"
-          [form]="disabilityGroup.get('questionnaires').get('hypertension')"></app-hypertension>
-        <app-mellitus-diabetes *ngIf="disabilityGroup.get('questionnaires').get('mellitusDiabetes')"
-          [form]="disabilityGroup.get('questionnaires').get('mellitusDiabetes')"></app-mellitus-diabetes>
-        <app-arthritis *ngIf="disabilityGroup.get('questionnaires').get('arthritis')"
-          [form]="disabilityGroup.get('questionnaires').get('arthritis')"></app-arthritis>
-        <app-spine *ngIf="disabilityGroup.get('questionnaires').get('spine')"
-          [form]="disabilityGroup.get('questionnaires').get('spine')"></app-spine>
-        <app-musculoskeletal *ngIf="disabilityGroup.get('questionnaires').get('musculosSkeletal')"
-          [form]="disabilityGroup.get('questionnaires').get('musculosSkeletal')"></app-musculoskeletal>
-        <app-cardiovascular *ngIf="disabilityGroup.get('questionnaires').get('cardiovascular')"
-          [form]="disabilityGroup.get('questionnaires').get('cardiovascular')"></app-cardiovascular>
-        <app-renal-urinary *ngIf="disabilityGroup.get('questionnaires').get('renalUrinary')"
-          [form]="disabilityGroup.get('questionnaires').get('renalUrinary')"></app-renal-urinary>
-        <app-prostatic *ngIf="disabilityGroup.get('questionnaires').get('prostatic')"
-          [form]="disabilityGroup.get('questionnaires').get('prostatic')"></app-prostatic>
+        <app-hypertension *ngIf="disabilityGroup.get('questionnaires').get('solicitudHipertensionArterial')"
+          [form]="disabilityGroup.get('questionnaires').get('solicitudHipertensionArterial')"></app-hypertension>
+        <app-mellitus-diabetes *ngIf="disabilityGroup.get('questionnaires').get('solicitudDiabetes')"
+          [form]="disabilityGroup.get('questionnaires').get('solicitudDiabetes')"></app-mellitus-diabetes>
+        <app-arthritis *ngIf="disabilityGroup.get('questionnaires').get('solicitudArtitris')"
+          [form]="disabilityGroup.get('questionnaires').get('solicitudArtitris')"></app-arthritis>
+        <app-spine *ngIf="disabilityGroup.get('questionnaires').get('columnaVertebralColumnaVertebral')"
+          [form]="disabilityGroup.get('questionnaires').get('columnaVertebralColumnaVertebral')"></app-spine>
+        <app-musculoskeletal *ngIf="disabilityGroup.get('questionnaires').get('solicitudMusculoesqueleticos')"
+          [form]="disabilityGroup.get('questionnaires').get('solicitudMusculoesqueleticos')"></app-musculoskeletal>
+        <app-cardiovascular *ngIf="disabilityGroup.get('questionnaires').get('solicitudCardioVasculares')"
+          [form]="disabilityGroup.get('questionnaires').get('solicitudCardioVasculares')"></app-cardiovascular>
+        <app-renal-urinary *ngIf="disabilityGroup.get('questionnaires').get('solicitudRenales')"
+          [form]="disabilityGroup.get('questionnaires').get('solicitudRenales')"></app-renal-urinary>
+        <app-prostatic *ngIf="disabilityGroup.get('questionnaires').get('solicitudProstatica')"
+          [form]="disabilityGroup.get('questionnaires').get('solicitudProstatica')"></app-prostatic>
       </mat-tab>
 
       <!-- <mat-tab label="Política Antilavado">

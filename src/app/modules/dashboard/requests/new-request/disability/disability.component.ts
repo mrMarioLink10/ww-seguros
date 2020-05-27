@@ -796,8 +796,8 @@ export class DisabilityComponent implements OnInit, DoCheck {
         }
         const questionnaires = this.disabilityGroup.get('questionnaires') as FormGroup;
         if (this.x == 0){
-          if (!this.disabilityGroup.get('questionnaires').get('prostatic')){
-            questionnaires.addControl('prostatic', this.fb.group({}));
+          if (!this.disabilityGroup.get('questionnaires').get('solicitudProstatica')){
+            questionnaires.addControl('solicitudProstatica', this.fb.group({}));
           }
           this.disabilityGroup.get('questions').get('questionnaire').get('sicknessType_radio').setValue('si');
 
@@ -819,8 +819,8 @@ export class DisabilityComponent implements OnInit, DoCheck {
         }
         const questionnaires = this.disabilityGroup.get('questionnaires') as FormGroup;
         if (this.x != 0){
-          if (this.disabilityGroup.get('questionnaires').get('prostatic')){
-            questionnaires.removeControl('prostatic');
+          if (this.disabilityGroup.get('questionnaires').get('solicitudProstatica')){
+            questionnaires.removeControl('solicitudProstatica');
           }
           if (this.disabilityGroup.get('questions').get('questionnaire').get('sicknessType')){
             this.disabilityGroup.get('questions').get('questionnaire').get('sicknessType').get('haveProstatics').setValue('no');
@@ -828,7 +828,7 @@ export class DisabilityComponent implements OnInit, DoCheck {
             this.xx++;
           }
         }
-        if (!this.disabilityGroup.get('questionnaires').get('prostatic') &&
+        if (!this.disabilityGroup.get('questionnaires').get('solicitudProstatica') &&
         !this.disabilityGroup.get('questions').get('questionnaire').get('sicknessType')){
           this.x = 0;
         }
@@ -932,7 +932,7 @@ export class DisabilityComponent implements OnInit, DoCheck {
           break;
 
         case 'haveHypertension':
-          questionnaires.addControl('hypertension', this.fb.group({}));
+          questionnaires.addControl('solicitudHipertensionArterial', this.fb.group({}));
           break;
 
         case 'pep_radio_insured':
@@ -968,31 +968,31 @@ export class DisabilityComponent implements OnInit, DoCheck {
           break;
 
         case 'haveArthritis':
-          questionnaires.addControl('arthritis', this.fb.group({}));
+          questionnaires.addControl('solicitudArtitris', this.fb.group({}));
           break;
 
         case 'haveCardiovascular':
-          questionnaires.addControl('cardiovascular', this.fb.group({}));
+          questionnaires.addControl('solicitudCardioVasculares', this.fb.group({}));
           break;
 
         case 'haveRenalUrinary':
-          questionnaires.addControl('renalUrinary', this.fb.group({}));
+          questionnaires.addControl('solicitudRenales', this.fb.group({}));
           break;
 
         case 'haveMetabolics':
-          questionnaires.addControl('mellitusDiabetes', this.fb.group({}));
+          questionnaires.addControl('solicitudDiabetes', this.fb.group({}));
           break;
 
         case 'haveMusculoSkeletal':
-          questionnaires.addControl('musculosSkeletal', this.fb.group({}));
+          questionnaires.addControl('solicitudMusculoesqueleticos', this.fb.group({}));
           break;
 
         case 'haveProstatics':
-          questionnaires.addControl('prostatic', this.fb.group({}));
+          questionnaires.addControl('solicitudProstatica', this.fb.group({}));
           break;
 
         case 'haveSpine':
-          questionnaires.addControl('spine', this.fb.group({}));
+          questionnaires.addControl('columnaVertebralColumnaVertebral', this.fb.group({}));
           break;
 
         case 'VIH_radio':
@@ -1132,35 +1132,35 @@ export class DisabilityComponent implements OnInit, DoCheck {
           break;
 
         case 'haveHypertension':
-          questionnaires.removeControl('hypertension');
+          questionnaires.removeControl('solicitudHipertensionArterial');
           break;
 
         case 'haveArthritis':
-          questionnaires.removeControl('arthritis');
+          questionnaires.removeControl('solicitudArtitris');
           break;
 
         case 'haveCardiovascular':
-          questionnaires.removeControl('cardiovascular');
+          questionnaires.removeControl('solicitudCardioVasculares');
           break;
 
         case 'haveRenalUrinary':
-          questionnaires.removeControl('renalUrinary');
+          questionnaires.removeControl('solicitudRenales');
           break;
 
         case 'haveMetabolics':
-          questionnaires.removeControl('mellitusDiabetes');
+          questionnaires.removeControl('solicitudDiabetes');
           break;
 
         case 'haveMusculoSkeletal':
-          questionnaires.removeControl('musculosSkeletal');
+          questionnaires.removeControl('solicitudMusculoesqueleticos');
           break;
 
         case 'haveProstatics':
-          questionnaires.removeControl('prostatic');
+          questionnaires.removeControl('solicitudProstatica');
           break;
 
         case 'haveSpine':
-          questionnaires.removeControl('spine');
+          questionnaires.removeControl('columnaVertebralColumnaVertebral');
           break;
 
         case 'pep_radio_insured':
@@ -1346,6 +1346,9 @@ export class DisabilityComponent implements OnInit, DoCheck {
     array = this.formMethods.addElement(array, increment, this.createFormArray(name)).formArray;
 
     console.log(JSON.stringify(this.disabilityGroup.value));
+    // console.log(this.mainFormArray);
+    // console.log(this.mainFormArray.value);
+
     // array.push(this.createFormArray(name));
 
   }
@@ -1415,6 +1418,12 @@ export class DisabilityComponent implements OnInit, DoCheck {
      {
        let key = e;
        let value = obj[key];
+
+       const var2 = {
+        name: key, valor: value
+       };
+       this.selectChange(var2);
+
        if (obj[key] !== null && obj[e] !== undefined && (typeof obj[e]) != "object")
        {
          if ( value !== undefined && value !== null && value !== '')
@@ -1441,13 +1450,14 @@ export class DisabilityComponent implements OnInit, DoCheck {
           }
           if(obj[key].length > 0)
           {
-
               let form = formDataGroup.get(key);
               let arrayForm = [];
               obj[key].forEach( (element) =>{
                 let fbGroup = this.fb.group({
                   id: ['', Validators.required]
                 });
+                // console.log('HOLAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA!');
+                // console.log(typeof obj[key]);
 
                 this.iterateThroughtAllObject(element,  fbGroup);
                 arrayForm.push(fbGroup);

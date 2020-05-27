@@ -571,9 +571,9 @@ export class RacingComponent implements OnInit {
 
     addBasicControls(){
 
-      this.form.addControl('last_names', this.fb.control('', Validators.required));
-      this.form.addControl('name', this.fb.control('', Validators.required));
-      this.form.addControl('date', this.fb.control(new Date(), Validators.required));
+      // this.form.addControl('last_names', this.fb.control('', Validators.required));
+      // this.form.addControl('name', this.fb.control('', Validators.required));
+      // this.form.addControl('date', this.fb.control(new Date(), Validators.required));
       this.form.addControl('competition_date', this.fb.control(new Date(), Validators.required));
       this.form.addControl('formation', this.fb.control('', Validators.required));
       this.form.addControl('past_months', this.fb.group({

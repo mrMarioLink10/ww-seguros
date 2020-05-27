@@ -1,5 +1,5 @@
 import { Component, OnInit, DoCheck, ɵConsole } from '@angular/core';
-import { FormGroup, FormBuilder, FormArray, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, FormArray, Validators, FormControl } from '@angular/forms';
 import { FormArrayGeneratorService } from 'src/app/core/services/forms/form-array-generator.service';
 import { FieldConfig } from 'src/app/shared/components/form-components/models/field-config';
 import { $sex, $country, $res, $time, $family, $weightTypes, $heightTypes } from 'src/app/core/form/objects';
@@ -470,7 +470,7 @@ export class LifeComponent implements OnInit, DoCheck {
 
     if (this.ID != null) {
       console.log("El ID es " + this.ID);
-      // this.getData(this.ID);
+      this.getData(this.ID);
     }
     else if (this.ID == null) {
       console.log("ID esta vacio")
@@ -485,7 +485,7 @@ export class LifeComponent implements OnInit, DoCheck {
     this.role = this.userService.getRoleCotizador();
 
     this.newRequest = this.fb.group({
-      NoC: ['', Validators.required],
+      noC: ['', Validators.required],
       isComplete: [false, Validators.required],
       person: this.fb.group({
         firstName: [{ value: '', disabled: true }, [Validators.required]],
@@ -517,7 +517,7 @@ export class LifeComponent implements OnInit, DoCheck {
         isExposed: ['', Validators.required],
       }),
       employer: this.fb.group({
-        CompanyName: ['', Validators.required],
+        companyName: ['', Validators.required],
         profession: ['', Validators.required],
         economicActivity: ['', Validators.required],
         years: ['', Validators.required],
@@ -1677,6 +1677,7 @@ export class LifeComponent implements OnInit, DoCheck {
 
   addToList(list: any, type: string) {
     list.push(this.createFormArray(type));
+    console.log('json', JSON.stringify(this.newRequest.value));
   }
 
   questionsLength() {
@@ -1746,6 +1747,97 @@ export class LifeComponent implements OnInit, DoCheck {
   print() {
     console.log(this.newRequest);
     console.log('json', JSON.stringify(this.newRequest.get('releventPlanInformation').value));
+  }
+
+  has(object: any, key : any) {
+    return object ? this.hasOwnProperty.call(object, key) : false;
+ }
+
+ iterateThroughtAllObject(obj: any, groupControl: any)
+ {
+   const formDataGroup = groupControl as FormGroup;
+   Object.keys(obj).forEach(e =>
+     {
+       let key = e;
+       let value = obj[key];
+       if (obj[key] !== null && obj[e] !== undefined && (typeof obj[e]) != "object")
+       {
+         if ( value !== undefined && value !== null && value !== '')
+         {
+           if (!this.has(formDataGroup['controls'], key))
+           {
+             formDataGroup.addControl(key, this.fb.control(value));
+           }
+           else
+           {
+
+           const valueFormControl = formDataGroup['controls'][key] as FormControl;
+           valueFormControl.setValue (value);
+         }
+         }
+       }
+       else if (obj[key] !== null && obj[key] !== undefined && (typeof obj[key]) === "object")
+       {
+         if (Array.isArray(obj[key] ))
+         {
+          if (!this.has(formDataGroup['controls'], key))
+          {
+            formDataGroup.removeControl(key);
+          }
+          if(obj[key].length > 0)
+          {
+
+              let form = formDataGroup.get(key);
+              let arrayForm = [];
+              obj[key].forEach( (element) =>{
+                let fbGroup = this.fb.group({
+                  id: ['', Validators.required]
+                });
+
+                this.iterateThroughtAllObject(element,  fbGroup);
+                arrayForm.push(fbGroup);
+              });
+
+
+              formDataGroup.addControl(key, this.fb.array(arrayForm));
+          }
+         }
+         else
+         {
+          if (!this.has(formDataGroup['controls'], key))
+          {
+            formDataGroup.addControl(key, this.fb.group({
+              id: ['', Validators.required]
+            }));
+          }
+
+          let form = formDataGroup.get(key);
+
+          this.iterateThroughtAllObject(obj[key], form);
+          return form;
+         }
+
+       }
+
+   });
+ }
+  getData(id) {
+		this.life.returnData(id).subscribe(data => {
+			// console.log(data.data.asegurado.documentoIdentidad)
+      console.log(data);
+      if (data !== undefined && data.data !== null &&
+        data.data != undefined )
+     {
+       this.ID = data.data.id;
+       this.iterateThroughtAllObject(data.data, this.newRequest);
+
+      // this.disabilityGroup['controls'].num_financial_quote.setValue(data.data.num_financial_quote)
+     }
+
+    });
+
+  this.life.id = null;
+		console.log('this.life.id es igual a ' + this.life.id);
   }
 
 }

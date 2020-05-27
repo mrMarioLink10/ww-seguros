@@ -125,9 +125,17 @@
                 name="sameAsContractor" title="¿Es el contratante el mismo propuesto asegurado?"
                 [options]="diseaseService.yesOrNoOriginal">
               </app-radio-button>
+              <app-radio-button *ngIf="newRequest.get('person').get('contractorIsLegalEntity')" class="mr-3 pt-21"
+                (selected)="selectChange($event)" [group]="newRequest.get('person')" name="contractorIsLegalEntity"
+                title="¿Es el contratante una persona juridica?" [options]="diseaseService.yesOrNoOriginal">
+              </app-radio-button>
               <app-radio-button class="mr-3 pt-21" (selected)="selectChange($event)" [group]="newRequest.get('person')"
                 name="sameAsPayer" title="¿Es el pagador el mismo propuesto asegurado?"
                 [options]="diseaseService.yesOrNoOriginal">
+              </app-radio-button>
+              <app-radio-button *ngIf="newRequest.get('person').get('payerIsLegalEntity')" class="mr-3 pt-21"
+                (selected)="selectChange($event)" [group]="newRequest.get('person')" name="payerIsLegalEntity"
+                title="¿Es el contratante una persona juridica?" [options]="diseaseService.yesOrNoOriginal">
               </app-radio-button>
             </div>
             <mat-action-row class="action-row">
@@ -182,13 +190,13 @@
               </div>
             </div>
             <mat-action-row class="action-row">
-              <button mat-button class="next-button" (click)="nextStep()" type="button">
+              <button mat-button class="next-button" (click)="nextStep('laborales')" type="button">
                 Siguiente
               </button>
             </mat-action-row>
           </mat-expansion-panel>
-          <mat-expansion-panel *ngIf="newRequest.get('person').value.sameAsContractor === 'no'" class="ww-mat-expansion"
-            [expanded]="step === 3" (opened)="setStep(3)">
+          <mat-expansion-panel *ngIf="newRequest.get('contractor')" class="ww-mat-expansion" [expanded]="step === 3"
+            (opened)="setStep(3)">
             <mat-expansion-panel-header class="body-13 icon-blue">
               Contratante (completar sólo si no fuese el asegurado. De ser una Persona Jurídica, completar el Formulario
               Persona Jurídica.)
@@ -289,12 +297,13 @@
               </div>
             </div>
             <mat-action-row class="action-row">
-              <button mat-button class="next-button" (click)="nextStep()" type="button">
+              <button mat-button class="next-button" (click)="nextStep('contractor')" type="button">
                 Siguiente
               </button>
             </mat-action-row>
           </mat-expansion-panel>
-          <mat-expansion-panel class="ww-mat-expansion" [expanded]="step === 4" (opened)="setStep(4)">
+          <mat-expansion-panel *ngIf="newRequest.get('payer')" class="ww-mat-expansion" [expanded]="step === 4"
+            (opened)="setStep(4)">
             <mat-expansion-panel-header class="body-13 icon-blue">
               Pagador (completar sólo si no fuese el contratante. De ser una Persona Jurídica, completar el Formulario
               Persona Jurídica.)
@@ -374,7 +383,7 @@
                 <div class="mr-3">
                   <label for="">País</label>
                   <app-select class="mr-3" [options]="country" name='country'
-                    [group]="newRequest.get('contractor').get('company')"></app-select>
+                    [group]="newRequest.get('payer').get('company')"></app-select>
                 </div>
                 <app-input class="mr-3 pt-21" [group]="newRequest.get('payer').get('company')"
                   label="Propósito del Seguro" name='country'></app-input>
@@ -1490,6 +1499,7 @@
               </button>
             </mat-action-row>
           </mat-expansion-panel>
+
         </mat-accordion>
       </mat-tab>
       <mat-tab label="Cuestionarios Actividades" *ngIf="activitiesQuestionsLength() > 0" class="mat-tab-forms">
@@ -1513,14 +1523,19 @@
         <app-financial-status *ngIf="newRequest.get('questionnaires').get('solicitudEstadoFinancieroConfidencial')"
           [form]="newRequest.get('questionnaires').get('solicitudEstadoFinancieroConfidencial')"></app-financial-status>
       </mat-tab>
-      <mat-tab
-        *ngIf="isFormValid('contractor') && (newRequest.get('contractorQuestionnaires').get('solicitudConozcaASuCliente') || newRequest.get('contractorQuestionnaires').get('knowYourCustomer'))"
+      <mat-tab *ngIf="this.newRequest.get('person').get('contractorLegalEntity')"
         label="Conozca a su cliente - Contratante">
         <app-know-your-client *ngIf="this.role === 'WMA'"
-          [form]="newRequest.get('contractorQuestionnaires').get('solicitudConozcaASuCliente')">
+          [form]="newRequest.get('person').get('contractorLegalEntity')">
         </app-know-your-client>
         <app-know-your-customer *ngIf="this.role === 'WWS'"
-          [form]="newRequest.get('contractorQuestionnaires').get('knowYourCustomer')">
+          [form]="newRequest.get('person').get('contractorLegalEntity')">
+        </app-know-your-customer>
+      </mat-tab>
+      <mat-tab *ngIf="this.newRequest.get('person').get('payerLegalEntity')" label="Conozca a su cliente - Pagador">
+        <app-know-your-client *ngIf="this.role === 'WMA'" [form]="newRequest.get('person').get('payerLegalEntity')">
+        </app-know-your-client>
+        <app-know-your-customer *ngIf="this.role === 'WWS'" [form]="newRequest.get('person').get('payerLegalEntity')">
         </app-know-your-customer>
       </mat-tab>
     </mat-tab-group>

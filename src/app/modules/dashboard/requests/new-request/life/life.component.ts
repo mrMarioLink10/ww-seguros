@@ -525,62 +525,6 @@ export class LifeComponent implements OnInit, DoCheck {
         jobDuties: ['', Validators.required],
         countryOfResidence: ['', Validators.required],
       }),
-      contractor: this.fb.group({
-        firstName: ['', Validators.required],
-        secondName: ['', Validators.required],
-        lastName: ['', Validators.required],
-        date: ['', Validators.required],
-        sex: ['', Validators.required],
-        nationality: ['', Validators.required],
-        id2: ['', Validators.required],
-        countryOfResidence: ['', Validators.required],
-        status: ['', Validators.required],
-        countryOfBirth: ['', Validators.required],
-        direction: ['', Validators.required],
-        tel: ['', Validators.required],
-        cel: ['', Validators.required],
-        officeTel: ['', Validators.required],
-        fax: ['', Validators.required],
-        email: ['', Validators.required],
-        company: this.fb.group({
-          name: ['', Validators.required],
-          position: ['', Validators.required],
-          direction: ['', Validators.required],
-          economicActivity: ['', Validators.required],
-          city: ['', Validators.required],
-          country: ['', Validators.required],
-          insurancePurpose: ['', Validators.required],
-          contractorCountry: ['', Validators.required],
-        }),
-      }),
-      payer: this.fb.group({
-        firstName: ['', Validators.required],
-        secondName: ['', Validators.required],
-        lastName: ['', Validators.required],
-        date: ['', Validators.required],
-        sex: ['', Validators.required],
-        nationality: ['', Validators.required],
-        id2: ['', Validators.required],
-        countryOfResidence: ['', Validators.required],
-        status: ['', Validators.required],
-        countryOfBirth: ['', Validators.required],
-        direction: ['', Validators.required],
-        tel: ['', Validators.required],
-        cel: ['', Validators.required],
-        officeTel: ['', Validators.required],
-        fax: ['', Validators.required],
-        email: ['', Validators.required],
-        company: this.fb.group({
-          name: ['', Validators.required],
-          position: ['', Validators.required],
-          direction: ['', Validators.required],
-          economicActivity: ['', Validators.required],
-          city: ['', Validators.required],
-          country: ['', Validators.required],
-          kinship: ['', Validators.required],
-          contractorCountry: ['', Validators.required],
-        }),
-      }),
       financialProfile: this.fb.group({
         annualIncome: ['', Validators.required],
         othersAnnualIncome: ['', Validators.required],
@@ -987,9 +931,30 @@ export class LifeComponent implements OnInit, DoCheck {
   setStep(index: number) {
     this.step = index;
   }
-  nextStep() {
+  nextStep(panel?: string) {
+    if (panel === 'laborales') {
+      console.log(!this.newRequest.get('contractor'));
+      console.log(!this.newRequest.get('payer'));
+      console.log((!this.newRequest.get('contractor') && !this.newRequest.get('payer')));
 
-    this.step++;
+      if (!this.newRequest.get('contractor') && !this.newRequest.get('payer')) {
+        this.step += 3;
+      } else if ((!this.newRequest.get('contractor'))) {
+        this.step += 2;
+      } else if ((!this.newRequest.get('payer'))) {
+        this.step++;
+      } else {
+        this.step++;
+      }
+    } else if (panel === 'contractor') {
+      if (!this.newRequest.get('payer')) {
+        this.step += 2;
+      } else {
+        this.step++;
+      }
+    } else {
+      this.step++;
+    }
   }
 
   getBmi() {
@@ -1113,6 +1078,7 @@ export class LifeComponent implements OnInit, DoCheck {
     const formAQ = this.newRequest.get('activitiesQuestionnaires') as FormGroup;
     const formEP = this.newRequest.get('exposedPerson') as FormGroup;
     const formAR = this.newRequest.get('agentReport') as FormGroup;
+    const formP = this.newRequest.get('person') as FormGroup;
     const formGI = this.newRequest.get('generalInformation') as FormGroup;
     const formHMI = this.newRequest.get('medicalHistory').get('informations') as FormGroup;
     const formWI = this.newRequest.get('medicalHistory').get('informations').get('womenInformation') as FormGroup;
@@ -1204,12 +1170,28 @@ export class LifeComponent implements OnInit, DoCheck {
 
         case 'sameAsPayer':
           formEP.removeControl('payer');
+          this.newRequest.removeControl('payer');
           formEP.removeControl('isPayerExposed');
+          formP.removeControl('payerIsLegalEntity');
+          break;
+
+        case 'payerIsLegalEntity':
+          this.newRequest.removeControl('payer');
+          formP.addControl('payerLegalEntity', this.fb.group({}));
+
           break;
 
         case 'sameAsContractor':
           formEP.removeControl('contractor');
+          this.newRequest.removeControl('contractor');
           formEP.removeControl('isContractorExposed');
+          formP.removeControl('contractorIsLegalEntity');
+          break;
+
+        case 'contractorIsLegalEntity':
+          this.newRequest.removeControl('contractor');
+          formP.addControl('contractorLegalEntity', this.fb.group({}));
+
           break;
 
         case 'isMarried':
@@ -1456,11 +1438,144 @@ export class LifeComponent implements OnInit, DoCheck {
 
         case 'sameAsPayer':
           formEP.addControl('isPayerExposed', this.fb.control('', Validators.required));
+          formP.addControl('payerIsLegalEntity', this.fb.control('', Validators.required));
+
+          this.newRequest.addControl('payer', this.fb.group({
+            firstName: ['', Validators.required],
+            secondName: ['', Validators.required],
+            lastName: ['', Validators.required],
+            date: ['', Validators.required],
+            sex: ['', Validators.required],
+            nationality: ['', Validators.required],
+            id2: ['', Validators.required],
+            countryOfResidence: ['', Validators.required],
+            status: ['', Validators.required],
+            countryOfBirth: ['', Validators.required],
+            direction: ['', Validators.required],
+            tel: ['', Validators.required],
+            cel: ['', Validators.required],
+            officeTel: ['', Validators.required],
+            fax: ['', Validators.required],
+            email: ['', Validators.required],
+            company: this.fb.group({
+              name: ['', Validators.required],
+              position: ['', Validators.required],
+              direction: ['', Validators.required],
+              economicActivity: ['', Validators.required],
+              city: ['', Validators.required],
+              country: ['', Validators.required],
+              kinship: ['', Validators.required],
+              contractorCountry: ['', Validators.required],
+            })
+          }));
           break;
 
         case 'sameAsContractor':
           formEP.addControl('isContractorExposed', this.fb.control('', Validators.required));
+          formP.addControl('contractorIsLegalEntity', this.fb.control('', Validators.required));
+
+          this.newRequest.addControl('contractor', this.fb.group({
+            firstName: ['', Validators.required],
+            secondName: ['', Validators.required],
+            lastName: ['', Validators.required],
+            date: ['', Validators.required],
+            sex: ['', Validators.required],
+            nationality: ['', Validators.required],
+            id2: ['', Validators.required],
+            countryOfResidence: ['', Validators.required],
+            status: ['', Validators.required],
+            countryOfBirth: ['', Validators.required],
+            direction: ['', Validators.required],
+            tel: ['', Validators.required],
+            cel: ['', Validators.required],
+            officeTel: ['', Validators.required],
+            fax: ['', Validators.required],
+            email: ['', Validators.required],
+            company: this.fb.group({
+              name: ['', Validators.required],
+              position: ['', Validators.required],
+              direction: ['', Validators.required],
+              economicActivity: ['', Validators.required],
+              city: ['', Validators.required],
+              country: ['', Validators.required],
+              insurancePurpose: ['', Validators.required],
+              contractorCountry: ['', Validators.required],
+            }),
+          }));
           break;
+
+        case 'contractorIsLegalEntity':
+          if (!this.newRequest.get('contractor')) {
+            this.newRequest.addControl('contractor', this.fb.group({
+              firstName: ['', Validators.required],
+              secondName: ['', Validators.required],
+              lastName: ['', Validators.required],
+              date: ['', Validators.required],
+              sex: ['', Validators.required],
+              nationality: ['', Validators.required],
+              id2: ['', Validators.required],
+              countryOfResidence: ['', Validators.required],
+              status: ['', Validators.required],
+              countryOfBirth: ['', Validators.required],
+              direction: ['', Validators.required],
+              tel: ['', Validators.required],
+              cel: ['', Validators.required],
+              officeTel: ['', Validators.required],
+              fax: ['', Validators.required],
+              email: ['', Validators.required],
+              company: this.fb.group({
+                name: ['', Validators.required],
+                position: ['', Validators.required],
+                direction: ['', Validators.required],
+                economicActivity: ['', Validators.required],
+                city: ['', Validators.required],
+                country: ['', Validators.required],
+                insurancePurpose: ['', Validators.required],
+                contractorCountry: ['', Validators.required],
+              }),
+            }));
+          }
+
+          formP.removeControl('payerLegalEntity');
+
+          break;
+
+        case 'payerIsLegalEntity':
+          if (!this.newRequest.get('payer')) {
+            this.newRequest.addControl('payer', this.fb.group({
+              firstName: ['', Validators.required],
+              secondName: ['', Validators.required],
+              lastName: ['', Validators.required],
+              date: ['', Validators.required],
+              sex: ['', Validators.required],
+              nationality: ['', Validators.required],
+              id2: ['', Validators.required],
+              countryOfResidence: ['', Validators.required],
+              status: ['', Validators.required],
+              countryOfBirth: ['', Validators.required],
+              direction: ['', Validators.required],
+              tel: ['', Validators.required],
+              cel: ['', Validators.required],
+              officeTel: ['', Validators.required],
+              fax: ['', Validators.required],
+              email: ['', Validators.required],
+              company: this.fb.group({
+                name: ['', Validators.required],
+                position: ['', Validators.required],
+                direction: ['', Validators.required],
+                economicActivity: ['', Validators.required],
+                city: ['', Validators.required],
+                country: ['', Validators.required],
+                kinship: ['', Validators.required],
+                contractorCountry: ['', Validators.required],
+              })
+            }));
+          }
+
+          formP.removeControl('contractorLegalEntity');
+
+          break;
+
 
         case 'isMarried':
           formAR.removeControl('marriedInformation');

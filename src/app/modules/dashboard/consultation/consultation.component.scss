@@ -1,0 +1,13 @@
+.tabs-content{
+  ::ng-deep .mat-tab-header{
+    background-color: #F2F2F2;
+  }
+
+  ::ng-deep .mat-tab-label-active {
+    color: #18446B;
+  }
+
+  ::ng-deep .mat-tab-label {
+    color: #007DB7;
+  }
+}

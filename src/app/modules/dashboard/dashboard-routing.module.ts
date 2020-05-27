@@ -40,7 +40,10 @@ const routes: Routes = [
 				path: 'requests',
 				loadChildren: () => import('./requests/requests.module').then((m) => m.RequestsModule)
 			},
-			
+      {
+        path: 'consult',
+        loadChildren: () => import('./consultation/consultation.module').then((m) => m.ConsultationModule)
+      }
 		]
 	}
 ];

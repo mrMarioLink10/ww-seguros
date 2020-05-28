@@ -44,6 +44,8 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy {
 		'Archivos adjuntos'
 	];
 
+	filesInformation: Observable<any>;
+
 	seguros: FieldConfig = {
 		label: '¿Tiene otro seguro de salud?',
 		options: [
@@ -142,6 +144,8 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy {
 			console.log('ID esta vacio');
 		}
 
+		console.log(this.filesInformation);
+
 		this.authorization = this.fb.group({
 			fecha: [new Date(), Validators.required],
 			informacionAsegurado: this.fb.group({
@@ -227,10 +231,20 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy {
 					break;
 			}
 		});
+
+	}
+
+	fileNameWatcher(type?: string) {
+		if (this.filesInformation) {
+			if (this.filesInformation[type + 'Url']) { return this.filesInformation[type + 'Url']; }
+		}
 	}
 
 	onFileChange(event, formName) {
 		const reader = new FileReader();
+		console.log(this.authorization.get('files'));
+		console.log('event.targe: ', event.target.files);
+		console.log('event: ', event);
 
 		if (event.target.files && event.target.files.length) {
 			const [file] = event.target.files;
@@ -240,8 +254,6 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy {
 				this.authorization.get('files').patchValue({
 					[formName]: reader.result
 				});
-
-				// need to run CD since file load runs outside of zone
 				this.cd.markForCheck();
 			};
 		}
@@ -332,6 +344,7 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy {
 	}
 
 	getData(id) {
+		this.appComponent.showOverlay = true;
 		this.newAuthorization.returnData(id).subscribe(data => {
 			console.log(data);
 			this.authorization.get('informacionAsegurado').get('idNumber').disable();
@@ -376,6 +389,9 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy {
 			this.authorization['controls'].informacionMedica['controls'].isMedicalEqual.setValue(data.data.informacionMedica.isMedicalEqual);
 			// this.authorization['controls'].files['controls'].medicReport.setValue(data.data.files.medicReport);
 			if (data.data.files) {
+				this.filesInformation = data.data.files;
+				console.log(this.filesInformation);
+
 				if (data.data.files.medicReport) {
 					this.authorization.get('files').patchValue({
 						medicReport: data.data.files.medicReport
@@ -442,6 +458,7 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy {
 		});
 		this.newAuthorization.id = null;
 		console.log('this.newAuthorization.id es igual a ' + this.newAuthorization.id);
+		this.appComponent.showOverlay = false;
 	}
 
 	sendForm(form: FormGroup, formType: string, sendType: string, id?: number) {

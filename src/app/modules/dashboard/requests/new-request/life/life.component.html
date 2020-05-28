@@ -13,11 +13,13 @@
       <app-number-input class="mr-3" [group]="newRequest" label="No. de Cotización" name='noC'></app-number-input>
 
       <div class="flex">
-        <button *ngIf="ID === null || ID === undefined" (click)="searchIdNumber(newRequest.value.noC)"
-          class="nofocus flex justify-center small-search-button" style="display: -webkit-box">
+        <button *ngIf="(ID === null || ID === undefined) && (noCotizacion === null || noCotizacion === undefined)"
+          (click)="searchIdNumber(newRequest.value.noC)" class="nofocus flex justify-center small-search-button"
+          style="display: -webkit-box">
           <img src="/assets/iconos/search-icon.svg">
         </button>
-        <button (click)="newQuote()" class="nofocus flex justify-center small-search-button ml-3"
+        <button *ngIf="(ID === null || ID === undefined) && (noCotizacion === null || noCotizacion === undefined)"
+          (click)="newQuote()" class="nofocus flex justify-center small-search-button ml-3"
           style="display: -webkit-box; color: white;">
           <mat-icon style="font-weight: 900;  margin-top: 7px;">add</mat-icon>
         </button>
@@ -531,7 +533,7 @@
                   </div>
                   <app-number-input isMoney="true" class="mr-3"
                     [group]="newRequest.get('releventPlanInformation').get('coverages')" label="Suma Asegurada"
-                    (keyup)="needFinancialStatusCalculator()" name="basicLife">
+                    name="basicLife">
                   </app-number-input>
                 </div>
                 <div class="mr-3">
@@ -549,8 +551,8 @@
                     Muerte Accidental y Desmembramiento
                   </div>
                   <app-number-input isMoney="true" class="mr-3"
-                    [group]="newRequest.get('releventPlanInformation').get('coverages')" label="Suma Asegurada"
-                    name="accidentalDeathDismemberment">
+                    [group]="newRequest.get('releventPlanInformation').get('coverages')" maxInfo="400,000"
+                    label="Suma Asegurada" name="accidentalDeathDismemberment">
                   </app-number-input>
                 </div>
                 <div class="mr-3" *ngIf="newRequest.get('releventPlanInformation').get('coverages').get('disability')">
@@ -558,8 +560,8 @@
                     Invalidez Total y Permanente
                   </div>
                   <app-number-input isMoney="true" class="mr-3"
-                    [group]="newRequest.get('releventPlanInformation').get('coverages')" label="Suma Asegurada"
-                    name="disability">
+                    [group]="newRequest.get('releventPlanInformation').get('coverages')" maxInfo="400,000"
+                    label="Suma Asegurada" name="disability">
                   </app-number-input>
                 </div>
                 <div class="mr-3"
@@ -568,8 +570,8 @@
                     Enfermedades Graves
                   </div>
                   <app-number-input isMoney="true" class="mr-3"
-                    [group]="newRequest.get('releventPlanInformation').get('coverages')" label="Suma Asegurada"
-                    name="seriousIllnesses">
+                    [group]="newRequest.get('releventPlanInformation').get('coverages')" maxInfo="400,000"
+                    label="Suma Asegurada" name="seriousIllnesses">
                   </app-number-input>
                 </div>
                 <div class="mr-3"
@@ -589,8 +591,8 @@
                   </div>
                   <div style="max-width: 50%;">
                     <app-number-input isMoney="true" class="mr-3"
-                      [group]="newRequest.get('releventPlanInformation').get('coverages')" label="Suma Asegurada"
-                      name="advancePaymentOfCapital">
+                      [group]="newRequest.get('releventPlanInformation').get('coverages')" maxInfo="300,000"
+                      label="Suma Asegurada" name="advancePaymentOfCapital">
                     </app-number-input>
                   </div>
                 </div>
@@ -664,12 +666,26 @@
                           <mat-icon style="color: #18446B">remove</mat-icon>
                         </button>
                       </div>
-                      <mat-divider class="pt-5"></mat-divider>
+                      <hr class="mt-4 w-full mb-3 ww-divider">
+
                     </div>
                   </div>
                 </div>
               </div>
               <div>
+                <label *ngIf="isBenefitMinorThan100('primaryBenefits', 'dependentsC')"
+                  class="formulary-labels text-red-300" style="color: #c53030;">
+                  La suma de los porcentajes de
+                  beneficios es menor a 100%,
+                  por favor revisar. </label>
+
+                <label *ngIf="isBenefitMajorThan100('primaryBenefits', 'dependentsC')"
+                  class="formulary-labels text-red-300" style="color: #c53030;">
+                  La suma de los porcentajes de
+                  beneficios es mayor a 100%,
+                  por favor revisar. </label>
+              </div>
+              <div class="mt-2">
                 <p>Si a mi fallecimiento alguno de mis Beneficiarios Primarios es menor de edad, el beneficio
                   correspondiente será entregado a</p><br>
                 <div class='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-4'>
@@ -733,14 +749,25 @@
                           <mat-icon style="color: #18446B">remove</mat-icon>
                         </button>
                       </div>
-                      <hr class="mt-4 w-full mb-6 ww-divider">
-
-
+                      <hr class="mt-4 w-full mb-3 ww-divider">
                     </div>
                   </div>
                 </div>
               </div>
               <div>
+                <label *ngIf="isBenefitMinorThan100('contingentBeneficiary', 'dependentsC')"
+                  class="formulary-labels text-red-300" style="color: #c53030;">
+                  La suma de los porcentajes de
+                  beneficios es menor a 100%,
+                  por favor revisar. </label>
+
+                <label *ngIf="isBenefitMajorThan100('contingentBeneficiary', 'dependentsC')"
+                  class="formulary-labels text-red-300" style="color: #c53030;">
+                  La suma de los porcentajes de
+                  beneficios es mayor a 100%,
+                  por favor revisar. </label>
+              </div>
+              <div class="mt-2">
                 <div class="radio-button-label" style="font-size: 12px !important; ">Si a mi fallecimiento alguno de mis
                   Beneficiarios Primarios es menor de edad, el beneficio
                   correspondiente será entregado a</div><br>
@@ -1499,6 +1526,141 @@
               </button>
             </mat-action-row>
           </mat-expansion-panel>
+          <mat-expansion-panel class="ww-mat-expansion" [expanded]="step === 14" (opened)="setStep(14)">
+            <mat-expansion-panel-header class="body-13 icon-blue">
+              Archivos adjuntos
+            </mat-expansion-panel-header>
+            <div [formGroup]="newRequest.get('files')">
+              <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4 ">
+                <mat-form-field class="mr-3" appearance="outline"
+                  *ngIf="this.newRequest.get('files').get('healthDeclaration')">
+                  <mat-label> Declaración de salud </mat-label>
+                  <ngx-mat-file-input formControlName="healthDeclaration"
+                    [valuePlaceholder]="fileNameWatcher('healthDeclaration')"
+                    (change)="onFileChange($event, 'healthDeclaration')"></ngx-mat-file-input>
+                  <mat-icon style="color: #e2e2e2;" matSuffix>publish</mat-icon>
+                </mat-form-field>
+                <mat-form-field class="mr-3" appearance="outline" *ngIf="this.newRequest.get('files').get('id2')">
+                  <mat-label> Cédula de identidad o pasaporte vigente </mat-label>
+                  <ngx-mat-file-input formControlName="id2" [valuePlaceholder]="fileNameWatcher('id2')"
+                    (change)="onFileChange($event, 'id2')"></ngx-mat-file-input>
+                  <mat-icon style="color: #e2e2e2;" matSuffix>publish</mat-icon>
+                </mat-form-field>
+                <mat-form-field class="mr-3" appearance="outline" *ngIf="this.newRequest.get('files').get('medicExam')">
+                  <mat-label> Examen médico </mat-label>
+                  <ngx-mat-file-input formControlName="medicExam" [valuePlaceholder]="fileNameWatcher('medicExam')"
+                    (change)="onFileChange($event, 'medicExam')"></ngx-mat-file-input>
+                  <mat-icon style="color: #e2e2e2;" matSuffix>publish</mat-icon>
+                </mat-form-field>
+                <mat-form-field class="mr-3" appearance="outline" *ngIf="this.newRequest.get('files').get('glycemia')">
+                  <mat-label> Glicemia </mat-label>
+                  <ngx-mat-file-input formControlName="glycemia" [valuePlaceholder]="fileNameWatcher('glycemia')"
+                    (change)="onFileChange($event, 'glycemia')"></ngx-mat-file-input>
+                  <mat-icon style="color: #e2e2e2;" matSuffix>publish</mat-icon>
+                </mat-form-field>
+                <mat-form-field class="mr-3" appearance="outline" *ngIf="this.newRequest.get('files').get('hbA1C')">
+                  <mat-label> hbA1C </mat-label>
+                  <ngx-mat-file-input formControlName="hbA1C" [valuePlaceholder]="fileNameWatcher('hbA1C')"
+                    (change)="onFileChange($event, 'hbA1C')"></ngx-mat-file-input>
+                  <mat-icon style="color: #e2e2e2;" matSuffix>publish</mat-icon>
+                </mat-form-field>
+                <mat-form-field class="mr-3" appearance="outline"
+                  *ngIf="this.newRequest.get('files').get('totalCholestor')">
+                  <mat-label> Cólesterol total </mat-label>
+                  <ngx-mat-file-input formControlName="totalCholestor"
+                    [valuePlaceholder]="fileNameWatcher('totalCholestor')"
+                    (change)="onFileChange($event, 'totalCholestor')"></ngx-mat-file-input>
+                  <mat-icon style="color: #e2e2e2;" matSuffix>publish</mat-icon>
+                </mat-form-field>
+                <mat-form-field class="mr-3" appearance="outline" *ngIf="this.newRequest.get('files').get('HDL')">
+                  <mat-label> HDL </mat-label>
+                  <ngx-mat-file-input formControlName="HDL" [valuePlaceholder]="fileNameWatcher('HDL')"
+                    (change)="onFileChange($event, 'HDL')"></ngx-mat-file-input>
+                  <mat-icon style="color: #e2e2e2;" matSuffix>publish</mat-icon>
+                </mat-form-field>
+                <mat-form-field class="mr-3" appearance="outline"
+                  *ngIf="this.newRequest.get('files').get('triglycerides')">
+                  <mat-label> Triglicéridos </mat-label>
+                  <ngx-mat-file-input formControlName="triglycerides"
+                    [valuePlaceholder]="fileNameWatcher('triglycerides')"
+                    (change)="onFileChange($event, 'triglycerides')"></ngx-mat-file-input>
+                  <mat-icon style="color: #e2e2e2;" matSuffix>publish</mat-icon>
+                </mat-form-field>
+                <mat-form-field class="mr-3" appearance="outline"
+                  *ngIf="this.newRequest.get('files').get('creatinine')">
+                  <mat-label> Creatinina </mat-label>
+                  <ngx-mat-file-input formControlName="creatinine" [valuePlaceholder]="fileNameWatcher('creatinine')"
+                    (change)="onFileChange($event, 'creatinine')"></ngx-mat-file-input>
+                  <mat-icon style="color: #e2e2e2;" matSuffix>publish</mat-icon>
+                </mat-form-field>
+                <mat-form-field class="mr-3" appearance="outline" *ngIf="this.newRequest.get('files').get('AST')">
+                  <mat-label> AST </mat-label>
+                  <ngx-mat-file-input formControlName="AST" [valuePlaceholder]="fileNameWatcher('AST')"
+                    (change)="onFileChange($event, 'AST')"></ngx-mat-file-input>
+                  <mat-icon style="color: #e2e2e2;" matSuffix>publish</mat-icon>
+                </mat-form-field>
+                <mat-form-field class="mr-3" appearance="outline" *ngIf="this.newRequest.get('files').get('ALT')">
+                  <mat-label> ALT </mat-label>
+                  <ngx-mat-file-input formControlName="ALT" [valuePlaceholder]="fileNameWatcher('ALT')"
+                    (change)="onFileChange($event, 'ALT')"></ngx-mat-file-input>
+                  <mat-icon style="color: #e2e2e2;" matSuffix>publish</mat-icon>
+                </mat-form-field>
+                <mat-form-field class="mr-3" appearance="outline" *ngIf="this.newRequest.get('files').get('GGT')">
+                  <mat-label> GGT </mat-label>
+                  <ngx-mat-file-input formControlName="GGT" [valuePlaceholder]="fileNameWatcher('GGT')"
+                    (change)="onFileChange($event, 'GGT')"></ngx-mat-file-input>
+                  <mat-icon style="color: #e2e2e2;" matSuffix>publish</mat-icon>
+                </mat-form-field>
+                <mat-form-field class="mr-3" appearance="outline" *ngIf="this.newRequest.get('files').get('HIV')">
+                  <mat-label> HIV </mat-label>
+                  <ngx-mat-file-input formControlName="HIV" [valuePlaceholder]="fileNameWatcher('HIV')"
+                    (change)="onFileChange($event, 'HIV')"></ngx-mat-file-input>
+                  <mat-icon style="color: #e2e2e2;" matSuffix>publish</mat-icon>
+                </mat-form-field>
+                <mat-form-field class="mr-3" appearance="outline" *ngIf="this.newRequest.get('files').get('cocaine')">
+                  <mat-label> Cocaína </mat-label>
+                  <ngx-mat-file-input formControlName="cocaine" [valuePlaceholder]="fileNameWatcher('cocaine')"
+                    (change)="onFileChange($event, 'cocaine')"></ngx-mat-file-input>
+                  <mat-icon style="color: #e2e2e2;" matSuffix>publish</mat-icon>
+                </mat-form-field>
+                <mat-form-field class="mr-3" appearance="outline" *ngIf="this.newRequest.get('files').get('nicotine')">
+                  <mat-label> Nicotina </mat-label>
+                  <ngx-mat-file-input formControlName="nicotine" [valuePlaceholder]="fileNameWatcher('nicotine')"
+                    (change)="onFileChange($event, 'nicotine')"></ngx-mat-file-input>
+                  <mat-icon style="color: #e2e2e2;" matSuffix>publish</mat-icon>
+                </mat-form-field>
+                <mat-form-field class="mr-3" appearance="outline"
+                  *ngIf="this.newRequest.get('files').get('urineAnalysis')">
+                  <mat-label> Analísis químico y microscópico de orina </mat-label>
+                  <ngx-mat-file-input formControlName="urineAnalysis"
+                    [valuePlaceholder]="fileNameWatcher('urineAnalysis')"
+                    (change)="onFileChange($event, 'urineAnalysis')"></ngx-mat-file-input>
+                  <mat-icon style="color: #e2e2e2;" matSuffix>publish</mat-icon>
+                </mat-form-field>
+                <mat-form-field class="mr-3" appearance="outline"
+                  *ngIf="this.newRequest.get('files').get('restingElectrocardiogram')">
+                  <mat-label> Electrocardiograma en reposo </mat-label>
+                  <ngx-mat-file-input formControlName="restingElectrocardiogram"
+                    [valuePlaceholder]="fileNameWatcher('restingElectrocardiogram')"
+                    (change)="onFileChange($event, 'restingElectrocardiogram')"></ngx-mat-file-input>
+                  <mat-icon style="color: #e2e2e2;" matSuffix>publish</mat-icon>
+                </mat-form-field>
+                <mat-form-field class="mr-3" appearance="outline"
+                  *ngIf="this.newRequest.get('files').get('stressElectrocardiogram')">
+                  <mat-label> Electrocardiograma de esfuerzo </mat-label>
+                  <ngx-mat-file-input formControlName="stressElectrocardiogram"
+                    [valuePlaceholder]="fileNameWatcher('stressElectrocardiogram')"
+                    (change)="onFileChange($event, 'stressElectrocardiogram')"></ngx-mat-file-input>
+                  <mat-icon style="color: #e2e2e2;" matSuffix>publish</mat-icon>
+                </mat-form-field>
+              </div>
+            </div>
+            <mat-action-row class="action-row">
+              <button mat-button class="next-button" (click)="nextStep()" type="button">
+                Siguiente
+              </button>
+            </mat-action-row>
+          </mat-expansion-panel>
 
         </mat-accordion>
       </mat-tab>
@@ -1544,8 +1706,8 @@
     <button mat-button class="cancel-form-button" style="margin-right: 7.5px !important;"
       (click)="formHandler.sendForm(newRequest, 'life', 'cancel')" type="submit">Cancelar</button>
     <button mat-button class="save-button" style="margin-right: 7.5px !important;"
-      (click)="formHandler.sendForm(newRequest, 'life', 'save')" type="submit">Guardar</button>
-    <button mat-button class="send-button" (click)="formHandler.sendForm(newRequest, 'life', 'send')"
+      (click)="sendForm(newRequest, 'new-authorization', 'save')" type="submit">Guardar</button>
+    <button mat-button class="send-button" (click)="sendForm(newRequest, 'new-authorization', 'send', ID)"
       type="submit">Enviar</button>
   </div>
 </div>

@@ -294,14 +294,32 @@ export class FormHandlerService {
 									break;
 
 								case 'life':
-									this.lifeService.postRequest(json)
-										.subscribe(res => {
-											this.correctSend(res, dialog, dataClosing, route);
-
-										}, (err) => {
-											this.badSend(err, dialog);
-
-										});
+									if (ID) {
+										appComponent.showOverlay = true;
+										this.lifeService.sendRequest(ID)
+											.subscribe(res => {
+												appComponent.showOverlay = false;
+												this.correctSend(res, dialog, dataClosing, route);
+											}, (err) => {
+												appComponent.showOverlay = false;
+												this.badSend(err, dialog);
+											});
+									} else {
+										appComponent.showOverlay = true;
+										this.lifeService.postRequest(json)
+											.subscribe((res: any) => {
+												if (res.data.id) {
+													this.lifeService.sendRequest(res.data.id)
+														.subscribe(response => {
+															appComponent.showOverlay = false;
+															this.correctSend(response, dialog, dataClosing, route);
+														});
+												}
+											}, (err) => {
+												appComponent.showOverlay = false;
+												this.badSend(err, dialog);
+											});
+									}
 									break;
 
 								case 'major-expenses':

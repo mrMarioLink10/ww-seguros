@@ -178,19 +178,22 @@
           <!-- <input id="file" type="file" class="form-control"> -->
           <mat-form-field class="mr-3" appearance="outline">
             <mat-label>Informe médico</mat-label>
-            <ngx-mat-file-input placeholder="Basic outline placeholder" (change)="onFileChange($event, 'medicReport')">
+            <ngx-mat-file-input placeholder="Basic outline placeholder"
+              [valuePlaceholder]="fileNameWatcher('medicReport')" (change)="onFileChange($event, 'medicReport')">
             </ngx-mat-file-input>
             <mat-icon style="color: #e2e2e2;" matSuffix>publish</mat-icon>
           </mat-form-field>
           <mat-form-field class="mr-3" appearance="outline">
             <mat-label>Estudios</mat-label>
-            <ngx-mat-file-input placeholder="Estudios" (change)="onFileChange($event, 'studies')">
+            <ngx-mat-file-input placeholder="Estudios" [valuePlaceholder]="fileNameWatcher('studies')"
+              (change)="onFileChange($event, 'studies')">
             </ngx-mat-file-input>
             <mat-icon style="color: #e2e2e2;" matSuffix>publish</mat-icon>
           </mat-form-field>
           <mat-form-field class="mr-3" appearance="outline">
             <mat-label>Indicacion</mat-label>
-            <ngx-mat-file-input placeholder="Indicacion" (change)="onFileChange($event, 'indication')">
+            <ngx-mat-file-input placeholder="Indicacion" [valuePlaceholder]="fileNameWatcher('indications')"
+              (change)="onFileChange($event, 'indication')">
             </ngx-mat-file-input>
             <mat-icon style="color: #e2e2e2;" matSuffix>publish</mat-icon>
           </mat-form-field>

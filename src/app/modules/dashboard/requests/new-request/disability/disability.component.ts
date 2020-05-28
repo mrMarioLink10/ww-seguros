@@ -901,7 +901,7 @@ export class DisabilityComponent implements OnInit, DoCheck {
           this.inpatientCareArray = this.disabilityGroup.get('questions').get('questionnaire').get('inpatientCare_array') as FormArray;
           break;
 
-        case 'bloodSick_radio': 
+        case 'bloodSick_radio':
           formQ.addControl('bloodSick_array', this.fb.array([this.formMethods.createItem(this.bloodSickGroup)]));
           this.bloodSickArray = this.disabilityGroup.get('questions').get('questionnaire').get('bloodSick_array') as FormArray;
           break;
@@ -1408,74 +1408,64 @@ export class DisabilityComponent implements OnInit, DoCheck {
     return object ? this.hasOwnProperty.call(object, key) : false;
  }
 
- iterateThroughtAllObject(obj: any, groupControl: any)
- {
-   const formDataGroup = groupControl as FormGroup;
-   Object.keys(obj).forEach(e =>
-     {
-       let key = e;
-       let value = obj[key];
-       if (obj[key] !== null && obj[e] !== undefined && (typeof obj[e]) != "object")
-       {
-         if ( value !== undefined && value !== null && value !== '')
-         {
-           if (!this.has(formDataGroup['controls'], key))
-           {
-             formDataGroup.addControl(key, this.fb.control(value));
-           }
-           else
-           {
 
-           const valueFormControl = formDataGroup['controls'][key] as FormControl;
-           valueFormControl.setValue (value);
-         }
-         }
-       }
-       else if (obj[key] !== null && obj[key] !== undefined && (typeof obj[key]) === "object")
-       {
-         if (Array.isArray(obj[key] ))
-         {
-          if (!this.has(formDataGroup['controls'], key))
-          {
-            formDataGroup.removeControl(key);
-          }
-          if(obj[key].length > 0)
-          {
+ iterateThroughtAllObject(obj: any, groupControl: any) {
+  const formDataGroup = groupControl as FormGroup;
+  Object.keys(obj).forEach(e => {
+    const key = e;
+    const value = obj[key];
+    if (value !== undefined && (typeof value) !== 'object') {
 
-              let form = formDataGroup.get(key);
-              let arrayForm = [];
-              obj[key].forEach( (element) =>{
-                let fbGroup = this.fb.group({
-                  id: ['', Validators.required]
-                });
+      if (value !== undefined ) {
+        const valueToSet = (value === null) ? "" : value;
+        if (!this.has(formDataGroup.controls, key)) {
+          formDataGroup.addControl(key, this.fb.control(valueToSet));
+        } else {
 
-                this.iterateThroughtAllObject(element,  fbGroup);
-                arrayForm.push(fbGroup);
-              });
+          const valueFormControl = formDataGroup.controls[key] as FormControl;
+          valueFormControl.setValue(valueToSet);
+        }
+      }
+    }
+    else if (value !== null && value !== undefined && (typeof value) === 'object') {
+      if (Array.isArray(value)) {
+        if (this.has(formDataGroup.controls, key)) {
+          formDataGroup.removeControl(key);
+        }
+        if (value.length > 0) {
 
-
-              formDataGroup.addControl(key, this.fb.array(arrayForm));
-          }
-         }
-         else
-         {
-          if (!this.has(formDataGroup['controls'], key))
-          {
-            formDataGroup.addControl(key, this.fb.group({
+          const arrayForm = [];
+          value.forEach((element) => {
+            const fbGroup = this.fb.group({
               id: ['', Validators.required]
-            }));
-          }
+            });
 
-          let form = formDataGroup.get(key);
+            this.iterateThroughtAllObject(element, fbGroup);
+            arrayForm.push(fbGroup);
+          });
 
-          this.iterateThroughtAllObject(obj[key], form);
-          return form;
-         }
 
-       }
+          formDataGroup.addControl(key, this.fb.array(arrayForm));
+        }
+      }
+      else
+      {
+        if (!this.has(formDataGroup.controls, key)) {
+          formDataGroup.addControl(key, this.fb.group({
+            id: ['', Validators.required]
+          }));
+        }
 
-   });
- }
+        const form = formDataGroup.get(key);
+
+        this.iterateThroughtAllObject(value, form);
+
+      }
+
+    }
+
+  });
+}
   getData(id) {
 		this.disabilityService.returnData(id).subscribe(data => {
 			// console.log(data.data.asegurado.documentoIdentidad)
@@ -1485,7 +1475,7 @@ export class DisabilityComponent implements OnInit, DoCheck {
      {
        this.ID = data.data.id;
        this.iterateThroughtAllObject(data.data, this.disabilityGroup);
-
+console.log(this.disabilityGroup);
       //this.disabilityGroup['controls'].num_financial_quote.setValue(data.data.num_financial_quote)
      }
 

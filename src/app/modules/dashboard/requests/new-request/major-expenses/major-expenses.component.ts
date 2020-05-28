@@ -819,9 +819,10 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
       console.log(index);
     }*/
     // for(let index in this.dependentsFormArray.controls)
-    if (this.newRequest.get('dependents').get('allDependents') !== undefined) {
+    if (this.newRequest.get('dependents').get('allDependents') !== undefined ) {
       const arrayElement = this.newRequest.get('dependents').get('allDependents') as FormArray;
       for (let index = 0; index < arrayElement.length; index++) {
+
         // tslint:disable-next-line: max-line-length
         const isBmiEventAssigned = this.newRequest.get('dependents').get('allDependents').get(index.toString()).get('isBmiEventAssigned').value;
 
@@ -1425,26 +1426,28 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
     Object.keys(obj).forEach(e => {
       const key = e;
       const value = obj[key];
-      if (obj[key] !== null && obj[e] !== undefined && (typeof obj[e]) !== 'object') {
-        if (value !== undefined && value !== null && value !== '') {
+      if (value !== undefined && (typeof value) !== 'object') {
+
+        if (value !== undefined ) {
+          const valueToSet = (value === null) ? "" : value;
           if (!this.has(formDataGroup.controls, key)) {
-            formDataGroup.addControl(key, this.fb.control(value));
+            formDataGroup.addControl(key, this.fb.control(valueToSet));
           } else {
 
             const valueFormControl = formDataGroup.controls[key] as FormControl;
-            valueFormControl.setValue(value);
+            valueFormControl.setValue(valueToSet);
           }
         }
-      } else if (obj[key] !== null && obj[key] !== undefined && (typeof obj[key]) === 'object') {
-        if (Array.isArray(obj[key])) {
-          if (!this.has(formDataGroup.controls, key)) {
+      }
+      else if (value !== null && value !== undefined && (typeof value) === 'object') {
+        if (Array.isArray(value)) {
+          if (this.has(formDataGroup.controls, key)) {
             formDataGroup.removeControl(key);
           }
-          if (obj[key].length > 0) {
+          if (value.length > 0) {
 
-            const form = formDataGroup.get(key);
             const arrayForm = [];
-            obj[key].forEach((element) => {
+            value.forEach((element) => {
               const fbGroup = this.fb.group({
                 id: ['', Validators.required]
               });
@@ -1456,7 +1459,9 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
 
             formDataGroup.addControl(key, this.fb.array(arrayForm));
           }
-        } else {
+        }
+        else
+        {
           if (!this.has(formDataGroup.controls, key)) {
             formDataGroup.addControl(key, this.fb.group({
               id: ['', Validators.required]
@@ -1465,42 +1470,32 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
 
           const form = formDataGroup.get(key);
 
-          this.iterateThroughtAllObject(obj[key], form);
-          return form;
+          this.iterateThroughtAllObject(value, form);
+
         }
 
       }
 
-    });
-  }
-  iterateThroughtObject(obj: any, groupControl: any) {
-    const formDataGroup = groupControl as FormGroup;
-    Object.keys(obj).forEach(e => {
-      const key = e;
-      const value = obj[e];
-      if (obj[e] !== undefined && (typeof obj[e]) !== 'object') {
-        //  console.log(this.has(formDataGroup['controls'], key));
-        if (value !== undefined && value !== null && value !== '') {
-          if (!this.has(formDataGroup.controls, key)) {
-            formDataGroup.addControl(key, this.fb.control(value));
-          } else {
-
-            const valueFormControl = formDataGroup.controls[e] as FormControl;
-            valueFormControl.setValue(value);
-          }
-        }
-      }
     });
   }
   getData(id) {
     this.majorExpensesService.returnData(id).subscribe(data => {
-      // console.log(data);
+      //console.log(data);
       // console.log( this.newRequest);
       if (data !== undefined && data.data !== null &&
         data.data !== undefined) {
         this.ID = data.data.id;
         this.iterateThroughtAllObject(data.data, this.newRequest);
+        console.log( this.newRequest);
         this.AddEventOnEachDependentVariable();
+        if (this.newRequest.get('questionsB').get('familyWithDiseases') !== undefined && this.newRequest.get('questionsB').get('familyWithDiseases') !== null)
+        {
+          this.familyWithDiseasesList = this.newRequest.get('questionsB').get('familyWithDiseases') as FormArray;
+        }
+        else
+        {
+          this.familyWithDiseasesList = null;
+        }
         this.isFormValidToFill = true;
         /*let person = this.newRequest.get('person');
         this.iterateThroughtObject(data.data.person, person);

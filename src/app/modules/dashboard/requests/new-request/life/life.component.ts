@@ -471,7 +471,7 @@ export class LifeComponent implements OnInit, DoCheck {
 
     if (this.ID != null) {
       console.log('El ID es ' + this.ID);
-      // this.getData(this.ID);
+      this.getData(this.ID);
     }
     else if (this.ID == null) {
       console.log('ID esta vacio');

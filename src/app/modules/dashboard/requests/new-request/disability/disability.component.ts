@@ -1465,6 +1465,12 @@ export class DisabilityComponent implements OnInit, DoCheck {
 
 
               formDataGroup.addControl(key, this.fb.array(arrayForm));
+              // if (key == 'claim_radio'){
+              //   // tslint:disable-next-line: prefer-for-of
+              //   for (let x = 0; x < obj[key].length; x ++){
+              //     this.selectChange(var2, x.toString());
+              //   }
+              // }
           }
          }
          else

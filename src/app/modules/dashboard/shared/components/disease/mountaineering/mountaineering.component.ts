@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, DoCheck } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { FormArrayGeneratorService } from 'src/app/core/services/forms/form-array-generator.service';
 import { FieldConfig } from 'src/app/shared/components/form-components/models/field-config';
@@ -8,14 +8,15 @@ import { FieldConfig } from 'src/app/shared/components/form-components/models/fi
   templateUrl: './mountaineering.component.html',
   styles: []
 })
-export class MountaineeringComponent implements OnInit {
+export class MountaineeringComponent implements OnInit, DoCheck {
 
   accordionTitles = ['Cuestionario'];
 
   @Input() form: FormGroup;
 
   // mountaineering:FormGroup;
-  c:number=0;
+  c = 0;
+  dataText;
   YesNo: FieldConfig = {
     label: '',
     options: [
@@ -78,7 +79,7 @@ export class MountaineeringComponent implements OnInit {
     //   expeditions: this.fb.group({
 
     //     radio:['', Validators.required],
-      
+
     //   }),
 
     //   category: this.fb.group({
@@ -90,6 +91,30 @@ export class MountaineeringComponent implements OnInit {
 
     // })
 
+  }
+
+  ngDoCheck() {
+
+    const formZ = this.form.get('climb_zone') as FormGroup;
+    // console.log(this.dataText);
+    if (this.c == 0 && (this.form.get('climb_zone').get('africa').value == 'si' 
+    || this.form.get('climb_zone').get('alpes').value == 'si'
+    || this.form.get('climb_zone').get('himalaya').value == 'si' 
+    || this.form.get('climb_zone').get('andes').value == 'si'
+    || this.form.get('climb_zone').get('McKinley').value == 'si' 
+    || this.form.get('climb_zone').get('Alaska').value == 'si'
+    || this.form.get('climb_zone').get('mountain_range').value == 'si' 
+    || this.form.get('climb_zone').get('others').value == 'si')) {
+
+      if (!this.form.get('climb_zone').get('area_text')) {
+        formZ.addControl('area_text', this.fb.group({
+          info: [this.dataText, Validators.required]
+        }));
+        // this.form.get('climb_zone').get('area_text').get('info').setValue(this.dataText);
+        this.c = 1;
+        console.log('El campo ha sido restaurado. El valor de c ahora es ' + this.c);
+      }
+    }
   }
 
   addBasicControls(){
@@ -179,7 +204,12 @@ export class MountaineeringComponent implements OnInit {
               case 'Alaska':
               case 'mountain_range':
               case 'others':
-                if (this.c == 0){
+
+                if(this.c >= 8) {
+                  console.log('No se se hara nada porque el valor de c es ' + this.c);
+                }
+
+                else if (this.c == 0){
                   this.c++;
                   console.log('El valor de c es ' + this.c);
                   formZ.addControl('area_text', this.fb.group({
@@ -254,8 +284,14 @@ export class MountaineeringComponent implements OnInit {
         case 'Alaska':
         case 'mountain_range':
         case 'others':
-            if (this.c == 1) {
+
+            if (this.c == 0){
+              console.log("No se se hara nada porque el valor de c es " + this.c);
+            }
+
+            else if (this.c == 1) {
               this.c--;
+              this.dataText = this.form.get('climb_zone').get('area_text').get('info').value;
               console.log('El campo ha sido eliminado. El valor de c ahora es ' + this.c);
               formZ.removeControl('area_text');
 

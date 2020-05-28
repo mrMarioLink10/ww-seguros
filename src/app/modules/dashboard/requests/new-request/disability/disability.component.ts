@@ -493,7 +493,7 @@ export class DisabilityComponent implements OnInit, DoCheck {
   ID = null;
   ngOnInit() {
 
-    this.ID = this.disabilityService.id;
+    //this.ID = this.disabilityService.id;
 
     this.route.params.subscribe(res => {
 			this.ID = res.id;
@@ -629,7 +629,7 @@ export class DisabilityComponent implements OnInit, DoCheck {
         height: ['', [Validators.required, Validators.min(1)]],
         weightUnit: ['', Validators.required],
         heightUnit: ['', Validators.required],
-        bmiName: ['', Validators.required],
+        bmiName: [{value:'', disabled: true}, Validators.required],
         questionnaire: this.fb.group({
           health_radio: ['', Validators.required],
           therapy_radio: ['', Validators.required],
@@ -1551,6 +1551,7 @@ export class DisabilityComponent implements OnInit, DoCheck {
   });
 }
   getData(id) {
+    console.log(id);
 		this.disabilityService.returnData(id).subscribe(data => {
 			// console.log(data.data.asegurado.documentoIdentidad)
       console.log(data)
@@ -1559,14 +1560,26 @@ export class DisabilityComponent implements OnInit, DoCheck {
      {
        this.ID = data.data.id;
        this.iterateThroughtAllObject(data.data, this.disabilityGroup);
+       this.therapyArray = this.disabilityGroup.get('questions').get('questionnaire').get('therapy_array') as FormArray;
+       this.sickPayArray = this.disabilityGroup.get('questions').get('questionnaire').get('sick_pay_array') as FormArray;
+       this.testArray = this.disabilityGroup.get('questions').get('questionnaire').get('analysis_array') as FormArray;
+       this.otherAnalysisArray = this.disabilityGroup.get('questions').get('questionnaire').get('other_analysis_array') as FormArray;
+       this.inpatientCareArray = this.disabilityGroup.get('questions').get('questionnaire').get('inpatientCare_array') as FormArray;
+       this.bloodSickArray = this.disabilityGroup.get('questions').get('questionnaire').get('bloodSick_array') as FormArray;
+       this.hospitalizationArray = this.disabilityGroup.get('questions').get('questionnaire').get('hospitalization_array') as FormArray;
+
+     this.VIHArray = this.disabilityGroup.get('questions').get('questionnaire').get('VIH_array') as FormArray;
+       this.specialTherapyArray = this.disabilityGroup.get('questions').get('questionnaire').get('specialTherapy_array') as FormArray;
+       this.accidentArray = this.disabilityGroup.get('questions').get('questionnaire').get('accident_array') as FormArray;
+       this.denyArray = this.disabilityGroup.get('questions').get('questionnaire').get('deny_array') as FormArray;
+       this.insuranceArray = this.disabilityGroup.get('questions').get('questionnaire').get('insurance_array') as FormArray;
+       this.existingCoveragesList = this.disabilityGroup.get('contingent').get('anotherCoverages') as FormArray;
+       this.changingCoveragesList = this.disabilityGroup.get('contingent').get('changingCoverages') as FormArray;
 
       //this.disabilityGroup['controls'].num_financial_quote.setValue(data.data.num_financial_quote)
      }
 
     });
-
-  this.disabilityService.id = null;
-		console.log('this.disabilityService.id es igual a ' + this.disabilityService.id);
   }
 
 }

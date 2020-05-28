@@ -819,7 +819,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
       console.log(index);
     }*/
     // for(let index in this.dependentsFormArray.controls)
-    if (this.newRequest.get('dependents').get('allDependents') !== undefined ) {
+    if (this.newRequest.get('dependents').get('allDependents') !== undefined && this.newRequest.get('dependents').get('allDependents') !== null ) {
       const arrayElement = this.newRequest.get('dependents').get('allDependents') as FormArray;
       for (let index = 0; index < arrayElement.length; index++) {
 
@@ -1459,8 +1459,17 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
 
             formDataGroup.addControl(key, this.fb.array(arrayForm));
           }
+          else
+          {
+            const arrayForm = [];
+            const fbGroup = this.fb.group({
+              id: ['', Validators.required]
+            });
+            arrayForm.push(fbGroup);
+            formDataGroup.addControl(key, this.fb.array(arrayForm));
+          }
         }
-        else
+       /* else
         {
           if (!this.has(formDataGroup.controls, key)) {
             formDataGroup.addControl(key, this.fb.group({
@@ -1472,7 +1481,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
 
           this.iterateThroughtAllObject(value, form);
 
-        }
+        }*/
 
       }
 
@@ -1487,6 +1496,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
         this.ID = data.data.id;
         this.iterateThroughtAllObject(data.data, this.newRequest);
         console.log( this.newRequest);
+        console.log( this.newRequest);
         this.AddEventOnEachDependentVariable();
         if (this.newRequest.get('questionsB').get('familyWithDiseases') !== undefined && this.newRequest.get('questionsB').get('familyWithDiseases') !== null)
         {
@@ -1494,7 +1504,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
         }
         else
         {
-          this.familyWithDiseasesList = null;
+          this.familyWithDiseasesList = undefined;
         }
         this.isFormValidToFill = true;
         /*let person = this.newRequest.get('person');

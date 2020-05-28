@@ -22,7 +22,12 @@ export class HypertensionComponent implements OnInit {
     this.addBasicControls();
 
     this.medicationList = this.getDIAsFormGroup().get('medicationUsing') as FormArray;
+    try{
+    this.changedMedicationList = this.getDIAsFormGroup().get('changedMedications') as FormArray;
+  }
+  catch(e){
 
+  }
     this.relatedQuestions = [
       {
         label: 'Enfermedad renal',

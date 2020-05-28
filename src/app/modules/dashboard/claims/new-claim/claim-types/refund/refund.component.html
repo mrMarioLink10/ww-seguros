@@ -89,26 +89,29 @@
       <div class="mt-3 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5">
         <mat-form-field class="mr-3" appearance="outline">
           <mat-label>Facturas</mat-label>
-          <ngx-mat-file-input placeholder="Basic outline placeholder" (change)="onFileChange($event, 'invoices', i)">
+          <ngx-mat-file-input placeholder="Basic outline placeholder"
+            [valuePlaceholder]="fileNameWatcher('invoices', i)" (change)="onFileChange($event, 'invoices', i)">
           </ngx-mat-file-input>
           <mat-icon style="color: #e2e2e2;" matSuffix>publish</mat-icon>
         </mat-form-field>
         <mat-form-field class="mr-3" appearance="outline">
           <mat-label>Indicaciones médicas</mat-label>
-          <ngx-mat-file-input placeholder="Basic outline placeholder" (change)="onFileChange($event, 'indications', i)">
+          <ngx-mat-file-input placeholder="Basic outline placeholder"
+            [valuePlaceholder]="fileNameWatcher('indications', i)" (change)="onFileChange($event, 'indications', i)">
           </ngx-mat-file-input>
           <mat-icon style="color: #e2e2e2;" matSuffix>publish</mat-icon>
         </mat-form-field>
         <mat-form-field class="mr-3" appearance="outline">
           <mat-label>Comprobante de pagos</mat-label>
           <ngx-mat-file-input placeholder="Basic outline placeholder"
-            (change)="onFileChange($event, 'medicReports', i)">
+            [valuePlaceholder]="fileNameWatcher('medicReports', i)" (change)="onFileChange($event, 'medicReports', i)">
           </ngx-mat-file-input>
           <mat-icon style="color: #e2e2e2;" matSuffix>publish</mat-icon>
         </mat-form-field>
         <mat-form-field class="mr-3" appearance="outline">
           <mat-label>Informe médico</mat-label>
           <ngx-mat-file-input placeholder="Basic outline placeholder"
+            [valuePlaceholder]="fileNameWatcher('paymentVouchers', i)"
             (change)="onFileChange($event, 'paymentVouchers', i)">
           </ngx-mat-file-input>
           <mat-icon style="color: #e2e2e2;" matSuffix>publish</mat-icon>

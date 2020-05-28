@@ -1,4 +1,4 @@
-import { Component, OnInit, DoCheck, ɵConsole } from '@angular/core';
+import { Component, OnInit, DoCheck, ɵConsole, ChangeDetectorRef, AfterViewChecked } from '@angular/core';
 import { FormGroup, FormBuilder, FormArray, Validators } from '@angular/forms';
 import { FormArrayGeneratorService } from 'src/app/core/services/forms/form-array-generator.service';
 import { FieldConfig } from 'src/app/shared/components/form-components/models/field-config';
@@ -25,8 +25,9 @@ import { MatProgressButtonOptions } from 'mat-progress-buttons';
   templateUrl: './life.component.html',
   styleUrls: ['./life.component.scss']
 })
-export class LifeComponent implements OnInit, DoCheck {
+export class LifeComponent implements OnInit, DoCheck, AfterViewChecked {
   step: number;
+  showContent = false;
 
   role: string;
   maxWidth: any;
@@ -66,7 +67,7 @@ export class LifeComponent implements OnInit, DoCheck {
   generalInfoQuestions: any[];
   sportsQuestions: any[];
   medicQuestions: any[];
-
+  filesInformation: any;
   needFinancialStatus = false;
   showNewQuoteRequest = false;
 
@@ -419,7 +420,7 @@ export class LifeComponent implements OnInit, DoCheck {
     'Información general', 'Historial Médico', 'Firmas', 'Reporte del agente'];
 
   newRequest: FormGroup;
-  noCotizacion;
+  noCotizacion = null;
   dependentsNumber = 0;
 
   ID = null;
@@ -453,7 +454,8 @@ export class LifeComponent implements OnInit, DoCheck {
     public dialog: MatDialog,
     private life: LifeService,
     private know: KnowYourCustomerComponent,
-    private appComponent: AppComponent
+    private appComponent: AppComponent,
+    private cd: ChangeDetectorRef
   ) { }
 
   ngOnInit() {
@@ -476,17 +478,17 @@ export class LifeComponent implements OnInit, DoCheck {
     else if (this.ID == null) {
       console.log('ID esta vacio');
     }
+
     if (this.noCotizacion != null) {
       this.searchIdNumber(this.noCotizacion);
       console.log('El noCotizacion es ' + this.noCotizacion);
     } else if (this.noCotizacion == null) {
       console.log('noCotizacion esta vacio');
-      this.noCotizacion = '';
     }
-    this.role = this.userService.getRoleCotizador();
 
+    this.role = this.userService.getRoleCotizador();
     this.newRequest = this.fb.group({
-      NoC: ['', Validators.required],
+      NoC: [{ value: this.noCotizacion }, Validators.required],
       isComplete: [false, Validators.required],
       person: this.fb.group({
         firstName: [{ value: '', disabled: true }, [Validators.required]],
@@ -630,11 +632,19 @@ export class LifeComponent implements OnInit, DoCheck {
         }),
         getAnswersFromInsured: ['', Validators.required],
       }),
+      files: this.fb.group({
+      }),
       questionnaires: this.fb.group({}),
       contractorQuestionnaires: this.fb.group({}),
       payerQuestionnaires: this.fb.group({}),
       activitiesQuestionnaires: this.fb.group({}),
     });
+
+    if (this.noCotizacion) {
+      this.newRequest.get('NoC').setValue(this.noCotizacion);
+      this.newRequest.get('NoC').disable();
+
+    }
 
     this.primaryBenefitsArray = this.newRequest.get('primaryBenefits').get('dependentsC') as FormArray;
     this.contingentBeneficiaryArray = this.newRequest.get('contingentBeneficiary').get('dependentsC') as FormArray;
@@ -882,28 +892,147 @@ export class LifeComponent implements OnInit, DoCheck {
       form.removeControl('waiverPremiumPayment');
 
       if (age >= 18 && age <= 70) {
-        form.addControl('advancePaymentOfCapital', this.fb.control('', Validators.required));
-        form.addControl('accidentalDeathDismemberment', this.fb.control('', Validators.required));
-        form.addControl('disability', this.fb.control('', Validators.required));
-        form.addControl('seriousIllnesses', this.fb.control('', Validators.required));
-        form.addControl('waiverPremiumPayment', this.fb.control('', Validators.required));
+        form.addControl('advancePaymentOfCapital', this.fb.control('', [Validators.required, Validators.max(300000)]));
+        form.addControl('accidentalDeathDismemberment', this.fb.control('', [Validators.required, Validators.max(400000)]));
+        form.addControl('disability', this.fb.control('', [Validators.required, Validators.max(400000)]));
+        form.addControl('seriousIllnesses', this.fb.control('', [Validators.required, Validators.max(400000)]));
+        form.addControl('waiverPremiumPayment', this.fb.control('', [Validators.required]));
       } else if (age >= 18 && age <= 65) {
-        form.addControl('accidentalDeathDismemberment', this.fb.control('', Validators.required));
-        form.addControl('disability', this.fb.control('', Validators.required));
-        form.addControl('seriousIllnesses', this.fb.control('', Validators.required));
-        form.addControl('waiverPremiumPayment', this.fb.control('', Validators.required));
+        form.addControl('accidentalDeathDismemberment', this.fb.control('', [Validators.required, Validators.max(400000)]));
+        form.addControl('disability', this.fb.control('', [Validators.required, Validators.max(400000)]));
+        form.addControl('seriousIllnesses', this.fb.control('', [Validators.required, Validators.max(400000)]));
+        form.addControl('waiverPremiumPayment', this.fb.control('', [Validators.required]));
       } else if (age >= 18 && age <= 59) {
-        form.addControl('disability', this.fb.control('', Validators.required));
-        form.addControl('seriousIllnesses', this.fb.control('', Validators.required));
-        form.addControl('waiverPremiumPayment', this.fb.control('', Validators.required));
+        form.addControl('disability', this.fb.control('', [Validators.required, Validators.max(400000)]));
+        form.addControl('seriousIllnesses', this.fb.control('', [Validators.required, Validators.max(400000)]));
+        form.addControl('waiverPremiumPayment', this.fb.control('', [Validators.required]));
       } else if (age >= 18 && age <= 55) {
-        form.addControl('waiverPremiumPayment', this.fb.control('', Validators.required));
+        form.addControl('waiverPremiumPayment', this.fb.control('', [Validators.required]));
       }
 
     });
 
     const weightBmiSubscriber = this.newRequest.get('person').get('weight').valueChanges.subscribe(value => {
       this.getBmi();
+    });
+
+    const coveragesAmountSubscriber = this.newRequest.get('releventPlanInformation').get('coverages').valueChanges.subscribe(value => {
+      let totalAmount = 0;
+      const formQ = this.newRequest.get('questionnaires') as FormGroup;
+      const formF = this.newRequest.get('files') as FormGroup;
+      // const age = this.newRequest.get('person').value.age;
+      const age = this.newRequest.get('person').get('age').value;
+
+      for (const key in value) {
+        if (value.hasOwnProperty(key)) {
+          const element = value[key];
+          if (!isNaN(parseInt(element, 10))) {
+            totalAmount += parseInt(element, 10);
+          }
+        }
+      }
+
+      if (totalAmount >= 500000) {
+        formQ.addControl('solicitudEstadoFinancieroConfidencial', this.fb.group({}));
+      } else {
+        formQ.removeControl('solicitudEstadoFinancieroConfidencial');
+      }
+
+      console.log('totalAmount:', totalAmount, 'age:', age);
+      this.deleteFiles(formF);
+      if (totalAmount >= 25000 && totalAmount <= 50000) {
+        if (age >= 18 && age <= 35) {
+          this.addFilesA(formF);
+        } else if (age >= 36 && age <= 55) {
+          this.addFilesA(formF);
+        } else if (age >= 56 && age <= 65) {
+          this.addFilesA(formF);
+        } else if (age >= 66) {
+          this.addFilesA(formF);
+          this.addFilesB(formF);
+          this.addFilesE(formF);
+        }
+      } else if (totalAmount >= 50001 && totalAmount <= 250000) {
+        if (age >= 18 && age <= 35) {
+          this.addFilesA(formF);
+        } else if (age >= 36 && age <= 55) {
+          this.addFilesA(formF);
+        } else if (age >= 56 && age <= 65) {
+          this.addFilesA(formF);
+          this.addFilesB(formF);
+          this.addFilesE(formF);
+        } else if (age >= 66) {
+          this.addFilesA(formF);
+          this.addFilesB(formF);
+          this.addFilesE(formF);
+        }
+      } else if (totalAmount >= 250001 && totalAmount <= 500000) {
+        if (age >= 18 && age <= 35) {
+          this.addFilesA(formF);
+          this.addFilesB(formF);
+          this.addFilesC(formF);
+        } else if (age >= 36 && age <= 55) {
+          this.addFilesA(formF);
+          this.addFilesB(formF);
+          this.addFilesC(formF);
+          if (age >= 45) {
+            this.addFilesE(formF);
+          }
+        } else if (age >= 56 && age <= 65) {
+          this.addFilesA(formF);
+          this.addFilesB(formF);
+          this.addFilesC(formF);
+          this.addFilesE(formF);
+        } else if (age >= 66) {
+          this.addFilesA(formF);
+          this.addFilesB(formF);
+          this.addFilesC(formF);
+          this.addFilesE(formF);
+        }
+      } else if (totalAmount >= 500001 && totalAmount <= 750000) {
+        if (age >= 18 && age <= 35) {
+          this.addFilesA(formF);
+          this.addFilesB(formF);
+          this.addFilesC(formF);
+          this.addFilesD(formF);
+        } else if (age >= 36 && age <= 55) {
+          this.addFilesABCDE(formF);
+        } else if (age >= 56 && age <= 65) {
+          this.addFilesABCDE(formF);
+        } else if (age >= 66) {
+          this.addFilesABCDE(formF);
+        }
+      } else if (totalAmount >= 750001 && totalAmount <= 1000000) {
+        if (age >= 18 && age <= 35) {
+          this.addFilesA(formF);
+          this.addFilesB(formF);
+          this.addFilesC(formF);
+          this.addFilesD(formF);
+        } else if (age >= 36 && age <= 55) {
+          this.addFilesABCDE(formF);
+        } else if (age >= 56 && age <= 65) {
+          this.addFilesABCDE(formF);
+        } else if (age >= 66) {
+          this.addFilesABCDE(formF);
+        }
+      } else if (totalAmount >= 1000001) {
+        if (age >= 18 && age <= 35) {
+          this.addFilesABCDE(formF);
+        } else if (age >= 36 && age <= 55) {
+          this.addFilesABCDE(formF);
+        } else if (age >= 56 && age <= 65) {
+          this.addFilesABCDE(formF);
+          if (totalAmount >= 2000001) {
+            this.addFilesF(formF);
+          }
+        } else if (age >= 66) {
+          this.addFilesABCDE(formF);
+          if (totalAmount >= 2000001) {
+            this.addFilesF(formF);
+          }
+        }
+      }
+
     });
 
     const heightBmiSubscriber = this.newRequest.get('person').get('height').valueChanges.subscribe(value => {
@@ -926,11 +1055,43 @@ export class LifeComponent implements OnInit, DoCheck {
       this.getBmi();
     });
 
+
+
+  }
+
+  ngAfterViewChecked() {
+    this.cd.detectChanges();
+  }
+
+  fileNameWatcher(type?: string) {
+    if (this.filesInformation) {
+      if (this.filesInformation[type + 'Url']) { return this.filesInformation[type + 'Url']; }
+    }
+  }
+
+  onFileChange(event, formName) {
+    const reader = new FileReader();
+    console.log(this.newRequest.get('files'));
+    console.log('event.targe: ', event.target.files);
+    console.log('event: ', event);
+
+    if (event.target.files && event.target.files.length) {
+      const [file] = event.target.files;
+      reader.readAsDataURL(file);
+
+      reader.onload = () => {
+        this.newRequest.get('files').patchValue({
+          [formName]: reader.result
+        });
+        this.cd.markForCheck();
+      };
+    }
   }
 
   setStep(index: number) {
     this.step = index;
   }
+
   nextStep(panel?: string) {
     if (panel === 'laborales') {
       console.log(!this.newRequest.get('contractor'));
@@ -957,6 +1118,72 @@ export class LifeComponent implements OnInit, DoCheck {
     }
   }
 
+  addFilesABCDE(form: FormGroup) {
+    this.addFilesA(form);
+    this.addFilesB(form);
+    this.addFilesC(form);
+    this.addFilesD(form);
+    this.addFilesE(form);
+  }
+
+  addFilesA(form: FormGroup) {
+    form.addControl('healthDeclaration', this.fb.control('', Validators.required));
+    form.addControl('id2', this.fb.control('', Validators.required));
+  }
+
+  addFilesB(form: FormGroup) {
+    form.addControl('medicExam', this.fb.control('', Validators.required));
+  }
+
+  addFilesC(form: FormGroup) {
+    form.addControl('glycemia', this.fb.control('', Validators.required));
+    form.addControl('hbA1C', this.fb.control('', Validators.required));
+    form.addControl('totalCholestor', this.fb.control('', Validators.required));
+    form.addControl('HDL', this.fb.control('', Validators.required));
+    form.addControl('triglycerides', this.fb.control('', Validators.required));
+    form.addControl('creatinine', this.fb.control('', Validators.required));
+    form.addControl('AST', this.fb.control('', Validators.required));
+    form.addControl('ALT', this.fb.control('', Validators.required));
+    form.addControl('GGT', this.fb.control('', Validators.required));
+    form.addControl('HIV', this.fb.control('', Validators.required));
+    form.addControl('cocaine', this.fb.control('', Validators.required));
+    form.addControl('nicotine', this.fb.control('', Validators.required));
+  }
+
+  addFilesD(form: FormGroup) {
+    form.addControl('urineAnalysis', this.fb.control('', Validators.required));
+  }
+
+  addFilesE(form: FormGroup) {
+    form.addControl('restingElectrocardiogram', this.fb.control('', Validators.required));
+  }
+
+  addFilesF(form: FormGroup) {
+    form.addControl('stressElectrocardiogram', this.fb.control('', Validators.required));
+  }
+
+  deleteFiles(form: FormGroup) {
+    form.removeControl('stressElectrocardiogram');
+    form.removeControl('restingElectrocardiogram');
+    form.removeControl('urineAnalysis');
+    form.removeControl('glycemia');
+    form.removeControl('hbA1C');
+    form.removeControl('totalCholestor');
+    form.removeControl('HDL');
+    form.removeControl('triglycerides');
+    form.removeControl('creatinine');
+    form.removeControl('AST');
+    form.removeControl('ALT');
+    form.removeControl('GGT');
+    form.removeControl('HIV');
+    form.removeControl('cocaine');
+    form.removeControl('nicotine');
+    form.removeControl('healthDeclaration');
+    form.removeControl('id2');
+    form.removeControl('medicExam');
+
+  }
+
   getBmi() {
     const weightUnit = this.newRequest.get('person').get('weightUnit').value;
     const heightUnit = this.newRequest.get('person').get('heightUnit').value;
@@ -980,6 +1207,31 @@ export class LifeComponent implements OnInit, DoCheck {
     }
   }
 
+  isBenefitMinorThan100(group: string, subgroup: string): boolean {
+    const form = this.newRequest.get(group).get(subgroup) as FormGroup;
+
+    if (this.benefitFor(form).total < 100 && this.benefitFor(form).isDirty) { return true; } else { return false; }
+  }
+
+  isBenefitMajorThan100(group: string, subgroup: string): boolean {
+    const form = this.newRequest.get(group).get(subgroup) as FormGroup;
+
+    if (this.benefitFor(form).total > 100 && this.benefitFor(form).isDirty) { return true; } else { return false; }
+  }
+
+  benefitFor(form: FormGroup) {
+    let total = 0;
+    let isDirty = false;
+
+    // tslint:disable-next-line: forin
+    for (const dpd in form.value) {
+      if (form.controls[dpd].dirty) { isDirty = true; }
+      total += form.value[dpd].quantity;
+
+    }
+    return { total, isDirty };
+  }
+
   ngDoCheck(): void {
     this.maxWidth = window.matchMedia('(max-width: 11270px)');
 
@@ -995,13 +1247,14 @@ export class LifeComponent implements OnInit, DoCheck {
   }
 
   searchIdNumber(idNumber: string) {
-    this.appComponent.showOverlay = true;
-
+    // this.appComponent.showOverlay = true;
     this.userService.getQuotes(idNumber, 'vida')
       .subscribe((response: any) => {
         console.log(response);
-        this.appComponent.showOverlay = false;
-        if (response.data !== null) {
+        // this.appComponent.showOverlay = false;
+        if (response.data !== null && response.data !== undefined) {
+          this.showContent = true;
+
           const dialogRef = this.dialog.open(BaseDialogComponent, {
             data: this.dialogOption.noCFound(response.data),
             minWidth: 385,
@@ -1031,6 +1284,8 @@ export class LifeComponent implements OnInit, DoCheck {
           }
 
         } else {
+          this.showContent = false;
+
           this.newRequest.get('person').get('firstName').reset();
           this.newRequest.get('person').get('date').reset();
           this.newRequest.get('relevantPaymentInformation').get('method').reset();
@@ -1842,18 +2097,6 @@ export class LifeComponent implements OnInit, DoCheck {
     return Object.keys(this.newRequest.get('activitiesQuestionnaires').value).length;
   }
 
-  needFinancialStatusCalculator() {
-    console.log('SI');
-    const quantity = this.newRequest.get('releventPlanInformation').get('coverages').value.basicLifeAssuredAmount;
-    const formQ = this.newRequest.get('questionnaires') as FormGroup;
-
-    if (quantity >= 500000) {
-      formQ.addControl('solicitudEstadoFinancieroConfidencial', this.fb.group({}));
-    } else {
-      formQ.removeControl('solicitudEstadoFinancieroConfidencial');
-    }
-  }
-
   isFormValid(form: string) {
     const isValid = this.newRequest.get(form).valid;
     const contractor = this.newRequest.get('contractorQuestionnaires') as FormGroup;
@@ -1898,4 +2141,10 @@ export class LifeComponent implements OnInit, DoCheck {
     console.log('json', JSON.stringify(this.newRequest.get('releventPlanInformation').value));
   }
 
+  sendForm(form: FormGroup, formType: string, sendType: string, id?: number) {
+    console.log(id);
+
+    this.formHandler.sendForm(form, formType, sendType, id, this.appComponent);
+
+  }
 }

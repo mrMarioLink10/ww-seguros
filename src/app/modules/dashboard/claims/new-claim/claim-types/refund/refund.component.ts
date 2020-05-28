@@ -31,6 +31,7 @@ export class RefundComponent implements OnInit {
 	totalAmount: number;
 	todayDate = new Date();
 	validDatesCounter = 0;
+	filesInformation = [];
 
 	formaPago: FieldConfig = {
 		label: 'Especifique forma de pago',
@@ -281,7 +282,15 @@ export class RefundComponent implements OnInit {
 			});
 	}
 
+	fileNameWatcher(type?: string, index?: number) {
+		console.log(this.filesInformation);
+		if (this.filesInformation[index]) {
+			if (this.filesInformation[index][type + 'Url']) { return this.filesInformation[index][type + 'Url']; }
+		}
+	}
+
 	getData(id) {
+		this.appComponent.showOverlay = true;
 		this.refund.returnData(id).subscribe(data => {
 			console.log(data);
 			this.refundForm.get('informacion').get('idNumber').disable();
@@ -302,10 +311,13 @@ export class RefundComponent implements OnInit {
 				this.refundForm['controls'].diagnosticos['controls'][x]['controls'].files['controls'].invoices.setValue(data.data.diagnosticos[x].files.invoices);
 				this.refundForm['controls'].diagnosticos['controls'][x]['controls'].files['controls'].medicReports.setValue(data.data.diagnosticos[x].files.medicReports);
 				this.refundForm['controls'].diagnosticos['controls'][x]['controls'].files['controls'].paymentVouchers.setValue(data.data.diagnosticos[x].files.paymentVouchers);
+				this.filesInformation.push(data.data.diagnosticos[x].files);
+				console.log(data.data.diagnosticos[x].files);
 
 				const formID4 = this.refundForm.get('diagnosticos').get([x]) as FormGroup;
 				formID4.addControl('id', this.fb.control(data.data.diagnosticos[x].id, Validators.required));
 			}
+			console.log(this.filesInformation);
 
 			this.refundForm['controls'].haveAditionalComentary.setValue(data.data.haveAditionalComentary);
 			this.refundForm['controls'].comentary.setValue(data.data.comentary);
@@ -354,6 +366,7 @@ export class RefundComponent implements OnInit {
 		});
 		this.refund.id = null;
 		console.log('this.refund.id es igual a ' + this.refund.id);
+		this.appComponent.showOverlay = false;
 	}
 
 

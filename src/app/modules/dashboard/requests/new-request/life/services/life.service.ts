@@ -28,6 +28,9 @@ export class LifeService {
     return this.http.get(`${environment.apiUrl}/api/Solicitudes/vida/${id}`)
   }
 
+  sendRequest(id): Observable<any> {
+    return this.http.post(`${environment.apiUrl}/api/Solicitudes/vida/confirm/${id}`, id);
+  }
 
   getID(id) {
     this.id = id;

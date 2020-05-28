@@ -131,7 +131,7 @@ informationArray= [
 
   addBasicControls(){
     
-    this.form.addControl('name', this.fb.control('', Validators.required));
+    // this.form.addControl('name', this.fb.control('', Validators.required));
     this.form.addControl('activities', this.fb.group({
 
         snorkel:[false],

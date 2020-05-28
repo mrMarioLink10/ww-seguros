@@ -47,7 +47,7 @@ export class SkydivingComponent implements OnInit {
 
   addBasicControls(){
 
-    this.form.addControl('name', this.fb.control('', Validators.required));
+    // this.form.addControl('name', this.fb.control('', Validators.required));
     this.form.addControl('goal', this.fb.control('', Validators.required));
     this.form.addControl('license', this.fb.control('', Validators.required));
     this.form.addControl('aircraft', this.fb.group({

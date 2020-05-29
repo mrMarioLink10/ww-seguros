@@ -661,8 +661,10 @@ export class LifeComponent implements OnInit {
     });
 
     if (this.noCotizacion) {
-      this.newRequest.get('NoC').setValue(this.noCotizacion);
-      this.newRequest.get('NoC').disable();
+      console.log(this.noCotizacion);
+      console.log(this.newRequest.get('noC'));
+      this.newRequest.get('noC').setValue(this.noCotizacion);
+      this.newRequest.get('noC').disable();
 
     }
 
@@ -2309,61 +2311,49 @@ export class LifeComponent implements OnInit {
 
   has(object: any, key: any) {
     return object ? this.hasOwnProperty.call(object, key) : false;
- }
+  }
 
- iterateThroughtAllObject(obj: any, groupControl: any)
- {
-   const formDataGroup = groupControl as FormGroup;
-   Object.keys(obj).forEach(e =>
-     {
-       let key = e;
-       let value = obj[key];
-       if (obj[key] !== null && obj[e] !== undefined && (typeof obj[e]) != "object")
-       {
-         if ( value !== undefined && value !== null && value !== '')
-         {
-           if (!this.has(formDataGroup['controls'], key))
-           {
-             formDataGroup.addControl(key, this.fb.control(value));
-           }
-           else
-           {
+  iterateThroughtAllObject(obj: any, groupControl: any) {
+    const formDataGroup = groupControl as FormGroup;
+    Object.keys(obj).forEach(e => {
+      let key = e;
+      let value = obj[key];
+      if (obj[key] !== null && obj[e] !== undefined && (typeof obj[e]) != "object") {
+        if (value !== undefined && value !== null && value !== '') {
+          if (!this.has(formDataGroup['controls'], key)) {
+            formDataGroup.addControl(key, this.fb.control(value));
+          }
+          else {
 
-           const valueFormControl = formDataGroup['controls'][key] as FormControl;
-           valueFormControl.setValue (value);
-         }
-         }
-       }
-       else if (obj[key] !== null && obj[key] !== undefined && (typeof obj[key]) === "object")
-       {
-         if (Array.isArray(obj[key] ))
-         {
-          if (!this.has(formDataGroup['controls'], key))
-          {
+            const valueFormControl = formDataGroup['controls'][key] as FormControl;
+            valueFormControl.setValue(value);
+          }
+        }
+      }
+      else if (obj[key] !== null && obj[key] !== undefined && (typeof obj[key]) === "object") {
+        if (Array.isArray(obj[key])) {
+          if (!this.has(formDataGroup['controls'], key)) {
             formDataGroup.removeControl(key);
           }
-          if(obj[key].length > 0)
-          {
+          if (obj[key].length > 0) {
 
-              let form = formDataGroup.get(key);
-              let arrayForm = [];
-              obj[key].forEach( (element) =>{
-                let fbGroup = this.fb.group({
-                  id: ['', Validators.required]
-                });
-
-                this.iterateThroughtAllObject(element,  fbGroup);
-                arrayForm.push(fbGroup);
+            let form = formDataGroup.get(key);
+            let arrayForm = [];
+            obj[key].forEach((element) => {
+              let fbGroup = this.fb.group({
+                id: ['', Validators.required]
               });
 
+              this.iterateThroughtAllObject(element, fbGroup);
+              arrayForm.push(fbGroup);
+            });
 
-              formDataGroup.addControl(key, this.fb.array(arrayForm));
+
+            formDataGroup.addControl(key, this.fb.array(arrayForm));
           }
-         }
-         else
-         {
-          if (!this.has(formDataGroup['controls'], key))
-          {
+        }
+        else {
+          if (!this.has(formDataGroup['controls'], key)) {
             formDataGroup.addControl(key, this.fb.group({
               id: ['', Validators.required]
             }));
@@ -2373,29 +2363,28 @@ export class LifeComponent implements OnInit {
 
           this.iterateThroughtAllObject(obj[key], form);
           return form;
-         }
+        }
 
-       }
+      }
 
-   });
- }
+    });
+  }
   getData(id) {
-		this.life.returnData(id).subscribe(data => {
-			// console.log(data.data.asegurado.documentoIdentidad)
+    this.life.returnData(id).subscribe(data => {
+      // console.log(data.data.asegurado.documentoIdentidad)
       console.log(data);
       if (data !== undefined && data.data !== null &&
-        data.data != undefined )
-     {
-       this.ID = data.data.id;
-       this.iterateThroughtAllObject(data.data, this.newRequest);
+        data.data != undefined) {
+        this.ID = data.data.id;
+        this.iterateThroughtAllObject(data.data, this.newRequest);
 
-      // this.disabilityGroup['controls'].num_financial_quote.setValue(data.data.num_financial_quote)
-     }
+        // this.disabilityGroup['controls'].num_financial_quote.setValue(data.data.num_financial_quote)
+      }
 
     });
 
-  this.life.id = null;
-		console.log('this.life.id es igual a ' + this.life.id);
+    this.life.id = null;
+    console.log('this.life.id es igual a ' + this.life.id);
   }
 
   sendForm(form: FormGroup, formType: string, sendType: string, id?: number) {

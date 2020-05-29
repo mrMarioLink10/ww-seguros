@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {PolicyFilter} from './models/policy';
 
 @Component({
   selector: 'app-consultation',
@@ -7,9 +8,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ConsultationComponent implements OnInit {
 
+  policyFilters: PolicyFilter;
+
   constructor() { }
 
   ngOnInit() {
+  }
+
+  setPolicyFilters(event) {
+    this.policyFilters = event;
   }
 
 }

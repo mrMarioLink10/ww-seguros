@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 
 @Component({
   selector: 'app-consult-header',
@@ -6,6 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./consult-header.component.scss']
 })
 export class ConsultHeaderComponent implements OnInit {
+  pendingPolicies = 2;
 
   constructor() { }
 

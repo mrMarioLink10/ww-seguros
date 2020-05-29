@@ -1,7 +1,7 @@
-<form [formGroup]="filterForm" (ngSubmit)="sendFormToParent()" class="p-3 pb-0 mt-5"
+<form [formGroup]="filterForm" (ngSubmit)="sendFormToParent()" class="p-3 pb-2 mt-5"
       style="background-color: #F2F2F2">
   <div class="filter-title">Filtro Rápido</div>
-  <div class="mt-3 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 xl:grid-cols-5">
+  <div class="mt-3 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 xl:grid-cols-6">
     <div class="mr-3">
       <mat-form-field color="accent" appearance="outline" class="w-full bg-transparente"
                       style="font-size: small !important;">
@@ -14,7 +14,7 @@
       <mat-form-field color="accent" appearance="outline" class="w-full bg-transparente"
                       style="font-size: small !important;">
         <mat-label>No. Póliza</mat-label>
-        <input formControlName="policy" matInput class="" placeholder="">
+        <input formControlName="policyId" matInput type="number">
       </mat-form-field>
     </div>
 
@@ -22,14 +22,14 @@
       <mat-form-field color="accent" appearance="outline" class="w-full" style="font-size: small !important;">
         <mat-label>Estado de Pago</mat-label>
         <mat-select formControlName="paymentState">
-          <!--          <mat-option *ngFor="let stat of fills.status" [value]="stat">{{stat | titlecase}}</mat-option>-->
           <mat-option value="Salud">Pagado</mat-option>
           <mat-option value="Vida">Pendiente</mat-option>
         </mat-select>
       </mat-form-field>
     </div>
 
-    <div class="mr-3">
+    <div class="mr-3 -mt-4">
+      <p class="text-xs" >Rango Vigencia</p>
       <mat-form-field color="accent" appearance="outline" class="w-full" style="font-size: small !important;">
         <mat-label>Desde</mat-label>
         <input formControlName="initialDate" matInput [matDatepicker]="initialDate" placeholder="25/12/2019">
@@ -57,6 +57,10 @@
       </mat-form-field>
     </div>
   </div>
-  <button type="submit"
-          style="background-color: #3E7DB8; color: white; font-size: 12px; padding: 5px;border-radius: 3px;margin: 10px auto;">BUSCAR</button>
+
+  <div class="flex flex-row-reverse -mt-3">
+    <button mat-mini-fab color="primary" aria-label="Buscar" type="submit">
+      <mat-icon>search</mat-icon>
+    </button>
+  </div>
 </form>

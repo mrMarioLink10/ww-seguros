@@ -1,6 +1,7 @@
 import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import {MatPaginator, MatTableDataSource, MatSort} from '@angular/material';
 import {Policy, PolicyFilter} from '../../models/policy';
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-policy-table',
@@ -34,7 +35,7 @@ export class PolicyTableComponent implements OnInit {
     {id: 1617, clientName: 'Jeremy Cruz', product: 'salud', insuredQuantity: 4, validityDate: '15/05/2020', paymentState: 'Pagado', totalBalance: 15000},
     ];
 
-  constructor() { }
+  constructor(private route: Router) { }
 
   ngOnInit() {
     this.loadData();
@@ -49,5 +50,7 @@ export class PolicyTableComponent implements OnInit {
   sortTableByPendingPayments(): void {
     this.sort.sort({ id: 'paymentState', start: 'desc', disableClear: false });
   }
+
+  go
 
 }

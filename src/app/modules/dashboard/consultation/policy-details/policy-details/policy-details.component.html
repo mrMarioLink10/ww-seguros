@@ -1,0 +1,64 @@
+<div>
+  <div class="text-blue-800 font-bold text-xl px-5 mt-3" >CONSULTA - PÓLIZA</div>
+
+  <div class="flex flex-col sm:flex-row px-4">
+
+    <form [formGroup]="form" (ngSubmit)="searchPolicy()" class="p-3 mt-5" style="background-color: #F2F2F2">
+      <div class="filter-title">Filtro Consultar otra Poliza</div>
+      <div class="mt-3 flex">
+        <div class="mr-3">
+          <mat-form-field color="accent" appearance="outline" class="w-full bg-transparente" style="font-size: small !important;">
+            <mat-label>Póliza</mat-label>
+            <input formControlName="policyId" matInput type="number">
+          </mat-form-field>
+        </div>
+
+        <div>
+          <button mat-mini-fab color="primary" aria-label="Buscar" type="submit">
+            <mat-icon>search</mat-icon>
+          </button>
+        </div>
+      </div>
+    </form>
+
+    <div class="sm:ml-auto sm:mt-10">
+      <p class="text-blue-800 font-bold text-3xl px-5 mt-3">PÓLIZA: 123456</p>
+    </div>
+  </div>
+
+  <div>
+    <div class="flex flex-col sm:flex-row p-5">
+      <div class="w-full flex flex-col background-gray px-10 py-4 border-r-blue-2" style="border-right-width: 50px">
+        <div class="txt-blue flex">
+          <div class="w-1/4">
+            Pago: Trimestral
+          </div>
+          <div class="w-1/4">
+            Moneda: US$
+          </div>
+          <div class="w-1/4">
+            Deducible: US$ 1,000/ US$ 1,5000
+          </div>
+          <div class="w-1/4">
+            Producto: WW Term RD WW
+          </div>
+        </div>
+        <div class="txt-blue flex mt-5">
+          <div class="w-1/4">
+            Ini. Videncia: 27/01/2021
+          </div>
+          <div class="w-1/4">
+            Fin. Videncia: 27/01/2021
+          </div>
+          <div class="w-1/4">
+            Ramo: Vida Terminal
+          </div>
+          <div class="w-1/4">
+            Certificados: 12
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

@@ -217,6 +217,8 @@ export class DisabilityService {
     }
   ];
 
+  id = null;
+
   constructor(private http: HttpClient, private route: Router) { }
 
   postRequest(body) {
@@ -233,11 +235,14 @@ export class DisabilityService {
     return this.http.get(`${environment.apiUrl}/api/Solicitudes/disability/${id}`);
   }
 
-  id = null;
+  sendRequest(id): Observable<any> {
+    return this.http.post(`${environment.apiUrl}/api/Solicitudes/disability/confirm/${id}`, id);
+  }
+
   getID(id) {
-      this.id = id;
-      console.log('hola, soy ', id);
-      this.route.navigateByUrl('/dashboard/requests/new-requests/disability');
+    this.id = id;
+    console.log('hola, soy ', id);
+    this.route.navigateByUrl('/dashboard/requests/new-requests/disability');
   }
 
 }

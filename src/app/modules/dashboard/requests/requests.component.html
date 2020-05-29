@@ -65,7 +65,8 @@
         <ng-container matColumnDef="estatus" style="margin-right: 15px !important">
           <th class="padding-cell" mat-header-cell *matHeaderCellDef mat-sort-header> Estatus </th>
           <td class="padding-cell" mat-cell *matCellDef="let element"
-            [ngClass]="{'text-color-yellow': element.estatus !== 'Enviado'}"> {{element.estatus | tableStatus}} </td>
+            [ngClass]="{'text-color-yellow': element.estatus === 0, 'text-color-red': element.estatus === 4, 'text-color-green': element.estatus === 2}">
+            {{element.estatus | tableStatus}} </td>
         </ng-container>
 
         <ng-container matColumnDef="acciones" style="text-align: end !important; margin-right: 15px !important; ">
@@ -86,22 +87,24 @@
             </button> -->
             <div *ngIf="element.seguro == 'Vida'">
               <button mat-mini-fab aria-label="Editar" *ngIf="element.estatus !== 'Enviado'"
-                class="dashboard-table-buttons"  (click)="navigateToLife(element.id)"> <!--  -->
+                class="dashboard-table-buttons" (click)="navigateToLife(element.id)">
+                <!--  -->
                 <img src="../../../../assets/iconos/edit.svg">
               </button>
               <!-- <p> Hola, soy vida </p> -->
             </div>
             <div *ngIf="element.seguro == 'Salud'">
               <button mat-mini-fab aria-label="Editar" *ngIf="element.estatus !== 'Enviado'"
-              class="dashboard-table-buttons"  (click)="navigateToSalud(element.id)">
-              <img src="../../../../assets/iconos/edit.svg">
+                class="dashboard-table-buttons" (click)="navigateToSalud(element.id)">
+                <img src="../../../../assets/iconos/edit.svg">
               </button>
               <!-- <p> Hola, soy Salud </p> -->
             </div>
             <div *ngIf="element.seguro == 'Disability'">
               <button mat-mini-fab aria-label="Editar" *ngIf="element.estatus !== 'Enviado'"
-              class="dashboard-table-buttons" (click)="navigateToDisability(element.id)"> <!-- (click)="this.life.getID(element)" -->
-              <img src="../../../../assets/iconos/edit.svg">
+                class="dashboard-table-buttons" (click)="navigateToDisability(element.id)">
+                <!-- (click)="this.life.getID(element)" -->
+                <img src="../../../../assets/iconos/edit.svg">
               </button>
               <!-- <p> Hola, soy Disability </p> -->
             </div>

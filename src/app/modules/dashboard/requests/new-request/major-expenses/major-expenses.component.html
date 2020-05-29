@@ -472,7 +472,7 @@
                 </div>
               </div>
               <!-- SI FUMABA -->
-              <div *ngIf="newRequest.get('questionsA').value.haveNicotine === true && question.name === 'haveNicotine'">
+              <div *ngIf="newRequest.get('questionsA').value.haveNicotine === true && question.name === 'haveNicotine' && newRequest.get('questionsA').get('nicotine')">
                 <label class="my-2 text-xs">Especifique cantidad por día y cuánto tiempo tiene o estuvo
                   fumando</label>
                 <div class='grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2'>
@@ -492,7 +492,7 @@
                 </div>
               </div>
               <!-- SI ESTA EMBARAZADA -->
-              <div *ngIf="newRequest.get('questionsA').value.havePregnant === true && question.name === 'havePregnant'">
+              <div *ngIf="newRequest.get('questionsA').value.havePregnant === true && question.name === 'havePregnant' && newRequest.get('questionsA').get('pregnant')">
                 <label class="my-2 text-xs">Favor indicar semanas de embarazo</label>
                 <div style="width: 200px;">
                   <app-number-input class="mr-3" [group]="newRequest.get('questionsA').get('pregnant')" type="number"
@@ -502,7 +502,7 @@
               </div>
               <!-- SI PRACTICA DEPORTE DE ALTO RIESGO -->
               <div
-                *ngIf="newRequest.get('questionsA').value.haveHighRiskSport === true && question.name === 'haveHighRiskSport'">
+                *ngIf="newRequest.get('questionsA').value.haveHighRiskSport === true && question.name === 'haveHighRiskSport' && newRequest.get('questionsA').get('highRiskSport')">
                 <label class="my-2 text-xs">¿Desde cuándo? Describa</label>
                 <div style="width: 200px;">
                   <app-date-picker class="mr-3" [group]="newRequest.get('questionsA').get('highRiskSport')"
@@ -604,7 +604,7 @@
                 </div>
               </div>
               <div *ngIf="newRequest.get('questionsB').value[question.name] === 'si'">
-                <div *ngIf="question.name === 'hasFamilyWithHeartKidneyDisease'">
+                <div *ngIf="question.name === 'hasFamilyWithHeartKidneyDisease' && familyWithDiseasesList !== null">
                   <div *ngFor="let studies of familyWithDiseasesList.controls; let i = index"
                     class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
                     <app-select class="mr-3" [options]="family"
@@ -627,13 +627,13 @@
                     </button>
                   </div>
                 </div>
-                <div *ngIf="question.name === 'hasDeclinedInsuranceCompany'">
+                <div *ngIf="question.name === 'hasDeclinedInsuranceCompany' && newRequest.get('questionsB').get('declinedInsuranceInformation')">
                   <div class="radio-button-label mb-2" style="font-size: 12px !important;">¿Por qué razón?</div>
                   <app-text-area [group]="newRequest.get('questionsB').get('declinedInsuranceInformation')"
                     name="reason" label="Texto">
                   </app-text-area>
                 </div>
-                <div *ngIf="question.name === 'haveHadMedicalHealthInsurance'">
+                <div *ngIf="question.name === 'haveHadMedicalHealthInsurance' && newRequest.get('questionsB').get('medicalHealthInsurance')">
                   <div class=" grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
                     <app-input class="mr-3" [group]=" newRequest.get('questionsB').get('medicalHealthInsurance')"
                       name="companyName" label="Nombre de compañía">
@@ -660,7 +660,7 @@
                       name="didReclamation" [options]="didReclamationOptions" (selected)="selectChange($event)">
                     </app-radio-button>
                   </div>
-                  <div *ngIf="newRequest.get('questionsB').get('medicalHealthInsurance').value.didReclamation === 'si'">
+                  <div *ngIf="newRequest.get('questionsB').get('medicalHealthInsurance') && newRequest.get('questionsB').get('medicalHealthInsurance').value.didReclamation === 'si'">
                     <div class="radio-button-label mb-2" style="font-size: 12px !important;">Especifique la
                       reclamación
                     </div>

@@ -1,28 +1,37 @@
 
 <div class="mx-4">
-    <div class="uppercase dashboard-page-title pt-10">
-      FORMULARIO POLÍTICA ANTILAVADO DE DINERO / FINANCIAMIENTO DE TERRORISMO (PERSONA JURÍDICA) </div>
-  
-    <div class="pt-12 pb-12 mt-5 ml-1" style="background-color: #F2F2F2">
-  
-      <div class="ml-8 mr-10 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4"> 
-
-        <app-number-input [group]="form" label="Solicitud No." name='request'
-        min="1" placeholder="12345678"></app-number-input>
-
-      </div>
-  
-    </div>
+    <!-- <div class="uppercase dashboard-page-title pt-10">
+      FORMULARIO POLÍTICA ANTILAVADO DE DINERO / FINANCIAMIENTO DE TERRORISMO (PERSONA JURÍDICA) </div> -->
   
     <div class="pb-1 mt-4">
   
-      <app-forms-container [titles]="accordionTitles">
+      <app-forms-container [isQuestionnarie]="false" [titles]="['Formulario Política Antilavado de Dinero / Financiamiento de Terrorismo']">
         
         <ng-template #formTemplate>
   
-          <div class="ml-3"> 
+          <div class="ml-3">
+            
+            <div class="pt-12 pb-12 mt-5 ml-1" style="background-color: #F2F2F2">
+  
+              <div class="ml-8 mr-10 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4"> 
+        
+                <app-number-input [group]="form" label="Solicitud No." name='request'
+                min="1" placeholder="12345678"></app-number-input>
+        
+              </div>
+          
+            </div>
+
+            <!-- Sección Datos Generales -->
+
+            <div class="mt-12">
+
+              <h3 style="font-size: 16px; color: #18446B; font-weight: 500;"> Datos Generales </h3>
+
+            </div>
+            
               <!-- Primer Bloque -->
-              <div>
+              <div class="mt-12">
               
                   <!-- Primera Fila -->
                 <div> 
@@ -134,422 +143,439 @@
                 </div>
   
               </div>
-          </div>
-  
-        </ng-template>
-  
-        <ng-template #formTemplate>
-          
-          <div class="pt-16 pb-5 mt-8 ml-1 pl-4 -mr-2" style="background-color: #F2F2F2;">
-            
-            <label class="formulary-labels"> Políticas, prácticas y procedimientos </label>
-           
-          </div>
 
-              <hr class="ml-1 ww-divider">
+              <!-- Sección Controles y evaluación de anti lavado de dinero o ﬁnanciamiento de terrorismo -->
+
+            <div class="mt-12">
+
+              <h3 style="font-size: 16px; color: #18446B; font-weight: 500;"> Controles y evaluación de anti lavado de dinero o ﬁnanciamiento de terrorismo </h3>
+
+            </div>
+
+            <div class="pt-16 pb-5 mt-12 ml-1 pl-4 -mr-2" style="background-color: #F2F2F2;">
+            
+              <label class="formulary-labels"> Políticas, prácticas y procedimientos </label>
              
-          <div class="pt-10 pb-10 ml-1 ">
-  
-            <div class="mt-3" style="display: inline-block;"> 
-              <label class="radio-button-label"> ¿Tiene la Sociedad un programa de cumplimiento para prevenir delitos de lavado o blanqueo de dinero o financiamiento de terrorismo? </label>
-            </div>
-            <div class="mt-3 float-right -ml-5 -mr-6 sm:ml-0 sm:-mr-1 md:ml-0 md:mr-0 lg:ml-0 lg:mr-0 xl:ml-0 xl:mr-0">
-              <app-radio-button [group]="form" [options]="evaluationOptions"
-              name="prevention_program">
-            </app-radio-button>
             </div>
   
-          </div>
-             
-              <hr class="ml-1 mt-8 ww-divider">
-  
-          <div class="pt-10 pb-10 ml-1 ">
-  
-            <div class="mt-3" style="display: inline-block;">
-              <label class="radio-button-label"> ¿Son aprobadas por el órgano de gestión correspondiente las políticas pertinentes para el cumplimiento del programa para prevención de delitos de lavado, blanqueo de dinero o financiamiento de terrorismo? </label>
-            </div>
-            <div class="float-right mt-3 -ml-5 -mr-6 sm:ml-0 sm:-mr-1 md:ml-0 md:mr-0 lg:ml-0 lg:mr-0 xl:ml-0 xl:mr-0">
-              <app-radio-button [group]="form" [options]="evaluationOptions"
-              name="management_body">
-            </app-radio-button>
-            </div>
-  
-          </div>
-             
-              <hr class="ml-1 mt-8 ww-divider">
-  
-          <div class="pt-10 pb-10 ml-1">
-  
-            <div class="mt-3" style="display: inline-block;">
-              <label class="radio-button-label"> ¿Ha establecido la Sociedad una política escrita que documente los procesos para prevenir, detectar y reportar transacciones sospechosas?          </label>
-            </div>
-            <div class="float-right mt-3 -ml-5 -mr-6 sm:ml-0 sm:-mr-1 md:ml-0 md:mr-0 lg:ml-0 lg:mr-0 xl:ml-0 xl:mr-0">
-              <app-radio-button [group]="form" [options]="evaluationOptions"
-              name="written_policy">
+                <hr class="ml-1 ww-divider">
+               
+            <div class="pt-10 pb-10 ml-1 ">
+    
+              <div class="mt-3" style="display: inline-block;"> 
+                <label class="radio-button-label"> ¿Tiene la Sociedad un programa de cumplimiento para prevenir delitos de lavado o blanqueo de dinero o financiamiento de terrorismo? </label>
+              </div>
+              <div class="mt-3 float-right -ml-5 -mr-6 sm:ml-0 sm:-mr-1 md:ml-0 md:mr-0 lg:ml-0 lg:mr-0 xl:ml-0 xl:mr-0">
+                <app-radio-button [group]="form" [options]="evaluationOptions"
+                name="prevention_program">
               </app-radio-button>
+              </div>
+    
             </div>
-                
-          </div>
-  
-              <hr class="ml-1 mt-8 ww-divider">
-  
-          <div class="pt-10 pb-10 ml-1">
-  
-            <div class="mt-3" style="display: inline-block;">
-              <label class="radio-button-label"> ¿Tiene la Sociedad una política que prohíba las cuentas/relaciones comerciales con bancos pantalla (Shell Banks)? </label>
-            </div>
-            <div class="float-right mt-3 -ml-5 -mr-6 sm:ml-0 sm:-mr-1 md:ml-0 md:mr-0 lg:ml-0 lg:mr-0 xl:ml-0 xl:mr-0">
-              <app-radio-button [group]="form" [options]="evaluationOptions"
-              name="ban_policy">
-            </app-radio-button>
-            </div>
-  
-          </div>
-  
-              <hr class="ml-1 mt-8 ww-divider">
-  
-          <div class="pt-10 pb-10 ml-1">
-  
-            <div class="mt-3" style="display: inline-block;">
-              <label class="radio-button-label"> ¿Tiene la Sociedad políticas que regulen las relaciones con Personas Políticamente Expuestas? </label>
-            </div>
-            <div class="float-right mt-3 -ml-5 -mr-6 sm:ml-0 sm:-mr-1 md:ml-0 md:mr-0 lg:ml-0 lg:mr-0 xl:ml-0 xl:mr-0">
-              <app-radio-button [group]="form" [options]="evaluationOptions"
-              name="regulation_policy">
+               
+                <hr class="ml-1 mt-8 ww-divider">
+    
+            <div class="pt-10 pb-10 ml-1 ">
+    
+              <div class="mt-3" style="display: inline-block;">
+                <label class="radio-button-label"> ¿Son aprobadas por el órgano de gestión correspondiente las políticas pertinentes para el cumplimiento del programa para prevención de delitos de lavado, blanqueo de dinero o financiamiento de terrorismo? </label>
+              </div>
+              <div class="float-right mt-3 -ml-5 -mr-6 sm:ml-0 sm:-mr-1 md:ml-0 md:mr-0 lg:ml-0 lg:mr-0 xl:ml-0 xl:mr-0">
+                <app-radio-button [group]="form" [options]="evaluationOptions"
+                name="management_body">
               </app-radio-button>
+              </div>
+    
             </div>
-  
-          </div>
-             
-              <hr class="ml-1 mt-8 ww-divider">
-  
-          <div class="pt-10 pb-10 ml-1">
-          
-            <div class="mt-3" style="display: inline-block;">
-              <label class="radio-button-label"> ¿En caso de tener sucursales o afiliadas, se implementan las políticas para prevenir delitos de la lavado o blanqueo de dinero o financiamiento de terrorismo? </label>
+               
+                <hr class="ml-1 mt-8 ww-divider">
+    
+            <div class="pt-10 pb-10 ml-1">
+    
+              <div class="mt-3" style="display: inline-block;">
+                <label class="radio-button-label"> ¿Ha establecido la Sociedad una política escrita que documente los procesos para prevenir, detectar y reportar transacciones sospechosas?          </label>
+              </div>
+              <div class="float-right mt-3 -ml-5 -mr-6 sm:ml-0 sm:-mr-1 md:ml-0 md:mr-0 lg:ml-0 lg:mr-0 xl:ml-0 xl:mr-0">
+                <app-radio-button [group]="form" [options]="evaluationOptions"
+                name="written_policy">
+                </app-radio-button>
+              </div>
+                  
             </div>
-            <div class="float-right mt-3 -ml-5 -mr-6 sm:ml-0 sm:-mr-1 md:ml-0 md:mr-0 lg:ml-0 lg:mr-0 xl:ml-0 xl:mr-0">
-              <app-radio-button  [group]="form" [options]="evaluationOptions"
-              name="branch_office_ban_policy">
+    
+                <hr class="ml-1 mt-8 ww-divider">
+    
+            <div class="pt-10 pb-10 ml-1">
+    
+              <div class="mt-3" style="display: inline-block;">
+                <label class="radio-button-label"> ¿Tiene la Sociedad una política que prohíba las cuentas/relaciones comerciales con bancos pantalla (Shell Banks)? </label>
+              </div>
+              <div class="float-right mt-3 -ml-5 -mr-6 sm:ml-0 sm:-mr-1 md:ml-0 md:mr-0 lg:ml-0 lg:mr-0 xl:ml-0 xl:mr-0">
+                <app-radio-button [group]="form" [options]="evaluationOptions"
+                name="ban_policy">
               </app-radio-button>
-            </div>
-          </div>
-  
-              <hr class="ml-1 mt-8 ww-divider">
-  
-          <div class="pt-10 pb-10 ml-1">
-  
-            <div class="mt-3" style="display: inline-block;"> 
-              <label class="radio-button-label"> ¿Ofrece la Sociedad servicios a clientes anónimos? </label>
-            </div>
-            <div class="float-right mt-3 -ml-5 -mr-6 sm:ml-0 sm:-mr-1 md:ml-0 md:mr-0 lg:ml-0 lg:mr-0 xl:ml-0 xl:mr-0">
-              <app-radio-button  [group]="form" [options]="evaluationOptions"
-              name="anonymous_customer_service">
-            </app-radio-button>
-            </div>
-  
-          </div>
-             
-              <hr class="ml-1 mt-8 ww-divider">
-  
-          <div class="pt-16 pb-5 ml-1 pl-4 -mr-2" style="background-color: #F2F2F2;">
-        
-            <label class="formulary-labels"> Controles de monitoreo  </label>
-           
-          </div>
-  
-              <hr class="ml-1 ww-divider">
-  
-          <div class="pt-10 pb-10 ml-1">
-      
-            <div class="mt-3" style="display: inline-block;"> 
-              <label class="radio-button-label"> ¿Ha establecido la Sociedad medios de auditoría para probar el cumplimiento de políticas para prevenir delitos de lavado o blanqueo de dinero o financiamiento de terrorismo? </label>
-            </div>
-            <div class="float-right mt-3 -ml-5 -mr-6 sm:ml-0 sm:-mr-1 md:ml-0 md:mr-0 lg:ml-0 lg:mr-0 xl:ml-0 xl:mr-0">
-              <app-radio-button  [group]="form" [options]="evaluationOptions"
-              name="means_of_audit">
-            </app-radio-button>
+              </div>
+    
             </div>
     
-          </div>
-             
-              <hr class="ml-1 mt-8 ww-divider">
-  
-          <div class="pt-10 pb-10 ml-1">
-  
-            <div class="mt-3" style="display: inline-block;">
-              <label class="radio-button-label"> ¿Monitorea la Sociedad las actividades de sus clientes a fin de detectar actividad sospechosa o inusual? </label>
-            </div>
-            <div class="float-right mt-3 -ml-5 -mr-6 sm:ml-0 sm:-mr-1 md:ml-0 md:mr-0 lg:ml-0 lg:mr-0 xl:ml-0 xl:mr-0">
-              <app-radio-button  [group]="form" [options]="evaluationOptions"
-              name="clients_monitoring">
-            </app-radio-button>
-            </div>
+                <hr class="ml-1 mt-8 ww-divider">
     
-          </div>
-             
-              <hr class="ml-1 mt-8 ww-divider">
-  
-          <div class="pt-10 pb-10 ml-1">
-            <div class="mt-3" style="display: inline-block;">
-              <label class="radio-button-label"> ¿Monitorea la Sociedad bases de datos oficiales a fin de detectar actividad sospechosa o inusual de sus clientes? </label>
-            </div>
-            <div class="float-right mt-3 -ml-5 -mr-6 sm:ml-0 sm:-mr-1 md:ml-0 md:mr-0 lg:ml-0 lg:mr-0 xl:ml-0 xl:mr-0">
-              <app-radio-button  [group]="form" [options]="evaluationOptions"
-              name="databases_monitoring">
-            </app-radio-button>
-            </div>
+            <div class="pt-10 pb-10 ml-1">
     
-          </div>
-        
-              <hr class="ml-1 mt-8 ww-divider">
-  
-          <div class="pt-16 pb-5 ml-1 pl-4 -mr-2" style="background-color: #F2F2F2;">
+              <div class="mt-3" style="display: inline-block;">
+                <label class="radio-button-label"> ¿Tiene la Sociedad políticas que regulen las relaciones con Personas Políticamente Expuestas? </label>
+              </div>
+              <div class="float-right mt-3 -ml-5 -mr-6 sm:ml-0 sm:-mr-1 md:ml-0 md:mr-0 lg:ml-0 lg:mr-0 xl:ml-0 xl:mr-0">
+                <app-radio-button [group]="form" [options]="evaluationOptions"
+                name="regulation_policy">
+                </app-radio-button>
+              </div>
     
-            <label class="formulary-labels"> Otros Controles </label>
-           
-          </div>
-             
-              <hr class="ml-1 mt-8 ww-divider">
-  
-          <div class="pt-10 pb-10 ml-1">
-            <div class="mt-3" style="display: inline-block;">
-              <label class="radio-button-label"> ¿Entrena a sus funcionarios, empleados, colaboradores en políticas y procedimiento para prevenir delitos de lavado o blanqueo de dinero o financiamiento de terrorismo? </label>
             </div>
-            <div class="float-right mt-3 -ml-5 -mr-6 sm:ml-0 sm:-mr-1 md:ml-0 md:mr-0 lg:ml-0 lg:mr-0 xl:ml-0 xl:mr-0">
-              <app-radio-button  [group]="form" [options]="evaluationOptions"
-              name="prevention_training">
-            </app-radio-button>
-            </div>
+               
+                <hr class="ml-1 mt-8 ww-divider">
     
-          </div>
-                 
-              <hr class="ml-1 mt-8 ww-divider">
-  
-          <div class="pt-10 pb-10 ml-1">
-            <div class="mt-3" style="display: inline-block;">
-              <label class="radio-button-label"> 
-                ¿Ha designado la Sociedad un oficial responsable del cumplimiento, coordinación y supervisión de las políticas para prevenir delitos de lavado o blanqueo de dinero o financiamiento de terrorismo? </label>
+            <div class="pt-10 pb-10 ml-1">
+            
+              <div class="mt-3" style="display: inline-block;">
+                <label class="radio-button-label"> ¿En caso de tener sucursales o afiliadas, se implementan las políticas para prevenir delitos de la lavado o blanqueo de dinero o financiamiento de terrorismo? </label>
               </div>
               <div class="float-right mt-3 -ml-5 -mr-6 sm:ml-0 sm:-mr-1 md:ml-0 md:mr-0 lg:ml-0 lg:mr-0 xl:ml-0 xl:mr-0">
                 <app-radio-button  [group]="form" [options]="evaluationOptions"
-                name="official_responsible">
+                name="branch_office_ban_policy">
+                </app-radio-button>
+              </div>
+            </div>
+    
+                <hr class="ml-1 mt-8 ww-divider">
+    
+            <div class="pt-10 pb-10 ml-1">
+    
+              <div class="mt-3" style="display: inline-block;"> 
+                <label class="radio-button-label"> ¿Ofrece la Sociedad servicios a clientes anónimos? </label>
+              </div>
+              <div class="float-right mt-3 -ml-5 -mr-6 sm:ml-0 sm:-mr-1 md:ml-0 md:mr-0 lg:ml-0 lg:mr-0 xl:ml-0 xl:mr-0">
+                <app-radio-button  [group]="form" [options]="evaluationOptions"
+                name="anonymous_customer_service">
               </app-radio-button>
               </div>
     
-          </div>
+            </div>
+               
+                <hr class="ml-1 mt-8 ww-divider">
+    
+            <div class="pt-16 pb-5 ml-1 pl-4 -mr-2" style="background-color: #F2F2F2;">
+          
+              <label class="formulary-labels"> Controles de monitoreo  </label>
              
-              <hr class="ml-1 mt-8 ww-divider">
-  
-          <div class="pt-10 pb-10 ml-1">
-            <div class="mt-3" style="display: inline-block;">
-              <label class="radio-button-label"> 
-                ¿Entrena la Sociedad a sus altos funcionarios en los procedimientos necesarios para la detención y reporte de transacciones sospechosas? </label>
-            </div>
-            <div class="float-right mt-3 -ml-5 -mr-6 sm:ml-0 sm:-mr-1 md:ml-0 md:mr-0 lg:ml-0 lg:mr-0 xl:ml-0 xl:mr-0">
-              <app-radio-button  [group]="form" [options]="evaluationOptions"
-              name="training_functionary">
-            </app-radio-button>
             </div>
     
-          </div>
-        
-              <hr class="ml-1 mt-8 ww-divider">
-        
-          <div class="pt-10 pb-10 ml-1">
-            <div class="mt-3" style="display: inline-block;">
-              <label class="radio-button-label"> 
-                ¿Se realizan con frecuencia entrenamientos del personal? </label>
-            </div>
-            <div class="float-right mt-3 -ml-5 -mr-6 sm:ml-0 sm:-mr-1 md:ml-0 md:mr-0 lg:ml-0 lg:mr-0 xl:ml-0 xl:mr-0">
-              <app-radio-button  [group]="form" [options]="evaluationOptions"
-              name="staff_training">
-            </app-radio-button>
-            </div>
+                <hr class="ml-1 ww-divider">
     
-          </div>   
+            <div class="pt-10 pb-10 ml-1">
+        
+              <div class="mt-3" style="display: inline-block;"> 
+                <label class="radio-button-label"> ¿Ha establecido la Sociedad medios de auditoría para probar el cumplimiento de políticas para prevenir delitos de lavado o blanqueo de dinero o financiamiento de terrorismo? </label>
+              </div>
+              <div class="float-right mt-3 -ml-5 -mr-6 sm:ml-0 sm:-mr-1 md:ml-0 md:mr-0 lg:ml-0 lg:mr-0 xl:ml-0 xl:mr-0">
+                <app-radio-button  [group]="form" [options]="evaluationOptions"
+                name="means_of_audit">
+              </app-radio-button>
+              </div>
+      
+            </div>
+               
+                <hr class="ml-1 mt-8 ww-divider">
+    
+            <div class="pt-10 pb-10 ml-1">
+    
+              <div class="mt-3" style="display: inline-block;">
+                <label class="radio-button-label"> ¿Monitorea la Sociedad las actividades de sus clientes a fin de detectar actividad sospechosa o inusual? </label>
+              </div>
+              <div class="float-right mt-3 -ml-5 -mr-6 sm:ml-0 sm:-mr-1 md:ml-0 md:mr-0 lg:ml-0 lg:mr-0 xl:ml-0 xl:mr-0">
+                <app-radio-button  [group]="form" [options]="evaluationOptions"
+                name="clients_monitoring">
+              </app-radio-button>
+              </div>
+      
+            </div>
+               
+                <hr class="ml-1 mt-8 ww-divider">
+    
+            <div class="pt-10 pb-10 ml-1">
+              <div class="mt-3" style="display: inline-block;">
+                <label class="radio-button-label"> ¿Monitorea la Sociedad bases de datos oficiales a fin de detectar actividad sospechosa o inusual de sus clientes? </label>
+              </div>
+              <div class="float-right mt-3 -ml-5 -mr-6 sm:ml-0 sm:-mr-1 md:ml-0 md:mr-0 lg:ml-0 lg:mr-0 xl:ml-0 xl:mr-0">
+                <app-radio-button  [group]="form" [options]="evaluationOptions"
+                name="databases_monitoring">
+              </app-radio-button>
+              </div>
+      
+            </div>
+          
+                <hr class="ml-1 mt-8 ww-divider">
+    
+            <div class="pt-16 pb-5 ml-1 pl-4 -mr-2" style="background-color: #F2F2F2;">
+      
+              <label class="formulary-labels"> Otros Controles </label>
              
-              <hr class="ml-1 mt-8 ww-divider">
-  
-          <div class="pt-10 pb-10 ml-1">
-            <div class="mt-3" style="display: inline-block;">
-              <label class="radio-button-label"> 
-                ¿Se prueban con frecuencia por auditoría el cumplimiento de las políticas de ALD? </label>
             </div>
-            <div class="float-right mt-3 -ml-5 -mr-6 sm:ml-0 sm:-mr-1 md:ml-0 md:mr-0 lg:ml-0 lg:mr-0 xl:ml-0 xl:mr-0">
-              <app-radio-button  [group]="form" [options]="evaluationOptions"
-              name="prove_fullfilment">
-            </app-radio-button>
-            </div>
+               
+                <hr class="ml-1 mt-8 ww-divider">
     
-          </div>
+            <div class="pt-10 pb-10 ml-1">
+              <div class="mt-3" style="display: inline-block;">
+                <label class="radio-button-label"> ¿Entrena a sus funcionarios, empleados, colaboradores en políticas y procedimiento para prevenir delitos de lavado o blanqueo de dinero o financiamiento de terrorismo? </label>
+              </div>
+              <div class="float-right mt-3 -ml-5 -mr-6 sm:ml-0 sm:-mr-1 md:ml-0 md:mr-0 lg:ml-0 lg:mr-0 xl:ml-0 xl:mr-0">
+                <app-radio-button  [group]="form" [options]="evaluationOptions"
+                name="prevention_training">
+              </app-radio-button>
+              </div>
+      
+            </div>
+                   
+                <hr class="ml-1 mt-8 ww-divider">
+    
+            <div class="pt-10 pb-10 ml-1">
+              <div class="mt-3" style="display: inline-block;">
+                <label class="radio-button-label"> 
+                  ¿Ha designado la Sociedad un oficial responsable del cumplimiento, coordinación y supervisión de las políticas para prevenir delitos de lavado o blanqueo de dinero o financiamiento de terrorismo? </label>
+                </div>
+                <div class="float-right mt-3 -ml-5 -mr-6 sm:ml-0 sm:-mr-1 md:ml-0 md:mr-0 lg:ml-0 lg:mr-0 xl:ml-0 xl:mr-0">
+                  <app-radio-button  [group]="form" [options]="evaluationOptions"
+                  name="official_responsible">
+                </app-radio-button>
+                </div>
+      
+            </div>
+               
+                <hr class="ml-1 mt-8 ww-divider">
+    
+            <div class="pt-10 pb-10 ml-1">
+              <div class="mt-3" style="display: inline-block;">
+                <label class="radio-button-label"> 
+                  ¿Entrena la Sociedad a sus altos funcionarios en los procedimientos necesarios para la detención y reporte de transacciones sospechosas? </label>
+              </div>
+              <div class="float-right mt-3 -ml-5 -mr-6 sm:ml-0 sm:-mr-1 md:ml-0 md:mr-0 lg:ml-0 lg:mr-0 xl:ml-0 xl:mr-0">
+                <app-radio-button  [group]="form" [options]="evaluationOptions"
+                name="training_functionary">
+              </app-radio-button>
+              </div>
+      
+            </div>
+          
+                <hr class="ml-1 mt-8 ww-divider">
+          
+            <div class="pt-10 pb-10 ml-1">
+              <div class="mt-3" style="display: inline-block;">
+                <label class="radio-button-label"> 
+                  ¿Se realizan con frecuencia entrenamientos del personal? </label>
+              </div>
+              <div class="float-right mt-3 -ml-5 -mr-6 sm:ml-0 sm:-mr-1 md:ml-0 md:mr-0 lg:ml-0 lg:mr-0 xl:ml-0 xl:mr-0">
+                <app-radio-button  [group]="form" [options]="evaluationOptions"
+                name="staff_training">
+              </app-radio-button>
+              </div>
+      
+            </div>   
+               
+                <hr class="ml-1 mt-8 ww-divider">
+    
+            <div class="pt-10 pb-10 ml-1">
+              <div class="mt-3" style="display: inline-block;">
+                <label class="radio-button-label"> 
+                  ¿Se prueban con frecuencia por auditoría el cumplimiento de las políticas de ALD? </label>
+              </div>
+              <div class="float-right mt-3 -ml-5 -mr-6 sm:ml-0 sm:-mr-1 md:ml-0 md:mr-0 lg:ml-0 lg:mr-0 xl:ml-0 xl:mr-0">
+                <app-radio-button  [group]="form" [options]="evaluationOptions"
+                name="prove_fullfilment">
+              </app-radio-button>
+              </div>
+      
+            </div>
+              
+                <hr class="ml-1 mt-8 ww-divider">
+    
+            <div class="pt-10 pb-10 ml-1">
+              <div class="mt-3" style="display: inline-block;">
+                <label class="radio-button-label"> 
+                  ¿Implementa la Sociedad un programa de riesgo para evaluar a sus clientes? </label>
+              </div>
+              <div class="float-right mt-3 -ml-5 -mr-6 sm:ml-0 sm:-mr-1 md:ml-0 md:mr-0 lg:ml-0 lg:mr-0 xl:ml-0 xl:mr-0">
+                <app-radio-button  [group]="form" [options]="evaluationOptions"
+                name="risk_program">
+              </app-radio-button>
+              </div>
+      
+            </div>
+               
+                <hr class="ml-1 mt-8 ww-divider">
+    
+            <div class="pt-10 pb-10 ml-1">
+              <div class="mt-3" style="display: inline-block;">
+                <label class="radio-button-label"> 
+                  ¿Aplica la Sociedad técnicas mejoradas de debida diligencia para evaluar a posibles clientes? </label>
+              </div>
+              <div class="float-right mt-3 -ml-5 -mr-6 sm:ml-0 sm:-mr-1 md:ml-0 md:mr-0 lg:ml-0 lg:mr-0 xl:ml-0 xl:mr-0">
+                <app-radio-button  [group]="form" [options]="evaluationOptions"
+                name="evaluation_techniques">
+                </app-radio-button>
+              </div>
+      
+            </div>
+               
+                <hr class="ml-1 mt-8 ww-divider">
+    
+            <div class="pt-10 pb-10 ml-1">
+              <div class="mt-3" style="display: inline-block;">
+                <label class="radio-button-label"> 
+                  ¿Aplica la Sociedad técnicas mejoradas de debida diligencia para evaluar a clientes de alto riesgo, ej. Personas Políticamente Expuestas? </label>
+              </div>
+              <div class="float-right mt-3 -ml-5 -mr-6 sm:ml-0 sm:-mr-1 md:ml-0 md:mr-0 lg:ml-0 lg:mr-0 xl:ml-0 xl:mr-0">
+                <app-radio-button  [group]="form" [options]="evaluationOptions"
+                name="risk_evaluation_techniques">
+                </app-radio-button>
+              </div>
+      
+            </div>
+          
+                <hr class="ml-1 mt-8 ww-divider">
             
-              <hr class="ml-1 mt-8 ww-divider">
-  
-          <div class="pt-10 pb-10 ml-1">
-            <div class="mt-3" style="display: inline-block;">
-              <label class="radio-button-label"> 
-                ¿Implementa la Sociedad un programa de riesgo para evaluar a sus clientes? </label>
-            </div>
-            <div class="float-right mt-3 -ml-5 -mr-6 sm:ml-0 sm:-mr-1 md:ml-0 md:mr-0 lg:ml-0 lg:mr-0 xl:ml-0 xl:mr-0">
-              <app-radio-button  [group]="form" [options]="evaluationOptions"
-              name="risk_program">
-            </app-radio-button>
-            </div>
-    
-          </div>
+            <div class="pt-16 pb-5 ml-1 pl-4 -mr-2" style="background-color: #F2F2F2;">
+              <label class="formulary-labels"> Reporte de transacciones y prevención de transacciones con fondos ilícitos </label>
              
-              <hr class="ml-1 mt-8 ww-divider">
-  
-          <div class="pt-10 pb-10 ml-1">
-            <div class="mt-3" style="display: inline-block;">
-              <label class="radio-button-label"> 
-                ¿Aplica la Sociedad técnicas mejoradas de debida diligencia para evaluar a posibles clientes? </label>
-            </div>
-            <div class="float-right mt-3 -ml-5 -mr-6 sm:ml-0 sm:-mr-1 md:ml-0 md:mr-0 lg:ml-0 lg:mr-0 xl:ml-0 xl:mr-0">
-              <app-radio-button  [group]="form" [options]="evaluationOptions"
-              name="evaluation_techniques">
-              </app-radio-button>
-            </div>
+            </div>  
+               
+                <hr class="ml-1 ww-divider">
     
-          </div>
-             
-              <hr class="ml-1 mt-8 ww-divider">
-  
-          <div class="pt-10 pb-10 ml-1">
-            <div class="mt-3" style="display: inline-block;">
-              <label class="radio-button-label"> 
-                ¿Aplica la Sociedad técnicas mejoradas de debida diligencia para evaluar a clientes de alto riesgo, ej. Personas Políticamente Expuestas? </label>
+            <div class="pt-10 pb-10 ml-1">
+              <div class="mt-3" style="display: inline-block;">
+                <label class="radio-button-label"> 
+                  ¿Ha implementado la Sociedad políticas y prácticas para identificación y reporte de transacciones que requieran de ser reportadas a las autoridades? </label>
+              </div>
+              <div class="float-right mt-3 -ml-5 -mr-6 sm:ml-0 sm:-mr-1 md:ml-0 md:mr-0 lg:ml-0 lg:mr-0 xl:ml-0 xl:mr-0">
+                <app-radio-button  [group]="form" [options]="evaluationOptions"
+                name="implement_policy">
+                </app-radio-button>
+              </div>
+      
             </div>
-            <div class="float-right mt-3 -ml-5 -mr-6 sm:ml-0 sm:-mr-1 md:ml-0 md:mr-0 lg:ml-0 lg:mr-0 xl:ml-0 xl:mr-0">
-              <app-radio-button  [group]="form" [options]="evaluationOptions"
-              name="risk_evaluation_techniques">
-              </app-radio-button>
-            </div>
+            
+                <hr class="ml-1 mt-8 ww-divider">     
     
-          </div>
-        
-              <hr class="ml-1 mt-8 ww-divider">
+            <div class="pt-10 pb-10 ml-1">
+              <div class="mt-3" style="display: inline-block;">
+                <label class="radio-button-label"> 
+                  ¿Tiene la Sociedad medios para detectar y prevenir transacciones con fondos ilícitos? </label>
+              </div>
+              <div class="float-right mt-3 -ml-5 -mr-6 sm:ml-0 sm:-mr-1 md:ml-0 md:mr-0 lg:ml-0 lg:mr-0 xl:ml-0 xl:mr-0">
+                <app-radio-button  [group]="form" [options]="evaluationOptions"
+                name="detection_means">
+                </app-radio-button>
+              </div>
+      
+            </div>
           
-          <div class="pt-16 pb-5 ml-1 pl-4 -mr-2" style="background-color: #F2F2F2;">
-            <label class="formulary-labels"> Reporte de transacciones y prevención de transacciones con fondos ilícitos </label>
-           
-          </div>  
-             
-              <hr class="ml-1 ww-divider">
-  
-          <div class="pt-10 pb-10 ml-1">
-            <div class="mt-3" style="display: inline-block;">
-              <label class="radio-button-label"> 
-                ¿Ha implementado la Sociedad políticas y prácticas para identificación y reporte de transacciones que requieran de ser reportadas a las autoridades? </label>
+                <hr class="ml-1 mt-8 ww-divider">     
+                   
+            <div class="pt-10 pb-10 ml-1">
+              <div class="mt-3" style="display: inline-block;">
+                <label class="radio-button-label"> 
+                  ¿Tiene la Sociedad políticas que aseguren que las transacciones no se conduzcan a través de bancos pantalla (Shell Banks)? </label>
+              </div>
+              <div class="float-right mt-3 -ml-5 -mr-6 sm:ml-0 sm:-mr-1 md:ml-0 md:mr-0 lg:ml-0 lg:mr-0 xl:ml-0 xl:mr-0">
+                <app-radio-button  [group]="form" [options]="evaluationOptions"
+                name="transaction_policys">
+                </app-radio-button>
+              </div>
+      
             </div>
-            <div class="float-right mt-3 -ml-5 -mr-6 sm:ml-0 sm:-mr-1 md:ml-0 md:mr-0 lg:ml-0 lg:mr-0 xl:ml-0 xl:mr-0">
-              <app-radio-button  [group]="form" [options]="evaluationOptions"
-              name="implement_policy">
-              </app-radio-button>
-            </div>
-    
-          </div>
+               
+                <hr class="ml-1 mt-8 ww-divider">   
           
-              <hr class="ml-1 mt-8 ww-divider">     
-  
-          <div class="pt-10 pb-10 ml-1">
-            <div class="mt-3" style="display: inline-block;">
-              <label class="radio-button-label"> 
-                ¿Tiene la Sociedad medios para detectar y prevenir transacciones con fondos ilícitos? </label>
-            </div>
-            <div class="float-right mt-3 -ml-5 -mr-6 sm:ml-0 sm:-mr-1 md:ml-0 md:mr-0 lg:ml-0 lg:mr-0 xl:ml-0 xl:mr-0">
-              <app-radio-button  [group]="form" [options]="evaluationOptions"
-              name="detection_means">
-              </app-radio-button>
-            </div>
+            <div class="pt-10 pb-10 ml-1">
+            
+              <label class="formulary-labels"> Documentos Necesarios: </label>
+              <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-2"> 
     
-          </div>
-        
-              <hr class="ml-1 mt-8 ww-divider">     
-                 
-          <div class="pt-10 pb-10 ml-1">
-            <div class="mt-3" style="display: inline-block;">
-              <label class="radio-button-label"> 
-                ¿Tiene la Sociedad políticas que aseguren que las transacciones no se conduzcan a través de bancos pantalla (Shell Banks)? </label>
-            </div>
-            <div class="float-right mt-3 -ml-5 -mr-6 sm:ml-0 sm:-mr-1 md:ml-0 md:mr-0 lg:ml-0 lg:mr-0 xl:ml-0 xl:mr-0">
-              <app-radio-button  [group]="form" [options]="evaluationOptions"
-              name="transaction_policys">
-              </app-radio-button>
-            </div>
+                <div class="mt-6 lg:-mr-64"> 
     
-          </div>
-             
-              <hr class="ml-1 mt-8 ww-divider">   
-        
-          <div class="pt-10 pb-10 ml-1">
-          
-            <label class="formulary-labels"> Documentos Necesarios: </label>
-            <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-1 xl:grid-cols-2"> 
-  
-              <div class="mt-6 -ml-4"> 
-  
-                  <app-radio-button style="display: inline-flex; flex-direction: column; white-space: normal !important;" [group]="form" [options]="documents"
-                  name="required_documents">
-                  </app-radio-button>
-                 
+                    <app-radio-button style="display: inline-flex; flex-direction: column; white-space: normal !important;" [group]="form" [options]="documents"
+                    name="required_documents">
+                    </app-radio-button>
+                   
+                </div>
+              
+              </div>
+      
+            </div>
+            
+            <!-- Sección Declaración -->
+
+            <div class="mt-4">
+
+              <h3 style="font-size: 16px; color: #18446B; font-weight: 500;"> Declaración </h3>
+
+            </div>
+
+            <div class="pt-5 pl-3 pb-5 mt-12 ml-1" style="background-color: #E6E7E8;">
+            
+              <div class="pl-8 pr-6">
+                <label style="font-size: 12px;">  Por la presente declaro bajo la fe de juramento que los datos suministrados anteriormente y contenidos en este formulario son verdaderos, correctos y actualizados y que no he omitido ninguna información requerida explícita o implícitamente en este formulario.  </label>
               </div>
             
-            </div>
-    
-          </div> 
-  
-        </ng-template>
-  
-        <ng-template #formTemplate>
-          
-          <div class="pt-5 pl-3 pb-5 mt-5 ml-1" style="background-color: #E6E7E8;">
+            </div> 
             
-            <div class="pl-8 pr-6">
-              <label style="font-size: 12px;">  Por la presente declaro bajo la fe de juramento que los datos suministrados anteriormente y contenidos en este formulario son verdaderos, correctos y actualizados y que no he omitido ninguna información requerida explícita o implícitamente en este formulario.  </label>
+            <!-- Sección Datos del corredor (quien declara haber revisado los datos dada por el cliente o contratante -->
+
+            <div class="mt-12">
+
+              <h3 style="font-size: 16px; color: #18446B; font-weight: 500;"> Datos del corredor (quien declara haber revisado los datos dada por el cliente o contratante </h3>
+
             </div>
-          
-          </div> 
-          
-        </ng-template>
+
+            <div class="mt-12 mb-10 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4">
   
-        <ng-template #formTemplate>
-          
-          <div class="mt-16 mb-10 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4">
-  
-            <div class="ml-3 mr-3">
-  
-              <app-input [group]="form" label="Nombre/Razón Social" name='name' placeholder=""></app-input> 
-  
-            </div>
-  
-            <div class="ml-3 mt-8 sm:mt-4 md:mt-0 lg:mt-0 xl:mt-0 mr-3">
+              <div class="ml-3 mr-3">
     
-              <app-number-input [group]="form" label="No. Licencia" name='license'
-                       placeholder=""></app-number-input>
+                <app-input [group]="form" label="Nombre/Razón Social" name='name' placeholder=""></app-input> 
+    
+              </div>
+    
+              <div class="ml-3 mt-8 sm:mt-4 md:mt-0 lg:mt-0 xl:mt-0 mr-3">
+      
+                <app-number-input [group]="form" label="No. Licencia" name='license'
+                         placeholder=""></app-number-input>
+              </div>
+    
             </div>
-  
-          </div>
-  
-        </ng-template>
-  
-        <ng-template #formTemplate>
-          
-          <div class="mt-12 mb-10 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4">
-  
-            <div class="ml-3 mr-3">
-  
-              <app-input [group]="form" label="Nombre completo funcionario" name='functionary_name' placeholder=""></app-input> 
-  
+
+            <!-- Sección Para uso de la aseguradora -->
+
+            <div class="mt-12">
+
+              <h3 style="font-size: 16px; color: #18446B; font-weight: 500;"> Para uso de la aseguradora </h3>
+
             </div>
+
+            <div class="mt-12 mb-10 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4">
   
-            <div class="ml-3 mt-10 sm:mt-5 md:mt-0 lg:mt-0 xl:mt-0 mr-3">
-  
-              <app-input [group]="form" label="Cargo" name='position' placeholder=""></app-input> 
-  
+              <div class="ml-3 mr-3">
+    
+                <app-input [group]="form" label="Nombre completo funcionario" name='functionary_name' placeholder=""></app-input> 
+    
+              </div>
+    
+              <div class="ml-3 mt-10 sm:mt-5 md:mt-0 lg:mt-0 xl:mt-0 mr-3">
+    
+                <app-input [group]="form" label="Cargo" name='position' placeholder=""></app-input> 
+    
+              </div>
+    
             </div>
-  
+
           </div>
   
         </ng-template>

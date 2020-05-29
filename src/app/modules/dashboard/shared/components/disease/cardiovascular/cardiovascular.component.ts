@@ -57,7 +57,8 @@ export class CardiovascularComponent implements OnInit {
 	medicalTreatmentList: FormArray;
 	hypertensionStudiesList: FormArray;
 	changedTreatmentList: FormArray;
-	liquidAnomalyList: FormArray;
+  liquidAnomalyList: FormArray;
+
 
 	diseaseInfoGroup() {
 		return this.fb.group({
@@ -221,10 +222,13 @@ export class CardiovascularComponent implements OnInit {
 
 		this.form.addControl('studies', this.fb.array([this.createFormArray('studies')]));
 		this.studiesList = this.form.get('studies') as FormArray;
-
+console.log(this.studiesList);
 		this.form.addControl('medicalTreatment', this.fb.array([this.createFormArray('medicalTreatment')]));
-		this.medicalTreatmentList = this.form.get('medicalTreatment') as FormArray;
-
+    this.medicalTreatmentList = this.form.get('medicalTreatment') as FormArray;
+    try{
+    this.studiesList = this.form.get('studies') as FormArray;
+    }
+    catch{}
 		this.questions = [
 			{
 				label: 'Dolor de Pecho (anginas):',

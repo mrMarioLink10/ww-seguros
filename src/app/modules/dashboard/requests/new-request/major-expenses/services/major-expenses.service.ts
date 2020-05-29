@@ -21,6 +21,7 @@ export class MajorExpensesService {
   }
 
   returnData(id):Observable<any>{
+
     return this.http.get(`${environment.apiUrl}/api/Solicitudes/salud/${id}`)
   }
 

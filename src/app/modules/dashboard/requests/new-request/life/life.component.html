@@ -10,11 +10,11 @@
           <input matInput class="">
         </mat-form-field>
       </div> -->
-      <app-number-input class="mr-3" [group]="newRequest" label="No. de Cotización" name='NoC'></app-number-input>
+      <app-number-input class="mr-3" [group]="newRequest" label="No. de Cotización" name='noC'></app-number-input>
 
       <div class="flex">
         <button *ngIf="(ID === null || ID === undefined) && (noCotizacion === null || noCotizacion === undefined)"
-          (click)="searchIdNumber(newRequest.value.NoC)" class="nofocus flex justify-center small-search-button"
+          (click)="searchIdNumber(newRequest.value.noC)" class="nofocus flex justify-center small-search-button"
           style="display: -webkit-box">
           <img src="/assets/iconos/search-icon.svg">
         </button>
@@ -181,7 +181,7 @@
             <div>
               <div class="mt-3 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-4">
                 <app-input class="mr-3" [group]="newRequest.get('employer')" label="Nombre de la compañía"
-                  name='CompanyName'></app-input>
+                  name='companyName'></app-input>
                 <app-input class="mr-3" [group]="newRequest.get('employer')" label="Ocupación y Profesión"
                   name='profession'></app-input>
                 <app-input class="mr-3" [group]="newRequest.get('employer')" label="Actividad Económica de la empresa"
@@ -1703,10 +1703,10 @@
       <mat-tab label="Cuestionarios Actividades" *ngIf="activitiesQuestionsLength() > 0" class="mat-tab-forms">
         <app-diving *ngIf="newRequest.get('activitiesQuestionnaires').get('diving')"
           [form]="newRequest.get('activitiesQuestionnaires').get('diving')"></app-diving>
-        <app-skydiving *ngIf="newRequest.get('activitiesQuestionnaires').get('racing')"
-          [form]="newRequest.get('activitiesQuestionnaires').get('racing')"></app-skydiving>
-        <app-racing *ngIf="newRequest.get('activitiesQuestionnaires').get('skydiving')"
-          [form]="newRequest.get('activitiesQuestionnaires').get('skydiving')"></app-racing>
+        <app-skydiving *ngIf="newRequest.get('activitiesQuestionnaires').get('skydiving')"
+          [form]="newRequest.get('activitiesQuestionnaires').get('skydiving')"></app-skydiving>
+        <app-racing *ngIf="newRequest.get('activitiesQuestionnaires').get('racing')"
+          [form]="newRequest.get('activitiesQuestionnaires').get('racing')"></app-racing>
         <app-mountaineering *ngIf="newRequest.get('activitiesQuestionnaires').get('mountaineering')"
           [form]="newRequest.get('activitiesQuestionnaires').get('mountaineering')"></app-mountaineering>
       </mat-tab>

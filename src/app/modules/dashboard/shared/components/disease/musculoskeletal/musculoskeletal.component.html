@@ -8,13 +8,13 @@
     <ng-template #formTemplate>
       <div class="pt-12 pb-6 mt-5 ml-1 pr-5 sm:pb-2 md:pb-1 lg:pb-0 xl:pb-0" style="background-color: #F2F2F2">
         <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 ml-8 pb-3">
-        <!--   <div class="mr-3 mt-3 sm:mt-2 md:mt-2 lg:mt-2 xl:mt-0">
+          <div class="mr-3 mt-3 sm:mt-2 md:mt-2 lg:mt-2 xl:mt-0">
             <app-input [group]="form" label="Nombre Completo" name="full_name" placeholder="Ramón Melo de los Santos">
             </app-input>
           </div>
           <div class="mr-3 mt-3 sm:mt-2 md:mt-2 lg:mt-2 xl:mt-0">
             <app-number-input [group]="form" label="Edad" name='age' min="1" placeholder="25 años"></app-number-input>
-          </div> -->
+          </div>
           <div class="mr-3 mt-3 sm:mt-2 md:mt-2 lg:mt-2 xl:mt-0">
             <app-input [group]="form" label="Nombre del Médico Tratante" name="doctor_name" placeholder="Cruz Jiminián">
             </app-input>
@@ -77,8 +77,8 @@
 
                 <div>
 
-                  <datepicker-month fieldId="date" [group]="form.get('data').get('disorder')" label="Fecha" name='date'>
-                  </datepicker-month>
+                  <app-date-picker [group]="form.get('data').get('disorder')" label="Fecha" name='date'>
+                  </app-date-picker>
 
                 </div>
 
@@ -149,7 +149,7 @@
 
                 <div>
 
-                  <datepicker-month fieldId="date" [group]="form.get('data')" label="Fecha" name='date'> </datepicker-month>
+                  <app-date-picker [group]="form.get('data')" label="Fecha" name='date'> </app-date-picker>
 
                 </div>
 
@@ -202,8 +202,8 @@
 
                     <div>
 
-                      <datepicker-month fieldId="date" [group]="form.get('data').get('episode').get('episode_array').get(in.toString())"
-                        label="Fecha" name='date'> </datepicker-month>
+                      <app-date-picker [group]="form.get('data').get('episode').get('episode_array').get(in.toString())"
+                        label="Fecha" name='date'> </app-date-picker>
 
                     </div>
 
@@ -303,8 +303,8 @@
 
                     <div>
 
-                      <datepicker-month fieldId="date"  [group]="form.get('data').get('surgery').get('surgery_array').get(in.toString())"
-                        label="Fecha" name='date'> </datepicker-month>
+                      <app-date-picker [group]="form.get('data').get('surgery').get('surgery_array').get(in.toString())"
+                        label="Fecha" name='date'> </app-date-picker>
 
                     </div>
 
@@ -368,7 +368,7 @@
 
           <div>
 
-            <div class="mt-16 sm:mt-16 md:mt-12 lg:mt-10 xl:mt-10">
+            <div class="mt-16 sm:mt-16 md:mt-12 lg:mt-10 xl:mt-10" *ngIf="therapyFormArray">
               <!-- *ngIf="episodeFormArray" -->
 
               <div *ngFor=" let elements of therapyFormArray.controls; let in = index">
@@ -388,8 +388,8 @@
 
                     <div class="mr-3">
 
-                      <datepicker-month fieldId="date" [group]="form.get('data').get('therapy').get('therapy_array').get(in.toString())"
-                        label="Fecha" name='date'> </datepicker-month>
+                      <app-date-picker [group]="form.get('data').get('therapy').get('therapy_array').get(in.toString())"
+                        label="Fecha" name='date'> </app-date-picker>
 
                     </div>
 

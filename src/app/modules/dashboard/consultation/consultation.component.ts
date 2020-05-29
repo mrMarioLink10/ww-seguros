@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {PolicyFilter} from './models/policy';
+import {BillFilter} from "./models/bill";
 
 @Component({
   selector: 'app-consultation',
@@ -9,6 +10,8 @@ import {PolicyFilter} from './models/policy';
 export class ConsultationComponent implements OnInit {
 
   policyFilters: PolicyFilter;
+  billsFilter: BillFilter;
+  activeTab = 0;
 
   constructor() { }
 
@@ -17,6 +20,14 @@ export class ConsultationComponent implements OnInit {
 
   setPolicyFilters(event) {
     this.policyFilters = event;
+  }
+
+  setBillsFilters(event) {
+    this.billsFilter = event;
+  }
+
+  setActiveTab(event) {
+    this.activeTab = event;
   }
 
 }

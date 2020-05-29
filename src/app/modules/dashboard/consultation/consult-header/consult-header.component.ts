@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 
 @Component({
   selector: 'app-consult-header',
@@ -8,9 +8,15 @@ import {Component, OnInit} from '@angular/core';
 export class ConsultHeaderComponent implements OnInit {
   pendingPolicies = 2;
 
+  @Output() activeTab = new EventEmitter<number>();
+
   constructor() { }
 
   ngOnInit() {
+  }
+
+  activatePolicyTab() {
+    this.activeTab.emit(0);
   }
 
 }

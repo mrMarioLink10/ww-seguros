@@ -18,6 +18,8 @@ export class PolicyTableComponent implements OnInit {
     this.policyFilters = policyFilters;
   }
 
+  sortByPendingPayments = false;
+
   displayedColumns: string[] = ['id', 'clientName', 'product', 'insuredQuantity', 'validityDate',
     'paymentState', 'totalBalance'];
 
@@ -42,6 +44,10 @@ export class PolicyTableComponent implements OnInit {
     this.dataSource = new MatTableDataSource(this.data);
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
+  }
+
+  sortTableByPendingPayments(): void {
+    this.sort.sort({ id: 'paymentState', start: 'desc', disableClear: false });
   }
 
 }

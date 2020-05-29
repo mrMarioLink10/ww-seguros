@@ -4,7 +4,7 @@
     <div class="txt-blue">correo: ivargas@xpertcode.com.do </div>
   </div>
 
-  <div *ngIf="pendingPolicies > 0" class="w-full mt-4 sm:mt-0 sm:w-1/2 sm:ml-5 flex shadow-xl">
+  <div *ngIf="pendingPolicies > 0" class="w-full mt-4 sm:mt-0 sm:w-1/2 sm:ml-5 flex shadow-xl cursor-pointer" (click)="activatePolicyTab()">
     <div class="w-1/2 text-6xl text-center txt-red font-bold mt-4">
       <p>{{pendingPolicies}}</p>
     </div>

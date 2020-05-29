@@ -9,9 +9,11 @@ import {ReactiveFormsModule} from '@angular/forms';
 import { PolicyTableComponent } from './policy-content/policy-table/policy-table.component';
 import {MatSortModule} from '@angular/material/sort';
 import {MaterialModule} from '../../../shared/modules/material.module';
+import { BillsFilterComponent } from './bills-content/bills-filter/bills-filter.component';
+import { BillsTableComponent } from './bills-content/bills-table/bills-table.component';
 
 @NgModule({
-  declarations: [ConsultationComponent, ConsultHeaderComponent, PolicyFilterComponent, PolicyTableComponent],
+  declarations: [ConsultationComponent, ConsultHeaderComponent, PolicyFilterComponent, PolicyTableComponent, BillsFilterComponent, BillsTableComponent],
   imports: [
     CommonModule,
     ConsultationRoutingModule,

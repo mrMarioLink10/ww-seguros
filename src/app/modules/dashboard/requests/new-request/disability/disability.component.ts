@@ -1500,8 +1500,10 @@ export class DisabilityComponent implements OnInit, DoCheck {
     const value = obj[key];
     if (value !== undefined && (typeof value) !== 'object') {
 
-      if (value !== undefined ) {
-        const valueToSet = (value === null) ? "" : value;
+      const valueToSet = (value === null || value === undefined) ? "" : value;
+
+    console.log(`${key} ${valueToSet}`);
+      if (valueToSet !== undefined ) {
         if (!this.has(formDataGroup.controls, key)) {
           formDataGroup.addControl(key, this.fb.control(valueToSet));
         } else {
@@ -1527,9 +1529,11 @@ export class DisabilityComponent implements OnInit, DoCheck {
             this.iterateThroughtAllObject(element, fbGroup);
             arrayForm.push(fbGroup);
           });
-
-
           formDataGroup.addControl(key, this.fb.array(arrayForm));
+        }
+        else
+        {
+          formDataGroup.addControl(key, this.fb.array([]));
         }
       }
       else
@@ -1560,6 +1564,9 @@ export class DisabilityComponent implements OnInit, DoCheck {
      {
        this.ID = data.data.id;
        this.iterateThroughtAllObject(data.data, this.disabilityGroup);
+
+       console.log( this.disabilityGroup);
+       console.log( data.data);
        this.therapyArray = this.disabilityGroup.get('questions').get('questionnaire').get('therapy_array') as FormArray;
        this.sickPayArray = this.disabilityGroup.get('questions').get('questionnaire').get('sick_pay_array') as FormArray;
        this.testArray = this.disabilityGroup.get('questions').get('questionnaire').get('analysis_array') as FormArray;

@@ -896,32 +896,32 @@
         <app-know-your-client *ngIf="isJuridica"
           [form]="newRequest.get('contractor').get('conozcaSuClientePersonaJuridica')"> </app-know-your-client>
 
-        <app-hypertension *ngIf="newRequest.get('questionsA').get('questionnairesGastosMayores').get('hypertension')"
-          [form]="newRequest.get('questionsA').get('questionnairesGastosMayores').get('hypertension')">
+    <app-hypertension *ngIf="newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudHipertensionArterial')"
+          [form]="newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudHipertensionArterial')">
         </app-hypertension>
         <app-cardiovascular
-          *ngIf="newRequest.get('questionsA').get('questionnairesGastosMayores').get('cardiovascular')"
-          [form]="newRequest.get('questionsA').get('questionnairesGastosMayores').get('cardiovascular')">
+          *ngIf="newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudCardioVasculares')"
+          [form]="newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudCardioVasculares')">
         </app-cardiovascular>
         <app-mellitus-diabetes
-          *ngIf="newRequest.get('questionsA').get('questionnairesGastosMayores').get('mellitusDiabetes')"
-          [form]="newRequest.get('questionsA').get('questionnairesGastosMayores').get('mellitusDiabetes')">
+          *ngIf="newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudDiabetes')"
+          [form]="newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudDiabetes')">
         </app-mellitus-diabetes>
-        <app-arthritis *ngIf="newRequest.get('questionsA').get('questionnairesGastosMayores').get('arthritis')"
-          [form]="newRequest.get('questionsA').get('questionnairesGastosMayores').get('arthritis')"></app-arthritis>
-        <app-spine *ngIf="newRequest.get('questionsA').get('questionnairesGastosMayores').get('spine')"
-          [form]="newRequest.get('questionsA').get('questionnairesGastosMayores').get('spine')"></app-spine>
+        <app-arthritis *ngIf="newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudArtitris')"
+          [form]="newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudArtitris')"></app-arthritis>
+        <app-spine *ngIf="newRequest.get('questionsA').get('questionnairesGastosMayores').get('columnaVertebralColumnaVertebral')"
+          [form]="newRequest.get('questionsA').get('questionnairesGastosMayores').get('columnaVertebralColumnaVertebral')"></app-spine>
         <app-musculoskeletal
-          *ngIf="newRequest.get('questionsA').get('questionnairesGastosMayores').get('musculosSkeletal')"
-          [form]="newRequest.get('questionsA').get('questionnairesGastosMayores').get('musculosSkeletal')">
+          *ngIf="newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudMusculoesqueleticos')"
+          [form]="newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudMusculoesqueleticos')">
         </app-musculoskeletal>
-        <app-renal-urinary *ngIf="newRequest.get('questionsA').get('questionnairesGastosMayores').get('renalUrinary')"
-          [form]="newRequest.get('questionsA').get('questionnairesGastosMayores').get('renalUrinary')">
+        <app-renal-urinary *ngIf="newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudRenales')"
+          [form]="newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudRenales')">
         </app-renal-urinary>
-        <app-prostatic *ngIf="newRequest.get('questionsA').get('questionnairesGastosMayores').get('prostatic')"
-          [form]="newRequest.get('questionsA').get('questionnairesGastosMayores').get('prostatic')"></app-prostatic>
+        <app-prostatic *ngIf="newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudProstatica')"
+          [form]="newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudProstatica')"></app-prostatic>
       </mat-tab>
-      <!--    <mat-tab
+          <mat-tab
         *ngIf="isJuridica || isSolicitantePep || isContractorPep"
         label="Conozca a su cliente">
         <app-know-your-client *ngIf="isJuridica"
@@ -933,34 +933,34 @@
         <app-know-your-customer *ngIf="isContractorPep"
           [form]="newRequest.get('contractor').get('conozcaSuClientePersona')">
         </app-know-your-customer>
-      </mat-tab> -->
+      </mat-tab>
       <mat-tab *ngFor=" let element of dependentsFormArray.controls; let i = index" [label]="'D0'+ (i+1)">
         <app-hypertension
-          *ngIf="newRequest.get('dependents').get('allDependents').get(i.toString()).get('hypertension')"
-          [form]="newRequest.get('dependents').get('allDependents').get(i.toString()).get('hypertension')">
+          *ngIf="newRequest.get('dependents').get('allDependents').get(i.toString()).get('solicitudHipertensionArterial')"
+          [form]="newRequest.get('dependents').get('allDependents').get(i.toString()).get('solicitudHipertensionArterial')">
         </app-hypertension>
         <app-cardiovascular
-          *ngIf="newRequest.get('dependents').get('allDependents').get(i.toString()).get('cardiovascular')"
-          [form]="newRequest.get('dependents').get('allDependents').get(i.toString()).get('cardiovascular')">
+          *ngIf="newRequest.get('dependents').get('allDependents').get(i.toString()).get('solicitudCardioVasculares')"
+          [form]="newRequest.get('dependents').get('allDependents').get(i.toString()).get('solicitudCardioVasculares')">
         </app-cardiovascular>
         <app-mellitus-diabetes
-          *ngIf="newRequest.get('dependents').get('allDependents').get(i.toString()).get('mellitusDiabetes')"
-          [form]="newRequest.get('dependents').get('allDependents').get(i.toString()).get('mellitusDiabetes')">
+          *ngIf="newRequest.get('dependents').get('allDependents').get(i.toString()).get('solicitudDiabetes')"
+          [form]="newRequest.get('dependents').get('allDependents').get(i.toString()).get('solicitudDiabetes')">
         </app-mellitus-diabetes>
-        <app-arthritis *ngIf="newRequest.get('dependents').get('allDependents').get(i.toString()).get('arthritis')"
-          [form]="newRequest.get('dependents').get('allDependents').get(i.toString()).get('arthritis')"></app-arthritis>
-        <app-spine *ngIf="newRequest.get('dependents').get('allDependents').get(i.toString()).get('spine')"
-          [form]="newRequest.get('dependents').get('allDependents').get(i.toString()).get('spine')"></app-spine>
+        <app-arthritis *ngIf="newRequest.get('dependents').get('allDependents').get(i.toString()).get('solicitudArtitris')"
+          [form]="newRequest.get('dependents').get('allDependents').get(i.toString()).get('solicitudArtitris')"></app-arthritis>
+        <app-spine *ngIf="newRequest.get('dependents').get('allDependents').get(i.toString()).get('columnaVertebralColumnaVertebral')"
+          [form]="newRequest.get('dependents').get('allDependents').get(i.toString()).get('columnaVertebralColumnaVertebral')"></app-spine>
         <app-musculoskeletal
-          *ngIf="newRequest.get('dependents').get('allDependents').get(i.toString()).get('musculosSkeletal')"
-          [form]="newRequest.get('dependents').get('allDependents').get(i.toString()).get('musculosSkeletal')">
+          *ngIf="newRequest.get('dependents').get('allDependents').get(i.toString()).get('solicitudMusculoesqueleticos')"
+          [form]="newRequest.get('dependents').get('allDependents').get(i.toString()).get('solicitudMusculoesqueleticos')">
         </app-musculoskeletal>
         <app-renal-urinary
-          *ngIf="newRequest.get('dependents').get('allDependents').get(i.toString()).get('renalUrinary')"
-          [form]="newRequest.get('dependents').get('allDependents').get(i.toString()).get('renalUrinary')">
+          *ngIf="newRequest.get('dependents').get('allDependents').get(i.toString()).get('solicitudRenales')"
+          [form]="newRequest.get('dependents').get('allDependents').get(i.toString()).get('solicitudRenales')">
         </app-renal-urinary>
-        <app-prostatic *ngIf="newRequest.get('dependents').get('allDependents').get(i.toString()).get('prostatic')"
-          [form]="newRequest.get('dependents').get('allDependents').get(i.toString()).get('prostatic')"></app-prostatic>
+        <app-prostatic *ngIf="newRequest.get('dependents').get('allDependents').get(i.toString()).get('solicitudProstatica')"
+          [form]="newRequest.get('dependents').get('allDependents').get(i.toString()).get('solicitudProstatica')"></app-prostatic>
       </mat-tab>
     </mat-tab-group>
 

@@ -465,20 +465,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
     this.route.params.subscribe(res => {
       this.noCotizacion = res.noCotizacion;
     });
-    if (this.ID != null) {
-      console.log('El ID es ' + this.ID);
-      this.getData(this.ID);
-    } else if (this.ID == null) {
-      console.log('ID esta vacio');
-    }
-    if (this.noCotizacion != null) {
-      this.getDataCotizaciones(this.noCotizacion);
-      console.log('El noCotizacion es ' + this.noCotizacion);
-      // this.getData(this.ID);
-    } else if (this.noCotizacion == null) {
-      console.log('noCotizacion esta vacio');
-      this.noCotizacion = '';
-    }
+
     this.procedures = this.fb.array([this.formMethods.createItem(this.formGroupProcedure)]);
 
     this.newRequest = this.fb.group({
@@ -679,71 +666,91 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
     this.questionsBFormArray = this.newRequest.get('questionsB') as FormArray;
     this.informationList = this.newRequest.get('questionsB').get('information') as FormArray;
     // this.setQuestionsA();
-    this.newRequest.get('person').get('weight').valueChanges.subscribe(value => {
-      this.getBmi(this.newRequest.get('person').value.height, value);
-    });
-    this.newRequest.get('NoC').valueChanges.subscribe(value => {
-      if (value !== '' && value !== undefined) {
-        this.isNotValidToSearch = false;
-      } else {
-        this.isNotValidToSearch = true;
-      }
-    });
 
-    this.newRequest.get('person').get('height').valueChanges.subscribe(value => {
-      this.getBmi(value, this.newRequest.get('person').value.weight);
-    });
+    this.addEventChange();
 
-    this.newRequest.get('person').get('date').valueChanges.subscribe(value => {
-      const timeDiff = Math.abs(Date.now() - new Date(value).getTime());
-      const age = Math.floor(timeDiff / (1000 * 3600 * 24) / 365.25);
-      this.newRequest.get('person').get('age').setValue(age);
 
-    });
+    if (this.ID != null) {
+      console.log('El ID es ' + this.ID);
+      this.getData(this.ID);
+    } else if (this.ID == null) {
+      console.log('ID esta vacio');
+    }
+
+  if (this.noCotizacion != null) {
+    this.getDataCotizaciones(this.noCotizacion);
+    console.log('El noCotizacion es ' + this.noCotizacion);
+    // this.getData(this.ID);
+  } else if (this.noCotizacion == null) {
+    console.log('noCotizacion esta vacio');
+    this.noCotizacion = '';
+  }
+}
+addEventChange(){
+  this.newRequest.get('person').get('weight').valueChanges.subscribe(value => {
+    this.getBmi(this.newRequest.get('person').value.height, value);
+  });
+  this.newRequest.get('NoC').valueChanges.subscribe(value => {
+    if (value !== '' && value !== undefined) {
+      this.isNotValidToSearch = false;
+    } else {
+      this.isNotValidToSearch = true;
+    }
+  });
+  this.newRequest.get('person').get('height').valueChanges.subscribe(value => {
+    this.getBmi(value, this.newRequest.get('person').value.weight);
+  });
+
+  this.newRequest.get('person').get('date').valueChanges.subscribe(value => {
+    const timeDiff = Math.abs(Date.now() - new Date(value).getTime());
+    const age = Math.floor(timeDiff / (1000 * 3600 * 24) / 365.25);
+    this.newRequest.get('person').get('age').setValue(age);
+
+  });
+  this.isContractor = true;
+  this.newRequest.get('person').get('isContractor').valueChanges.subscribe(value => {
+
     this.isContractor = true;
-    this.newRequest.get('person').get('isContractor').valueChanges.subscribe(value => {
+    if (value === 'Si') {
+      this.isContractor = false;
+      this.titles = FormValidationsConstant.titlesForMajorExpenses;
+    } else {
+      this.titles = FormValidationsConstant.titlesForMajorExpensesComplete;
+    }
+  });
+  this.isContractorPep = false;
+  this.newRequest.get('exposedPerson').get('contractor').valueChanges.subscribe(value => {
 
-      this.isContractor = true;
-      if (value === 'Si') {
-        this.isContractor = false;
-        this.titles = FormValidationsConstant.titlesForMajorExpenses;
-      } else {
-        this.titles = FormValidationsConstant.titlesForMajorExpensesComplete;
-      }
-    });
     this.isContractorPep = false;
-    this.newRequest.get('exposedPerson').get('contractor').valueChanges.subscribe(value => {
+    if (value === 'si') {
+      this.isContractorPep = true;
+    }
 
-      this.isContractorPep = false;
-      if (value === 'si') {
-        this.isContractorPep = true;
-      }
+  });
 
-    });
+  this.isSolicitantePep = false;
+  this.newRequest.get('exposedPerson').get('headLine').valueChanges.subscribe(value => {
 
     this.isSolicitantePep = false;
-    this.newRequest.get('exposedPerson').get('headLine').valueChanges.subscribe(value => {
+    if (value === 'si') {
+      this.isSolicitantePep = true;
+    }
 
-      this.isSolicitantePep = false;
-      if (value === 'si') {
-        this.isSolicitantePep = true;
-      }
-
-    });
+  });
+  this.isJuridica = false;
+  this.newRequest.get('person').get('isJuridica').valueChanges.subscribe(value => {
     this.isJuridica = false;
-    this.newRequest.get('person').get('isJuridica').valueChanges.subscribe(value => {
-      this.isJuridica = false;
-      console.log(value);
-      if (value === 'Si') {
-        this.isJuridica = true;
-        this.titles = FormValidationsConstant.titlesForMajorExpenses;
-      } else {
-        this.titles = FormValidationsConstant.titlesForMajorExpensesComplete;
-      }
+    console.log(value);
+    if (value === 'Si') {
+      this.isJuridica = true;
+      this.titles = FormValidationsConstant.titlesForMajorExpenses;
+    } else {
+      this.titles = FormValidationsConstant.titlesForMajorExpensesComplete;
+    }
 
-    });
-  }
+  });
 
+}
   searchIdNumber(idNumber: string) {
     this.appComponent.showOverlay = true;
 
@@ -1421,14 +1428,15 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
     return object ? this.hasOwnProperty.call(object, key) : false;
   }
 
-  iterateThroughtAllObject(obj: any, groupControl: any) {
+  /*iterateThroughtAllObject(obj: any, groupControl: any) {
     const formDataGroup = groupControl as FormGroup;
     Object.keys(obj).forEach(e => {
       const key = e;
       const value = obj[key];
       if (value !== undefined && (typeof value) !== 'object') {
 
-        if (value !== undefined ) {
+        const valueToSet = (value === null || value === undefined) ? "" : value;
+        if (valueToSet !== undefined ) {
           const valueToSet = (value === null) ? "" : value;
           if (!this.has(formDataGroup.controls, key)) {
             formDataGroup.addControl(key, this.fb.control(valueToSet));
@@ -1459,17 +1467,9 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
 
             formDataGroup.addControl(key, this.fb.array(arrayForm));
           }
-          else
-          {
-            const arrayForm = [];
-            const fbGroup = this.fb.group({
-              id: ['', Validators.required]
-            });
-            arrayForm.push(fbGroup);
-            formDataGroup.addControl(key, this.fb.array(arrayForm));
-          }
+
         }
-       /* else
+        else
         {
           if (!this.has(formDataGroup.controls, key)) {
             formDataGroup.addControl(key, this.fb.group({
@@ -1481,12 +1481,74 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
 
           this.iterateThroughtAllObject(value, form);
 
-        }*/
+        }
 
       }
 
     });
-  }
+  }*/
+
+ iterateThroughtAllObject(obj: any, groupControl: any) {
+  const formDataGroup = groupControl as FormGroup;
+  Object.keys(obj).forEach(e => {
+    const key = e;
+    const value = obj[key];
+    if (value !== undefined && (typeof value) !== 'object') {
+
+      const valueToSet = (value === null || value === undefined) ? "" : value;
+
+    console.log(`${key} ${valueToSet}`);
+      if (valueToSet !== undefined ) {
+        if (!this.has(formDataGroup.controls, key)) {
+          formDataGroup.addControl(key, this.fb.control(valueToSet));
+        } else {
+
+          const valueFormControl = formDataGroup.controls[key] as FormControl;
+          valueFormControl.setValue(valueToSet);
+        }
+      }
+    }
+    else if (value !== null && value !== undefined && (typeof value) === 'object') {
+      if (Array.isArray(value)) {
+        if (this.has(formDataGroup.controls, key)) {
+          formDataGroup.removeControl(key);
+        }
+        if (value.length > 0) {
+
+          const arrayForm = [];
+          value.forEach((element) => {
+            const fbGroup = this.fb.group({
+              id: ['', Validators.required]
+            });
+
+            this.iterateThroughtAllObject(element, fbGroup);
+            arrayForm.push(fbGroup);
+          });
+          formDataGroup.addControl(key, this.fb.array(arrayForm));
+        }
+        else
+        {
+          formDataGroup.addControl(key, this.fb.array([]));
+        }
+      }
+      else
+      {
+        if (!this.has(formDataGroup.controls, key)) {
+          formDataGroup.addControl(key, this.fb.group({
+            id: ['', Validators.required]
+          }));
+        }
+
+        const form = formDataGroup.get(key);
+
+        this.iterateThroughtAllObject(value, form);
+
+      }
+
+    }
+
+  });
+}
   getData(id) {
     this.majorExpensesService.returnData(id).subscribe(data => {
       //console.log(data);
@@ -1494,8 +1556,8 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
       if (data !== undefined && data.data !== null &&
         data.data !== undefined) {
         this.ID = data.data.id;
+        console.log(  data.data);
         this.iterateThroughtAllObject(data.data, this.newRequest);
-        console.log( this.newRequest);
         console.log( this.newRequest);
         this.AddEventOnEachDependentVariable();
         if (this.newRequest.get('questionsB').get('familyWithDiseases') !== undefined && this.newRequest.get('questionsB').get('familyWithDiseases') !== null)
@@ -1506,7 +1568,17 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
         {
           this.familyWithDiseasesList = undefined;
         }
+
+    this.contingentBeneficiaryArray = this.newRequest.get('contingentBeneficiary').get('dependentsC') as FormArray;
+    this.primaryBenefitsArray = this.newRequest.get('primaryBenefits').get('dependentsC') as FormArray;
+    this.studentDependents = this.newRequest.get('dependents').get('students') as FormArray;
+    this.dependentsFormArray = this.newRequest.get('dependents').get('allDependents') as FormArray;
+    this.questionsFormArray = this.newRequest.get('questionsA') as FormArray;
+    this.questionsBFormArray = this.newRequest.get('questionsB') as FormArray;
+    this.informationList = this.newRequest.get('questionsB').get('information') as FormArray;
         this.isFormValidToFill = true;
+
+    this.addEventChange();
         /*let person = this.newRequest.get('person');
         this.iterateThroughtObject(data.data.person, person);
 /// Person

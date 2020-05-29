@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input,ChangeDetectorRef } from '@angular/core';
 import { FieldConfig } from '../models/field-config';
 import { FormGroup } from '@angular/forms';
 
@@ -17,7 +17,11 @@ export class InputComponent implements OnInit {
 	@Input() disabled?: boolean;
 	@Input() group: FormGroup;
 
-	constructor() { }
+  constructor(private cdr: ChangeDetectorRef) {}
 
-	ngOnInit() { }
+  ngOnInit() { }
+  ngAfterViewChecked() {
+    console.log( 'all done loading :)');
+     this.cdr.detectChanges();
+   }
 }

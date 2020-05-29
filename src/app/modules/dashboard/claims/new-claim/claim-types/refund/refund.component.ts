@@ -158,6 +158,13 @@ export class RefundComponent implements OnInit {
 		}
 	}
 
+	fileNameWatcher(type?: string, index?: number) {
+		console.log(this.filesInformation);
+		if (this.filesInformation[index]) {
+			if (this.filesInformation[index][type + 'Url']) { return this.filesInformation[index][type + 'Url']; }
+		}
+	}
+
 	calculatedDate(value: any) {
 		const date = this.todayDate.getTime() - value;
 		return Math.floor(date / (1000 * 3600 * 24) / 30.4375);
@@ -280,13 +287,6 @@ export class RefundComponent implements OnInit {
 
 				}
 			});
-	}
-
-	fileNameWatcher(type?: string, index?: number) {
-		console.log(this.filesInformation);
-		if (this.filesInformation[index]) {
-			if (this.filesInformation[index][type + 'Url']) { return this.filesInformation[index][type + 'Url']; }
-		}
 	}
 
 	getData(id) {

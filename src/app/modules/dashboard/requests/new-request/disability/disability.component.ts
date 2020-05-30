@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter, Input, DoCheck } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input, DoCheck, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormArray, FormControl } from '@angular/forms';
 import { FormArrayGeneratorService } from 'src/app/core/services/forms/form-array-generator.service';
 import { FieldConfig } from 'src/app/shared/components/form-components/models/field-config';
@@ -14,6 +14,7 @@ import { MatDialog } from '@angular/material';
 import { Observable } from 'rxjs';
 import { BaseDialogComponent } from 'src/app/shared/components/base-dialog/base-dialog.component';
 import { map, first } from 'rxjs/operators';
+import { AppComponent } from 'src/app/app.component';
 // tslint:disable: forin
 // tslint:disable: one-line
 
@@ -211,18 +212,18 @@ export class DisabilityComponent implements OnInit, DoCheck {
 
   trashArray = [
     { value: 'us$ 1,000', viewValue: 'US$ 1,000' },
-      { value: 'us$ 2,000', viewValue: 'US$ 2,000' },
-      { value: 'us$ 3,000', viewValue: 'US$ 3,000' },
-      { value: 'us$ 4,000', viewValue: 'US$ 4,000' },
-      { value: 'us$ 5,000', viewValue: 'US$ 5,000' },
-      { value: 'us$ 6,000', viewValue: 'US$ 6,000' },
-      { value: 'us$ 7,000', viewValue: 'US$ 7,000' },
-      { value: 'us$ 8,000', viewValue: 'US$ 8,000' },
-      { value: 'us$ 9,000', viewValue: 'US$ 9,000' },
-      { value: 'us$ 10,000', viewValue: 'US$ 10,000' },
-      { value: 'us$ 11,000', viewValue: 'US$ 11,000' },
-      { value: 'us$ 12,000', viewValue: 'US$ 12,000' }
-    ];
+    { value: 'us$ 2,000', viewValue: 'US$ 2,000' },
+    { value: 'us$ 3,000', viewValue: 'US$ 3,000' },
+    { value: 'us$ 4,000', viewValue: 'US$ 4,000' },
+    { value: 'us$ 5,000', viewValue: 'US$ 5,000' },
+    { value: 'us$ 6,000', viewValue: 'US$ 6,000' },
+    { value: 'us$ 7,000', viewValue: 'US$ 7,000' },
+    { value: 'us$ 8,000', viewValue: 'US$ 8,000' },
+    { value: 'us$ 9,000', viewValue: 'US$ 9,000' },
+    { value: 'us$ 10,000', viewValue: 'US$ 10,000' },
+    { value: 'us$ 11,000', viewValue: 'US$ 11,000' },
+    { value: 'us$ 12,000', viewValue: 'US$ 12,000' }
+  ];
 
   rentOptions: FieldConfig = {
 
@@ -291,8 +292,8 @@ export class DisabilityComponent implements OnInit, DoCheck {
     label: '',
     options: [
       {
-      value: 'declinado',
-      viewValue: 'Declinado'
+        value: 'declinado',
+        viewValue: 'Declinado'
       },
       {
         value: 'aplazado',
@@ -313,8 +314,8 @@ export class DisabilityComponent implements OnInit, DoCheck {
     label: 'Tipo de Póliza',
     options: [
       {
-      value: 'salud',
-      viewValue: 'Salud'
+        value: 'salud',
+        viewValue: 'Salud'
       },
       {
         value: 'vida',
@@ -476,6 +477,10 @@ export class DisabilityComponent implements OnInit, DoCheck {
 
   noCotizacion;
   age;
+
+  @ViewChild('form', { static: false }) form;
+
+
   constructor(
     private fb: FormBuilder,
     public formMethods: FormArrayGeneratorService,
@@ -488,6 +493,8 @@ export class DisabilityComponent implements OnInit, DoCheck {
     public dialogModal: DialogService,
     private dialogOption: DialogOptionService,
     public dialog: MatDialog,
+    public appComponent: AppComponent,
+
   ) { }
 
   ID = null;
@@ -496,17 +503,17 @@ export class DisabilityComponent implements OnInit, DoCheck {
     //this.ID = this.disabilityService.id;
 
     this.route.params.subscribe(res => {
-			this.ID = res.id;
-		});
+      this.ID = res.id;
+    });
     this.route.params.subscribe(res => {
-			this.noCotizacion = res.noCotizacion;
+      this.noCotizacion = res.noCotizacion;
     });
     if (this.ID != null) {
-			console.log('El ID es ' + this.ID);
-			this.getData(this.ID);
-		} else if (this.ID == null) {
-			console.log('ID esta vacio');
-		}
+      console.log('El ID es ' + this.ID);
+      this.getData(this.ID);
+    } else if (this.ID == null) {
+      console.log('ID esta vacio');
+    }
 
     this.role = this.userService.getRoleCotizador();
 
@@ -629,7 +636,7 @@ export class DisabilityComponent implements OnInit, DoCheck {
         height: ['', [Validators.required, Validators.min(1)]],
         weightUnit: ['', Validators.required],
         heightUnit: ['', Validators.required],
-        bmiName: [{value:'', disabled: true}, Validators.required],
+        bmiName: [{ value: '', disabled: true }, Validators.required],
         questionnaire: this.fb.group({
           health_radio: ['', Validators.required],
           therapy_radio: ['', Validators.required],
@@ -687,7 +694,11 @@ export class DisabilityComponent implements OnInit, DoCheck {
   }
 
   canDeactivate(): Observable<boolean> | boolean {
-    if (this.disabilityGroup.dirty) {
+    if (this.form.submitted) {
+      return true;
+    }
+
+    if (this.disabilityGroup.dirty && !this.form.submitted) {
       const dialogRef = this.dialog.open(BaseDialogComponent, {
         data: this.dialogOption.exitConfirm,
         minWidth: 385,
@@ -705,10 +716,10 @@ export class DisabilityComponent implements OnInit, DoCheck {
   y = 0
   x = 0;
   xx = 0;
-  ngDoCheck(): void{
+  ngDoCheck(): void {
 
     if (this.disabilityGroup.get('questions').get('weightUnit').value != '' &&
-      this.disabilityGroup.get('questions').get('heightUnit').value != '' ){
+      this.disabilityGroup.get('questions').get('heightUnit').value != '') {
       // &&
       // this.disabilityGroup.get('questions').get('weight').value != (null || undefined) &&
       // this.disabilityGroup.get('questions').get('height').value != (null || undefined)
@@ -718,20 +729,20 @@ export class DisabilityComponent implements OnInit, DoCheck {
       let weightConst;
       let heightConst;
 
-      if (this.disabilityGroup.get('questions').get('weightUnit').value == 'libras'){
+      if (this.disabilityGroup.get('questions').get('weightUnit').value == 'libras') {
         weightConst = this.disabilityGroup.get('questions').get('weight').value / 2.205;
         // console.log("holaaaaaaaaaaaaaaaaa 1 " + weightConst);
       }
-      else if (this.disabilityGroup.get('questions').get('weightUnit').value == 'kilogramos'){
+      else if (this.disabilityGroup.get('questions').get('weightUnit').value == 'kilogramos') {
         weightConst = this.disabilityGroup.get('questions').get('weight').value;
         // console.log("adiiooooooooooooooos 2 " + weightConst);
       }
 
-      if (this.disabilityGroup.get('questions').get('heightUnit').value == 'pies'){
+      if (this.disabilityGroup.get('questions').get('heightUnit').value == 'pies') {
         heightConst = this.disabilityGroup.get('questions').get('height').value / 3.281;
         // console.log("saludoooooooooooooooooos 3" + heightConst);
       }
-      else if (this.disabilityGroup.get('questions').get('heightUnit').value == 'centimetros'){
+      else if (this.disabilityGroup.get('questions').get('heightUnit').value == 'centimetros') {
         heightConst = this.disabilityGroup.get('questions').get('height').value / 100;
         // console.log("despedidadsdsaaaaaaaaaaaaaaaaasssssss 4" + heightConst);
       }
@@ -747,23 +758,23 @@ export class DisabilityComponent implements OnInit, DoCheck {
     // const plan = this.disabilityGroup.get('plan') as FormGroup;
     // console.log(this.disabilityGroup.get('insured_data').get('salary').value * 0.7 );
     // tslint:disable-next-line: prefer-for-of
-    if (this.disabilityGroup.get('insured_data').get('salary').valueChanges){
+    if (this.disabilityGroup.get('insured_data').get('salary').valueChanges) {
       valueSalary = this.disabilityGroup.get('insured_data').get('salary').value;
       this.y = 0;
     }
 
     if ((valueSalary != null ||
-    valueSalary != undefined) &&
-    valueSalary > 0){
+      valueSalary != undefined) &&
+      valueSalary > 0) {
       // this.actualValue = valueSalary;
       // console.log(this.actualValue);
-      if ((1000 < (valueSalary * 0.7 )) && this.y == 0){
-        for (let x = 0; x < this.trashArray.length; x++){
+      if ((1000 < (valueSalary * 0.7)) && this.y == 0) {
+        for (let x = 0; x < this.trashArray.length; x++) {
           // tslint:disable-next-line: radix
           if (this.rentArray[x] == (null || undefined) &&
-          // tslint:disable-next-line: radix
-          (Number.parseInt(this.trashArray[x].value.slice(3).replace(',', ''))) <
-          (valueSalary * 0.7 )) {
+            // tslint:disable-next-line: radix
+            (Number.parseInt(this.trashArray[x].value.slice(3).replace(',', ''))) <
+            (valueSalary * 0.7)) {
 
             this.rentArray.push(this.trashArray[x]);
             // tslint:disable-next-line: radix
@@ -775,10 +786,10 @@ export class DisabilityComponent implements OnInit, DoCheck {
         this.y = 1;
         // plan.addControl('rent', this.fb.control(['', Validators.required]));
       }
-      for (let x = 0; x < this.rentArray.length; x++){
-            // tslint:disable-next-line: radix
+      for (let x = 0; x < this.rentArray.length; x++) {
+        // tslint:disable-next-line: radix
         if ((Number.parseInt(this.rentArray[x].value.slice(3).replace(',', ''))) >
-        (valueSalary * 0.7 )) {
+          (valueSalary * 0.7)) {
 
           this.rentArray.splice(x, 1);
           this.y = 0;
@@ -789,50 +800,50 @@ export class DisabilityComponent implements OnInit, DoCheck {
     }
     // console.log(this.rentArray);
 
-      // tslint:disable-next-line: align
-      if (this.age >= 50 && this.disabilityGroup.get('insured_data').get('gender').value == 'masculino'){
-        if (this.xx != 0){
-          this.xx = 0;
-        }
-        const questionnaires = this.disabilityGroup.get('questionnaires') as FormGroup;
-        if (this.x == 0){
-          if (!this.disabilityGroup.get('questionnaires').get('solicitudProstatica')){
-            questionnaires.addControl('solicitudProstatica', this.fb.group({}));
-          }
-          this.disabilityGroup.get('questions').get('questionnaire').get('sicknessType_radio').setValue('si');
-
-          const var1 = {
-            name: 'sicknessType_radio', valor: 'si'
-          };
-
-          this.selectChange(var1);
-
-          if (this.disabilityGroup.get('questions').get('questionnaire').get('sicknessType')){
-            this.disabilityGroup.get('questions').get('questionnaire').get('sicknessType').get('haveProstatics').setValue('si');
-            this.x++;
-          }
-        }
+    // tslint:disable-next-line: align
+    if (this.age >= 50 && this.disabilityGroup.get('insured_data').get('gender').value == 'masculino') {
+      if (this.xx != 0) {
+        this.xx = 0;
       }
-      else if (this.age < 50 || this.disabilityGroup.get('insured_data').get('gender').value == 'femenino') {
-        if (this.xx == 0){
+      const questionnaires = this.disabilityGroup.get('questionnaires') as FormGroup;
+      if (this.x == 0) {
+        if (!this.disabilityGroup.get('questionnaires').get('solicitudProstatica')) {
+          questionnaires.addControl('solicitudProstatica', this.fb.group({}));
+        }
+        this.disabilityGroup.get('questions').get('questionnaire').get('sicknessType_radio').setValue('si');
+
+        const var1 = {
+          name: 'sicknessType_radio', valor: 'si'
+        };
+
+        this.selectChange(var1);
+
+        if (this.disabilityGroup.get('questions').get('questionnaire').get('sicknessType')) {
+          this.disabilityGroup.get('questions').get('questionnaire').get('sicknessType').get('haveProstatics').setValue('si');
           this.x++;
         }
-        const questionnaires = this.disabilityGroup.get('questionnaires') as FormGroup;
-        if (this.x != 0){
-          if (this.disabilityGroup.get('questionnaires').get('solicitudProstatica')){
-            questionnaires.removeControl('solicitudProstatica');
-          }
-          if (this.disabilityGroup.get('questions').get('questionnaire').get('sicknessType')){
-            this.disabilityGroup.get('questions').get('questionnaire').get('sicknessType').get('haveProstatics').setValue('no');
-            this.x = 0;
-            this.xx++;
-          }
+      }
+    }
+    else if (this.age < 50 || this.disabilityGroup.get('insured_data').get('gender').value == 'femenino') {
+      if (this.xx == 0) {
+        this.x++;
+      }
+      const questionnaires = this.disabilityGroup.get('questionnaires') as FormGroup;
+      if (this.x != 0) {
+        if (this.disabilityGroup.get('questionnaires').get('solicitudProstatica')) {
+          questionnaires.removeControl('solicitudProstatica');
         }
-        if (!this.disabilityGroup.get('questionnaires').get('solicitudProstatica') &&
-        !this.disabilityGroup.get('questions').get('questionnaire').get('sicknessType')){
+        if (this.disabilityGroup.get('questions').get('questionnaire').get('sicknessType')) {
+          this.disabilityGroup.get('questions').get('questionnaire').get('sicknessType').get('haveProstatics').setValue('no');
           this.x = 0;
+          this.xx++;
         }
       }
+      if (!this.disabilityGroup.get('questionnaires').get('solicitudProstatica') &&
+        !this.disabilityGroup.get('questions').get('questionnaire').get('sicknessType')) {
+        this.x = 0;
+      }
+    }
 
   }
 
@@ -843,8 +854,8 @@ export class DisabilityComponent implements OnInit, DoCheck {
     const questionnaires = this.disabilityGroup.get('questionnaires') as FormGroup;
     const formQ = this.disabilityGroup.get('questions').get('questionnaire') as FormGroup;
     let formC;
-    if(this.disabilityGroup.get('questions').get('questionnaire').get('insurance_array')){
-       formC = this.disabilityGroup.get('questions').get('questionnaire').get('insurance_array').get(position) as FormGroup;
+    if (this.disabilityGroup.get('questions').get('questionnaire').get('insurance_array')) {
+      formC = this.disabilityGroup.get('questions').get('questionnaire').get('insurance_array').get(position) as FormGroup;
     }
     const formGeneral = this.disabilityGroup as FormGroup;
     const formCB = this.disabilityGroup.get('contingent') as FormGroup;
@@ -997,9 +1008,9 @@ export class DisabilityComponent implements OnInit, DoCheck {
 
         case 'VIH_radio':
 
-        formQ.addControl('VIH_array', this.fb.array([this.formMethods.createItem(this.VIHGroup)]));
-        this.VIHArray = this.disabilityGroup.get('questions').get('questionnaire').get('VIH_array') as FormArray;
-        break;
+          formQ.addControl('VIH_array', this.fb.array([this.formMethods.createItem(this.VIHGroup)]));
+          this.VIHArray = this.disabilityGroup.get('questions').get('questionnaire').get('VIH_array') as FormArray;
+          break;
 
         case 'specialTherapy_radio':
           formQ.addControl('specialTherapy_array', this.fb.array([this.formMethods.createItem(this.specialTherapyGroup)]));
@@ -1028,7 +1039,7 @@ export class DisabilityComponent implements OnInit, DoCheck {
           break;
 
         case 'insuredPolicyholderRadio':
-          if (this.disabilityGroup.get('insured_data').get('policyholderKnowClientRadio')){
+          if (this.disabilityGroup.get('insured_data').get('policyholderKnowClientRadio')) {
             formInsured.removeControl('policyholderKnowClientRadio');
           }
           this.accordionTitles = [
@@ -1178,8 +1189,8 @@ export class DisabilityComponent implements OnInit, DoCheck {
 
         case 'insuredPolicyholderRadio':
 
-        formInsured.addControl('policyholderKnowClientRadio', this.fb.control('', Validators.required));
-        if (!this.disabilityGroup.get('policyholder')){
+          formInsured.addControl('policyholderKnowClientRadio', this.fb.control('', Validators.required));
+          if (!this.disabilityGroup.get('policyholder')) {
             formGeneral.addControl('policyholder', this.fb.group(this.policyHolderGroup));
             this.accordionTitles = [
               'Sección A. Datos del propuesto Asegurado y Estatus laboral',
@@ -1193,8 +1204,8 @@ export class DisabilityComponent implements OnInit, DoCheck {
           break;
 
         case 'policyholderKnowClientRadio':
-        // formInsured.addControl('policyholderKnowClientRadio', this.fb.control('', Validators.required));
-        if (!this.disabilityGroup.get('policyholder')){
+          // formInsured.addControl('policyholderKnowClientRadio', this.fb.control('', Validators.required));
+          if (!this.disabilityGroup.get('policyholder')) {
             formGeneral.addControl('policyholder', this.fb.group(this.policyHolderGroup));
             this.accordionTitles = [
               'Sección A. Datos del propuesto Asegurado y Estatus laboral',
@@ -1206,9 +1217,9 @@ export class DisabilityComponent implements OnInit, DoCheck {
             console.log('Ya existe, por tanto no hay que crear a policyholder de nuevo.');
           }
 
-        if (this.disabilityGroup.get('insured_data').get('knowYourClientSecond')){
-          formInsured.removeControl('knowYourClientSecond');
-        }
+          if (this.disabilityGroup.get('insured_data').get('knowYourClientSecond')) {
+            formInsured.removeControl('knowYourClientSecond');
+          }
           break;
 
         case 'hasAnotherCoverage':
@@ -1320,9 +1331,9 @@ export class DisabilityComponent implements OnInit, DoCheck {
         break;
 
       case 'insurance_array':
-          formQ.addControl('insurance_array', this.insuranceProperty);
-          return this.insuranceGroup;
-          break;
+        formQ.addControl('insurance_array', this.insuranceProperty);
+        return this.insuranceGroup;
+        break;
 
       case 'coverages':
         return this.fb.group({
@@ -1407,76 +1418,64 @@ export class DisabilityComponent implements OnInit, DoCheck {
         break;
     }
   }
-  has(object: any, key : any) {
+  has(object: any, key: any) {
     return object ? this.hasOwnProperty.call(object, key) : false;
- }
+  }
 
- iterateThroughtAllObject2(obj: any, groupControl: any)
- {
-   const formDataGroup = groupControl as FormGroup;
-   Object.keys(obj).forEach(e =>
-     {
-       let key = e;
-       let value = obj[key];
+  iterateThroughtAllObject2(obj: any, groupControl: any) {
+    const formDataGroup = groupControl as FormGroup;
+    Object.keys(obj).forEach(e => {
+      let key = e;
+      let value = obj[key];
 
-       const var2 = {
+      const var2 = {
         name: key, valor: value
-       };
-       this.selectChange(var2);
+      };
+      this.selectChange(var2);
 
-       if (obj[key] !== null && obj[e] !== undefined && (typeof obj[e]) != "object")
-       {
-         if ( value !== undefined && value !== null && value !== '')
-         {
-           if (!this.has(formDataGroup['controls'], key))
-           {
-             formDataGroup.addControl(key, this.fb.control(value));
-           }
-           else
-           {
+      if (obj[key] !== null && obj[e] !== undefined && (typeof obj[e]) != "object") {
+        if (value !== undefined && value !== null && value !== '') {
+          if (!this.has(formDataGroup['controls'], key)) {
+            formDataGroup.addControl(key, this.fb.control(value));
+          }
+          else {
 
-           const valueFormControl = formDataGroup['controls'][key] as FormControl;
-           valueFormControl.setValue (value);
-         }
-         }
-       }
-       else if (obj[key] !== null && obj[key] !== undefined && (typeof obj[key]) === "object")
-       {
-         if (Array.isArray(obj[key] ))
-         {
-          if (!this.has(formDataGroup['controls'], key))
-          {
+            const valueFormControl = formDataGroup['controls'][key] as FormControl;
+            valueFormControl.setValue(value);
+          }
+        }
+      }
+      else if (obj[key] !== null && obj[key] !== undefined && (typeof obj[key]) === "object") {
+        if (Array.isArray(obj[key])) {
+          if (!this.has(formDataGroup['controls'], key)) {
             formDataGroup.removeControl(key);
           }
-          if(obj[key].length > 0)
-          {
-              let form = formDataGroup.get(key);
-              let arrayForm = [];
-              obj[key].forEach( (element) =>{
-                let fbGroup = this.fb.group({
-                  id: ['', Validators.required]
-                });
-                // console.log('HOLAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA!');
-                // console.log(typeof obj[key]);
-
-                this.iterateThroughtAllObject2(element,  fbGroup);
-                arrayForm.push(fbGroup);
+          if (obj[key].length > 0) {
+            let form = formDataGroup.get(key);
+            let arrayForm = [];
+            obj[key].forEach((element) => {
+              let fbGroup = this.fb.group({
+                id: ['', Validators.required]
               });
+              // console.log('HOLAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA!');
+              // console.log(typeof obj[key]);
+
+              this.iterateThroughtAllObject2(element, fbGroup);
+              arrayForm.push(fbGroup);
+            });
 
 
-              formDataGroup.addControl(key, this.fb.array(arrayForm));
-              // if (key == 'claim_radio'){
-              //   // tslint:disable-next-line: prefer-for-of
-              //   for (let x = 0; x < obj[key].length; x ++){
-              //     this.selectChange(var2, x.toString());
-              //   }
-              // }
+            formDataGroup.addControl(key, this.fb.array(arrayForm));
+            // if (key == 'claim_radio'){
+            //   // tslint:disable-next-line: prefer-for-of
+            //   for (let x = 0; x < obj[key].length; x ++){
+            //     this.selectChange(var2, x.toString());
+            //   }
+            // }
           }
-         }
-         else
-         {
-          if (!this.has(formDataGroup['controls'], key))
-          {
+        }
+        else {
+          if (!this.has(formDataGroup['controls'], key)) {
             formDataGroup.addControl(key, this.fb.group({
               id: ['', Validators.required]
             }));
@@ -1486,9 +1485,9 @@ export class DisabilityComponent implements OnInit, DoCheck {
 
           this.iterateThroughtAllObject2(obj[key], form);
           return form;
-         }
+        }
 
-       }
+      }
 
    });
  }
@@ -1556,35 +1555,34 @@ export class DisabilityComponent implements OnInit, DoCheck {
 }
   getData(id) {
     console.log(id);
-		this.disabilityService.returnData(id).subscribe(data => {
-			// console.log(data.data.asegurado.documentoIdentidad)
+    this.disabilityService.returnData(id).subscribe(data => {
+      // console.log(data.data.asegurado.documentoIdentidad)
       console.log(data)
       if (data !== undefined && data.data !== null &&
-        data.data != undefined )
-     {
-       this.ID = data.data.id;
-       this.iterateThroughtAllObject(data.data, this.disabilityGroup);
+        data.data != undefined) {
+        this.ID = data.data.id;
+        this.iterateThroughtAllObject(data.data, this.disabilityGroup);
 
-       console.log( this.disabilityGroup);
-       console.log( data.data);
-       this.therapyArray = this.disabilityGroup.get('questions').get('questionnaire').get('therapy_array') as FormArray;
-       this.sickPayArray = this.disabilityGroup.get('questions').get('questionnaire').get('sick_pay_array') as FormArray;
-       this.testArray = this.disabilityGroup.get('questions').get('questionnaire').get('analysis_array') as FormArray;
-       this.otherAnalysisArray = this.disabilityGroup.get('questions').get('questionnaire').get('other_analysis_array') as FormArray;
-       this.inpatientCareArray = this.disabilityGroup.get('questions').get('questionnaire').get('inpatientCare_array') as FormArray;
-       this.bloodSickArray = this.disabilityGroup.get('questions').get('questionnaire').get('bloodSick_array') as FormArray;
-       this.hospitalizationArray = this.disabilityGroup.get('questions').get('questionnaire').get('hospitalization_array') as FormArray;
+        console.log(this.disabilityGroup);
+        console.log(data.data);
+        this.therapyArray = this.disabilityGroup.get('questions').get('questionnaire').get('therapy_array') as FormArray;
+        this.sickPayArray = this.disabilityGroup.get('questions').get('questionnaire').get('sick_pay_array') as FormArray;
+        this.testArray = this.disabilityGroup.get('questions').get('questionnaire').get('analysis_array') as FormArray;
+        this.otherAnalysisArray = this.disabilityGroup.get('questions').get('questionnaire').get('other_analysis_array') as FormArray;
+        this.inpatientCareArray = this.disabilityGroup.get('questions').get('questionnaire').get('inpatientCare_array') as FormArray;
+        this.bloodSickArray = this.disabilityGroup.get('questions').get('questionnaire').get('bloodSick_array') as FormArray;
+        this.hospitalizationArray = this.disabilityGroup.get('questions').get('questionnaire').get('hospitalization_array') as FormArray;
 
-     this.VIHArray = this.disabilityGroup.get('questions').get('questionnaire').get('VIH_array') as FormArray;
-       this.specialTherapyArray = this.disabilityGroup.get('questions').get('questionnaire').get('specialTherapy_array') as FormArray;
-       this.accidentArray = this.disabilityGroup.get('questions').get('questionnaire').get('accident_array') as FormArray;
-       this.denyArray = this.disabilityGroup.get('questions').get('questionnaire').get('deny_array') as FormArray;
-       this.insuranceArray = this.disabilityGroup.get('questions').get('questionnaire').get('insurance_array') as FormArray;
-       this.existingCoveragesList = this.disabilityGroup.get('contingent').get('anotherCoverages') as FormArray;
-       this.changingCoveragesList = this.disabilityGroup.get('contingent').get('changingCoverages') as FormArray;
+        this.VIHArray = this.disabilityGroup.get('questions').get('questionnaire').get('VIH_array') as FormArray;
+        this.specialTherapyArray = this.disabilityGroup.get('questions').get('questionnaire').get('specialTherapy_array') as FormArray;
+        this.accidentArray = this.disabilityGroup.get('questions').get('questionnaire').get('accident_array') as FormArray;
+        this.denyArray = this.disabilityGroup.get('questions').get('questionnaire').get('deny_array') as FormArray;
+        this.insuranceArray = this.disabilityGroup.get('questions').get('questionnaire').get('insurance_array') as FormArray;
+        this.existingCoveragesList = this.disabilityGroup.get('contingent').get('anotherCoverages') as FormArray;
+        this.changingCoveragesList = this.disabilityGroup.get('contingent').get('changingCoverages') as FormArray;
 
-      //this.disabilityGroup['controls'].num_financial_quote.setValue(data.data.num_financial_quote)
-     }
+        //this.disabilityGroup['controls'].num_financial_quote.setValue(data.data.num_financial_quote)
+      }
 
     });
   }

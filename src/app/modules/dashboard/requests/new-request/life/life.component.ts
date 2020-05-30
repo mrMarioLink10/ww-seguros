@@ -1,4 +1,4 @@
-import { Component, OnInit, DoCheck, ɵConsole, ChangeDetectorRef, AfterViewChecked } from '@angular/core';
+import { Component, OnInit, DoCheck, ɵConsole, ChangeDetectorRef, AfterViewChecked, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, FormArray, Validators, FormControl } from '@angular/forms';
 import { FormArrayGeneratorService } from 'src/app/core/services/forms/form-array-generator.service';
 import { FieldConfig } from 'src/app/shared/components/form-components/models/field-config';
@@ -26,6 +26,23 @@ import { MatProgressButtonOptions } from 'mat-progress-buttons';
   styleUrls: ['./life.component.scss']
 })
 export class LifeComponent implements OnInit {
+
+  constructor(
+    private fb: FormBuilder,
+    public formMethods: FormArrayGeneratorService,
+    public diseaseService: DiseaseService,
+    public formHandler: FormHandlerService,
+    private userService: UserService,
+    private router: Router,
+    private route: ActivatedRoute,
+    public dialogModal: DialogService,
+    private dialogOption: DialogOptionService,
+    public dialog: MatDialog,
+    private life: LifeService,
+    private know: KnowYourCustomerComponent,
+    private appComponent: AppComponent,
+    private cd: ChangeDetectorRef
+  ) { }
   step: number;
   showContent = false;
 
@@ -458,22 +475,7 @@ export class LifeComponent implements OnInit {
     customClass: 'dashboard-button'
   };
 
-  constructor(
-    private fb: FormBuilder,
-    public formMethods: FormArrayGeneratorService,
-    public diseaseService: DiseaseService,
-    public formHandler: FormHandlerService,
-    private userService: UserService,
-    private router: Router,
-    private route: ActivatedRoute,
-    public dialogModal: DialogService,
-    private dialogOption: DialogOptionService,
-    public dialog: MatDialog,
-    private life: LifeService,
-    private know: KnowYourCustomerComponent,
-    private appComponent: AppComponent,
-    private cd: ChangeDetectorRef
-  ) { }
+  @ViewChild('form', { static: false }) form;
 
   ngOnInit() {
     this.userService.getWholeQuotes()
@@ -569,7 +571,6 @@ export class LifeComponent implements OnInit {
           id2Attached: ['']
         }),
         hasAnotherCoverage: ['', Validators.required],
-        changeAnotherCoverage: ['', Validators.required],
       }),
       bankTransfer: this.fb.group({
         bankEntity: [''],
@@ -1081,7 +1082,7 @@ export class LifeComponent implements OnInit {
 
   }
 
-  foreignWithoutResidenceChecker(event: any, target: string, form: FormGroup, targetForm: FormGroup) {
+  foreignWithoutResidenceChecker(event: any, target: string, form: any, targetForm: any) {
     console.log(event);
 
     switch (this.role) {
@@ -1183,7 +1184,7 @@ export class LifeComponent implements OnInit {
       reader.readAsDataURL(file);
 
       reader.onload = () => {
-        if (i) {
+        if (i !== null) {
           this.newRequest.get(group).get('dependentsC').get(i.toString()).patchValue({
             [formName]: reader.result
           });
@@ -1422,7 +1423,11 @@ export class LifeComponent implements OnInit {
   }
 
   canDeactivate(): Observable<boolean> | boolean {
-    if (this.newRequest.dirty) {
+    if (this.form.submitted) {
+      return true;
+    }
+
+    if (this.newRequest.dirty && !this.form.submitted) {
       const dialogRef = this.dialog.open(BaseDialogComponent, {
         data: this.dialogOption.exitConfirm,
         minWidth: 385,
@@ -1595,6 +1600,7 @@ export class LifeComponent implements OnInit {
 
         case 'hasAnotherCoverage':
           formCB.addControl('anotherCoverages', this.fb.array([this.createFormArray('coverages')]));
+          formCB.addControl('changeAnotherCoverage', this.fb.control('', Validators.required));
           this.existingCoveragesList = formCB.get('anotherCoverages') as FormArray;
           break;
 
@@ -2007,6 +2013,8 @@ export class LifeComponent implements OnInit {
 
         case 'hasAnotherCoverage':
           formCB.removeControl('anotherCoverages');
+          formCB.removeControl('changeAnotherCoverage');
+
           this.existingCoveragesList = undefined;
           formCB.get('changeAnotherCoverage').reset();
           formCB.removeControl('changingCoverages');

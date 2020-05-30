@@ -1,4 +1,4 @@
-import { Component, OnInit, DoCheck } from '@angular/core';
+import { Component, OnInit, DoCheck, ViewChild } from '@angular/core';
 import { FieldConfig } from 'src/app/shared/components/form-components/models/field-config';
 import { FormGroup, FormBuilder, Validators, FormArray, FormControl } from '@angular/forms';
 import { $sex, $res, $country, $time, $family, $allFamily } from '../../../../../core/form/objects';
@@ -20,7 +20,7 @@ import { MajorExpensesService } from './services/major-expenses.service';
 import { QuotesService } from '../../../services/quotes/quotes.service';
 import { environment } from '../../../../../../environments/environment';
 import { FormValidationsConstant } from 'src/app/shared/ShareConstant/shareConstantFile';
-import {CurrencyPipe} from '@angular/common'
+import { CurrencyPipe } from '@angular/common';
 @Component({
   selector: 'app-major-expenses',
   templateUrl: './major-expenses.component.html',
@@ -42,7 +42,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
     private quotesService: QuotesService,
     private majorExpensesService: MajorExpensesService,
     public dialog: MatDialog,
-    private appComponent: AppComponent,
+    public appComponent: AppComponent,
     private currencyPipe: CurrencyPipe
   ) { }
 
@@ -446,6 +446,10 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
   isSolicitantePep = true;
   isContractorPep = true;
   notFoundQuote = false;
+
+  @ViewChild('form', { static: false }) ogForm;
+
+
   searchQuote(noCotizacion) {
     if (noCotizacion !== undefined && noCotizacion !== '') {
       this.getDataCotizaciones(noCotizacion);
@@ -677,80 +681,80 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
       console.log('ID esta vacio');
     }
 
-  if (this.noCotizacion != null) {
-    this.getDataCotizaciones(this.noCotizacion);
-    console.log('El noCotizacion es ' + this.noCotizacion);
-    // this.getData(this.ID);
-  } else if (this.noCotizacion == null) {
-    console.log('noCotizacion esta vacio');
-    this.noCotizacion = '';
+    if (this.noCotizacion != null) {
+      this.getDataCotizaciones(this.noCotizacion);
+      console.log('El noCotizacion es ' + this.noCotizacion);
+      // this.getData(this.ID);
+    } else if (this.noCotizacion == null) {
+      console.log('noCotizacion esta vacio');
+      this.noCotizacion = '';
+    }
   }
-}
-addEventChange(){
-  this.newRequest.get('person').get('weight').valueChanges.subscribe(value => {
-    this.getBmi(this.newRequest.get('person').value.height, value);
-  });
-  this.newRequest.get('NoC').valueChanges.subscribe(value => {
-    if (value !== '' && value !== undefined) {
-      this.isNotValidToSearch = false;
-    } else {
-      this.isNotValidToSearch = true;
-    }
-  });
-  this.newRequest.get('person').get('height').valueChanges.subscribe(value => {
-    this.getBmi(value, this.newRequest.get('person').value.weight);
-  });
+  addEventChange() {
+    this.newRequest.get('person').get('weight').valueChanges.subscribe(value => {
+      this.getBmi(this.newRequest.get('person').value.height, value);
+    });
+    this.newRequest.get('NoC').valueChanges.subscribe(value => {
+      if (value !== '' && value !== undefined) {
+        this.isNotValidToSearch = false;
+      } else {
+        this.isNotValidToSearch = true;
+      }
+    });
+    this.newRequest.get('person').get('height').valueChanges.subscribe(value => {
+      this.getBmi(value, this.newRequest.get('person').value.weight);
+    });
 
-  this.newRequest.get('person').get('date').valueChanges.subscribe(value => {
-    const timeDiff = Math.abs(Date.now() - new Date(value).getTime());
-    const age = Math.floor(timeDiff / (1000 * 3600 * 24) / 365.25);
-    this.newRequest.get('person').get('age').setValue(age);
+    this.newRequest.get('person').get('date').valueChanges.subscribe(value => {
+      const timeDiff = Math.abs(Date.now() - new Date(value).getTime());
+      const age = Math.floor(timeDiff / (1000 * 3600 * 24) / 365.25);
+      this.newRequest.get('person').get('age').setValue(age);
 
-  });
-  this.isContractor = true;
-  this.newRequest.get('person').get('isContractor').valueChanges.subscribe(value => {
-
+    });
     this.isContractor = true;
-    if (value === 'Si') {
-      this.isContractor = false;
-      this.titles = FormValidationsConstant.titlesForMajorExpenses;
-    } else {
-      this.titles = FormValidationsConstant.titlesForMajorExpensesComplete;
-    }
-  });
-  this.isContractorPep = false;
-  this.newRequest.get('exposedPerson').get('contractor').valueChanges.subscribe(value => {
+    this.newRequest.get('person').get('isContractor').valueChanges.subscribe(value => {
 
+      this.isContractor = true;
+      if (value === 'Si') {
+        this.isContractor = false;
+        this.titles = FormValidationsConstant.titlesForMajorExpenses;
+      } else {
+        this.titles = FormValidationsConstant.titlesForMajorExpensesComplete;
+      }
+    });
     this.isContractorPep = false;
-    if (value === 'si') {
-      this.isContractorPep = true;
-    }
+    this.newRequest.get('exposedPerson').get('contractor').valueChanges.subscribe(value => {
 
-  });
+      this.isContractorPep = false;
+      if (value === 'si') {
+        this.isContractorPep = true;
+      }
 
-  this.isSolicitantePep = false;
-  this.newRequest.get('exposedPerson').get('headLine').valueChanges.subscribe(value => {
+    });
 
     this.isSolicitantePep = false;
-    if (value === 'si') {
-      this.isSolicitantePep = true;
-    }
+    this.newRequest.get('exposedPerson').get('headLine').valueChanges.subscribe(value => {
 
-  });
-  this.isJuridica = false;
-  this.newRequest.get('person').get('isJuridica').valueChanges.subscribe(value => {
+      this.isSolicitantePep = false;
+      if (value === 'si') {
+        this.isSolicitantePep = true;
+      }
+
+    });
     this.isJuridica = false;
-    console.log(value);
-    if (value === 'Si') {
-      this.isJuridica = true;
-      this.titles = FormValidationsConstant.titlesForMajorExpenses;
-    } else {
-      this.titles = FormValidationsConstant.titlesForMajorExpensesComplete;
-    }
+    this.newRequest.get('person').get('isJuridica').valueChanges.subscribe(value => {
+      this.isJuridica = false;
+      console.log(value);
+      if (value === 'Si') {
+        this.isJuridica = true;
+        this.titles = FormValidationsConstant.titlesForMajorExpenses;
+      } else {
+        this.titles = FormValidationsConstant.titlesForMajorExpensesComplete;
+      }
 
-  });
+    });
 
-}
+  }
   searchIdNumber(idNumber: string) {
     this.appComponent.showOverlay = true;
 
@@ -795,7 +799,11 @@ addEventChange(){
     }
   }
   canDeactivate(): Observable<boolean> | boolean {
-    if (this.newRequest.dirty) {
+    if (this.ogForm.submitted) {
+      return true;
+    }
+
+    if (this.newRequest.dirty && !this.ogForm.submitted) {
       const dialogRef = this.dialog.open(BaseDialogComponent, {
         data: this.dialogOption.exitConfirm,
         minWidth: 385,
@@ -826,7 +834,7 @@ addEventChange(){
       console.log(index);
     }*/
     // for(let index in this.dependentsFormArray.controls)
-    if (this.newRequest.get('dependents').get('allDependents') !== undefined && this.newRequest.get('dependents').get('allDependents') !== null ) {
+    if (this.newRequest.get('dependents').get('allDependents') !== undefined && this.newRequest.get('dependents').get('allDependents') !== null) {
       const arrayElement = this.newRequest.get('dependents').get('allDependents') as FormArray;
       for (let index = 0; index < arrayElement.length; index++) {
 
@@ -1406,7 +1414,7 @@ addEventChange(){
         this.isFormValidToFill = true;
         this.notFoundQuote = false;
 
-        this.newRequest.get('payment').setValue(this.currencyPipe.transform (data.data.monto));
+        this.newRequest.get('payment').setValue(this.currencyPipe.transform(data.data.monto));
         this.newRequest.get('plans').setValue(data.data.plan);
         this.newRequest.get('person').get('date').setValue(data.data.fecha_nacimiento);
         this.newRequest.get('person').get('firstName').setValue(data.data.nombre);
@@ -1557,26 +1565,24 @@ addEventChange(){
       if (data !== undefined && data.data !== null &&
         data.data !== undefined) {
         this.ID = data.data.id;
-        console.log(  data.data);
+        console.log(data.data);
         this.iterateThroughtAllObject(data.data, this.newRequest);
-        console.log( this.newRequest);
+        console.log(this.newRequest);
         this.AddEventOnEachDependentVariable();
-        if (this.newRequest.get('questionsB').get('familyWithDiseases') !== undefined && this.newRequest.get('questionsB').get('familyWithDiseases') !== null)
-        {
+        if (this.newRequest.get('questionsB').get('familyWithDiseases') !== undefined && this.newRequest.get('questionsB').get('familyWithDiseases') !== null) {
           this.familyWithDiseasesList = this.newRequest.get('questionsB').get('familyWithDiseases') as FormArray;
         }
-        else
-        {
+        else {
           this.familyWithDiseasesList = undefined;
         }
 
-    this.contingentBeneficiaryArray = this.newRequest.get('contingentBeneficiary').get('dependentsC') as FormArray;
-    this.primaryBenefitsArray = this.newRequest.get('primaryBenefits').get('dependentsC') as FormArray;
-    this.studentDependents = this.newRequest.get('dependents').get('students') as FormArray;
-    this.dependentsFormArray = this.newRequest.get('dependents').get('allDependents') as FormArray;
-    this.questionsFormArray = this.newRequest.get('questionsA') as FormArray;
-    this.questionsBFormArray = this.newRequest.get('questionsB') as FormArray;
-    this.informationList = this.newRequest.get('questionsB').get('information') as FormArray;
+        this.contingentBeneficiaryArray = this.newRequest.get('contingentBeneficiary').get('dependentsC') as FormArray;
+        this.primaryBenefitsArray = this.newRequest.get('primaryBenefits').get('dependentsC') as FormArray;
+        this.studentDependents = this.newRequest.get('dependents').get('students') as FormArray;
+        this.dependentsFormArray = this.newRequest.get('dependents').get('allDependents') as FormArray;
+        this.questionsFormArray = this.newRequest.get('questionsA') as FormArray;
+        this.questionsBFormArray = this.newRequest.get('questionsB') as FormArray;
+        this.informationList = this.newRequest.get('questionsB').get('information') as FormArray;
         this.isFormValidToFill = true;
 
     //this.addEventChange();

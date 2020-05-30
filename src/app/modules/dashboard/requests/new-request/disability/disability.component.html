@@ -5,7 +5,8 @@
       <div class="filter-title">Info. Inicio</div>
       <div class="mt-3 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4">
         <div class="mr-3">
-          <app-number-input [group]="disabilityGroup" label="No. de Cotización" name="num_financial_quote" placeholder="13257" min="1">
+          <app-number-input [group]="disabilityGroup" label="No. de Cotización" name="num_financial_quote"
+            placeholder="13257" min="1">
           </app-number-input>
         </div>
         <div></div>
@@ -113,7 +114,9 @@
                   </div>
 
                   <div class="mr-3 mt-5 md:mt-6 lg:mt-3 xl:mt-0">
-                    <app-number-input [group]="disabilityGroup.get('insured_data')" label="Salario Mensual (Dólares - US$)"name="salary" placeholder="Por ej: 20000" min="1"></app-number-input>
+                    <app-number-input [group]="disabilityGroup.get('insured_data')"
+                      label="Salario Mensual (Dólares - US$)" name="salary" placeholder="Por ej: 20000" min="1">
+                    </app-number-input>
                   </div>
 
                   <!-- <div class="grid grid-cols-2 mt-5 md:mt-10 lg:mt-3 xl:mt-0">
@@ -128,8 +131,8 @@
                       </div>
                     </div> -->
 
-                    <!-- mr-3 w-1/2 -->
-                    <!-- <div class="grid grid-cols-2">
+                  <!-- mr-3 w-1/2 -->
+                  <!-- <div class="grid grid-cols-2">
                       <div>
 
                       </div>
@@ -287,12 +290,14 @@
                         <app-radio-button [group]="disabilityGroup.get('insured_data')" [options]="YesNo"
                           name='pep_radio_insured' (selected)="selectChange($event)">
                         </app-radio-button>
-                        <div style="max-width: 85%;" *ngIf="!disabilityGroup.get('insured_data').get('pep_radio_insured').valid && !disabilityGroup.get('insured_data').get('pep_radio_insured').touched || disabilityGroup.get('insured_data').get('pep_radio_insured').valid && disabilityGroup.get('insured_data').get('pep_radio_insured').touched || disabilityGroup.get('insured_data').get('pep_radio_insured').valid && !disabilityGroup.get('insured_data').get('pep_radio_insured').touched"
-                        class="-mt-8">
+                        <div style="max-width: 85%;"
+                          *ngIf="!disabilityGroup.get('insured_data').get('pep_radio_insured').valid && !disabilityGroup.get('insured_data').get('pep_radio_insured').touched || disabilityGroup.get('insured_data').get('pep_radio_insured').valid && disabilityGroup.get('insured_data').get('pep_radio_insured').touched || disabilityGroup.get('insured_data').get('pep_radio_insured').valid && !disabilityGroup.get('insured_data').get('pep_radio_insured').touched"
+                          class="-mt-8">
                           <small> (Sí la respuesta es si, favor completar formulario "Conozca a su Cliente") </small>
                         </div>
-                        <div style="max-width: 85%;" *ngIf="!disabilityGroup.get('insured_data').get('pep_radio_insured').valid && disabilityGroup.get('insured_data').get('pep_radio_insured').touched"
-                        class="-mt-2">
+                        <div style="max-width: 85%;"
+                          *ngIf="!disabilityGroup.get('insured_data').get('pep_radio_insured').valid && disabilityGroup.get('insured_data').get('pep_radio_insured').touched"
+                          class="-mt-2">
                           <small> (Sí la respuesta es si, favor completar formulario "Conozca a su Cliente") </small>
                         </div>
                       </div>
@@ -337,35 +342,38 @@
                       <app-radio-button [group]="disabilityGroup.get('insured_data')" [options]="YesNo"
                         name='pension_radio'>
                       </app-radio-button>
-                      <div *ngIf="!disabilityGroup.get('insured_data').get('pension_radio').valid && !disabilityGroup.get('insured_data').get('pension_radio').touched || disabilityGroup.get('insured_data').get('pension_radio').valid && disabilityGroup.get('insured_data').get('pension_radio').touched || disabilityGroup.get('insured_data').get('pension_radio').valid && !disabilityGroup.get('insured_data').get('pension_radio').touched"
-                      class="-mt-8">
+                      <div
+                        *ngIf="!disabilityGroup.get('insured_data').get('pension_radio').valid && !disabilityGroup.get('insured_data').get('pension_radio').touched || disabilityGroup.get('insured_data').get('pension_radio').valid && disabilityGroup.get('insured_data').get('pension_radio').touched || disabilityGroup.get('insured_data').get('pension_radio').valid && !disabilityGroup.get('insured_data').get('pension_radio').touched"
+                        class="-mt-8">
                         <small> En caso de pensión por discapacidad, anexar reportes descriptivos </small>
                       </div>
-                      <div *ngIf="!disabilityGroup.get('insured_data').get('pension_radio').valid && disabilityGroup.get('insured_data').get('pension_radio').touched"
-                      class="-mt-2">
+                      <div
+                        *ngIf="!disabilityGroup.get('insured_data').get('pension_radio').valid && disabilityGroup.get('insured_data').get('pension_radio').touched"
+                        class="-mt-2">
                         <small> En caso de pensión por discapacidad, anexar reportes descriptivos </small>
                       </div>
                     </div>
                   </div>
 
                   <div *ngIf="disabilityGroup.get('insured_data').value.pension_radio === 'si'"
-                      class="mr-3 mt-4 lg:mt-3 xl:mt-3" style="margin-top: 15px;">
-                      <app-input [group]="disabilityGroup.get('insured_data')"
-                        label="Naturaleza de la pensión o ingreso" name="reason_pension" placeholder=""></app-input>
-                    </div>
+                    class="mr-3 mt-4 lg:mt-3 xl:mt-3" style="margin-top: 15px;">
+                    <app-input [group]="disabilityGroup.get('insured_data')" label="Naturaleza de la pensión o ingreso"
+                      name="reason_pension" placeholder=""></app-input>
+                  </div>
 
-                    <div *ngIf="disabilityGroup.get('insured_data').value.pension_radio === 'si'"
-                      class=" grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2"> <!--  -->
-                      <div class="mr-3 mt-4 ">
-                        <app-number-input [group]="disabilityGroup.get('insured_data')"
-                          label="Monto Mensual del ingreso o pensión" name="amount_pension" placeholder="Por ej: 20000"
-                          min="1"></app-number-input>
-                      </div>
-                      <div class="mr-3 mt-4 ">
-                        <app-select name="currency_pension" [options]="currencyOptions"
-                          [group]="disabilityGroup.get('insured_data')"></app-select>
-                      </div>
+                  <div *ngIf="disabilityGroup.get('insured_data').value.pension_radio === 'si'"
+                    class=" grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2">
+                    <!--  -->
+                    <div class="mr-3 mt-4 ">
+                      <app-number-input [group]="disabilityGroup.get('insured_data')"
+                        label="Monto Mensual del ingreso o pensión" name="amount_pension" placeholder="Por ej: 20000"
+                        min="1"></app-number-input>
                     </div>
+                    <div class="mr-3 mt-4 ">
+                      <app-select name="currency_pension" [options]="currencyOptions"
+                        [group]="disabilityGroup.get('insured_data')"></app-select>
+                    </div>
+                  </div>
 
                   <div class="mt-4">
                     <div>
@@ -378,7 +386,8 @@
                     </div>
                   </div>
 
-                  <div *ngIf="disabilityGroup.get('insured_data').get('policyholderKnowClientRadio')" class="mt-4 lg:mt-3 xl:mt-3">
+                  <div *ngIf="disabilityGroup.get('insured_data').get('policyholderKnowClientRadio')"
+                    class="mt-4 lg:mt-3 xl:mt-3">
                     <div>
                       <label class="radio-button-label"> ¿El contratante es una persona jurídica? </label>
                     </div>
@@ -392,22 +401,27 @@
                 </div>
 
                 <div *ngIf="disabilityGroup.get('insured_data').get('pep')"
-                    class="mt-4 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-3 xl:grid-cols-6">
-                  <app-input class="mr-3" [group]="disabilityGroup.get('insured_data').get('pep')" label="Cargo actual o anterior"
-                    name='lastPosition'></app-input>
+                  class="mt-4 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-3 xl:grid-cols-6">
+                  <app-input class="mr-3" [group]="disabilityGroup.get('insured_data').get('pep')"
+                    label="Cargo actual o anterior" name='lastPosition'></app-input>
                   <div class="grid grid-cols-2">
-                    <app-number-input class="mr-3" [group]="disabilityGroup.get('insured_data').get('pep')" label="Tiempo" name="timeNumber" min="1">
+                    <app-number-input class="mr-3" [group]="disabilityGroup.get('insured_data').get('pep')"
+                      label="Tiempo" name="timeNumber" min="1">
                     </app-number-input>
-                    <app-select class="mr-3" [options]="year" [group]="disabilityGroup.get('insured_data').get('pep')"></app-select>
+                    <app-select class="mr-3" [options]="year" [group]="disabilityGroup.get('insured_data').get('pep')">
+                    </app-select>
                   </div>
                   <div>
                   </div>
-                  <app-radio-button class="mr-3" title="Asegurado" [group]="disabilityGroup.get('insured_data').get('pep')"
-                    name="insured" [options]="YesNo"></app-radio-button>
-                  <app-radio-button class="mr-3" title="Contratante" [group]="disabilityGroup.get('insured_data').get('pep')"
-                    name="contractor" [options]="YesNo"></app-radio-button>
-                  <app-radio-button class="mr-3" title="Pagador" [group]="disabilityGroup.get('insured_data').get('pep')" name="payer"
-                    [options]="YesNo"></app-radio-button>
+                  <app-radio-button class="mr-3" title="Asegurado"
+                    [group]="disabilityGroup.get('insured_data').get('pep')" name="insured" [options]="YesNo">
+                  </app-radio-button>
+                  <app-radio-button class="mr-3" title="Contratante"
+                    [group]="disabilityGroup.get('insured_data').get('pep')" name="contractor" [options]="YesNo">
+                  </app-radio-button>
+                  <app-radio-button class="mr-3" title="Pagador"
+                    [group]="disabilityGroup.get('insured_data').get('pep')" name="payer" [options]="YesNo">
+                  </app-radio-button>
                 </div>
               </div>
 
@@ -510,14 +524,16 @@
                     <app-radio-button [group]="disabilityGroup.get('policyholder')" (selected)="selectChange($event)"
                       [options]="YesNo" name='pep_radio_holder'>
                     </app-radio-button>
-                    <div style="max-width: 85%;" *ngIf="!disabilityGroup.get('policyholder').get('pep_radio_holder').valid && !disabilityGroup.get('policyholder').get('pep_radio_holder').touched || disabilityGroup.get('policyholder').get('pep_radio_holder').valid && disabilityGroup.get('policyholder').get('pep_radio_holder').touched || disabilityGroup.get('policyholder').get('pep_radio_holder').valid && !disabilityGroup.get('policyholder').get('pep_radio_holder').touched"
-                        class="-mt-8">
-                          <small> (Sí la respuesta es si, favor completar formulario "Conozca a su Cliente") </small>
-                        </div>
-                        <div style="max-width: 85%;" *ngIf="!disabilityGroup.get('policyholder').get('pep_radio_holder').valid && disabilityGroup.get('policyholder').get('pep_radio_holder').touched"
-                        class="-mt-2">
-                          <small> (Sí la respuesta es si, favor completar formulario "Conozca a su Cliente") </small>
-                        </div>
+                    <div style="max-width: 85%;"
+                      *ngIf="!disabilityGroup.get('policyholder').get('pep_radio_holder').valid && !disabilityGroup.get('policyholder').get('pep_radio_holder').touched || disabilityGroup.get('policyholder').get('pep_radio_holder').valid && disabilityGroup.get('policyholder').get('pep_radio_holder').touched || disabilityGroup.get('policyholder').get('pep_radio_holder').valid && !disabilityGroup.get('policyholder').get('pep_radio_holder').touched"
+                      class="-mt-8">
+                      <small> (Sí la respuesta es si, favor completar formulario "Conozca a su Cliente") </small>
+                    </div>
+                    <div style="max-width: 85%;"
+                      *ngIf="!disabilityGroup.get('policyholder').get('pep_radio_holder').valid && disabilityGroup.get('policyholder').get('pep_radio_holder').touched"
+                      class="-mt-2">
+                      <small> (Sí la respuesta es si, favor completar formulario "Conozca a su Cliente") </small>
+                    </div>
                   </div>
 
                 </div>
@@ -536,23 +552,27 @@
               </div>
 
               <div *ngIf="disabilityGroup.get('policyholder').get('pep')"
-                    class="mt-4 ml-3 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-3 xl:grid-cols-6">
-                  <app-input class="mr-3" [group]="disabilityGroup.get('policyholder').get('pep')" label="Cargo actual o anterior"
-                    name='lastPosition'></app-input>
-                  <div class="grid grid-cols-2">
-                    <app-number-input class="mr-3" [group]="disabilityGroup.get('policyholder').get('pep')" label="Tiempo" name="timeNumber" min="1">
-                    </app-number-input>
-                    <app-select class="mr-3" [options]="year" [group]="disabilityGroup.get('policyholder').get('pep')"></app-select>
-                  </div>
-                  <div>
-                  </div>
-                  <app-radio-button class="mr-3" title="Asegurado" [group]="disabilityGroup.get('policyholder').get('pep')"
-                    name="insured" [options]="YesNo"></app-radio-button>
-                  <app-radio-button class="mr-3" title="Contratante" [group]="disabilityGroup.get('policyholder').get('pep')"
-                    name="contractor" [options]="YesNo"></app-radio-button>
-                  <app-radio-button class="mr-3" title="Pagador" [group]="disabilityGroup.get('policyholder').get('pep')" name="payer"
-                    [options]="YesNo"></app-radio-button>
+                class="mt-4 ml-3 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-3 xl:grid-cols-6">
+                <app-input class="mr-3" [group]="disabilityGroup.get('policyholder').get('pep')"
+                  label="Cargo actual o anterior" name='lastPosition'></app-input>
+                <div class="grid grid-cols-2">
+                  <app-number-input class="mr-3" [group]="disabilityGroup.get('policyholder').get('pep')" label="Tiempo"
+                    name="timeNumber" min="1">
+                  </app-number-input>
+                  <app-select class="mr-3" [options]="year" [group]="disabilityGroup.get('policyholder').get('pep')">
+                  </app-select>
                 </div>
+                <div>
+                </div>
+                <app-radio-button class="mr-3" title="Asegurado"
+                  [group]="disabilityGroup.get('policyholder').get('pep')" name="insured" [options]="YesNo">
+                </app-radio-button>
+                <app-radio-button class="mr-3" title="Contratante"
+                  [group]="disabilityGroup.get('policyholder').get('pep')" name="contractor" [options]="YesNo">
+                </app-radio-button>
+                <app-radio-button class="mr-3" title="Pagador" [group]="disabilityGroup.get('policyholder').get('pep')"
+                  name="payer" [options]="YesNo"></app-radio-button>
+              </div>
 
             </ng-template>
 
@@ -572,15 +592,16 @@
                     </div>
                   </div>
                   <!-- <div > -->
-                  <div class="md:mt-5 lg:mt-0 xl:mt-0 grid grid-cols-2" *ngIf="this.disabilityGroup.get('questions').get('smoke')">
+                  <div class="md:mt-5 lg:mt-0 xl:mt-0 grid grid-cols-2"
+                    *ngIf="this.disabilityGroup.get('questions').get('smoke')">
                     <div class="-mr-3">
                       <app-number-input label="Consumo diario de tabaco (Paquetes)" name="quantity"
-                      [group]="disabilityGroup.get('questions').get('smoke')" placeholder="Por ej: 2" min="1">
+                        [group]="disabilityGroup.get('questions').get('smoke')" placeholder="Por ej: 2" min="1">
                       </app-number-input>
                     </div>
                     <div class="ml-6 mr-3">
                       <app-input label="Duración" name="quantity"
-                      [group]="disabilityGroup.get('questions').get('smoke')" placeholder="">
+                        [group]="disabilityGroup.get('questions').get('smoke')" placeholder="">
                       </app-input>
                     </div>
                   </div>
@@ -603,25 +624,29 @@
                   </div>
                   <!-- </div> -->
                   <div class="grid grid-cols-2">
-                    <app-number-input class="mr-3" label="Peso" name="weight" [group]="disabilityGroup.get('questions')" min="1">
+                    <app-number-input class="mr-3" label="Peso" name="weight" [group]="disabilityGroup.get('questions')"
+                      min="1">
                     </app-number-input>
                     <app-select class="mr-3" name="weightUnit" [options]="weightList"
-                     [group]="disabilityGroup.get('questions')"> <!-- (selected)="selectChange($event)" -->
+                      [group]="disabilityGroup.get('questions')">
+                      <!-- (selected)="selectChange($event)" -->
                     </app-select>
                   </div>
                   <div class="grid grid-cols-2">
-                    <app-number-input class="mr-3" label="Estatura" name="height" [group]="disabilityGroup.get('questions')" min="1">
+                    <app-number-input class="mr-3" label="Estatura" name="height"
+                      [group]="disabilityGroup.get('questions')" min="1">
                     </app-number-input>
                     <app-select class="mr-3" name="heightUnit" [options]="heightList"
-                     [group]="disabilityGroup.get('questions')"> <!-- (selected)="selectChange($event)" -->
+                      [group]="disabilityGroup.get('questions')">
+                      <!-- (selected)="selectChange($event)" -->
                     </app-select>
                   </div>
                   <div class="mr-3">
 
 
-                  <app-input label="IMC/BMI: kg/m²" name="bmiName"
-                  [group]="disabilityGroup.get('questions')" placeholder="Por ej: 4" min="1" disabled="true" >
-                </app-input>
+                    <app-input label="IMC/BMI: kg/m²" name="bmiName" [group]="disabilityGroup.get('questions')"
+                      placeholder="Por ej: 4" min="1" disabled="true">
+                    </app-input>
                     <!-- <app-input label="IMC/BMI: kg/m²" name="bmiName"
                       [group]="disabilityGroup.get('questions')" placeholder="" disabled>
                       </app-input> -->
@@ -693,14 +718,17 @@
                           <div *ngFor=" let elements of therapyArray.controls; let in = index">
                             <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
                               <div class="mr-3">
-                                <app-input [group]="disabilityGroup.get('questions').get('questionnaire').get('therapy_array').get(in.toString())" name='diagnosis' label="Diagnóstico" placeholder=""> </app-input>
+                                <app-input
+                                  [group]="disabilityGroup.get('questions').get('questionnaire').get('therapy_array').get(in.toString())"
+                                  name='diagnosis' label="Diagnóstico" placeholder=""> </app-input>
                               </div>
                               <div class="mr-3">
                                 <app-date-picker
                                   [group]="disabilityGroup.get('questions').get('questionnaire').get('therapy_array').get(in.toString())"
                                   label="¿Desde qué fecha?" name='date'> </app-date-picker>
                               </div>
-                              <div class="mr-3 mt-2 sm:mt-2 md:mt-0 md:col-span-2 lg:col-span-1 lg:mt-0 xl:mt-0 xl:col-span-1">
+                              <div
+                                class="mr-3 mt-2 sm:mt-2 md:mt-0 md:col-span-2 lg:col-span-1 lg:mt-0 xl:mt-0 xl:col-span-1">
                                 <app-text-area label="¿Por qué razón?" name='reason'
                                   [group]="disabilityGroup.get('questions').get('questionnaire').get('therapy_array').get(in.toString())">
                                 </app-text-area>
@@ -719,10 +747,11 @@
                                 class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
                                 <mat-icon style="color: #18446B">add</mat-icon>
                               </button>
-                              <button *ngIf="therapyArray.controls.length > 1" mat-mini-fab aria-label="Eliminar tratamiento"
-                              (click)=" removeFormArray(in, therapyArray) " type="button"      class="dashboard-toolbar-buttons"
-                              style="border: 1px rgb(197, 197, 197) solid">
-                              <mat-icon style="color: #18446B">remove</mat-icon>
+                              <button *ngIf="therapyArray.controls.length > 1" mat-mini-fab
+                                aria-label="Eliminar tratamiento" (click)=" removeFormArray(in, therapyArray) "
+                                type="button" class="dashboard-toolbar-buttons"
+                                style="border: 1px rgb(197, 197, 197) solid">
+                                <mat-icon style="color: #18446B">remove</mat-icon>
                               </button>
                             </div>
                           </div>
@@ -770,8 +799,9 @@
                                 class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
                                 <mat-icon style="color: #18446B">add</mat-icon>
                               </button>
-                              <button *ngIf="sickPayArray.controls.length > 1" mat-mini-fab aria-label="Eliminar licencia médica"
-                                (click)=" removeFormArray(in, sickPayArray) " type="button"      class="dashboard-toolbar-buttons"
+                              <button *ngIf="sickPayArray.controls.length > 1" mat-mini-fab
+                                aria-label="Eliminar licencia médica" (click)=" removeFormArray(in, sickPayArray) "
+                                type="button" class="dashboard-toolbar-buttons"
                                 style="border: 1px rgb(197, 197, 197) solid">
                                 <mat-icon style="color: #18446B">remove</mat-icon>
                               </button>
@@ -813,7 +843,8 @@
                                 <!-- <app-input label="¿Cuál?" name='name'
                                   [group]="disabilityGroup.get('questions').get('questionnaire').get('analysis')">
                                 </app-input> -->
-                                <app-select name="test" [options]="testOptions" [group]="disabilityGroup.get('questions').get('questionnaire').get('analysis_array').get(in.toString())">
+                                <app-select name="test" [options]="testOptions"
+                                  [group]="disabilityGroup.get('questions').get('questionnaire').get('analysis_array').get(in.toString())">
                                   <!-- .get('analysis_array').get(in.toString()) -->
                                 </app-select>
                               </div>
@@ -826,8 +857,8 @@
                                 <mat-icon style="color: #18446B">add</mat-icon>
                               </button>
                               <button *ngIf="testArray.controls.length > 1" mat-mini-fab aria-label="Eliminar estudio"
-                                (click)=" removeFormArray(in, testArray) " type="button"      class="dashboard-toolbar-buttons"
-                                style="border: 1px rgb(197, 197, 197) solid">
+                                (click)=" removeFormArray(in, testArray) " type="button"
+                                class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
                                 <mat-icon style="color: #18446B">remove</mat-icon>
                               </button>
                             </div>
@@ -870,8 +901,9 @@
                                 class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
                                 <mat-icon style="color: #18446B">add</mat-icon>
                               </button>
-                              <button *ngIf="otherAnalysisArray.controls.length > 1" mat-mini-fab aria-label="Eliminar otro estudio"
-                                (click)=" removeFormArray(in, otherAnalysisArray) " type="button"      class="dashboard-toolbar-buttons"
+                              <button *ngIf="otherAnalysisArray.controls.length > 1" mat-mini-fab
+                                aria-label="Eliminar otro estudio" (click)=" removeFormArray(in, otherAnalysisArray) "
+                                type="button" class="dashboard-toolbar-buttons"
                                 style="border: 1px rgb(197, 197, 197) solid">
                                 <mat-icon style="color: #18446B">remove</mat-icon>
                               </button>
@@ -919,16 +951,18 @@
                               </div>
                               <div
                                 class="mb-8 -mx-2 sm:mb-8 sm:mx-0 md:mb-8 md:mx-0 lg:mb-8 lg:mx-0 lg:mt-2 xl:mx-0 xl:mb-8 mt-2">
-                                  <button mat-mini-fab aria-label="Agregar hospitalización"
-                                  (click)=" addFormArray(inpatientCareArray,'inpatientCare_array') " type="button" class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
+                                <button mat-mini-fab aria-label="Agregar hospitalización"
+                                  (click)=" addFormArray(inpatientCareArray,'inpatientCare_array') " type="button"
+                                  class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
                                   <mat-icon style="color: #18446B">add</mat-icon>
-                                  </button>
-                                  <button *ngIf="inpatientCareArray.controls.length > 1" mat-mini-fab  aria-label="Eliminar hospitalización"
-                                  (click)=" removeFormArray(in, inpatientCareArray) " type="button"         class="dashboard-toolbar-buttons"
-                                  style="border: 1px rgb(197, 197, 197) solid">
+                                </button>
+                                <button *ngIf="inpatientCareArray.controls.length > 1" mat-mini-fab
+                                  aria-label="Eliminar hospitalización"
+                                  (click)=" removeFormArray(in, inpatientCareArray) " type="button"
+                                  class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
                                   <mat-icon style="color: #18446B">remove</mat-icon>
-                                  </button>
-                                </div>
+                                </button>
+                              </div>
                             </div>
                           </div>
                         </div>
@@ -963,17 +997,19 @@
                               </div>
                             </div>
                             <div
-                                class="mb-8 -mx-2 sm:mb-8 sm:mx-0 md:mb-8 md:mx-0 lg:mb-8 lg:mx-0 lg:mt-2 xl:mx-0 xl:mb-8 mt-2">
-                                  <button mat-mini-fab aria-label="Agregar hospitalización futura"
-                                  (click)=" addFormArray(hospitalizationArray,'hospitalization_array') " type="button" class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
-                                  <mat-icon style="color: #18446B">add</mat-icon>
-                                  </button>
-                                  <button *ngIf="hospitalizationArray.controls.length > 1" mat-mini-fab  aria-label="Eliminar hospitalización futura"
-                                  (click)=" removeFormArray(in, hospitalizationArray) " type="button"         class="dashboard-toolbar-buttons"
-                                  style="border: 1px rgb(197, 197, 197) solid">
-                                  <mat-icon style="color: #18446B">remove</mat-icon>
-                                  </button>
-                              </div>
+                              class="mb-8 -mx-2 sm:mb-8 sm:mx-0 md:mb-8 md:mx-0 lg:mb-8 lg:mx-0 lg:mt-2 xl:mx-0 xl:mb-8 mt-2">
+                              <button mat-mini-fab aria-label="Agregar hospitalización futura"
+                                (click)=" addFormArray(hospitalizationArray,'hospitalization_array') " type="button"
+                                class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
+                                <mat-icon style="color: #18446B">add</mat-icon>
+                              </button>
+                              <button *ngIf="hospitalizationArray.controls.length > 1" mat-mini-fab
+                                aria-label="Eliminar hospitalización futura"
+                                (click)=" removeFormArray(in, hospitalizationArray) " type="button"
+                                class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
+                                <mat-icon style="color: #18446B">remove</mat-icon>
+                              </button>
+                            </div>
                           </div>
                         </div>
                       </div>
@@ -1106,29 +1142,33 @@
                                 [group]="disabilityGroup.get('questions').get('questionnaire').get('bloodSick_array').get(in.toString())"
                                 label="¿En qué fecha?" name='date'> </app-date-picker>
                             </div>
-                            <div class="mr-3"> <!--  mt-2 sm:mt-2 md:mt-0 lg:mt-0 xl:mt-0 -->
+                            <div class="mr-3">
+                              <!--  mt-2 sm:mt-2 md:mt-0 lg:mt-0 xl:mt-0 -->
                               <app-input label="¿Cuál?" name='name'
                                 [group]="disabilityGroup.get('questions').get('questionnaire').get('bloodSick_array').get(in.toString())">
                               </app-input>
                             </div>
-                            <div class="mr-3 "> <!-- mt-2 sm:mt-2 md:mt-0 lg:mt-0 xl:mt-0 lg:col-span-2 -->
+                            <div class="mr-3 ">
+                              <!-- mt-2 sm:mt-2 md:mt-0 lg:mt-0 xl:mt-0 lg:col-span-2 -->
                               <app-text-area label="¿Por qué razón?" name='reason'
                                 [group]="disabilityGroup.get('questions').get('questionnaire').get('bloodSick_array').get(in.toString())">
                               </app-text-area>
                             </div>
                           </div>
                           <div
-                                class="mb-8 -mx-2 sm:mb-8 sm:mx-0 md:mb-8 md:mx-0 lg:mb-8 lg:mx-0 lg:mt-2 xl:mx-0 xl:mb-8 mt-2">
-                                  <button mat-mini-fab aria-label="Agregar enfermedad de la sangre"
-                                  (click)=" addFormArray(bloodSickArray,'bloodSick_array') " type="button" class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
-                                  <mat-icon style="color: #18446B">add</mat-icon>
-                                  </button>
-                                  <button *ngIf="bloodSickArray.controls.length > 1" mat-mini-fab  aria-label="Eliminar enfermedad de la sangre"
-                                  (click)=" removeFormArray(in, bloodSickArray) " type="button"         class="dashboard-toolbar-buttons"
-                                  style="border: 1px rgb(197, 197, 197) solid">
-                                  <mat-icon style="color: #18446B">remove</mat-icon>
-                                  </button>
-                            </div>
+                            class="mb-8 -mx-2 sm:mb-8 sm:mx-0 md:mb-8 md:mx-0 lg:mb-8 lg:mx-0 lg:mt-2 xl:mx-0 xl:mb-8 mt-2">
+                            <button mat-mini-fab aria-label="Agregar enfermedad de la sangre"
+                              (click)=" addFormArray(bloodSickArray,'bloodSick_array') " type="button"
+                              class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
+                              <mat-icon style="color: #18446B">add</mat-icon>
+                            </button>
+                            <button *ngIf="bloodSickArray.controls.length > 1" mat-mini-fab
+                              aria-label="Eliminar enfermedad de la sangre"
+                              (click)=" removeFormArray(in, bloodSickArray) " type="button"
+                              class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
+                              <mat-icon style="color: #18446B">remove</mat-icon>
+                            </button>
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -1165,16 +1205,18 @@
                               </div>
                             </div>
                             <div
-                                class="mb-8 -mx-2 sm:mb-8 sm:mx-0 md:mb-8 md:mx-0 lg:mb-8 lg:mx-0 lg:mt-2 xl:mx-0 xl:mb-8 mt-2">
-                                  <button mat-mini-fab aria-label="Agregar enfermedad de VIH"
-                                  (click)=" addFormArray(VIHArray,'VIH_array') " type="button" class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
-                                  <mat-icon style="color: #18446B">add</mat-icon>
-                                  </button>
-                                  <button *ngIf="VIHArray.controls.length > 1" mat-mini-fab  aria-label="Eliminar enfermedad de VIH"
-                                  (click)=" removeFormArray(in, VIHArray) " type="button"         class="dashboard-toolbar-buttons"
-                                  style="border: 1px rgb(197, 197, 197) solid">
-                                  <mat-icon style="color: #18446B">remove</mat-icon>
-                                  </button>
+                              class="mb-8 -mx-2 sm:mb-8 sm:mx-0 md:mb-8 md:mx-0 lg:mb-8 lg:mx-0 lg:mt-2 xl:mx-0 xl:mb-8 mt-2">
+                              <button mat-mini-fab aria-label="Agregar enfermedad de VIH"
+                                (click)=" addFormArray(VIHArray,'VIH_array') " type="button"
+                                class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
+                                <mat-icon style="color: #18446B">add</mat-icon>
+                              </button>
+                              <button *ngIf="VIHArray.controls.length > 1" mat-mini-fab
+                                aria-label="Eliminar enfermedad de VIH" (click)=" removeFormArray(in, VIHArray) "
+                                type="button" class="dashboard-toolbar-buttons"
+                                style="border: 1px rgb(197, 197, 197) solid">
+                                <mat-icon style="color: #18446B">remove</mat-icon>
+                              </button>
                             </div>
                           </div>
                         </div>
@@ -1203,28 +1245,32 @@
                                   [group]="disabilityGroup.get('questions').get('questionnaire').get('specialTherapy_array').get(in.toString())"
                                   label="¿En qué fecha?" name='date'> </app-date-picker>
                               </div>
-                              <div class="mr-3 "> <!-- mt-2 sm:mt-2 md:mt-0 lg:mt-0 xl:mt-0 -->
+                              <div class="mr-3 ">
+                                <!-- mt-2 sm:mt-2 md:mt-0 lg:mt-0 xl:mt-0 -->
                                 <app-input label="¿Cuál?" name='name'
                                   [group]="disabilityGroup.get('questions').get('questionnaire').get('specialTherapy_array').get(in.toString())">
                                 </app-input>
                               </div>
-                              <div class="mr-3 "> <!-- mt-2 sm:mt-2 md:mt-0 lg:mt-0 xl:mt-0 lg:col-span-2 -->
+                              <div class="mr-3 ">
+                                <!-- mt-2 sm:mt-2 md:mt-0 lg:mt-0 xl:mt-0 lg:col-span-2 -->
                                 <app-text-area label="¿Por qué razón?" name='reason'
                                   [group]="disabilityGroup.get('questions').get('questionnaire').get('specialTherapy_array').get(in.toString())">
                                 </app-text-area>
                               </div>
                             </div>
                             <div
-                                class="mb-8 -mx-2 sm:mb-8 sm:mx-0 md:mb-8 md:mx-0 lg:mb-8 lg:mx-0 lg:mt-2 xl:mx-0 xl:mb-8 mt-2">
-                                  <button mat-mini-fab aria-label="Agregar tratamiento especial"
-                                  (click)=" addFormArray(specialTherapyArray,'specialTherapy_array') " type="button" class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
-                                  <mat-icon style="color: #18446B">add</mat-icon>
-                                  </button>
-                                  <button *ngIf="specialTherapyArray.controls.length > 1" mat-mini-fab  aria-label="Eliminar tratamiento especial"
-                                  (click)=" removeFormArray(in, specialTherapyArray) " type="button"         class="dashboard-toolbar-buttons"
-                                  style="border: 1px rgb(197, 197, 197) solid">
-                                  <mat-icon style="color: #18446B">remove</mat-icon>
-                                  </button>
+                              class="mb-8 -mx-2 sm:mb-8 sm:mx-0 md:mb-8 md:mx-0 lg:mb-8 lg:mx-0 lg:mt-2 xl:mx-0 xl:mb-8 mt-2">
+                              <button mat-mini-fab aria-label="Agregar tratamiento especial"
+                                (click)=" addFormArray(specialTherapyArray,'specialTherapy_array') " type="button"
+                                class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
+                                <mat-icon style="color: #18446B">add</mat-icon>
+                              </button>
+                              <button *ngIf="specialTherapyArray.controls.length > 1" mat-mini-fab
+                                aria-label="Eliminar tratamiento especial"
+                                (click)=" removeFormArray(in, specialTherapyArray) " type="button"
+                                class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
+                                <mat-icon style="color: #18446B">remove</mat-icon>
+                              </button>
                             </div>
                           </div>
                         </div>
@@ -1265,16 +1311,18 @@
                               </div>
                             </div>
                             <div
-                                class="mb-8 -mx-2 sm:mb-8 sm:mx-0 md:mb-8 md:mx-0 lg:mb-8 lg:mx-0 lg:mt-2 xl:mx-0 xl:mb-8 mt-2">
-                                  <button mat-mini-fab aria-label="Agregar enfermedad/accidente con efectos secundarios"
-                                  (click)=" addFormArray(accidentArray,'accident_array') " type="button" class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
-                                  <mat-icon style="color: #18446B">add</mat-icon>
-                                  </button>
-                                  <button *ngIf="accidentArray.controls.length > 1" mat-mini-fab  aria-label="Eliminar enfermedad/accidente con efectos secundarios"
-                                  (click)=" removeFormArray(in, accidentArray) " type="button"         class="dashboard-toolbar-buttons"
-                                  style="border: 1px rgb(197, 197, 197) solid">
-                                  <mat-icon style="color: #18446B">remove</mat-icon>
-                                  </button>
+                              class="mb-8 -mx-2 sm:mb-8 sm:mx-0 md:mb-8 md:mx-0 lg:mb-8 lg:mx-0 lg:mt-2 xl:mx-0 xl:mb-8 mt-2">
+                              <button mat-mini-fab aria-label="Agregar enfermedad/accidente con efectos secundarios"
+                                (click)=" addFormArray(accidentArray,'accident_array') " type="button"
+                                class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
+                                <mat-icon style="color: #18446B">add</mat-icon>
+                              </button>
+                              <button *ngIf="accidentArray.controls.length > 1" mat-mini-fab
+                                aria-label="Eliminar enfermedad/accidente con efectos secundarios"
+                                (click)=" removeFormArray(in, accidentArray) " type="button"
+                                class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
+                                <mat-icon style="color: #18446B">remove</mat-icon>
+                              </button>
                             </div>
                           </div>
                         </div>
@@ -1297,9 +1345,10 @@
                           <div *ngFor=" let elements of denyArray.controls; let in = index">
                             <div>
                               <div class="mr-3">
-                                <app-radio-button [group]="disabilityGroup.get('questions').get('questionnaire').get('deny_array').get(in.toString())"
-                                name="negationRadio" [options]="negationOptions">
-                              </app-radio-button>
+                                <app-radio-button
+                                  [group]="disabilityGroup.get('questions').get('questionnaire').get('deny_array').get(in.toString())"
+                                  name="negationRadio" [options]="negationOptions">
+                                </app-radio-button>
                               </div>
                               <div class="mr-3">
                                 <app-text-area label="¿Por qué razón?" name='reason'
@@ -1308,16 +1357,18 @@
                               </div>
                             </div>
                             <div
-                                class="mb-8 -mx-2 sm:mb-8 sm:mx-0 md:mb-8 md:mx-0 lg:mb-8 lg:mx-0 lg:mt-2 xl:mx-0 xl:mb-8 mt-2">
-                                  <button mat-mini-fab aria-label="Agregar negación de seguro"
-                                  (click)=" addFormArray(denyArray,'deny_array') " type="button" class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
-                                  <mat-icon style="color: #18446B">add</mat-icon>
-                                  </button>
-                                  <button *ngIf="denyArray.controls.length > 1" mat-mini-fab  aria-label="Eliminar negación de seguro"
-                                  (click)=" removeFormArray(in, denyArray) " type="button"         class="dashboard-toolbar-buttons"
-                                  style="border: 1px rgb(197, 197, 197) solid">
-                                  <mat-icon style="color: #18446B">remove</mat-icon>
-                                  </button>
+                              class="mb-8 -mx-2 sm:mb-8 sm:mx-0 md:mb-8 md:mx-0 lg:mb-8 lg:mx-0 lg:mt-2 xl:mx-0 xl:mb-8 mt-2">
+                              <button mat-mini-fab aria-label="Agregar negación de seguro"
+                                (click)=" addFormArray(denyArray,'deny_array') " type="button"
+                                class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
+                                <mat-icon style="color: #18446B">add</mat-icon>
+                              </button>
+                              <button *ngIf="denyArray.controls.length > 1" mat-mini-fab
+                                aria-label="Eliminar negación de seguro" (click)=" removeFormArray(in, denyArray) "
+                                type="button" class="dashboard-toolbar-buttons"
+                                style="border: 1px rgb(197, 197, 197) solid">
+                                <mat-icon style="color: #18446B">remove</mat-icon>
+                              </button>
                             </div>
                           </div>
                         </div>
@@ -1332,19 +1383,20 @@
                             name="insurance_radio" [options]="YesNo" (selected)="selectChange($event)">
                           </app-radio-button>
                         </div>
-                        <div
-                          *ngIf="this.disabilityGroup.get('questions').get('questionnaire').get('insurance_array')">
-                          <div *ngFor=" let elements of insuranceArray.controls; let in = index" >
-                            <div class="mt-16 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+                        <div *ngIf="this.disabilityGroup.get('questions').get('questionnaire').get('insurance_array')">
+                          <div *ngFor=" let elements of insuranceArray.controls; let in = index">
+                            <div
+                              class="mt-16 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
 
                               <div class="mr-3">
-                                <app-input label="Nombre de la compañía" name='company' placeholder="Por ej: Seguros ARS"
+                                <app-input label="Nombre de la compañía" name='company'
+                                  placeholder="Por ej: Seguros ARS"
                                   [group]="disabilityGroup.get('questions').get('questionnaire').get('insurance_array').get(in.toString())">
                                 </app-input>
                               </div>
                               <div class="mr-3 mt-5 sm:mt-2 md:mt-0 lg:mt-0 xl:mt-0">
                                 <app-input label="Número de poliza" name='num'
-                                  [group]="disabilityGroup.get('questions').get('questionnaire').get('insurance_array').get(in.toString())" >
+                                  [group]="disabilityGroup.get('questions').get('questionnaire').get('insurance_array').get(in.toString())">
                                 </app-input>
                               </div>
                               <div class="mr-3 mt-5 sm:mt-3 md:mt-5 lg:mt-0 xl:mt-0">
@@ -1375,7 +1427,8 @@
                                 <div class="mr-3">
                                   <app-radio-button
                                     [group]="disabilityGroup.get('questions').get('questionnaire').get('insurance_array').get(in.toString())"
-                                    [options]="YesNo" name='claim_radio' (selected)="selectChange($event, in.toString())">
+                                    [options]="YesNo" name='claim_radio'
+                                    (selected)="selectChange($event, in.toString())">
                                   </app-radio-button>
                                 </div>
                               </div>
@@ -1388,16 +1441,18 @@
 
                             </div>
                             <div
-                                class="mb-8 -mx-2 sm:mb-8 sm:mx-0 md:mb-8 md:mx-0 lg:mb-8 lg:mx-0 lg:mt-2 xl:mx-0 xl:mb-8 mt-2">
-                                  <button mat-mini-fab aria-label="Agregar negación de seguro"
-                                  (click)=" addFormArray(insuranceArray,'insurance_array') " type="button" class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
-                                  <mat-icon style="color: #18446B">add</mat-icon>
-                                  </button>
-                                  <button *ngIf="insuranceArray.controls.length > 1" mat-mini-fab  aria-label="Eliminar negación de seguro"
-                                  (click)=" removeFormArray(in, insuranceArray) " type="button"         class="dashboard-toolbar-buttons"
-                                  style="border: 1px rgb(197, 197, 197) solid">
-                                  <mat-icon style="color: #18446B">remove</mat-icon>
-                                  </button>
+                              class="mb-8 -mx-2 sm:mb-8 sm:mx-0 md:mb-8 md:mx-0 lg:mb-8 lg:mx-0 lg:mt-2 xl:mx-0 xl:mb-8 mt-2">
+                              <button mat-mini-fab aria-label="Agregar negación de seguro"
+                                (click)=" addFormArray(insuranceArray,'insurance_array') " type="button"
+                                class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
+                                <mat-icon style="color: #18446B">add</mat-icon>
+                              </button>
+                              <button *ngIf="insuranceArray.controls.length > 1" mat-mini-fab
+                                aria-label="Eliminar negación de seguro" (click)=" removeFormArray(in, insuranceArray) "
+                                type="button" class="dashboard-toolbar-buttons"
+                                style="border: 1px rgb(197, 197, 197) solid">
+                                <mat-icon style="color: #18446B">remove</mat-icon>
+                              </button>
                             </div>
                           </div>
                         </div>
@@ -1488,9 +1543,8 @@
                             label="Nacionalidad" name="nationality" placeholder="Ej.: Dominicano"></app-input>
                         </div>
                         <div class="mr-3 mt-2 lg:mt-0 xl:mt-0">
-                          <app-input
-                          [group]="disabilityGroup.get('main').get('main_array').get(in.toString())"
-                          label="Ocupación" name='ocupation'></app-input>
+                          <app-input [group]="disabilityGroup.get('main').get('main_array').get(in.toString())"
+                            label="Ocupación" name='ocupation'></app-input>
                         </div>
                         <div class="mr-3 mt-2 xl:mt-0">
                           <!-- mb-3  sm:mb-3 xl:mt-8 xl:pt-1 -->
@@ -1503,7 +1557,8 @@
                         <div class="mr-3 mt-2 xl:mt-0">
                           <!-- mb-3  sm:mb-3 xl:mt-8 xl:pt-1 -->
                           <app-number-input [group]="disabilityGroup.get('main').get('main_array').get(in.toString())"
-                            label="Cant. en %" name="percentage" placeholder="Ej.: 35" min="1" max="100"></app-number-input>
+                            label="Cant. en %" name="percentage" placeholder="Ej.: 35" min="1" max="100">
+                          </app-number-input>
                         </div>
                       </div>
                       <div
@@ -1549,8 +1604,7 @@
                         placeholder="Por ej: Julio Mena de los Santos"> </app-input>
                     </div>
                     <div class="mr-3 mt-2 md:mt-0 lg:mt-0 xl:mt-0">
-                      <app-select [options]="family"
-                        [group]="disabilityGroup.get('main')">
+                      <app-select [options]="family" [group]="disabilityGroup.get('main')">
                       </app-select>
                       <!-- <app-input [group]="disabilityGroup.get('main')" label="Parentesco" name='relationship'
                         placeholder="Por ej: Su Hijo"> </app-input> -->
@@ -1595,7 +1649,7 @@
                         <div class="mr-3 mt-2 lg:mt-0 xl:mt-0">
                           <app-input
                             [group]="disabilityGroup.get('contingent').get('contingent_array').get(in.toString())"
-                          label="Ocupación" name='ocupation'></app-input>
+                            label="Ocupación" name='ocupation'></app-input>
                         </div>
                         <div class="mr-3 mt-2 xl:mt-0">
                           <!-- mb-3  sm:mb-3 xl:mt-8 xl:pt-1 -->
@@ -1610,7 +1664,8 @@
                           <!-- mb-3  sm:mb-3 xl:mt-8 xl:pt-1 -->
                           <app-number-input
                             [group]="disabilityGroup.get('contingent').get('contingent_array').get(in.toString())"
-                            label="Cant. en %" name="percentage" placeholder="Ej.: 35" min="1" max="100"></app-number-input>
+                            label="Cant. en %" name="percentage" placeholder="Ej.: 35" min="1" max="100">
+                          </app-number-input>
                         </div>
                       </div>
                       <div
@@ -1656,8 +1711,7 @@
                         name='full_name' placeholder="Por ej: Julio Mena de los Santos"> </app-input>
                     </div>
                     <div class="mr-3 mt-2 md:mt-0 lg:mt-0 xl:mt-0">
-                      <app-select [options]="family"
-                        [group]="disabilityGroup.get('contingent')">
+                      <app-select [options]="family" [group]="disabilityGroup.get('contingent')">
                       </app-select>
                       <!-- <app-input [group]="disabilityGroup.get('contingent')" label="Parentesco" name='relationship'
                         placeholder="Por ej: Su Hijo"> </app-input> -->
@@ -1688,126 +1742,128 @@
                 <hr class="ww-divider mt-6 mb-6">
 
                 <div
-              class="w-full xl:flex xl:justify-between lg:flex lg:justify-between md:flex md:justify-between sm:flex sm:justify-between">
-              <div class="radio-button-label" style="font-size: 12px !important; max-width: 60vw;">1.a. ¿La persona
-                propuesta para seguro
-                tiene alguna cobertura existente, o alguna solicitud pendiente para seguro de vida o anualidad con esta
-                compañía o cualquier otra?</div>
-              <app-radio-button [group]="disabilityGroup.get('contingent')" name="hasAnotherCoverage"
-                [options]="YesNo" (selected)="selectChange($event)">
-              </app-radio-button>
-            </div>
-            <div *ngIf="disabilityGroup.get('contingent').value.hasAnotherCoverage === 'si'">
-              <div *ngFor="let studies of existingCoveragesList.controls; let i = index"
-                class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
-                <div class="mr-3">
-                  <app-input [group]="disabilityGroup.get('contingent').get('anotherCoverages').get(i.toString())"
-                    name="name" label="Nombre de la Compañia">
-                  </app-input>
+                  class="w-full xl:flex xl:justify-between lg:flex lg:justify-between md:flex md:justify-between sm:flex sm:justify-between">
+                  <div class="radio-button-label" style="font-size: 12px !important; max-width: 60vw;">1.a. ¿La persona
+                    propuesta para seguro
+                    tiene alguna cobertura existente, o alguna solicitud pendiente para seguro de vida o anualidad con
+                    esta
+                    compañía o cualquier otra?</div>
+                  <app-radio-button [group]="disabilityGroup.get('contingent')" name="hasAnotherCoverage"
+                    [options]="YesNo" (selected)="selectChange($event)">
+                  </app-radio-button>
                 </div>
-                <div class="mr-3">
-                  <app-number-input
-                    [group]="disabilityGroup.get('contingent').get('anotherCoverages').get(i.toString())"
-                    name="amount" label="Monto del Seguro">
-                  </app-number-input>
-                </div>
-                <div class="mr-3">
-                  <app-input [group]="disabilityGroup.get('contingent').get('anotherCoverages').get(i.toString())"
-                    name="policeNo" label="No. de Póliza">
-                  </app-input>
-                </div>
-                <div class="mr-3">
-                  <app-number-input
-                    [group]="disabilityGroup.get('contingent').get('anotherCoverages').get(i.toString())"
-                    name="adbQuantity" label="Cantidad ADB" min="0">
-                  </app-number-input>
-                </div>
-                <div class="mr-3">
-                  <app-date-picker
-                    [group]="disabilityGroup.get('contingent').get('anotherCoverages').get(i.toString())"
-                    name="date" label="Fecha de Solicitud">
-                  </app-date-picker>
-                </div>
-                <div *ngIf="existingCoveragesList.length > 1"
-                  [ngClass]="{'': existingCoveragesList.length === 1, 'col-span-1': existingCoveragesList.length > 1} ">
-                  <button mat-mini-fab aria-label=" Eliminar estudio"
-                    (click)="removeFormArray(i, existingCoveragesList)" type="button"
-                    class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
-                    <mat-icon style="color: #18446B">remove</mat-icon>
-                  </button>
-                </div>
-              </div>
-              <div class="mb-8">
-                <button mat-mini-fab aria-label="Agregar estudio"
-                  (click)="addToList(existingCoveragesList, 'coverages')" type="button"
-                  class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
-                  <mat-icon style="color: #18446B">add</mat-icon>
-                </button>
-              </div>
-              <hr class=" w-full mb-6 ww-divider">
-              <div
-                class="w-full xl:flex xl:justify-between lg:flex lg:justify-between md:flex md:justify-between sm:flex sm:justify-between">
-                <div class="radio-button-label" style="font-size: 12px !important; max-width: 60vw;">1.b. ¿Tiene la
-                  persona propuesta
-                  para seguro la intención de remplazar, descontinuar o cambiar alguna de estas coberturas?</div>
-                <app-radio-button [group]="disabilityGroup.get('contingent')" name="changeAnotherCoverage"
-                  [options]="YesNo" (selected)="selectChange($event)">
-                </app-radio-button>
-              </div>
-              <div *ngIf="disabilityGroup.get('contingent').value.changeAnotherCoverage === 'si'">
-                <div *ngFor="let studies of changingCoveragesList.controls; let i = index"
-                  class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
-                  <div class="mr-3">
-                    <app-input
-                      [group]="disabilityGroup.get('contingent').get('changingCoverages').get(i.toString())"
-                      name="name" label="Nombre de la Compañia">
-                    </app-input>
+                <div *ngIf="disabilityGroup.get('contingent').value.hasAnotherCoverage === 'si'">
+                  <div *ngFor="let studies of existingCoveragesList.controls; let i = index"
+                    class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
+                    <div class="mr-3">
+                      <app-input [group]="disabilityGroup.get('contingent').get('anotherCoverages').get(i.toString())"
+                        name="name" label="Nombre de la Compañia">
+                      </app-input>
+                    </div>
+                    <div class="mr-3">
+                      <app-number-input
+                        [group]="disabilityGroup.get('contingent').get('anotherCoverages').get(i.toString())"
+                        name="amount" label="Monto del Seguro">
+                      </app-number-input>
+                    </div>
+                    <div class="mr-3">
+                      <app-input [group]="disabilityGroup.get('contingent').get('anotherCoverages').get(i.toString())"
+                        name="policeNo" label="No. de Póliza">
+                      </app-input>
+                    </div>
+                    <div class="mr-3">
+                      <app-number-input
+                        [group]="disabilityGroup.get('contingent').get('anotherCoverages').get(i.toString())"
+                        name="adbQuantity" label="Cantidad ADB" min="0">
+                      </app-number-input>
+                    </div>
+                    <div class="mr-3">
+                      <app-date-picker
+                        [group]="disabilityGroup.get('contingent').get('anotherCoverages').get(i.toString())"
+                        name="date" label="Fecha de Solicitud">
+                      </app-date-picker>
+                    </div>
+                    <div *ngIf="existingCoveragesList.length > 1"
+                      [ngClass]="{'': existingCoveragesList.length === 1, 'col-span-1': existingCoveragesList.length > 1} ">
+                      <button mat-mini-fab aria-label=" Eliminar estudio"
+                        (click)="removeFormArray(i, existingCoveragesList)" type="button"
+                        class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
+                        <mat-icon style="color: #18446B">remove</mat-icon>
+                      </button>
+                    </div>
                   </div>
-                  <div class="mr-3">
-                    <app-number-input
-                      [group]="disabilityGroup.get('contingent').get('changingCoverages').get(i.toString())"
-                      name="amount" label="Monto del Seguro">
-                    </app-number-input>
-                  </div>
-                  <div class="mr-3">
-                    <app-input
-                      [group]="disabilityGroup.get('contingent').get('changingCoverages').get(i.toString())"
-                      name="policeNo" label="No. de Póliza">
-                    </app-input>
-                  </div>
-                  <div class="mr-3">
-                    <app-number-input
-                      [group]="disabilityGroup.get('contingent').get('changingCoverages').get(i.toString())"
-                      name="adbQuantity" label="Cantidad ADB" min="0">
-                    </app-number-input>
-                  </div>
-                  <div class="mr-3">
-                    <app-date-picker
-                      [group]="disabilityGroup.get('contingent').get('changingCoverages').get(i.toString())"
-                      name="date" label="Fecha de Solicitud">
-                    </app-date-picker>
-                  </div>
-                  <div *ngIf="changingCoveragesList.length > 1"
-                    [ngClass]="{'': changingCoveragesList.length === 1, 'col-span-1': changingCoveragesList.length > 1} ">
-                    <button mat-mini-fab aria-label=" Eliminar estudio"
-                      (click)="removeFormArray(i, changingCoveragesList)" type="button"
+                  <div class="mb-8">
+                    <button mat-mini-fab aria-label="Agregar estudio"
+                      (click)="addToList(existingCoveragesList, 'coverages')" type="button"
                       class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
-                      <mat-icon style="color: #18446B">remove</mat-icon>
+                      <mat-icon style="color: #18446B">add</mat-icon>
                     </button>
                   </div>
+                  <hr class=" w-full mb-6 ww-divider">
+                  <div
+                    class="w-full xl:flex xl:justify-between lg:flex lg:justify-between md:flex md:justify-between sm:flex sm:justify-between">
+                    <div class="radio-button-label" style="font-size: 12px !important; max-width: 60vw;">1.b. ¿Tiene la
+                      persona propuesta
+                      para seguro la intención de remplazar, descontinuar o cambiar alguna de estas coberturas?</div>
+                    <app-radio-button [group]="disabilityGroup.get('contingent')" name="changeAnotherCoverage"
+                      [options]="YesNo" (selected)="selectChange($event)">
+                    </app-radio-button>
+                  </div>
+                  <div *ngIf="disabilityGroup.get('contingent').value.changeAnotherCoverage === 'si'">
+                    <div *ngFor="let studies of changingCoveragesList.controls; let i = index"
+                      class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
+                      <div class="mr-3">
+                        <app-input
+                          [group]="disabilityGroup.get('contingent').get('changingCoverages').get(i.toString())"
+                          name="name" label="Nombre de la Compañia">
+                        </app-input>
+                      </div>
+                      <div class="mr-3">
+                        <app-number-input
+                          [group]="disabilityGroup.get('contingent').get('changingCoverages').get(i.toString())"
+                          name="amount" label="Monto del Seguro">
+                        </app-number-input>
+                      </div>
+                      <div class="mr-3">
+                        <app-input
+                          [group]="disabilityGroup.get('contingent').get('changingCoverages').get(i.toString())"
+                          name="policeNo" label="No. de Póliza">
+                        </app-input>
+                      </div>
+                      <div class="mr-3">
+                        <app-number-input
+                          [group]="disabilityGroup.get('contingent').get('changingCoverages').get(i.toString())"
+                          name="adbQuantity" label="Cantidad ADB" min="0">
+                        </app-number-input>
+                      </div>
+                      <div class="mr-3">
+                        <app-date-picker
+                          [group]="disabilityGroup.get('contingent').get('changingCoverages').get(i.toString())"
+                          name="date" label="Fecha de Solicitud">
+                        </app-date-picker>
+                      </div>
+                      <div *ngIf="changingCoveragesList.length > 1"
+                        [ngClass]="{'': changingCoveragesList.length === 1, 'col-span-1': changingCoveragesList.length > 1} ">
+                        <button mat-mini-fab aria-label=" Eliminar estudio"
+                          (click)="removeFormArray(i, changingCoveragesList)" type="button"
+                          class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
+                          <mat-icon style="color: #18446B">remove</mat-icon>
+                        </button>
+                      </div>
+                    </div>
+                    <div class="mb-8">
+                      <button mat-mini-fab aria-label="Agregar estudio"
+                        (click)="addToList(changingCoveragesList, 'coverages')" type="button"
+                        class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
+                        <mat-icon style="color: #18446B">add</mat-icon>
+                      </button>
+                    </div>
+                  </div>
                 </div>
-                <div class="mb-8">
-                  <button mat-mini-fab aria-label="Agregar estudio"
-                    (click)="addToList(changingCoveragesList, 'coverages')" type="button"
-                    class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
-                    <mat-icon style="color: #18446B">add</mat-icon>
-                  </button>
-                </div>
-              </div>
-            </div>
-            <hr class=" w-full mb-6 ww-divider">
+                <hr class=" w-full mb-6 ww-divider">
 
-                <div > <!-- class="mt-6" -->
+                <div>
+                  <!-- class="mt-6" -->
                   <label class="formulary-labels"> Nota: En caso de no establecer los datos del(de los) beneficiario(s),
                     el pago del beneficiario se realizará según lo establecido en las Condiciones Generales de este
                     Beneficio. </label>
@@ -1852,10 +1908,10 @@
                 <div class='mt-5 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4'>
                   <app-input class="mr-3" label='Entidad Financiera' name="bankEntity"
                     [group]="disabilityGroup.get('bankTransfer')"></app-input>
-                  <app-number-input class="mr-3" [group]="disabilityGroup.get('bankTransfer')"
-                    label="Suma cedida" name="amount" min="0"></app-number-input>
-                  <app-number-input class="mr-3" [group]="disabilityGroup.get('bankTransfer')"
-                    label="Contacto" name="contact"></app-number-input>
+                  <app-number-input class="mr-3" [group]="disabilityGroup.get('bankTransfer')" label="Suma cedida"
+                    name="amount" min="0"></app-number-input>
+                  <app-number-input class="mr-3" [group]="disabilityGroup.get('bankTransfer')" label="Contacto"
+                    name="contact"></app-number-input>
                   <div></div>
                 </div>
               </div>
@@ -1873,11 +1929,11 @@
           [form]="disabilityGroup.get('questionnaires').get('solicitudArtitris')"></app-arthritis>
         <app-spine *ngIf="disabilityGroup.get('questionnaires').get('columnaVertebralColumnaVertebral')"
           [form]="disabilityGroup.get('questionnaires').get('columnaVertebralColumnaVertebral')"></app-spine>
-       <app-musculoskeletal *ngIf="disabilityGroup.get('questionnaires').get('solicitudMusculoesqueleticos')"
+        <app-musculoskeletal *ngIf="disabilityGroup.get('questionnaires').get('solicitudMusculoesqueleticos')"
           [form]="disabilityGroup.get('questionnaires').get('solicitudMusculoesqueleticos')"></app-musculoskeletal>
         <app-cardiovascular *ngIf="disabilityGroup.get('questionnaires').get('solicitudCardioVasculares')"
           [form]="disabilityGroup.get('questionnaires').get('solicitudCardioVasculares')"></app-cardiovascular>
-     <app-renal-urinary *ngIf="disabilityGroup.get('questionnaires').get('solicitudRenales')"
+        <app-renal-urinary *ngIf="disabilityGroup.get('questionnaires').get('solicitudRenales')"
           [form]="disabilityGroup.get('questionnaires').get('solicitudRenales')"></app-renal-urinary>
         <app-prostatic *ngIf="disabilityGroup.get('questionnaires').get('solicitudProstatica')"
           [form]="disabilityGroup.get('questionnaires').get('solicitudProstatica')"></app-prostatic>
@@ -1909,22 +1965,25 @@
         </mat-tab>
       </div>
       <!-- <div *ngIf ="disabilityGroup.get('insured_data')"> -->
-        <mat-tab
-        *ngIf="disabilityGroup.get('insured_data').get('knowYourClientSecond')"
+      <mat-tab *ngIf="disabilityGroup.get('insured_data').get('knowYourClientSecond')"
         label="Conozca a su cliente (Persona Jurídica) - Contratante">
-        <app-know-your-client
-          [form]="disabilityGroup.get('insured_data').get('knowYourClientSecond')"> <!-- *ngIf="this.role === 'WWS'" -->
+        <app-know-your-client [form]="disabilityGroup.get('insured_data').get('knowYourClientSecond')">
+          <!-- *ngIf="this.role === 'WWS'" -->
         </app-know-your-client>
-        </mat-tab>
+      </mat-tab>
       <!-- </div> -->
     </mat-tab-group>
   </form>
-  <div class="mt-8">
-    <button mat-button class="cancel-form-button" style="margin-right: 7.5px !important;"
-      (click)="formHandler.sendForm(disabilityGroup, 'disability', 'cancel')" type="submit">Cancelar</button>
-    <button mat-button class="save-button" style="margin-right: 7.5px !important;"
-      (click)="formHandler.sendForm(disabilityGroup, 'disability', 'save')" type="submit">Guardar</button>
-    <button mat-button class="send-button" (click)="formHandler.sendForm(disabilityGroup, 'disability', 'send')"
-      type="submit">Enviar</button>
-  </div>
+  <form #form="ngForm">
+    <div class="mt-8">
+      <button mat-button class="cancel-form-button" style="margin-right: 7.5px !important;"
+        (click)="formHandler.sendForm(disabilityGroup, 'disability', 'cancel')" type="submit">Cancelar</button>
+      <button mat-button class="save-button" style="margin-right: 7.5px !important;"
+        (click)="formHandler.sendForm(disabilityGroup, 'disability', 'save', appComponent)"
+        type="submit">Guardar</button>
+      <button mat-button class="send-button"
+        (click)="formHandler.sendForm(disabilityGroup, 'disability', 'send', appComponent)"
+        type="submit">Enviar</button>
+    </div>
+  </form>
 </div>

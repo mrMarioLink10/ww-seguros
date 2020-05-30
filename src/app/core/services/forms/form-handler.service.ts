@@ -323,25 +323,61 @@ export class FormHandlerService {
 									break;
 
 								case 'major-expenses':
-									this.majorExpensesService.postRequest(json)
-										.subscribe(res => {
-											this.correctSend(res, dialog, dataClosing, route);
-
-										}, (err) => {
-											this.badSend(err, dialog);
-
-										});
+									if (ID) {
+										appComponent.showOverlay = true;
+										this.majorExpensesService.sendRequest(ID)
+											.subscribe(res => {
+												appComponent.showOverlay = false;
+												this.correctSend(res, dialog, dataClosing, route);
+											}, (err) => {
+												appComponent.showOverlay = false;
+												this.badSend(err, dialog);
+											});
+									} else {
+										appComponent.showOverlay = true;
+										this.majorExpensesService.postRequest(json)
+											.subscribe((res: any) => {
+												if (res.data.id) {
+													this.majorExpensesService.sendRequest(res.data.id)
+														.subscribe(response => {
+															appComponent.showOverlay = false;
+															this.correctSend(response, dialog, dataClosing, route);
+														});
+												}
+											}, (err) => {
+												appComponent.showOverlay = false;
+												this.badSend(err, dialog);
+											});
+									}
 									break;
 
 								case 'disability':
-									this.disabilityService.postRequest(json)
-										.subscribe(res => {
-											this.correctSend(res, dialog, dataClosing, route);
-
-										}, (err) => {
-											this.badSend(err, dialog);
-
-										});
+									if (ID) {
+										appComponent.showOverlay = true;
+										this.disabilityService.sendRequest(ID)
+											.subscribe(res => {
+												appComponent.showOverlay = false;
+												this.correctSend(res, dialog, dataClosing, route);
+											}, (err) => {
+												appComponent.showOverlay = false;
+												this.badSend(err, dialog);
+											});
+									} else {
+										appComponent.showOverlay = true;
+										this.disabilityService.postRequest(json)
+											.subscribe((res: any) => {
+												if (res.data.id) {
+													this.disabilityService.sendRequest(res.data.id)
+														.subscribe(response => {
+															appComponent.showOverlay = false;
+															this.correctSend(response, dialog, dataClosing, route);
+														});
+												}
+											}, (err) => {
+												appComponent.showOverlay = false;
+												this.badSend(err, dialog);
+											});
+									}
 									break;
 
 								default:

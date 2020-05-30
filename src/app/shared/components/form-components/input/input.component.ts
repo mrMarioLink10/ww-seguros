@@ -1,4 +1,4 @@
-import { Component, OnInit, Input,ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, Input, ChangeDetectorRef, AfterViewChecked } from '@angular/core';
 import { FieldConfig } from '../models/field-config';
 import { FormGroup } from '@angular/forms';
 
@@ -7,7 +7,7 @@ import { FormGroup } from '@angular/forms';
 	templateUrl: './input.component.html',
 	styleUrls: ['./input.component.scss']
 })
-export class InputComponent implements OnInit {
+export class InputComponent implements OnInit, AfterViewChecked {
 	@Input() label: string;
 	@Input() name: string;
 	@Input() type: string;
@@ -17,7 +17,7 @@ export class InputComponent implements OnInit {
 	@Input() disabled?: boolean;
 	@Input() group: FormGroup;
 
-  constructor(private cdr: ChangeDetectorRef) {}
+	constructor(private cdr: ChangeDetectorRef) { }
 
   ngOnInit() { }
   ngAfterViewChecked() {

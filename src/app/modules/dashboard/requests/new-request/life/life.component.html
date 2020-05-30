@@ -1435,7 +1435,7 @@
                       label="Tiempo" name="amount" min="1">
                     </app-number-input>
                     <app-select class="mr-3" [options]="year"
-                      [group]="newRequest.get('agentReport').get('connectionTypeInfo')"></app-select>
+                      [group]="newRequest.get('agentReport').get('connectionTypeInfo')" name="year"></app-select>
                   </div>
                 </div>
                 <hr class=" w-full mb-6 ww-divider">
@@ -1700,15 +1700,15 @@
           </mat-expansion-panel>
         </mat-accordion>
       </mat-tab>
-      <mat-tab label="Cuestionarios Actividades" *ngIf="activitiesQuestionsLength() > 0" class="mat-tab-forms">
-        <app-diving *ngIf="newRequest.get('activitiesQuestionnaires').get('diving')"
-          [form]="newRequest.get('activitiesQuestionnaires').get('diving')"></app-diving>
-        <app-skydiving *ngIf="newRequest.get('activitiesQuestionnaires').get('skydiving')"
-          [form]="newRequest.get('activitiesQuestionnaires').get('skydiving')"></app-skydiving>
-        <app-racing *ngIf="newRequest.get('activitiesQuestionnaires').get('racing')"
-          [form]="newRequest.get('activitiesQuestionnaires').get('racing')"></app-racing>
-        <app-mountaineering *ngIf="newRequest.get('activitiesQuestionnaires').get('mountaineering')"
-          [form]="newRequest.get('activitiesQuestionnaires').get('mountaineering')"></app-mountaineering>
+      <mat-tab label="Cuestionarios Actividades" *ngIf="activitiesQuestionsLength()" class="mat-tab-forms">
+        <app-diving *ngIf="newRequest.get('activitiesQuestionnaires').get('solicitudBuceo')"
+          [form]="newRequest.get('activitiesQuestionnaires').get('solicitudBuceo')"></app-diving>
+        <app-skydiving *ngIf="newRequest.get('activitiesQuestionnaires').get('solicitudAviacion')"
+          [form]="newRequest.get('activitiesQuestionnaires').get('solicitudAviacion')"></app-skydiving>
+        <app-racing *ngIf="newRequest.get('activitiesQuestionnaires').get('solicitudMoto')"
+          [form]="newRequest.get('activitiesQuestionnaires').get('solicitudMoto')"></app-racing>
+        <app-mountaineering *ngIf="newRequest.get('activitiesQuestionnaires').get('solicitudMontanismo')"
+          [form]="newRequest.get('activitiesQuestionnaires').get('solicitudMontanismo')"></app-mountaineering>
       </mat-tab>
       <mat-tab label="Cuestionarios Adicionales" *ngIf="questionsLength() > 0" class="mat-tab-forms">
         <app-hypertension *ngIf="newRequest.get('questionnaires').get('solicitudHipertensionArterial')"
@@ -1736,18 +1736,18 @@
         <app-know-your-customer *ngIf="this.role === 'WWS'" [form]="newRequest.get('person').get('payerLegalEntity')">
         </app-know-your-customer>
       </mat-tab>
-      <mat-tab *ngIf="newRequest.get('questionnaires').get('moneyLaundering')"
+      <mat-tab *ngIf="newRequest.get('questionnaires').get('solucionAntiLavadoDinero')"
         label="Formulario politica Anti-lavado de Dinero/Financiamiento y Terrorismo (AML)">
-        <app-money-laundering [form]="newRequest.get('questionnaires').get('moneyLaundering')"></app-money-laundering>
+        <app-money-laundering [form]="newRequest.get('questionnaires').get('solucionAntiLavadoDinero')"></app-money-laundering>
       </mat-tab>
-      <mat-tab *ngIf="newRequest.get('contractorQuestionnaires').get('moneyLaundering')"
+      <mat-tab *ngIf="newRequest.get('contractorQuestionnaires').get('solucionAntiLavadoDinero')"
         label="Formulario politica Anti-lavado de Dinero/Financiamiento y Terrorismo (AML) - Contratante">
-        <app-money-laundering [form]="newRequest.get('contractorQuestionnaires').get('moneyLaundering')">
+        <app-money-laundering [form]="newRequest.get('contractorQuestionnaires').get('solucionAntiLavadoDinero')">
         </app-money-laundering>
       </mat-tab>
-      <mat-tab *ngIf="newRequest.get('payerQuestionnaires').get('moneyLaundering')"
+      <mat-tab *ngIf="newRequest.get('payerQuestionnaires').get('solucionAntiLavadoDinero')"
         label="Formulario politica Anti-lavado de Dinero/Financiamiento y Terrorismo (AML) - Pagador">
-        <app-money-laundering [form]="newRequest.get('payerQuestionnaires').get('moneyLaundering')">
+        <app-money-laundering [form]="newRequest.get('payerQuestionnaires').get('solucionAntiLavadoDinero')">
         </app-money-laundering>
       </mat-tab>
     </mat-tab-group>

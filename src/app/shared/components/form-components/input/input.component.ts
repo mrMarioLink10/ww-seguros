@@ -19,9 +19,9 @@ export class InputComponent implements OnInit, AfterViewChecked {
 
 	constructor(private cdr: ChangeDetectorRef) { }
 
-	ngOnInit() { }
+  ngOnInit() { }
+  ngAfterViewChecked() {
 
-	ngAfterViewChecked() {
-		this.cdr.detectChanges();
-	}
+     this.cdr.detectChanges();
+   }
 }

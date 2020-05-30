@@ -169,7 +169,7 @@ export class SpineComponent implements OnInit {
   }
 
   selectChange(event) {
-    console.log(event);
+
     if (event.valor === 'si') {
       switch (event.name) {
         case 'useSurgery':

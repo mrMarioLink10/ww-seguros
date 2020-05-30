@@ -17,6 +17,8 @@ import { map, first } from 'rxjs/operators';
 import { KnowYourCustomerComponent } from '../../../shared/components/disease/know-your-customer/know-your-customer.component';
 import { AppComponent } from 'src/app/app.component';
 import { MatProgressButtonOptions } from 'mat-progress-buttons';
+import { FormDataFillingService } from 'src/app/modules/dashboard/services/shared/formDataFillingService';
+
 // tslint:disable: one-line
 // tslint:disable: max-line-length
 
@@ -29,6 +31,7 @@ export class LifeComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
+    private dataMappingFromApi: FormDataFillingService,
     public formMethods: FormArrayGeneratorService,
     public diseaseService: DiseaseService,
     public formHandler: FormHandlerService,
@@ -490,20 +493,7 @@ export class LifeComponent implements OnInit {
       this.noCotizacion = res.noCotizacion;
     });
 
-    if (this.ID != null) {
-      console.log('El ID es ' + this.ID);
-      this.getData(this.ID);
-    }
-    else if (this.ID == null) {
-      console.log('ID esta vacio');
-    }
 
-    if (this.noCotizacion != null) {
-      this.searchIdNumber(this.noCotizacion);
-      console.log('El noCotizacion es ' + this.noCotizacion);
-    } else if (this.noCotizacion == null) {
-      console.log('noCotizacion esta vacio');
-    }
 
     this.role = this.userService.getRoleCotizador();
     this.newRequest = this.fb.group({
@@ -1078,7 +1068,20 @@ export class LifeComponent implements OnInit {
       this.getBmi();
     });
 
+    if (this.ID != null) {
+      console.log('El ID es ' + this.ID);
+      this.getData(this.ID);
+    }
+    else if (this.ID == null) {
+      console.log('ID esta vacio');
+    }
 
+    if (this.noCotizacion != null) {
+      this.searchIdNumber(this.noCotizacion);
+      console.log('El noCotizacion es ' + this.noCotizacion);
+    } else if (this.noCotizacion == null) {
+      console.log('noCotizacion esta vacio');
+    }
 
   }
 
@@ -1089,25 +1092,25 @@ export class LifeComponent implements OnInit {
       case 'WWS':
         if (form.get('countryOfResidence').value !== 'República Dominicana' && form.get('countryOfBirth').value !== 'República Dominicana') {
           if (!targetForm.get('money-laundering')) {
-            targetForm.addControl('moneyLaundering', this.fb.group({}));
+            targetForm.addControl('solucionAntiLavadoDinero', this.fb.group({}));
           }
         } else {
           switch (target) {
             case 'person':
               if (this.newRequest.get('exposedPerson').get('isExposed').value !== 'si') {
-                targetForm.removeControl('moneyLaundering');
+                targetForm.removeControl('solucionAntiLavadoDinero');
               }
               break;
 
             case 'contractor':
               if (this.newRequest.get('exposedPerson').get('isContractorExposed').value !== 'si' && this.newRequest.get('person').get('contractorIsLegalEntity').value !== 'si') {
-                targetForm.removeControl('moneyLaundering');
+                targetForm.removeControl('solucionAntiLavadoDinero');
               }
               break;
 
             case 'payer':
               if (this.newRequest.get('exposedPerson').get('isPayerExposed').value !== 'si' && this.newRequest.get('person').get('payerIsLegalEntity').value !== 'si') {
-                targetForm.removeControl('moneyLaundering');
+                targetForm.removeControl('solucionAntiLavadoDinero');
               }
               break;
 
@@ -1120,25 +1123,25 @@ export class LifeComponent implements OnInit {
       case 'WMA':
         if (form.get('countryOfResidence').value !== 'Panamá' && form.get('countryOfBirth').value !== 'Panamá') {
           if (!targetForm.get('money-laundering')) {
-            targetForm.addControl('moneyLaundering', this.fb.group({}));
+            targetForm.addControl('solucionAntiLavadoDinero', this.fb.group({}));
           }
         } else {
           switch (target) {
             case 'person':
               if (this.newRequest.get('exposedPerson').get('isExposed').value !== 'si') {
-                targetForm.removeControl('moneyLaundering');
+                targetForm.removeControl('solucionAntiLavadoDinero');
               }
               break;
 
             case 'contractor':
               if (this.newRequest.get('exposedPerson').get('isContractorExposed').value !== 'si' && this.newRequest.get('person').get('contractorIsLegalEntity').value !== 'si') {
-                targetForm.removeControl('moneyLaundering');
+                targetForm.removeControl('solucionAntiLavadoDinero');
               }
               break;
 
             case 'payer':
               if (this.newRequest.get('exposedPerson').get('isPayerExposed').value !== 'si' && this.newRequest.get('person').get('payerIsLegalEntity').value !== 'si') {
-                targetForm.removeControl('moneyLaundering');
+                targetForm.removeControl('solucionAntiLavadoDinero');
               }
               break;
 
@@ -1503,19 +1506,19 @@ export class LifeComponent implements OnInit {
     if (event.valor === 'si') {
       switch (event.name) {
         case 'diving':
-          formAQ.addControl('diving', this.fb.group({}));
+          formAQ.addControl('solicitudBuceo', this.fb.group({}));
           break;
 
         case 'racing':
-          formAQ.addControl('racing', this.fb.group({}));
+          formAQ.addControl('solicitudMoto', this.fb.group({}));
           break;
 
         case 'skydiving':
-          formAQ.addControl('skydiving', this.fb.group({}));
+          formAQ.addControl('solicitudAviacion', this.fb.group({}));
           break;
 
         case 'mountaineering':
-          formAQ.addControl('mountaineering', this.fb.group({}));
+          formAQ.addControl('solicitudMontanismo', this.fb.group({}));
           break;
 
         case 'isExposed':
@@ -1525,7 +1528,7 @@ export class LifeComponent implements OnInit {
             timeNumber: ['', Validators.required]
           }));
           if (!formQ.get('money-laundering')) {
-            formQ.addControl('moneyLaundering', this.fb.group({}));
+            formQ.addControl('solucionAntiLavadoDinero', this.fb.group({}));
           }
           break;
 
@@ -1536,7 +1539,7 @@ export class LifeComponent implements OnInit {
             timeNumber: ['', Validators.required]
           }));
           if (!formPQ.get('money-laundering')) {
-            formPQ.addControl('moneyLaundering', this.fb.group({}));
+            formPQ.addControl('solucionAntiLavadoDinero', this.fb.group({}));
           }
           break;
 
@@ -1547,7 +1550,7 @@ export class LifeComponent implements OnInit {
             timeNumber: ['', Validators.required]
           }));
           if (!formCQ.get('money-laundering')) {
-            formCQ.addControl('moneyLaundering', this.fb.group({}));
+            formCQ.addControl('solucionAntiLavadoDinero', this.fb.group({}));
           }
 
           break;
@@ -1558,14 +1561,14 @@ export class LifeComponent implements OnInit {
           formEP.removeControl('isPayerExposed');
           formP.removeControl('payerIsLegalEntity');
           formP.removeControl('payerLegalEntity');
-          formPQ.removeControl('moneyLaundering');
+          formPQ.removeControl('solucionAntiLavadoDinero');
           break;
 
         case 'payerIsLegalEntity':
           this.newRequest.removeControl('payer');
           formP.addControl('payerLegalEntity', this.fb.group({}));
           if (!formPQ.get('money-laundering')) {
-            formPQ.addControl('moneyLaundering', this.fb.group({}));
+            formPQ.addControl('solucionAntiLavadoDinero', this.fb.group({}));
           }
           break;
 
@@ -1575,14 +1578,14 @@ export class LifeComponent implements OnInit {
           formEP.removeControl('isContractorExposed');
           formP.removeControl('contractorIsLegalEntity');
           formP.removeControl('contractorLegalEntity');
-          formCQ.removeControl('moneyLaundering');
+          formCQ.removeControl('solucionAntiLavadoDinero');
           break;
 
         case 'contractorIsLegalEntity':
           this.newRequest.removeControl('contractor');
           formP.addControl('contractorLegalEntity', this.fb.group({}));
           if (!formCQ.get('money-laundering')) {
-            formCQ.addControl('moneyLaundering', this.fb.group({}));
+            formCQ.addControl('solucionAntiLavadoDinero', this.fb.group({}));
           }
           break;
 
@@ -1801,25 +1804,25 @@ export class LifeComponent implements OnInit {
     } else if (event.valor === 'no') {
       switch (event.name) {
         case 'diving':
-          formAQ.removeControl('diving');
+          formAQ.removeControl('solicitudBuceo');
           break;
 
         case 'racing':
-          formAQ.removeControl('racing');
+          formAQ.removeControl('solicitudMoto');
           break;
 
         case 'skydiving':
-          formAQ.removeControl('skydiving');
+          formAQ.removeControl('solicitudAviacion');
           break;
 
         case 'mountaineering':
-          formAQ.removeControl('mountaineering');
+          formAQ.removeControl('solicitudMontanismo');
           break;
 
         case 'isExposed':
           formEP.removeControl('exposedPerson');
           if ((formP.get('countryOfResidence').value === 'República Dominicana' || formP.get('countryOfResidence').value === '') || formP.get('countryOfBirth').value === 'República Dominicana' || formP.get('countryOfResidence').value === '') {
-            formQ.removeControl('moneyLaundering');
+            formQ.removeControl('solucionAntiLavadoDinero');
           }
           break;
 
@@ -1829,11 +1832,11 @@ export class LifeComponent implements OnInit {
           if (formPA) {
             if (this.role === 'WWS') {
               if (((formPA.get('countryOfResidence').value === 'República Dominicana' || formPA.get('countryOfResidence').value === '') || (formPA.get('countryOfBirth').value === 'República Dominicana' || formPA.get('countryOfBirth').value === ''))) {
-                formPQ.removeControl('moneyLaundering');
+                formPQ.removeControl('solucionAntiLavadoDinero');
               }
             } else {
               if (((formPA.get('countryOfResidence').value === 'Panamá' || formPA.get('countryOfResidence').value === '') || (formPA.get('countryOfBirth').value === 'Panamá' || formPA.get('countryOfBirth').value === ''))) {
-                formPQ.removeControl('moneyLaundering');
+                formPQ.removeControl('solucionAntiLavadoDinero');
               }
             }
           }
@@ -1845,13 +1848,13 @@ export class LifeComponent implements OnInit {
           if (this.role === 'WWS') {
             if (formC) {
               if (((formC.get('countryOfResidence').value === 'República Dominicana' || formC.get('countryOfResidence').value === '') || (formC.get('countryOfBirth').value === 'República Dominicana' || formC.get('countryOfBirth').value === ''))) {
-                formCQ.removeControl('moneyLaundering');
+                formCQ.removeControl('solucionAntiLavadoDinero');
               }
             }
           } else {
             if (formC) {
               if (((formC.get('countryOfResidence').value === 'Panamá' || formC.get('countryOfResidence').value === '') || (formC.get('countryOfBirth').value === 'Panamá' || formC.get('countryOfBirth').value === ''))) {
-                formCQ.removeControl('moneyLaundering');
+                formCQ.removeControl('solucionAntiLavadoDinero');
               }
             }
           }
@@ -1959,7 +1962,7 @@ export class LifeComponent implements OnInit {
 
           formP.removeControl('contractorLegalEntity');
           if (formEP.get('isContractorExposed').value !== 'si') {
-            formCQ.removeControl('moneyLaundering');
+            formCQ.removeControl('solucionAntiLavadoDinero');
           }
           break;
 
@@ -1997,7 +2000,7 @@ export class LifeComponent implements OnInit {
 
           formP.removeControl('payerLegalEntity');
           if (formEP.get('isPayerExposed').value !== 'si') {
-            formPQ.removeControl('moneyLaundering');
+            formPQ.removeControl('solucionAntiLavadoDinero');
           }
           break;
 
@@ -2258,9 +2261,9 @@ export class LifeComponent implements OnInit {
   }
 
   questionsLength() {
-    if (this.newRequest.get('questionnaires').get('moneyLaundering') && this.newRequest.get('questionnaires').get('solicitudEstadoFinancieroConfidencial')) {
+    if (this.newRequest.get('questionnaires').get('solucionAntiLavadoDinero') && this.newRequest.get('questionnaires').get('solicitudEstadoFinancieroConfidencial')) {
       return Object.keys(this.newRequest.get('questionnaires').value).length - 2;
-    } else if (this.newRequest.get('questionnaires').get('moneyLaundering')) {
+    } else if (this.newRequest.get('questionnaires').get('solucionAntiLavadoDinero')) {
       return Object.keys(this.newRequest.get('questionnaires').value).length - 1;
     } else if (this.newRequest.get('questionnaires').get('solicitudEstadoFinancieroConfidencial')) {
       return Object.keys(this.newRequest.get('questionnaires').value).length - 1;
@@ -2270,7 +2273,7 @@ export class LifeComponent implements OnInit {
   }
 
   activitiesQuestionsLength() {
-    return Object.keys(this.newRequest.get('activitiesQuestionnaires').value).length;
+    return Object.keys(this.newRequest.get('activitiesQuestionnaires').value).length > 1;
   }
 
   isFormValid(form: string) {
@@ -2317,76 +2320,52 @@ export class LifeComponent implements OnInit {
     console.log('json', JSON.stringify(this.newRequest.get('releventPlanInformation').value));
   }
 
-  has(object: any, key: any) {
-    return object ? this.hasOwnProperty.call(object, key) : false;
-  }
-
-  iterateThroughtAllObject(obj: any, groupControl: any) {
-    const formDataGroup = groupControl as FormGroup;
-    Object.keys(obj).forEach(e => {
-      let key = e;
-      let value = obj[key];
-      if (obj[key] !== null && obj[e] !== undefined && (typeof obj[e]) != "object") {
-        if (value !== undefined && value !== null && value !== '') {
-          if (!this.has(formDataGroup['controls'], key)) {
-            formDataGroup.addControl(key, this.fb.control(value));
-          }
-          else {
-
-            const valueFormControl = formDataGroup['controls'][key] as FormControl;
-            valueFormControl.setValue(value);
-          }
-        }
-      }
-      else if (obj[key] !== null && obj[key] !== undefined && (typeof obj[key]) === "object") {
-        if (Array.isArray(obj[key])) {
-          if (!this.has(formDataGroup['controls'], key)) {
-            formDataGroup.removeControl(key);
-          }
-          if (obj[key].length > 0) {
-
-            let form = formDataGroup.get(key);
-            let arrayForm = [];
-            obj[key].forEach((element) => {
-              let fbGroup = this.fb.group({
-                id: ['', Validators.required]
-              });
-
-              this.iterateThroughtAllObject(element, fbGroup);
-              arrayForm.push(fbGroup);
-            });
-
-
-            formDataGroup.addControl(key, this.fb.array(arrayForm));
-          }
-        }
-        else {
-          if (!this.has(formDataGroup['controls'], key)) {
-            formDataGroup.addControl(key, this.fb.group({
-              id: ['', Validators.required]
-            }));
-          }
-
-          let form = formDataGroup.get(key);
-
-          this.iterateThroughtAllObject(obj[key], form);
-          return form;
-        }
-
-      }
-
-    });
-  }
   getData(id) {
     this.life.returnData(id).subscribe(data => {
       // console.log(data.data.asegurado.documentoIdentidad)
-      console.log(data);
+      //console.log(data);
       if (data !== undefined && data.data !== null &&
         data.data != undefined) {
         this.ID = data.data.id;
-        this.iterateThroughtAllObject(data.data, this.newRequest);
+        this.dataMappingFromApi.iterateThroughtAllObject(data.data, this.newRequest);
 
-        // this.disabilityGroup['controls'].num_financial_quote.setValue(data.data.num_financial_quote)
+        console.log(this.newRequest);
+        this.primaryBenefitsArray = this.newRequest.get('primaryBenefits').get('dependentsC') as FormArray;
+        this.contingentBeneficiaryArray = this.newRequest.get('contingentBeneficiary').get('dependentsC') as FormArray;
+        this.dependentsFormArray = this.newRequest.get('dependents') as FormArray;
+        this.showContent = true;
+
+        const formCB = this.newRequest.get('contingentBeneficiary') as FormGroup;
+    const formAR = this.newRequest.get('agentReport') as FormGroup;
+    const formHMI = this.newRequest.get('medicalHistory').get('informations') as FormGroup;
+    const formWI = this.newRequest.get('medicalHistory').get('informations').get('womenInformation') as FormGroup;
+
+          this.familyRelationshipInsurances = formAR.get('familyInsurances') as FormArray; ;
+          this.existingCoveragesList = formCB.get('anotherCoverages') as FormArray;
+          this.changingCoveragesList = formCB.get('changingCoverages') as FormArray;
+          this.womenDisordersList = formWI.get('disorders') as FormArray;
+          this.heartPainList = formHMI.get('heartPain') as FormArray;
+          this.respiratoryDisorderList = formHMI.get('respiratoryDisorder') as FormArray;
+          this.mentalNervousDisorderList = formHMI.get('mentalNervousDisorder') as FormArray;
+          this.stomachDisorderList = formHMI.get('stomachDisorder') as FormArray;
+          this.endocrineDisorderList = formHMI.get('endocrineDisorder') as FormArray;
+          this.spineDisorderList = formHMI.get('spineDisorder') as FormArray;
+          this.unexplainedDiseaseList = formHMI.get('unexplainedDisease') as FormArray;
+          this.renalDisorderList = formHMI.get('renalDisorder') as FormArray;
+          this.eyesNoseThroatProblemList = formHMI.get('eyesNoseThroatProblem') as FormArray;
+          this.bloodDisorderList = formHMI.get('bloodDisorder') as FormArray;
+          this.birthDefectList = formHMI.get('birthDefect') as FormArray;
+          this.medicalProceduresList = formHMI.get('medicalProcedures') as FormArray;
+          this.beenAPatientList = formHMI.get('beenAPatient') as FormArray;
+          this.hadSpecializedTestsList = formHMI.get('hadSpecializedTests') as FormArray;
+          this.notCarriedOutList = formHMI.get('notCarriedOut') as FormArray;
+          this.takenInLast12MonthsList = formHMI.get('takenInLast12Months') as FormArray;
+          this.planToObtainMedicalTreatmentList = formHMI.get('planToObtainMedicalTreatment') as FormArray;
+          this.testedPositiveForHIVList = formHMI.get('testedPositiveForHIV') as FormArray;
+          this.diabetesDiagnosisList = formHMI.get('diabetesDiagnosis') as FormArray;
+          this.doctorList = formHMI.get('doctors') as FormArray;
+
+
       }
 
     });

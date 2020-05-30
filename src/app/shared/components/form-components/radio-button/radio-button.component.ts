@@ -23,8 +23,9 @@ export class RadioButtonComponent implements OnInit, AfterViewChecked {
 
 	emitter(event) {
 		this.selected.emit({ valor: event.value, name: this.name });
-	}
-	ngAfterViewChecked() {
-		this.cdr.detectChanges();
-	}
+  }
+  ngAfterViewChecked() {
+
+    this.cdr.detectChanges();
+  }
 }

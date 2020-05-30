@@ -35,7 +35,10 @@ export class MountaineeringComponent implements OnInit, DoCheck {
 
   ngOnInit() {
 
-    this.addBasicControls();
+    if (this.form.get("id") === undefined || this.form.get("id") .value == "0")
+    {
+      this.addBasicControls();
+    }
 
     // this.mountaineering= this.fb.group({
 
@@ -97,13 +100,13 @@ export class MountaineeringComponent implements OnInit, DoCheck {
 
     const formZ = this.form.get('climb_zone') as FormGroup;
     // console.log(this.dataText);
-    if (this.c == 0 && (this.form.get('climb_zone').get('africa').value == 'si' 
+    if (this.c == 0 && (this.form.get('climb_zone').get('africa').value == 'si'
     || this.form.get('climb_zone').get('alpes').value == 'si'
-    || this.form.get('climb_zone').get('himalaya').value == 'si' 
+    || this.form.get('climb_zone').get('himalaya').value == 'si'
     || this.form.get('climb_zone').get('andes').value == 'si'
-    || this.form.get('climb_zone').get('McKinley').value == 'si' 
-    || this.form.get('climb_zone').get('Alaska').value == 'si'
-    || this.form.get('climb_zone').get('mountain_range').value == 'si' 
+    || this.form.get('climb_zone').get('mcKinley').value == 'si'
+    || this.form.get('climb_zone').get('alaska').value == 'si'
+    || this.form.get('climb_zone').get('mountain_range').value == 'si'
     || this.form.get('climb_zone').get('others').value == 'si')) {
 
       if (!this.form.get('climb_zone').get('area_text')) {
@@ -125,7 +128,7 @@ export class MountaineeringComponent implements OnInit, DoCheck {
       artificial_wall_radio: ['', Validators.required],
       expeditions_radio: ['', Validators.required],
       climbing_radio: ['', Validators.required],
-      Hiking_radio: ['', Validators.required],
+      hiking_radio: ['', Validators.required],
       ice_climbing_radio: ['', Validators.required],
       rock_climbing_radio: ['', Validators.required],
 
@@ -155,8 +158,8 @@ export class MountaineeringComponent implements OnInit, DoCheck {
         alpes: ['', Validators.required],
         himalaya: ['', Validators.required],
         andes: ['', Validators.required],
-        McKinley: ['', Validators.required],
-        Alaska: ['', Validators.required],
+        mcKinley: ['', Validators.required],
+        alaska: ['', Validators.required],
         mountain_range: ['', Validators.required],
         others: ['', Validators.required]
 
@@ -200,8 +203,8 @@ export class MountaineeringComponent implements OnInit, DoCheck {
               case 'alpes':
               case 'himalaya':
               case 'andes':
-              case 'McKinley':
-              case 'Alaska':
+              case 'mcKinley':
+              case 'alaska':
               case 'mountain_range':
               case 'others':
 
@@ -280,8 +283,8 @@ export class MountaineeringComponent implements OnInit, DoCheck {
         case 'alpes':
         case 'himalaya':
         case 'andes':
-        case 'McKinley':
-        case 'Alaska':
+        case 'mcKinley':
+        case 'alaska':
         case 'mountain_range':
         case 'others':
 

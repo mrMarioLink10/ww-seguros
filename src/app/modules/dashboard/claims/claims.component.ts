@@ -32,17 +32,19 @@ export interface Claims {
 export class ClaimsComponent implements OnInit {
 
 	statusTypes = [
-	  'Enviado', 
-	  'Reembolsado', 
-	  'Denegado'
+		{ value: 0, view: 'Incompleto' },
+		{ value: 1, view: 'Completo' },
+		{ value: 2, view: 'Enviado' },
+		{ value: 3, view: 'Cancelado' },
+		{ value: 4, view: 'Adjuntar Expediente' },
 	];
 
 	fillType = 'nroPoliza';
 
 	fills = {
-	  status: this.statusTypes, 
-	  fillType: this.fillType
-	}; 
+		status: this.statusTypes,
+		fillType: this.fillType
+	};
 
 	newClaimButtonOptions: MatProgressButtonOptions = {
 		active: false,
@@ -61,7 +63,7 @@ export class ClaimsComponent implements OnInit {
 	displayedColumns: string[] = ['no', 'nombre', 'seguro', 'plan', 'fecha', 'monto', 'estatus', 'acciones'];
 
 	dataSource;
-	public claims:any[];
+	public claims: any[];
 
 	@ViewChild(MatSort, { static: true })
 	sort: MatSort;
@@ -72,23 +74,23 @@ export class ClaimsComponent implements OnInit {
 
 	constructor(private route: Router, private fb: FormBuilder, private _claimsService: ClaimsService, private _claimsList: ClaimsListComponent, private _refundsList: RefundsListComponent) { }
 
-	filterData(params:HttpParams = new HttpParams){
+	filterData(params: HttpParams = new HttpParams) {
 		this._claimsList.getClaims(params);
 		this._refundsList.getRefunds(params);
 	}
 
-	getClaims(params:HttpParams = new HttpParams){
+	getClaims(params: HttpParams = new HttpParams) {
 		let data;
 		this._claimsService.getClaims(params)
-		.subscribe(res => {
-		  data = res;
-		  this.claims = data.data;
-		  this.dataSource = new MatTableDataSource(this.claims);
-		  this.dataSource.sort = this.sort;
-		  this.dataSource.paginator = this.paginator;
-		}, err => console.log(err));
-	  }
-	  
+			.subscribe(res => {
+				data = res;
+				this.claims = data.data;
+				this.dataSource = new MatTableDataSource(this.claims);
+				this.dataSource.sort = this.sort;
+				this.dataSource.paginator = this.paginator;
+			}, err => console.log(err));
+	}
+
 	ngOnInit() {
 		this.testForm = this.fb.group({
 			arthritis: this.fb.group({})
@@ -112,7 +114,7 @@ export class ClaimsComponent implements OnInit {
 
 	newClaim() {
 		this.newClaimButtonOptions.active = true;
-		this.route.navigateByUrl('/dashboard/claims/new-claim');
+		this.route.navigateByUrl('/dashboard/claims/new-claim/refund');
 	}
 }
 

@@ -5,14 +5,14 @@
   <ng-template #formTemplate>
     <div class="p-3 pb-0 mb-4" style="background-color: #F2F2F2">
       <div class="mt-3 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 xl:grid-cols-5">
-        <div class="mr-3">
+      <!--   <div class="mr-3">
           <app-input [group]="form" label="Nombre Completo" name='nombre' placeholder="Alberto Matias">
           </app-input>
         </div>
         <div class="mr-3">
-          <app-input [group]="form" label="Edad" name='edad' placeholder="34" type="number">
-          </app-input>
-        </div>
+          <app-number-input [group]="form" label="Edad" name='edad' placeholder="34" min="1">
+          </app-number-input>
+        </div> -->
         <div class="mr-3">
           <app-input [group]="form" label="Nombre del Médico Tratante" name='nombreMedico'
             placeholder="Santiago Alberto">
@@ -24,8 +24,8 @@
           </app-input>
         </div>
         <div class="mr-3">
-          <app-input [group]="form" label="Teléfono del Centro" name='telefonoCentro' placeholder="8207776677">
-          </app-input>
+          <app-number-input [group]="form" label="Teléfono del Centro" name='telefonoCentro' placeholder="8207776677">
+          </app-number-input>
         </div>
       </div>
     </div>
@@ -163,7 +163,7 @@
         <div *ngIf="form.get('haveSmokingHabits').value === 'si'"
           class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
           <div class="mr-3">
-            <app-input [group]="form.get('smokingHabits')" name="cantidad" label="Cantidad por día" type="number">
+            <app-input [group]="form.get('smokingHabits')" name="cantidad" label="Cantidad por día" type="number" min="1">
             </app-input>
           </div>
         </div>
@@ -188,9 +188,9 @@
                 </app-select>
               </div>
               <div class="mr-3">
-                <app-date-picker [group]="form.get('hypertensionStudies').get(i.toString())" name="fecha"
+                <datepicker-month fieldId="fecha"  [group]="form.get('hypertensionStudies').get(i.toString())" name="fecha"
                   label="Fecha del estudio">
-                </app-date-picker>
+                </datepicker-month>
               </div>
               <div class="mr-3">
                 <app-input [group]="form.get('hypertensionStudies').get(i.toString())" name="resultado"
@@ -295,8 +295,8 @@
         </div>
         <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
           <div class="mr-3">
-            <app-date-picker [group]="form.get('lastMedicalConsultation')" name="fecha"
-              label="Fecha última consulta médico"></app-date-picker>
+            <datepicker-month fieldId="fecha"  [group]="form.get('lastMedicalConsultation')" name="fecha"
+              label="Fecha última consulta médico"></datepicker-month >
           </div>
           <div class="mr-3">
             <app-input [group]="form.get('lastMedicalConsultation')" name="resultado"
@@ -321,8 +321,8 @@
           <div *ngFor="let hyStudies of liquidAnomalyList.controls; let i = index">
             <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
               <div class="mr-3">
-                <app-date-picker [group]="form.get('liquidAnomaly').get(i.toString())" name="fecha" label="Fecha">
-                </app-date-picker>
+                <datepicker-month fieldId="fecha"   [group]="form.get('liquidAnomaly').get(i.toString())" name="fecha" label="Fecha">
+                </datepicker-month>
               </div>
               <div *ngIf="liquidAnomalyList.length > 1"
                 [ngClass]="{'': liquidAnomalyList.length === 1, 'col-span-1': liquidAnomalyList.length > 1} ">

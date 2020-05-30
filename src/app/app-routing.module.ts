@@ -2,17 +2,26 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { DashboardLayoutComponent } from './modules/dashboard/shared/layouts/dashboard-layout/dashboard-layout.component';
 import { LoginComponent } from './modules/auth/login/login.component';
+import { AppAuthGuard } from './core/guards/app-auth.guard';
+import { CanExitGuard } from './core/guards/can-exit.guard';
 
 const routes: Routes = [
-	{ path: '', component: LoginComponent },
+	{
+		path: '',
+		redirectTo: 'dashboard/requests',
+		pathMatch: 'full'
+	},
 	{
 		path: 'app',
-		loadChildren: () => import('./modules/dashboard/dashboard.module').then((m) => m.DashboardModule)
+		loadChildren: () => import('./modules/dashboard/dashboard.module').then((m) => m.DashboardModule),
+		// canActivate: [AppAuthGuard],
+		// data: { roles: ['WWS', 'WWA'] }
 	}
 ];
 
 @NgModule({
-	imports: [ RouterModule.forRoot(routes) ],
-	exports: [ RouterModule ]
+	imports: [RouterModule.forRoot(routes)],
+	exports: [RouterModule],
+	providers: [AppAuthGuard, CanExitGuard]
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

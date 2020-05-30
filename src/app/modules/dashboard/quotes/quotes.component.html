@@ -18,12 +18,12 @@
   </div>
   <div class="mt-6 pb-8 w-full ">
     <div class="table-responsive" style="overflow-y: hidden; overflow-x: auto; max-width: 100%;">
-      <table mat-table [dataSource]="dataSource" matSort class="w-full dashboard-basic-table">
+      <table mat-table matSort [dataSource]="dataSource" class="w-full dashboard-basic-table">
         <!-- Position Column -->
-        <ng-container matColumnDef="no" style="margin-right: 15px !important">
+        <ng-container matColumnDef="noCotizacion" style="margin-right: 15px !important">
           <th class="padding-cell" mat-header-cell *matHeaderCellDef mat-sort-header> No. Cotización</th>
           <td class="padding-cell" mat-cell *matCellDef="let element"
-            style="color: #007DB7 !important; font-weight: bold !important;"> {{element.noCotizacion}} </td>
+            style="color: #007DB7 !important; font-weight: 500 !important;"> {{element.noCotizacion}} </td>
         </ng-container>
 
         <ng-container matColumnDef="nombre" style="margin-right: 15px !important">
@@ -31,14 +31,9 @@
           <td class="padding-cell" mat-cell *matCellDef="let element"> {{element.nombre}} </td>
         </ng-container>
 
-        <ng-container matColumnDef="dependientes" style="margin-right: 15px !important">
-          <th class="padding-cell" mat-header-cell *matHeaderCellDef mat-sort-header> Dependientes </th>
-          <td class="padding-cell" mat-cell *matCellDef="let element"> {{element.dependientes}} </td>
-        </ng-container>
-
-        <ng-container matColumnDef="seguro" style="margin-right: 15px !important">
-          <th class="padding-cell" mat-header-cell *matHeaderCellDef mat-sort-header> Seguro de: </th>
-          <td class="padding-cell" mat-cell *matCellDef="let element"> {{element.seguro}} </td>
+        <ng-container matColumnDef="tipoSeguro" style="margin-right: 15px !important">
+          <th class="padding-cell" mat-header-cell *matHeaderCellDef mat-sort-header> Tipo de seguro </th>
+          <td class="padding-cell" mat-cell *matCellDef="let element"> {{element.tipoSeguro | titlecase}} </td>
         </ng-container>
 
         <ng-container matColumnDef="plan" style="margin-right: 15px !important">
@@ -58,19 +53,23 @@
 
         <ng-container matColumnDef="estatus" style="margin-right: 15px !important">
           <th class="padding-cell" mat-header-cell *matHeaderCellDef mat-sort-header> Estatus </th>
-          <td class="padding-cell" mat-cell *matCellDef="let element"
-            [ngClass]="{'text-color-yellow': element.estatus==='Por Enviar'}"> {{element.estatus}} </td>
+          <td class="padding-cell text-color-green" mat-cell *matCellDef="let element"
+            [ngClass]="{'text-color-yellow': element.estatus==='Por Enviar'}"> Activa </td>
         </ng-container>
 
         <ng-container matColumnDef="acciones" style="text-align: end !important; margin-right: 15px !important; ">
-          <th class="padding-cell" mat-header-cell *matHeaderCellDef mat-sort-header
-            style="max-width: 110px !important;"> Acciones </th>
+          <th class="padding-cell" mat-header-cell *matHeaderCellDef style="max-width: 110px !important;"> Acciones
+          </th>
           <td class="padding-cell" mat-cell *matCellDef="let element" style="max-width: 110px !important;">
-            <button mat-mini-fab aria-label="Ver mas" class="dashboard-table-buttons">
+            <!--  <button mat-mini-fab aria-label="Ver mas" class="dashboard-table-buttons">
               <img src="../../../../assets/iconos/eye.svg">
+            </button> -->
+            <button mat-mini-fab aria-label="Enviar" *ngIf="element.tipoSeguro == 'vida'"
+              class="dashboard-table-buttons" (click)="navigateToLife(element.noCotizacion)">
+              <img src="../../../../assets/iconos/check.svg">
             </button>
-            <button mat-mini-fab aria-label="Enviar" *ngIf="element.estatus === 'Por Enviar'"
-              class="dashboard-table-buttons">
+            <button mat-mini-fab aria-label="Enviar" *ngIf="element.tipoSeguro == 'salud'"
+              (click)="navigateToSalud(element.noCotizacion)" class="dashboard-table-buttons">
               <img src="../../../../assets/iconos/check.svg">
             </button>
           </td>

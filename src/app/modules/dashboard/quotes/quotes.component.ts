@@ -1,8 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 import { MatProgressButtonOptions } from 'mat-progress-buttons';
 import { MatTableDataSource, MatSort, MatPaginator } from '@angular/material';
 import { QuotesService } from '../services/quotes/quotes.service';
 import { HttpParams } from '@angular/common/http';
+import { UserService } from '../../../core/services/user/user.service';
 
 export interface Quotes {
   noCotizacion: number;
@@ -24,16 +26,16 @@ export interface Quotes {
 export class QuotesComponent implements OnInit {
 
   statusTypes = [
-    'Enviado',
-    'Por Enviar'
+    { value: 2, view: 'Enviado' },
+    { value: 5, view: 'Por Enviar' },
   ];
 
   fillType = 'tipoSeguro';
 
   fills = {
-    status: this.statusTypes, 
+    status: this.statusTypes,
     fillType: this.fillType
-  }; 
+  };
 
   newQuoteButtonOptions: MatProgressButtonOptions = {
     active: false,
@@ -49,38 +51,47 @@ export class QuotesComponent implements OnInit {
     customClass: 'dashboard-button'
   };
 
-  displayedColumns: string[] = ['no', 'nombre', 'dependientes', 'seguro', 'plan', 'fecha', 'monto', 'estatus', 'acciones'];
+  displayedColumns: string[] = ['noCotizacion', 'nombre', 'tipoSeguro', 'plan', 'fecha', 'monto', 'estatus', 'acciones'];
   dataSource;
 
-  quotes:any[];
+  quotes: any[];
 
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
-  constructor(private _quotesService: QuotesService) { }
+  constructor(
+    private router: Router,
+    private quotesService: QuotesService,
+    private userService: UserService
+  ) { }
 
-  getQuotes(params:HttpParams = new HttpParams){
+  getQuotes(params: HttpParams = new HttpParams()) {
     let data;
-    this._quotesService.getQuotes(params)
-    .subscribe(res => {
-      data = res;
-      this.quotes = data.data;
-      this.dataSource = new MatTableDataSource(this.quotes);
-      this.dataSource.sort = this.sort;
-      this.dataSource.paginator = this.paginator;
-    }, err => console.log(err));
+    this.quotesService.getQuotes(params)
+      .subscribe(res => {
+        data = res;
+        this.quotes = data.data;
+        this.dataSource = new MatTableDataSource(this.quotes);
+        this.dataSource.sort = this.sort;
+        this.dataSource.paginator = this.paginator;
+      }, err => console.log(err));
   }
 
   ngOnInit() {
     this.getQuotes();
   }
-
+  navigateToLife(id) {
+    this.router.navigateByUrl(`/dashboard/requests/new-requests/life/cotizacion/${id}`);
+  }
+  navigateToSalud(id) {
+    this.router.navigateByUrl(`/dashboard/requests/new-requests/major-expenses/cotizacion/${id}`);
+  }
   newQuote() {
-    this.newQuoteButtonOptions.active = true;
-    setTimeout(() => {
-      this.newQuoteButtonOptions.active = false;
-
-    }, 3500);
+    if (this.userService.getRoleCotizador() === 'WWS') {
+      window.open('https://cotizadores.wwseguros.com.do/?cia=wws', '_blank');
+    } else if (this.userService.getRoleCotizador() === 'WMA') {
+      window.open('https://cotizadores.wwseguros.com.do/?cia=wwm', '_blank');
+    }
   }
 
 }

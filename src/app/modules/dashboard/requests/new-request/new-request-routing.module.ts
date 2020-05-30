@@ -4,6 +4,7 @@ import { MajorExpensesComponent } from './major-expenses/major-expenses.componen
 import { LifeComponent } from './life/life.component';
 import { NewRequestComponent } from './new-request.component';
 import { DisabilityComponent } from './disability/disability.component';
+import { CanExitGuard } from 'src/app/core/guards/can-exit.guard';
 
 
 const routes: Routes = [
@@ -16,9 +17,14 @@ const routes: Routes = [
       name: 'Nueva Solicitud',
     }
   },
-  { path: 'major-expenses', component: MajorExpensesComponent },
-  { path: 'life', component: LifeComponent },
-  { path: 'disability', component: DisabilityComponent }
+  { path: 'major-expenses', component: MajorExpensesComponent, canDeactivate: [CanExitGuard] },
+  { path: 'major-expenses/cotizacion/:noCotizacion', component: MajorExpensesComponent, canDeactivate: [CanExitGuard] },
+  { path: 'major-expenses/:id', component: MajorExpensesComponent, canDeactivate: [CanExitGuard] },
+  { path: 'life', component: LifeComponent, canDeactivate: [CanExitGuard] },
+  { path: 'life/cotizacion/:noCotizacion', component: LifeComponent, canDeactivate: [CanExitGuard] },
+  { path: 'life/:id', component: LifeComponent, canDeactivate: [CanExitGuard] },
+  { path: 'disability', component: DisabilityComponent, canDeactivate: [CanExitGuard] },
+  { path: 'disability/:id', component: DisabilityComponent, canDeactivate: [CanExitGuard] },
 ];
 
 @NgModule({

@@ -57,7 +57,8 @@ export class CardiovascularComponent implements OnInit {
 	medicalTreatmentList: FormArray;
 	hypertensionStudiesList: FormArray;
 	changedTreatmentList: FormArray;
-	liquidAnomalyList: FormArray;
+  liquidAnomalyList: FormArray;
+
 
 	diseaseInfoGroup() {
 		return this.fb.group({
@@ -120,7 +121,7 @@ export class CardiovascularComponent implements OnInit {
 
 				case 'haveSmokingHabits':
 					this.form.addControl('smokingHabits', this.fb.group({
-						cantidad: ['', Validators.required]
+						cantidad: ['', [Validators.required, Validators.min(1)]]
 					}));
 					break;
 
@@ -221,10 +222,13 @@ export class CardiovascularComponent implements OnInit {
 
 		this.form.addControl('studies', this.fb.array([this.createFormArray('studies')]));
 		this.studiesList = this.form.get('studies') as FormArray;
-
+console.log(this.studiesList);
 		this.form.addControl('medicalTreatment', this.fb.array([this.createFormArray('medicalTreatment')]));
-		this.medicalTreatmentList = this.form.get('medicalTreatment') as FormArray;
-
+    this.medicalTreatmentList = this.form.get('medicalTreatment') as FormArray;
+    try{
+    this.studiesList = this.form.get('studies') as FormArray;
+    }
+    catch{}
 		this.questions = [
 			{
 				label: 'Dolor de Pecho (anginas):',
@@ -276,7 +280,7 @@ export class CardiovascularComponent implements OnInit {
 
 	addBasicControls() {
 		this.form.addControl('nombre', this.fb.control('', Validators.required));
-		this.form.addControl('edad', this.fb.control('', Validators.required));
+		this.form.addControl('edad', this.fb.control('', [Validators.required, Validators.min(1)]));
 		this.form.addControl('nombreMedico', this.fb.control('', Validators.required));
 		this.form.addControl('centroSalud', this.fb.control('', Validators.required));
 		this.form.addControl('telefonoCentro', this.fb.control('', Validators.required));

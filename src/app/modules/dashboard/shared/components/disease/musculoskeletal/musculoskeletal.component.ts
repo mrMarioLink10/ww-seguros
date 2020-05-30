@@ -37,7 +37,7 @@ export class MusculoskeletalComponent implements OnInit {
   };
 
   // skeletalMuscle: FormGroup;
-  
+
   episodeFormArray: FormArray;
   episodeProperty;
 
@@ -55,10 +55,10 @@ export class MusculoskeletalComponent implements OnInit {
     const formS = this.form.get('data').get('surgery') as FormGroup;
     const formNFA = this.form.get('data') as FormGroup;
 
-    
+
 		if (event.valor === 'si') {
       switch (event.name) {
-        
+
         case 'episode_radio':
 
                   formE.addControl('episode_array', this.episodeProperty);
@@ -71,7 +71,7 @@ export class MusculoskeletalComponent implements OnInit {
 
                   formS.addControl('surgery_array', this.surgeryProperty);
                   this.surgeryFormArray = this.form.get('data').get('surgery').get('surgery_array') as FormArray;
-                  
+
                   console.log(JSON.stringify(this.form.value));
                   break;
 
@@ -89,14 +89,20 @@ export class MusculoskeletalComponent implements OnInit {
 
         case 'recovered_radio':
 
-                  formNFA.removeControl('areaText')
-                  break;
+                  formNFA.addControl('date', this.fb.control(new Date(), Validators.required));
 
+                  formNFA.addControl('areaText', this.fb.group({
+
+                        residual_symptoms:['', Validators.required],
+
+                  }));
+                  console.log(JSON.stringify(this.form.value));
+                  break;
         }
 
 			}
 		 else if (event.valor === 'no') {
-	
+
       switch (event.name) {
 
         case 'episode_radio':
@@ -110,7 +116,7 @@ export class MusculoskeletalComponent implements OnInit {
 
             formS.removeControl('surgery_array');
             this.surgeryFormArray = undefined;
-            
+
             break;
 
         case 'skeletal_disorder_radio':
@@ -120,24 +126,18 @@ export class MusculoskeletalComponent implements OnInit {
 
         case 'recovered_radio':
 
-            formNFA.addControl('areaText', this.fb.group({
-
-                residual_symptoms:['', Validators.required],
-
-            }));
-
-            console.log(JSON.stringify(this.form.value));
+            formNFA.removeControl('date')
+            formNFA.removeControl('areaText')
             break;
-
         }
 
 			}
-		
+
   }
 
   episodeGroup ={
     date: [new Date(), Validators.required],
-    duration: ['', Validators.required],
+    duration: ['', [Validators.required, Validators.min(1)]],
     DayMonthYear: ['', Validators.required]
   }
 
@@ -190,51 +190,48 @@ export class MusculoskeletalComponent implements OnInit {
     this.surgeryProperty = this.fb.array([this.formMethods.createItem(this.surgeryGroup)]);
     this.therapyProperty = this.fb.array([this.formMethods.createItem(this.therapyGroup)]);
 
-    this.addBasicControls();
+if (this.form.get('data') !== undefined && this.form.get('data') !== null)
+{
+if (this.form.get('data').get('surgery').get('surgery_array') !== null)
+{
+      this.surgeryFormArray = this.form.get('data').get('surgery').get('surgery_array') as FormArray;
 
-    // this.form = this.fb.group({
+    }
+    else
+    {
 
-    //   full_name: ['', Validators.required],
-    //   age:['', [Validators.required, Validators.min(1)]],
-    //   doctor_name: ['', Validators.required],
-    //   hospital_name: ['', Validators.required],
-    //   hospital_telephone: ['', Validators.required],
-
-    //   data: this.fb.group({
-
-    //     skeletal_disorder_radio:['', Validators.required],
-    //     recovered_radio:['', Validators.required],
-    //     date: [new Date(), Validators.required],
-    //     episode_radio:['', Validators.required],
-    //     episode:  this.fb.group({
-
-    //       episode_array: this.fb.array([this.formMethods.createItem(this.episodeGroup)])
-
-    //   }),
-
-    //     surgery_radio:['', Validators.required],
-    //     surgery: this.fb.group({
-
-    //       surgery_array: this.fb.array([this.formMethods.createItem(this.surgeryGroup)])
-
-    //     }),
-
-    //     therapy: this.fb.group({
-
-    //       therapy_array: this.fb.array([this.formMethods.createItem(this.therapyGroup)])
-
-    //     }),
-
-    //     aditional_info:['', Validators.required]
-    //   }),
-
-
-    // })
-
-    this.therapyFormArray = this.form.get('data').get('therapy').get('therapy_array') as FormArray;
+    const formE = this.form.get('data').get('episode') as FormGroup;
+    const formS = this.form.get('data').get('surgery') as FormGroup;
+    formS.addControl('surgery_array', this.surgeryProperty);
+    this.surgeryFormArray = this.form.get('data').get('surgery').get('surgery_array') as FormArray;
+    //formE.addControl('episode_array', this.episodeProperty);
+    //this.episodeFormArray = this.form.get('data').get('episode').get('episode_array') as FormArray;
+      console.log(this.surgeryFormArray);
+      console.log(this.form);
+    }
 
   }
+  else
+  {
+    this.addBasicControls();
+  }
 
+  this.therapyFormArray = this.form.get('data').get('therapy').get('therapy_array') as FormArray;
+  this.surgeryFormArray = this.form.get('data').get('surgery').get('surgery_array') as FormArray;
+  console.log(this.surgeryFormArray);
+
+  }
+IssurgeryFormArray()
+{
+  try{
+    if (this.surgeryFormArray.length > 0)
+    {
+      return true;
+    }
+  }
+  catch{}
+  return false;
+}
   addBasicControls(){
 
     this.form.addControl('full_name', this.fb.control('', Validators.required));
@@ -247,7 +244,6 @@ export class MusculoskeletalComponent implements OnInit {
 
       skeletal_disorder_radio:['', Validators.required],
       recovered_radio:['', Validators.required],
-      date: [new Date(), Validators.required],
       episode_radio:['', Validators.required],
       episode:  this.fb.group({
 
@@ -270,7 +266,7 @@ export class MusculoskeletalComponent implements OnInit {
 
       aditional_info:['', Validators.required]
     })
-    
+
     );
 
   }
@@ -279,10 +275,10 @@ export class MusculoskeletalComponent implements OnInit {
 
     const increment = array.length + 1;
     array = this.formMethods.addElement(array, increment, this.createFormArray(name)).formArray;
-    
+
     console.log(JSON.stringify(this.form.value));
     // array.push(this.createFormArray(name));
-    
+
   }
 
   removeFormArray(index, array: any) {

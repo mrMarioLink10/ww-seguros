@@ -2,9 +2,13 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatProgressButtonOptions } from 'mat-progress-buttons';
 import { MatTableDataSource, MatSort, MatPaginator } from '@angular/material';
-import { FormGroup } from '@angular/forms';
+import { FormGroup, Validators } from '@angular/forms';
 import { AuthorizationsService } from '../services/authorizations/authorizations.service';
 import { HttpParams } from '@angular/common/http';
+import { NewAuthorizationService } from '../../../modules/dashboard/authorizations/new-authorization/services/new-authorization.service';
+import { FormHandlerService } from '../../../core/services/forms/form-handler.service';
+import { AppComponent } from '../../../app.component';
+
 
 
 export interface Claims {
@@ -17,38 +21,6 @@ export interface Claims {
 	estatus: string;
 }
 
-const ELEMENT_DATA: Claims[] = [
-
-	{
-		no: 154546,
-		nombre: 'Isai Vargas',
-		seguro: 'Vida',
-		plan: 'Nombre del Plan',
-		fecha: new Date(),
-		monto: 2000,
-		estatus: 'Reembolsado'
-	},
-	{
-		no: 213214,
-		nombre: 'Pablo Quavo',
-		seguro: 'Salud',
-		plan: 'Nombre del Plan',
-		fecha: new Date(),
-		monto: 2000,
-		estatus: 'Enviado'
-	},
-	{
-		no: 768678,
-		nombre: 'Kevin David',
-		seguro: 'Salud',
-		plan: 'Nombre del Plan',
-		fecha: new Date(),
-		monto: 2000,
-		estatus: 'Enviado'
-	}
-];
-
-
 @Component({
 	selector: 'app-authorizations',
 	templateUrl: './authorizations.component.html',
@@ -57,18 +29,20 @@ const ELEMENT_DATA: Claims[] = [
 export class AuthorizationsComponent implements OnInit {
 
 	statusTypes = [
-	  'Enviado', 
-	  'Reembolsado', 
-	  'Denegado'
+		{ value: 0, view: 'Incompleto' },
+		{ value: 1, view: 'Completo' },
+		{ value: 2, view: 'Enviado' },
+		{ value: 3, view: 'Cancelado' },
+		{ value: 4, view: 'Adjuntar Expediente' },
 	];
 
 	fillType = 'nroPoliza';
 
 	fills = {
-	  status: this.statusTypes, 
-	  fillType: this.fillType
-	}; 
-  
+		status: this.statusTypes,
+		fillType: this.fillType
+	};
+
 
 	newAuthorizationButtonOptions: MatProgressButtonOptions = {
 		active: false,
@@ -84,11 +58,10 @@ export class AuthorizationsComponent implements OnInit {
 		customClass: 'dashboard-button'
 	};
 
-	//displayedColumns: string[] = ['no', 'nombre', 'seguro', 'plan', 'fecha', 'monto', 'estatus', 'acciones'];
-	displayedColumns: string[] = ['no', 'nombre', 'seguro', 'plan','condicion', 'estatus', 'acciones'];
-	//dataSource = new MatTableDataSource(ELEMENT_DATA);
+	displayedColumns: string[] = ['no', 'nombre', 'seguro', 'plan', 'condicion', 'estatus', 'acciones'];
+
 	dataSource;
-	authorizations:any[];
+	authorizations: any[];
 
 	@ViewChild(MatSort, { static: true })
 	sort: MatSort;
@@ -97,20 +70,36 @@ export class AuthorizationsComponent implements OnInit {
 
 	testForm: FormGroup;
 
-	constructor(private route: Router, private _authorizationsService: AuthorizationsService) { }
+	constructor(
+		private route: Router,
+		public authorizationsService: AuthorizationsService,
+		public newAuthorization: NewAuthorizationService,
+		public formHandlerService: FormHandlerService,
+		private appComponent: AppComponent
+	) { }
 
 
-	getAuthorizations(params:HttpParams = new HttpParams){
+	getAuthorizations(params: HttpParams = new HttpParams()) {
 		let data;
-		this._authorizationsService.getAuthoriations(params)
-		.subscribe(res => {
-		  data = res;
-		  this.authorizations = data.data;
-		  this.dataSource = new MatTableDataSource(this.authorizations);
-		  this.dataSource.sort = this.sort;
-		  this.dataSource.paginator = this.paginator;
-		}, err => console.log(err));
-	  }
+		this.authorizationsService.getAuthoriations(params)
+			.subscribe(res => {
+				data = res;
+				this.authorizations = data.data;
+				this.dataSource = new MatTableDataSource(this.authorizations);
+				this.dataSource.sort = this.sort;
+				this.dataSource.paginator = this.paginator;
+			}, err => console.log(err));
+	}
+
+	deleteAuthorization(id: number) {
+		this.formHandlerService.deleteRequest(id, 'Precertificado', 'Autorización', this.appComponent);
+		this.getAuthorizations();
+	}
+
+	directSendAuthorization(id: number) {
+		this.formHandlerService.directSendRequest(id, 'Precertificado', 'Autorización', this.appComponent);
+		this.getAuthorizations();
+	}
 
 	ngOnInit() {
 		this.getAuthorizations();
@@ -120,5 +109,6 @@ export class AuthorizationsComponent implements OnInit {
 		this.newAuthorizationButtonOptions.active = true;
 		this.route.navigateByUrl('/dashboard/authorizations/new-authorization');
 	}
+
 }
 

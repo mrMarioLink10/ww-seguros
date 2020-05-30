@@ -1,34 +1,34 @@
 <div class="mx-4 mb-8">
-    <div class="uppercase dashboard-page-title pt-10">
-      CUESTIONARIO Competición Moto </div>
+    <!-- <div class="uppercase dashboard-page-title pt-10">
+      CUESTIONARIO Competición Moto </div> -->
 
     <div class="mt-6">
 
-        <app-forms-container [titles]="accordionTitles"> 
+        <app-forms-container [isQuestionnarie]="false" [titles]="['Cuestionario Competición Moto']"> 
 
             <ng-template #formTemplate>
 
-                <div class="ml-4"> 
+                <div class="ml-4">
 
                     <!-- Mini Bloque de los campos de la parte superior -->
-                    <div class="mt-3 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
+               <!--       <div class="mt-3 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
 
                         <div class="mr-3">
-                            <app-input [group]="form" 
+                            <app-input [group]="form"
                             label="Apellidos" name='last_names' placeholder="Por ej: Ogando Montero"></app-input>
                         </div>
 
                         <div class="mr-3 mt-8 sm:mt-5 md:mt-0">
-                            <app-input [group]="form" 
+                            <app-input [group]="form"
                             label="Nombre" name='name' placeholder="Por ej: Guillermo Daniel"></app-input>
                         </div>
 
                         <div class="mr-3 mt-8 sm:mt-5 md:mt-4 lg:mt-0">
                             <app-date-picker [group]="form" label="Fecha de nacimiento"
-                            name='date'> </app-date-picker>  
+                            name='date'> </app-date-picker>
                         </div>
 
-                    </div>
+                    </div> -->
 
                     <hr class="ww-divider mt-8">
 
@@ -71,22 +71,22 @@
                                 <!-- Checkboxes-->
                                 <div>
                                     <form [formGroup]="form.get('past_months')">
-                                        <div class="mr-3 grid grid-cols-1"> 
+                                        <div class="mr-3 grid grid-cols-1">
                                             <mat-checkbox style="margin-top: 18px;" class="radio-button-label" (change)="selectChangeP($event)"
-                                            [formControlName]="option.name"> <span style="white-space: normal;"> {{option.label}} </span> </mat-checkbox> 
-                                        </div>           
+                                            [formControlName]="option.name"> <span style="white-space: normal;"> {{option.label}} </span> </mat-checkbox>
+                                        </div>
                                     </form>
                                 </div>
-                                
+
                                 <!-- Campos-->
                                 <div class="mt-8 md:mb-5 lg:mb-3 xl:mb-0">
                                     <div *ngIf="this.form.get('past_months').get(option.group)" class="grid grid-cols-1 md:grid-cols-2">
                                         <div class="mr-3">
-                                            <app-number-input [group]="form.get('past_months').get(option.group)" 
+                                            <app-number-input [group]="form.get('past_months').get(option.group)"
                                             label="Número" name='number' placeholder="" min="1"></app-number-input>
                                         </div>
                                         <div class="mr-3 mb-2 mt-12 pt-1 sm:mb-0 sm:pt-0 sm:mt-6 md:mt-0">
-                                            <app-input [group]="form.get('past_months').get(option.group)" 
+                                            <app-input [group]="form.get('past_months').get(option.group)"
                                             label="Nombre" name='name' placeholder=""></app-input>
                                         </div>
                                     </div>
@@ -105,21 +105,21 @@
 
                         <!-- Mini campo de inputs y radiobuttons -->
                         <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4 mb-6 sm:mb-5 md:mb-5 lg:mb-0">
-                            <div> 
+                            <div>
                                 <div class="mr-8">
                                     <label class="formulary-labels"> Número de carreras actuales y futuras (próximos 12 meses): </label>
                                 </div>
                                 <div class="mt-3">
-                                    <app-radio-button [group]="form.get('future_months')" name="type_radio" 
-                                    [options]="typeOptions"> </app-radio-button> 
+                                    <app-radio-button [group]="form.get('future_months')" name="type_radio"
+                                    [options]="typeOptions"> </app-radio-button>
                                 </div>
-                            </div> 
+                            </div>
                             <div class="mr-3">
-                                <app-input [group]="form.get('future_months')" 
+                                <app-input [group]="form.get('future_months')"
                                 label="Marca (Moto)" name='brand' placeholder=""></app-input>
-                            </div>    
+                            </div>
                             <div class="mr-3 mt-6 sm:mt-4 md:mt-0">
-                                <app-input [group]="form.get('future_months')" 
+                                <app-input [group]="form.get('future_months')"
                                 label="Cilindrada (Moto)" name='engine' placeholder=""></app-input>
                             </div>
                         </div>
@@ -130,22 +130,22 @@
                                 <!-- Checkboxes-->
                                 <div>
                                     <form [formGroup]="form.get('future_months')">
-                                        <div class="mr-3 grid grid-cols-1"> 
+                                        <div class="mr-3 grid grid-cols-1">
                                             <mat-checkbox style="margin-top: 18px;" class="radio-button-label" (change)="selectChangeF($event)"
-                                            [formControlName]="option.name"> <span style="white-space: normal;"> {{option.label}} </span> </mat-checkbox> 
-                                        </div>           
+                                            [formControlName]="option.name"> <span style="white-space: normal;"> {{option.label}} </span> </mat-checkbox>
+                                        </div>
                                     </form>
                                 </div>
-                                
+
                                 <!-- Campos-->
                                 <div class="mt-8 md:mb-5 lg:mb-3 xl:mb-0">
                                     <div *ngIf="this.form.get('future_months').get(option.group)" class="grid grid-cols-1 md:grid-cols-2">
                                         <div class="mr-3">
-                                            <app-number-input [group]="form.get('future_months').get(option.group)" 
+                                            <app-number-input [group]="form.get('future_months').get(option.group)"
                                             label="Número" name='number' placeholder="" min="1"></app-number-input>
                                         </div>
                                         <div class="mr-3 mb-2 mt-12 pt-1 sm:mb-0 sm:pt-0 sm:mt-6 md:mt-0">
-                                            <app-input [group]="form.get('future_months').get(option.group)" 
+                                            <app-input [group]="form.get('future_months').get(option.group)"
                                             label="Nombre" name='name' placeholder=""></app-input>
                                         </div>
                                     </div>
@@ -164,19 +164,19 @@
 
                         <!-- Radiobutton y campo input -->
                         <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
-                            <div> 
+                            <div>
                                 <div class="">
                                     <label class="formulary-labels"> Accidentes </label>
                                 </div>
                                 <div class="mt-3 -mr-8 sm:mr-0 md:-mr-2 lg:-mr-3 xl:mr-0">
                                     <app-radio-button [group]="form.get('accidents')" name="radio" (selected)="selectRadio($event)"
-                                    [options]="yesNo"> </app-radio-button> 
+                                    [options]="yesNo"> </app-radio-button>
                                 </div>
-                            </div> 
-                            
+                            </div>
+
                             <div class="mr-3 mt-3" *ngIf="this.form.get('accidents').get('outcome')">
                                 <app-date-picker [group]="form.get('accidents').get('outcome')" label="Fecha"
-                                name='date'> </app-date-picker>  
+                                name='date'> </app-date-picker>
                             </div>
                         </div>
 
@@ -200,7 +200,7 @@
                                 <label class="formulary-labels"> Informaciones adicionales </label>
                             </div>
                             <div class="mr-3 mt-4">
-                                <app-text-area label='Indicar otras informaciones y cualquier detalle que la CIA deba de conocer para fijar las condiciones del riesgo de "Competiciones Motos" ' 
+                                <app-text-area label='Indicar otras informaciones y cualquier detalle que la CIA deba de conocer para fijar las condiciones del riesgo de "Competiciones Motos" '
                                 name='info' [group]="form"></app-text-area>
                             </div>
 
@@ -212,14 +212,14 @@
                     <div class="pt-5 pl-3 pb-5 mt-32 sm:mt-24 md:mt-12 ml-1 -mr-2 sm:-mr-0 md:mr-0 lg:mr-0 xl:mr-0 mb-4" style="background-color: #E6E7E8;">
 
                         <div class="pl-1 pr-1 sm:pl-2 sm:pr-2 md:pl-8 md:pr-6 lg:pl-8 lg:pr-6 xl:pl-8 pr-6">
-    
+
                           <label style="font-size: 12px;"> Nota: Sí en el futuro usted participa en pruebas diferentes a las declaradas, sólo estará cubierto si le han sido fijadas nuevas condiciones de tarificación.
                             <br>
                             El abajo firmante, declara haber contestado verídicamente a estas preguntas, comprendiendo que, en caso de indicaciones incompletas o falsas, serán de aplicación las disposiciones comprendidas en la vigente Ley sobre Contrato del Seguro.
                           </label>
-    
+
                         </div>
-                        
+
                     </div>
 
                 </div>

@@ -20,12 +20,12 @@ export class SelectComponent implements OnInit {
 
   ngOnInit() {
     if(this.options.name){
-      this.name = this.options.name
+      this.name = this.options.name;
     }
   }
 
   emitter(event) {
-		this.selected.emit({ valor: event.value });
+		this.selected.emit({ valor: event.value, name: this.name });
 	}
 
 }

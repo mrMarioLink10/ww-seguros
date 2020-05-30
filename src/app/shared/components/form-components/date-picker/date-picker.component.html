@@ -1,8 +1,9 @@
   <mat-form-field [formGroup]="group" color="accent" appearance="outline" class="w-full"
     style="font-size: small !important;">
     <mat-label>{{label}}</mat-label>
-    <input [formControlName]="name" matInput [matDatepicker]="picker" placeholder="01/03/2020">
-    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <input [min]="min" [max]="max" [formControlName]="name" matInput [matDatepicker]="picker" placeholder="mm/dd/aaaa">
+    <mat-datepicker-toggle matSuffix [for]="picker">
+    </mat-datepicker-toggle>
     <mat-datepicker #picker></mat-datepicker>
     <mat-error *ngIf="group.get(name).touched && !group.get(name).valid || group.get(name).value === '' ">Debe llenar el
       campo de {{label}}</mat-error>

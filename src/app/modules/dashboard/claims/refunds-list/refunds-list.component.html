@@ -1,64 +1,83 @@
+<div class="mt-6 pb-8 w-full">
+  <div class="table-responsive" style="overflow-y: hidden; overflow-x: auto; max-width: 100%;">
+    <table mat-table [dataSource]="dataSource" matSort class="w-full dashboard-basic-table">
+      <ng-container matColumnDef="no" style="margin-right: 15px !important">
+        <th class="padding-cell" mat-header-cell *matHeaderCellDef mat-sort-header> No. Póliza</th>
+        <td class="padding-cell" mat-cell *matCellDef="let element"
+          style="color: #007DB7 !important; font-weight: 500 !important;"> {{element.informacion.noPoliza}} </td>
+      </ng-container>
 
-  <div class="mt-6 pb-8 w-full">
-    <div class="table-responsive" style="overflow-y: hidden; overflow-x: auto; max-width: 100%;">
-      <table mat-table [dataSource]="dataSource" matSort class="w-full dashboard-basic-table">
-        <ng-container matColumnDef="no" style="margin-right: 15px !important">
-          <th class="padding-cell" mat-header-cell *matHeaderCellDef mat-sort-header> No. Póliza</th>
-          <td class="padding-cell" mat-cell *matCellDef="let element"
-            style="color: #007DB7 !important; font-weight: bold !important;"> {{element.informacion.noPoliza}} </td>
-        </ng-container>
+      <ng-container matColumnDef="nombre" style="margin-right: 15px !important">
+        <th class="padding-cell" mat-header-cell *matHeaderCellDef mat-sort-header> Nombre Asegurado</th>
+        <td class="padding-cell" mat-cell *matCellDef="let element"> {{element.informacion.nombre}} </td>
+      </ng-container>
 
-        <ng-container matColumnDef="nombre" style="margin-right: 15px !important">
-          <th class="padding-cell" mat-header-cell *matHeaderCellDef mat-sort-header> Nombre Asegurado</th>
-          <td class="padding-cell" mat-cell *matCellDef="let element"> {{element.informacion.nombre}} </td>
-        </ng-container>
+      <ng-container matColumnDef="cedula" style="margin-right: 15px !important">
+        <th class="padding-cell" mat-header-cell *matHeaderCellDef mat-sort-header> Cédula </th>
+        <td class="padding-cell" mat-cell *matCellDef="let element"> {{element.informacion.idNumber}} </td>
+      </ng-container>
 
-        <ng-container matColumnDef="cedula" style="margin-right: 15px !important">
-          <th class="padding-cell" mat-header-cell *matHeaderCellDef mat-sort-header> Cédula </th>
-          <td class="padding-cell" mat-cell *matCellDef="let element"> {{element.informacion.idNumber}} </td>
-        </ng-container>
+      <ng-container matColumnDef="totalAmount" style="margin-right: 15px !important">
+        <th class="padding-cell" mat-header-cell *matHeaderCellDef mat-sort-header> Monto </th>
+        <td class="padding-cell" mat-cell *matCellDef="let element">
+          {{element.totalAmount | currency}}
+        </td>
+      </ng-container>
 
-        <ng-container matColumnDef="bancoEmisor" style="margin-right: 15px !important">
-          <th class="padding-cell" mat-header-cell *matHeaderCellDef mat-sort-header> Banco Emisor </th>
-          <td class="padding-cell" mat-cell *matCellDef="let element"> {{element.infoTransferencia.bancoEmisor}} </td>
-        </ng-container>
+      <ng-container matColumnDef="tipoServicio" style="margin-right: 15px !important">
+        <th class="padding-cell" mat-header-cell *matHeaderCellDef mat-sort-header> Tipo Servicio </th>
+        <td class="padding-cell" mat-cell *matCellDef="let element"> {{element.reclamacion.tipoServicio | titlecase}}
+        </td>
+      </ng-container>
 
-        <ng-container matColumnDef="tipoServicio" style="margin-right: 15px !important">
-          <th class="padding-cell" mat-header-cell *matHeaderCellDef mat-sort-header> Tipo Servicio </th>
-          <td class="padding-cell" mat-cell *matCellDef="let element"> {{element.reclamacion.tipoServicio}} </td>
-        </ng-container>
-        
-        <ng-container matColumnDef="autorizadoPor" style="margin-right: 15px !important">
-            <th class="padding-cell" mat-header-cell *matHeaderCellDef mat-sort-header> Autorizado por: </th>
-            <td class="padding-cell" mat-cell *matCellDef="let element"> {{element.reclamacion.autorizadoPor}} </td>
-          </ng-container>
+      <ng-container matColumnDef="autorizadoPor" style="margin-right: 15px !important">
+        <th class="padding-cell" mat-header-cell *matHeaderCellDef mat-sort-header> Autorizado por: </th>
+        <td class="padding-cell" mat-cell *matCellDef="let element"> {{element.reclamacion.autorizadoPor}} </td>
+      </ng-container>
 
-        <ng-container matColumnDef="forma" style="margin-right: 15px !important">
-          <th class="padding-cell" mat-header-cell *matHeaderCellDef mat-sort-header> Forma </th>
-          <td class="padding-cell" mat-cell *matCellDef="let element"> {{element.forma}} </td>
-        </ng-container>
+      <ng-container matColumnDef="forma" style="margin-right: 15px !important">
+        <th class="padding-cell" mat-header-cell *matHeaderCellDef mat-sort-header> Forma </th>
+        <td class="padding-cell" mat-cell *matCellDef="let element"> {{element.forma | titlecase}} </td>
+      </ng-container>
 
-        <ng-container matColumnDef="estatus" style="margin-right: 15px !important">
-          <th class="padding-cell" mat-header-cell *matHeaderCellDef mat-sort-header> Estatus </th>
-          <td class="padding-cell" mat-cell *matCellDef="let element"
-            [ngClass]="{'text-color-yellow': element.estatus === 'Enviado', 'text-color-red': element.estatus === 'Denegado'}">
-            {{element.statusStr}} </td>
-        </ng-container>
+      <ng-container matColumnDef="estatus" style="margin-right: 15px !important">
+        <th class="padding-cell" mat-header-cell *matHeaderCellDef mat-sort-header> Estatus </th>
+        <td class="padding-cell" mat-cell *matCellDef="let element"
+          [ngClass]="{'text-color-yellow': element.status === 0, 'text-color-red': element.status === 4, 'text-color-green': element.status === 2}">
+          {{element.status | tableStatus}} </td>
+      </ng-container>
 
-        <ng-container matColumnDef="acciones" style="text-align: end !important; margin-right: 15px !important; ">
-          <th class="padding-cell" mat-header-cell *matHeaderCellDef mat-sort-header
-            style="max-width: 110px !important;"> Acciones </th>
-          <td class="padding-cell" mat-cell *matCellDef="let element" style="max-width: 110px !important;">
-            <button mat-mini-fab aria-label="Ver mas" class="dashboard-table-buttons">
-              <img src="../../../../assets/iconos/eye.svg">
-            </button>
-          </td>
-        </ng-container>
+      <ng-container matColumnDef="acciones" style="text-align: end !important; margin-right: 15px !important; ">
+        <th class="padding-cell" mat-header-cell *matHeaderCellDef mat-sort-header
+          style="max-width: 110px !important; min-width: 68px !important; width: 68px !important;"> Acciones </th>
+        <td class="padding-cell" mat-cell *matCellDef="let element"
+          style="max-width: 140px !important; min-width: 137px !important; width: 137px !important;">
+          <!-- <button mat-mini-fab aria-label="Ver mas" class="dashboard-table-buttons">
+            <img src="../../../../assets/iconos/eye.svg">
+          </button> -->
+          <!-- <button (click)="this.refund.getID(element.id)" mat-mini-fab aria-label="Editar"
+            class="dashboard-table-buttons">
+            <img src="../../../../assets/iconos/edit.svg">
+          </button> -->
+          <button *ngIf="element.status === 1" (click)="directSendRefund(element.id)" mat-mini-fab aria-label="Enviar"
+            class="dashboard-table-buttons">
+            <img src="../../../../assets/iconos/send.svg">
+          </button>
+          <button *ngIf="element.status !== 2" (click)="this.refund.getID(element.id)" mat-mini-fab aria-label="Editar"
+            class="dashboard-table-buttons">
+            <img src="../../../../assets/iconos/edit.svg">
+          </button>
+          <button *ngIf="element.status !== 2" (click)="deleteRefund(element.id)" mat-mini-fab aria-label="Eliminar"
+            class="dashboard-table-buttons">
+            <img src="../../../../assets/iconos/trash.svg">
+          </button>
+        </td>
+      </ng-container>
 
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-      </table>
-    </div>
-    <mat-paginator color="accent" class="dashboard-table-paginator" [pageSizeOptions]="[5, 10, 20]"
-      showFirstLastButtons></mat-paginator>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
   </div>
+  <mat-paginator color="accent" class="dashboard-table-paginator" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons>
+  </mat-paginator>
+</div>

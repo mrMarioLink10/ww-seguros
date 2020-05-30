@@ -1,4 +1,4 @@
-import { Component, OnInit, DoCheck } from '@angular/core';
+import { Component, OnInit, DoCheck, ViewChild } from '@angular/core';
 import { FieldConfig } from 'src/app/shared/components/form-components/models/field-config';
 import { FormGroup, FormBuilder, Validators, FormArray, FormControl } from '@angular/forms';
 import { $sex, $res, $country, $time, $family, $allFamily } from '../../../../../core/form/objects';
@@ -6,9 +6,21 @@ import { FormArrayGeneratorService } from 'src/app/core/services/forms/form-arra
 import { questionsA, questionsB } from './questions';
 import { Requests } from '../../requests.component';
 import { Router, ActivatedRoute } from '@angular/router';
-import { generate } from 'rxjs';
+import { UserService } from '../../../../../core/services/user/user.service';
+import { generate, Observable } from 'rxjs';
 import { FormHandlerService } from 'src/app/core/services/forms/form-handler.service';
 import { DiseaseService } from '../../../shared/components/disease/shared/disease/disease.service';
+import { DialogService } from 'src/app/core/services/dialog/dialog.service';
+import { DialogOptionService } from 'src/app/core/services/dialog/dialog-option.service';
+import { MatDialog } from '@angular/material';
+import { BaseDialogComponent } from 'src/app/shared/components/base-dialog/base-dialog.component';
+import { map, first } from 'rxjs/operators';
+import { AppComponent } from 'src/app/app.component';
+import { MajorExpensesService } from './services/major-expenses.service';
+import { QuotesService } from '../../../services/quotes/quotes.service';
+import { environment } from '../../../../../../environments/environment';
+import { FormValidationsConstant } from 'src/app/shared/ShareConstant/shareConstantFile';
+import { CurrencyPipe } from '@angular/common';
 @Component({
   selector: 'app-major-expenses',
   templateUrl: './major-expenses.component.html',
@@ -16,6 +28,40 @@ import { DiseaseService } from '../../../shared/components/disease/shared/diseas
 })
 
 export class MajorExpensesComponent implements OnInit, DoCheck {
+  // tslint:disable-next-line: max-line-length
+  constructor(
+    private fb: FormBuilder,
+    public formMethods: FormArrayGeneratorService,
+    private router: Router,
+    private route: ActivatedRoute,
+    public formHandler: FormHandlerService,
+    public diseaseService: DiseaseService,
+    public dialogModal: DialogService,
+    private dialogOption: DialogOptionService,
+    private userService: UserService,
+    private quotesService: QuotesService,
+    private majorExpensesService: MajorExpensesService,
+    public dialog: MatDialog,
+    public appComponent: AppComponent,
+    private currencyPipe: CurrencyPipe
+  ) { }
+
+  get allDependents(): FormArray {
+    return this.newRequest.get('dependents').get('allDependents') as FormArray;
+  }
+
+
+  get questionnairesGastosMayores(): FormGroup {
+    return this.newRequest.get('questionsA').get('questionnairesGastosMayores') as FormGroup;
+  }
+
+  get questionsA(): FormGroup {
+    return this.newRequest.get('questionsA') as FormGroup;
+  }
+
+  get person(): FormGroup {
+    return this.newRequest.get('person') as FormGroup;
+  }
   pruebaCheck: any;
   visible = false;
   primaryBenefitsArray: FormArray;
@@ -32,6 +78,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
   familyWithDiseasesList: FormArray;
   questions = questionsA;
   questionsB = questionsB;
+  routeSelected = 'gastos mayores';
   student = {
     name: ['', Validators.required],
     univercity: ['', Validators.required],
@@ -58,12 +105,58 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
     {
       label: 'Tipo de Solicitud',
       options: [
+
         {
-          value: 'Cambio de plan',
-          viewValue: 'Cambio de plan',
+          value: 'Poliza Nueva',
+          viewValue: 'Póliza Nueva',
         }
       ],
       name: 'requestType',
+    };
+  isJuridicaData: FieldConfig =
+    {
+      label: 'Es el Contratante Persona Juridica?',
+      options: [
+        {
+          value: 'Si',
+          viewValue: 'Sí',
+        },
+        {
+          value: 'No',
+          viewValue: 'No',
+        }
+      ],
+      name: 'idType',
+    };
+  isContractorData: FieldConfig =
+    {
+      label: 'Es el Contractante?',
+      options: [
+        {
+          value: 'Si',
+          viewValue: 'Sí',
+        },
+        {
+          value: 'No',
+          viewValue: 'No',
+        }
+      ],
+      name: 'idType',
+    };
+  idType: FieldConfig =
+    {
+      label: 'Tipo de documento de identidad',
+      options: [
+        {
+          value: 'Cedula',
+          viewValue: 'Cédula',
+        },
+        {
+          value: 'Pasaporte',
+          viewValue: 'Pasaporte',
+        }
+      ],
+      name: 'idType',
     };
 
   itIsCurrentOptions: FieldConfig =
@@ -107,29 +200,29 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
         viewValue: 'Semestral'
       },
       {
-        value: 'otro',
-        viewValue: 'Otra'
+        value: 'Trimestral',
+        viewValue: 'Trimestral'
       },
     ]
   };
   deducibles: FieldConfig = {
-    label: 'Frecuencia de Pago',
+    label: 'Deducibles',
     options: [
       {
-        value: 'RD$1,000',
-        viewValue: '1000'
+        value: '1000',
+        viewValue: 'RD$1,000'
       },
       {
-        value: 'RD$3,000',
-        viewValue: '3000'
+        value: '3000',
+        viewValue: 'RD$3,000'
       },
       {
-        value: 'RD$5,000',
-        viewValue: '5000'
+        value: '5000',
+        viewValue: 'RD$5,000'
       },
       {
         value: 'otro',
-        viewValue: 'Otr0'
+        viewValue: 'Otro'
       },
     ]
   };
@@ -139,24 +232,53 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
       {
         value: 'Signature Special',
         viewValue: 'Signature Special',
+      },
+      {
+        value: 'Excellence Special',
+        viewValue: 'Excellence Special',
+      },
+      {
+        value: 'Distinction Premium',
+        viewValue: 'Distinction Premium',
+      },
+      {
+        value: 'Signature',
+        viewValue: 'Signature',
+      },
+      {
+        value: 'Excellence',
+        viewValue: 'Excellence',
+      },
+      {
+        value: 'Distinction',
+        viewValue: 'Distinction',
+      },
+      {
+        value: 'Plan Estudiantil',
+        viewValue: 'Plan Estudiantil',
+      },
+      {
+        value: 'Otro',
+        viewValue: 'Otro',
       }
     ],
     name: 'plans',
   };
   // tslint:disable-next-line: max-line-length
-  titles = [
-    'Contratante', 'Solicitante',
-    'Persona políticamente expuesta',
-    'Perfil Financiero', 'Dependientes',
-    'Sección A', 'Sección B',
-    'Sección C Beneficiarios Primarios',
-    'Beneficiario(s) Contingente(s)',
-    'Comentarios adicionales'];
+  titles = FormValidationsConstant.titlesForMajorExpensesComplete;
+
   country = {
     label: 'País',
     options: $country,
     name: 'country',
-  }
+  };
+
+  nationality = {
+    label: 'Nacionalidad',
+    options: $country,
+    name: 'nationality',
+  };
+
   status = {
     label: 'Estado Civil',
     options: [
@@ -204,12 +326,14 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
     name: ['', Validators.required],
     lastName: ['', Validators.required],
     family: ['', Validators.required],
-    weight: ['', Validators.required],
-    date: [new Date(), Validators.required],
-    height: ['', Validators.required],
+    weight: ['', [Validators.required, Validators.min(1)]],
+    date: ['', Validators.required],
+    height: ['', [Validators.required, Validators.min(1)]],
     sex: ['', Validators.required],
     id2: ['', Validators.required],
     nationality: ['', Validators.required],
+    age: [{ value: '', disabled: true }, Validators.required],
+    bmi: [{ value: '', disabled: true }, Validators.required],
     haveMusculoskeletal: [false, Validators.required],
     haveCerebrovascular: [false, Validators.required],
     haveNervousSystem: [false, Validators.required],
@@ -233,6 +357,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
     haveHighRiskSport: [false, Validators.required],
     havePregnant: [false, Validators.required],
     haveReproductiveOrganDisorders: [false, Validators.required],
+    isBmiEventAssigned: [false, Validators.required]
   };
   questionsGroup = {
     question: ['', Validators.required],
@@ -251,7 +376,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
   DateQuestionGroup = {
     question: ['', Validators.required],
     answer: [false, Validators.required],
-    date: [new Date(), Validators.required],
+    date: ['', Validators.required],
     description: ['', Validators.required],
   };
   pregnant = {
@@ -263,7 +388,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
   formGroupProcedure = {
     patientsName: ['', Validators.required],
     procedures: ['', Validators.required],
-    date: [new Date(), Validators.required],
+    date: ['', Validators.required],
     treatment: ['', Validators.required],
     duration: ['', Validators.required],
     time: ['', Validators.required],
@@ -277,11 +402,12 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
     nationality: ['', Validators.required],
     ocupation: ['', Validators.required],
     family: ['', Validators.required],
-    quantity: ['', Validators.required]
+    quantity: ['', [Validators.required, Validators.min(1), Validators.max(100)]]
 
   };
   allFamily = $allFamily;
-
+  TitleConozcaClienteAsegurado = 'Conoca Su Cliente (Asegurado)';
+  TitleConozcaClienteContratante = 'Conoca Su Cliente (Contratante)';
   haveSomeone = {
     haveMusculoskeletal: '',
     haveCerebrovascular: '',
@@ -308,75 +434,137 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
     haveReproductiveOrganDisorders: '',
   };
 
+  ID = null;
+  noCotizacion = null;
   policy: FormGroup;
-  // tslint:disable-next-line: max-line-length
-  constructor(
-    private fb: FormBuilder,
-    public formMethods: FormArrayGeneratorService,
-    private router: Router,
-    private route: ActivatedRoute,
-    public formHandler: FormHandlerService,
-    public diseaseService: DiseaseService
-  ) { }
+  isFormValidToFill = false;
+  isNotValidToSearch = true;
+  role = '';
 
+  isContractor = true;
+  isJuridica = false;
+  isSolicitantePep = true;
+  isContractorPep = true;
+  notFoundQuote = false;
+
+  @ViewChild('form', { static: false }) ogForm;
+
+
+  searchQuote(noCotizacion) {
+    if (noCotizacion !== undefined && noCotizacion !== '') {
+      this.getDataCotizaciones(noCotizacion);
+    }
+  }
   ngOnInit() {
+    this.userService.getWholeQuotes()
+      .subscribe(res => {
+        console.log(res);
+      });
+
+    this.role = this.userService.getRoleCotizador();
+    this.isFormValidToFill = false;
+    this.route.params.subscribe(res => {
+      this.ID = res.id;
+    });
+    this.route.params.subscribe(res => {
+      this.noCotizacion = res.noCotizacion;
+    });
 
     this.procedures = this.fb.array([this.formMethods.createItem(this.formGroupProcedure)]);
 
     this.newRequest = this.fb.group({
 
-      NoC: ['', Validators.required],
+      NoC: [{ value: this.noCotizacion, disabled: ((this.noCotizacion === '') ? false : true) }, Validators.required],
+      isComplete: [false, Validators.required],
       deducibles: ['', Validators.required],
-      payment: ['', Validators.required],
-      plans: ['', Validators.required],
+      payment: [{ value: '', disabled: true }, Validators.required],
+      plans: [{ value: '', disabled: true }, Validators.required],
       requestType: ['', Validators.required],
       person: this.fb.group({
+        conozcaSuClientePersona: this.fb.group({}),
         firstName: ['', Validators.required],
-        secondName: ['', Validators.required],
+        secondName: [''],
         lastName: ['', Validators.required],
-        date: [new Date(), Validators.required],
+        date: ['', Validators.required],
         sex: ['', Validators.required],
+        isContractor: ['', Validators.required],
+        isJuridica: ['', Validators.required],
         nationality: ['', Validators.required],
+        idType: ['', Validators.required],
         id2: ['', Validators.required],
-        age: ['', Validators.required],
+        age: [{ value: '', disabled: true }, Validators.required],
         weight: ['', Validators.required],
         height: ['', Validators.required],
+        bmi: [{ value: '', disabled: true }, Validators.required],
         status: ['', Validators.required],
         country: ['', Validators.required],
         city: ['', Validators.required],
         direction: ['', Validators.required],
-        tel: ['', Validators.required],
+        tel: [''],
         cel: ['', Validators.required],
-        officeTel: ['', Validators.required],
-        fax: ['', Validators.required],
+        officeTel: [''],
+        fax: [''],
         email: ['', Validators.required],
         office: this.fb.group({
-          company: ['', Validators.required],
-          position: ['', Validators.required],
-          direction: ['', Validators.required],
-          economicActivity: ['', Validators.required],
-          sector: ['', Validators.required],
-          city: ['', Validators.required],
-          country: ['', Validators.required],
+          company: [''],
+          position: [''],
+          direction: [''],
+          economicActivity: [''],
+          sector: [''],
+          city: [''],
+          country: [''],
         })
       }),
       contractor: this.fb.group({
-        societyName: ['', Validators.required],
-        commercialName: ['', Validators.required],
+        conozcaSuClientePersonaJuridica: this.fb.group({}),
+        conozcaSuClientePersona: this.fb.group({}),
+        firstName: ['', Validators.required],
+        secondName: [''],
+        lastName: ['', Validators.required],
+        date: ['', Validators.required],
+        sex: ['', Validators.required],
+        nationality: ['', Validators.required],
+        idType: ['', Validators.required],
+        id2: ['', Validators.required],
+        age: [{ value: '', disabled: true }, Validators.required],
+        weight: ['', Validators.required],
+        height: ['', Validators.required],
+        bmi: [{ value: '', disabled: true }, Validators.required],
+        status: ['', Validators.required],
+        country: ['', Validators.required],
+        city: ['', Validators.required],
+        direction: ['', Validators.required],
+        tel: [''],
+        cel: ['', Validators.required],
+        officeTel: [''],
+        fax: [''],
+        email: ['', Validators.required],
+        office: this.fb.group({
+          company: [''],
+          position: [''],
+          direction: [''],
+          economicActivity: [''],
+          sector: [''],
+          city: [''],
+          country: [''],
+        })
+        /*societyName: ['', Validators.required],
+        commercialName: [''],
         taxpayerNumber: ['', Validators.required],
-        socialHome: ['', Validators.required],
+        socialHome: [''],
         tel: ['', Validators.required],
         email: ['', Validators.required],
         commercialActivity: ['', Validators.required],
-        requestType: ['', Validators.required],
+        // requestType: ['', Validators.required],
         legalRepresentation: this.fb.group({
           name: ['', Validators.required],
           position: ['', Validators.required],
           nationality: ['', Validators.required],
+          idType: ['', Validators.required],
           id2: ['', Validators.required],
-          policy: ['', Validators.required],
+          policy: [''],
           email: ['', Validators.required]
-        })
+        })*/
       }),
       exposedPerson: this.fb.group({
         contractor: ['', Validators.required],
@@ -424,14 +612,15 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
         hasFamilyWithHeartKidneyDisease: ['', Validators.required],
         hasDeclinedInsuranceCompany: ['', Validators.required],
         haveHadMedicalHealthInsurance: ['', Validators.required],
-        information: this.fb.array([this.createFormArray('medicInformation')]),
+        information: this.fb.array([]),
       }),
       primaryBenefits: this.fb.group({
         dependentsC: this.fb.array([this.formMethods.createItem(this.primaryBenefits)]),
         personBenefited: this.fb.group({
           name: [''],
           family: [''],
-          id2: ['']
+          id2: [''],
+          idType: [''],
         })
       }),
       contingentBeneficiary: this.fb.group({
@@ -439,7 +628,8 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
         personBenefited: this.fb.group({
           name: [''],
           family: [''],
-          id2: ['']
+          id2: [''],
+          idType: [''],
         })
       }),
       comentary: [''],
@@ -480,16 +670,255 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
     this.questionsBFormArray = this.newRequest.get('questionsB') as FormArray;
     this.informationList = this.newRequest.get('questionsB').get('information') as FormArray;
     // this.setQuestionsA();
+
+    this.addEventChange();
+
+
+    if (this.ID != null) {
+      console.log('El ID es ' + this.ID);
+      this.getData(this.ID);
+    } else if (this.ID == null) {
+      console.log('ID esta vacio');
+    }
+
+    if (this.noCotizacion != null) {
+      this.getDataCotizaciones(this.noCotizacion);
+      console.log('El noCotizacion es ' + this.noCotizacion);
+      // this.getData(this.ID);
+    } else if (this.noCotizacion == null) {
+      console.log('noCotizacion esta vacio');
+      this.noCotizacion = '';
+    }
   }
+  addEventChange() {
+    this.newRequest.get('person').get('weight').valueChanges.subscribe(value => {
+      this.getBmi(this.newRequest.get('person').value.height, value);
+    });
+    this.newRequest.get('NoC').valueChanges.subscribe(value => {
+      if (value !== '' && value !== undefined) {
+        this.isNotValidToSearch = false;
+      } else {
+        this.isNotValidToSearch = true;
+      }
+    });
+    this.newRequest.get('person').get('height').valueChanges.subscribe(value => {
+      this.getBmi(value, this.newRequest.get('person').value.weight);
+    });
+
+    this.newRequest.get('person').get('date').valueChanges.subscribe(value => {
+      const timeDiff = Math.abs(Date.now() - new Date(value).getTime());
+      const age = Math.floor(timeDiff / (1000 * 3600 * 24) / 365.25);
+      this.newRequest.get('person').get('age').setValue(age);
+
+    });
+    this.isContractor = true;
+    this.newRequest.get('person').get('isContractor').valueChanges.subscribe(value => {
+
+      this.isContractor = true;
+      if (value === 'Si') {
+        this.isContractor = false;
+        this.titles = FormValidationsConstant.titlesForMajorExpenses;
+      } else {
+        this.titles = FormValidationsConstant.titlesForMajorExpensesComplete;
+      }
+    });
+    this.isContractorPep = false;
+    this.newRequest.get('exposedPerson').get('contractor').valueChanges.subscribe(value => {
+
+      this.isContractorPep = false;
+      if (value === 'si') {
+        this.isContractorPep = true;
+      }
+
+    });
+
+    this.isSolicitantePep = false;
+    this.newRequest.get('exposedPerson').get('headLine').valueChanges.subscribe(value => {
+
+      this.isSolicitantePep = false;
+      if (value === 'si') {
+        this.isSolicitantePep = true;
+      }
+
+    });
+    this.isJuridica = false;
+    this.newRequest.get('person').get('isJuridica').valueChanges.subscribe(value => {
+      this.isJuridica = false;
+      console.log(value);
+      if (value === 'Si') {
+        this.isJuridica = true;
+        this.titles = FormValidationsConstant.titlesForMajorExpenses;
+      } else {
+        this.titles = FormValidationsConstant.titlesForMajorExpensesComplete;
+      }
+
+    });
+
+  }
+  searchIdNumber(idNumber: string) {
+    this.appComponent.showOverlay = true;
+
+    this.userService.getQuotes(idNumber, 'salud')
+      .subscribe((response: any) => {
+        console.log(response);
+        this.appComponent.showOverlay = false;
+        if (response.data !== null) {
+          const dialogRef = this.dialog.open(BaseDialogComponent, {
+            data: this.dialogOption.noCFound(response.data),
+            minWidth: 385,
+          });
+          setTimeout(() => {
+            dialogRef.close();
+          }, 4000);
+          this.newRequest.get('payment').setValue(response.data.formaPago);
+          this.newRequest.get('plans').setValue(response.data.plan);
+          this.newRequest.get('person').get('firstName').setValue(response.data.nombre);
+          this.newRequest.get('person').get('date').setValue(response.data.fecha_nacimiento);
+        } else {
+          this.newRequest.get('payment').reset();
+          this.newRequest.get('plans').reset();
+          this.newRequest.get('person').get('firstName').reset();
+          this.newRequest.get('person').get('date').reset();
+          const dialogRef = this.dialog.open(BaseDialogComponent, {
+            data: this.dialogOption.noCNotFound,
+            minWidth: 385,
+          });
+          setTimeout(() => {
+            dialogRef.close();
+          }, 4000);
+
+        }
+      });
+  }
+
+  newQuote() {
+    if (this.userService.getRoleCotizador() === 'WWS') {
+      window.open('https://cotizadores.wwseguros.com.do/?cia=wws', '_blank');
+    } else if (this.userService.getRoleCotizador() === 'WMA') {
+      window.open('https://cotizadores.wwseguros.com.do/?cia=wwm', '_blank');
+    }
+  }
+  canDeactivate(): Observable<boolean> | boolean {
+    if (this.ogForm.submitted) {
+      return true;
+    }
+
+    if (this.newRequest.dirty && !this.ogForm.submitted) {
+      const dialogRef = this.dialog.open(BaseDialogComponent, {
+        data: this.dialogOption.exitConfirm,
+        minWidth: 385,
+      });
+      return dialogRef.componentInstance.dialogRef.afterClosed().pipe(map(result => {
+        if (result === 'true') {
+          return true;
+        }
+      }), first());
+    }
+    return true;
+  }
+
 
   ngDoCheck() { }
 
   add(dependentsFormArray, group) {
+
     const increment = dependentsFormArray.length + 1;
     dependentsFormArray = this.formMethods.addElement(dependentsFormArray, increment, group).formArray;
 
-    console.log(this.newRequest);
 
+    this.AddEventOnEachDependentVariable();
+  }
+  AddEventOnEachDependentVariable() {
+    /*for(let index = 0;index < this.newRequest.get('dependents').get('allDependents').length;index++)
+    {
+      console.log(index);
+    }*/
+    // for(let index in this.dependentsFormArray.controls)
+    if (this.newRequest.get('dependents').get('allDependents') !== undefined && this.newRequest.get('dependents').get('allDependents') !== null) {
+      const arrayElement = this.newRequest.get('dependents').get('allDependents') as FormArray;
+      for (let index = 0; index < arrayElement.length; index++) {
+
+        // tslint:disable-next-line: max-line-length
+        const isBmiEventAssigned = this.newRequest.get('dependents').get('allDependents').get(index.toString()).get('isBmiEventAssigned').value;
+
+        if (isBmiEventAssigned == false) {
+          this.newRequest
+            .get('dependents')
+            .get('allDependents')
+            .get(index.toString())
+            .get('isBmiEventAssigned')
+            .setValue(true);
+          this.newRequest.get('dependents').get('allDependents').get(index.toString()).get('date').valueChanges.subscribe(value => {
+            const timeDiff = Math.abs(Date.now() - new Date(value).getTime());
+            const age = Math.floor(timeDiff / (1000 * 3600 * 24) / 365.25);
+            this.newRequest.get('dependents').get('allDependents').get(index.toString()).get('age').setValue(age);
+
+          });
+          this.newRequest.get('dependents').get('allDependents').get(index.toString()).get('height').valueChanges.subscribe(value => {
+            const weight = this.newRequest.get('dependents').get('allDependents').get(index.toString()).get('weight').value;
+            const result = this.getBmiValue(value, weight);
+            this.newRequest
+              .get('dependents')
+              .get('allDependents')
+              .get(index.toString())
+              .get('bmi')
+              .setValue(result);
+
+          });
+          this.newRequest.get('dependents').get('allDependents').get(index.toString()).get('weight').valueChanges.subscribe(value => {
+            const height = this.newRequest.get('dependents').get('allDependents').get(index.toString()).get('height').value;
+            const result = this.getBmiValue(height, value);
+            this.newRequest
+              .get('dependents')
+              .get('allDependents')
+              .get(index.toString())
+              .get('bmi')
+              .setValue(result);
+
+          });
+        } else {
+          this.newRequest
+            .get('dependents')
+            .get('allDependents')
+            .get(index.toString())
+            .get('isBmiEventAssigned')
+            .setValue(true);
+        }
+      }
+
+    }
+  }
+  getBmiValue(height: any, weight: any) {
+    const bmi = weight / ((height / 100) * (height / 100));
+
+    if (bmi !== Infinity) {
+      const value = parseFloat(`${bmi}`).toFixed(2);
+      return value;
+    }
+  }
+  isBenefitMinorThan100(group: string, subgroup: string): boolean {
+    const form = this.newRequest.get(group).get(subgroup) as FormGroup;
+
+    if (this.benefitFor(form).total < 100 && this.benefitFor(form).isDirty) { return true; } else { return false; }
+  }
+
+  isBenefitMajorThan100(group: string, subgroup: string): boolean {
+    const form = this.newRequest.get(group).get(subgroup) as FormGroup;
+
+    if (this.benefitFor(form).total > 100 && this.benefitFor(form).isDirty) { return true; } else { return false; }
+  }
+
+  benefitFor(form: FormGroup) {
+    let total = 0;
+    let isDirty = false;
+
+    // tslint:disable-next-line: forin
+    for (const dpd in form.value) {
+      if (form.controls[dpd].dirty) { isDirty = true; }
+      total += form.value[dpd].quantity;
+
+    }
+    return { total, isDirty };
   }
 
   // setQuestionsA(){
@@ -530,7 +959,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
     const mhiForm = this.newRequest.get('questionsB').get('medicalHealthInsurance') as FormGroup;
     const exposedPersonForm = this.newRequest.get('exposedPerson') as FormGroup;
 
-    console.log(event);
+
     if (event.valor === 'si') {
       switch (event.name) {
 
@@ -538,7 +967,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
           exposedPersonForm.addControl('contractorExposedInfo', this.fb.group({
             lastPosition: ['', Validators.required],
             time: ['', Validators.required],
-            timeNumber: ['', Validators.required]
+            timeNumber: ['', [Validators.required, Validators.min(1)]]
           }));
           break;
 
@@ -546,7 +975,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
           exposedPersonForm.addControl('headLineExposedInfo', this.fb.group({
             lastPosition: ['', Validators.required],
             time: ['', Validators.required],
-            timeNumber: ['', Validators.required]
+            timeNumber: ['', [Validators.required, Validators.min(1)]]
           }));
           break;
 
@@ -747,29 +1176,29 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
             }));
             break;
           case 'haveEndocrineDisorders':
-            this.questionnairesGastosMayores.addControl('mellitusDiabetes', this.fb.group({}));
+            this.questionnairesGastosMayores.addControl('solicitudDiabetes', this.fb.group({}));
             break;
 
           case 'haveMaleReproductiveOrgans':
-            if (this.person.value.age > 50) {
-              this.questionnairesGastosMayores.addControl('prostatic', this.fb.group({}));
+            if (this.person.value.age > FormValidationsConstant.maxMenAge) {
+              this.questionnairesGastosMayores.addControl('solicitudProstatica', this.fb.group({}));
             }
 
             break;
 
           case 'haveUrinarySystem':
-            this.questionnairesGastosMayores.addControl('renalUrinary', this.fb.group({}));
+            this.questionnairesGastosMayores.addControl('solicitudRenales', this.fb.group({}));
             break;
 
           case 'haveMusculoskeletal':
-            this.questionnairesGastosMayores.addControl('arthritis', this.fb.group({}));
-            this.questionnairesGastosMayores.addControl('spine', this.fb.group({}));
-            this.questionnairesGastosMayores.addControl('musculosSkeletal', this.fb.group({}));
+            this.questionnairesGastosMayores.addControl('solicitudArtitris', this.fb.group({}));
+            this.questionnairesGastosMayores.addControl('columnaVertebralColumnaVertebral', this.fb.group({}));
+            this.questionnairesGastosMayores.addControl('solicitudMusculoesqueleticos', this.fb.group({}));
             break;
 
           case 'haveCardiovascularSystem':
-            this.questionnairesGastosMayores.addControl('hypertension', this.fb.group({}));
-            this.questionnairesGastosMayores.addControl('spcardiovascularine', this.fb.group({}));
+            this.questionnairesGastosMayores.addControl('solicitudHipertensionArterial', this.fb.group({}));
+            this.questionnairesGastosMayores.addControl('solicitudCardioVasculares', this.fb.group({}));
             break;
 
           default:
@@ -789,27 +1218,27 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
             break;
 
           case 'haveEndocrineDisorders':
-            this.questionnairesGastosMayores.removeControl('mellitusDiabetes');
+            this.questionnairesGastosMayores.removeControl('solicitudDiabetes');
             break;
 
           case 'haveMaleReproductiveOrgans':
-            this.questionnairesGastosMayores.removeControl('prostatic');
+            this.questionnairesGastosMayores.removeControl('solicitudProstatica');
 
             break;
 
           case 'haveUrinarySystem':
-            this.questionnairesGastosMayores.removeControl('renalUrinary');
+            this.questionnairesGastosMayores.removeControl('solicitudRenales');
             break;
 
           case 'haveMusculoskeletal':
-            this.questionnairesGastosMayores.removeControl('arthritis');
-            this.questionnairesGastosMayores.removeControl('spine');
-            this.questionnairesGastosMayores.removeControl('musculosSkeletal');
+            this.questionnairesGastosMayores.removeControl('solicitudArtitris');
+            this.questionnairesGastosMayores.removeControl('columnaVertebralColumnaVertebral');
+            this.questionnairesGastosMayores.removeControl('solicitudMusculoesqueleticos');
             break;
 
           case 'haveCardiovascularSystem':
-            this.questionnairesGastosMayores.removeControl('hypertension');
-            this.questionnairesGastosMayores.removeControl('cardiovascular');
+            this.questionnairesGastosMayores.removeControl('solicitudHipertensionArterial');
+            this.questionnairesGastosMayores.removeControl('solicitudCardioVasculares');
             break;
 
           default:
@@ -825,29 +1254,29 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
         console.log('true');
         switch (question) {
           case 'haveEndocrineDisorders':
-            questionnaire.addControl('mellitusDiabetes', this.fb.group({}));
+            questionnaire.addControl('solicitudDiabetes', this.fb.group({}));
             break;
 
           case 'haveMaleReproductiveOrgans':
-            if (this.person.value.age > 50) {
-              questionnaire.addControl('prostatic', this.fb.group({}));
+            if (this.person.value.age > FormValidationsConstant.maxMenAge) {
+              questionnaire.addControl('solicitudProstatica', this.fb.group({}));
             }
 
             break;
 
           case 'haveUrinarySystem':
-            questionnaire.addControl('renalUrinary', this.fb.group({}));
+            questionnaire.addControl('solicitudRenales', this.fb.group({}));
             break;
 
           case 'haveMusculoskeletal':
-            questionnaire.addControl('arthritis', this.fb.group({}));
-            questionnaire.addControl('spine', this.fb.group({}));
-            questionnaire.addControl('musculosSkeletal', this.fb.group({}));
+            questionnaire.addControl('solicitudArtitris', this.fb.group({}));
+            questionnaire.addControl('columnaVertebralColumnaVertebral', this.fb.group({}));
+            questionnaire.addControl('solicitudMusculoesqueleticos', this.fb.group({}));
             break;
 
           case 'haveCardiovascularSystem':
-            questionnaire.addControl('hypertension', this.fb.group({}));
-            questionnaire.addControl('spcardiovascularine', this.fb.group({}));
+            questionnaire.addControl('solicitudHipertensionArterial', this.fb.group({}));
+            questionnaire.addControl('solicitudCardioVasculares', this.fb.group({}));
             break;
 
           default:
@@ -858,27 +1287,27 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
 
         switch (question) {
           case 'haveEndocrineDisorders':
-            questionnaire.removeControl('mellitusDiabetes');
+            questionnaire.removeControl('solicitudDiabetes');
             break;
 
           case 'haveMaleReproductiveOrgans':
-            questionnaire.removeControl('prostatic');
+            questionnaire.removeControl('solicitudProstatica');
 
             break;
 
           case 'haveUrinarySystem':
-            questionnaire.removeControl('renalUrinary');
+            questionnaire.removeControl('solicitudRenales');
             break;
 
           case 'haveMusculoskeletal':
-            questionnaire.removeControl('arthritis');
-            questionnaire.removeControl('spine');
-            questionnaire.removeControl('musculosSkeletal');
+            questionnaire.removeControl('solicitudArtitris');
+            questionnaire.removeControl('columnaVertebralColumnaVertebral');
+            questionnaire.removeControl('solicitudMusculoesqueleticos');
             break;
 
           case 'haveCardiovascularSystem':
-            questionnaire.removeControl('hypertension');
-            questionnaire.removeControl('cardiovascular');
+            questionnaire.removeControl('solicitudHipertensionArterial');
+            questionnaire.removeControl('solicitudCardioVasculares');
             break;
 
           default:
@@ -925,6 +1354,14 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
     }
   }
 
+  getBmi(height: any, weight: any) {
+    const bmi = weight / ((height / 100) * (height / 100));
+    if (bmi !== Infinity) {
+      const value = parseFloat(`${bmi}`).toFixed(2);
+      this.newRequest.get('person').get('bmi').setValue(value);
+    }
+  }
+
   print() {
     console.log('solicitante: ', this.newRequest.get('questionsA'));
     console.log('dependientes: ', this.newRequest.get('dependents').value.allDependents);
@@ -934,14 +1371,14 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
     switch (type) {
       case 'medicInformation':
         return this.fb.group({
-          name: ['', Validators.required],
+          name: [''],
           ailment: ['', Validators.required],
           date: ['', Validators.required],
           threatment: ['', Validators.required],
-          time: ['', Validators.required],
-          duration: ['', Validators.required],
-          medicCenterName: ['', Validators.required],
-          medicCenterAddress: ['', Validators.required],
+          time: [''],
+          duration: ['', Validators.min(1)],
+          medicCenterName: [''],
+          medicCenterAddress: [''],
         });
         break;
 
@@ -960,21 +1397,246 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
     list.push(this.createFormArray(type));
   }
 
-  get allDependents(): FormArray {
-    return this.newRequest.get('dependents').get('allDependents') as FormArray;
+  SaveForm(newRequestReq: FormGroup) {
+    this.formHandler.sendForm(newRequestReq, 'major-expenses', 'send');
+  }
+  getDataCotizaciones(id) {
+    this.quotesService.returnDataSalud(id).subscribe(data => {
+
+      if (data !== undefined && data.data !== null && data.data !== undefined && data.data.nombre !== undefined) {
+        const dialogRef = this.dialog.open(BaseDialogComponent, {
+          data: this.dialogOption.noCFound(data.data),
+          minWidth: 385,
+        });
+        setTimeout(() => {
+          dialogRef.close();
+        }, 4000);
+        this.isFormValidToFill = true;
+        this.notFoundQuote = false;
+
+        this.newRequest.get('payment').setValue(this.currencyPipe.transform(data.data.monto));
+        this.newRequest.get('plans').setValue(data.data.plan);
+        this.newRequest.get('person').get('date').setValue(data.data.fecha_nacimiento);
+        this.newRequest.get('person').get('firstName').setValue(data.data.nombre);
+      } else {
+        this.notFoundQuote = true;
+        const dialogRef = this.dialog.open(BaseDialogComponent, {
+          data: this.dialogOption.noCNotFound,
+          minWidth: 385,
+        });
+        setTimeout(() => {
+          dialogRef.close();
+        }, 4000);
+      }
+    });
+
   }
 
-
-  get questionnairesGastosMayores(): FormGroup {
-    return this.newRequest.get('questionsA').get('questionnairesGastosMayores') as FormGroup;
+  has(object: any, key: any) {
+    return object ? this.hasOwnProperty.call(object, key) : false;
   }
 
-  get questionsA(): FormGroup {
-    return this.newRequest.get('questionsA') as FormGroup;
-  }
+  /*iterateThroughtAllObject(obj: any, groupControl: any) {
+    const formDataGroup = groupControl as FormGroup;
+    Object.keys(obj).forEach(e => {
+      const key = e;
+      const value = obj[key];
+      if (value !== undefined && (typeof value) !== 'object') {
 
-  get person(): FormGroup {
-    return this.newRequest.get('person') as FormGroup;
+        const valueToSet = (value === null || value === undefined) ? "" : value;
+        if (valueToSet !== undefined ) {
+          const valueToSet = (value === null) ? "" : value;
+          if (!this.has(formDataGroup.controls, key)) {
+            formDataGroup.addControl(key, this.fb.control(valueToSet));
+          } else {
+
+            const valueFormControl = formDataGroup.controls[key] as FormControl;
+            valueFormControl.setValue(valueToSet);
+          }
+        }
+      }
+      else if (value !== null && value !== undefined && (typeof value) === 'object') {
+        if (Array.isArray(value)) {
+          if (this.has(formDataGroup.controls, key)) {
+            formDataGroup.removeControl(key);
+          }
+          if (value.length > 0) {
+
+            const arrayForm = [];
+            value.forEach((element) => {
+              const fbGroup = this.fb.group({
+                id: ['', Validators.required]
+              });
+
+              this.iterateThroughtAllObject(element, fbGroup);
+              arrayForm.push(fbGroup);
+            });
+
+
+            formDataGroup.addControl(key, this.fb.array(arrayForm));
+          }
+
+        }
+        else
+        {
+          if (!this.has(formDataGroup.controls, key)) {
+            formDataGroup.addControl(key, this.fb.group({
+              id: ['', Validators.required]
+            }));
+          }
+
+          const form = formDataGroup.get(key);
+
+          this.iterateThroughtAllObject(value, form);
+
+        }
+
+      }
+
+    });
+  }*/
+
+  iterateThroughtAllObject(obj: any, groupControl: any) {
+    const formDataGroup = groupControl as FormGroup;
+    Object.keys(obj).forEach(e => {
+      const key = e;
+      const value = obj[key];
+      if (value !== undefined && (typeof value) !== 'object') {
+
+        const valueToSet = (value === null || value === undefined) ? "" : value;
+
+        if (valueToSet !== undefined ) {
+          if (!this.has(formDataGroup.controls, key)) {
+            formDataGroup.addControl(key, this.fb.control(valueToSet));
+          } else {
+
+            const valueFormControl = formDataGroup.controls[key] as FormControl;
+            valueFormControl.setValue(valueToSet);
+          }
+        }
+      }
+      else if (value !== null && value !== undefined && (typeof value) === 'object') {
+        if (Array.isArray(value)) {
+          if (this.has(formDataGroup.controls, key)) {
+            formDataGroup.removeControl(key);
+          }
+          if (value.length > 0) {
+
+            const arrayForm = [];
+            value.forEach((element) => {
+              const fbGroup = this.fb.group({
+                id: ['', Validators.required]
+              });
+
+              this.iterateThroughtAllObject(element, fbGroup);
+              arrayForm.push(fbGroup);
+            });
+            formDataGroup.addControl(key, this.fb.array(arrayForm));
+          }
+          else
+          {
+            formDataGroup.addControl(key, this.fb.array([]));
+          }
+        }
+        else
+        {
+          if (!this.has(formDataGroup.controls, key)) {
+            formDataGroup.addControl(key, this.fb.group({
+              id: ['', Validators.required]
+            }));
+          }
+          const form = formDataGroup.get(key);
+          this.iterateThroughtAllObject(value, form);
+
+          if ((key.includes("solicitud") || key.includes("knowYour")  || key.includes("columnaVertebralColumnaVertebral")) && form.get("id").value == "0")
+          {
+            console.log("DELETE DATAAAAA");
+            formDataGroup.removeControl(key);
+          }
+        }
+      }
+
+    });
+  }
+  getData(id) {
+    this.majorExpensesService.returnData(id).subscribe(data => {
+      //console.log(data);
+      // console.log( this.newRequest);
+      if (data !== undefined && data.data !== null &&
+        data.data !== undefined) {
+        this.ID = data.data.id;
+        console.log(data.data);
+        this.iterateThroughtAllObject(data.data, this.newRequest);
+        console.log(this.newRequest);
+        this.AddEventOnEachDependentVariable();
+        if (this.newRequest.get('questionsB').get('familyWithDiseases') !== undefined && this.newRequest.get('questionsB').get('familyWithDiseases') !== null) {
+          this.familyWithDiseasesList = this.newRequest.get('questionsB').get('familyWithDiseases') as FormArray;
+        }
+        else {
+          this.familyWithDiseasesList = undefined;
+        }
+
+        this.contingentBeneficiaryArray = this.newRequest.get('contingentBeneficiary').get('dependentsC') as FormArray;
+        this.primaryBenefitsArray = this.newRequest.get('primaryBenefits').get('dependentsC') as FormArray;
+        this.studentDependents = this.newRequest.get('dependents').get('students') as FormArray;
+        this.dependentsFormArray = this.newRequest.get('dependents').get('allDependents') as FormArray;
+        this.questionsFormArray = this.newRequest.get('questionsA') as FormArray;
+        this.questionsBFormArray = this.newRequest.get('questionsB') as FormArray;
+        this.informationList = this.newRequest.get('questionsB').get('information') as FormArray;
+        this.isFormValidToFill = true;
+
+    //this.addEventChange();
+        /*let person = this.newRequest.get('person');
+        this.iterateThroughtObject(data.data.person, person);
+/// Person
+        let personOffice = this.newRequest.get('person').get('office');
+        this.iterateThroughtObject(data.data.person.office, personOffice);
+        let personaConozcaSuClientePersona = this.newRequest.get('person').get('conozcaSuClientePersona');
+        this.iterateThroughtObject(data.data.person.conozcaSuClientePersona, personaConozcaSuClientePersona);
+/// Contractor
+        let contractor = this.newRequest.get('contractor');
+        this.iterateThroughtObject(data.data.contractor, contractor);
+        let contractorOffice = this.newRequest.get('contractor').get('office');
+        this.iterateThroughtObject(data.data.contractor.office, contractorOffice);
+        let ContractorConozcaSuClientePersona = this.newRequest.get('contractor').get('conozcaSuClientePersona');
+        this.iterateThroughtObject(data.data.contractor.conozcaSuClientePersona, ContractorConozcaSuClientePersona);
+        let ContractorConozcaSuClientePersonaJuridica = this.newRequest.get('contractor').get('conozcaSuClientePersonaJuridica');
+        this.iterateThroughtObject(data.data.contractor.conozcaSuClientePersonaJuridica, ContractorConozcaSuClientePersonaJuridica);
+
+/// ExpoxedPerson
+let exposedPerson = this.newRequest.get('exposedPerson');
+this.iterateThroughtObject(data.data.exposedPerson, exposedPerson);
+let contractorExposedInfo = this.newRequest.get('exposedPerson').get('contractorExposedInfo');
+this.iterateThroughtObject(data.data.exposedPerson.contractorExposedInfo, contractorExposedInfo);
+let headLineExposedInfo = this.newRequest.get('exposedPerson').get('headLineExposedInfo');
+this.iterateThroughtObject(data.data.exposedPerson.headLineExposedInfo, headLineExposedInfo);
+
+/// Incomes
+let incomes = this.newRequest.get('incomes');
+this.iterateThroughtObject(data.data.incomes, incomes);
+if (data.data.dependents !== null)
+{
+// Dependents
+let dependents = this.newRequest.get('dependents');
+this.iterateThroughtObject(data.data.dependents, dependents);
+
+if(data.data.dependents.allDependents !== null && data.data.dependents.allDependents.length > 0)
+{
+data.data.dependents.allDependents.foreach( (element) =>{
+  this.iterateThroughtObject(element, dependents)
+  });
+}
+if(data.data.dependents.students !== null && data.data.dependents.students.length > 0)
+{
+data.data.dependents.students.foreach( (element) =>{
+  this.iterateThroughtObject(element, dependents)
+  });
+}
+}*/
+      }
+
+
+    });
   }
 
 }

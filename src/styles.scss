@@ -297,6 +297,12 @@ body {
     font-size: 13px !important;
   }
 
+  .mat-header-cell {
+    color: #18446B !important;
+    font-weight: bold !important;
+    font-size: 13px !important;
+  }
+
   td.mat-footer-cell {
     border-bottom: 2px #24ACE7 solid !important;
   }
@@ -432,12 +438,36 @@ body {
 }
 
 .send-button {
+  background: #007DB7 !important;
+  color: white !important;
+  border: 2px solid #007DB7 !important;
+  border-radius: 35px !important;
+  font-size: 12px !important;
+  padding: 3px 39.5px !important;
+  min-width: 120px !important;
+  font-weight: 900 !important;
+}
+
+.save-button {
   background: white !important;
-  color: #18446B !important;
+  color: #373536 !important;
   border: 2px solid #BDBDBD !important;
   border-radius: 35px !important;
   font-size: 12px !important;
-  padding: 3px 45px !important;
+  padding: 3px 39.5px !important;
+  min-width: 120px !important;
+  font-weight: 900 !important;
+}
+
+.cancel-form-button {
+  background: #C4C4C466 !important;
+  color: #373536 !important;
+  border: 2px solid #BDBDBD !important;
+  border-radius: 35px !important;
+  font-size: 12px !important;
+  padding: 3px 39.5px !important;
+  min-width: 120px !important;
+  font-weight: 900 !important;
 }
 
 .ww-divider {
@@ -445,6 +475,33 @@ body {
   border: #E5E5E5 1px solid;
 }
 
+.small-search-button {
+  width: 46px !important;
+  height: 46px !important;
+  background-color: #007DB7 !important;
+  border-radius: 50% !important;
+  outline: none !important;
+  outline-style: none !important;
+  display: flex;
+  justify-content: center;
+}
+
+.nofocus:focus {
+  outline: none !important;
+  outline-style: none !important;
+}
+
+.big-search-button {
+  background: #007DB7 !important;
+  color: white !important;
+  border: 2px solid #007DB7 !important;
+  border-radius: 35px !important;
+  font-size: 12px !important;
+  padding: 3px 39.5px !important;
+  font-weight: 900 !important;
+  width: 100% !important;
+}
+
 /** OVERWRITING ANOTHER CLASSES */
 /** OVERWRITING ANOTHER CLASSES */
 /** OVERWRITING ANOTHER CLASSES */
@@ -461,6 +518,10 @@ body {
 /** OVERWRITING ANOTHER CLASSES */
 /** OVERWRITING ANOTHER CLASSES */
 /** OVERWRITING ANOTHER CLASSES */
+
+.mat-raised-button {
+  box-shadow: none !important;
+}
 
 .mat-list-item-content {
   max-height: 35px !important;
@@ -552,6 +613,42 @@ button.active:focus {
 
 }
 
+.info-cot {
+  background-color: #F2F2F2;
+
+  .w-h {
+    width: 150px;
+  }
+}
+
 .mat-tab-body-content {
   padding-bottom: 10px !important;
+}
+
+::ng-deep .mat-tab-labels {
+  margin-top: 20px;
+  background-color: #F2F2F2;
+}
+
+.mat-tab-labels {
+  margin-top: 20px;
+  background-color: #F2F2F2;
+}
+
+.mat-tab-label-active {
+  color: #18446B !important;
+  font-weight: bold;
+  font-size: 13px;
+  opacity: 100 !important;
+}
+
+.mat-ink-bar {
+  background-color: #007DB7 !important;
+}
+
+.mat-tab-label {
+  color: #007DB7;
+  font-weight: bold;
+  font-size: 13px;
+  opacity: 100 !important;
 }

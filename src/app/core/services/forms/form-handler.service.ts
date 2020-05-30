@@ -10,6 +10,9 @@ import { NewAuthorizationService } from '../../../modules/dashboard/authorizatio
 import { LifeService } from 'src/app/modules/dashboard/requests/new-request/life/services/life.service';
 import { MajorExpensesService } from '../../../modules/dashboard/requests/new-request/major-expenses/services/major-expenses.service';
 import { DisabilityService } from '../../../modules/dashboard/requests/new-request/disability/services/disability.service';
+import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../../environments/environment';
+import { AppComponent } from 'src/app/app.component';
 // tslint:disable: forin
 // tslint:disable: variable-name
 
@@ -19,7 +22,6 @@ import { DisabilityService } from '../../../modules/dashboard/requests/new-reque
 export class FormHandlerService {
 	sendedForm;
 	errorServer = this.dialogOption.errorServer;
-
 	constructor(
 		private dialog: MatDialog,
 		private dialogOption: DialogOptionService,
@@ -30,55 +32,97 @@ export class FormHandlerService {
 		private lifeService: LifeService,
 		private majorExpensesService: MajorExpensesService,
 		private disabilityService: DisabilityService,
+		private http: HttpClient,
 	) { }
 
-	sendForm(form: FormGroup, name: string) {
+	sendForm(form: FormGroup, name: string, type?: string, id?: number, appComponent?: any) {
 		console.log('Impresion de formulario down here: ', form);
-		this.dialogHandler(form, name);
+		this.dialogHandler(form, name, type, id, appComponent);
+		console.log(appComponent);
 	}
 
-	dialogHandler(form: FormGroup, name: string) {
+	dialogHandler(form: FormGroup, name: string, type: string, id?: number, appComponent?: any) {
 		let Dialog;
 		let dataOpen;
 		let dataClosing;
 		let route;
 
+		const ID = id;
+
+		console.log(ID);
+
 		switch (name) {
 			case 'claims-reclaim':
-				dataOpen = this.dialogOption.reclaimConfirmation;
-				dataClosing = this.dialogOption.reclaimConfirmated;
+				if (type === 'send') {
+					dataOpen = this.dialogOption.sendForm('Reclamo');
+					dataClosing = this.dialogOption.confirmedForm('Reclamo');
+				} else if (type === 'save') {
+					dataOpen = this.dialogOption.saveForm('Reclamo');
+					dataClosing = this.dialogOption.confirmedSavedForm('Reclamo');
+				}
 				route = 'dashboard/claims';
 				break;
 
 			case 'claims-refund':
-				dataOpen = this.dialogOption.refundConfirmation;
-				dataClosing = this.dialogOption.refundConfirmated;
+				if (type === 'send') {
+					dataOpen = this.dialogOption.sendForm('Reembolso');
+					dataClosing = this.dialogOption.confirmedForm('Reembolso');
+				} else if (type === 'save') {
+					dataOpen = this.dialogOption.saveForm('Reembolso');
+					dataClosing = this.dialogOption.confirmedSavedForm('Reembolso');
+				}
 				route = 'dashboard/claims';
 				break;
 
 			case 'new-authorization':
-				dataOpen = this.dialogOption.authorizationConfirmation;
-				dataClosing = this.dialogOption.authorizationConfirmated;
+				if (type === 'send') {
+					dataOpen = this.dialogOption.sendForm('Autorización');
+					dataClosing = this.dialogOption.confirmedForm('Autorización');
+				} else if (type === 'save') {
+					dataOpen = this.dialogOption.saveForm('Autorización');
+					dataClosing = this.dialogOption.confirmedSavedForm('Autorización');
+				}
 				route = 'dashboard/authorizations';
 				break;
 
 			case 'life':
-				dataOpen = this.dialogOption.lifeConfirmation;
-				dataClosing = this.dialogOption.requestConfirmated;
+				if (type === 'send') {
+					dataOpen = this.dialogOption.sendForm('seguro de Vida');
+					dataClosing = this.dialogOption.confirmedForm('seguro de Vida');
+				} else if (type === 'save') {
+					dataOpen = this.dialogOption.saveForm('seguro de Vida');
+					dataClosing = this.dialogOption.confirmedSavedForm('seguro de Vida');
+				}
 				route = 'dashboard/requests';
 				break;
 
 			case 'major-expenses':
-				dataOpen = this.dialogOption.healthConfirmation;
-				dataClosing = this.dialogOption.requestConfirmated;
+				if (type === 'send') {
+					dataOpen = this.dialogOption.sendForm('seguro Gastos Médicos Mayores');
+					dataClosing = this.dialogOption.confirmedForm('seguro Gastos Médicos Mayores');
+				} else if (type === 'save') {
+					dataOpen = this.dialogOption.saveForm('seguro Gastos Médicos Mayores');
+					dataClosing = this.dialogOption.confirmedSavedForm('seguro Gastos Médicos Mayores');
+				}
 				route = 'dashboard/requests';
 				break;
 
 			case 'disability':
-				dataOpen = this.dialogOption.disabilityConfirmation;
-				dataClosing = this.dialogOption.requestConfirmated;
+				if (type === 'send') {
+					dataOpen = this.dialogOption.sendForm('suscripcion Disability');
+					dataClosing = this.dialogOption.confirmedForm('suscripcion Disability');
+				} else if (type === 'save') {
+					dataOpen = this.dialogOption.saveForm('suscripcion Disability');
+					dataClosing = this.dialogOption.confirmedSavedForm('suscripcion Disability');
+				}
 				route = 'dashboard/requests';
 				break;
+
+		}
+
+		if (type === 'cancel') {
+			this.navigateToMenu(route);
+			return;
 		}
 
 		Dialog = this.dialog.open(BaseDialogComponent, {
@@ -87,99 +131,278 @@ export class FormHandlerService {
 		});
 
 		Dialog.afterClosed().subscribe((result) => {
-			this.sendedForm = form.value;
+			if (form.valid) {
+				form.get('isComplete').setValue(true);
+			} else {
+				form.get('isComplete').setValue(false);
+			}
+
+			this.sendedForm = form.getRawValue();
 			const json = JSON.stringify(this.sendedForm);
 			console.log(json);
 
-			if (result === 'true') {
-				let dialog;
-				if (form.valid) {
+			switch (type) {
+				case 'save':
+					if (result === 'true') {
+						let dialog;
+						switch (name) {
+							case 'claims-reclaim':
+								this.claimService.postClaim(json)
+									.subscribe(res => {
+										this.correctSend(res, dialog, dataClosing, route);
+									}, (err) => {
+										this.badSend(err, dialog);
+									});
+								break;
 
-					switch (name) {
-						case 'claims-reclaim':
-							this.claimService.postClaim(json)
-								.subscribe(res => {
-									this.correctSend(res, dialog, dataClosing, route);
+							case 'claims-refund':
+								this.refundService.postClaim(json)
+									.subscribe(res => {
+										this.correctSend(res, dialog, dataClosing, route);
+									}, (err) => {
+										this.badSend(err, dialog);
+									});
+								break;
 
-								}, (err) => {
-									this.badSend(dialog);
+							case 'new-authorization':
+								this.newAuthorizationService.postClaim(json)
+									.subscribe(res => {
+										this.correctSend(res, dialog, dataClosing, route);
+									}, (err) => {
+										this.badSend(err, dialog);
+									});
+								break;
 
-								});
-							break;
+							case 'life':
+								this.lifeService.postRequest(json)
+									.subscribe(res => {
+										this.correctSend(res, dialog, dataClosing, route);
+									}, (err) => {
+										this.badSend(err, dialog);
+									});
+								break;
 
-						case 'claims-refund':
-							this.refundService.postClaim(json)
-								.subscribe(res => {
-									this.correctSend(res, dialog, dataClosing, route);
+							case 'major-expenses':
+								this.majorExpensesService.postRequest(json)
+									.subscribe(res => {
+										this.correctSend(res, dialog, dataClosing, route);
+									}, (err) => {
+										this.badSend(err, dialog);
+									});
+								break;
 
-								}, (err) => {
-									this.badSend(dialog);
+							case 'disability':
+								this.disabilityService.postRequest(json)
+									.subscribe(res => {
+										this.correctSend(res, dialog, dataClosing, route);
+									}, (err) => {
+										this.badSend(err, dialog);
+									});
+								break;
 
-								});
-							break;
-
-						case 'new-authorization':
-							this.newAuthorizationService.postClaim(json)
-								.subscribe(res => {
-									this.correctSend(res, dialog, dataClosing, route);
-
-								}, (err) => {
-									this.badSend(dialog);
-
-								});
-							break;
-
-						case 'life':
-							this.lifeService.postRequest(json)
-								.subscribe(res => {
-									this.correctSend(res, dialog, dataClosing, route);
-
-								}, (err) => {
-									this.badSend(dialog);
-
-								});
-							break;
-
-						case 'major-expenses':
-							this.majorExpensesService.postRequest(json)
-								.subscribe(res => {
-									this.correctSend(res, dialog, dataClosing, route);
-
-								}, (err) => {
-									this.badSend(dialog);
-
-								});
-							break;
-
-						case 'disability':
-							this.disabilityService.postRequest(json)
-								.subscribe(res => {
-									this.correctSend(res, dialog, dataClosing, route);
-
-								}, (err) => {
-									this.badSend(dialog);
-
-								});
-							break;
-
-						default:
-							break;
+							default:
+								break;
+						}
+						console.log(JSON.stringify(this.sendedForm));
 					}
+					break;
 
-					console.log(JSON.stringify(this.sendedForm));
-				} else {
-					// console.log(this.findInvalidControls(form));
+				case 'send':
+					if (result === 'true') {
+						let dialog;
+						// dialog = this.dialog.open(BaseDialogComponent, {
+						// 	data: dataOpen,
+						// 	minWidth: 385
+						// });
+						// this.closeDialog(dialog);
+						if (form.valid) {
+							switch (name) {
+								case 'claims-reclaim':
+									this.claimService.postClaim(json)
+										.subscribe(res => {
+											this.correctSend(res, dialog, dataClosing, route);
 
-					const invalidControls = [];
-					for (const control in this.findInvalidControls(form)) {
-						invalidControls.push(this.getName(this.findInvalidControls(form)[control]));
+										}, (err) => {
+											this.badSend(err, dialog);
+
+										});
+									break;
+
+								case 'claims-refund':
+									if (ID) {
+										appComponent.showOverlay = true;
+										this.refundService.sendRefund(ID)
+											.subscribe(res => {
+												appComponent.showOverlay = false;
+												this.correctSend(res, dialog, dataClosing, route);
+											}, (err) => {
+												appComponent.showOverlay = false;
+												this.badSend(err, dialog);
+											});
+									} else {
+										appComponent.showOverlay = true;
+										this.refundService.postClaim(json)
+											.subscribe((res: any) => {
+												if (res.data.id) {
+													this.refundService.sendRefund(res.data.id)
+														.subscribe(response => {
+															appComponent.showOverlay = false;
+															this.correctSend(response, dialog, dataClosing, route);
+														});
+												}
+											}, (err) => {
+												appComponent.showOverlay = false;
+												this.badSend(err, dialog);
+											});
+									}
+									break;
+
+								case 'new-authorization':
+									if (ID) {
+										appComponent.showOverlay = true;
+										this.newAuthorizationService.sendAuthorization(ID)
+											.subscribe(res => {
+												appComponent.showOverlay = false;
+
+												this.correctSend(res, dialog, dataClosing, route);
+											}, (err) => {
+												appComponent.showOverlay = false;
+												this.badSend(err, dialog);
+
+											});
+									} else {
+										appComponent.showOverlay = true;
+										this.newAuthorizationService.postClaim(json)
+											.subscribe((res: any) => {
+												if (res.data.id) {
+													this.newAuthorizationService.sendAuthorization(res.data.id)
+														.subscribe(response => {
+															appComponent.showOverlay = false;
+															console.log(response);
+															this.correctSend(response, dialog, dataClosing, route);
+
+														});
+												}
+												// this.correctSend(res, dialog, dataClosing, route);
+
+											}, (err) => {
+												appComponent.showOverlay = false;
+												this.badSend(err, dialog);
+
+											});
+									}
+									break;
+
+								case 'life':
+									if (ID) {
+										appComponent.showOverlay = true;
+										this.lifeService.sendRequest(ID)
+											.subscribe(res => {
+												appComponent.showOverlay = false;
+												this.correctSend(res, dialog, dataClosing, route);
+											}, (err) => {
+												appComponent.showOverlay = false;
+												this.badSend(err, dialog);
+											});
+									} else {
+										appComponent.showOverlay = true;
+										this.lifeService.postRequest(json)
+											.subscribe((res: any) => {
+												if (res.data.id) {
+													this.lifeService.sendRequest(res.data.id)
+														.subscribe(response => {
+															appComponent.showOverlay = false;
+															this.correctSend(response, dialog, dataClosing, route);
+														});
+												}
+											}, (err) => {
+												appComponent.showOverlay = false;
+												this.badSend(err, dialog);
+											});
+									}
+									break;
+
+								case 'major-expenses':
+									if (ID) {
+										appComponent.showOverlay = true;
+										this.majorExpensesService.sendRequest(ID)
+											.subscribe(res => {
+												appComponent.showOverlay = false;
+												this.correctSend(res, dialog, dataClosing, route);
+											}, (err) => {
+												appComponent.showOverlay = false;
+												this.badSend(err, dialog);
+											});
+									} else {
+										appComponent.showOverlay = true;
+										this.majorExpensesService.postRequest(json)
+											.subscribe((res: any) => {
+												if (res.data.id) {
+													this.majorExpensesService.sendRequest(res.data.id)
+														.subscribe(response => {
+															appComponent.showOverlay = false;
+															this.correctSend(response, dialog, dataClosing, route);
+														});
+												}
+											}, (err) => {
+												appComponent.showOverlay = false;
+												this.badSend(err, dialog);
+											});
+									}
+									break;
+
+								case 'disability':
+									if (ID) {
+										appComponent.showOverlay = true;
+										this.disabilityService.sendRequest(ID)
+											.subscribe(res => {
+												appComponent.showOverlay = false;
+												this.correctSend(res, dialog, dataClosing, route);
+											}, (err) => {
+												appComponent.showOverlay = false;
+												this.badSend(err, dialog);
+											});
+									} else {
+										appComponent.showOverlay = true;
+										this.disabilityService.postRequest(json)
+											.subscribe((res: any) => {
+												if (res.data.id) {
+													this.disabilityService.sendRequest(res.data.id)
+														.subscribe(response => {
+															appComponent.showOverlay = false;
+															this.correctSend(response, dialog, dataClosing, route);
+														});
+												}
+											}, (err) => {
+												appComponent.showOverlay = false;
+												this.badSend(err, dialog);
+											});
+									}
+									break;
+
+								default:
+									break;
+							}
+
+							console.log(JSON.stringify(this.sendedForm));
+						} else {
+							// console.log(this.findInvalidControls(form));
+
+							const invalidControls = [];
+							for (const control in this.findInvalidControls(form)) {
+								invalidControls.push(this.getName(this.findInvalidControls(form)[control]));
+							}
+							dialog = this.dialog.open(BaseDialogComponent, {
+								data: this.dialogOption.getInvalidControls(invalidControls),
+								minWidth: 385
+							});
+							this.closeDialog(dialog);
+						}
 					}
-					dialog = this.dialog.open(BaseDialogComponent, {
-						data: this.dialogOption.getInvalidControls(invalidControls),
-						minWidth: 385
-					});
-					this.closeDialog(dialog);
-				}
+					break;
+
+				default:
+					break;
 			}
 		});
 	}
@@ -194,23 +417,81 @@ export class FormHandlerService {
 		this.navigateToMenu(route);
 	}
 
-	badSend(dialog) {
-		dialog = this.dialog.open(BaseDialogComponent, {
+	badSend(err, dialog?) {
+		console.log(err);
+
+		const dialogRef = this.dialog.open(BaseDialogComponent, {
 			data: this.errorServer,
 			minWidth: 385
 		});
-		this.closeDialog(dialog);
+		this.closeDialog(dialogRef);
 	}
 
 	closeDialog(dialog) {
 		setTimeout(() => {
 			dialog.close();
 
-		}, 7000);
+		}, 4000);
 	}
 
 	navigateToMenu(route) {
 		this.route.navigateByUrl(route);
+	}
+
+	directSendRequest(id: number, type: string, title: string, appComponent: any) {
+		const dialogRef = this.dialog.open(BaseDialogComponent, {
+			data: this.dialogOption.sendForm(title),
+			minWidth: 385,
+		});
+
+		dialogRef.afterClosed().subscribe((result) => {
+			if (result === 'true') {
+				appComponent.showOverlay = true;
+				this.http.post(`${environment.apiUrl}/api/${type}/confirm/${id}`, id)
+					.subscribe(response => {
+						appComponent.showOverlay = false;
+						console.log(response);
+
+						const dialog = this.dialog.open(BaseDialogComponent, {
+							data: this.dialogOption.confirmedForm(title),
+							minWidth: 385
+						});
+						this.closeDialog(dialog);
+
+					}, (err) => {
+						this.badSend(err);
+
+					});
+			}
+		});
+	}
+
+	deleteRequest(id: number, type: string, title: string, appComponent: any) {
+		const dialogRef = this.dialog.open(BaseDialogComponent, {
+			data: this.dialogOption.deleteConfirm(title),
+			minWidth: 385,
+		});
+
+		dialogRef.afterClosed().subscribe((result) => {
+			if (result === 'true') {
+				appComponent.showOverlay = true;
+
+				this.http.delete(`${environment.apiUrl}/api/${type}/${id}`)
+					.subscribe(response => {
+						console.log(response);
+						appComponent.showOverlay = false;
+
+						const dialog = this.dialog.open(BaseDialogComponent, {
+							data: this.dialogOption.deleteConfirmed(title),
+							minWidth: 385
+						});
+						this.closeDialog(dialog);
+					}, (err) => {
+						this.badSend(err);
+
+					});
+			}
+		});
 	}
 
 	findInvalidControls(_input: AbstractControl, _invalidControls?: AbstractControl[]): AbstractControl[] {

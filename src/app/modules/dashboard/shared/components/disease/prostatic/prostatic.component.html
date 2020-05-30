@@ -4,8 +4,8 @@
 <app-forms-container [isQuestionnarie]="false"
   [titles]="['Cuestionario médico de evaluación prostática para hombres mayores de 50 años']">
   <ng-template #formTemplate>
-    <div class="mt-3 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4">
-      <div class="mr-3">
+    <!--  <div class="mt-3 mb-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4">
+     <div class="mr-3">
         <app-input [group]="form" label="Nombre del asegurado" name='firstName'>
         </app-input>
       </div>
@@ -18,10 +18,10 @@
         </app-date-picker>
       </div>
       <div class="">
-        <app-input [group]="form" label="Número de póliza" name='policeNo'>
+        <app-input [group]="form" label="Número de póliza" name='policeNo' >
         </app-input>
       </div>
-    </div>
+    </div> -->
     <div *ngFor="let question of questions">
       <div
         class="w-full xl:flex xl:justify-between lg:flex lg:justify-between md:flex md:justify-between sm:flex sm:justify-between">
@@ -32,7 +32,7 @@
       </div>
       <div *ngIf="form.value[question.name] === 'si'">
         <div *ngIf="question.name === 'hasProstateEvaluation'">
-          <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4">
+          <div class="mb-3 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4">
             <div class="mr-3">
               <app-input [group]="form.get(question.group)" label="Nombre del médico tratante" name='doctorName'>
               </app-input>
@@ -47,8 +47,8 @@
               </app-input>
             </div>
             <div class="">
-              <app-input [group]="form.get(question.group)" label="Teléfono" name='phone'>
-              </app-input>
+              <app-number-input [group]="form.get(question.group)" label="Teléfono" name='phone'>
+              </app-number-input>
             </div>
           </div>
         </div>
@@ -57,8 +57,8 @@
           *ngIf="question.name === 'hasPSATotal' || question.name === 'hasProstateUltrasound' || question.name === 'hasBiopsy'">
           <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4">
             <div class="mr-3">
-              <app-date-picker [group]="form.get(question.group)" label="Fecha del estudio" name='date'>
-              </app-date-picker>
+              <datepicker-month fieldId="date"  [group]="form.get(question.group)" label="Fecha del estudio" name='date'>
+              </datepicker-month >
             </div>
             <div class="mr-3"></div>
             <div class="mr-3">
@@ -109,8 +109,8 @@
     <div *ngFor="let studies of studiesList.controls; let i = index"
       class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
       <div class="mr-3">
-        <app-date-picker [group]="form.get('studies').get(i.toString())" name="date" label="Fecha del estudio">
-        </app-date-picker>
+        <datepicker-month fieldId="date"  [group]="form.get('studies').get(i.toString())" name="date" label="Fecha del estudio">
+        </datepicker-month >
       </div>
       <div class="mr-3">
         <app-input [group]="form.get('studies').get(i.toString())" name="results" label="Resultado del estudio">

@@ -98,7 +98,7 @@ export class SpineComponent implements OnInit {
 
   addBasicControls() {
     this.form.addControl('nombre', this.fb.control('', Validators.required));
-    this.form.addControl('edad', this.fb.control('', Validators.required));
+    this.form.addControl('edad', this.fb.control('', [Validators.required, Validators.min(1)]));
     this.form.addControl('nombreMedico', this.fb.control('', Validators.required));
     this.form.addControl('centroSalud', this.fb.control('', Validators.required));
     this.form.addControl('telefonoCentro', this.fb.control('', Validators.required));
@@ -169,7 +169,7 @@ export class SpineComponent implements OnInit {
   }
 
   selectChange(event) {
-    console.log(event);
+
     if (event.valor === 'si') {
       switch (event.name) {
         case 'useSurgery':

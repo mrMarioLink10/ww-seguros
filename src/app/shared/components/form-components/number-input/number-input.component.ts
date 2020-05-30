@@ -9,11 +9,12 @@ import { FormGroup } from '@angular/forms';
 export class NumberInputComponent implements OnInit {
   @Input() label: string;
   @Input() name: string;
-  @Input() min: string;
-  @Input() max: string;
+  @Input() min: number;
+  @Input() max: number;
+  @Input() isMoney?: string;
+  @Input() maxInfo?: string;
   @Input() placeholder: string;
   @Input() group: FormGroup;
-
   constructor() { }
 
   ngOnInit() {

@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
+import { Observable } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -184,7 +186,40 @@ export class DisabilityService {
     }
   ];
 
-  constructor(private http: HttpClient) { }
+  testArray = [
+    {
+      value: 'hemograma',
+      viewValue: 'Hemograma'
+    },
+    {
+      value: 'electrocardiograma',
+      viewValue: 'Electrocardiograma'
+    },
+    {
+      value: 'rayos X',
+      viewValue: 'Rayos X'
+    },
+    {
+      value: 'endoscopia',
+      viewValue: 'Endoscopia'
+    },
+    {
+      value: 'ultrasonido',
+      viewValue: 'Ultrasonido'
+    },
+    {
+      value: 'scan',
+      viewValue: 'Scan'
+    },
+    {
+      value: 'resonancia magnética',
+      viewValue: 'Resonancia magnética'
+    }
+  ];
+
+  id = null;
+
+  constructor(private http: HttpClient, private route: Router) { }
 
   postRequest(body) {
 
@@ -193,6 +228,21 @@ export class DisabilityService {
     };
 
     console.log('body:', body);
-    return this.http.post(`${environment.baseUrl}/api/Solicitudes/disability`, body, httpOptions);
+    return this.http.post(`${environment.apiUrl}/api/Solicitudes/disability`, body, httpOptions);
   }
+
+  returnData(id): Observable<any> {
+    return this.http.get(`${environment.apiUrl}/api/Solicitudes/disability/${id}`);
+  }
+
+  sendRequest(id): Observable<any> {
+    return this.http.post(`${environment.apiUrl}/api/Solicitudes/disability/confirm/${id}`, id);
+  }
+
+  getID(id) {
+    this.id = id;
+    console.log('hola, soy ', id);
+    this.route.navigateByUrl('/dashboard/requests/new-requests/disability');
+  }
+
 }

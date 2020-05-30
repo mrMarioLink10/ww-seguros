@@ -2,8 +2,8 @@
   [formGroup]="group">
   <mat-label>{{label}}</mat-label>
   <input [formControlName]="name" matInput class="" [type]="type" [min]="min" [max]="max" [placeholder]="placeholder">
-  <mat-error *ngIf="group.get(name).touched && !group.get(name).valid && type!='number'">Debe llenar el campo de
-    {{label}}</mat-error>
+  <mat-error *ngIf="group.get(name).touched && !group.get(name).valid && type!='number'">Este campo es obligatorio
+  </mat-error>
   <mat-error *ngIf="group.get(name).touched && !group.get(name).valid && type=='number'">Lo que ha ingresado en
     {{label}} es incorrecto o el campo está vacío.</mat-error>
 </mat-form-field>

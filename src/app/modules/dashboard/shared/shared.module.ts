@@ -1,10 +1,10 @@
-import { NgModule } from "@angular/core";
-import { CommonModule } from "@angular/common";
-import { FilterComponent } from "./components/filter/filter.component";
-import { MaterialModule } from "src/app/shared/modules/material.module";
-import { FormsContainerComponent } from "./components/forms-container/forms-container.component";
-import { CardiovascularComponent } from "./components/disease/cardiovascular/cardiovascular.component";
-import { GlobalSharedModule } from "../../../shared/global-shared.module";
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FilterComponent } from './components/filter/filter.component';
+import { MaterialModule } from 'src/app/shared/modules/material.module';
+import { FormsContainerComponent } from './components/forms-container/forms-container.component';
+import { CardiovascularComponent } from './components/disease/cardiovascular/cardiovascular.component';
+import { GlobalSharedModule } from '../../../shared/global-shared.module';
 import { DiseasesInfoComponent } from './components/disease/shared/diseases-info/diseases-info.component';
 import { SpineComponent } from './components/disease/spine/spine.component';
 import { KnowYourClientComponent } from './components/disease/know-your-client/know-your-client.component';
@@ -24,6 +24,8 @@ import { RacingComponent } from './components/disease/racing/racing.component';
 import { DivingComponent } from './components/disease/diving/diving.component';
 import { FinancialStatusComponent } from './components/disease/financial-status/financial-status.component';
 import { KnowYourCustomerComponent } from './components/disease/know-your-customer/know-your-customer.component';
+import { TableStatusPipe } from '../../../core/pipes/table-status.pipe';
+import { MaterialFileInputModule } from 'ngx-material-file-input';
 
 @NgModule({
   declarations: [
@@ -45,9 +47,10 @@ import { KnowYourCustomerComponent } from './components/disease/know-your-custom
     SkydivingComponent,
     MountaineeringComponent,
     FinancialStatusComponent,
-    KnowYourCustomerComponent
+    KnowYourCustomerComponent,
+    TableStatusPipe
   ],
-  imports: [CommonModule, MaterialModule, GlobalSharedModule, FormsModule, ReactiveFormsModule, HttpClientModule],
+  imports: [CommonModule, MaterialModule, GlobalSharedModule, FormsModule, ReactiveFormsModule, HttpClientModule, MaterialFileInputModule],
   exports: [
     FilterComponent,
     FormsContainerComponent,
@@ -67,7 +70,9 @@ import { KnowYourCustomerComponent } from './components/disease/know-your-custom
     RacingComponent,
     DivingComponent,
     FinancialStatusComponent,
-    KnowYourCustomerComponent
+    KnowYourCustomerComponent,
+    TableStatusPipe,
+    MaterialFileInputModule
   ]
 })
 export class SharedModule { }

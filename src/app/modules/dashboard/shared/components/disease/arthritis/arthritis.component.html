@@ -5,14 +5,14 @@
   <ng-template #formTemplate>
     <div class="p-3 pb-0 mb-4" style="background-color: #F2F2F2">
       <div class="mt-3 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 xl:grid-cols-5">
-        <div class="mr-3">
+     <!--    <div class="mr-3">
           <app-input [group]="form" label="Nombre Completo" name='name' placeholder="Alberto Matias">
           </app-input>
         </div>
         <div class="mr-3">
-          <app-input [group]="form" label="Edad" name='age' placeholder="34" type="number">
-          </app-input>
-        </div>
+          <app-number-input [group]="form" label="Edad" name='age' placeholder="34" min="1">
+          </app-number-input>
+        </div> -->
         <div class="mr-3">
           <app-input [group]="form" label="Nombre del Médico Tratante" name='doctorName' placeholder="Santiago Alberto">
           </app-input>
@@ -23,8 +23,8 @@
           </app-input>
         </div>
         <div class="mr-3">
-          <app-input [group]="form" label="Teléfono del Centro" name='hcNumber' placeholder="8207776677">
-          </app-input>
+          <app-number-input [group]="form" label="Teléfono del Centro" name='hcNumber' placeholder="8207776677">
+          </app-number-input>
         </div>
       </div>
     </div>
@@ -49,8 +49,8 @@
         </app-input>
       </div>
       <div class="mr-3">
-        <app-date-picker [group]="form" name="firstDiagnostic" label="Fecha primer diagnóstico enfermedad">
-        </app-date-picker>
+        <datepicker-month fieldId="firstDiagnostic"  [group]="form" name="firstDiagnostic" label="Fecha primer diagnóstico enfermedad">
+        </datepicker-month>
       </div>
     </div>
     <hr class="w-full mb-6 ww-divider">
@@ -75,17 +75,17 @@
           <div class="body-13 mb-2">Fecha última vez que tuvo síntomas
           </div>
           <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5">
-            <app-date-picker [group]="form.get('symptoms')" name="date" label="Fecha">
-            </app-date-picker>
+            <datepicker-month fieldId="date"  [group]="form.get('symptoms')" name="date" label="Fecha">
+            </datepicker-month >
           </div>
         </div>
         <div *ngIf="question.name === 'hasBeenOperated'">
           <div *ngFor="let studies of surgeriesList.controls; let i = index"
             class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-5 xl:grid-cols-5">
             <div class="mr-3">
-              <app-date-picker [group]="form.get('surgeries').get(i.toString())" name="date"
+              <datepicker-month fieldId="date"   [group]="form.get('surgeries').get(i.toString())" name="date"
                 label="Fecha de la cirugía">
-              </app-date-picker>
+              </datepicker-month >
             </div>
             <div class="mr-3">
               <app-input [group]="form.get('surgeries').get(i.toString())" name="surgeonName"

@@ -13,6 +13,7 @@ import { DialogOptionService } from 'src/app/core/services/dialog/dialog-option.
 import { MatDialog } from '@angular/material';
 import { Observable } from 'rxjs';
 import { BaseDialogComponent } from 'src/app/shared/components/base-dialog/base-dialog.component';
+import { FormDataFillingService } from 'src/app/modules/dashboard/services/shared/formDataFillingService';
 import { map, first } from 'rxjs/operators';
 import { AppComponent } from 'src/app/app.component';
 // tslint:disable: forin
@@ -483,6 +484,7 @@ export class DisabilityComponent implements OnInit, DoCheck {
 
   constructor(
     private fb: FormBuilder,
+    private dataMappingFromApi: FormDataFillingService,
     public formMethods: FormArrayGeneratorService,
     private disabilityService: DisabilityService,
     public formHandler: FormHandlerService,
@@ -1418,141 +1420,7 @@ export class DisabilityComponent implements OnInit, DoCheck {
         break;
     }
   }
-  has(object: any, key: any) {
-    return object ? this.hasOwnProperty.call(object, key) : false;
-  }
 
-  iterateThroughtAllObject2(obj: any, groupControl: any) {
-    const formDataGroup = groupControl as FormGroup;
-    Object.keys(obj).forEach(e => {
-      let key = e;
-      let value = obj[key];
-
-      const var2 = {
-        name: key, valor: value
-      };
-      this.selectChange(var2);
-
-      if (obj[key] !== null && obj[e] !== undefined && (typeof obj[e]) != "object") {
-        if (value !== undefined && value !== null && value !== '') {
-          if (!this.has(formDataGroup['controls'], key)) {
-            formDataGroup.addControl(key, this.fb.control(value));
-          }
-          else {
-
-            const valueFormControl = formDataGroup['controls'][key] as FormControl;
-            valueFormControl.setValue(value);
-          }
-        }
-      }
-      else if (obj[key] !== null && obj[key] !== undefined && (typeof obj[key]) === "object") {
-        if (Array.isArray(obj[key])) {
-          if (!this.has(formDataGroup['controls'], key)) {
-            formDataGroup.removeControl(key);
-          }
-          if (obj[key].length > 0) {
-            let form = formDataGroup.get(key);
-            let arrayForm = [];
-            obj[key].forEach((element) => {
-              let fbGroup = this.fb.group({
-                id: ['', Validators.required]
-              });
-              // console.log('HOLAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA!');
-              // console.log(typeof obj[key]);
-
-              this.iterateThroughtAllObject2(element, fbGroup);
-              arrayForm.push(fbGroup);
-            });
-
-
-            formDataGroup.addControl(key, this.fb.array(arrayForm));
-            // if (key == 'claim_radio'){
-            //   // tslint:disable-next-line: prefer-for-of
-            //   for (let x = 0; x < obj[key].length; x ++){
-            //     this.selectChange(var2, x.toString());
-            //   }
-            // }
-          }
-        }
-        else {
-          if (!this.has(formDataGroup['controls'], key)) {
-            formDataGroup.addControl(key, this.fb.group({
-              id: ['', Validators.required]
-            }));
-          }
-
-          let form = formDataGroup.get(key);
-
-          this.iterateThroughtAllObject2(obj[key], form);
-          return form;
-        }
-
-      }
-
-   });
- }
- iterateThroughtAllObject(obj: any, groupControl: any) {
-  const formDataGroup = groupControl as FormGroup;
-  Object.keys(obj).forEach(e => {
-    const key = e;
-    const value = obj[key];
-    if (value !== undefined && (typeof value) !== 'object') {
-
-      const valueToSet = (value === null || value === undefined) ? "" : value;
-
-      if (valueToSet !== undefined ) {
-        if (!this.has(formDataGroup.controls, key)) {
-          formDataGroup.addControl(key, this.fb.control(valueToSet));
-        } else {
-
-          const valueFormControl = formDataGroup.controls[key] as FormControl;
-          valueFormControl.setValue(valueToSet);
-        }
-      }
-    }
-    else if (value !== null && value !== undefined && (typeof value) === 'object') {
-      if (Array.isArray(value)) {
-        if (this.has(formDataGroup.controls, key)) {
-          formDataGroup.removeControl(key);
-        }
-        if (value.length > 0) {
-
-          const arrayForm = [];
-          value.forEach((element) => {
-            const fbGroup = this.fb.group({
-              id: ['', Validators.required]
-            });
-
-            this.iterateThroughtAllObject(element, fbGroup);
-            arrayForm.push(fbGroup);
-          });
-          formDataGroup.addControl(key, this.fb.array(arrayForm));
-        }
-        else
-        {
-          formDataGroup.addControl(key, this.fb.array([]));
-        }
-      }
-      else
-      {
-        if (!this.has(formDataGroup.controls, key)) {
-          formDataGroup.addControl(key, this.fb.group({
-            id: ['', Validators.required]
-          }));
-        }
-        const form = formDataGroup.get(key);
-        this.iterateThroughtAllObject(value, form);
-
-        if ((key.includes("solicitud") || key.includes("knowYour")  || key.includes("columnaVertebralColumnaVertebral")) && form.get("id").value == "0")
-        {
-          console.log("DELETE DATAAAAA");
-          formDataGroup.removeControl(key);
-        }
-      }
-    }
-
-  });
-}
   getData(id) {
     console.log(id);
     this.disabilityService.returnData(id).subscribe(data => {
@@ -1561,7 +1429,7 @@ export class DisabilityComponent implements OnInit, DoCheck {
       if (data !== undefined && data.data !== null &&
         data.data != undefined) {
         this.ID = data.data.id;
-        this.iterateThroughtAllObject(data.data, this.disabilityGroup);
+        this.dataMappingFromApi.iterateThroughtAllObject(data.data, this.disabilityGroup);
 
         console.log(this.disabilityGroup);
         console.log(data.data);

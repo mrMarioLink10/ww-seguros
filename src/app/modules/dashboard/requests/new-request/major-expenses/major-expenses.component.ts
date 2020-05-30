@@ -21,6 +21,7 @@ import { QuotesService } from '../../../services/quotes/quotes.service';
 import { environment } from '../../../../../../environments/environment';
 import { FormValidationsConstant } from 'src/app/shared/ShareConstant/shareConstantFile';
 import { CurrencyPipe } from '@angular/common';
+import { FormDataFillingService } from 'src/app/modules/dashboard/services/shared/formDataFillingService';
 @Component({
   selector: 'app-major-expenses',
   templateUrl: './major-expenses.component.html',
@@ -31,6 +32,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
   // tslint:disable-next-line: max-line-length
   constructor(
     private fb: FormBuilder,
+    private dataMappingFromApi: FormDataFillingService,
     public formMethods: FormArrayGeneratorService,
     private router: Router,
     private route: ActivatedRoute,
@@ -1432,132 +1434,6 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
 
   }
 
-  has(object: any, key: any) {
-    return object ? this.hasOwnProperty.call(object, key) : false;
-  }
-
-  /*iterateThroughtAllObject(obj: any, groupControl: any) {
-    const formDataGroup = groupControl as FormGroup;
-    Object.keys(obj).forEach(e => {
-      const key = e;
-      const value = obj[key];
-      if (value !== undefined && (typeof value) !== 'object') {
-
-        const valueToSet = (value === null || value === undefined) ? "" : value;
-        if (valueToSet !== undefined ) {
-          const valueToSet = (value === null) ? "" : value;
-          if (!this.has(formDataGroup.controls, key)) {
-            formDataGroup.addControl(key, this.fb.control(valueToSet));
-          } else {
-
-            const valueFormControl = formDataGroup.controls[key] as FormControl;
-            valueFormControl.setValue(valueToSet);
-          }
-        }
-      }
-      else if (value !== null && value !== undefined && (typeof value) === 'object') {
-        if (Array.isArray(value)) {
-          if (this.has(formDataGroup.controls, key)) {
-            formDataGroup.removeControl(key);
-          }
-          if (value.length > 0) {
-
-            const arrayForm = [];
-            value.forEach((element) => {
-              const fbGroup = this.fb.group({
-                id: ['', Validators.required]
-              });
-
-              this.iterateThroughtAllObject(element, fbGroup);
-              arrayForm.push(fbGroup);
-            });
-
-
-            formDataGroup.addControl(key, this.fb.array(arrayForm));
-          }
-
-        }
-        else
-        {
-          if (!this.has(formDataGroup.controls, key)) {
-            formDataGroup.addControl(key, this.fb.group({
-              id: ['', Validators.required]
-            }));
-          }
-
-          const form = formDataGroup.get(key);
-
-          this.iterateThroughtAllObject(value, form);
-
-        }
-
-      }
-
-    });
-  }*/
-
-  iterateThroughtAllObject(obj: any, groupControl: any) {
-    const formDataGroup = groupControl as FormGroup;
-    Object.keys(obj).forEach(e => {
-      const key = e;
-      const value = obj[key];
-      if (value !== undefined && (typeof value) !== 'object') {
-
-        const valueToSet = (value === null || value === undefined) ? "" : value;
-
-        if (valueToSet !== undefined ) {
-          if (!this.has(formDataGroup.controls, key)) {
-            formDataGroup.addControl(key, this.fb.control(valueToSet));
-          } else {
-
-            const valueFormControl = formDataGroup.controls[key] as FormControl;
-            valueFormControl.setValue(valueToSet);
-          }
-        }
-      }
-      else if (value !== null && value !== undefined && (typeof value) === 'object') {
-        if (Array.isArray(value)) {
-          if (this.has(formDataGroup.controls, key)) {
-            formDataGroup.removeControl(key);
-          }
-          if (value.length > 0) {
-
-            const arrayForm = [];
-            value.forEach((element) => {
-              const fbGroup = this.fb.group({
-                id: ['', Validators.required]
-              });
-
-              this.iterateThroughtAllObject(element, fbGroup);
-              arrayForm.push(fbGroup);
-            });
-            formDataGroup.addControl(key, this.fb.array(arrayForm));
-          }
-          else
-          {
-            formDataGroup.addControl(key, this.fb.array([]));
-          }
-        }
-        else
-        {
-          if (!this.has(formDataGroup.controls, key)) {
-            formDataGroup.addControl(key, this.fb.group({
-              id: ['', Validators.required]
-            }));
-          }
-          const form = formDataGroup.get(key);
-          this.iterateThroughtAllObject(value, form);
-
-          if ((key.includes("solicitud") || key.includes("knowYour")  || key.includes("columnaVertebralColumnaVertebral")) && form.get("id").value == "0")
-          {
-            console.log("DELETE DATAAAAA");
-            formDataGroup.removeControl(key);
-          }
-        }
-      }
-
-    });
-  }
   getData(id) {
     this.majorExpensesService.returnData(id).subscribe(data => {
       //console.log(data);
@@ -1566,7 +1442,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
         data.data !== undefined) {
         this.ID = data.data.id;
         console.log(data.data);
-        this.iterateThroughtAllObject(data.data, this.newRequest);
+        this.dataMappingFromApi.iterateThroughtAllObject(data.data, this.newRequest);
         console.log(this.newRequest);
         this.AddEventOnEachDependentVariable();
         if (this.newRequest.get('questionsB').get('familyWithDiseases') !== undefined && this.newRequest.get('questionsB').get('familyWithDiseases') !== null) {

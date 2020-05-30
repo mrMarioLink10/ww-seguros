@@ -3,6 +3,7 @@ import {FormBuilder, Validators} from '@angular/forms';
 import {MatTableDataSource} from '@angular/material/table';
 import {MatPaginator, MatSort} from '@angular/material';
 import {ActivatedRoute, Router} from "@angular/router";
+import {Insured} from "../../models/policy-detail";
 
 @Component({
   selector: 'app-policy-details',
@@ -22,12 +23,12 @@ export class PolicyDetailsComponent implements OnInit {
 
   dataSource: MatTableDataSource<any>;
   displayedColumns: string[] = ['insuredId', 'certificate', 'fullName', 'validityDate', 'kinship'];
-  data: any[] = [
-    {insuredId: 4321, certificate: 13, fullName: 'Jodir Jiménez', validityDate: '15/05/2020', kinship: 'Hermano'},
-    {insuredId: 5678, certificate: 24, fullName: 'Oscar López', validityDate: '17/03/2020', kinship: 'Hermano'},
-    {insuredId: 9101, certificate: 36, fullName: 'Manuel Montero', validityDate: '20/04/2020', kinship: 'Hermano'},
-    {insuredId: 1213, certificate: 2, fullName: 'Alam Alcántara', validityDate: '22/07/2020', kinship: 'Hermano'},
-    {insuredId: 1415, certificate: 12, fullName: 'Edgar Pérez', validityDate: '12/12/2020', kinship: 'Hermano'},
+  data: Insured[] = [
+    {insuredId: 4321, certificates: 13, fullName: 'Jodir Jiménez', validityDate: '15/05/2020', kinship: 'Hermano'},
+    {insuredId: 5678, certificates: 24, fullName: 'Oscar López', validityDate: '17/03/2020', kinship: 'Hermano'},
+    {insuredId: 9101, certificates: 36, fullName: 'Manuel Montero', validityDate: '20/04/2020', kinship: 'Hermano'},
+    {insuredId: 1213, certificates: 2, fullName: 'Alam Alcántara', validityDate: '22/07/2020', kinship: 'Hermano'},
+    {insuredId: 1415, certificates: 12, fullName: 'Edgar Pérez', validityDate: '12/12/2020', kinship: 'Hermano'},
   ];
 
   constructor(private fb: FormBuilder, private activatedRoute: ActivatedRoute) {

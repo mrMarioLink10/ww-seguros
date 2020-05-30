@@ -1,4 +1,5 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {UserService} from "../../../../core/services/user/user.service";
 
 @Component({
   selector: 'app-consult-header',
@@ -6,13 +7,17 @@ import {Component, EventEmitter, OnInit, Output} from '@angular/core';
   styleUrls: ['./consult-header.component.scss']
 })
 export class ConsultHeaderComponent implements OnInit {
-  pendingPolicies = 2;
 
   @Output() activeTab = new EventEmitter<number>();
+  pendingPolicies = 2;
+  userName: string;
+  userEmail: string;
 
-  constructor() { }
+  constructor(private userService: UserService) { }
 
   ngOnInit() {
+    this.userName = this.userService.getUserInformation().name;
+    this.userEmail = this.userService.getUserInformation().email;
   }
 
   activatePolicyTab() {

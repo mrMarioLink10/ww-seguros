@@ -1,7 +1,7 @@
 <div class="flex flex-col sm:flex-row p-5">
   <div class="w-full sm:w-1/2 flex flex-col background-gray px-10 py-4 border-r-blue-2" style="border-right-width: 50px">
-    <div class="text-5xl txt-blue" >ISAI VARGAS</div>
-    <div class="txt-blue">correo: ivargas@xpertcode.com.do </div>
+    <div class="text-5xl txt-blue" >{{userName}}</div>
+    <div class="txt-blue">correo: {{userEmail}} </div>
   </div>
 
   <div *ngIf="pendingPolicies > 0" class="w-full mt-4 sm:mt-0 sm:w-1/2 sm:ml-5 flex shadow-xl cursor-pointer" (click)="activatePolicyTab()">

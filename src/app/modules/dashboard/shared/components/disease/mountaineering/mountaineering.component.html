@@ -4,16 +4,16 @@
 
     <div class="mt-6">
 
-        <app-forms-container [isQuestionnarie]="false" [titles]="['Cuestionario de Escalada y Montañismo']"> 
+        <app-forms-container [isQuestionnarie]="false" [titles]="['Cuestionario de Escalada y Montañismo']">
 
             <ng-template #formTemplate>
-            
+
                 <div class="ml-4 ">
 
                     <!-- Mini Bloque del campo nombre -->
                     <div class="mt-3 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 mr-3">
 
-                        <app-input [group]="form" 
+                        <app-input [group]="form"
                         label="Nombre(s)" name='name' placeholder="Por ej: Juan Martínez de león de los Santos"></app-input>
 
                     </div>
@@ -36,7 +36,7 @@
 
                                 <div class="inline float-right mt-5 -ml-5 -mr-6 sm:ml-0 sm:-mr-1 sm:mt-4 md:ml-0 md:mr-0 md:mt-3 lg:ml-0 lg:mr-0 lg:mt-0 xl:mt-0 xl:ml-0 xl:mr-0">
                                     <app-radio-button [group]="form.get('activities')" name="artificial_wall_radio"
-                                    [options]="YesNo"> </app-radio-button>                                
+                                    [options]="YesNo"> </app-radio-button>
                                 </div>
 
                             </div>
@@ -50,7 +50,7 @@
 
                                 <div class="inline float-right mt-5 -ml-5 -mr-6 sm:ml-0 sm:-mr-1 sm:mt-4 md:mt-3 md:ml-0 md:mr-0 lg:mt-0 lg:ml-0 lg:mr-0 xl:mt-0 xl:ml-0 xl:mr-0">
                                     <app-radio-button [group]="form.get('activities')" name="expeditions_radio"
-                                    [options]="YesNo"> </app-radio-button>                                
+                                    [options]="YesNo"> </app-radio-button>
                                 </div>
 
                             </div>
@@ -64,7 +64,7 @@
 
                                 <div class="inline float-right mt-5 -ml-5 -mr-6 sm:mt-4 sm:ml-0 sm:-mr-1 md:mt-3 md:ml-0 md:mr-0 lg:mt-0 lg:ml-0 lg:mr-0 xl:mt-0 xl:ml-0 xl:mr-0">
                                     <app-radio-button [group]="form.get('activities')" name="climbing_radio"
-                                    [options]="YesNo"> </app-radio-button>                                
+                                    [options]="YesNo"> </app-radio-button>
                                 </div>
 
                             </div>
@@ -77,8 +77,8 @@
                                 </div>
 
                                 <div class="inline float-right mt-5 -ml-5 -mr-6 sm:mt-4 sm:ml-0 sm:-mr-1 md:mt-3 md:ml-0 md:mr-0 lg:mt-0 lg:ml-0 lg:mr-0 xl:mt-0 xl:ml-0 xl:mr-0">
-                                    <app-radio-button [group]="form.get('activities')" name="Hiking_radio"
-                                    [options]="YesNo"> </app-radio-button>                                
+                                    <app-radio-button [group]="form.get('activities')" name="hiking_radio"
+                                    [options]="YesNo"> </app-radio-button>
                                 </div>
 
                             </div>
@@ -92,7 +92,7 @@
 
                                 <div class="inline float-right mt-5 -ml-5 -mr-6 sm:mt-4 sm:ml-0 sm:-mr-1 md:mt-3 md:ml-0 md:mr-0 lg:mt-0 lg:ml-0 lg:mr-0 xl:mt-0 xl:ml-0 xl:mr-0">
                                     <app-radio-button [group]="form.get('activities')" name="ice_climbing_radio"
-                                    [options]="YesNo"> </app-radio-button>                                
+                                    [options]="YesNo"> </app-radio-button>
                                 </div>
 
                             </div>
@@ -106,7 +106,7 @@
 
                                 <div class="inline float-right mt-5 -ml-5 -mr-6 sm:mt-4 sm:ml-0 sm:-mr-1 md:mt-3 md:ml-0 md:mr-0 lg:mt-0 lg:ml-0 lg:mr-0 xl:mt-0 xl:ml-0 xl:mr-0">
                                     <app-radio-button [group]="form.get('activities')" name="rock_climbing_radio"
-                                    [options]="YesNo"> </app-radio-button>                                
+                                    [options]="YesNo"> </app-radio-button>
                                 </div>
 
                             </div>
@@ -126,10 +126,10 @@
                                 <div class="inline">
                                     <label class="formulary-labels"> 2. ¿Es Ud. miembro de un club u organización de renombre? </label>
                                 </div>
-                                
+
                                 <div class="inline float-right mt-5 -ml-5 -mr-6 sm:mt-4 sm:ml-0 sm:-mr-1 md:mt-3 md:ml-0 md:mr-0 lg:mt-3 lg:ml-0 lg:mr-0 xl:mt-0 xl:ml-0 xl:mr-0">
                                     <app-radio-button [group]="form.get('club')" name="organization_radio"
-                                    [options]="YesNo" (selected)="selectChange($event)"> </app-radio-button>                                
+                                    [options]="YesNo" (selected)="selectChange($event)"> </app-radio-button>
                                 </div>
                             </div>
 
@@ -153,10 +153,10 @@
                                 <label class="formulary-labels"> 3. ¿Cuál es la máxima altura que ha escalado o tiene previsto escalar? </label>
                             </div>
                             <div class="mr-3 mt-6 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
-                                <app-input [group]="form.get('max_height')" 
+                                <app-input [group]="form.get('max_height')"
                                 label="Altura Max" name='height' placeholder="Por ej: 30 metros"></app-input>
                             </div>
-                            
+
                         </div>
 
                     </div>
@@ -165,15 +165,15 @@
 
                     <!-- Bloque 4 -->
                     <div class="mt-10">
-                        
+
                         <div>
                             <div class="inline">
                                 <label class="formulary-labels"> 4. ¿Ha escalado alguna vez solo o sin cuerdas? </label>
                             </div>
-                            
+
                             <div class="inline float-right mt-5 -ml-5 -mr-6 sm:mt-4 sm:ml-0 sm:-mr-1 md:mt-3 md:ml-0 md:mr-0 lg:mt-0 lg:ml-0 lg:mr-0 xl:mt-0 xl:ml-0 xl:mr-0">
                                 <app-radio-button [group]="form.get('climb')" name="radio"
-                                [options]="YesNo"> </app-radio-button>                                
+                                [options]="YesNo"> </app-radio-button>
                             </div>
                         </div>
 
@@ -183,7 +183,7 @@
 
                     <!-- Bloque 5 -->
                     <div class="mt-10">
-                        
+
                         <div>
 
                             <div class="">
@@ -191,56 +191,56 @@
                             </div>
 
                             <!-- Sub-bloque 1 -->
-                            <div>                                     
+                            <div>
 
                                 <!-- Sub-sub-bloque 1 -->
                                     <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4 mt-6">
 
                                         <!-- 1er radio-button -->
-                                        <div>  
+                                        <div>
                                             <div>
-                                                <label class="formulary-labels"> África </label>                         
+                                                <label class="formulary-labels"> África </label>
                                             </div>
                                             <div class="mt-2 -mr-8 sm:mr-0 md:-mr-2 lg:mr-0 xl:mr-0 ">
                                                 <app-radio-button [group]="form.get('climb_zone')" name="africa"
-                                                [options]="YesNo" (selected)="selectChange($event)"> </app-radio-button> 
+                                                [options]="YesNo" (selected)="selectChange($event)"> </app-radio-button>
                                             </div>
                                         </div>
-                                    
+
                                         <!-- 2do radio-button -->
-                                        <div class="md:ml-3 lg:m-0 xl:ml-0">  
+                                        <div class="md:ml-3 lg:m-0 xl:ml-0">
                                             <div>
-                                                <label class="formulary-labels"> Alpes </label>                         
+                                                <label class="formulary-labels"> Alpes </label>
                                             </div>
                                             <div class="mt-2 -mr-8 sm:mr-0 md:-mr-5 lg:mr-0 xl:mr-0">
                                                 <app-radio-button [group]="form.get('climb_zone')" name="alpes"
-                                                [options]="YesNo" (selected)="selectChange($event)"> </app-radio-button> 
+                                                [options]="YesNo" (selected)="selectChange($event)"> </app-radio-button>
                                             </div>
                                         </div>
 
                                         <!-- 3er radio-button -->
-                                        <div>  
+                                        <div>
                                             <div>
-                                                <label class="formulary-labels"> Himalaya </label>                         
+                                                <label class="formulary-labels"> Himalaya </label>
                                             </div>
                                             <div class="mt-2 -mr-8 sm:mr-0 md:-mr-2 lg:mr-0 xl:mr-0 ">
                                                 <app-radio-button [group]="form.get('climb_zone')" name="himalaya"
-                                                [options]="YesNo" (selected)="selectChange($event)"> </app-radio-button> 
+                                                [options]="YesNo" (selected)="selectChange($event)"> </app-radio-button>
                                             </div>
                                         </div>
 
                                         <!-- 4to radio-button -->
-                                        <div class="md:ml-3 lg:m-0 xl:ml-0">  
+                                        <div class="md:ml-3 lg:m-0 xl:ml-0">
                                             <div>
-                                                <label class="formulary-labels"> Andes </label>                         
+                                                <label class="formulary-labels"> Andes </label>
                                             </div>
                                             <div class="mt-2 -mr-8 sm:mr-0 md:-mr-5 lg:mr-0 xl:mr-0">
                                                 <app-radio-button [group]="form.get('climb_zone')" name="andes"
-                                                [options]="YesNo" (selected)="selectChange($event)"> </app-radio-button> 
+                                                [options]="YesNo" (selected)="selectChange($event)"> </app-radio-button>
                                             </div>
                                         </div>
                                     </div>
-                                    
+
                                 <!-- Sub-sub-bloque 2 -->
                                     <div class="mt-3">
 
@@ -251,46 +251,46 @@
                                         <div class="mt-6 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4">
 
                                             <!-- 5to radio-button -->
-                                            <div>  
+                                            <div>
                                                 <div>
-                                                    <label class="formulary-labels"> M. McKinley </label>                         
+                                                    <label class="formulary-labels"> M. McKinley </label>
                                                 </div>
                                                 <div class="mt-2 -mr-8 sm:mr-0 md:-mr-2 lg:mr-0 xl:mr-0">
-                                                    <app-radio-button [group]="form.get('climb_zone')" name="McKinley"
-                                                    [options]="YesNo" (selected)="selectChange($event)"> </app-radio-button> 
+                                                    <app-radio-button [group]="form.get('climb_zone')" name="mcKinley"
+                                                    [options]="YesNo" (selected)="selectChange($event)"> </app-radio-button>
                                                 </div>
                                             </div>
 
                                             <!-- 6to radio-button -->
-                                            <div class="md:ml-3 lg:m-0 xl:ml-0">  
+                                            <div class="md:ml-3 lg:m-0 xl:ml-0">
                                                 <div class="mr-4">
-                                                    <label class="formulary-labels"> Otras cordilleras de Alaska </label>                         
+                                                    <label class="formulary-labels"> Otras cordilleras de Alaska </label>
                                                 </div>
                                                 <div class="mt-2 -mr-8 sm:mr-0 md:-mr-5 lg:mr-0 xl:mr-0">
-                                                    <app-radio-button [group]="form.get('climb_zone')" name="Alaska"
-                                                    [options]="YesNo" (selected)="selectChange($event)"> </app-radio-button> 
+                                                    <app-radio-button [group]="form.get('climb_zone')" name="alaska"
+                                                    [options]="YesNo" (selected)="selectChange($event)"> </app-radio-button>
                                                 </div>
                                             </div>
 
                                             <!-- 7mo radio-button -->
-                                            <div>  
+                                            <div>
                                                 <div class="mr-6 xl:mr-4">
-                                                    <label class="formulary-labels"> Cualquier otra cordillera / cadena montañosa </label>                         
+                                                    <label class="formulary-labels"> Cualquier otra cordillera / cadena montañosa </label>
                                                 </div>
                                                 <div class="mt-2 -mr-8 sm:mr-0 md:-mr-2 lg:mr-0 xl:mr-0">
                                                     <app-radio-button [group]="form.get('climb_zone')" name="mountain_range"
-                                                    [options]="YesNo" (selected)="selectChange($event)"> </app-radio-button> 
+                                                    [options]="YesNo" (selected)="selectChange($event)"> </app-radio-button>
                                                 </div>
                                             </div>
 
                                             <!-- 8vo radio-button -->
-                                            <div class="md:ml-3 lg:m-0 xl:ml-0">  
+                                            <div class="md:ml-3 lg:m-0 xl:ml-0">
                                                 <div>
-                                                    <label class="formulary-labels"> Otros </label>                         
+                                                    <label class="formulary-labels"> Otros </label>
                                                 </div>
                                                 <div class="mt-2 -mr-8 sm:mr-0 md:-mr-5 lg:mr-0 xl:mr-0">
                                                     <app-radio-button [group]="form.get('climb_zone')" name="others"
-                                                    [options]="YesNo" (selected)="selectChange($event)"> </app-radio-button> 
+                                                    [options]="YesNo" (selected)="selectChange($event)"> </app-radio-button>
                                                 </div>
                                             </div>
 
@@ -319,12 +319,12 @@
                             <div class="inline">
                                 <label class="formulary-labels"> 6. Espeología y expediciones en cavernas </label>
                             </div>
-                            
+
                             <div class="inline float-right mt-5 -ml-5 -mr-6 sm:mt-4 sm:ml-0 sm:-mr-1 md:mt-3 md:ml-0 md:mr-0 lg:mt-0 lg:ml-0 lg:mr-0 xl:mt-0 xl:ml-0 xl:mr-0">
                                 <app-radio-button [group]="form.get('expeditions')" name="radio"
-                                [options]="YesNo" (selected)="selectChange($event)"> </app-radio-button>                                
+                                [options]="YesNo" (selected)="selectChange($event)"> </app-radio-button>
                             </div>
-                            
+
                         </div>
 
                         <!-- Filas 6 -->
@@ -339,7 +339,7 @@
                                     </div>
                                     <div class="mr-1 mt-6 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
                                         <app-date-picker [group]="form.get('expeditions').get('cave')" label="¿Desde qué fecha?"
-                                        name='date'> </app-date-picker>  
+                                        name='date'> </app-date-picker>
                                     </div>
                                 </div>
 
@@ -353,7 +353,7 @@
                                         <label class="formulary-labels"> 6b. De media, ¿cuantas veces por año realiza expediciones en cavernas? </label>
                                     </div>
                                     <div class="mr-3 mt-6 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
-                                        <app-number-input [group]="form.get('expeditions').get('cave')" 
+                                        <app-number-input [group]="form.get('expeditions').get('cave')"
                                         label="Por año" name='quantity' placeholder="Por ej: 7" min="0"></app-number-input>
                                     </div>
                                 </div>
@@ -365,9 +365,9 @@
 
                                 <div class="mt-8">
                                     <div class=" inline">
-                                       
+
                                             <label class="formulary-labels"> 6c. ¿Ha realizado en alguna ocasión espeología o exploración de grutas solo o con una persona inexperta? </label>
-                                       
+
                                     </div>
                                     <div class="inline float-right mt-5 -ml-5 -mr-6 sm:mt-4 sm:ml-0 sm:-mr-1 md:mt-3 md:ml-0 md:mr-0 lg:mt-3 lg:ml-0 lg:mr-0 xl:mt-0 xl:ml-0 xl:mr-0">
                                         <app-radio-button [group]="form.get('expeditions').get('cave')" name="grotto_radio"
@@ -386,9 +386,9 @@
 
                                 <div class="mt-20 pt-3 sm:mt-12 sm:pt-3 md:mt-12 md:pt-0 lg:mt-10 lg:pt-0 xl:mt-10 xl:pt-0">
                                     <div class=" inline">
-                                        
+
                                             <label class="formulary-labels"> 6d. ¿Ha buceado en alguna ocasión durante sus actividades de exploración de grutas o espeología? </label>
-                                       
+
                                     </div>
                                     <div class="inline float-right mt-5 -ml-5 -mr-6 sm:mt-4 sm:ml-0 sm:-mr-1 md:mt-3 md:ml-0 md:mr-0 lg:mt-3 lg:ml-0 lg:mr-0 xl:mt-0 xl:ml-0 xl:mr-0">
                                         <app-radio-button [group]="form.get('expeditions').get('cave')" name="dive_radio"
@@ -415,12 +415,12 @@
                             <div class="inline">
                                 <label class="formulary-labels"> 7. ¿Tiene la intención de cambiar la categoría deportiva o tipo de escalada en los próximos 2 años? </label>
                             </div>
-                            
+
                             <div class="inline float-right mt-5 -ml-5 -mr-6 sm:mt-4 sm:ml-0 sm:-mr-1 md:mt-3 md:ml-0 md:mr-0 lg:mt-3 lg:ml-0 lg:mr-0 xl:mt-0 xl:ml-0 xl:mr-0">
                                 <app-radio-button [group]="form.get('category')" name="type_radio"
-                                [options]="YesNo" (selected)="selectChange($event)"> </app-radio-button>                                
+                                [options]="YesNo" (selected)="selectChange($event)"> </app-radio-button>
                             </div>
-                            
+
                         </div>
 
                         <div class="mt-3 mr-3" *ngIf="this.form.get('category').get('sport')">
@@ -433,11 +433,11 @@
                     <div class="pt-5 pl-3 pb-5 mt-24 sm:mt-16 ml-1 -mr-2 sm:-mr-0 md:mr-0 lg:mr-0 xl:mr-0 mb-4" style="background-color: #E6E7E8;">
 
                         <div class="pl-1 pr-1 sm:pl-2 sm:pr-2 md:pl-8 md:pr-6 lg:pl-8 lg:pr-6 xl:pl-8 pr-6">
-    
+
                           <label style="font-size: 12px;"> Declaro haber contestado verídicamente a estas preguntas y que no he ocultado ninguna información que pueda influir en la evaluación o la aceptación de esta solicitud. Estoy de acuerdo en que este cuestionario forme parte de mi solicitud de seguro y que el hecho de no revelar alguna circunstancia conocida por mí, puede anular el contrato. </label>
-    
+
                         </div>
-                        
+
                       </div>
 
                 </div>

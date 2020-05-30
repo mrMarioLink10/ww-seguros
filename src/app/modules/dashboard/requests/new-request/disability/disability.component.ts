@@ -1492,7 +1492,6 @@ export class DisabilityComponent implements OnInit, DoCheck {
 
    });
  }
-
  iterateThroughtAllObject(obj: any, groupControl: any) {
   const formDataGroup = groupControl as FormGroup;
   Object.keys(obj).forEach(e => {
@@ -1502,7 +1501,6 @@ export class DisabilityComponent implements OnInit, DoCheck {
 
       const valueToSet = (value === null || value === undefined) ? "" : value;
 
-    console.log(`${key} ${valueToSet}`);
       if (valueToSet !== undefined ) {
         if (!this.has(formDataGroup.controls, key)) {
           formDataGroup.addControl(key, this.fb.control(valueToSet));
@@ -1543,13 +1541,15 @@ export class DisabilityComponent implements OnInit, DoCheck {
             id: ['', Validators.required]
           }));
         }
-
         const form = formDataGroup.get(key);
-
         this.iterateThroughtAllObject(value, form);
 
+        if ((key.includes("solicitud") || key.includes("knowYour")  || key.includes("columnaVertebralColumnaVertebral")) && form.get("id").value == "0")
+        {
+          console.log("DELETE DATAAAAA");
+          formDataGroup.removeControl(key);
+        }
       }
-
     }
 
   });

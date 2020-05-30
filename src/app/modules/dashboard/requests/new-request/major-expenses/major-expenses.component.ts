@@ -1168,29 +1168,29 @@ addEventChange(){
             }));
             break;
           case 'haveEndocrineDisorders':
-            this.questionnairesGastosMayores.addControl('mellitusDiabetes', this.fb.group({}));
+            this.questionnairesGastosMayores.addControl('solicitudDiabetes', this.fb.group({}));
             break;
 
           case 'haveMaleReproductiveOrgans':
             if (this.person.value.age > FormValidationsConstant.maxMenAge) {
-              this.questionnairesGastosMayores.addControl('prostatic', this.fb.group({}));
+              this.questionnairesGastosMayores.addControl('solicitudProstatica', this.fb.group({}));
             }
 
             break;
 
           case 'haveUrinarySystem':
-            this.questionnairesGastosMayores.addControl('renalUrinary', this.fb.group({}));
+            this.questionnairesGastosMayores.addControl('solicitudRenales', this.fb.group({}));
             break;
 
           case 'haveMusculoskeletal':
-            this.questionnairesGastosMayores.addControl('arthritis', this.fb.group({}));
-            this.questionnairesGastosMayores.addControl('spine', this.fb.group({}));
-            this.questionnairesGastosMayores.addControl('musculosSkeletal', this.fb.group({}));
+            this.questionnairesGastosMayores.addControl('solicitudArtitris', this.fb.group({}));
+            this.questionnairesGastosMayores.addControl('columnaVertebralColumnaVertebral', this.fb.group({}));
+            this.questionnairesGastosMayores.addControl('solicitudMusculoesqueleticos', this.fb.group({}));
             break;
 
           case 'haveCardiovascularSystem':
-            this.questionnairesGastosMayores.addControl('hypertension', this.fb.group({}));
-            this.questionnairesGastosMayores.addControl('spcardiovascularine', this.fb.group({}));
+            this.questionnairesGastosMayores.addControl('solicitudHipertensionArterial', this.fb.group({}));
+            this.questionnairesGastosMayores.addControl('solicitudCardioVasculares', this.fb.group({}));
             break;
 
           default:
@@ -1210,27 +1210,27 @@ addEventChange(){
             break;
 
           case 'haveEndocrineDisorders':
-            this.questionnairesGastosMayores.removeControl('mellitusDiabetes');
+            this.questionnairesGastosMayores.removeControl('solicitudDiabetes');
             break;
 
           case 'haveMaleReproductiveOrgans':
-            this.questionnairesGastosMayores.removeControl('prostatic');
+            this.questionnairesGastosMayores.removeControl('solicitudProstatica');
 
             break;
 
           case 'haveUrinarySystem':
-            this.questionnairesGastosMayores.removeControl('renalUrinary');
+            this.questionnairesGastosMayores.removeControl('solicitudRenales');
             break;
 
           case 'haveMusculoskeletal':
-            this.questionnairesGastosMayores.removeControl('arthritis');
-            this.questionnairesGastosMayores.removeControl('spine');
-            this.questionnairesGastosMayores.removeControl('musculosSkeletal');
+            this.questionnairesGastosMayores.removeControl('solicitudArtitris');
+            this.questionnairesGastosMayores.removeControl('columnaVertebralColumnaVertebral');
+            this.questionnairesGastosMayores.removeControl('solicitudMusculoesqueleticos');
             break;
 
           case 'haveCardiovascularSystem':
-            this.questionnairesGastosMayores.removeControl('hypertension');
-            this.questionnairesGastosMayores.removeControl('cardiovascular');
+            this.questionnairesGastosMayores.removeControl('solicitudHipertensionArterial');
+            this.questionnairesGastosMayores.removeControl('solicitudCardioVasculares');
             break;
 
           default:
@@ -1246,29 +1246,29 @@ addEventChange(){
         console.log('true');
         switch (question) {
           case 'haveEndocrineDisorders':
-            questionnaire.addControl('mellitusDiabetes', this.fb.group({}));
+            questionnaire.addControl('solicitudDiabetes', this.fb.group({}));
             break;
 
           case 'haveMaleReproductiveOrgans':
             if (this.person.value.age > FormValidationsConstant.maxMenAge) {
-              questionnaire.addControl('prostatic', this.fb.group({}));
+              questionnaire.addControl('solicitudProstatica', this.fb.group({}));
             }
 
             break;
 
           case 'haveUrinarySystem':
-            questionnaire.addControl('renalUrinary', this.fb.group({}));
+            questionnaire.addControl('solicitudRenales', this.fb.group({}));
             break;
 
           case 'haveMusculoskeletal':
-            questionnaire.addControl('arthritis', this.fb.group({}));
-            questionnaire.addControl('spine', this.fb.group({}));
-            questionnaire.addControl('musculosSkeletal', this.fb.group({}));
+            questionnaire.addControl('solicitudArtitris', this.fb.group({}));
+            questionnaire.addControl('columnaVertebralColumnaVertebral', this.fb.group({}));
+            questionnaire.addControl('solicitudMusculoesqueleticos', this.fb.group({}));
             break;
 
           case 'haveCardiovascularSystem':
-            questionnaire.addControl('hypertension', this.fb.group({}));
-            questionnaire.addControl('spcardiovascularine', this.fb.group({}));
+            questionnaire.addControl('solicitudHipertensionArterial', this.fb.group({}));
+            questionnaire.addControl('solicitudCardioVasculares', this.fb.group({}));
             break;
 
           default:
@@ -1279,27 +1279,27 @@ addEventChange(){
 
         switch (question) {
           case 'haveEndocrineDisorders':
-            questionnaire.removeControl('mellitusDiabetes');
+            questionnaire.removeControl('solicitudDiabetes');
             break;
 
           case 'haveMaleReproductiveOrgans':
-            questionnaire.removeControl('prostatic');
+            questionnaire.removeControl('solicitudProstatica');
 
             break;
 
           case 'haveUrinarySystem':
-            questionnaire.removeControl('renalUrinary');
+            questionnaire.removeControl('solicitudRenales');
             break;
 
           case 'haveMusculoskeletal':
-            questionnaire.removeControl('arthritis');
-            questionnaire.removeControl('spine');
-            questionnaire.removeControl('musculosSkeletal');
+            questionnaire.removeControl('solicitudArtitris');
+            questionnaire.removeControl('columnaVertebralColumnaVertebral');
+            questionnaire.removeControl('solicitudMusculoesqueleticos');
             break;
 
           case 'haveCardiovascularSystem':
-            questionnaire.removeControl('hypertension');
-            questionnaire.removeControl('cardiovascular');
+            questionnaire.removeControl('solicitudHipertensionArterial');
+            questionnaire.removeControl('solicitudCardioVasculares');
             break;
 
           default:
@@ -1488,67 +1488,68 @@ addEventChange(){
     });
   }*/
 
- iterateThroughtAllObject(obj: any, groupControl: any) {
-  const formDataGroup = groupControl as FormGroup;
-  Object.keys(obj).forEach(e => {
-    const key = e;
-    const value = obj[key];
-    if (value !== undefined && (typeof value) !== 'object') {
+  iterateThroughtAllObject(obj: any, groupControl: any) {
+    const formDataGroup = groupControl as FormGroup;
+    Object.keys(obj).forEach(e => {
+      const key = e;
+      const value = obj[key];
+      if (value !== undefined && (typeof value) !== 'object') {
 
-      const valueToSet = (value === null || value === undefined) ? "" : value;
+        const valueToSet = (value === null || value === undefined) ? "" : value;
 
-    console.log(`${key} ${valueToSet}`);
-      if (valueToSet !== undefined ) {
-        if (!this.has(formDataGroup.controls, key)) {
-          formDataGroup.addControl(key, this.fb.control(valueToSet));
-        } else {
+        if (valueToSet !== undefined ) {
+          if (!this.has(formDataGroup.controls, key)) {
+            formDataGroup.addControl(key, this.fb.control(valueToSet));
+          } else {
 
-          const valueFormControl = formDataGroup.controls[key] as FormControl;
-          valueFormControl.setValue(valueToSet);
+            const valueFormControl = formDataGroup.controls[key] as FormControl;
+            valueFormControl.setValue(valueToSet);
+          }
         }
       }
-    }
-    else if (value !== null && value !== undefined && (typeof value) === 'object') {
-      if (Array.isArray(value)) {
-        if (this.has(formDataGroup.controls, key)) {
-          formDataGroup.removeControl(key);
-        }
-        if (value.length > 0) {
+      else if (value !== null && value !== undefined && (typeof value) === 'object') {
+        if (Array.isArray(value)) {
+          if (this.has(formDataGroup.controls, key)) {
+            formDataGroup.removeControl(key);
+          }
+          if (value.length > 0) {
 
-          const arrayForm = [];
-          value.forEach((element) => {
-            const fbGroup = this.fb.group({
-              id: ['', Validators.required]
+            const arrayForm = [];
+            value.forEach((element) => {
+              const fbGroup = this.fb.group({
+                id: ['', Validators.required]
+              });
+
+              this.iterateThroughtAllObject(element, fbGroup);
+              arrayForm.push(fbGroup);
             });
-
-            this.iterateThroughtAllObject(element, fbGroup);
-            arrayForm.push(fbGroup);
-          });
-          formDataGroup.addControl(key, this.fb.array(arrayForm));
+            formDataGroup.addControl(key, this.fb.array(arrayForm));
+          }
+          else
+          {
+            formDataGroup.addControl(key, this.fb.array([]));
+          }
         }
         else
         {
-          formDataGroup.addControl(key, this.fb.array([]));
+          if (!this.has(formDataGroup.controls, key)) {
+            formDataGroup.addControl(key, this.fb.group({
+              id: ['', Validators.required]
+            }));
+          }
+          const form = formDataGroup.get(key);
+          this.iterateThroughtAllObject(value, form);
+
+          if ((key.includes("solicitud") || key.includes("knowYour")  || key.includes("columnaVertebralColumnaVertebral")) && form.get("id").value == "0")
+          {
+            console.log("DELETE DATAAAAA");
+            formDataGroup.removeControl(key);
+          }
         }
       }
-      else
-      {
-        if (!this.has(formDataGroup.controls, key)) {
-          formDataGroup.addControl(key, this.fb.group({
-            id: ['', Validators.required]
-          }));
-        }
 
-        const form = formDataGroup.get(key);
-
-        this.iterateThroughtAllObject(value, form);
-
-      }
-
-    }
-
-  });
-}
+    });
+  }
   getData(id) {
     this.majorExpensesService.returnData(id).subscribe(data => {
       //console.log(data);
@@ -1578,7 +1579,7 @@ addEventChange(){
     this.informationList = this.newRequest.get('questionsB').get('information') as FormArray;
         this.isFormValidToFill = true;
 
-    this.addEventChange();
+    //this.addEventChange();
         /*let person = this.newRequest.get('person');
         this.iterateThroughtObject(data.data.person, person);
 /// Person

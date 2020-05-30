@@ -1889,15 +1889,15 @@
       <mat-tab
         *ngIf="disabilityGroup.get('insured_data').get('knowYourClient') || disabilityGroup.get('insured_data').get('knowYourCustomer')"
         label="Conozca a su cliente - Asegurado">
-      <!--  <app-know-your-client *ngIf="this.role === 'WMA'"
+        <app-know-your-client *ngIf="disabilityGroup.get('insured_data').get('knowYourClient')"
           [form]="disabilityGroup.get('insured_data').get('knowYourClient')">
         </app-know-your-client>
-        <app-know-your-customer *ngIf="this.role === 'WWS'"
+        <app-know-your-customer *ngIf="disabilityGroup.get('insured_data').get('knowYourCustomer')"
           [form]="disabilityGroup.get('insured_data').get('knowYourCustomer')">
-        </app-know-your-customer>-->
+        </app-know-your-customer>
       </mat-tab>
       <div *ngIf ="disabilityGroup.get('policyholder')">
-     <!--   <mat-tab
+        <mat-tab
         *ngIf="disabilityGroup.get('policyholder').get('knowYourClient') || disabilityGroup.get('policyholder').get('knowYourCustomer')"
         label="Conozca a su cliente - Contratante">
         <app-know-your-client *ngIf="this.role === 'WMA'"
@@ -1906,7 +1906,7 @@
         <app-know-your-customer *ngIf="this.role === 'WWS'"
           [form]="disabilityGroup.get('policyholder').get('knowYourCustomer')">
         </app-know-your-customer>
-        </mat-tab>-->
+        </mat-tab>
       </div>
       <!-- <div *ngIf ="disabilityGroup.get('insured_data')"> -->
         <mat-tab

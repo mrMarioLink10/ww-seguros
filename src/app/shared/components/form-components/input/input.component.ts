@@ -21,7 +21,7 @@ export class InputComponent implements OnInit {
 
   ngOnInit() { }
   ngAfterViewChecked() {
-    console.log( 'all done loading :)');
+
      this.cdr.detectChanges();
    }
 }

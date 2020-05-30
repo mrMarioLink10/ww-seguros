@@ -17,3 +17,25 @@
 .background-gray {
   background-color: #F2F2F2;
 }
+
+.policy-details-table{
+  .mat-header-cell{
+    color: #18446B;
+  }
+
+  #insuredIdCell{
+    color: #007DB7;
+    font-weight: bold;
+  }
+
+  .mat-form-field-infix{
+    border-color: #0e6aff;
+    border-style: solid;
+    border-width: 3px;
+  }
+}
+
+.txt-red {
+  color: red;
+}
+

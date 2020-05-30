@@ -1,7 +1,7 @@
 import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import {MatPaginator, MatTableDataSource, MatSort} from '@angular/material';
 import {Policy, PolicyFilter} from '../../models/policy';
-import {Router} from "@angular/router";
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-policy-table',
@@ -50,7 +50,5 @@ export class PolicyTableComponent implements OnInit {
   sortTableByPendingPayments(): void {
     this.sort.sort({ id: 'paymentState', start: 'desc', disableClear: false });
   }
-
-  go
 
 }

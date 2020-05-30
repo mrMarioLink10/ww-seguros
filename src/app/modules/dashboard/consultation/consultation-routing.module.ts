@@ -25,6 +25,28 @@ const routes: Routes = [
     }
   },
   {
+    path: 'policy/:policyId',
+    component: PolicyDetailsComponent,
+    data: {
+      slug: 'consultation',
+      name: 'Consultas de Polizas',
+      breadcrumb: [
+        {
+          label: '',
+          url: '/'
+        },
+        {
+          label: 'Consultas',
+          url: '/consults'
+        },
+        {
+          label: 'Detalles de Póliza',
+          url: '/policy'
+        }
+      ]
+    }
+  },
+  {
     path: 'policy',
     component: PolicyDetailsComponent,
     data: {
@@ -46,6 +68,7 @@ const routes: Routes = [
       ]
     }
   }
+
 ];
 
 @NgModule({

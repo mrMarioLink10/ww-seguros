@@ -3,18 +3,7 @@ import {FormBuilder} from '@angular/forms';
 import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
 import {MomentDateAdapter} from '@angular/material-moment-adapter';
 import {PolicyFilter} from '../../models/policy';
-
-export const MY_FORMATS = {
-  parse: {
-    dateInput: 'LL',
-  },
-  display: {
-    dateInput: 'DD/MM/YYYY',
-    monthYearLabel: 'YYYY',
-    dateA11yLabel: 'LL',
-    monthYearA11yLabel: 'YYYY',
-  },
-};
+import {MY_FORMATS} from '../../models/date-format';
 
 @Component({
   selector: 'app-policy-filter',
@@ -55,7 +44,7 @@ export class PolicyFilterComponent implements OnInit {
       paymentState: formValue.paymentState ? formValue.paymentState.toString() : '',
       insuranceType: formValue.insuranceType ? formValue.insuranceType.toString() : '',
       initialDate: initialDate ? `${initialDate._i.date}/${initialDate._i.month + 1}/${initialDate._i.year}` : '',
-      endDate: endDate ? `${endDate.date}/${endDate.month + 1}/${endDate.year}` : ''
+      endDate: endDate ? `${endDate._i.date}/${endDate._i.month + 1}/${endDate._i.year}` : ''
     };
 
     this.filters.emit(filter);

@@ -34,7 +34,7 @@
       <div class="w-full grid sm:grid-rows-2 background-gray px-10 py-4 border-r-blue-2" style="border-right-width: 50px">
         <div class="txt-blue grid grid-cols-1 sm:grid-cols-4">
           <div>
-            <span class="font-bold">Pago:</span> {{policyDetail.paymentCicle}}
+            <span class="font-bold mr-2">Pago:</span> {{policyDetail.paymentCicle === 'P' ? 'Pendiente' : 'Pagado'}}
           </div>
           <div>
             <span class="font-bold" >Moneda:</span> {{policyDetail.currency}}$

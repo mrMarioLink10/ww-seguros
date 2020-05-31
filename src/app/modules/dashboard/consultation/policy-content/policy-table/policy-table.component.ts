@@ -51,7 +51,6 @@ export class PolicyTableComponent implements OnInit {
     this.loading = true;
     const params = this.generatePoliciesParams();
     this.policyService.getPolicies(params).subscribe((res: any) => {
-      console.log('POLICIES: ', res);
       this.data = res.data;
       this.dataSource = new MatTableDataSource(this.data);
       this.dataSource.sort = this.sort;
@@ -66,7 +65,7 @@ export class PolicyTableComponent implements OnInit {
   }
 
   emitPendingPolicies(policies: Policy[]) {
-    const filteredPolicies = policies.filter( p => Number(p.paymentState) === 0);
+    const filteredPolicies = policies.filter( p => p.paymentState === 'P');
     this.pendingPoliciesEmitter.emit(filteredPolicies.length);
   }
 

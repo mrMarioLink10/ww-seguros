@@ -49,7 +49,6 @@ export class BillsTableComponent implements OnInit {
   loadData() {
     const httpParams = this.constructQueryParams();
     this.billsService.getBills(httpParams).subscribe((res: any) => {
-      console.log('BILLS: ', res);
       this.data = res.data || [];
       this.dataSource = new MatTableDataSource(this.data);
       this.dataSource.sort = this.sort;

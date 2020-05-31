@@ -500,7 +500,7 @@ export class LifeComponent implements OnInit {
       noC: [{ value: this.noCotizacion }, Validators.required],
       isComplete: [false, Validators.required],
       person: this.fb.group({
-        firstName: [{ value: '', disabled: true }, [Validators.required]],
+        firstName: [{ value: '', disabled: false }, [Validators.required]],
         secondName: ['', Validators.required],
         lastName: ['', Validators.required],
         date: [{ value: '', disabled: true }, [Validators.required]],
@@ -1053,14 +1053,7 @@ export class LifeComponent implements OnInit {
     });
 
     const heightUnitBmiSubscriber = this.newRequest.get('person').get('heightUnit').valueChanges.subscribe(value => {
-      if (value === 'pies') {
-        setTimeout(() => {
-          const inchesBmiSubscriber = this.newRequest.get('person').get('inches').valueChanges.subscribe(val => {
-            this.getBmi();
 
-          });
-        }, 1500);
-      }
       this.getBmi();
     });
 
@@ -1304,13 +1297,12 @@ export class LifeComponent implements OnInit {
 
     let weight = this.newRequest.get('person').get('weight').value;
     let height = this.newRequest.get('person').get('height').value;
-    let inches;
 
-    if (this.newRequest.get('person').get('inches')) { inches = this.newRequest.get('person').get('inches').value; }
+   // if (this.newRequest.get('person').get('inches')) { inches = this.newRequest.get('person').get('inches').value; }
 
     if (weightUnit === 'libras') { weight = weight / 2.205; }
-    if (heightUnit === 'pies') {
-      height = (((height * 12) + inches) * 2.54);
+    if (heightUnit === 'pie') {
+      height = height / 3.281;//(((height * 12) + inches) * 2.54);
     }
 
     const bmi = weight / ((height / 100) * (height / 100));
@@ -1353,11 +1345,11 @@ export class LifeComponent implements OnInit {
 
   onHeightUnitChange(evento) {
     const form = this.newRequest.get('person') as FormGroup;
-    if (evento.valor === 'pies') {
+    /*if (evento.valor === 'pie') {
       form.addControl('inches', this.fb.control('', Validators.required));
     } else {
       form.removeControl('inches');
-    }
+    }*/
   }
 
   searchIdNumber(idNumber: string) {
@@ -1378,6 +1370,7 @@ export class LifeComponent implements OnInit {
           }, 4000);
           this.newRequest.get('person').get('firstName').setValue(response.data.nombre);
           this.newRequest.get('person').get('date').setValue(response.data.fecha_nacimiento);
+          this.newRequest.get('person').get('sex').setValue(response.data.data.sexo);
           this.newRequest.get('relevantPaymentInformation').get('method').setValue(response.data.formaPago);
 
           switch (response.data.plan) {

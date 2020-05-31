@@ -67,7 +67,7 @@ export class FormDataFillingService {
           const form = formDataGroup.get(key);
           this.iterateThroughtAllObject(value, form);
 
-          if ((key.includes("solicitud") || key.includes("knowYour")  || key.includes("columnaVertebralColumnaVertebral")) && form.get("id").value == "0")
+          if ((key.includes("solucionAnti")  || key.includes("solicitud") || key.includes("knowYour")  || key.includes("columnaVertebralColumnaVertebral")) && form.get("id").value == "0")
           {
             console.log("DELETE DATAAAAA");
             formDataGroup.removeControl(key);

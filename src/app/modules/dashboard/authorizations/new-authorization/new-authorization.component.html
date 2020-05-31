@@ -19,7 +19,7 @@
     </div>
   </div>
 
-  <div class="pb-1 mt-4">
+  <div *ngIf="showContent" class="pb-1 mt-4">
 
     <app-forms-container [titles]="accordionTitles">
 
@@ -202,7 +202,7 @@
     </app-forms-container>
 
   </div>
-  <form #form="ngForm" [formGroup]="authorization">
+  <form *ngIf="showContent" #form="ngForm" [formGroup]="authorization">
     <div class="mt-8 mb-4">
       <button mat-button class="cancel-form-button" style="margin-right: 7.5px !important;"
         (click)="formHandler.sendForm(authorization, 'new-authorization', 'cancel')" type="submit">Cancelar</button>

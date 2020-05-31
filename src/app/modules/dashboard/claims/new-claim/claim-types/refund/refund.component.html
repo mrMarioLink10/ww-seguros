@@ -23,7 +23,7 @@
   </div>
 </div>
 
-<app-forms-container [titles]="accordionTitles">
+<app-forms-container *ngIf="showContent" [titles]="accordionTitles">
   <ng-template #formTemplate>
     <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
       <div class="mr-3">
@@ -215,7 +215,7 @@
     </div>
   </ng-template>
 </app-forms-container>
-<form #form="ngForm" [formGroup]="refundForm">
+<form *ngIf="showContent" #form="ngForm" [formGroup]="refundForm">
   <div class="mt-8 mb-4">
     <button mat-button class="cancel-form-button" style="margin-right: 7.5px !important;"
       (click)="formHandler.sendForm(refundForm, 'claims-refund', 'cancel')" type="submit">Cancelar</button>

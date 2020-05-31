@@ -491,7 +491,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
 
       noC: [{ value: this.noCotizacion, disabled: ((this.noCotizacion === '') ? false : true) }, Validators.required],
       isComplete: [false, Validators.required],
-      deducibles: ['', Validators.required],
+      deducibles: [{ value: '', disabled: true }, Validators.required],
       payment: [{ value: '', disabled: true }, Validators.required],
       plans: [{ value: '', disabled: true }, Validators.required],
       requestType: ['', Validators.required],
@@ -502,7 +502,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
         lastName: ['', Validators.required],
         weightUnit: ['', Validators.required],
         heightUnit: ['', Validators.required],
-        date: ['', Validators.required],
+        date: [{ value: '', disabled: true }, Validators.required],
         sex: ['', Validators.required],
         isContractor: ['', Validators.required],
         isJuridica: ['', Validators.required],
@@ -1494,6 +1494,7 @@ if (weight !== '' && height !== '')
 
         this.newRequest.get('payment').setValue(this.currencyPipe.transform(data.data.monto));
         this.newRequest.get('plans').setValue(data.data.plan);
+        this.newRequest.get('deducibles').setValue(data.data.deducible);
         this.newRequest.get('person').get('date').setValue(data.data.fecha_nacimiento);
         this.newRequest.get('person').get('firstName').setValue(data.data.nombre);
         this.newRequest.get('person').get('sex').setValue(data.data.sexo);

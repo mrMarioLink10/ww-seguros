@@ -23,7 +23,11 @@
 
       </div>
       <div class="mr-3">
-        <app-input [group]="form" name="diabetesType" label="Tipo de diabetes">
+        <app-select class="mr-3" [options]="diabetesType" [group]="form"></app-select>
+
+      </div>
+      <div class="mr-3" *ngIf="form.get('diabetesType').value === 'Otra'">
+        <app-input [group]="form" name="diabetesOther" label="Otro Tipo de diabetes">
         </app-input>
       </div>
     </div>

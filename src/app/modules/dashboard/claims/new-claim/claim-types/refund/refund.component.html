@@ -16,14 +16,14 @@
   </div>
 </div>
 
-<div class="p-3 pb-0 mb-4" style="background-color: #F2F2F2">
+<div *ngIf="showContent" class="p-3 pb-0 mb-4" style="background-color: #F2F2F2">
   <div class="filter-title" style="color: #18446B !important">Asegurado</div>
   <div class="mt-3 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 xl:grid-cols-5">
 
   </div>
 </div>
 
-<app-forms-container [titles]="accordionTitles">
+<app-forms-container *ngIf="showContent" [titles]="accordionTitles">
   <ng-template #formTemplate>
     <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
       <div class="mr-3">
@@ -216,7 +216,7 @@
   </ng-template>
 </app-forms-container>
 <form #form="ngForm" [formGroup]="refundForm">
-  <div class="mt-8 mb-4">
+  <div *ngIf="showContent" class="mt-8 mb-4">
     <button mat-button class="cancel-form-button" style="margin-right: 7.5px !important;"
       (click)="formHandler.sendForm(refundForm, 'claims-refund', 'cancel')" type="submit">Cancelar</button>
     <!-- <button mat-button class="save-button" style="margin-right: 7.5px !important;"

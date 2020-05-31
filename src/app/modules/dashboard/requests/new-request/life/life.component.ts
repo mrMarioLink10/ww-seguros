@@ -17,6 +17,8 @@ import { map, first } from 'rxjs/operators';
 import { KnowYourCustomerComponent } from '../../../shared/components/disease/know-your-customer/know-your-customer.component';
 import { AppComponent } from 'src/app/app.component';
 import { MatProgressButtonOptions } from 'mat-progress-buttons';
+import { FormDataFillingService } from 'src/app/modules/dashboard/services/shared/formDataFillingService';
+
 // tslint:disable: one-line
 // tslint:disable: max-line-length
 
@@ -29,6 +31,7 @@ export class LifeComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
+    private dataMappingFromApi: FormDataFillingService,
     public formMethods: FormArrayGeneratorService,
     public diseaseService: DiseaseService,
     public formHandler: FormHandlerService,
@@ -87,6 +90,7 @@ export class LifeComponent implements OnInit {
   filesInformation: any;
   needFinancialStatus = false;
   showNewQuoteRequest = false;
+  todayDate = new Date();
 
   payMethod = {
     label: 'Método de pago',
@@ -257,6 +261,11 @@ export class LifeComponent implements OnInit {
     };
 
   country = {
+    options: $country,
+  };
+
+  countryWithLabel = {
+    label: 'País',
     options: $country,
   };
 
@@ -497,7 +506,7 @@ export class LifeComponent implements OnInit {
       noC: [{ value: this.noCotizacion }, Validators.required],
       isComplete: [false, Validators.required],
       person: this.fb.group({
-        firstName: [{ value: '', disabled: true }, [Validators.required]],
+        firstName: [{ value: '', disabled: false }, [Validators.required]],
         secondName: ['', Validators.required],
         lastName: ['', Validators.required],
         date: [{ value: '', disabled: true }, [Validators.required]],
@@ -519,7 +528,7 @@ export class LifeComponent implements OnInit {
         tel: [''],
         cel: ['', Validators.required],
         officeTel: [''],
-        email: ['', Validators.required],
+        email: ['', [Validators.required, Validators.email]],
         sameAsContractor: ['', Validators.required],
         sameAsPayer: ['', Validators.required],
       }),
@@ -1050,14 +1059,7 @@ export class LifeComponent implements OnInit {
     });
 
     const heightUnitBmiSubscriber = this.newRequest.get('person').get('heightUnit').valueChanges.subscribe(value => {
-      if (value === 'pies') {
-        setTimeout(() => {
-          const inchesBmiSubscriber = this.newRequest.get('person').get('inches').valueChanges.subscribe(val => {
-            this.getBmi();
 
-          });
-        }, 1500);
-      }
       this.getBmi();
     });
 
@@ -1301,13 +1303,12 @@ export class LifeComponent implements OnInit {
 
     let weight = this.newRequest.get('person').get('weight').value;
     let height = this.newRequest.get('person').get('height').value;
-    let inches;
 
-    if (this.newRequest.get('person').get('inches')) { inches = this.newRequest.get('person').get('inches').value; }
+   // if (this.newRequest.get('person').get('inches')) { inches = this.newRequest.get('person').get('inches').value; }
 
     if (weightUnit === 'libras') { weight = weight / 2.205; }
-    if (heightUnit === 'pies') {
-      height = (((height * 12) + inches) * 2.54);
+    if (heightUnit === 'pie') {
+      height = height / 3.281;//(((height * 12) + inches) * 2.54);
     }
 
     const bmi = weight / ((height / 100) * (height / 100));
@@ -1350,11 +1351,11 @@ export class LifeComponent implements OnInit {
 
   onHeightUnitChange(evento) {
     const form = this.newRequest.get('person') as FormGroup;
-    if (evento.valor === 'pies') {
+    /*if (evento.valor === 'pie') {
       form.addControl('inches', this.fb.control('', Validators.required));
     } else {
       form.removeControl('inches');
-    }
+    }*/
   }
 
   searchIdNumber(idNumber: string) {
@@ -1375,6 +1376,7 @@ export class LifeComponent implements OnInit {
           }, 4000);
           this.newRequest.get('person').get('firstName').setValue(response.data.nombre);
           this.newRequest.get('person').get('date').setValue(response.data.fecha_nacimiento);
+          this.newRequest.get('person').get('sex').setValue(response.data.data.sexo);
           this.newRequest.get('relevantPaymentInformation').get('method').setValue(response.data.formaPago);
 
           switch (response.data.plan) {
@@ -1863,7 +1865,7 @@ export class LifeComponent implements OnInit {
 
           this.newRequest.addControl('payer', this.fb.group({
             firstName: ['', Validators.required],
-            secondName: ['', Validators.required],
+            secondName: [''],
             lastName: ['', Validators.required],
             date: ['', Validators.required],
             sex: ['', Validators.required],
@@ -1873,11 +1875,11 @@ export class LifeComponent implements OnInit {
             status: ['', Validators.required],
             countryOfBirth: ['', Validators.required],
             direction: ['', Validators.required],
-            tel: ['', Validators.required],
-            cel: ['', Validators.required],
+            tel: [''],
+            cel: [''],
             officeTel: ['', Validators.required],
-            fax: ['', Validators.required],
-            email: ['', Validators.required],
+            fax: [''],
+            email: ['', [Validators.required, Validators.email]],
             company: this.fb.group({
               name: ['', Validators.required],
               position: ['', Validators.required],
@@ -1886,6 +1888,7 @@ export class LifeComponent implements OnInit {
               city: ['', Validators.required],
               country: ['', Validators.required],
               kinship: ['', Validators.required],
+              insurancePurpose: ['', Validators.required],
               contractorCountry: ['', Validators.required],
             })
           }));
@@ -1897,7 +1900,7 @@ export class LifeComponent implements OnInit {
 
           this.newRequest.addControl('contractor', this.fb.group({
             firstName: ['', Validators.required],
-            secondName: ['', Validators.required],
+            secondName: [''],
             lastName: ['', Validators.required],
             date: ['', Validators.required],
             sex: ['', Validators.required],
@@ -1907,11 +1910,11 @@ export class LifeComponent implements OnInit {
             status: ['', Validators.required],
             countryOfBirth: ['', Validators.required],
             direction: ['', Validators.required],
-            tel: ['', Validators.required],
+            tel: [''],
             cel: ['', Validators.required],
-            officeTel: ['', Validators.required],
-            fax: ['', Validators.required],
-            email: ['', Validators.required],
+            officeTel: [''],
+            fax: [''],
+            email: ['', [Validators.required, Validators.email]],
             company: this.fb.group({
               name: ['', Validators.required],
               position: ['', Validators.required],
@@ -1919,6 +1922,7 @@ export class LifeComponent implements OnInit {
               economicActivity: ['', Validators.required],
               city: ['', Validators.required],
               country: ['', Validators.required],
+              kinship: ['', Validators.required],
               insurancePurpose: ['', Validators.required],
               contractorCountry: ['', Validators.required],
             }),
@@ -1943,7 +1947,7 @@ export class LifeComponent implements OnInit {
               cel: ['', Validators.required],
               officeTel: ['', Validators.required],
               fax: ['', Validators.required],
-              email: ['', Validators.required],
+              email: ['', [Validators.required, Validators.email]],
               company: this.fb.group({
                 name: ['', Validators.required],
                 position: ['', Validators.required],
@@ -1981,7 +1985,7 @@ export class LifeComponent implements OnInit {
               cel: ['', Validators.required],
               officeTel: ['', Validators.required],
               fax: ['', Validators.required],
-              email: ['', Validators.required],
+              email: ['', [Validators.required, Validators.email]],
               company: this.fb.group({
                 name: ['', Validators.required],
                 position: ['', Validators.required],
@@ -2016,7 +2020,9 @@ export class LifeComponent implements OnInit {
           formCB.removeControl('changeAnotherCoverage');
 
           this.existingCoveragesList = undefined;
-          formCB.get('changeAnotherCoverage').reset();
+          if (formCB.get('changeAnotherCoverage')) {
+            formCB.get('changeAnotherCoverage').reset();
+          }
           formCB.removeControl('changingCoverages');
           this.changingCoveragesList = undefined;
           break;
@@ -2317,129 +2323,6 @@ export class LifeComponent implements OnInit {
     console.log('json', JSON.stringify(this.newRequest.get('releventPlanInformation').value));
   }
 
-  has(object: any, key: any) {
-    return object ? this.hasOwnProperty.call(object, key) : false;
-  }
-
-  iterateThroughtAllObject4(obj: any, groupControl: any) {
-    const formDataGroup = groupControl as FormGroup;
-    Object.keys(obj).forEach(e => {
-      let key = e;
-      let value = obj[key];
-      if (obj[key] !== null && obj[e] !== undefined && (typeof obj[e]) != "object") {
-        if (value !== undefined && value !== null && value !== '') {
-          if (!this.has(formDataGroup['controls'], key)) {
-            formDataGroup.addControl(key, this.fb.control(value));
-          }
-          else {
-
-            const valueFormControl = formDataGroup['controls'][key] as FormControl;
-            valueFormControl.setValue(value);
-          }
-        }
-      }
-      else if (obj[key] !== null && obj[key] !== undefined && (typeof obj[key]) === "object") {
-        if (Array.isArray(obj[key])) {
-          if (!this.has(formDataGroup['controls'], key)) {
-            formDataGroup.removeControl(key);
-          }
-          if (obj[key].length > 0) {
-
-            let form = formDataGroup.get(key);
-            let arrayForm = [];
-            obj[key].forEach((element) => {
-              let fbGroup = this.fb.group({
-                id: ['', Validators.required]
-              });
-
-              this.iterateThroughtAllObject(element, fbGroup);
-              arrayForm.push(fbGroup);
-            });
-
-
-            formDataGroup.addControl(key, this.fb.array(arrayForm));
-          }
-        }
-        else {
-          if (!this.has(formDataGroup['controls'], key)) {
-            formDataGroup.addControl(key, this.fb.group({
-              id: ['', Validators.required]
-            }));
-          }
-
-          let form = formDataGroup.get(key);
-
-          this.iterateThroughtAllObject(obj[key], form);
-          return form;
-        }
-
-      }
-
-    });
-  }
-
- iterateThroughtAllObject(obj: any, groupControl: any) {
-  const formDataGroup = groupControl as FormGroup;
-  Object.keys(obj).forEach(e => {
-    const key = e;
-    const value = obj[key];
-    if (value !== undefined && (typeof value) !== 'object') {
-
-      const valueToSet = (value === null || value === undefined) ? "" : value;
-
-      if (valueToSet !== undefined ) {
-        if (!this.has(formDataGroup.controls, key)) {
-          formDataGroup.addControl(key, this.fb.control(valueToSet));
-        } else {
-
-          const valueFormControl = formDataGroup.controls[key] as FormControl;
-          valueFormControl.setValue(valueToSet);
-        }
-      }
-    }
-    else if (value !== null && value !== undefined && (typeof value) === 'object') {
-      if (Array.isArray(value)) {
-        if (this.has(formDataGroup.controls, key)) {
-          formDataGroup.removeControl(key);
-        }
-        if (value.length > 0) {
-
-          const arrayForm = [];
-          value.forEach((element) => {
-            const fbGroup = this.fb.group({
-              id: ['', Validators.required]
-            });
-
-            this.iterateThroughtAllObject(element, fbGroup);
-            arrayForm.push(fbGroup);
-          });
-          formDataGroup.addControl(key, this.fb.array(arrayForm));
-        }
-        else
-        {
-          formDataGroup.addControl(key, this.fb.array([]));
-        }
-      }
-      else
-      {
-        if (!this.has(formDataGroup.controls, key)) {
-          formDataGroup.addControl(key, this.fb.group({
-            id: ['', Validators.required]
-          }));
-        }
-        const form = formDataGroup.get(key);
-        this.iterateThroughtAllObject(value, form);
-
-        if ((key.includes("solicitud") || key.includes("knowYour")  || key.includes("columnaVertebralColumnaVertebral")) && form.get("id").value == "0")
-        {
-          console.log("DELETE DATAAAAA");
-          formDataGroup.removeControl(key);
-        }
-      }
-    }
-
-  });
-}
   getData(id) {
     this.life.returnData(id).subscribe(data => {
       // console.log(data.data.asegurado.documentoIdentidad)
@@ -2447,7 +2330,7 @@ export class LifeComponent implements OnInit {
       if (data !== undefined && data.data !== null &&
         data.data != undefined) {
         this.ID = data.data.id;
-        this.iterateThroughtAllObject(data.data, this.newRequest);
+        this.dataMappingFromApi.iterateThroughtAllObject(data.data, this.newRequest);
 
         console.log(this.newRequest);
         this.primaryBenefitsArray = this.newRequest.get('primaryBenefits').get('dependentsC') as FormArray;
@@ -2456,34 +2339,34 @@ export class LifeComponent implements OnInit {
         this.showContent = true;
 
         const formCB = this.newRequest.get('contingentBeneficiary') as FormGroup;
-    const formAR = this.newRequest.get('agentReport') as FormGroup;
-    const formHMI = this.newRequest.get('medicalHistory').get('informations') as FormGroup;
-    const formWI = this.newRequest.get('medicalHistory').get('informations').get('womenInformation') as FormGroup;
+        const formAR = this.newRequest.get('agentReport') as FormGroup;
+        const formHMI = this.newRequest.get('medicalHistory').get('informations') as FormGroup;
+        const formWI = this.newRequest.get('medicalHistory').get('informations').get('womenInformation') as FormGroup;
 
-          this.familyRelationshipInsurances = formAR.get('familyInsurances') as FormArray; ;
-          this.existingCoveragesList = formCB.get('anotherCoverages') as FormArray;
-          this.changingCoveragesList = formCB.get('changingCoverages') as FormArray;
-          this.womenDisordersList = formWI.get('disorders') as FormArray;
-          this.heartPainList = formHMI.get('heartPain') as FormArray;
-          this.respiratoryDisorderList = formHMI.get('respiratoryDisorder') as FormArray;
-          this.mentalNervousDisorderList = formHMI.get('mentalNervousDisorder') as FormArray;
-          this.stomachDisorderList = formHMI.get('stomachDisorder') as FormArray;
-          this.endocrineDisorderList = formHMI.get('endocrineDisorder') as FormArray;
-          this.spineDisorderList = formHMI.get('spineDisorder') as FormArray;
-          this.unexplainedDiseaseList = formHMI.get('unexplainedDisease') as FormArray;
-          this.renalDisorderList = formHMI.get('renalDisorder') as FormArray;
-          this.eyesNoseThroatProblemList = formHMI.get('eyesNoseThroatProblem') as FormArray;
-          this.bloodDisorderList = formHMI.get('bloodDisorder') as FormArray;
-          this.birthDefectList = formHMI.get('birthDefect') as FormArray;
-          this.medicalProceduresList = formHMI.get('medicalProcedures') as FormArray;
-          this.beenAPatientList = formHMI.get('beenAPatient') as FormArray;
-          this.hadSpecializedTestsList = formHMI.get('hadSpecializedTests') as FormArray;
-          this.notCarriedOutList = formHMI.get('notCarriedOut') as FormArray;
-          this.takenInLast12MonthsList = formHMI.get('takenInLast12Months') as FormArray;
-          this.planToObtainMedicalTreatmentList = formHMI.get('planToObtainMedicalTreatment') as FormArray;
-          this.testedPositiveForHIVList = formHMI.get('testedPositiveForHIV') as FormArray;
-          this.diabetesDiagnosisList = formHMI.get('diabetesDiagnosis') as FormArray;
-          this.doctorList = formHMI.get('doctors') as FormArray;
+        this.familyRelationshipInsurances = formAR.get('familyInsurances') as FormArray;;
+        this.existingCoveragesList = formCB.get('anotherCoverages') as FormArray;
+        this.changingCoveragesList = formCB.get('changingCoverages') as FormArray;
+        this.womenDisordersList = formWI.get('disorders') as FormArray;
+        this.heartPainList = formHMI.get('heartPain') as FormArray;
+        this.respiratoryDisorderList = formHMI.get('respiratoryDisorder') as FormArray;
+        this.mentalNervousDisorderList = formHMI.get('mentalNervousDisorder') as FormArray;
+        this.stomachDisorderList = formHMI.get('stomachDisorder') as FormArray;
+        this.endocrineDisorderList = formHMI.get('endocrineDisorder') as FormArray;
+        this.spineDisorderList = formHMI.get('spineDisorder') as FormArray;
+        this.unexplainedDiseaseList = formHMI.get('unexplainedDisease') as FormArray;
+        this.renalDisorderList = formHMI.get('renalDisorder') as FormArray;
+        this.eyesNoseThroatProblemList = formHMI.get('eyesNoseThroatProblem') as FormArray;
+        this.bloodDisorderList = formHMI.get('bloodDisorder') as FormArray;
+        this.birthDefectList = formHMI.get('birthDefect') as FormArray;
+        this.medicalProceduresList = formHMI.get('medicalProcedures') as FormArray;
+        this.beenAPatientList = formHMI.get('beenAPatient') as FormArray;
+        this.hadSpecializedTestsList = formHMI.get('hadSpecializedTests') as FormArray;
+        this.notCarriedOutList = formHMI.get('notCarriedOut') as FormArray;
+        this.takenInLast12MonthsList = formHMI.get('takenInLast12Months') as FormArray;
+        this.planToObtainMedicalTreatmentList = formHMI.get('planToObtainMedicalTreatment') as FormArray;
+        this.testedPositiveForHIVList = formHMI.get('testedPositiveForHIV') as FormArray;
+        this.diabetesDiagnosisList = formHMI.get('diabetesDiagnosis') as FormArray;
+        this.doctorList = formHMI.get('doctors') as FormArray;
 
 
       }

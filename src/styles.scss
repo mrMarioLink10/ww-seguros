@@ -482,6 +482,9 @@ body {
   border-radius: 50% !important;
   outline: none !important;
   outline-style: none !important;
+  display: -webkit-box !important;
+  display: -ms-flexbox !important;
+  display: -webkit-flex !important;
   display: flex;
   justify-content: center;
 }

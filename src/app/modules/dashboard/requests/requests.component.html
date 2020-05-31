@@ -71,43 +71,47 @@
 
         <ng-container matColumnDef="acciones" style="text-align: end !important; margin-right: 15px !important; ">
           <th class="padding-cell" mat-header-cell *matHeaderCellDef mat-sort-header
-            style="max-width: 110px !important;"> Acciones </th>
-          <td class="padding-cell" mat-cell *matCellDef="let element" style="max-width: 110px !important;">
-            <!-- <button mat-mini-fab aria-label="Ver mas" *ngIf="element.estatus === 'Enviado'"
-              class="dashboard-table-buttons">
-              <img src="../../../../assets/iconos/eye.svg">
-            </button>
+            style="max-width: 140px !important; min-width: 137px !important; width: 137px !important;"> Acciones </th>
+          <td class="padding-cell" mat-cell *matCellDef="let element"
+            style="max-width: 140px !important; min-width: 137px !important; width: 137px !important;">
+            <!-- 
             <button mat-mini-fab aria-label="Editar" *ngIf="element.estatus !== 'Enviado'"
               class="dashboard-table-buttons">
               <img src="../../../../assets/iconos/edit.svg">
             </button>
-            <button mat-mini-fab aria-label="Eliminar" *ngIf="element.estatus !== 'Enviado'"
+            -->
+            <button mat-mini-fab aria-label="Ver mas" (click)="seeRequest(element.id, element.seguro)"
+              *ngIf="element.estatus === 2" class="dashboard-table-buttons">
+              <img src="../../../../assets/iconos/eye.svg">
+            </button>
+            <button *ngIf="element.estatus === 1" (click)="directSendTargeting(element.id, element.seguro)" mat-mini-fab
+              aria-label="Enviar" class="dashboard-table-buttons">
+              <img src="../../../../assets/iconos/send.svg">
+            </button>
+            <button mat-mini-fab aria-label="Editar"
+              *ngIf="element.seguro == 'Vida' && element.estatus !== 2 && element.estatus !== 4"
+              class="dashboard-table-buttons" (click)="navigateToLife(element.id)">
+              <!--  -->
+              <img src="../../../../assets/iconos/edit.svg">
+            </button>
+            <button mat-mini-fab aria-label="Editar"
+              *ngIf="element.seguro == 'Salud' && element.estatus !== 2 && element.estatus !== 4"
+              class="dashboard-table-buttons" (click)="navigateToSalud(element.id)">
+              <img src="../../../../assets/iconos/edit.svg">
+            </button>
+
+            <button mat-mini-fab aria-label="Editar"
+              *ngIf="element.seguro == 'Disability' && element.estatus !== 2 && element.estatus !== 4"
+              class="dashboard-table-buttons" (click)="navigateToDisability(element.id)">
+              <!-- (click)="this.life.getID(element)" -->
+              <img src="../../../../assets/iconos/edit.svg">
+            </button>
+
+            <button *ngIf="element.estatus!== 2 && element.estatus !== 4"
+              (click)="deleteTargeting(element.id, element.seguro)" mat-mini-fab aria-label="Eliminar"
               class="dashboard-table-buttons">
               <img src="../../../../assets/iconos/trash.svg">
-            </button> -->
-            <div *ngIf="element.seguro == 'Vida'">
-              <button mat-mini-fab aria-label="Editar" *ngIf="element.estatus !== 'Enviado'"
-                class="dashboard-table-buttons" (click)="navigateToLife(element.id)">
-                <!--  -->
-                <img src="../../../../assets/iconos/edit.svg">
-              </button>
-              <!-- <p> Hola, soy vida </p> -->
-            </div>
-            <div *ngIf="element.seguro == 'Salud'">
-              <button mat-mini-fab aria-label="Editar" *ngIf="element.estatus !== 'Enviado'"
-                class="dashboard-table-buttons" (click)="navigateToSalud(element.id)">
-                <img src="../../../../assets/iconos/edit.svg">
-              </button>
-              <!-- <p> Hola, soy Salud </p> -->
-            </div>
-            <div *ngIf="element.seguro == 'Disability'">
-              <button mat-mini-fab aria-label="Editar" *ngIf="element.estatus !== 'Enviado'"
-                class="dashboard-table-buttons" (click)="navigateToDisability(element.id)">
-                <!-- (click)="this.life.getID(element)" -->
-                <img src="../../../../assets/iconos/edit.svg">
-              </button>
-              <!-- <p> Hola, soy Disability </p> -->
-            </div>
+            </button>
           </td>
         </ng-container>
 

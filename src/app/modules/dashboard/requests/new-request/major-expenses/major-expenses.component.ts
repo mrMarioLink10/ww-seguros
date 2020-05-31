@@ -1,7 +1,7 @@
 import { Component, OnInit, DoCheck, ViewChild } from '@angular/core';
 import { FieldConfig } from 'src/app/shared/components/form-components/models/field-config';
 import { FormGroup, FormBuilder, Validators, FormArray, FormControl } from '@angular/forms';
-import { $sex, $res, $country, $time, $family, $allFamily } from '../../../../../core/form/objects';
+import { $sex, $res, $country, $time, $family, $allFamily, $weightTypes, $heightTypes  } from '../../../../../core/form/objects';
 import { FormArrayGeneratorService } from 'src/app/core/services/forms/form-array-generator.service';
 import { questionsA, questionsB } from './questions';
 import { Requests } from '../../requests.component';
@@ -21,6 +21,7 @@ import { QuotesService } from '../../../services/quotes/quotes.service';
 import { environment } from '../../../../../../environments/environment';
 import { FormValidationsConstant } from 'src/app/shared/ShareConstant/shareConstantFile';
 import { CurrencyPipe } from '@angular/common';
+import { FormDataFillingService } from 'src/app/modules/dashboard/services/shared/formDataFillingService';
 @Component({
   selector: 'app-major-expenses',
   templateUrl: './major-expenses.component.html',
@@ -31,6 +32,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
   // tslint:disable-next-line: max-line-length
   constructor(
     private fb: FormBuilder,
+    private dataMappingFromApi: FormDataFillingService,
     public formMethods: FormArrayGeneratorService,
     private router: Router,
     private route: ActivatedRoute,
@@ -62,6 +64,17 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
   get person(): FormGroup {
     return this.newRequest.get('person') as FormGroup;
   }
+  weightUnit = {
+    label: 'Unidad de peso',
+    options: $weightTypes,
+    name: 'weightUnit'
+  };
+
+  heightUnit = {
+    label: 'Unidad de altura',
+    options: $heightTypes,
+    name: 'heightUnit'
+  };
   pruebaCheck: any;
   visible = false;
   primaryBenefitsArray: FormArray;
@@ -326,6 +339,8 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
     name: ['', Validators.required],
     lastName: ['', Validators.required],
     family: ['', Validators.required],
+    weightUnit: ['', Validators.required],
+    heightUnit: ['', Validators.required],
     weight: ['', [Validators.required, Validators.min(1)]],
     date: ['', Validators.required],
     height: ['', [Validators.required, Validators.min(1)]],
@@ -474,7 +489,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
 
     this.newRequest = this.fb.group({
 
-      NoC: [{ value: this.noCotizacion, disabled: ((this.noCotizacion === '') ? false : true) }, Validators.required],
+      noC: [{ value: this.noCotizacion, disabled: ((this.noCotizacion === '') ? false : true) }, Validators.required],
       isComplete: [false, Validators.required],
       deducibles: ['', Validators.required],
       payment: [{ value: '', disabled: true }, Validators.required],
@@ -485,6 +500,8 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
         firstName: ['', Validators.required],
         secondName: [''],
         lastName: ['', Validators.required],
+        weightUnit: ['', Validators.required],
+        heightUnit: ['', Validators.required],
         date: ['', Validators.required],
         sex: ['', Validators.required],
         isContractor: ['', Validators.required],
@@ -691,10 +708,16 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
     }
   }
   addEventChange() {
+     this.newRequest.get('person').get('weightUnit').valueChanges.subscribe(value => {
+      this.getBmi(this.newRequest.get('person').value.height, this.newRequest.get('person').value.weight);
+    });
+     this.newRequest.get('person').get('heightUnit').valueChanges.subscribe(value => {
+      this.getBmi(this.newRequest.get('person').value.height, this.newRequest.get('person').value.weight);
+    });
     this.newRequest.get('person').get('weight').valueChanges.subscribe(value => {
       this.getBmi(this.newRequest.get('person').value.height, value);
     });
-    this.newRequest.get('NoC').valueChanges.subscribe(value => {
+    this.newRequest.get('noC').valueChanges.subscribe(value => {
       if (value !== '' && value !== undefined) {
         this.isNotValidToSearch = false;
       } else {
@@ -856,7 +879,10 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
           });
           this.newRequest.get('dependents').get('allDependents').get(index.toString()).get('height').valueChanges.subscribe(value => {
             const weight = this.newRequest.get('dependents').get('allDependents').get(index.toString()).get('weight').value;
-            const result = this.getBmiValue(value, weight);
+            const heightUnit = this.newRequest.get('dependents').get('allDependents').get(index.toString()).get('heightUnit').value;
+            const weightUnit = this.newRequest.get('dependents').get('allDependents').get(index.toString()).get('weightUnit').value;
+
+            const result = this.getBmiValue(value, weight, weightUnit, heightUnit);
             this.newRequest
               .get('dependents')
               .get('allDependents')
@@ -867,7 +893,9 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
           });
           this.newRequest.get('dependents').get('allDependents').get(index.toString()).get('weight').valueChanges.subscribe(value => {
             const height = this.newRequest.get('dependents').get('allDependents').get(index.toString()).get('height').value;
-            const result = this.getBmiValue(height, value);
+            const heightUnit = this.newRequest.get('dependents').get('allDependents').get(index.toString()).get('heightUnit').value;
+            const weightUnit = this.newRequest.get('dependents').get('allDependents').get(index.toString()).get('weightUnit').value;
+            const result = this.getBmiValue(height, value, weightUnit, heightUnit);
             this.newRequest
               .get('dependents')
               .get('allDependents')
@@ -876,7 +904,37 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
               .setValue(result);
 
           });
-        } else {
+
+          this.newRequest.get('dependents').get('allDependents').get(index.toString()).get('heightUnit').valueChanges.subscribe(value => {
+            const height = this.newRequest.get('dependents').get('allDependents').get(index.toString()).get('height').value;
+            const weight = this.newRequest.get('dependents').get('allDependents').get(index.toString()).get('weight').value;
+            const weightUnit = this.newRequest.get('dependents').get('allDependents').get(index.toString()).get('weightUnit').value;
+            const result = this.getBmiValue(height, weight, weightUnit, value);
+            this.newRequest
+              .get('dependents')
+              .get('allDependents')
+              .get(index.toString())
+              .get('bmi')
+              .setValue(result);
+
+          });
+
+          this.newRequest.get('dependents').get('allDependents').get(index.toString()).get('weightUnit').valueChanges.subscribe(value => {
+            const height = this.newRequest.get('dependents').get('allDependents').get(index.toString()).get('height').value;
+            const weight = this.newRequest.get('dependents').get('allDependents').get(index.toString()).get('weight').value;
+            const heightUnit = this.newRequest.get('dependents').get('allDependents').get(index.toString()).get('heightUnit').value;
+            const result = this.getBmiValue(height, weight, value, heightUnit);
+            this.newRequest
+              .get('dependents')
+              .get('allDependents')
+              .get(index.toString())
+              .get('bmi')
+              .setValue(result);
+
+          });
+        }
+        else
+        {
           this.newRequest
             .get('dependents')
             .get('allDependents')
@@ -888,13 +946,22 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
 
     }
   }
-  getBmiValue(height: any, weight: any) {
-    const bmi = weight / ((height / 100) * (height / 100));
+  getBmiValue(height: any, weight: any, typeWeight: any, typeHeight: any) {
+    if (height !== '' && weight !== '')
+    {
+      if (typeWeight === 'libras') { weight = weight / 2.205; }
+      if (typeHeight === 'pie') {
+        height = height / 3.281;
+      }
+      const bmi = weight / ((height / 100) * (height / 100));
 
-    if (bmi !== Infinity) {
-      const value = parseFloat(`${bmi}`).toFixed(2);
-      return value;
+      if (bmi !== Infinity) {
+        const value = parseFloat(`${bmi}`).toFixed(2);
+        return value;
+      }
+
     }
+    return 0;
   }
   isBenefitMinorThan100(group: string, subgroup: string): boolean {
     const form = this.newRequest.get(group).get(subgroup) as FormGroup;
@@ -1355,12 +1422,23 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
   }
 
   getBmi(height: any, weight: any) {
-    const bmi = weight / ((height / 100) * (height / 100));
-    if (bmi !== Infinity) {
-      const value = parseFloat(`${bmi}`).toFixed(2);
-      this.newRequest.get('person').get('bmi').setValue(value);
-    }
+    const weightUnit = this.newRequest.get('person').get('weightUnit').value;
+    const heightUnit = this.newRequest.get('person').get('heightUnit').value;
+if (weight !== '' && height !== '')
+{
+  if (weightUnit === 'libras') { weight = weight / 2.205; }
+  if (heightUnit === 'pie') {
+    height = height / 3.281;//(((height * 12) + inches) * 2.54);
   }
+
+  const bmi = weight / ((height / 100) * (height / 100));
+  if (bmi !== Infinity) {
+    const value = parseFloat(`${bmi}`).toFixed(2);
+    this.newRequest.get('person').get('bmi').setValue(value);
+  }
+
+}
+}
 
   print() {
     console.log('solicitante: ', this.newRequest.get('questionsA'));
@@ -1418,6 +1496,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
         this.newRequest.get('plans').setValue(data.data.plan);
         this.newRequest.get('person').get('date').setValue(data.data.fecha_nacimiento);
         this.newRequest.get('person').get('firstName').setValue(data.data.nombre);
+        this.newRequest.get('person').get('sex').setValue(data.data.sexo);
       } else {
         this.notFoundQuote = true;
         const dialogRef = this.dialog.open(BaseDialogComponent, {
@@ -1432,132 +1511,6 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
 
   }
 
-  has(object: any, key: any) {
-    return object ? this.hasOwnProperty.call(object, key) : false;
-  }
-
-  /*iterateThroughtAllObject(obj: any, groupControl: any) {
-    const formDataGroup = groupControl as FormGroup;
-    Object.keys(obj).forEach(e => {
-      const key = e;
-      const value = obj[key];
-      if (value !== undefined && (typeof value) !== 'object') {
-
-        const valueToSet = (value === null || value === undefined) ? "" : value;
-        if (valueToSet !== undefined ) {
-          const valueToSet = (value === null) ? "" : value;
-          if (!this.has(formDataGroup.controls, key)) {
-            formDataGroup.addControl(key, this.fb.control(valueToSet));
-          } else {
-
-            const valueFormControl = formDataGroup.controls[key] as FormControl;
-            valueFormControl.setValue(valueToSet);
-          }
-        }
-      }
-      else if (value !== null && value !== undefined && (typeof value) === 'object') {
-        if (Array.isArray(value)) {
-          if (this.has(formDataGroup.controls, key)) {
-            formDataGroup.removeControl(key);
-          }
-          if (value.length > 0) {
-
-            const arrayForm = [];
-            value.forEach((element) => {
-              const fbGroup = this.fb.group({
-                id: ['', Validators.required]
-              });
-
-              this.iterateThroughtAllObject(element, fbGroup);
-              arrayForm.push(fbGroup);
-            });
-
-
-            formDataGroup.addControl(key, this.fb.array(arrayForm));
-          }
-
-        }
-        else
-        {
-          if (!this.has(formDataGroup.controls, key)) {
-            formDataGroup.addControl(key, this.fb.group({
-              id: ['', Validators.required]
-            }));
-          }
-
-          const form = formDataGroup.get(key);
-
-          this.iterateThroughtAllObject(value, form);
-
-        }
-
-      }
-
-    });
-  }*/
-
-  iterateThroughtAllObject(obj: any, groupControl: any) {
-    const formDataGroup = groupControl as FormGroup;
-    Object.keys(obj).forEach(e => {
-      const key = e;
-      const value = obj[key];
-      if (value !== undefined && (typeof value) !== 'object') {
-
-        const valueToSet = (value === null || value === undefined) ? "" : value;
-
-        if (valueToSet !== undefined ) {
-          if (!this.has(formDataGroup.controls, key)) {
-            formDataGroup.addControl(key, this.fb.control(valueToSet));
-          } else {
-
-            const valueFormControl = formDataGroup.controls[key] as FormControl;
-            valueFormControl.setValue(valueToSet);
-          }
-        }
-      }
-      else if (value !== null && value !== undefined && (typeof value) === 'object') {
-        if (Array.isArray(value)) {
-          if (this.has(formDataGroup.controls, key)) {
-            formDataGroup.removeControl(key);
-          }
-          if (value.length > 0) {
-
-            const arrayForm = [];
-            value.forEach((element) => {
-              const fbGroup = this.fb.group({
-                id: ['', Validators.required]
-              });
-
-              this.iterateThroughtAllObject(element, fbGroup);
-              arrayForm.push(fbGroup);
-            });
-            formDataGroup.addControl(key, this.fb.array(arrayForm));
-          }
-          else
-          {
-            formDataGroup.addControl(key, this.fb.array([]));
-          }
-        }
-        else
-        {
-          if (!this.has(formDataGroup.controls, key)) {
-            formDataGroup.addControl(key, this.fb.group({
-              id: ['', Validators.required]
-            }));
-          }
-          const form = formDataGroup.get(key);
-          this.iterateThroughtAllObject(value, form);
-
-          if ((key.includes("solicitud") || key.includes("knowYour")  || key.includes("columnaVertebralColumnaVertebral")) && form.get("id").value == "0")
-          {
-            console.log("DELETE DATAAAAA");
-            formDataGroup.removeControl(key);
-          }
-        }
-      }
-
-    });
-  }
   getData(id) {
     this.majorExpensesService.returnData(id).subscribe(data => {
       //console.log(data);
@@ -1566,7 +1519,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
         data.data !== undefined) {
         this.ID = data.data.id;
         console.log(data.data);
-        this.iterateThroughtAllObject(data.data, this.newRequest);
+        this.dataMappingFromApi.iterateThroughtAllObject(data.data, this.newRequest);
         console.log(this.newRequest);
         this.AddEventOnEachDependentVariable();
         if (this.newRequest.get('questionsB').get('familyWithDiseases') !== undefined && this.newRequest.get('questionsB').get('familyWithDiseases') !== null) {

@@ -97,6 +97,7 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy {
 	direccionSB: any;
 	formSubmitted = false;
 	todayDate = new Date();
+	showContent = false;
 
 	@ViewChild('form', { static: false }) form;
 
@@ -264,9 +265,11 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy {
 
 		this.userService.getInsurancePeople(idNumber)
 			.subscribe((response: any) => {
+
 				console.log(response);
 				this.appComponent.showOverlay = false;
 				if (response.data !== null) {
+					this.showContent = true;
 					const dialogRef = this.dialog.open(BaseDialogComponent, {
 						data: this.dialogOption.idNumberFound(response.data),
 						minWidth: 385,
@@ -292,6 +295,8 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy {
 					}
 
 				} else {
+					this.showContent = false;
+
 					const dialogRef = this.dialog.open(BaseDialogComponent, {
 						data: this.dialogOption.idNumberNotFound,
 						minWidth: 385,
@@ -347,6 +352,7 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy {
 		this.appComponent.showOverlay = true;
 		this.newAuthorization.returnData(id).subscribe(data => {
 			console.log(data);
+			this.showContent = true;
 			this.authorization.get('informacionAsegurado').get('idNumber').disable();
 
 			switch (data.data.informacionAsegurado.sexo) {

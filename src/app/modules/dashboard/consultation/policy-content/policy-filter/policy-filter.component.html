@@ -14,7 +14,7 @@
       <mat-form-field color="accent" appearance="outline" class="w-full bg-transparente"
                       style="font-size: small !important;">
         <mat-label>No. Póliza</mat-label>
-        <input formControlName="policyId" matInput type="number">
+        <input formControlName="policyId" matInput>
       </mat-form-field>
     </div>
 
@@ -59,7 +59,11 @@
   </div>
 
   <div class="flex flex-row-reverse -mt-3">
-    <button mat-mini-fab color="primary" aria-label="Buscar" type="submit">
+    <button mat-mini-fab color="accent" aria-label="Buscar" (click)="resetForm()" >
+      <mat-icon>delete</mat-icon>
+    </button>
+
+    <button mat-mini-fab color="primary" aria-label="Buscar" type="submit" style="margin-right: 5px;">
       <mat-icon>search</mat-icon>
     </button>
   </div>

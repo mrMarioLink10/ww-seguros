@@ -11,7 +11,7 @@ export interface PolicyDetail {
 }
 
 export interface Insured {
-  insuredId: number;
+  insuredId: string;
   certificates: number;
   fullName: string;
   validityDate: string;

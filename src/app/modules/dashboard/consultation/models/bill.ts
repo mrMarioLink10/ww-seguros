@@ -8,8 +8,8 @@ export interface Bill {
 }
 
 export interface BillFilter {
-  policyId?: number;
-  billId?: number;
+  policyId?: string;
+  billId?: string;
   clientName?: string;
   paymentState?: string;
   initialDate?: string;

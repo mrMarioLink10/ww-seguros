@@ -27,21 +27,24 @@ export class BillsFilterComponent implements OnInit {
   sendFormToParent() {
     const formValue = this.filterForm.value;
 
-    console.log('FORM VALUE: ', formValue);
-    const initialDate = formValue.initialDate._i;
-    const endDate = formValue.endDate._i;
+    const initialDate = formValue.initialDate;
+    const endDate = formValue.endDate;
 
     const filter: BillFilter = {
-      policyId: formValue.policyId,
-      billId: formValue.billId,
-      clientName: formValue.clientName,
-      paymentState: formValue.paymentState,
-      initialDate: initialDate ? `${initialDate.date}/${initialDate.month + 1}/${initialDate.year}` : '',
+      policyId: formValue.policyId ? formValue.policyId : '',
+      billId: formValue.billId ? formValue.billId : '',
+      clientName: formValue.clientName ? formValue.clientName : '',
+      paymentState: formValue.paymentState ? formValue.paymentState : '',
+      initialDate: initialDate ? `${initialDate._i.date}/${initialDate._i.month + 1}/${initialDate._i.year}` : '',
       endDate: endDate ? `${endDate.date}/${endDate.month + 1}/${endDate.year}` : ''
     };
-    console.log('FILTER VALUE: ', filter);
 
     this.filters.emit(filter);
+  }
+
+  resetForm() {
+    this.filterForm.reset();
+    this.sendFormToParent();
   }
 
 }

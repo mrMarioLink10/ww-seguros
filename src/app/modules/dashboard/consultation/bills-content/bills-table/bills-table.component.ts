@@ -1,6 +1,9 @@
 import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import {Bill, BillFilter} from '../../models/bill';
 import {MatPaginator, MatTableDataSource, MatSort} from '@angular/material';
+import {BillsService} from '../../../services/consultation/bills.service';
+import {UserService} from '../../../../../core/services/user/user.service';
+import {HttpParams} from '@angular/common/http';
 
 @Component({
   selector: 'app-bills-table',
@@ -13,33 +16,89 @@ export class BillsTableComponent implements OnInit {
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
   billsFilter: BillFilter;
+
   @Input() set filters(billsFilter: BillFilter) {
-    this.billsFilter = billsFilter;
+    if (billsFilter) {
+      this.billsFilter = billsFilter;
+      this.loadData();
+    } else {
+      this.billsFilter = {
+        policyId: '',
+        billId: '',
+        clientName: '',
+        initialDate: '',
+        endDate: '',
+        paymentState: ''
+      };
+    }
   }
 
+  userRole: string;
   dataSource;
-  data: Bill[] = [
-    {policyId: 1233, billId: 1234, clientName: 'Isaí Vargas', expirationDate: '15/05/2020', paymentState: 'Pagado', totalBalance: 15000},
-    {policyId: 4567, billId: 1234, clientName: 'Alam Alcántara', expirationDate: '15/05/2020', paymentState: 'Pagado', totalBalance: 7500},
-    {policyId: 8910, billId: 1234, clientName: 'Jean Carlos Pérez', expirationDate: '15/05/2020', paymentState: 'Pendiente', totalBalance: 15000},
-    {policyId: 1112, billId: 1234, clientName: 'Jodir Jimenez', expirationDate: '15/05/2020', paymentState: 'Pagado', totalBalance: 15000},
-    {policyId: 1314, billId: 1234, clientName: 'Oscar López', expirationDate: '15/05/2020', paymentState: 'Pagado', totalBalance: 15000},
-    {policyId: 1516, billId: 1234, clientName: 'Manuel Montero', expirationDate: '15/05/2020', paymentState: 'Pendiente', totalBalance: 7500},
-    {policyId: 1617, billId: 1234, clientName: 'Jeremy Cruz', expirationDate: '15/05/2020', paymentState: 'Pagado', totalBalance: 15000},
-  ];
-
+  data: Bill[] = [];
   displayedColumns: string[] = ['policyId', 'billId' , 'clientName', 'expirationDate', 'paymentState', 'totalBalance', 'actions'];
 
-  constructor() { }
+  constructor(private billsService: BillsService, private userService: UserService) { }
 
   ngOnInit() {
+    this.userRole = this.userService.getRoleCotizador();
+    this.canUserDownloadBills();
     this.loadData();
   }
 
   loadData() {
-    this.dataSource = new MatTableDataSource(this.data);
-    this.dataSource.sort = this.sort;
-    this.dataSource.paginator = this.paginator;
+    const httpParams = this.constructQueryParams();
+    this.billsService.getBills(httpParams).subscribe((res: any) => {
+      console.log('BILLS: ', res);
+      this.data = res.data || [];
+      this.dataSource = new MatTableDataSource(this.data);
+      this.dataSource.sort = this.sort;
+      this.dataSource.paginator = this.paginator;
+    });
+  }
+
+  canUserDownloadBills() {
+    return this.userRole === 'WWS' || this.userRole === 'WMA';
+  }
+
+  getBillDownloadLink(billId) {
+    switch (this.userRole) {
+      case 'WWS':
+        return `http://wwsdevportalbackend.azurewebsites.net/InvoiceView/ExportRDToPD/${billId}`;
+      case 'WMA':
+        return `http://wwsdevportalbackend.azurewebsites.net/InvoiceView/ExportPMToPDF/${billId}`;
+      default:
+        return'';
+    }
+  }
+
+  constructQueryParams(): HttpParams {
+    let httpParams = new HttpParams();
+    if (this.billsFilter.policyId && this.billsFilter.policyId !== '') {
+      httpParams = httpParams.append('policyId', this.billsFilter.policyId.toString());
+    }
+
+    if (this.billsFilter.billId && this.billsFilter.billId !== '') {
+      httpParams = httpParams.append('billId', this.billsFilter.billId.toString());
+    }
+
+    if (this.billsFilter.clientName && this.billsFilter.clientName !== '') {
+      httpParams = httpParams.append('clientName', this.billsFilter.clientName.toString());
+    }
+
+    if (this.billsFilter.paymentState && this.billsFilter.paymentState !== '') {
+      httpParams = httpParams.append('paymentState', this.billsFilter.paymentState.toString());
+    }
+
+    if (this.billsFilter.initialDate && this.billsFilter.initialDate !== '') {
+      httpParams = httpParams.append('initialDate', this.billsFilter.initialDate.toString());
+    }
+
+    if (this.billsFilter.endDate && this.billsFilter.endDate !== '') {
+      httpParams = httpParams.append('endDate', this.billsFilter.endDate.toString());
+    }
+
+    return httpParams;
   }
 
 }

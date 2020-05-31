@@ -1,5 +1,5 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
-import {UserService} from "../../../../core/services/user/user.service";
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {UserService} from '../../../../core/services/user/user.service';
 
 @Component({
   selector: 'app-consult-header',
@@ -9,9 +9,13 @@ import {UserService} from "../../../../core/services/user/user.service";
 export class ConsultHeaderComponent implements OnInit {
 
   @Output() activeTab = new EventEmitter<number>();
-  pendingPolicies = 2;
   userName: string;
   userEmail: string;
+
+  pendingPolicies = 0;
+  @Input() set _pendingPolicies(pendingPolicies: number) {
+    this.pendingPolicies = pendingPolicies;
+  }
 
   constructor(private userService: UserService) { }
 

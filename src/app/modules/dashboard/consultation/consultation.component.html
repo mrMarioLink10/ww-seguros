@@ -1,17 +1,17 @@
 <div>
   <div class="text-blue-800 font-bold text-2xl px-5 mt-3" >Consulta</div>
-  <app-consult-header (activeTab)="setActiveTab($event); policyTable.sortTableByPendingPayments()"></app-consult-header>
+  <app-consult-header (activeTab)="setActiveTab($event); policyTable.sortTableByPendingPayments()" [_pendingPolicies]="pendingPolicies"></app-consult-header>
   <div class="tabs-content px-4 mt-3 sm:mt-10">
-    <mat-tab-group mat-stretch-tabs [(selectedIndex)]="activeTab" >
+    <mat-tab-group mat-stretch-tabs [(selectedIndex)]="activeTab">
 
       <mat-tab label="Pólizas">
         <app-policy-filter (filters)="setPolicyFilters($event)" ></app-policy-filter>
-        <app-policy-table [filters]="policyFilters" #policyTable></app-policy-table>
+        <app-policy-table [filters]="policyFilters" (pendingPoliciesEmitter)="setPendingPolicies($event)" #policyTable></app-policy-table>
       </mat-tab>
 
       <mat-tab label="Facturas">
         <app-bills-filter (filters)="setBillsFilters($event)"></app-bills-filter>
-        <app-bills-table [filters]="billsFilter"></app-bills-table>
+        <app-bills-table [filters]="billsFilter" #billTable></app-bills-table>
       </mat-tab>
     </mat-tab-group>
   </div>

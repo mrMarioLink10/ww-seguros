@@ -1,7 +1,9 @@
-import {Component, Input, OnInit, ViewChild} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {MatPaginator, MatTableDataSource, MatSort} from '@angular/material';
 import {Policy, PolicyFilter} from '../../models/policy';
 import {Router} from '@angular/router';
+import {PolicyService} from '../../../services/consultation/policy.service';
+import {HttpParams} from '@angular/common/http';
 
 @Component({
   selector: 'app-policy-table',
@@ -13,42 +15,89 @@ export class PolicyTableComponent implements OnInit {
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
-
   policyFilters: PolicyFilter;
   @Input() set filters(policyFilters: PolicyFilter) {
-    this.policyFilters = policyFilters;
+    if (policyFilters) {
+      this.policyFilters = policyFilters;
+      this.loadData();
+    } else {
+      this.policyFilters = {
+        id: '',
+        clientName: '',
+        initialDate: '',
+        endDate: '',
+        insuranceType: '',
+        paymentState: ''
+      };
+    }
   }
 
-  sortByPendingPayments = false;
+  @Output() pendingPoliciesEmitter = new EventEmitter<number>();
 
   displayedColumns: string[] = ['id', 'clientName', 'product', 'insuredQuantity', 'validityDate',
     'paymentState', 'totalBalance'];
 
-    dataSource;
-    data: Policy[] = [
-    {id: 1233, clientName: 'Isaí Vargas', product: 'vida', insuredQuantity: 4, validityDate: '15/05/2020', paymentState: 'Pagado', totalBalance: 15000},
-    {id: 4567, clientName: 'Alam Alcántara', product: 'salud', insuredQuantity: 4, validityDate: '15/05/2020', paymentState: 'Pagado', totalBalance: 7500},
-    {id: 8910, clientName: 'Jean Carlos Pérez', product: 'vida', insuredQuantity: 4, validityDate: '15/05/2020', paymentState: 'Pendiente', totalBalance: 15000},
-    {id: 1112, clientName: 'Jodir Jimenez', product: 'vida', insuredQuantity: 4, validityDate: '15/05/2020', paymentState: 'Pagado', totalBalance: 15000},
-    {id: 1314, clientName: 'Oscar López', product: 'vida', insuredQuantity: 4, validityDate: '15/05/2020', paymentState: 'Pagado', totalBalance: 15000},
-    {id: 1516, clientName: 'Manuel Montero', product: 'salud', insuredQuantity: 4, validityDate: '15/05/2020', paymentState: 'Pendiente', totalBalance: 7500},
-    {id: 1617, clientName: 'Jeremy Cruz', product: 'salud', insuredQuantity: 4, validityDate: '15/05/2020', paymentState: 'Pagado', totalBalance: 15000},
-    ];
+    dataSource: MatTableDataSource<Policy>;
+    data: Policy[] = [];
+    loading = false;
 
-  constructor(private route: Router) { }
+  constructor(private route: Router, private policyService: PolicyService) { }
 
   ngOnInit() {
     this.loadData();
   }
 
   loadData() {
-    this.dataSource = new MatTableDataSource(this.data);
-    this.dataSource.sort = this.sort;
-    this.dataSource.paginator = this.paginator;
+    this.loading = true;
+    const params = this.generatePoliciesParams();
+    this.policyService.getPolicies(params).subscribe((res: any) => {
+      console.log('POLICIES: ', res);
+      this.data = res.data;
+      this.dataSource = new MatTableDataSource(this.data);
+      this.dataSource.sort = this.sort;
+      this.dataSource.paginator = this.paginator;
+      this.emitPendingPolicies(this.data);
+      this.loading = false;
+    });
   }
 
   sortTableByPendingPayments(): void {
     this.sort.sort({ id: 'paymentState', start: 'desc', disableClear: false });
+  }
+
+  emitPendingPolicies(policies: Policy[]) {
+    const filteredPolicies = policies.filter( p => Number(p.paymentState) === 0);
+    this.pendingPoliciesEmitter.emit(filteredPolicies.length);
+  }
+
+  generatePoliciesParams(): HttpParams {
+    let httpParams = new HttpParams();
+
+    if (this.policyFilters.id && this.policyFilters.id !== '') {
+      httpParams = httpParams.append('id', this.policyFilters.id);
+    }
+
+    if (this.policyFilters.clientName && this.policyFilters.clientName !== '') {
+      httpParams = httpParams.append('clientName', this.policyFilters.clientName);
+    }
+
+    if (this.policyFilters.paymentState && this.policyFilters.paymentState !== '') {
+      httpParams = httpParams.append('paymentState', this.policyFilters.paymentState);
+    }
+
+    if (this.policyFilters.insuranceType && this.policyFilters.insuranceType !== '') {
+      httpParams = httpParams.append('insuranceType', this.policyFilters.insuranceType);
+    }
+
+    if (this.policyFilters.initialDate && this.policyFilters.initialDate !== '') {
+      httpParams = httpParams.append('initianDate', this.policyFilters.initialDate);
+    }
+
+    if (this.policyFilters.endDate && this.policyFilters.endDate !== '') {
+      httpParams = httpParams.append('endDate', this.policyFilters.endDate);
+    }
+
+    return httpParams;
   }
 
 }

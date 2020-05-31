@@ -46,21 +46,24 @@ export class PolicyFilterComponent implements OnInit {
   sendFormToParent() {
     const formValue = this.filterForm.value;
 
-    console.log('FORM VALUE: ', formValue);
-    const initialDate = formValue.initialDate._i;
-    const endDate = formValue.endDate._i;
+    const initialDate = formValue.initialDate;
+    const endDate = formValue.endDate;
 
     const filter: PolicyFilter = {
-      id: formValue.policyId,
-      clientName: formValue.clientName,
-      paymentState: formValue.paymentState,
-      insuranceType: formValue.insuranceType,
-      initialDate: initialDate ? `${initialDate.date}/${initialDate.month + 1}/${initialDate.year}` : '',
+      id: formValue.policyId ? formValue.policyId.toString() : '',
+      clientName: formValue.clientName ? formValue.clientName.toString() : '',
+      paymentState: formValue.paymentState ? formValue.paymentState.toString() : '',
+      insuranceType: formValue.insuranceType ? formValue.insuranceType.toString() : '',
+      initialDate: initialDate ? `${initialDate._i.date}/${initialDate._i.month + 1}/${initialDate._i.year}` : '',
       endDate: endDate ? `${endDate.date}/${endDate.month + 1}/${endDate.year}` : ''
     };
-    console.log('FILTER VALUE: ', filter);
 
     this.filters.emit(filter);
+  }
+
+  resetForm() {
+    this.filterForm.reset();
+    this.sendFormToParent();
   }
 
 }

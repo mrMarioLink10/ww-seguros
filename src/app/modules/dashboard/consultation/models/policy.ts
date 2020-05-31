@@ -1,15 +1,16 @@
 export interface Policy {
-  id: number;
+  id: string;
   clientName: string;
   product: string;
   insuredQuantity: number;
   validityDate: string;
   paymentState: string;
   totalBalance: number;
+  category: string;
 }
 
 export interface PolicyFilter {
-  id?: number;
+  id?: string;
   clientName?: string;
   paymentState?: string;
   initialDate?: string;

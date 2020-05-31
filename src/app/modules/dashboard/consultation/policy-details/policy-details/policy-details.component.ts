@@ -2,8 +2,9 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {FormBuilder, Validators} from '@angular/forms';
 import {MatTableDataSource} from '@angular/material/table';
 import {MatPaginator, MatSort} from '@angular/material';
-import {ActivatedRoute, Router} from "@angular/router";
-import {Insured} from "../../models/policy-detail";
+import {ActivatedRoute} from '@angular/router';
+import {Insured, PolicyDetail} from '../../models/policy-detail';
+import {PolicyService} from '../../../services/consultation/policy.service';
 
 @Component({
   selector: 'app-policy-details',
@@ -23,15 +24,11 @@ export class PolicyDetailsComponent implements OnInit {
 
   dataSource: MatTableDataSource<any>;
   displayedColumns: string[] = ['insuredId', 'certificate', 'fullName', 'validityDate', 'kinship'];
-  data: Insured[] = [
-    {insuredId: 4321, certificates: 13, fullName: 'Jodir Jiménez', validityDate: '15/05/2020', kinship: 'Hermano'},
-    {insuredId: 5678, certificates: 24, fullName: 'Oscar López', validityDate: '17/03/2020', kinship: 'Hermano'},
-    {insuredId: 9101, certificates: 36, fullName: 'Manuel Montero', validityDate: '20/04/2020', kinship: 'Hermano'},
-    {insuredId: 1213, certificates: 2, fullName: 'Alam Alcántara', validityDate: '22/07/2020', kinship: 'Hermano'},
-    {insuredId: 1415, certificates: 12, fullName: 'Edgar Pérez', validityDate: '12/12/2020', kinship: 'Hermano'},
-  ];
+  policyDetail: PolicyDetail;
+  data: Insured[] = [];
+  loading = false;
 
-  constructor(private fb: FormBuilder, private activatedRoute: ActivatedRoute) {
+  constructor(private fb: FormBuilder, private activatedRoute: ActivatedRoute, private policyService: PolicyService) {
     this.policyId = this.activatedRoute.snapshot.paramMap.get('policyId');
   }
 
@@ -41,11 +38,18 @@ export class PolicyDetailsComponent implements OnInit {
     }
   }
 
-  searchPolicy(policyId: number) {
+  searchPolicy(policyId: string) {
     this.policyId = policyId;
-    this.dataSource = new MatTableDataSource(this.data);
-    this.dataSource.sort = this.sort;
-    this.dataSource.paginator = this.paginator;
+    this.loading = true;
+    this.policyService.getPolicyDetails(policyId).subscribe((res: any) => {
+      this.policyDetail = res.data;
+      console.log('DETALLE DE POLIZA: ', res);
+      this.dataSource = new MatTableDataSource(this.policyDetail.insured);
+      this.dataSource.sort = this.sort;
+      this.dataSource.paginator = this.paginator;
+      this.loading = false;
+    });
+
   }
 
 }

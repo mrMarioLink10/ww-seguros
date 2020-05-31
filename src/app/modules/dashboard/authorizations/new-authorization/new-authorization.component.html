@@ -202,8 +202,8 @@
     </app-forms-container>
 
   </div>
-  <form *ngIf="showContent" #form="ngForm" [formGroup]="authorization">
-    <div class="mt-8 mb-4">
+  <form #form="ngForm" [formGroup]="authorization">
+    <div *ngIf="showContent" class="mt-8 mb-4">
       <button mat-button class="cancel-form-button" style="margin-right: 7.5px !important;"
         (click)="formHandler.sendForm(authorization, 'new-authorization', 'cancel')" type="submit">Cancelar</button>
       <button #saveButton name="saveButton" mat-button class="save-button" style="margin-right: 7.5px !important;"

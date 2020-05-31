@@ -32,6 +32,7 @@ export class RefundComponent implements OnInit {
 	todayDate = new Date();
 	validDatesCounter = 0;
 	filesInformation = [];
+	showContent = false;
 
 	formaPago: FieldConfig = {
 		label: 'Especifique forma de pago',
@@ -262,6 +263,7 @@ export class RefundComponent implements OnInit {
 				console.log(response);
 				this.appComponent.showOverlay = false;
 				if (response.data !== null) {
+					this.showContent = true;
 					const dialogRef = this.dialog.open(BaseDialogComponent, {
 						data: this.dialogOption.idNumberFound(response.data),
 						minWidth: 385,
@@ -274,6 +276,7 @@ export class RefundComponent implements OnInit {
 					this.refundForm.get('informacion').get('noPoliza').setValue(response.data.asegurado.no_poliza);
 
 				} else {
+					this.showContent = false;
 					const dialogRef = this.dialog.open(BaseDialogComponent, {
 						data: this.dialogOption.idNumberNotFound,
 						minWidth: 385,

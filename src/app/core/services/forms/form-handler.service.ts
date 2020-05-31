@@ -35,13 +35,13 @@ export class FormHandlerService {
 		private http: HttpClient,
 	) { }
 
-	sendForm(form: FormGroup, name: string, type?: string, id?: number, appComponent?: any) {
+	sendForm(form: FormGroup, name: string, type?: string, appComponent?: any, id?: number) {
 		console.log('Impresion de formulario down here: ', form);
-		this.dialogHandler(form, name, type, id, appComponent);
+		this.dialogHandler(form, name, type, appComponent, id);
 		console.log(appComponent);
 	}
 
-	dialogHandler(form: FormGroup, name: string, type: string, id?: number, appComponent?: any) {
+	dialogHandler(form: FormGroup, name: string, type: string, appComponent?: any, id?: number) {
 		let Dialog;
 		let dataOpen;
 		let dataClosing;

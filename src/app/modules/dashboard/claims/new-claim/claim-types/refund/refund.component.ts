@@ -376,7 +376,7 @@ export class RefundComponent implements OnInit {
 	sendForm(form: FormGroup, formType: string, sendType: string, id?: number) {
 		console.log(id);
 
-		this.formHandler.sendForm(form, formType, sendType, id, this.appComponent);
+		this.formHandler.sendForm(form, formType, sendType, this.appComponent, id);
 
 	}
 }

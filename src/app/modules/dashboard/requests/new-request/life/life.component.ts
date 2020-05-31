@@ -1304,7 +1304,7 @@ export class LifeComponent implements OnInit {
     let weight = this.newRequest.get('person').get('weight').value;
     let height = this.newRequest.get('person').get('height').value;
 
-   // if (this.newRequest.get('person').get('inches')) { inches = this.newRequest.get('person').get('inches').value; }
+    // if (this.newRequest.get('person').get('inches')) { inches = this.newRequest.get('person').get('inches').value; }
 
     if (weightUnit === 'libras') { weight = weight / 2.205; }
     if (heightUnit === 'pie') {
@@ -2380,7 +2380,7 @@ export class LifeComponent implements OnInit {
   sendForm(form: FormGroup, formType: string, sendType: string, id?: number) {
     console.log(id);
 
-    this.formHandler.sendForm(form, formType, sendType, id, this.appComponent);
+    this.formHandler.sendForm(form, formType, sendType, this.appComponent, id);
 
   }
 }

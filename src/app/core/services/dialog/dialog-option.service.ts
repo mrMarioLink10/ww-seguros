@@ -84,8 +84,8 @@ export class DialogOptionService {
 	deleteConfirmed(title: string) {
 		return {
 			logo: 'check',
-			title: `Se ha eliminado correctamente la solicitud de ${title}`,
-			text: ``,
+			title: `Confirmación`,
+			text: `Se ha eliminado correctamente la solicitud de ${title}`,
 			showButtons: false,
 		};
 	}
@@ -105,7 +105,7 @@ export class DialogOptionService {
 	confirmedForm(form: string) {
 		return {
 			logo: 'check',
-			title: 'Enviado',
+			title: 'Confirmación',
 			text: `La solicitud de ${form} ha sido enviada`,
 			showButtons: false,
 		};

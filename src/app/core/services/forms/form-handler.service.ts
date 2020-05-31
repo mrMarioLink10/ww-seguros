@@ -13,6 +13,7 @@ import { DisabilityService } from '../../../modules/dashboard/requests/new-reque
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../../environments/environment';
 import { AppComponent } from 'src/app/app.component';
+import { Observable, Subject } from 'rxjs';
 // tslint:disable: forin
 // tslint:disable: variable-name
 
@@ -438,12 +439,13 @@ export class FormHandlerService {
 		this.route.navigateByUrl(route);
 	}
 
-	directSendRequest(id: number, type: string, title: string, appComponent: any) {
+	directSendRequest(id: number, type: string, title: string, appComponent: any): Observable<boolean> {
 		const dialogRef = this.dialog.open(BaseDialogComponent, {
 			data: this.dialogOption.sendForm(title),
 			minWidth: 385,
 		});
-
+		let deleted: boolean;
+		const subject = new Subject<boolean>();
 		dialogRef.afterClosed().subscribe((result) => {
 			if (result === 'true') {
 				appComponent.showOverlay = true;
@@ -457,21 +459,24 @@ export class FormHandlerService {
 							minWidth: 385
 						});
 						this.closeDialog(dialog);
-
+						deleted = true;
+						subject.next(deleted);
 					}, (err) => {
 						this.badSend(err);
 
 					});
 			}
 		});
+		return subject.asObservable();
 	}
 
-	deleteRequest(id: number, type: string, title: string, appComponent: any) {
+	deleteRequest(id: number, type: string, title: string, appComponent: any): Observable<boolean> {
 		const dialogRef = this.dialog.open(BaseDialogComponent, {
 			data: this.dialogOption.deleteConfirm(title),
 			minWidth: 385,
 		});
-
+		let deleted: boolean;
+		const subject = new Subject<boolean>();
 		dialogRef.afterClosed().subscribe((result) => {
 			if (result === 'true') {
 				appComponent.showOverlay = true;
@@ -486,12 +491,14 @@ export class FormHandlerService {
 							minWidth: 385
 						});
 						this.closeDialog(dialog);
+						deleted = true;
+						subject.next(deleted);
 					}, (err) => {
 						this.badSend(err);
-
 					});
 			}
 		});
+		return subject.asObservable();
 	}
 
 	findInvalidControls(_input: AbstractControl, _invalidControls?: AbstractControl[]): AbstractControl[] {

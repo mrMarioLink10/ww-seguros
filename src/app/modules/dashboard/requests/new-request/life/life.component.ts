@@ -506,11 +506,11 @@ export class LifeComponent implements OnInit {
       noC: [{ value: this.noCotizacion }, Validators.required],
       isComplete: [false, Validators.required],
       person: this.fb.group({
-        firstName: [{ value: '', disabled: false }, [Validators.required]],
-        secondName: ['', Validators.required],
+        firstName: [{ value: '', disabled: true }, [Validators.required]],
+        secondName: [''],
         lastName: ['', Validators.required],
         date: [{ value: '', disabled: true }, [Validators.required]],
-        sex: ['', Validators.required],
+        sex: [{ value: '', disabled: true }, [Validators.required]],
         nationality: ['', Validators.required],
         id2: ['', Validators.required],
         id2Type: ['', Validators.required],
@@ -521,7 +521,7 @@ export class LifeComponent implements OnInit {
         heightUnit: ['', Validators.required],
         status: ['', Validators.required],
         bmi: [{ value: '', disabled: true }, [Validators.required]],
-        annualIncome: ['', [Validators.required, Validators.min(1)]],
+        annualIncome: ['', [Validators.required, Validators.min(0)]],
         countryOfResidence: ['', Validators.required],
         countryOfBirth: ['', Validators.required],
         direction: ['', Validators.required],
@@ -1376,8 +1376,20 @@ export class LifeComponent implements OnInit {
           }, 4000);
           this.newRequest.get('person').get('firstName').setValue(response.data.nombre);
           this.newRequest.get('person').get('date').setValue(response.data.fecha_nacimiento);
-          this.newRequest.get('person').get('sex').setValue(response.data.data.sexo);
           this.newRequest.get('relevantPaymentInformation').get('method').setValue(response.data.formaPago);
+
+          switch (response.data.sexo) {
+            case 'M':
+              this.newRequest.get('person').get('sex').setValue('Masculino');
+              break;
+
+            case 'F':
+              this.newRequest.get('person').get('sex').setValue('Femenino');
+              break;
+
+            default:
+              break;
+          }
 
           switch (response.data.plan) {
             case 'Survivor':
@@ -1819,7 +1831,7 @@ export class LifeComponent implements OnInit {
           break;
 
         case 'isExposed':
-          formEP.removeControl('exposedPerson');
+          formEP.removeControl('insured');
           if ((formP.get('countryOfResidence').value === 'República Dominicana' || formP.get('countryOfResidence').value === '') || formP.get('countryOfBirth').value === 'República Dominicana' || formP.get('countryOfResidence').value === '') {
             formQ.removeControl('solucionAntiLavadoDinero');
           }
@@ -1877,7 +1889,7 @@ export class LifeComponent implements OnInit {
             direction: ['', Validators.required],
             tel: [''],
             cel: [''],
-            officeTel: ['', Validators.required],
+            officeTel: [''],
             fax: [''],
             email: ['', [Validators.required, Validators.email]],
             company: this.fb.group({

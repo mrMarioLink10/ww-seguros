@@ -41,8 +41,12 @@ export class RefundsListComponent implements OnInit {
 
 	getRefunds(params: HttpParams = new HttpParams()) {
 		let data;
+		if (this.appComponent.showOverlay === true) {
+			this.appComponent.showOverlay = true;
+		}
 		this.claimsService.getRefunds(params)
 			.subscribe(res => {
+				this.appComponent.showOverlay = false;
 				data = res;
 				this.refunds = data.data;
 				this.dataSource = new MatTableDataSource(this.refunds);
@@ -56,13 +60,17 @@ export class RefundsListComponent implements OnInit {
 	}
 
 	deleteRefund(id: number) {
-		this.formHandlerService.deleteRequest(id, 'Reembolsos', 'Reembolso', this.appComponent);
-		this.getRefunds();
+		this.formHandlerService.deleteRequest(id, 'Reembolsos', 'Reembolso', this.appComponent)
+			.subscribe(res => {
+				if (res === true) { this.getRefunds(); }
+			});
 	}
 
 	directSendRefund(id: number) {
-		this.formHandlerService.directSendRequest(id, 'Reembolsos', 'Reembolso', this.appComponent);
-		this.getRefunds();
-	}
+		this.formHandlerService.directSendRequest(id, 'Reembolsos', 'Reembolso', this.appComponent)
+			.subscribe(res => {
+				if (res === true) { this.getRefunds(); }
+			});
 
+	}
 }

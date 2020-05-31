@@ -81,8 +81,12 @@ export class AuthorizationsComponent implements OnInit {
 
 	getAuthorizations(params: HttpParams = new HttpParams()) {
 		let data;
+		if (this.appComponent.showOverlay === true) {
+			this.appComponent.showOverlay = true;
+		}
 		this.authorizationsService.getAuthoriations(params)
 			.subscribe(res => {
+				this.appComponent.showOverlay = false;
 				data = res;
 				this.authorizations = data.data;
 				this.dataSource = new MatTableDataSource(this.authorizations);
@@ -92,13 +96,17 @@ export class AuthorizationsComponent implements OnInit {
 	}
 
 	deleteAuthorization(id: number) {
-		this.formHandlerService.deleteRequest(id, 'Precertificado', 'Autorización', this.appComponent);
-		this.getAuthorizations();
+		this.formHandlerService.deleteRequest(id, 'Precertificado', 'Autorización', this.appComponent)
+			.subscribe(res => {
+				if (res === true) { this.getAuthorizations(); }
+			});
 	}
 
 	directSendAuthorization(id: number) {
-		this.formHandlerService.directSendRequest(id, 'Precertificado', 'Autorización', this.appComponent);
-		this.getAuthorizations();
+		this.formHandlerService.directSendRequest(id, 'Precertificado', 'Autorización', this.appComponent)
+			.subscribe(res => {
+				if (res === true) { this.getAuthorizations(); }
+			});
 	}
 
 	ngOnInit() {

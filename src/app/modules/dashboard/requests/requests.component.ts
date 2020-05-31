@@ -80,8 +80,13 @@ export class RequestsComponent implements OnInit {
 
   getRequests(params: HttpParams = new HttpParams()) {
     let data;
+    if (this.appComponent.showOverlay === true) {
+      this.appComponent.showOverlay = true;
+    }
     this.requestsService.getRequests(params)
       .subscribe(res => {
+        this.appComponent.showOverlay = false;
+
         data = res;
         this.requests = data.data;
         this.dataSource = new MatTableDataSource(this.requests);
@@ -112,43 +117,64 @@ export class RequestsComponent implements OnInit {
     switch (type) {
       case 'Vida':
         console.log('Vida');
-        this.formHandlerService.deleteRequest(id, 'Solicitudes/vida', 'Vida', this.appComponent);
+        this.formHandlerService.deleteRequest(id, 'Solicitudes/vida', 'Vida', this.appComponent)
+          .subscribe(res => {
+            console.log(res);
+            if (res === true) { this.getRequests(); }
+          });
         break;
 
       case 'Salud':
         console.log('Salud');
-        this.formHandlerService.deleteRequest(id, 'Solicitudes/salud', 'Salud', this.appComponent);
+        this.formHandlerService.deleteRequest(id, 'Solicitudes/salud', 'Salud', this.appComponent)
+          .subscribe(res => {
+            console.log(res);
+            if (res === true) { this.getRequests(); }
+          });
         break;
 
       case 'Disability':
         console.log('Disability');
-        this.formHandlerService.deleteRequest(id, 'Solicitudes/disability', 'Disability', this.appComponent);
+        this.formHandlerService.deleteRequest(id, 'Solicitudes/disability', 'Disability', this.appComponent)
+          .subscribe(res => {
+            if (res === true) { this.getRequests(); }
+          });
         break;
 
       default:
         break;
     }
-    this.getRequests();
   }
 
   directSendTargeting(id: number, type: string) {
     switch (type) {
       case 'Vida':
-        this.formHandlerService.directSendRequest(id, 'Solicitudes/vida', 'Vida', this.appComponent);
+        this.formHandlerService.directSendRequest(id, 'Solicitudes/vida', 'Vida', this.appComponent)
+          .subscribe(res => {
+            console.log(res);
+            if (res === true) { this.getRequests(); }
+          });
         break;
 
       case 'Salud':
-        this.formHandlerService.directSendRequest(id, 'Solicitudes/salud', 'Salud', this.appComponent);
+        this.formHandlerService.directSendRequest(id, 'Solicitudes/salud', 'Salud', this.appComponent)
+          .subscribe(res => {
+            console.log(res);
+            if (res === true) { this.getRequests(); }
+          });
         break;
 
       case 'Disability':
-        this.formHandlerService.directSendRequest(id, 'Solicitudes/disability', 'Disability', this.appComponent);
+        this.formHandlerService.directSendRequest(id, 'Solicitudes/disability', 'Disability', this.appComponent)
+          .subscribe(res => {
+            console.log(res);
+            if (res === true) { this.getRequests(); }
+          });
         break;
 
       default:
         break;
     }
-    this.getRequests();
   }
 
   navigateToLife(id) {

@@ -5,6 +5,7 @@ import { MatTableDataSource, MatSort, MatPaginator } from '@angular/material';
 import { QuotesService } from '../services/quotes/quotes.service';
 import { HttpParams } from '@angular/common/http';
 import { UserService } from '../../../core/services/user/user.service';
+import { AppComponent } from '../../../app.component';
 
 export interface Quotes {
   noCotizacion: number;
@@ -62,11 +63,15 @@ export class QuotesComponent implements OnInit {
   constructor(
     private router: Router,
     private quotesService: QuotesService,
-    private userService: UserService
+    private userService: UserService,
+    private appComponent: AppComponent
   ) { }
 
   getQuotes(params: HttpParams = new HttpParams()) {
     let data;
+    setTimeout(() => {
+      this.appComponent.showOverlay = true;
+    });
     this.quotesService.getQuotes(params)
       .subscribe(res => {
         data = res;
@@ -74,6 +79,7 @@ export class QuotesComponent implements OnInit {
         this.dataSource = new MatTableDataSource(this.quotes);
         this.dataSource.sort = this.sort;
         this.dataSource.paginator = this.paginator;
+        this.appComponent.showOverlay = false;
       }, err => console.log(err));
   }
 

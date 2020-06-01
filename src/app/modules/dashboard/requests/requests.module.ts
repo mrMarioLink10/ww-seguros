@@ -9,6 +9,7 @@ import { SharedDirectivesModule } from 'src/app/core/directive';
 import { GlobalSharedModule } from 'src/app/shared/global-shared.module';
 import { ServicesModule } from 'src/app/core/services/services.module';
 import { NewRequestComponent } from './new-request/new-request.component';
+import { MatSortModule } from '@angular/material';
 
 @NgModule({
 	declarations: [RequestsComponent],
@@ -21,7 +22,8 @@ import { NewRequestComponent } from './new-request/new-request.component';
 		ReactiveFormsModule,
 		SharedDirectivesModule,
 		GlobalSharedModule,
-		ServicesModule
+		ServicesModule,
+
 	]
 })
 export class RequestsModule { }

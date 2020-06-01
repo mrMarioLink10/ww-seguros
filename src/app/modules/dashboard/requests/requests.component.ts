@@ -59,11 +59,14 @@ export class RequestsComponent implements OnInit {
     customClass: 'dashboard-button'
   };
 
-  displayedColumns: string[] = ['no', 'nombre', 'apellidos', 'dependientes', 'seguro', 'plan', 'fecha', 'monto', 'estatus', 'acciones'];
+  // tslint:disable-next-line: max-line-length
+  displayedColumns: string[] = ['noCotizacion', 'nombres', 'apellidos', 'seguro', 'plan', 'fecha', 'monto', 'estatus', 'acciones'];
 
   dataSource;
   requests: any;
   role: any;
+
+  loading = false;
 
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
@@ -80,9 +83,11 @@ export class RequestsComponent implements OnInit {
 
   getRequests(params: HttpParams = new HttpParams()) {
     let data;
-    if (this.appComponent.showOverlay === true) {
+    this.loading = true;
+
+    setTimeout(() => {
       this.appComponent.showOverlay = true;
-    }
+    });
     this.requestsService.getRequests(params)
       .subscribe(res => {
         this.appComponent.showOverlay = false;
@@ -92,6 +97,8 @@ export class RequestsComponent implements OnInit {
         this.dataSource = new MatTableDataSource(this.requests);
         this.dataSource.sort = this.sort;
         this.dataSource.paginator = this.paginator;
+        this.loading = false;
+
       }, err => console.log(err));
   }
 

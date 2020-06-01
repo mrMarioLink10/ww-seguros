@@ -5,9 +5,10 @@ import { Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ClaimsService } from '../../services/claims/claims.service';
 import { HttpParams } from '@angular/common/http';
-import { RefundService } from './../new-claim/claim-types/refund/services/refund.service'
+import { RefundService } from './../new-claim/claim-types/refund/services/refund.service';
 import { FormHandlerService } from 'src/app/core/services/forms/form-handler.service';
 import { AppComponent } from 'src/app/app.component';
+import { UserService } from '../../../../core/services/user/user.service';
 
 
 @Component({
@@ -18,13 +19,14 @@ import { AppComponent } from 'src/app/app.component';
 
 export class RefundsListComponent implements OnInit {
 
-	displayedColumns: string[] = ['no', 'nombre', 'cedula', 'totalAmount', 'forma', 'estatus', 'acciones'];
+	displayedColumns: string[] = ['noPoliza', 'nombre', 'idNumber', 'totalAmount', 'forma', 'estatus', 'acciones'];
 
 	dataSource;
 	@Input() refunds: any[];
 
 	@ViewChild(MatSort, { static: true })
 	sort: MatSort;
+	role: string;
 	@ViewChild(MatPaginator, { static: true })
 	paginator: MatPaginator;
 
@@ -36,14 +38,15 @@ export class RefundsListComponent implements OnInit {
 		public claimsService: ClaimsService,
 		public refund: RefundService,
 		public formHandlerService: FormHandlerService,
-		private appComponent: AppComponent
+		private appComponent: AppComponent,
+		private userService: UserService
 	) { }
 
 	getRefunds(params: HttpParams = new HttpParams()) {
 		let data;
-		if (this.appComponent.showOverlay === true) {
+		setTimeout(() => {
 			this.appComponent.showOverlay = true;
-		}
+		});
 		this.claimsService.getRefunds(params)
 			.subscribe(res => {
 				this.appComponent.showOverlay = false;
@@ -56,7 +59,19 @@ export class RefundsListComponent implements OnInit {
 	}
 
 	ngOnInit() {
+		if (this.appComponent.showOverlay === false) {
+			this.appComponent.showOverlay = false;
+		}
 		this.getRefunds();
+		this.role = this.userService.getRoleCotizador();
+	}
+
+	seeRequest(id: number) {
+		if (this.role === 'WWS') {
+			window.open(`https://wwsdevportalbackend.azurewebsites.net/ReembolsosView/Index/${id}/?location=true`, '_blank');
+		} else {
+			window.open(`https://wwsdevportalbackend.azurewebsites.net/ReembolsosView/Index/${id}/?location=false`, '_blank');
+		}
 	}
 
 	deleteRefund(id: number) {

@@ -1,10 +1,10 @@
 <div class="table-responsive policy-table w-full">
 
-  <div *ngIf="loading">
-    <mat-spinner class="m-auto" ></mat-spinner>
+  <div *ngIf="loading" class="absolute bg-gray-400 bg-opacity-05 w-full h-full">
+    <mat-spinner class="m-auto"></mat-spinner>
   </div>
 
-  <table *ngIf="!loading" mat-table matSort [dataSource]="dataSource" class="mt-5 w-full dashboard-basic-table">
+  <table mat-table matSort [dataSource]="dataSource" class="mt-5 w-full dashboard-basic-table">
 
     <!-- Policy ID Column -->
     <ng-container matColumnDef="id" style="margin-right: 15px !important">

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, DoCheck } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { FieldConfig } from 'src/app/shared/components/form-components/models/field-config';
 import { $time } from 'src/app/core/form/objects';
@@ -10,7 +10,7 @@ import { FormArrayGeneratorService } from 'src/app/core/services/forms/form-arra
   templateUrl: './musculoskeletal.component.html',
   styles: []
 })
-export class MusculoskeletalComponent implements OnInit {
+export class MusculoskeletalComponent implements OnInit, DoCheck {
 
   @Input() form: FormGroup;
 
@@ -37,7 +37,7 @@ export class MusculoskeletalComponent implements OnInit {
   };
 
   // skeletalMuscle: FormGroup;
-  
+
   episodeFormArray: FormArray;
   episodeProperty;
 
@@ -55,7 +55,7 @@ export class MusculoskeletalComponent implements OnInit {
     const formS = this.form.get('data').get('surgery') as FormGroup;
     const formNFA = this.form.get('data') as FormGroup;
 
-    
+
 		if (event.valor === 'si') {
       switch (event.name) {
         
@@ -182,7 +182,7 @@ export class MusculoskeletalComponent implements OnInit {
 
     }
 
-  constructor(private fb:FormBuilder, public formMethods: FormArrayGeneratorService) { }
+  constructor(private fb: FormBuilder, public formMethods: FormArrayGeneratorService) { }
 
   ngOnInit() {
 
@@ -234,6 +234,55 @@ export class MusculoskeletalComponent implements OnInit {
     this.therapyFormArray = this.form.get('data').get('therapy').get('therapy_array') as FormArray;
 
   }
+
+  ngDoCheck(): void{
+
+    if (this.form.get('data').get('surgery_radio').value == 'si' &&
+		!this.surgeryFormArray) {
+			const varsurgery = {
+        valor: 'si',
+        name: 'surgery_radio'
+      };
+      // tslint:disable-next-line: align
+      this.selectChange(varsurgery);
+			console.log('HolAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA surgery');
+      }
+
+      if (this.form.get('data').get('skeletal_disorder_radio').value == 'si' &&
+		!this.form.get('data').get('disorder')) {
+			const vardisorder = {
+        valor: 'si',
+        name: 'skeletal_disorder_radio'
+      };
+      // tslint:disable-next-line: align
+      this.selectChange(vardisorder);
+			console.log('HolAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA disorder');
+      }
+
+      if (this.form.get('data').get('recovered_radio').value == 'si' &&
+		!this.form.get('data').get('areaText')) {
+			const varRecovered = {
+        valor: 'si',
+        name: 'recovered_radio'
+      };
+      // tslint:disable-next-line: align
+      this.selectChange(varRecovered);
+			console.log('HolAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA areaText');
+      }
+
+      if (this.form.get('data').get('episode_radio').value == 'si' &&
+		!this.episodeFormArray) {
+			const varEpisode = {
+        valor: 'si',
+        name: 'episode_radio'
+      };
+      // tslint:disable-next-line: align
+      this.selectChange(varEpisode);
+			console.log('HolAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA episode');
+      }
+
+  }
+
 
   addBasicControls(){
 

@@ -629,7 +629,7 @@ export class DisabilityComponent implements OnInit, DoCheck {
         height: ['', [Validators.required, Validators.min(1)]],
         weightUnit: ['', Validators.required],
         heightUnit: ['', Validators.required],
-        bmiName: ['', Validators.required],
+        bmiName: [{ value: '', disabled: true }, Validators.required],
         questionnaire: this.fb.group({
           health_radio: ['', Validators.required],
           therapy_radio: ['', Validators.required],
@@ -705,6 +705,8 @@ export class DisabilityComponent implements OnInit, DoCheck {
   y = 0
   x = 0;
   xx = 0;
+  // varMusculoSkeletal = 0;
+  // varRenal = 0;
   ngDoCheck(): void{
 
     if (this.disabilityGroup.get('questions').get('weightUnit').value != '' &&
@@ -833,7 +835,20 @@ export class DisabilityComponent implements OnInit, DoCheck {
           this.x = 0;
         }
       }
-
+    // if (this.ID != null) {
+    //     if (this.disabilityGroup.get('questionnaires').get('solicitudMusculoesqueleticos')){
+    //       if (this.varMusculoSkeletal == 0){
+    //         this.getDataSubForms(this.ID, 'solicitudMusculoesqueleticos');
+    //         this.varMusculoSkeletal++;
+    //       }
+    //     }
+    //     if (this.disabilityGroup.get('questionnaires').get('solicitudRenales')){
+    //       if (this.varRenal == 0){
+    //         this.getDataSubForms(this.ID, 'solicitudRenales');
+    //         this.varRenal++;
+    //       }
+    //     }
+    //   }
   }
 
   selectChange(event, position?) {
@@ -948,7 +963,7 @@ export class DisabilityComponent implements OnInit, DoCheck {
           }));
 
           if (this.role === 'WMA') { formInsured.addControl('knowYourClient', this.fb.group({})); }
-          else if (this.role === 'WWS') { formInsured.addControl('knowYourCustomer', this.fb.group({})); }
+          else if (this.role === 'WWS') { formInsured.addControl('KnowYourCustomer', this.fb.group({})); }
           break;
 
         case 'pep_radio_holder':
@@ -964,7 +979,7 @@ export class DisabilityComponent implements OnInit, DoCheck {
           }));
 
           if (this.role === 'WMA') { formHolder.addControl('knowYourClient', this.fb.group({})); }
-          else if (this.role === 'WWS') { formHolder.addControl('knowYourCustomer', this.fb.group({})); }
+          else if (this.role === 'WWS') { formHolder.addControl('KnowYourCustomer', this.fb.group({})); }
           break;
 
         case 'haveArthritis':
@@ -1166,14 +1181,14 @@ export class DisabilityComponent implements OnInit, DoCheck {
         case 'pep_radio_insured':
           formInsured.removeControl('pep');
           formInsured.removeControl('knowYourClient');
-          formInsured.removeControl('knowYourCustomer');
+          formInsured.removeControl('KnowYourCustomer');
           break;
 
 
         case 'pep_radio_holder':
           formHolder.removeControl('pep');
           formHolder.removeControl('knowYourClient');
-          formHolder.removeControl('knowYourCustomer');
+          formHolder.removeControl('KnowYourCustomer');
           break;
 
         case 'insuredPolicyholderRadio':
@@ -1422,6 +1437,17 @@ export class DisabilityComponent implements OnInit, DoCheck {
        const var2 = {
         name: key, valor: value
        };
+      //  if (key == 'claim_radio'){
+      //   // tslint:disable-next-line: prefer-for-of
+      //   // for (let x = 0; x < obj[key].length; x ++){
+      //   //   this.selectChange(var2, x.toString());
+      //   //   console.log('holaaaaa ' + x);
+      //   // }
+      //   console.log('Nadaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa!!!!!!!!!!!!!');
+      // }
+      // else {
+      //   this.selectChange(var2);
+      // }
        this.selectChange(var2);
 
        if (obj[key] !== null && obj[e] !== undefined && (typeof obj[e]) != "object")
@@ -1450,6 +1476,15 @@ export class DisabilityComponent implements OnInit, DoCheck {
           }
           if(obj[key].length > 0)
           {
+              // if (key == 'claim_radio'){
+              //   // tslint:disable-next-line: prefer-for-of
+              //   for (let x = 0; x < obj[key].length; x ++){
+              //     this.selectChange(var2, x.toString());
+              //     console.log('holaaaaa ' + x);
+              //   }
+              //   // console.log('Nadaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa!!!!!!!!!!!!!');
+              // }
+
               let form = formDataGroup.get(key);
               let arrayForm = [];
               obj[key].forEach( (element) =>{
@@ -1465,12 +1500,6 @@ export class DisabilityComponent implements OnInit, DoCheck {
 
 
               formDataGroup.addControl(key, this.fb.array(arrayForm));
-              // if (key == 'claim_radio'){
-              //   // tslint:disable-next-line: prefer-for-of
-              //   for (let x = 0; x < obj[key].length; x ++){
-              //     this.selectChange(var2, x.toString());
-              //   }
-              // }
           }
          }
          else
@@ -1481,7 +1510,6 @@ export class DisabilityComponent implements OnInit, DoCheck {
               id: ['', Validators.required]
             }));
           }
-
           let form = formDataGroup.get(key);
 
           this.iterateThroughtAllObject(obj[key], form);
@@ -1510,6 +1538,34 @@ export class DisabilityComponent implements OnInit, DoCheck {
   this.disabilityService.id = null;
 		console.log('this.disabilityService.id es igual a ' + this.disabilityService.id);
   }
+
+  // getDataSubForms(id, name) {
+	// 	this.disabilityService.returnData(id).subscribe(data => {
+	// 		// console.log(data.data.asegurado.documentoIdentidad)
+  //     console.log(data);
+  //     if (data !== undefined && data.data !== null &&
+  //       data.data != undefined )
+  //    {
+  //      this.ID = data.data.id;
+  //      if (name == 'solicitudMusculoesqueleticos'){
+  //       this.iterateThroughtAllObject(data.data.questionnaires.solicitudMusculoesqueleticos,
+  //         // tslint:disable-next-line: no-string-literal
+  //         this.disabilityGroup.get('questionnaires').get('solicitudMusculoesqueleticos'));
+  //      }
+  //      if (name == 'solicitudRenales'){
+  //       this.iterateThroughtAllObject(data.data.questionnaires.solicitudRenales,
+  //         // tslint:disable-next-line: no-string-literal
+  //         this.disabilityGroup.get('questionnaires').get('solicitudRenales'));
+  //      }
+
+  //     //this.disabilityGroup['controls'].num_financial_quote.setValue(data.data.num_financial_quote)
+  //    }
+
+  //   });
+
+  // // this.disabilityService.id = null;
+	// 	console.log('this.disabilityService.id es igual a ' + this.disabilityService.id);
+  // }
 
 }
 

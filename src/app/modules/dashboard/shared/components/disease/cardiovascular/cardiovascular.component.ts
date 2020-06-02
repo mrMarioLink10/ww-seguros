@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, DoCheck } from '@angular/core';
 import { FormGroup, FormBuilder, RequiredValidator, Validators, FormArray } from '@angular/forms';
 import { FieldConfig } from 'src/app/shared/components/form-components/models/field-config';
 
@@ -7,7 +7,7 @@ import { FieldConfig } from 'src/app/shared/components/form-components/models/fi
 	templateUrl: './cardiovascular.component.html',
 	styles: []
 })
-export class CardiovascularComponent implements OnInit {
+export class CardiovascularComponent implements OnInit, DoCheck {
 	@Input() form: FormGroup;
 
 	accordionTitle = ['Datos'];
@@ -272,6 +272,52 @@ export class CardiovascularComponent implements OnInit {
 				group: 'stentPosture'
 			}
 		];
+	}
+
+	ngDoCheck(): void {
+
+		if (this.form.get('haveAnotherDisease').value == 'si' &&
+		!this.form.get('anotherDiseases')) {
+			const varDisease = {
+        valor: 'si',
+        name: 'haveAnotherDisease'
+      };
+      // tslint:disable-next-line: align
+      this.selectChange(varDisease);
+			console.log('HolAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA anotherDiseases');
+	  }
+
+	  if (this.form.get('haveFamilyWithCardio').value == 'si' &&
+		!this.form.get('familyWithCardio')) {
+			const varFamilyCardio = {
+        valor: 'si',
+        name: 'haveFamilyWithCardio'
+      };
+      // tslint:disable-next-line: align
+      this.selectChange(varFamilyCardio);
+			console.log('HolAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA familyWithCardio');
+	  }
+
+	  if (this.form.get('haveHypertensionStudies').value == 'si' &&
+		!this.form.get('hypertensionStudies')) {
+			const varArterial = {
+        valor: 'si',
+        name: 'haveHypertensionStudies'
+      };
+      // tslint:disable-next-line: align
+      this.selectChange(varArterial);
+			console.log('HolAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA hypertensionStudies');
+      }
+
+	  if (this.form.get('haveLiquidAnomaly').value == 'si') {
+			const varAnomaly = {
+        valor: 'si',
+        name: 'haveLiquidAnomaly'
+      };
+      // tslint:disable-next-line: align
+      this.selectChange(varAnomaly);
+			console.log('HolAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA liquidAnomaly');
+      }
 	}
 
 	addBasicControls() {

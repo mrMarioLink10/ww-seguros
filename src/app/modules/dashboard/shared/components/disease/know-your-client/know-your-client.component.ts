@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, DoCheck } from '@angular/core';
 import { Validators, FormGroup, FormBuilder, FormArray } from '@angular/forms';
 import { FormArrayGeneratorService } from 'src/app/core/services/forms/form-array-generator.service';
 import { $country } from 'src/app/core/form/objects';
@@ -9,7 +9,7 @@ import { FieldConfig } from 'src/app/shared/components/form-components/models/fi
   templateUrl: './know-your-client.component.html',
   styles: []
 })
-export class KnowYourClientComponent implements OnInit {
+export class KnowYourClientComponent implements OnInit, DoCheck {
 
 	@Input() form: FormGroup;
   accordionTitles = [
@@ -283,6 +283,28 @@ export class KnowYourClientComponent implements OnInit {
 		this.bodyMembersFormArray = this.form.get('management_body_composition').get('allMembers') as FormArray;
 		this.shareholdersFormArray = this.form.get('shareholders').get('allShareholders') as FormArray;
 
+	}
+
+	ngDoCheck(): void {
+
+		if (this.form.get('exposed').get('branch_office_radio').value == 'si' && 
+		!this.form.get('exposed').get('branch_office').get('allBranch_office')) {
+			const varBranch = {
+			  valor: 'si',
+			  name: 'branch_office_radio'
+			};
+			this.selectChangeBranchOffice(varBranch);
+			console.log("HolAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA branch")
+
+		  }
+		if (this.form.get('exposed').get('investigated_representative').value == 'si' && !this.form.get('exposed').get('areatext')) {
+			const varInvestigated = {
+			  valor: 'si',
+			  name: 'investigated_representative'
+			};
+			this.selectChangeText(varInvestigated);
+			console.log("HolAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
+		}
 	}
 
 	addBasicControls() {

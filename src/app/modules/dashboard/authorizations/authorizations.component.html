@@ -18,39 +18,43 @@
     </div>
   </div>
   <div class="mt-6 pb-8 w-full ">
+
     <div class="table-responsive" style="overflow-y: hidden; overflow-x: auto; max-width: 100%;">
       <table mat-table [dataSource]="dataSource" matSort class="w-full dashboard-basic-table">
-        <ng-container matColumnDef="no" style="margin-right: 15px !important">
+        <ng-container matColumnDef="noPoliza" style="margin-right: 15px !important">
           <th class="padding-cell" mat-header-cell *matHeaderCellDef mat-sort-header> No. Póliza</th>
           <td class="padding-cell" mat-cell *matCellDef="let element"
-            style="color: #007DB7 !important; font-weight: 500 !important;"> {{element.informacionAsegurado.noPoliza}}
+            style="color: #007DB7 !important; font-weight: 500 !important;"> {{element.noPoliza}}
           </td>
         </ng-container>
 
-        <ng-container matColumnDef="nombre" style="margin-right: 15px !important">
-          <th class="padding-cell" mat-header-cell *matHeaderCellDef mat-sort-header> Nombre Asegurado</th>
-          <td class="padding-cell" mat-cell *matCellDef="let element"> {{element.informacionAsegurado.nombres}}
-            {{element.informacionAsegurado.apellidos}} </td>
+        <ng-container matColumnDef="nombres" style="margin-right: 15px !important">
+          <th class="padding-cell" mat-header-cell *matHeaderCellDef mat-sort-header> Nombres</th>
+          <td class="padding-cell" mat-cell *matCellDef="let element"> {{element.nombres | titlecase}}</td>
+        </ng-container>
+        <ng-container matColumnDef="apellidos" style="margin-right: 15px !important">
+          <th class="padding-cell" mat-header-cell *matHeaderCellDef mat-sort-header> Apellidos </th>
+          <td class="padding-cell" mat-cell *matCellDef="let element"> {{element.apellidos | titlecase}}</td>
         </ng-container>
 
-        <ng-container matColumnDef="seguro" style="margin-right: 15px !important">
+        <ng-container matColumnDef="procedimiento" style="margin-right: 15px !important">
           <th class="padding-cell" mat-header-cell *matHeaderCellDef mat-sort-header> Procedimiento </th>
-          <td class="padding-cell" mat-cell *matCellDef="let element"> {{element.informacionMedica.procedimiento}} </td>
+          <td class="padding-cell" mat-cell *matCellDef="let element"> {{element.procedimiento}} </td>
         </ng-container>
 
-        <ng-container matColumnDef="plan" style="margin-right: 15px !important">
+        <ng-container matColumnDef="nombreServicio" style="margin-right: 15px !important">
           <th class="padding-cell" mat-header-cell *matHeaderCellDef mat-sort-header> Nombre Servicio </th>
-          <td class="padding-cell" mat-cell *matCellDef="let element"> {{element.informacionMedica.nombreServicio}}
+          <td class="padding-cell" mat-cell *matCellDef="let element"> {{element.nombreServicio}}
           </td>
         </ng-container>
 
         <ng-container matColumnDef="condicion" style="margin-right: 15px !important">
           <th class="padding-cell" mat-header-cell *matHeaderCellDef mat-sort-header> Condición </th>
           <td class="padding-cell" mat-cell *matCellDef="let element">
-            {{element.informacionMedica.condicion | titlecase}} </td>
+            {{element.condicion | titlecase}} </td>
         </ng-container>
 
-        <ng-container matColumnDef="estatus" style="margin-right: 15px !important">
+        <ng-container matColumnDef="status" style="margin-right: 15px !important">
           <th class="padding-cell" mat-header-cell *matHeaderCellDef mat-sort-header> Estatus </th>
           <td class="padding-cell" mat-cell *matCellDef="let element"
             [ngClass]="{'text-color-yellow': element.status === 0, 'text-color-red': element.status === 4, 'text-color-green': element.status === 2}">
@@ -58,13 +62,14 @@
         </ng-container>
 
         <ng-container matColumnDef="acciones" style="text-align: end !important; margin-right: 15px !important; ">
-          <th class="padding-cell" mat-header-cell *matHeaderCellDef mat-sort-header
+          <th class="padding-cell" mat-header-cell *matHeaderCellDef
             style="max-width: 110px !important; min-width: 68px !important; width: 68px !important;"> Acciones </th>
           <td class="padding-cell" mat-cell *matCellDef="let element"
             style="max-width: 140px !important; min-width: 137px !important; width: 137px !important;">
-            <!-- <button mat-mini-fab aria-label="Ver mas" class="dashboard-table-buttons">
+            <button mat-mini-fab aria-label="Ver mas" (click)="seeRequest(element.id)" *ngIf="element.status === 2"
+              class="dashboard-table-buttons">
               <img src="../../../../assets/iconos/eye.svg">
-            </button> -->
+            </button>
             <button *ngIf="element.status === 1" (click)="directSendAuthorization(element.id)" mat-mini-fab
               aria-label="Enviar" class="dashboard-table-buttons">
               <img src="../../../../assets/iconos/send.svg">

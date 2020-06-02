@@ -31,6 +31,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatSortModule } from '@angular/material/sort';
 
 /**
  * NgModule that includes all Material modules.
@@ -69,8 +70,8 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 		MatExpansionModule,
 		MatRadioModule,
 		MatDialogModule,
-		MatProgressSpinnerModule
-
+		MatProgressSpinnerModule,
+		MatSortModule
 	]
 })
 export class MaterialModule { }

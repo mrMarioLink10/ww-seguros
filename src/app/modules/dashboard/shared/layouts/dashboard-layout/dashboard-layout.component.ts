@@ -22,6 +22,7 @@ export class DashboardLayoutComponent implements OnInit, OnDestroy {
 
   userName: string;
   userEmail: string;
+  role: string;
 
   watchRouter: Subscription;
   newNotification = [
@@ -73,6 +74,7 @@ export class DashboardLayoutComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.userName = this.userService.getUserInformation().name;
     this.userEmail = this.userService.getUserInformation().email;
+    this.role = this.userService.getRoleCotizador();
   }
 
   navigationInterceptor(event: RouterEvent): string {

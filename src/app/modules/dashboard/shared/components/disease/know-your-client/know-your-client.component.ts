@@ -203,10 +203,10 @@ export class KnowYourClientComponent implements OnInit, DoCheck {
 
 	ngOnInit() {
 
-		this.addBasicControls();
+		//this.addBasicControls();
 
-		this.branch_property = this.fb.array([this.formMethods.createItem(this.branchGroup)]);
-
+		//this.branch_property = this.fb.array([this.formMethods.createItem(this.branchGroup)]);
+console.log(this.form);
 	// 	this.form = this.fb.group({
 	// 		request: ['', Validators.required],
 
@@ -282,6 +282,7 @@ export class KnowYourClientComponent implements OnInit, DoCheck {
 
 		this.bodyMembersFormArray = this.form.get('management_body_composition').get('allMembers') as FormArray;
 		this.shareholdersFormArray = this.form.get('shareholders').get('allShareholders') as FormArray;
+    this.branchOfficeFormArray = this.form.get('exposed').get('branch_office').get('allBranch_office') as FormArray;
 
 	}
 

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, DoCheck } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { FieldConfig } from 'src/app/shared/components/form-components/models/field-config';
 import { $time } from 'src/app/core/form/objects';
@@ -10,7 +10,7 @@ import { FormArrayGeneratorService } from 'src/app/core/services/forms/form-arra
   templateUrl: './musculoskeletal.component.html',
   styles: []
 })
-export class MusculoskeletalComponent implements OnInit, DoCheck {
+export class MusculoskeletalComponent implements OnInit {
 
   @Input() form: FormGroup;
 
@@ -58,7 +58,7 @@ export class MusculoskeletalComponent implements OnInit, DoCheck {
 
 		if (event.valor === 'si') {
       switch (event.name) {
-        
+
         case 'episode_radio':
 
                   formE.addControl('episode_array', this.episodeProperty);
@@ -71,7 +71,7 @@ export class MusculoskeletalComponent implements OnInit, DoCheck {
 
                   formS.addControl('surgery_array', this.surgeryProperty);
                   this.surgeryFormArray = this.form.get('data').get('surgery').get('surgery_array') as FormArray;
-                  
+
                   console.log(JSON.stringify(this.form.value));
                   break;
 
@@ -102,7 +102,7 @@ export class MusculoskeletalComponent implements OnInit, DoCheck {
 
 			}
 		 else if (event.valor === 'no') {
-	
+
       switch (event.name) {
 
         case 'episode_radio':
@@ -116,7 +116,7 @@ export class MusculoskeletalComponent implements OnInit, DoCheck {
 
             formS.removeControl('surgery_array');
             this.surgeryFormArray = undefined;
-            
+
             break;
 
         case 'skeletal_disorder_radio':
@@ -125,14 +125,14 @@ export class MusculoskeletalComponent implements OnInit, DoCheck {
             break;
 
         case 'recovered_radio':
-          
+
             formNFA.removeControl('date')
             formNFA.removeControl('areaText')
             break;
         }
 
 			}
-		
+
   }
 
   episodeGroup ={
@@ -190,100 +190,48 @@ export class MusculoskeletalComponent implements OnInit, DoCheck {
     this.surgeryProperty = this.fb.array([this.formMethods.createItem(this.surgeryGroup)]);
     this.therapyProperty = this.fb.array([this.formMethods.createItem(this.therapyGroup)]);
 
+if (this.form.get('data') !== undefined && this.form.get('data') !== null)
+{
+if (this.form.get('data').get('surgery').get('surgery_array') !== null)
+{
+      this.surgeryFormArray = this.form.get('data').get('surgery').get('surgery_array') as FormArray;
+
+    }
+    else
+    {
+
+    const formE = this.form.get('data').get('episode') as FormGroup;
+    const formS = this.form.get('data').get('surgery') as FormGroup;
+    formS.addControl('surgery_array', this.surgeryProperty);
+    this.surgeryFormArray = this.form.get('data').get('surgery').get('surgery_array') as FormArray;
+    //formE.addControl('episode_array', this.episodeProperty);
+    //this.episodeFormArray = this.form.get('data').get('episode').get('episode_array') as FormArray;
+      console.log(this.surgeryFormArray);
+      console.log(this.form);
+    }
+
+  }
+  else
+  {
     this.addBasicControls();
-
-    // this.form = this.fb.group({
-
-    //   full_name: ['', Validators.required],
-    //   age:['', [Validators.required, Validators.min(1)]],
-    //   doctor_name: ['', Validators.required],
-    //   hospital_name: ['', Validators.required],
-    //   hospital_telephone: ['', Validators.required],
-
-    //   data: this.fb.group({
-
-    //     skeletal_disorder_radio:['', Validators.required],
-    //     recovered_radio:['', Validators.required],
-    //     date: [new Date(), Validators.required],
-    //     episode_radio:['', Validators.required],
-    //     episode:  this.fb.group({
-
-    //       episode_array: this.fb.array([this.formMethods.createItem(this.episodeGroup)])
-
-    //   }),
-
-    //     surgery_radio:['', Validators.required],
-    //     surgery: this.fb.group({
-
-    //       surgery_array: this.fb.array([this.formMethods.createItem(this.surgeryGroup)])
-
-    //     }),
-
-    //     therapy: this.fb.group({
-
-    //       therapy_array: this.fb.array([this.formMethods.createItem(this.therapyGroup)])
-
-    //     }),
-
-    //     aditional_info:['', Validators.required]
-    //   }),
-
-
-    // })
-
-    this.therapyFormArray = this.form.get('data').get('therapy').get('therapy_array') as FormArray;
-
   }
 
-  ngDoCheck(): void{
-
-    if (this.form.get('data').get('surgery_radio').value == 'si' &&
-		!this.surgeryFormArray) {
-			const varsurgery = {
-        valor: 'si',
-        name: 'surgery_radio'
-      };
-      // tslint:disable-next-line: align
-      this.selectChange(varsurgery);
-			console.log('HolAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA surgery');
-      }
-
-      if (this.form.get('data').get('skeletal_disorder_radio').value == 'si' &&
-		!this.form.get('data').get('disorder')) {
-			const vardisorder = {
-        valor: 'si',
-        name: 'skeletal_disorder_radio'
-      };
-      // tslint:disable-next-line: align
-      this.selectChange(vardisorder);
-			console.log('HolAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA disorder');
-      }
-
-      if (this.form.get('data').get('recovered_radio').value == 'si' &&
-		!this.form.get('data').get('areaText')) {
-			const varRecovered = {
-        valor: 'si',
-        name: 'recovered_radio'
-      };
-      // tslint:disable-next-line: align
-      this.selectChange(varRecovered);
-			console.log('HolAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA areaText');
-      }
-
-      if (this.form.get('data').get('episode_radio').value == 'si' &&
-		!this.episodeFormArray) {
-			const varEpisode = {
-        valor: 'si',
-        name: 'episode_radio'
-      };
-      // tslint:disable-next-line: align
-      this.selectChange(varEpisode);
-			console.log('HolAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA episode');
-      }
+  this.therapyFormArray = this.form.get('data').get('therapy').get('therapy_array') as FormArray;
+  this.surgeryFormArray = this.form.get('data').get('surgery').get('surgery_array') as FormArray;
+  console.log(this.surgeryFormArray);
 
   }
-
-
+IssurgeryFormArray()
+{
+  try{
+    if (this.surgeryFormArray.length > 0)
+    {
+      return true;
+    }
+  }
+  catch{}
+  return false;
+}
   addBasicControls(){
 
     this.form.addControl('full_name', this.fb.control('', Validators.required));
@@ -318,7 +266,7 @@ export class MusculoskeletalComponent implements OnInit, DoCheck {
 
       aditional_info:['', Validators.required]
     })
-    
+
     );
 
   }
@@ -327,10 +275,10 @@ export class MusculoskeletalComponent implements OnInit, DoCheck {
 
     const increment = array.length + 1;
     array = this.formMethods.addElement(array, increment, this.createFormArray(name)).formArray;
-    
+
     console.log(JSON.stringify(this.form.value));
     // array.push(this.createFormArray(name));
-    
+
   }
 
   removeFormArray(index, array: any) {

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatProgressButtonOptions } from 'mat-progress-buttons';
 import { MatTableDataSource, MatSort, MatPaginator } from '@angular/material';
@@ -8,6 +8,7 @@ import { HttpParams } from '@angular/common/http';
 import { NewAuthorizationService } from '../../../modules/dashboard/authorizations/new-authorization/services/new-authorization.service';
 import { FormHandlerService } from '../../../core/services/forms/form-handler.service';
 import { AppComponent } from '../../../app.component';
+import { UserService } from '../../../core/services/user/user.service';
 
 
 
@@ -58,10 +59,11 @@ export class AuthorizationsComponent implements OnInit {
 		customClass: 'dashboard-button'
 	};
 
-	displayedColumns: string[] = ['no', 'nombre', 'seguro', 'plan', 'condicion', 'estatus', 'acciones'];
+	displayedColumns: string[] = ['noPoliza', 'nombres', 'apellidos', 'procedimiento', 'nombreServicio', 'condicion', 'status', 'acciones'];
 
 	dataSource;
 	authorizations: any[];
+	role: any;
 
 	@ViewChild(MatSort, { static: true })
 	sort: MatSort;
@@ -69,18 +71,22 @@ export class AuthorizationsComponent implements OnInit {
 	paginator: MatPaginator;
 
 	testForm: FormGroup;
-
+	loading = false;
 	constructor(
 		private route: Router,
 		public authorizationsService: AuthorizationsService,
 		public newAuthorization: NewAuthorizationService,
 		public formHandlerService: FormHandlerService,
-		private appComponent: AppComponent
+		private appComponent: AppComponent,
+		private userService: UserService,
+		private cd: ChangeDetectorRef
 	) { }
-
 
 	getAuthorizations(params: HttpParams = new HttpParams()) {
 		let data;
+		setTimeout(() => {
+			this.appComponent.showOverlay = true;
+		});
 		this.authorizationsService.getAuthoriations(params)
 			.subscribe(res => {
 				data = res;
@@ -88,21 +94,36 @@ export class AuthorizationsComponent implements OnInit {
 				this.dataSource = new MatTableDataSource(this.authorizations);
 				this.dataSource.sort = this.sort;
 				this.dataSource.paginator = this.paginator;
+				this.appComponent.showOverlay = false;
+
 			}, err => console.log(err));
 	}
 
 	deleteAuthorization(id: number) {
-		this.formHandlerService.deleteRequest(id, 'Precertificado', 'Autorización', this.appComponent);
-		this.getAuthorizations();
+		this.formHandlerService.deleteRequest(id, 'Precertificado', 'Autorización', this.appComponent)
+			.subscribe(res => {
+				if (res === true) { this.getAuthorizations(); }
+			});
 	}
 
 	directSendAuthorization(id: number) {
-		this.formHandlerService.directSendRequest(id, 'Precertificado', 'Autorización', this.appComponent);
-		this.getAuthorizations();
+		this.formHandlerService.directSendRequest(id, 'Precertificado', 'Autorización', this.appComponent)
+			.subscribe(res => {
+				if (res === true) { this.getAuthorizations(); }
+			});
+	}
+
+	seeRequest(id: number) {
+		if (this.role === 'WWS') {
+			window.open(`https://wwsdevportalbackend.azurewebsites.net/PrecertificadoView/Index/${id}/?location=true`, '_blank');
+		} else {
+			window.open(`https://wwsdevportalbackend.azurewebsites.net/PrecertificadoView/Index/${id}/?location=false`, '_blank');
+		}
 	}
 
 	ngOnInit() {
 		this.getAuthorizations();
+		this.role = this.userService.getRoleCotizador();
 	}
 
 	newClaim() {

@@ -8,6 +8,9 @@ import { Observable } from 'rxjs';
 })
 export class MajorExpensesService {
 
+  id = null;
+  idKNOWCustomer = null;
+
   constructor(private http: HttpClient) { }
 
   postRequest(body) {
@@ -20,15 +23,18 @@ export class MajorExpensesService {
     return this.http.post(`${environment.apiUrl}/api/Solicitudes/salud`, body, httpOptions);
   }
 
-  returnData(id):Observable<any>{
-    return this.http.get(`${environment.apiUrl}/api/Solicitudes/salud/${id}`)
+  returnData(id): Observable<any> {
+    console.log(environment.apiUrl);
+    return this.http.get(`${environment.apiUrl}/api/Solicitudes/salud/${id}`);
   }
 
-  id=null;
-  idKNOWCustomer=null;
-  getID(id){
-      this.id=id;
-      console.log("hola, soy ",id);
-      //return this.returnData(id);
+
+  sendRequest(id): Observable<any> {
+    return this.http.post(`${environment.apiUrl}/api/Solicitudes/salud/confirm/${id}`, id);
+  }
+
+  getID(id) {
+    this.id = id;
+    // return this.returnData(id);
   }
 }

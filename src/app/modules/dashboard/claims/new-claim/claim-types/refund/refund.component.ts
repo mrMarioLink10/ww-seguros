@@ -32,6 +32,7 @@ export class RefundComponent implements OnInit {
 	todayDate = new Date();
 	validDatesCounter = 0;
 	filesInformation = [];
+	showContent = false;
 
 	formaPago: FieldConfig = {
 		label: 'Especifique forma de pago',
@@ -158,6 +159,13 @@ export class RefundComponent implements OnInit {
 		}
 	}
 
+	fileNameWatcher(type?: string, index?: number) {
+		console.log(this.filesInformation);
+		if (this.filesInformation[index]) {
+			if (this.filesInformation[index][type + 'Url']) { return this.filesInformation[index][type + 'Url']; }
+		}
+	}
+
 	calculatedDate(value: any) {
 		const date = this.todayDate.getTime() - value;
 		return Math.floor(date / (1000 * 3600 * 24) / 30.4375);
@@ -255,6 +263,7 @@ export class RefundComponent implements OnInit {
 				console.log(response);
 				this.appComponent.showOverlay = false;
 				if (response.data !== null) {
+					this.showContent = true;
 					const dialogRef = this.dialog.open(BaseDialogComponent, {
 						data: this.dialogOption.idNumberFound(response.data),
 						minWidth: 385,
@@ -267,6 +276,7 @@ export class RefundComponent implements OnInit {
 					this.refundForm.get('informacion').get('noPoliza').setValue(response.data.asegurado.no_poliza);
 
 				} else {
+					this.showContent = false;
 					const dialogRef = this.dialog.open(BaseDialogComponent, {
 						data: this.dialogOption.idNumberNotFound,
 						minWidth: 385,
@@ -282,18 +292,12 @@ export class RefundComponent implements OnInit {
 			});
 	}
 
-	fileNameWatcher(type?: string, index?: number) {
-		console.log(this.filesInformation);
-		if (this.filesInformation[index]) {
-			if (this.filesInformation[index][type + 'Url']) { return this.filesInformation[index][type + 'Url']; }
-		}
-	}
-
 	getData(id) {
 		this.appComponent.showOverlay = true;
 		this.refund.returnData(id).subscribe(data => {
 			console.log(data);
 			this.refundForm.get('informacion').get('idNumber').disable();
+			this.showContent = true;
 
 
 			for (let x = 0; x < data.data.diagnosticos.length; x++) {
@@ -373,7 +377,7 @@ export class RefundComponent implements OnInit {
 	sendForm(form: FormGroup, formType: string, sendType: string, id?: number) {
 		console.log(id);
 
-		this.formHandler.sendForm(form, formType, sendType, id, this.appComponent);
+		this.formHandler.sendForm(form, formType, sendType, this.appComponent, id);
 
 	}
 }

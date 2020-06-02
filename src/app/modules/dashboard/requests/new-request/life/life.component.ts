@@ -1,4 +1,4 @@
-import { Component, OnInit, DoCheck, ɵConsole, ChangeDetectorRef, AfterViewChecked } from '@angular/core';
+import { Component, OnInit, DoCheck, ɵConsole, ChangeDetectorRef, AfterViewChecked, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, FormArray, Validators, FormControl } from '@angular/forms';
 import { FormArrayGeneratorService } from 'src/app/core/services/forms/form-array-generator.service';
 import { FieldConfig } from 'src/app/shared/components/form-components/models/field-config';
@@ -17,6 +17,8 @@ import { map, first } from 'rxjs/operators';
 import { KnowYourCustomerComponent } from '../../../shared/components/disease/know-your-customer/know-your-customer.component';
 import { AppComponent } from 'src/app/app.component';
 import { MatProgressButtonOptions } from 'mat-progress-buttons';
+import { FormDataFillingService } from 'src/app/modules/dashboard/services/shared/formDataFillingService';
+
 // tslint:disable: one-line
 // tslint:disable: max-line-length
 
@@ -25,7 +27,25 @@ import { MatProgressButtonOptions } from 'mat-progress-buttons';
   templateUrl: './life.component.html',
   styleUrls: ['./life.component.scss']
 })
-export class LifeComponent implements OnInit, DoCheck, AfterViewChecked {
+export class LifeComponent implements OnInit {
+
+  constructor(
+    private fb: FormBuilder,
+    private dataMappingFromApi: FormDataFillingService,
+    public formMethods: FormArrayGeneratorService,
+    public diseaseService: DiseaseService,
+    public formHandler: FormHandlerService,
+    private userService: UserService,
+    private router: Router,
+    private route: ActivatedRoute,
+    public dialogModal: DialogService,
+    private dialogOption: DialogOptionService,
+    public dialog: MatDialog,
+    private life: LifeService,
+    private know: KnowYourCustomerComponent,
+    private appComponent: AppComponent,
+    private cd: ChangeDetectorRef
+  ) { }
   step: number;
   showContent = false;
 
@@ -70,6 +90,7 @@ export class LifeComponent implements OnInit, DoCheck, AfterViewChecked {
   filesInformation: any;
   needFinancialStatus = false;
   showNewQuoteRequest = false;
+  todayDate = new Date();
 
   payMethod = {
     label: 'Método de pago',
@@ -167,6 +188,7 @@ export class LifeComponent implements OnInit, DoCheck, AfterViewChecked {
   primaryBenefits = {
     name: ['', Validators.required],
     id2: ['', Validators.required],
+    id2Attached: ['', Validators.required],
     nationality: ['', Validators.required],
     ocupation: ['', Validators.required],
     family: ['', Validators.required],
@@ -239,6 +261,11 @@ export class LifeComponent implements OnInit, DoCheck, AfterViewChecked {
     };
 
   country = {
+    options: $country,
+  };
+
+  countryWithLabel = {
+    label: 'País',
     options: $country,
   };
 
@@ -361,6 +388,22 @@ export class LifeComponent implements OnInit, DoCheck, AfterViewChecked {
     name: 'status'
   };
 
+  idType: FieldConfig =
+    {
+      label: 'Tipo de documento de identidad',
+      options: [
+        {
+          value: 'Cedula',
+          viewValue: 'Cédula',
+        },
+        {
+          value: 'Pasaporte',
+          viewValue: 'Pasaporte',
+        }
+      ],
+      name: 'id2Type',
+    };
+
   smokingTypes = {
     options: [
       {
@@ -441,22 +484,7 @@ export class LifeComponent implements OnInit, DoCheck, AfterViewChecked {
     customClass: 'dashboard-button'
   };
 
-  constructor(
-    private fb: FormBuilder,
-    public formMethods: FormArrayGeneratorService,
-    public diseaseService: DiseaseService,
-    public formHandler: FormHandlerService,
-    private userService: UserService,
-    private router: Router,
-    private route: ActivatedRoute,
-    public dialogModal: DialogService,
-    private dialogOption: DialogOptionService,
-    public dialog: MatDialog,
-    private life: LifeService,
-    private know: KnowYourCustomerComponent,
-    private appComponent: AppComponent,
-    private cd: ChangeDetectorRef
-  ) { }
+  @ViewChild('form', { static: false }) form;
 
   ngOnInit() {
     this.userService.getWholeQuotes()
@@ -471,20 +499,7 @@ export class LifeComponent implements OnInit, DoCheck, AfterViewChecked {
       this.noCotizacion = res.noCotizacion;
     });
 
-    if (this.ID != null) {
-      console.log('El ID es ' + this.ID);
-      this.getData(this.ID);
-    }
-    else if (this.ID == null) {
-      console.log('ID esta vacio');
-    }
 
-    if (this.noCotizacion != null) {
-      this.searchIdNumber(this.noCotizacion);
-      console.log('El noCotizacion es ' + this.noCotizacion);
-    } else if (this.noCotizacion == null) {
-      console.log('noCotizacion esta vacio');
-    }
 
     this.role = this.userService.getRoleCotizador();
     this.newRequest = this.fb.group({
@@ -492,12 +507,13 @@ export class LifeComponent implements OnInit, DoCheck, AfterViewChecked {
       isComplete: [false, Validators.required],
       person: this.fb.group({
         firstName: [{ value: '', disabled: true }, [Validators.required]],
-        secondName: ['', Validators.required],
+        secondName: [''],
         lastName: ['', Validators.required],
         date: [{ value: '', disabled: true }, [Validators.required]],
-        sex: ['', Validators.required],
+        sex: [{ value: '', disabled: true }, [Validators.required]],
         nationality: ['', Validators.required],
         id2: ['', Validators.required],
+        id2Type: ['', Validators.required],
         age: [{ value: '', disabled: true }, [Validators.required]],
         weight: ['', Validators.required],
         weightUnit: ['', Validators.required],
@@ -505,14 +521,14 @@ export class LifeComponent implements OnInit, DoCheck, AfterViewChecked {
         heightUnit: ['', Validators.required],
         status: ['', Validators.required],
         bmi: [{ value: '', disabled: true }, [Validators.required]],
-        annualIncome: ['', [Validators.required, Validators.min(1)]],
+        annualIncome: ['', [Validators.required, Validators.min(0)]],
         countryOfResidence: ['', Validators.required],
         countryOfBirth: ['', Validators.required],
         direction: ['', Validators.required],
         tel: [''],
         cel: ['', Validators.required],
         officeTel: [''],
-        email: ['', Validators.required],
+        email: ['', [Validators.required, Validators.email]],
         sameAsContractor: ['', Validators.required],
         sameAsPayer: ['', Validators.required],
       }),
@@ -549,9 +565,10 @@ export class LifeComponent implements OnInit, DoCheck, AfterViewChecked {
       primaryBenefits: this.fb.group({
         dependentsC: this.fb.array([this.formMethods.createItem(this.primaryBenefits)]),
         personBenefited: this.fb.group({
-          name: ['', Validators.required],
-          family: ['', Validators.required],
-          id2: ['', Validators.required],
+          name: [''],
+          family: [''],
+          id2: [''],
+          id2Attached: [''],
         })
       }),
       contingentBeneficiary: this.fb.group({
@@ -559,10 +576,10 @@ export class LifeComponent implements OnInit, DoCheck, AfterViewChecked {
         personBenefited: this.fb.group({
           name: [''],
           family: [''],
-          id2: ['']
+          id2: [''],
+          id2Attached: ['']
         }),
         hasAnotherCoverage: ['', Validators.required],
-        changeAnotherCoverage: ['', Validators.required],
       }),
       bankTransfer: this.fb.group({
         bankEntity: [''],
@@ -641,8 +658,10 @@ export class LifeComponent implements OnInit, DoCheck, AfterViewChecked {
     });
 
     if (this.noCotizacion) {
-      this.newRequest.get('NoC').setValue(this.noCotizacion);
-      this.newRequest.get('NoC').disable();
+      console.log(this.noCotizacion);
+      console.log(this.newRequest.get('noC'));
+      this.newRequest.get('noC').setValue(this.noCotizacion);
+      this.newRequest.get('noC').disable();
 
     }
 
@@ -1040,14 +1059,7 @@ export class LifeComponent implements OnInit, DoCheck, AfterViewChecked {
     });
 
     const heightUnitBmiSubscriber = this.newRequest.get('person').get('heightUnit').valueChanges.subscribe(value => {
-      if (value === 'pies') {
-        setTimeout(() => {
-          const inchesBmiSubscriber = this.newRequest.get('person').get('inches').valueChanges.subscribe(val => {
-            this.getBmi();
 
-          });
-        }, 1500);
-      }
       this.getBmi();
     });
 
@@ -1055,12 +1067,92 @@ export class LifeComponent implements OnInit, DoCheck, AfterViewChecked {
       this.getBmi();
     });
 
+    if (this.ID != null) {
+      console.log('El ID es ' + this.ID);
+      this.getData(this.ID);
+    }
+    else if (this.ID == null) {
+      console.log('ID esta vacio');
+    }
 
+    if (this.noCotizacion != null) {
+      this.searchIdNumber(this.noCotizacion);
+      console.log('El noCotizacion es ' + this.noCotizacion);
+    } else if (this.noCotizacion == null) {
+      console.log('noCotizacion esta vacio');
+    }
 
   }
 
-  ngAfterViewChecked() {
-    this.cd.detectChanges();
+  foreignWithoutResidenceChecker(event: any, target: string, form: any, targetForm: any) {
+    console.log(event);
+
+    switch (this.role) {
+      case 'WWS':
+        if (form.get('countryOfResidence').value !== 'República Dominicana' && form.get('countryOfBirth').value !== 'República Dominicana') {
+          if (!targetForm.get('money-laundering')) {
+            targetForm.addControl('solucionAntiLavadoDinero', this.fb.group({}));
+          }
+        } else {
+          switch (target) {
+            case 'person':
+              if (this.newRequest.get('exposedPerson').get('isExposed').value !== 'si') {
+                targetForm.removeControl('solucionAntiLavadoDinero');
+              }
+              break;
+
+            case 'contractor':
+              if (this.newRequest.get('exposedPerson').get('isContractorExposed').value !== 'si' && this.newRequest.get('person').get('contractorIsLegalEntity').value !== 'si') {
+                targetForm.removeControl('solucionAntiLavadoDinero');
+              }
+              break;
+
+            case 'payer':
+              if (this.newRequest.get('exposedPerson').get('isPayerExposed').value !== 'si' && this.newRequest.get('person').get('payerIsLegalEntity').value !== 'si') {
+                targetForm.removeControl('solucionAntiLavadoDinero');
+              }
+              break;
+
+            default:
+              break;
+          }
+        }
+        break;
+
+      case 'WMA':
+        if (form.get('countryOfResidence').value !== 'Panamá' && form.get('countryOfBirth').value !== 'Panamá') {
+          if (!targetForm.get('money-laundering')) {
+            targetForm.addControl('solucionAntiLavadoDinero', this.fb.group({}));
+          }
+        } else {
+          switch (target) {
+            case 'person':
+              if (this.newRequest.get('exposedPerson').get('isExposed').value !== 'si') {
+                targetForm.removeControl('solucionAntiLavadoDinero');
+              }
+              break;
+
+            case 'contractor':
+              if (this.newRequest.get('exposedPerson').get('isContractorExposed').value !== 'si' && this.newRequest.get('person').get('contractorIsLegalEntity').value !== 'si') {
+                targetForm.removeControl('solucionAntiLavadoDinero');
+              }
+              break;
+
+            case 'payer':
+              if (this.newRequest.get('exposedPerson').get('isPayerExposed').value !== 'si' && this.newRequest.get('person').get('payerIsLegalEntity').value !== 'si') {
+                targetForm.removeControl('solucionAntiLavadoDinero');
+              }
+              break;
+
+            default:
+              break;
+          }
+        }
+        break;
+
+      default:
+        break;
+    }
   }
 
   fileNameWatcher(type?: string) {
@@ -1071,9 +1163,6 @@ export class LifeComponent implements OnInit, DoCheck, AfterViewChecked {
 
   onFileChange(event, formName) {
     const reader = new FileReader();
-    console.log(this.newRequest.get('files'));
-    console.log('event.targe: ', event.target.files);
-    console.log('event: ', event);
 
     if (event.target.files && event.target.files.length) {
       const [file] = event.target.files;
@@ -1083,6 +1172,30 @@ export class LifeComponent implements OnInit, DoCheck, AfterViewChecked {
         this.newRequest.get('files').patchValue({
           [formName]: reader.result
         });
+
+        this.cd.markForCheck();
+      };
+    }
+  }
+
+  onFileChangeOnArray(event, formName, i?: number, group?: string) {
+    const reader = new FileReader();
+
+    if (event.target.files && event.target.files.length) {
+      const [file] = event.target.files;
+      reader.readAsDataURL(file);
+
+      reader.onload = () => {
+        if (i !== null) {
+          this.newRequest.get(group).get('dependentsC').get(i.toString()).patchValue({
+            [formName]: reader.result
+          });
+        } else {
+          this.newRequest.get(group).get('personBenefited').patchValue({
+            [formName]: reader.result
+          });
+        }
+
         this.cd.markForCheck();
       };
     }
@@ -1190,13 +1303,12 @@ export class LifeComponent implements OnInit, DoCheck, AfterViewChecked {
 
     let weight = this.newRequest.get('person').get('weight').value;
     let height = this.newRequest.get('person').get('height').value;
-    let inches;
 
-    if (this.newRequest.get('person').get('inches')) { inches = this.newRequest.get('person').get('inches').value; }
+    // if (this.newRequest.get('person').get('inches')) { inches = this.newRequest.get('person').get('inches').value; }
 
     if (weightUnit === 'libras') { weight = weight / 2.205; }
-    if (heightUnit === 'pies') {
-      height = (((height * 12) + inches) * 2.54);
+    if (heightUnit === 'pie') {
+      height = height / 3.281;//(((height * 12) + inches) * 2.54);
     }
 
     const bmi = weight / ((height / 100) * (height / 100));
@@ -1232,18 +1344,18 @@ export class LifeComponent implements OnInit, DoCheck, AfterViewChecked {
     return { total, isDirty };
   }
 
-  ngDoCheck(): void {
-    this.maxWidth = window.matchMedia('(max-width: 11270px)');
+  // ngDoCheck(): void {
+  //   this.maxWidth = window.matchMedia('(max-width: 11270px)');
 
-  }
+  // }
 
   onHeightUnitChange(evento) {
     const form = this.newRequest.get('person') as FormGroup;
-    if (evento.valor === 'pies') {
+    /*if (evento.valor === 'pie') {
       form.addControl('inches', this.fb.control('', Validators.required));
     } else {
       form.removeControl('inches');
-    }
+    }*/
   }
 
   searchIdNumber(idNumber: string) {
@@ -1265,6 +1377,19 @@ export class LifeComponent implements OnInit, DoCheck, AfterViewChecked {
           this.newRequest.get('person').get('firstName').setValue(response.data.nombre);
           this.newRequest.get('person').get('date').setValue(response.data.fecha_nacimiento);
           this.newRequest.get('relevantPaymentInformation').get('method').setValue(response.data.formaPago);
+
+          switch (response.data.sexo) {
+            case 'M':
+              this.newRequest.get('person').get('sex').setValue('Masculino');
+              break;
+
+            case 'F':
+              this.newRequest.get('person').get('sex').setValue('Femenino');
+              break;
+
+            default:
+              break;
+          }
 
           switch (response.data.plan) {
             case 'Survivor':
@@ -1312,7 +1437,11 @@ export class LifeComponent implements OnInit, DoCheck, AfterViewChecked {
   }
 
   canDeactivate(): Observable<boolean> | boolean {
-    if (this.newRequest.dirty) {
+    if (this.form.submitted) {
+      return true;
+    }
+
+    if (this.newRequest.dirty && !this.form.submitted) {
       const dialogRef = this.dialog.open(BaseDialogComponent, {
         data: this.dialogOption.exitConfirm,
         minWidth: 385,
@@ -1330,10 +1459,14 @@ export class LifeComponent implements OnInit, DoCheck, AfterViewChecked {
   selectChange(event) {
     const formCB = this.newRequest.get('contingentBeneficiary') as FormGroup;
     const formQ = this.newRequest.get('questionnaires') as FormGroup;
+    const formCQ = this.newRequest.get('contractorQuestionnaires') as FormGroup;
+    const formPQ = this.newRequest.get('payerQuestionnaires') as FormGroup;
     const formAQ = this.newRequest.get('activitiesQuestionnaires') as FormGroup;
     const formEP = this.newRequest.get('exposedPerson') as FormGroup;
     const formAR = this.newRequest.get('agentReport') as FormGroup;
     const formP = this.newRequest.get('person') as FormGroup;
+    const formC = this.newRequest.get('contractor') as FormGroup;
+    const formPA = this.newRequest.get('payer') as FormGroup;
     const formGI = this.newRequest.get('generalInformation') as FormGroup;
     const formHMI = this.newRequest.get('medicalHistory').get('informations') as FormGroup;
     const formWI = this.newRequest.get('medicalHistory').get('informations').get('womenInformation') as FormGroup;
@@ -1384,19 +1517,19 @@ export class LifeComponent implements OnInit, DoCheck, AfterViewChecked {
     if (event.valor === 'si') {
       switch (event.name) {
         case 'diving':
-          formAQ.addControl('diving', this.fb.group({}));
+          formAQ.addControl('solicitudBuceo', this.fb.group({}));
           break;
 
         case 'racing':
-          formAQ.addControl('racing', this.fb.group({}));
+          formAQ.addControl('solicitudMoto', this.fb.group({}));
           break;
 
         case 'skydiving':
-          formAQ.addControl('skydiving', this.fb.group({}));
+          formAQ.addControl('solicitudAviacion', this.fb.group({}));
           break;
 
         case 'mountaineering':
-          formAQ.addControl('mountaineering', this.fb.group({}));
+          formAQ.addControl('solicitudMontanismo', this.fb.group({}));
           break;
 
         case 'isExposed':
@@ -1405,6 +1538,9 @@ export class LifeComponent implements OnInit, DoCheck, AfterViewChecked {
             time: ['', Validators.required],
             timeNumber: ['', Validators.required]
           }));
+          if (!formQ.get('money-laundering')) {
+            formQ.addControl('solucionAntiLavadoDinero', this.fb.group({}));
+          }
           break;
 
         case 'isPayerExposed':
@@ -1413,6 +1549,9 @@ export class LifeComponent implements OnInit, DoCheck, AfterViewChecked {
             time: ['', Validators.required],
             timeNumber: ['', Validators.required]
           }));
+          if (!formPQ.get('money-laundering')) {
+            formPQ.addControl('solucionAntiLavadoDinero', this.fb.group({}));
+          }
           break;
 
         case 'isContractorExposed':
@@ -1421,6 +1560,10 @@ export class LifeComponent implements OnInit, DoCheck, AfterViewChecked {
             time: ['', Validators.required],
             timeNumber: ['', Validators.required]
           }));
+          if (!formCQ.get('money-laundering')) {
+            formCQ.addControl('solucionAntiLavadoDinero', this.fb.group({}));
+          }
+
           break;
 
         case 'sameAsPayer':
@@ -1428,12 +1571,16 @@ export class LifeComponent implements OnInit, DoCheck, AfterViewChecked {
           this.newRequest.removeControl('payer');
           formEP.removeControl('isPayerExposed');
           formP.removeControl('payerIsLegalEntity');
+          formP.removeControl('payerLegalEntity');
+          formPQ.removeControl('solucionAntiLavadoDinero');
           break;
 
         case 'payerIsLegalEntity':
           this.newRequest.removeControl('payer');
           formP.addControl('payerLegalEntity', this.fb.group({}));
-
+          if (!formPQ.get('money-laundering')) {
+            formPQ.addControl('solucionAntiLavadoDinero', this.fb.group({}));
+          }
           break;
 
         case 'sameAsContractor':
@@ -1441,12 +1588,16 @@ export class LifeComponent implements OnInit, DoCheck, AfterViewChecked {
           this.newRequest.removeControl('contractor');
           formEP.removeControl('isContractorExposed');
           formP.removeControl('contractorIsLegalEntity');
+          formP.removeControl('contractorLegalEntity');
+          formCQ.removeControl('solucionAntiLavadoDinero');
           break;
 
         case 'contractorIsLegalEntity':
           this.newRequest.removeControl('contractor');
           formP.addControl('contractorLegalEntity', this.fb.group({}));
-
+          if (!formCQ.get('money-laundering')) {
+            formCQ.addControl('solucionAntiLavadoDinero', this.fb.group({}));
+          }
           break;
 
         case 'isMarried':
@@ -1463,6 +1614,7 @@ export class LifeComponent implements OnInit, DoCheck, AfterViewChecked {
 
         case 'hasAnotherCoverage':
           formCB.addControl('anotherCoverages', this.fb.array([this.createFormArray('coverages')]));
+          formCB.addControl('changeAnotherCoverage', this.fb.control('', Validators.required));
           this.existingCoveragesList = formCB.get('anotherCoverages') as FormArray;
           break;
 
@@ -1662,33 +1814,61 @@ export class LifeComponent implements OnInit, DoCheck, AfterViewChecked {
       }
     } else if (event.valor === 'no') {
       switch (event.name) {
-
         case 'diving':
-          formAQ.removeControl('diving');
+          formAQ.removeControl('solicitudBuceo');
           break;
 
         case 'racing':
-          formAQ.removeControl('racing');
+          formAQ.removeControl('solicitudMoto');
           break;
 
         case 'skydiving':
-          formAQ.removeControl('skydiving');
+          formAQ.removeControl('solicitudAviacion');
           break;
 
         case 'mountaineering':
-          formAQ.removeControl('mountaineering');
+          formAQ.removeControl('solicitudMontanismo');
           break;
 
         case 'isExposed':
-          formEP.removeControl('exposedPerson');
+          formEP.removeControl('insured');
+          if ((formP.get('countryOfResidence').value === 'República Dominicana' || formP.get('countryOfResidence').value === '') || formP.get('countryOfBirth').value === 'República Dominicana' || formP.get('countryOfResidence').value === '') {
+            formQ.removeControl('solucionAntiLavadoDinero');
+          }
           break;
 
         case 'isPayerExposed':
           formEP.removeControl('payer');
+
+          if (formPA) {
+            if (this.role === 'WWS') {
+              if (((formPA.get('countryOfResidence').value === 'República Dominicana' || formPA.get('countryOfResidence').value === '') || (formPA.get('countryOfBirth').value === 'República Dominicana' || formPA.get('countryOfBirth').value === ''))) {
+                formPQ.removeControl('solucionAntiLavadoDinero');
+              }
+            } else {
+              if (((formPA.get('countryOfResidence').value === 'Panamá' || formPA.get('countryOfResidence').value === '') || (formPA.get('countryOfBirth').value === 'Panamá' || formPA.get('countryOfBirth').value === ''))) {
+                formPQ.removeControl('solucionAntiLavadoDinero');
+              }
+            }
+          }
+
           break;
 
         case 'isContractorExposed':
           formEP.removeControl('contractor');
+          if (this.role === 'WWS') {
+            if (formC) {
+              if (((formC.get('countryOfResidence').value === 'República Dominicana' || formC.get('countryOfResidence').value === '') || (formC.get('countryOfBirth').value === 'República Dominicana' || formC.get('countryOfBirth').value === ''))) {
+                formCQ.removeControl('solucionAntiLavadoDinero');
+              }
+            }
+          } else {
+            if (formC) {
+              if (((formC.get('countryOfResidence').value === 'Panamá' || formC.get('countryOfResidence').value === '') || (formC.get('countryOfBirth').value === 'Panamá' || formC.get('countryOfBirth').value === ''))) {
+                formCQ.removeControl('solucionAntiLavadoDinero');
+              }
+            }
+          }
           break;
 
         case 'sameAsPayer':
@@ -1697,7 +1877,7 @@ export class LifeComponent implements OnInit, DoCheck, AfterViewChecked {
 
           this.newRequest.addControl('payer', this.fb.group({
             firstName: ['', Validators.required],
-            secondName: ['', Validators.required],
+            secondName: [''],
             lastName: ['', Validators.required],
             date: ['', Validators.required],
             sex: ['', Validators.required],
@@ -1707,11 +1887,11 @@ export class LifeComponent implements OnInit, DoCheck, AfterViewChecked {
             status: ['', Validators.required],
             countryOfBirth: ['', Validators.required],
             direction: ['', Validators.required],
-            tel: ['', Validators.required],
-            cel: ['', Validators.required],
-            officeTel: ['', Validators.required],
-            fax: ['', Validators.required],
-            email: ['', Validators.required],
+            tel: [''],
+            cel: [''],
+            officeTel: [''],
+            fax: [''],
+            email: ['', [Validators.required, Validators.email]],
             company: this.fb.group({
               name: ['', Validators.required],
               position: ['', Validators.required],
@@ -1720,6 +1900,7 @@ export class LifeComponent implements OnInit, DoCheck, AfterViewChecked {
               city: ['', Validators.required],
               country: ['', Validators.required],
               kinship: ['', Validators.required],
+              insurancePurpose: ['', Validators.required],
               contractorCountry: ['', Validators.required],
             })
           }));
@@ -1731,7 +1912,7 @@ export class LifeComponent implements OnInit, DoCheck, AfterViewChecked {
 
           this.newRequest.addControl('contractor', this.fb.group({
             firstName: ['', Validators.required],
-            secondName: ['', Validators.required],
+            secondName: [''],
             lastName: ['', Validators.required],
             date: ['', Validators.required],
             sex: ['', Validators.required],
@@ -1741,11 +1922,11 @@ export class LifeComponent implements OnInit, DoCheck, AfterViewChecked {
             status: ['', Validators.required],
             countryOfBirth: ['', Validators.required],
             direction: ['', Validators.required],
-            tel: ['', Validators.required],
+            tel: [''],
             cel: ['', Validators.required],
-            officeTel: ['', Validators.required],
-            fax: ['', Validators.required],
-            email: ['', Validators.required],
+            officeTel: [''],
+            fax: [''],
+            email: ['', [Validators.required, Validators.email]],
             company: this.fb.group({
               name: ['', Validators.required],
               position: ['', Validators.required],
@@ -1753,6 +1934,7 @@ export class LifeComponent implements OnInit, DoCheck, AfterViewChecked {
               economicActivity: ['', Validators.required],
               city: ['', Validators.required],
               country: ['', Validators.required],
+              kinship: ['', Validators.required],
               insurancePurpose: ['', Validators.required],
               contractorCountry: ['', Validators.required],
             }),
@@ -1777,7 +1959,7 @@ export class LifeComponent implements OnInit, DoCheck, AfterViewChecked {
               cel: ['', Validators.required],
               officeTel: ['', Validators.required],
               fax: ['', Validators.required],
-              email: ['', Validators.required],
+              email: ['', [Validators.required, Validators.email]],
               company: this.fb.group({
                 name: ['', Validators.required],
                 position: ['', Validators.required],
@@ -1791,8 +1973,10 @@ export class LifeComponent implements OnInit, DoCheck, AfterViewChecked {
             }));
           }
 
-          formP.removeControl('payerLegalEntity');
-
+          formP.removeControl('contractorLegalEntity');
+          if (formEP.get('isContractorExposed').value !== 'si') {
+            formCQ.removeControl('solucionAntiLavadoDinero');
+          }
           break;
 
         case 'payerIsLegalEntity':
@@ -1813,7 +1997,7 @@ export class LifeComponent implements OnInit, DoCheck, AfterViewChecked {
               cel: ['', Validators.required],
               officeTel: ['', Validators.required],
               fax: ['', Validators.required],
-              email: ['', Validators.required],
+              email: ['', [Validators.required, Validators.email]],
               company: this.fb.group({
                 name: ['', Validators.required],
                 position: ['', Validators.required],
@@ -1827,8 +2011,10 @@ export class LifeComponent implements OnInit, DoCheck, AfterViewChecked {
             }));
           }
 
-          formP.removeControl('contractorLegalEntity');
-
+          formP.removeControl('payerLegalEntity');
+          if (formEP.get('isPayerExposed').value !== 'si') {
+            formPQ.removeControl('solucionAntiLavadoDinero');
+          }
           break;
 
 
@@ -1843,8 +2029,12 @@ export class LifeComponent implements OnInit, DoCheck, AfterViewChecked {
 
         case 'hasAnotherCoverage':
           formCB.removeControl('anotherCoverages');
+          formCB.removeControl('changeAnotherCoverage');
+
           this.existingCoveragesList = undefined;
-          formCB.get('changeAnotherCoverage').reset();
+          if (formCB.get('changeAnotherCoverage')) {
+            formCB.get('changeAnotherCoverage').reset();
+          }
           formCB.removeControl('changingCoverages');
           this.changingCoveragesList = undefined;
           break;
@@ -2086,16 +2276,19 @@ export class LifeComponent implements OnInit, DoCheck, AfterViewChecked {
   }
 
   questionsLength() {
-    if (this.newRequest.get('questionnaires').get('solicitudEstadoFinancieroConfidencial')) {
+    if (this.newRequest.get('questionnaires').get('solucionAntiLavadoDinero') && this.newRequest.get('questionnaires').get('solicitudEstadoFinancieroConfidencial')) {
+      return Object.keys(this.newRequest.get('questionnaires').value).length - 2;
+    } else if (this.newRequest.get('questionnaires').get('solucionAntiLavadoDinero')) {
+      return Object.keys(this.newRequest.get('questionnaires').value).length - 1;
+    } else if (this.newRequest.get('questionnaires').get('solicitudEstadoFinancieroConfidencial')) {
       return Object.keys(this.newRequest.get('questionnaires').value).length - 1;
     } else {
       return Object.keys(this.newRequest.get('questionnaires').value).length;
-
     }
   }
 
   activitiesQuestionsLength() {
-    return Object.keys(this.newRequest.get('activitiesQuestionnaires').value).length;
+    return Object.keys(this.newRequest.get('activitiesQuestionnaires').value).length > 1;
   }
 
   isFormValid(form: string) {
@@ -2142,101 +2335,64 @@ export class LifeComponent implements OnInit, DoCheck, AfterViewChecked {
     console.log('json', JSON.stringify(this.newRequest.get('releventPlanInformation').value));
   }
 
-  has(object: any, key: any) {
-    return object ? this.hasOwnProperty.call(object, key) : false;
- }
-
- iterateThroughtAllObject(obj: any, groupControl: any)
- {
-   const formDataGroup = groupControl as FormGroup;
-   Object.keys(obj).forEach(e =>
-     {
-       let key = e;
-       let value = obj[key];
-       if (obj[key] !== null && obj[e] !== undefined && (typeof obj[e]) != "object")
-       {
-         if ( value !== undefined && value !== null && value !== '')
-         {
-           if (!this.has(formDataGroup['controls'], key))
-           {
-             formDataGroup.addControl(key, this.fb.control(value));
-           }
-           else
-           {
-
-           const valueFormControl = formDataGroup['controls'][key] as FormControl;
-           valueFormControl.setValue (value);
-         }
-         }
-       }
-       else if (obj[key] !== null && obj[key] !== undefined && (typeof obj[key]) === "object")
-       {
-         if (Array.isArray(obj[key] ))
-         {
-          if (!this.has(formDataGroup['controls'], key))
-          {
-            formDataGroup.removeControl(key);
-          }
-          if(obj[key].length > 0)
-          {
-
-              let form = formDataGroup.get(key);
-              let arrayForm = [];
-              obj[key].forEach( (element) =>{
-                let fbGroup = this.fb.group({
-                  id: ['', Validators.required]
-                });
-
-                this.iterateThroughtAllObject(element,  fbGroup);
-                arrayForm.push(fbGroup);
-              });
-
-
-              formDataGroup.addControl(key, this.fb.array(arrayForm));
-          }
-         }
-         else
-         {
-          if (!this.has(formDataGroup['controls'], key))
-          {
-            formDataGroup.addControl(key, this.fb.group({
-              id: ['', Validators.required]
-            }));
-          }
-
-          let form = formDataGroup.get(key);
-
-          this.iterateThroughtAllObject(obj[key], form);
-          return form;
-         }
-
-       }
-
-   });
- }
   getData(id) {
-		this.life.returnData(id).subscribe(data => {
-			// console.log(data.data.asegurado.documentoIdentidad)
-      console.log(data);
+    this.life.returnData(id).subscribe(data => {
+      // console.log(data.data.asegurado.documentoIdentidad)
+      //console.log(data);
       if (data !== undefined && data.data !== null &&
-        data.data != undefined )
-     {
-       this.ID = data.data.id;
-       this.iterateThroughtAllObject(data.data, this.newRequest);
+        data.data != undefined) {
+        this.ID = data.data.id;
+        this.dataMappingFromApi.iterateThroughtAllObject(data.data, this.newRequest);
 
-      // this.disabilityGroup['controls'].num_financial_quote.setValue(data.data.num_financial_quote)
-     }
+        console.log(this.newRequest);
+        this.primaryBenefitsArray = this.newRequest.get('primaryBenefits').get('dependentsC') as FormArray;
+        this.contingentBeneficiaryArray = this.newRequest.get('contingentBeneficiary').get('dependentsC') as FormArray;
+        this.dependentsFormArray = this.newRequest.get('dependents') as FormArray;
+        this.showContent = true;
+
+        const formCB = this.newRequest.get('contingentBeneficiary') as FormGroup;
+        const formAR = this.newRequest.get('agentReport') as FormGroup;
+        const formHMI = this.newRequest.get('medicalHistory').get('informations') as FormGroup;
+        const formWI = this.newRequest.get('medicalHistory').get('informations').get('womenInformation') as FormGroup;
+
+        this.familyRelationshipInsurances = formAR.get('familyInsurances') as FormArray;;
+        this.existingCoveragesList = formCB.get('anotherCoverages') as FormArray;
+        this.changingCoveragesList = formCB.get('changingCoverages') as FormArray;
+        this.womenDisordersList = formWI.get('disorders') as FormArray;
+        this.heartPainList = formHMI.get('heartPain') as FormArray;
+        this.respiratoryDisorderList = formHMI.get('respiratoryDisorder') as FormArray;
+        this.mentalNervousDisorderList = formHMI.get('mentalNervousDisorder') as FormArray;
+        this.stomachDisorderList = formHMI.get('stomachDisorder') as FormArray;
+        this.endocrineDisorderList = formHMI.get('endocrineDisorder') as FormArray;
+        this.spineDisorderList = formHMI.get('spineDisorder') as FormArray;
+        this.unexplainedDiseaseList = formHMI.get('unexplainedDisease') as FormArray;
+        this.renalDisorderList = formHMI.get('renalDisorder') as FormArray;
+        this.eyesNoseThroatProblemList = formHMI.get('eyesNoseThroatProblem') as FormArray;
+        this.bloodDisorderList = formHMI.get('bloodDisorder') as FormArray;
+        this.birthDefectList = formHMI.get('birthDefect') as FormArray;
+        this.medicalProceduresList = formHMI.get('medicalProcedures') as FormArray;
+        this.beenAPatientList = formHMI.get('beenAPatient') as FormArray;
+        this.hadSpecializedTestsList = formHMI.get('hadSpecializedTests') as FormArray;
+        this.notCarriedOutList = formHMI.get('notCarriedOut') as FormArray;
+        this.takenInLast12MonthsList = formHMI.get('takenInLast12Months') as FormArray;
+        this.planToObtainMedicalTreatmentList = formHMI.get('planToObtainMedicalTreatment') as FormArray;
+        this.testedPositiveForHIVList = formHMI.get('testedPositiveForHIV') as FormArray;
+        this.diabetesDiagnosisList = formHMI.get('diabetesDiagnosis') as FormArray;
+        this.doctorList = formHMI.get('doctors') as FormArray;
+
+
+      }
 
     });
 
-  this.life.id = null;
-		console.log('this.life.id es igual a ' + this.life.id);
+    this.life.id = null;
+    console.log('this.life.id es igual a ' + this.life.id);
   }
 
   sendForm(form: FormGroup, formType: string, sendType: string, id?: number) {
     console.log(id);
 
-    this.formHandler.sendForm(form, formType, sendType, id, this.appComponent);
+    this.formHandler.sendForm(form, formType, sendType, this.appComponent, id);
 
   }
 }

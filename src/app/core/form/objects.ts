@@ -68,12 +68,12 @@ export const $weightTypes = [
 
 export const $heightTypes = [
     {
-        value: 'pies',
-        viewValue: 'Pies'
+        value: 'pie',
+        viewValue: 'Pie'
     },
     {
-        value: 'centimetros',
-        viewValue: "CM",
+        value: 'metro',
+        viewValue: "Metro",
     },
 ];
 

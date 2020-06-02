@@ -46,7 +46,11 @@ const routes: Routes = [
 				// canActivate: [AppAuthGuard],
 				loadChildren: () => import('./requests/requests.module').then((m) => m.RequestsModule)
 			},
-
+      {
+        path: 'consult',
+        // canActivate: [AppAuthGuard],
+        loadChildren: () => import('./consultation/consultation.module').then((m) => m.ConsultationModule)
+      }
 		]
 	}
 ];

@@ -21,6 +21,37 @@ export class MellitusDiabetesComponent implements OnInit {
   threatmentQuestions: any[];
   disordersQuestions: any[];
 
+  diabetesType  = {
+    label: 'Tipo de diabetes',
+    options: [
+      {
+        value: 'Diabetes mellitus Tipo 1',
+        viewValue: 'Diabetes mellitus Tipo 1'
+      },
+      {
+        value: 'Diabetes mellitus Tipo 2 ',
+        viewValue: 'Diabetes mellitus Tipo 2 '
+      },
+      {
+        value: 'Intolerancia a la glucosa',
+        viewValue: 'Intolerancia a la glucosa'
+      },
+      {
+        value: 'Diabetes gestacional',
+        viewValue: 'Diabetes gestacional'
+      },
+      {
+        value: 'Diabetes secundaria',
+        viewValue: 'Diabetes secundaria'
+      },
+      {
+        value: 'Otra',
+        viewValue: 'Otra'
+      }
+    ],
+    name: 'diabetesType'
+  };
+
   informationGroup() {
     return this.fb.group({
       information: ['', Validators.required],
@@ -84,6 +115,7 @@ export class MellitusDiabetesComponent implements OnInit {
     this.form.addControl('name', this.fb.control('', Validators.required));
     this.form.addControl('dateFirstDiagnostic', this.fb.control('', Validators.required));
     this.form.addControl('diabetesType', this.fb.control('', Validators.required));
+    this.form.addControl('diabetesOther', this.fb.control('', Validators.required));
     this.form.addControl('takeOralMedication', this.fb.control('', Validators.required));
     this.form.addControl('useInsulin', this.fb.control('', Validators.required));
     this.form.addControl('bloodGlucoseChecking', this.fb.control('', Validators.required));

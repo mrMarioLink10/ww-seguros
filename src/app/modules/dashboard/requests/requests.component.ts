@@ -6,6 +6,9 @@ import { RequestsService } from '../services/requests/requests.service';
 import { HttpParams } from '@angular/common/http';
 import { LifeService } from './new-request/life/services/life.service';
 import { DisabilityService } from './new-request/disability/services/disability.service';
+import { FormHandlerService } from '../../../core/services/forms/form-handler.service';
+import { AppComponent } from '../../../app.component';
+import { UserService } from '../../../core/services/user/user.service';
 
 export interface Requests {
   no: number;
@@ -56,30 +59,51 @@ export class RequestsComponent implements OnInit {
     customClass: 'dashboard-button'
   };
 
-  displayedColumns: string[] = ['no', 'nombre', 'apellidos', 'dependientes', 'seguro', 'plan', 'fecha', 'monto', 'estatus', 'acciones'];
+  // tslint:disable-next-line: max-line-length
+  displayedColumns: string[] = ['noCotizacion', 'nombres', 'apellidos', 'seguro', 'plan', 'fecha', 'monto', 'estatus', 'acciones'];
 
   dataSource;
   requests: any;
+  role: any;
+
+  loading = false;
 
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
-  constructor(private router: Router, private _requestsService: RequestsService, public life: LifeService,
-    public disability: DisabilityService) { }
+  constructor(
+    private router: Router,
+    private requestsService: RequestsService,
+    public life: LifeService,
+    public disability: DisabilityService,
+    private formHandlerService: FormHandlerService,
+    private appComponent: AppComponent,
+    private userService: UserService
+  ) { }
 
-  getRequests(params: HttpParams = new HttpParams) {
+  getRequests(params: HttpParams = new HttpParams()) {
     let data;
-    this._requestsService.getRequests(params)
+    this.loading = true;
+
+    setTimeout(() => {
+      this.appComponent.showOverlay = true;
+    });
+    this.requestsService.getRequests(params)
       .subscribe(res => {
+        this.appComponent.showOverlay = false;
+
         data = res;
         this.requests = data.data;
         this.dataSource = new MatTableDataSource(this.requests);
         this.dataSource.sort = this.sort;
         this.dataSource.paginator = this.paginator;
+        this.loading = false;
+
       }, err => console.log(err));
   }
 
   ngOnInit() {
+    this.role = this.userService.getRoleCotizador();
     this.getRequests();
   }
 
@@ -87,14 +111,89 @@ export class RequestsComponent implements OnInit {
     this.newRequestButtonOptions.active = true;
     this.router.navigateByUrl('/dashboard/requests/new-requests');
   }
+
+  seeRequest(id: number, type: string) {
+    if (this.role === 'WWS') {
+      window.open(`https://wwsdevportalbackend.azurewebsites.net/solicitudesView/${type}/${id}/?location=true`, '_blank');
+    } else {
+      window.open(`https://wwsdevportalbackend.azurewebsites.net/solicitudesView/${type}/${id}/?location=false`, '_blank');
+    }
+  }
+
+  deleteTargeting(id: number, type: string) {
+    switch (type) {
+      case 'Vida':
+        console.log('Vida');
+        this.formHandlerService.deleteRequest(id, 'Solicitudes/vida', 'Vida', this.appComponent)
+          .subscribe(res => {
+            console.log(res);
+            if (res === true) { this.getRequests(); }
+          });
+        break;
+
+      case 'Salud':
+        console.log('Salud');
+        this.formHandlerService.deleteRequest(id, 'Solicitudes/salud', 'Salud', this.appComponent)
+          .subscribe(res => {
+            console.log(res);
+            if (res === true) { this.getRequests(); }
+          });
+        break;
+
+      case 'Disability':
+        console.log('Disability');
+        this.formHandlerService.deleteRequest(id, 'Solicitudes/disability', 'Disability', this.appComponent)
+          .subscribe(res => {
+            if (res === true) { this.getRequests(); }
+          });
+        break;
+
+      default:
+        break;
+    }
+  }
+
+  directSendTargeting(id: number, type: string) {
+    switch (type) {
+      case 'Vida':
+        this.formHandlerService.directSendRequest(id, 'Solicitudes/vida', 'Vida', this.appComponent)
+          .subscribe(res => {
+            console.log(res);
+            if (res === true) { this.getRequests(); }
+          });
+        break;
+
+      case 'Salud':
+        this.formHandlerService.directSendRequest(id, 'Solicitudes/salud', 'Salud', this.appComponent)
+          .subscribe(res => {
+            console.log(res);
+            if (res === true) { this.getRequests(); }
+          });
+        break;
+
+      case 'Disability':
+        this.formHandlerService.directSendRequest(id, 'Solicitudes/disability', 'Disability', this.appComponent)
+          .subscribe(res => {
+            console.log(res);
+            if (res === true) { this.getRequests(); }
+          });
+        break;
+
+      default:
+        break;
+    }
+  }
+
   navigateToLife(id) {
     this.newRequestButtonOptions.active = true;
     this.router.navigateByUrl(`/dashboard/requests/new-requests/life/${id}`);
   }
+
   navigateToSalud(id) {
     this.newRequestButtonOptions.active = true;
     this.router.navigateByUrl(`/dashboard/requests/new-requests/major-expenses/${id}`);
   }
+
   navigateToDisability(id) {
     this.newRequestButtonOptions.active = true;
     this.router.navigateByUrl(`/dashboard/requests/new-requests/disability/${id}`);

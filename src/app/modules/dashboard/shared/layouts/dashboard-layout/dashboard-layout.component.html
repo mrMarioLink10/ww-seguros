@@ -15,7 +15,10 @@
         <div class="dashboard-background-color-first  flex justify-center sm:pb-6 md:pb-12 lg:pb-12 xl:pb-12">
           <div class="pr-2 pl-2 sidenav-user-info align-items-center d-flex">
             <div class="flex justify-center pt-2 sm:pt-24 md:pt-24 lg:pt-24 xl:pt-24 pb-3">
-              <img src="../../../../../../assets/Logowws@2x.png" width="225px" alt="Logo de WorldWide Seguros">
+              <img *ngIf="this.role === 'WWS'" src="../../../../../../assets/Logowws@2x.png" width="225px"
+                alt="Logo de WorldWide Seguros">
+              <img *ngIf="this.role !== 'WWS'" src="../../../../../../assets/Logowwm.png" width="225px"
+                alt="Logo de WorldWide Seguros">
             </div>
             <div class="text-center text-white pt-6">
               <ul class="list-unstyled m-0">
@@ -42,6 +45,13 @@
             <img style="max-height: 35px !important;" [src]="activeRoute !== '/dashboard/request-management' ? '../../../../../../assets/iconos/work_outline-24px.svg' : '../../../../../../assets/iconos/work_outline-24px-b.svg'" height="24px" width="24px" class="mr-1 ml-3">
             <div style="max-height: 35px !important;" class="text-xs uppercase">Gestión de solicitud</div>
           </mat-list-item> -->
+          <mat-list-item [routerLink]="['consult']" routerLinkActive="router-link-active"
+            style="color: white; max-height: 35px !important;" class="my-3">
+            <img style="max-height: 35px !important;"
+              [src]="activeRoute.includes('/dashboard/consult') ? '../../../../../../assets/iconos/user_search_icon_filled.svg' : '../../../../../../assets/iconos/user_search_icon.svg'"
+              height="24px" width="24px" class="mr-1 ml-3">
+            <div style="max-height: 35px !important;" class="text-xs uppercase">Consulta</div>
+          </mat-list-item>
           <mat-list-item [routerLink]="['quotes']" routerLinkActive="router-link-active"
             style="color: white; max-height: 35px !important;" class="my-3">
             <img style="max-height: 35px !important;"
@@ -76,18 +86,15 @@
               height="24px" width="24px" class="mr-1 ml-3">
             <!-- <img *ngIf="!activeRoute" style="max-height: 35px !important;"
               src="../../../../../../assets/iconos/autorizacion2.svg" height="24px" width="24px" class="mr-1 ml-3"> -->
-            <div style="max-height: 35px !important;" class="text-xs uppercase">Autorizaciones</div>
+            <div style="max-height: 35px !important;" class="text-xs uppercase">PRE - Autorizaciones</div>
           </mat-list-item>
-          <mat-list-item [routerLink]="['information']" routerLinkActive="router-link-active"
+          <!-- <mat-list-item [routerLink]="['information']" routerLinkActive="router-link-active"
             style="color: white; max-height: 35px !important;" class="my-3">
             <img style="max-height: 35px !important;"
               [src]="!activeRoute.includes('/dashboard/information') ? '../../../../../../assets/iconos/perm_contact_calendar-24px.svg' : '../../../../../../assets/iconos/perm_contact_calendar-24px-b.svg'"
               height="24px" width="24px" class="mr-1 ml-3">
-            <!-- <img *ngIf="!activeRoute" style="max-height: 35px !important;"
-              src="../../../../../../assets/iconos/perm_contact_calendar-24px.svg" height="24px" width="24px"
-              class="mr-1 ml-3"> -->
             <div style="max-height: 35px !important;" class="text-xs uppercase">Datos</div>
-          </mat-list-item>
+          </mat-list-item> -->
           <mat-list-item style="color: white; max-height: 35px !important; padding-left: 0.75rem"
             class="mt-10 sm:mt-40 md:mt-40 lg:mt-40 xl:mt-40">
             <button class="text-xs uppercase h-full w-full text-left" (click)="logOut()">Salir</button>

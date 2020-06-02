@@ -13,6 +13,7 @@ import { DisabilityService } from '../../../modules/dashboard/requests/new-reque
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../../environments/environment';
 import { AppComponent } from 'src/app/app.component';
+import { Observable, Subject } from 'rxjs';
 // tslint:disable: forin
 // tslint:disable: variable-name
 
@@ -35,13 +36,13 @@ export class FormHandlerService {
 		private http: HttpClient,
 	) { }
 
-	sendForm(form: FormGroup, name: string, type?: string, id?: number, appComponent?: any) {
+	sendForm(form: FormGroup, name: string, type?: string, appComponent?: any, id?: number) {
 		console.log('Impresion de formulario down here: ', form);
-		this.dialogHandler(form, name, type, id, appComponent);
+		this.dialogHandler(form, name, type, appComponent, id);
 		console.log(appComponent);
 	}
 
-	dialogHandler(form: FormGroup, name: string, type: string, id?: number, appComponent?: any) {
+	dialogHandler(form: FormGroup, name: string, type: string, appComponent?: any, id?: number) {
 		let Dialog;
 		let dataOpen;
 		let dataClosing;
@@ -323,25 +324,61 @@ export class FormHandlerService {
 									break;
 
 								case 'major-expenses':
-									this.majorExpensesService.postRequest(json)
-										.subscribe(res => {
-											this.correctSend(res, dialog, dataClosing, route);
-
-										}, (err) => {
-											this.badSend(err, dialog);
-
-										});
+									if (ID) {
+										appComponent.showOverlay = true;
+										this.majorExpensesService.sendRequest(ID)
+											.subscribe(res => {
+												appComponent.showOverlay = false;
+												this.correctSend(res, dialog, dataClosing, route);
+											}, (err) => {
+												appComponent.showOverlay = false;
+												this.badSend(err, dialog);
+											});
+									} else {
+										appComponent.showOverlay = true;
+										this.majorExpensesService.postRequest(json)
+											.subscribe((res: any) => {
+												if (res.data.id) {
+													this.majorExpensesService.sendRequest(res.data.id)
+														.subscribe(response => {
+															appComponent.showOverlay = false;
+															this.correctSend(response, dialog, dataClosing, route);
+														});
+												}
+											}, (err) => {
+												appComponent.showOverlay = false;
+												this.badSend(err, dialog);
+											});
+									}
 									break;
 
 								case 'disability':
-									this.disabilityService.postRequest(json)
-										.subscribe(res => {
-											this.correctSend(res, dialog, dataClosing, route);
-
-										}, (err) => {
-											this.badSend(err, dialog);
-
-										});
+									if (ID) {
+										appComponent.showOverlay = true;
+										this.disabilityService.sendRequest(ID)
+											.subscribe(res => {
+												appComponent.showOverlay = false;
+												this.correctSend(res, dialog, dataClosing, route);
+											}, (err) => {
+												appComponent.showOverlay = false;
+												this.badSend(err, dialog);
+											});
+									} else {
+										appComponent.showOverlay = true;
+										this.disabilityService.postRequest(json)
+											.subscribe((res: any) => {
+												if (res.data.id) {
+													this.disabilityService.sendRequest(res.data.id)
+														.subscribe(response => {
+															appComponent.showOverlay = false;
+															this.correctSend(response, dialog, dataClosing, route);
+														});
+												}
+											}, (err) => {
+												appComponent.showOverlay = false;
+												this.badSend(err, dialog);
+											});
+									}
 									break;
 
 								default:
@@ -402,12 +439,13 @@ export class FormHandlerService {
 		this.route.navigateByUrl(route);
 	}
 
-	directSendRequest(id: number, type: string, title: string, appComponent: any) {
+	directSendRequest(id: number, type: string, title: string, appComponent: any): Observable<boolean> {
 		const dialogRef = this.dialog.open(BaseDialogComponent, {
 			data: this.dialogOption.sendForm(title),
 			minWidth: 385,
 		});
-
+		let deleted: boolean;
+		const subject = new Subject<boolean>();
 		dialogRef.afterClosed().subscribe((result) => {
 			if (result === 'true') {
 				appComponent.showOverlay = true;
@@ -421,21 +459,24 @@ export class FormHandlerService {
 							minWidth: 385
 						});
 						this.closeDialog(dialog);
-
+						deleted = true;
+						subject.next(deleted);
 					}, (err) => {
 						this.badSend(err);
 
 					});
 			}
 		});
+		return subject.asObservable();
 	}
 
-	deleteRequest(id: number, type: string, title: string, appComponent: any) {
+	deleteRequest(id: number, type: string, title: string, appComponent: any): Observable<boolean> {
 		const dialogRef = this.dialog.open(BaseDialogComponent, {
 			data: this.dialogOption.deleteConfirm(title),
 			minWidth: 385,
 		});
-
+		let deleted: boolean;
+		const subject = new Subject<boolean>();
 		dialogRef.afterClosed().subscribe((result) => {
 			if (result === 'true') {
 				appComponent.showOverlay = true;
@@ -450,12 +491,14 @@ export class FormHandlerService {
 							minWidth: 385
 						});
 						this.closeDialog(dialog);
+						deleted = true;
+						subject.next(deleted);
 					}, (err) => {
 						this.badSend(err);
-
 					});
 			}
 		});
+		return subject.asObservable();
 	}
 
 	findInvalidControls(_input: AbstractControl, _invalidControls?: AbstractControl[]): AbstractControl[] {

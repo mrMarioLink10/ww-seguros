@@ -35,11 +35,7 @@ export class MountaineeringComponent implements OnInit, DoCheck {
 
   ngOnInit() {
 
-    if (this.form.get("id") === undefined || this.form.get("id") .value == "0")
-    {
-      this.addBasicControls();
-    }
-
+  this.addBasicControls();
     // this.mountaineering= this.fb.group({
 
     //   name:['', Validators.required],

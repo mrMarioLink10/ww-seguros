@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, DoCheck } from '@angular/core';
 import { FormGroup, FormArray, FormBuilder, Validators } from '@angular/forms';
 import { DiseaseService } from '../shared/disease/disease.service';
 
@@ -7,7 +7,7 @@ import { DiseaseService } from '../shared/disease/disease.service';
   templateUrl: './hypertension.component.html',
   styles: []
 })
-export class HypertensionComponent implements OnInit {
+export class HypertensionComponent implements OnInit, DoCheck {
   @Input() form: FormGroup;
 
   medicationList: FormArray;
@@ -89,6 +89,135 @@ export class HypertensionComponent implements OnInit {
       },
     ];
 
+  }
+x=0;
+  ngDoCheck(): void {
+
+    if (this.form.get('diseaseInfo').get('changedMedicationInLast12Months').value == 'si' &&
+		  this.x==0) {
+      this.x++;
+			// tslint:disable-next-line: align
+			const var12Months = {
+        valor: 'si',
+        name: 'changedMedicationInLast12Months'
+      };
+      // tslint:disable-next-line: align
+      this.selectChange(var12Months);
+			// tslint:disable-next-line: align
+			console.log('HolAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA changedMedications');
+      }
+ 
+      if (this.form.get('relatedHealthComplication').get('haveRenalDisease').value == 'si' &&
+		!this.form.get('relatedHealthComplication').get('renalDiseaseInfo')) {
+			const varrelatedHealthComplication1 = {
+        valor: 'si',
+        name: 'haveRenalDisease'
+      };
+      // tslint:disable-next-line: align
+      this.selectChange(varrelatedHealthComplication1);
+			console.log('HolAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA renalDiseaseInfo');
+      }
+      if (this.form.get('relatedHealthComplication').get('haveCoronaryHeart').value == 'si' &&
+		!this.form.get('relatedHealthComplication').get('coronaryHeartInfo')) {
+			const varrelatedHealthComplication2 = {
+        valor: 'si',
+        name: 'haveCoronaryHeart'
+      };
+      // tslint:disable-next-line: align
+      this.selectChange(varrelatedHealthComplication2);
+			console.log('HolAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA coronaryHeartInfo');
+      }
+      if (this.form.get('relatedHealthComplication').get('haveHeartFailure').value == 'si' &&
+		!this.form.get('relatedHealthComplication').get('heartFailureInfo')) {
+			const varrelatedHealthComplication3 = {
+        valor: 'si',
+        name: 'haveHeartFailure'
+      };
+      // tslint:disable-next-line: align
+      this.selectChange(varrelatedHealthComplication3);
+			console.log('HolAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA heartFailureInfo');
+      }
+      if (this.form.get('relatedHealthComplication').get('haveStrokes').value == 'si' &&
+		!this.form.get('relatedHealthComplication').get('strokesInfo')) {
+			const varrelatedHealthComplication4 = {
+        valor: 'si',
+        name: 'haveStrokes'
+      };
+      // tslint:disable-next-line: align
+      this.selectChange(varrelatedHealthComplication4);
+			console.log('HolAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA strokesInfo');
+      }
+      if (this.form.get('relatedHealthComplication').get('haveOther').value == 'si' &&
+		!this.form.get('relatedHealthComplication').get('otherInfo')) {
+			const varrelatedHealthComplication5 = {
+        valor: 'si',
+        name: 'haveOther'
+      };
+      // tslint:disable-next-line: align
+      this.selectChange(varrelatedHealthComplication5);
+			console.log('HolAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA otherInfo');
+      }
+
+      if (this.form.get('diagnosticStudies').get('electrocardiogram').value == 'si' &&
+		!this.form.get('diagnosticStudies').get('electrocardiogramInfo')) {
+			const vardiagnosticStudies1 = {
+        valor: 'si',
+        name: 'electrocardiogram'
+      };
+      // tslint:disable-next-line: align
+      this.selectChange(vardiagnosticStudies1);
+			console.log('HolAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA electrocardiogramInfo');
+      }
+      if (this.form.get('diagnosticStudies').get('chestXray').value == 'si' &&
+		!this.form.get('diagnosticStudies').get('chestXrayInfo')) {
+			const vardiagnosticStudies2 = {
+        valor: 'si',
+        name: 'chestXray'
+      };
+      // tslint:disable-next-line: align
+      this.selectChange(vardiagnosticStudies2);
+			console.log('HolAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA chestXrayInfo');
+      }
+      if (this.form.get('diagnosticStudies').get('echocardiogram').value == 'si' &&
+		!this.form.get('diagnosticStudies').get('echocardiogramInfo')) {
+			const vardiagnosticStudies3 = {
+        valor: 'si',
+        name: 'echocardiogram'
+      };
+      // tslint:disable-next-line: align
+      this.selectChange(vardiagnosticStudies3);
+			console.log('HolAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA echocardiogramInfo');
+      }
+      if (this.form.get('diagnosticStudies').get('sugarControl').value == 'si' &&
+		!this.form.get('diagnosticStudies').get('sugarControlInfo')) {
+			const vardiagnosticStudies4 = {
+        valor: 'si',
+        name: 'sugarControl'
+      };
+      // tslint:disable-next-line: align
+      this.selectChange(vardiagnosticStudies4);
+			console.log('HolAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA sugarControlInfo');
+      }
+      if (this.form.get('diagnosticStudies').get('bloodLipidsControl').value == 'si' &&
+		!this.form.get('diagnosticStudies').get('bloodLipidsControlInfo')) {
+			const vardiagnosticStudies5 = {
+        valor: 'si',
+        name: 'bloodLipidsControl'
+      };
+      // tslint:disable-next-line: align
+      this.selectChange(vardiagnosticStudies5);
+			console.log('HolAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA bloodLipidsControlInfo');
+      }
+      if (this.form.get('diagnosticStudies').get('other').value == 'si' &&
+		!this.form.get('diagnosticStudies').get('otherInfo')) {
+			const vardiagnosticStudies5 = {
+        valor: 'si',
+        name: 'other'
+      };
+      // tslint:disable-next-line: align
+      this.selectChange(vardiagnosticStudies5);
+			console.log('HolAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA otherInfo2');
+      }
   }
 
   addBasicControls() {

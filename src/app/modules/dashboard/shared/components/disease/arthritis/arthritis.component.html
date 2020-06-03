@@ -5,7 +5,7 @@
   <ng-template #formTemplate>
     <div class="p-3 pb-0 mb-4" style="background-color: #F2F2F2">
       <div class="mt-3 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 xl:grid-cols-5">
-     <!--    <div class="mr-3">
+        <!--    <div class="mr-3">
           <app-input [group]="form" label="Nombre Completo" name='name' placeholder="Alberto Matias">
           </app-input>
         </div>
@@ -32,7 +32,7 @@
     <div class="body-13 mb-8" style="color: black !important;">¿Qué tipo de artritis padece?
     </div>
     <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5">
-      <app-input [group]="form" name="arthritisType" label="Articulaciones">
+      <app-input [group]="form" name="arthritisType" label="Tipo">
       </app-input>
     </div>
     <div class="body-13 mb-2">Si no cuenta con un diagnóstico preciso, describa sus síntomas.
@@ -49,7 +49,8 @@
         </app-input>
       </div>
       <div class="mr-3">
-        <datepicker-month fieldId="firstDiagnostic"  [group]="form" name="firstDiagnostic" label="Fecha primer diagnóstico enfermedad">
+        <datepicker-month fieldId="firstDiagnostic" [group]="form" name="firstDiagnostic"
+          label="Fecha primer diagnóstico enfermedad">
         </datepicker-month>
       </div>
     </div>
@@ -75,17 +76,17 @@
           <div class="body-13 mb-2">Fecha última vez que tuvo síntomas
           </div>
           <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5">
-            <datepicker-month fieldId="date"  [group]="form.get('symptoms')" name="date" label="Fecha">
-            </datepicker-month >
+            <datepicker-month fieldId="date" [group]="form.get('symptoms')" name="date" label="Fecha">
+            </datepicker-month>
           </div>
         </div>
         <div *ngIf="question.name === 'hasBeenOperated'">
           <div *ngFor="let studies of surgeriesList.controls; let i = index"
             class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-5 xl:grid-cols-5">
             <div class="mr-3">
-              <datepicker-month fieldId="date"   [group]="form.get('surgeries').get(i.toString())" name="date"
+              <datepicker-month fieldId="date" [group]="form.get('surgeries').get(i.toString())" name="date"
                 label="Fecha de la cirugía">
-              </datepicker-month >
+              </datepicker-month>
             </div>
             <div class="mr-3">
               <app-input [group]="form.get('surgeries').get(i.toString())" name="surgeonName"
@@ -121,7 +122,8 @@
       <hr class=" w-full mb-6 ww-divider">
     </div>
     <!-- TIPOS DE TRATAMIENTO -->
-    <div class="body-13 mb-8" style="color: black !important;"> Especificar si utilizó algun tipo de tratamiento
+    <div class="body-13 mb-8" style="color: black !important;"> ¿Cuál es el tratamiento médico actual que recibe
+      (medicamentos, fisioterapia, etc.)?
     </div>
     <div *ngFor="let studies of threatmentList.controls; let i = index"
       class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-5 xl:grid-cols-5">

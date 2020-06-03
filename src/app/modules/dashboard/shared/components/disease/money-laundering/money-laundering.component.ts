@@ -72,15 +72,13 @@ export class MoneyLaunderingComponent implements OnInit {
 
 		if (event.valor === 'si') {
 
-			form.addControl('investigated', this.fb.group({
-				specify_investigation: ['', Validators.required]
-			}));
+			form.addControl('specify_investigation', this.fb.control('', Validators.required));
 			console.log(JSON.stringify(this.form.value));
 
 		}
 		else if (event.valor === 'no') {
 
-			form.removeControl('investigated');
+			form.removeControl('specify_investigation');
 
 		}
 

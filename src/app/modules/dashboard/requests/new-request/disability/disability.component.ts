@@ -38,6 +38,7 @@ export class DisabilityComponent implements OnInit, DoCheck {
   bmi: number;
   // massName = 'PESO';
   // heightName = 'ALTURA';
+  showContent = false;
 
   genderOptions: FieldConfig = {
 

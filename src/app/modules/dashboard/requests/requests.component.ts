@@ -114,9 +114,9 @@ export class RequestsComponent implements OnInit {
 
   seeRequest(id: number, type: string) {
     if (this.role === 'WWS') {
-      window.open(`https://wwsdevportalbackend.azurewebsites.net/solicitudesView/${type}/${id}/?location=true`, '_blank');
+      window.open(`http://wwsdevportalbackend.azurewebsites.net/solicitudesView/${type}/${id}/?location=true`, '_blank');
     } else {
-      window.open(`https://wwsdevportalbackend.azurewebsites.net/solicitudesView/${type}/${id}/?location=false`, '_blank');
+      window.open(`http://wwsdevportalbackend.azurewebsites.net/solicitudesView/${type}/${id}/?location=false`, '_blank');
     }
   }
 

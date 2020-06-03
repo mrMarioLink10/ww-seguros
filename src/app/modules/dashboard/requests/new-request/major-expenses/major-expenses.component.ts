@@ -1,7 +1,7 @@
 import { Component, OnInit, DoCheck, ViewChild } from '@angular/core';
 import { FieldConfig } from 'src/app/shared/components/form-components/models/field-config';
 import { FormGroup, FormBuilder, Validators, FormArray, FormControl } from '@angular/forms';
-import { $sex, $res, $country, $time, $family, $allFamily, $weightTypes, $heightTypes  } from '../../../../../core/form/objects';
+import { $sex, $res, $country, $time, $family, $allFamily, $weightTypes, $heightTypes } from '../../../../../core/form/objects';
 import { FormArrayGeneratorService } from 'src/app/core/services/forms/form-array-generator.service';
 import { questionsA, questionsB } from './questions';
 import { Requests } from '../../requests.component';
@@ -484,12 +484,13 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
     this.route.params.subscribe(res => {
       this.noCotizacion = res.noCotizacion;
     });
+    console.log(this.noCotizacion);
 
     this.procedures = this.fb.array([this.formMethods.createItem(this.formGroupProcedure)]);
 
     this.newRequest = this.fb.group({
 
-      noC: [{ value: this.noCotizacion, disabled: ((this.noCotizacion === '') ? false : true) }, Validators.required],
+      noC: [{ value: this.noCotizacion, disabled: (this.noCotizacion === undefined ? false : true) }, Validators.required],
       isComplete: [false, Validators.required],
       deducibles: [{ value: '', disabled: true }, Validators.required],
       payment: [{ value: '', disabled: true }, Validators.required],
@@ -503,7 +504,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
         weightUnit: ['', Validators.required],
         heightUnit: ['', Validators.required],
         date: [{ value: '', disabled: true }, Validators.required],
-        sex: ['', Validators.required],
+        sex: [{ value: '', disabled: true }, Validators.required],
         isContractor: ['', Validators.required],
         isJuridica: ['', Validators.required],
         nationality: ['', Validators.required],
@@ -708,10 +709,10 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
     }
   }
   addEventChange() {
-     this.newRequest.get('person').get('weightUnit').valueChanges.subscribe(value => {
+    this.newRequest.get('person').get('weightUnit').valueChanges.subscribe(value => {
       this.getBmi(this.newRequest.get('person').value.height, this.newRequest.get('person').value.weight);
     });
-     this.newRequest.get('person').get('heightUnit').valueChanges.subscribe(value => {
+    this.newRequest.get('person').get('heightUnit').valueChanges.subscribe(value => {
       this.getBmi(this.newRequest.get('person').value.height, this.newRequest.get('person').value.weight);
     });
     this.newRequest.get('person').get('weight').valueChanges.subscribe(value => {
@@ -933,8 +934,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
 
           });
         }
-        else
-        {
+        else {
           this.newRequest
             .get('dependents')
             .get('allDependents')
@@ -947,8 +947,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
     }
   }
   getBmiValue(height: any, weight: any, typeWeight: any, typeHeight: any) {
-    if (height !== '' && weight !== '')
-    {
+    if (height !== '' && weight !== '') {
       if (typeWeight === 'libras') { weight = weight / 2.205; }
       if (typeHeight === 'pie') {
         height = height / 3.281;
@@ -1424,21 +1423,20 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
   getBmi(height: any, weight: any) {
     const weightUnit = this.newRequest.get('person').get('weightUnit').value;
     const heightUnit = this.newRequest.get('person').get('heightUnit').value;
-if (weight !== '' && height !== '')
-{
-  if (weightUnit === 'libras') { weight = weight / 2.205; }
-  if (heightUnit === 'pie') {
-    height = height / 3.281;//(((height * 12) + inches) * 2.54);
-  }
+    if (weight !== '' && height !== '') {
+      if (weightUnit === 'libras') { weight = weight / 2.205; }
+      if (heightUnit === 'pie') {
+        height = height / 3.281;//(((height * 12) + inches) * 2.54);
+      }
 
-  const bmi = weight / ((height / 100) * (height / 100));
-  if (bmi !== Infinity) {
-    const value = parseFloat(`${bmi}`).toFixed(2);
-    this.newRequest.get('person').get('bmi').setValue(value);
-  }
+      const bmi = weight / ((height / 100) * (height / 100));
+      if (bmi !== Infinity) {
+        const value = parseFloat(`${bmi}`).toFixed(2);
+        this.newRequest.get('person').get('bmi').setValue(value);
+      }
 
-}
-}
+    }
+  }
 
   print() {
     console.log('solicitante: ', this.newRequest.get('questionsA'));
@@ -1497,9 +1495,30 @@ if (weight !== '' && height !== '')
         this.newRequest.get('deducibles').setValue(data.data.deducible);
         this.newRequest.get('person').get('date').setValue(data.data.fecha_nacimiento);
         this.newRequest.get('person').get('firstName').setValue(data.data.nombre);
-        this.newRequest.get('person').get('sex').setValue(data.data.sexo);
+
+        switch (data.data.sexo) {
+          case 'M':
+            this.newRequest.get('person').get('sex').setValue('Masculino');
+            break;
+
+          case 'F':
+            this.newRequest.get('person').get('sex').setValue('Femenino');
+            break;
+
+          default:
+            break;
+        }
+
       } else {
         this.notFoundQuote = true;
+
+        this.newRequest.get('payment').reset();
+        this.newRequest.get('plans').reset();
+        this.newRequest.get('deducibles').reset();
+        this.newRequest.get('person').get('date').reset();
+        this.newRequest.get('person').get('firstName').reset();
+        this.newRequest.get('person').get('sex').reset();
+
         const dialogRef = this.dialog.open(BaseDialogComponent, {
           data: this.dialogOption.noCNotFound,
           minWidth: 385,
@@ -1539,7 +1558,7 @@ if (weight !== '' && height !== '')
         this.informationList = this.newRequest.get('questionsB').get('information') as FormArray;
         this.isFormValidToFill = true;
 
-    //this.addEventChange();
+        //this.addEventChange();
         /*let person = this.newRequest.get('person');
         this.iterateThroughtObject(data.data.person, person);
 /// Person

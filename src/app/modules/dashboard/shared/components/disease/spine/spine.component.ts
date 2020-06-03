@@ -17,9 +17,10 @@ export class SpineComponent implements OnInit {
   medicationList: FormArray;
   physiotherapyList: FormArray;
   surgeryList: FormArray;
+  affectedSegmentList: FormArray;
 
   segments: FieldConfig = {
-    name: 'affectedSegment',
+    name: 'segment',
     label: 'Segmento Afectado',
     options: [
       { viewValue: 'Cervical', value: 'cervical' },
@@ -105,12 +106,14 @@ export class SpineComponent implements OnInit {
     this.form.addControl('dateFirstSymptoms', this.fb.control('', Validators.required));
     this.form.addControl('infoFirstSymptoms', this.fb.control('', Validators.required));
     this.form.addControl('dateFirstDiagnosis', this.fb.control('', Validators.required));
-    this.form.addControl('affectedSegment', this.fb.control('', Validators.required));
-    this.form.addControl('affectedVertebra', this.fb.control('', Validators.required));
+
     this.form.addControl('dateLastSymptoms', this.fb.control('', Validators.required));
     this.form.addControl('frequencySymptoms', this.fb.control('', Validators.required));
     this.form.addControl('lastTwoYears', this.fb.control('', Validators.required));
     this.form.addControl('aditionalInfo', this.fb.control('', Validators.required));
+
+    this.form.addControl('affectedSegment', this.fb.array([this.createFormArray('affectedSegment')]));
+    this.affectedSegmentList = this.form.get('affectedSegment') as FormArray;
 
     this.form.addControl('appliedStudies', this.fb.array([this.createFormArray('appliedStudies')]));
     this.appliedStudiesList = this.form.get('appliedStudies') as FormArray;
@@ -131,6 +134,19 @@ export class SpineComponent implements OnInit {
           type: ['', Validators.required],
           date: ['', Validators.required],
           result: ['', Validators.required],
+        });
+        break;
+
+      case 'affectedSegment':
+        return this.fb.group({
+          segment: ['', Validators.required],
+          affectedVertebra: this.fb.array([this.createFormArray('affectedVertebra')])
+        });
+        break;
+
+      case 'affectedVertebra':
+        return this.fb.group({
+          vertebra: ['', Validators.required],
         });
         break;
 
@@ -161,11 +177,18 @@ export class SpineComponent implements OnInit {
   }
 
   addToList(list: any, type: string) {
+    console.log('list: ', list);
+    console.log('ADD LIST');
     list.push(this.createFormArray(type));
   }
 
   removeToList(index, list: any) {
     list.removeAt(index);
+  }
+
+  returnAsFormArray(formArray: any) {
+    return formArray as FormArray;
+
   }
 
   selectChange(event) {

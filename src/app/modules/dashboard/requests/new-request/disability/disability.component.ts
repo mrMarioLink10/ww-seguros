@@ -38,6 +38,7 @@ export class DisabilityComponent implements OnInit, DoCheck {
   bmi: number;
   // massName = 'PESO';
   // heightName = 'ALTURA';
+  showContent = false;
 
   genderOptions: FieldConfig = {
 
@@ -740,12 +741,12 @@ export class DisabilityComponent implements OnInit, DoCheck {
         // console.log("adiiooooooooooooooos 2 " + weightConst);
       }
 
-      if (this.disabilityGroup.get('questions').get('heightUnit').value == 'pies') {
+      if (this.disabilityGroup.get('questions').get('heightUnit').value == 'pie') {
         heightConst = this.disabilityGroup.get('questions').get('height').value / 3.281;
         // console.log("saludoooooooooooooooooos 3" + heightConst);
       }
-      else if (this.disabilityGroup.get('questions').get('heightUnit').value == 'centimetros') {
-        heightConst = this.disabilityGroup.get('questions').get('height').value / 100;
+      else if (this.disabilityGroup.get('questions').get('heightUnit').value == 'metro') {
+        heightConst = this.disabilityGroup.get('questions').get('height').value;
         // console.log("despedidadsdsaaaaaaaaaaaaaaaaasssssss 4" + heightConst);
       }
 
@@ -977,7 +978,7 @@ export class DisabilityComponent implements OnInit, DoCheck {
           }));
 
           if (this.role === 'WMA') { formHolder.addControl('knowYourClient', this.fb.group({})); }
-          else if (this.role === 'WWS') { formHolder.addControl('knowYourCustomer', this.fb.group({})); }
+          else if (this.role === 'WWS') { formHolder.addControl('KnowYourCustomer', this.fb.group({})); }
           break;
 
         case 'haveArthritis':
@@ -1186,7 +1187,7 @@ export class DisabilityComponent implements OnInit, DoCheck {
         case 'pep_radio_holder':
           formHolder.removeControl('pep');
           formHolder.removeControl('knowYourClient');
-          formHolder.removeControl('knowYourCustomer');
+          formHolder.removeControl('KnowYourCustomer');
           break;
 
         case 'insuredPolicyholderRadio':
@@ -1420,7 +1421,6 @@ export class DisabilityComponent implements OnInit, DoCheck {
         break;
     }
   }
-
   getData(id) {
     console.log(id);
     this.disabilityService.returnData(id).subscribe(data => {
@@ -1454,5 +1454,33 @@ export class DisabilityComponent implements OnInit, DoCheck {
 
     });
   }
+
+  // getDataSubForms(id, name) {
+	// 	this.disabilityService.returnData(id).subscribe(data => {
+	// 		// console.log(data.data.asegurado.documentoIdentidad)
+  //     console.log(data);
+  //     if (data !== undefined && data.data !== null &&
+  //       data.data != undefined )
+  //    {
+  //      this.ID = data.data.id;
+  //      if (name == 'solicitudMusculoesqueleticos'){
+  //       this.iterateThroughtAllObject(data.data.questionnaires.solicitudMusculoesqueleticos,
+  //         // tslint:disable-next-line: no-string-literal
+  //         this.disabilityGroup.get('questionnaires').get('solicitudMusculoesqueleticos'));
+  //      }
+  //      if (name == 'solicitudRenales'){
+  //       this.iterateThroughtAllObject(data.data.questionnaires.solicitudRenales,
+  //         // tslint:disable-next-line: no-string-literal
+  //         this.disabilityGroup.get('questionnaires').get('solicitudRenales'));
+  //      }
+
+  //     //this.disabilityGroup['controls'].num_financial_quote.setValue(data.data.num_financial_quote)
+  //    }
+
+  //   });
+
+  // // this.disabilityService.id = null;
+	// 	console.log('this.disabilityService.id es igual a ' + this.disabilityService.id);
+  // }
 
 }

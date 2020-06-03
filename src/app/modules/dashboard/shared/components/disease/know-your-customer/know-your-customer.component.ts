@@ -227,52 +227,75 @@ export class KnowYourCustomerComponent implements OnInit, DoCheck {
 
   }
 
-  x = 0;
-  iD;
+  // x = 0;
+  // iD;
   ngDoCheck(): void {
 
-    if (this.life.idKNOWCustomer != null) {
-      console.log('this.iD es igual a ' + this.life.idKNOWCustomer);
-      // if(!this.form){
-      //   // this.x=1;
-      //  this.addBasicControls();
-      //  console.log("HOllaLALALALKALSLAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA!!!!")
-      // }
-      if (this.x < 40) {
-        if (this.form.get('policy').get('total_policy_radio').value == 'si') {
-          const varPolicy = {
-            valor: 'si',
-            name: 'total_policy_radio'
-          };
-          this.selectChange(varPolicy);
-        }
-        // if (this.form.get('exposed').get('exposed_person_radio').value == 'si') {
-        //   const varExposed = {
-        //     valor: 'si',
-        //     name:'exposed_person_radio'
-        //   };
-        //   this.selectChange(varExposed)
-        // }
-        // tslint:disable-next-line: max-line-length
-        // this.newRequest['controls'].contractorQuestionnaires['controls'].knowYourCustomer['controls'].exposed['controls'].exposed_person_radio.setValue(data.data.contractorQuestionnaires.knowYourCustomer.exposed.exposed_person_radio);
-        if (this.form.get('questions')) {
-          if (this.form.get('questions').get('transaction').get('investigation_radio').value == 'si') {
+
+    if (this.form.get('policy').get('total_policy_radio').value == 'si' &&
+		!this.form.get('questions')) {
+			const varPolicy = {
+        valor: 'si',
+        name: 'total_policy_radio'
+      };
+      // tslint:disable-next-line: align
+      this.selectChange(varPolicy);
+			console.log('HolAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA policy');
+
+      }
+    if (this.form.get('questions')) {
+          if (this.form.get('questions').get('transaction').get('investigation_radio').value == 'si' &&
+          !this.form.get('questions').get('transaction').get('investigation')) {
             const varInvestigation = {
               valor: 'si',
               name: 'investigation_radio'
             };
             this.selectChange(varInvestigation);
-          }
-          // this.bankFormArray = this.form.get('questions').get('bank').get('bank_array') as FormArray;
-          // this.commercialFormArray = this.form.get('questions').get('commercial').get('commercial_array') as FormArray;
-          // this.personalFormArray = this.form.get('questions').get('personal').get('personal_array') as FormArray;
+            console.log('HolAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA transaction');
         }
-        this.x++;
-        console.log('WEOOOOOOOOOOOOOOOOOOOO, CALLENSEEEEEEEEEEEEEEEEEEEE!!!');
       }
-      // tslint:disable-next-line: no-unused-expression
-      this.life.idKNOWCustomer == null;
-    }
+    // if (this.life.idKNOWCustomer != null) {
+    //   console.log('this.iD es igual a ' + this.life.idKNOWCustomer);
+    //   // if(!this.form){
+    //   //   // this.x=1;
+    //   //  this.addBasicControls();
+    //   //  console.log("HOllaLALALALKALSLAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA!!!!")
+    //   // }
+    //   if (this.x < 40) {
+    //     if (this.form.get('policy').get('total_policy_radio').value == 'si') {
+    //       const varPolicy = {
+    //         valor: 'si',
+    //         name: 'total_policy_radio'
+    //       };
+    //       this.selectChange(varPolicy);
+    //     }
+    //     // if (this.form.get('exposed').get('exposed_person_radio').value == 'si') {
+    //     //   const varExposed = {
+    //     //     valor: 'si',
+    //     //     name:'exposed_person_radio'
+    //     //   };
+    //     //   this.selectChange(varExposed)
+    //     // }
+    //     // tslint:disable-next-line: max-line-length
+    //     // this.newRequest['controls'].contractorQuestionnaires['controls'].knowYourCustomer['controls'].exposed['controls'].exposed_person_radio.setValue(data.data.contractorQuestionnaires.knowYourCustomer.exposed.exposed_person_radio);
+    //     if (this.form.get('questions')) {
+    //       if (this.form.get('questions').get('transaction').get('investigation_radio').value == 'si') {
+    //         const varInvestigation = {
+    //           valor: 'si',
+    //           name: 'investigation_radio'
+    //         };
+    //         this.selectChange(varInvestigation);
+    //       }
+    //       // this.bankFormArray = this.form.get('questions').get('bank').get('bank_array') as FormArray;
+    //       // this.commercialFormArray = this.form.get('questions').get('commercial').get('commercial_array') as FormArray;
+    //       // this.personalFormArray = this.form.get('questions').get('personal').get('personal_array') as FormArray;
+    //     }
+    //     this.x++;
+    //     console.log('WEOOOOOOOOOOOOOOOOOOOO, CALLENSEEEEEEEEEEEEEEEEEEEE!!!');
+    //   }
+    //   // tslint:disable-next-line: no-unused-expression
+    //   this.life.idKNOWCustomer == null;
+    // }
   }
 
   addBasicControls(){

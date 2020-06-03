@@ -106,7 +106,7 @@ export class ArthritisComponent implements OnInit {
           name: ['', Validators.required],
           medication: ['', Validators.required],
           dose: ['', Validators.required],
-          info: ['', Validators.required],
+          info: [''],
         });
         break;
       default:

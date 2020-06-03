@@ -21,7 +21,7 @@ export class MellitusDiabetesComponent implements OnInit {
   threatmentQuestions: any[];
   disordersQuestions: any[];
 
-  diabetesType  = {
+  diabetesType = {
     label: 'Tipo de diabetes',
     options: [
       {
@@ -123,7 +123,7 @@ export class MellitusDiabetesComponent implements OnInit {
     this.form.addControl('dateLastConsultation', this.fb.control('', Validators.required));
     this.form.addControl('doctorName', this.fb.control('', Validators.required));
     this.form.addControl('doctorCenter', this.fb.control('', Validators.required));
-    this.form.addControl('doctorCenterAdress', this.fb.control('', Validators.required));
+    this.form.addControl('doctorCenterAdress', this.fb.control(''));
     this.form.addControl('everHospitalized', this.fb.control('', Validators.required));
     this.form.addControl('haveProteinuriaAlbuminuria', this.fb.control('', Validators.required));
     this.form.addControl('haveEyesProblems', this.fb.control('', Validators.required));

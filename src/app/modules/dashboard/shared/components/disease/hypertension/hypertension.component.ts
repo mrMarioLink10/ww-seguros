@@ -22,12 +22,12 @@ export class HypertensionComponent implements OnInit {
     this.addBasicControls();
 
     this.medicationList = this.getDIAsFormGroup().get('medicationUsing') as FormArray;
-    try{
-    this.changedMedicationList = this.getDIAsFormGroup().get('changedMedications') as FormArray;
-  }
-  catch(e){
+    try {
+      this.changedMedicationList = this.getDIAsFormGroup().get('changedMedications') as FormArray;
+    }
+    catch (e) {
 
-  }
+    }
     this.relatedQuestions = [
       {
         label: 'Enfermedad renal',
@@ -93,8 +93,6 @@ export class HypertensionComponent implements OnInit {
 
   addBasicControls() {
     this.form.addControl('personInfo', this.fb.group({
-      name: ['', Validators.required],
-      age: ['', [Validators.required, Validators.min(1)]],
       doctorName: ['', Validators.required],
       healthCenter: ['', Validators.required],
       hcNumber: ['', Validators.required],

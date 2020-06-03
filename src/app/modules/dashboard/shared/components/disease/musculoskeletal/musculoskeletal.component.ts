@@ -14,20 +14,20 @@ export class MusculoskeletalComponent implements OnInit {
 
   @Input() form: FormGroup;
 
-  yesNo:FieldConfig ={
-    label:'',
+  yesNo: FieldConfig = {
+    label: '',
     options: [
 
-        {
-          value:'si',
-          viewValue: 'Si'
+      {
+        value: 'si',
+        viewValue: 'Si'
 
-        },
+      },
 
-        {
-          value:'no',
-          viewValue: 'No'
-        }
+      {
+        value: 'no',
+        viewValue: 'No'
+      }
     ]
   };
 
@@ -47,7 +47,7 @@ export class MusculoskeletalComponent implements OnInit {
   therapyFormArray: FormArray;
   therapyProperty;
 
-  accordionTitles=["Datos"];
+  accordionTitles = ["Datos"];
 
   selectChange(event: any) {
 
@@ -56,98 +56,98 @@ export class MusculoskeletalComponent implements OnInit {
     const formNFA = this.form.get('data') as FormGroup;
 
 
-		if (event.valor === 'si') {
+    if (event.valor === 'si') {
       switch (event.name) {
 
         case 'episode_radio':
 
-                  formE.addControl('episode_array', this.episodeProperty);
-                  this.episodeFormArray = this.form.get('data').get('episode').get('episode_array') as FormArray;
-                  console.log(JSON.stringify(this.form.value));
+          formE.addControl('episode_array', this.episodeProperty);
+          this.episodeFormArray = this.form.get('data').get('episode').get('episode_array') as FormArray;
+          console.log(JSON.stringify(this.form.value));
 
-                  break;
+          break;
 
         case 'surgery_radio':
 
-                  formS.addControl('surgery_array', this.surgeryProperty);
-                  this.surgeryFormArray = this.form.get('data').get('surgery').get('surgery_array') as FormArray;
+          formS.addControl('surgery_array', this.surgeryProperty);
+          this.surgeryFormArray = this.form.get('data').get('surgery').get('surgery_array') as FormArray;
 
-                  console.log(JSON.stringify(this.form.value));
-                  break;
+          console.log(JSON.stringify(this.form.value));
+          break;
 
         case 'skeletal_disorder_radio':
 
-                  formNFA.addControl('disorder', this.fb.group({
+          formNFA.addControl('disorder', this.fb.group({
 
-                        bodyPart:['', Validators.required],
-                        cause: ['', Validators.required],
-                        date: [new Date(), Validators.required],
+            bodyPart: ['', Validators.required],
+            cause: ['', Validators.required],
+            date: [new Date(), Validators.required],
 
-                  }));
-                  console.log(JSON.stringify(this.form.value));
-                  break;
+          }));
+          console.log(JSON.stringify(this.form.value));
+          break;
 
         case 'recovered_radio':
 
-                  formNFA.addControl('date', this.fb.control(new Date(), Validators.required));
+          formNFA.addControl('date', this.fb.control(new Date(), Validators.required));
 
-                  formNFA.addControl('areaText', this.fb.group({
+          formNFA.addControl('areaText', this.fb.group({
 
-                        residual_symptoms:['', Validators.required],
+            residual_symptoms: ['', Validators.required],
 
-                  }));
-                  console.log(JSON.stringify(this.form.value));
-                  break;
-        }
+          }));
+          console.log(JSON.stringify(this.form.value));
+          break;
+      }
 
-			}
-		 else if (event.valor === 'no') {
+    }
+    else if (event.valor === 'no') {
 
       switch (event.name) {
 
         case 'episode_radio':
 
-            formE.removeControl('episode_array');
-            this.episodeFormArray = undefined;
+          formE.removeControl('episode_array');
+          this.episodeFormArray = undefined;
 
-            break;
+          break;
 
         case 'surgery_radio':
 
-            formS.removeControl('surgery_array');
-            this.surgeryFormArray = undefined;
+          formS.removeControl('surgery_array');
+          this.surgeryFormArray = undefined;
 
-            break;
+          break;
 
         case 'skeletal_disorder_radio':
 
-            formNFA.removeControl('disorder')
-            break;
+          formNFA.removeControl('disorder')
+          break;
 
         case 'recovered_radio':
 
-            formNFA.removeControl('date')
-            formNFA.removeControl('areaText')
-            break;
-        }
+          formNFA.removeControl('date')
+          formNFA.removeControl('areaText')
+          break;
+      }
 
-			}
+    }
 
   }
 
-  episodeGroup ={
+  episodeGroup = {
     date: [new Date(), Validators.required],
     duration: ['', [Validators.required, Validators.min(1)]],
     DayMonthYear: ['', Validators.required]
   }
 
-  surgeryGroup ={
+  surgeryGroup = {
     date: [new Date(), Validators.required],
     name: ['', Validators.required],
     place: ['', Validators.required]
   }
 
-  therapyGroup ={
+  therapyGroup = {
     date: [new Date(), Validators.required],
     name: ['', Validators.required],
     dose: ['', Validators.required],
@@ -161,28 +161,28 @@ export class MusculoskeletalComponent implements OnInit {
 
     formT.addControl('therapy_array', this.therapyProperty);
 
-		switch (name) {
+    switch (name) {
 
-			case 'episode_array':
+      case 'episode_array':
 
-				  return this.episodeGroup;
-          break;
+        return this.episodeGroup;
+        break;
 
       case 'surgery_array':
 
-          return this.surgeryGroup;
-          break;
+        return this.surgeryGroup;
+        break;
 
       case 'therapy_array':
 
-          return this.therapyGroup;
+        return this.therapyGroup;
 
-          break;
-      }
-
+        break;
     }
 
-  constructor(private fb:FormBuilder, public formMethods: FormArrayGeneratorService) { }
+  }
+
+  constructor(private fb: FormBuilder, public formMethods: FormArrayGeneratorService) { }
 
   ngOnInit() {
 
@@ -190,68 +190,59 @@ export class MusculoskeletalComponent implements OnInit {
     this.surgeryProperty = this.fb.array([this.formMethods.createItem(this.surgeryGroup)]);
     this.therapyProperty = this.fb.array([this.formMethods.createItem(this.therapyGroup)]);
 
-if (this.form.get('data') !== undefined && this.form.get('data') !== null)
-{
-if (this.form.get('data').get('surgery').get('surgery_array') !== null)
-{
-      this.surgeryFormArray = this.form.get('data').get('surgery').get('surgery_array') as FormArray;
+    if (this.form.get('data') !== undefined && this.form.get('data') !== null) {
+      if (this.form.get('data').get('surgery').get('surgery_array') !== null) {
+        this.surgeryFormArray = this.form.get('data').get('surgery').get('surgery_array') as FormArray;
+
+      }
+      else {
+
+        const formE = this.form.get('data').get('episode') as FormGroup;
+        const formS = this.form.get('data').get('surgery') as FormGroup;
+        formS.addControl('surgery_array', this.surgeryProperty);
+        this.surgeryFormArray = this.form.get('data').get('surgery').get('surgery_array') as FormArray;
+        //formE.addControl('episode_array', this.episodeProperty);
+        //this.episodeFormArray = this.form.get('data').get('episode').get('episode_array') as FormArray;
+        console.log(this.surgeryFormArray);
+        console.log(this.form);
+      }
 
     }
-    else
-    {
+    else {
+      this.addBasicControls();
+    }
 
-    const formE = this.form.get('data').get('episode') as FormGroup;
-    const formS = this.form.get('data').get('surgery') as FormGroup;
-    formS.addControl('surgery_array', this.surgeryProperty);
+    this.therapyFormArray = this.form.get('data').get('therapy').get('therapy_array') as FormArray;
     this.surgeryFormArray = this.form.get('data').get('surgery').get('surgery_array') as FormArray;
-    //formE.addControl('episode_array', this.episodeProperty);
-    //this.episodeFormArray = this.form.get('data').get('episode').get('episode_array') as FormArray;
-      console.log(this.surgeryFormArray);
-      console.log(this.form);
+    console.log(this.surgeryFormArray);
+
+  }
+  IssurgeryFormArray() {
+    try {
+      if (this.surgeryFormArray.length > 0) {
+        return true;
+      }
     }
-
+    catch{ }
+    return false;
   }
-  else
-  {
-    this.addBasicControls();
-  }
-
-  this.therapyFormArray = this.form.get('data').get('therapy').get('therapy_array') as FormArray;
-  this.surgeryFormArray = this.form.get('data').get('surgery').get('surgery_array') as FormArray;
-  console.log(this.surgeryFormArray);
-
-  }
-IssurgeryFormArray()
-{
-  try{
-    if (this.surgeryFormArray.length > 0)
-    {
-      return true;
-    }
-  }
-  catch{}
-  return false;
-}
-  addBasicControls(){
-
-    this.form.addControl('full_name', this.fb.control('', Validators.required));
-    this.form.addControl('age', this.fb.control('', [Validators.required, Validators.min(1)]));
+  addBasicControls() {
     this.form.addControl('doctor_name', this.fb.control('', Validators.required));
     this.form.addControl('hospital_name', this.fb.control('', Validators.required));
     this.form.addControl('hospital_telephone', this.fb.control('', Validators.required));
 
     this.form.addControl('data', this.fb.group({
 
-      skeletal_disorder_radio:['', Validators.required],
-      recovered_radio:['', Validators.required],
-      episode_radio:['', Validators.required],
-      episode:  this.fb.group({
+      skeletal_disorder_radio: ['', Validators.required],
+      recovered_radio: ['', Validators.required],
+      episode_radio: ['', Validators.required],
+      episode: this.fb.group({
 
         episode_array: this.fb.array([this.formMethods.createItem(this.episodeGroup)])
 
-    }),
+      }),
 
-      surgery_radio:['', Validators.required],
+      surgery_radio: ['', Validators.required],
       surgery: this.fb.group({
 
         surgery_array: this.fb.array([this.formMethods.createItem(this.surgeryGroup)])
@@ -264,7 +255,7 @@ IssurgeryFormArray()
 
       }),
 
-      aditional_info:['', Validators.required]
+      aditional_info: ['', Validators.required]
     })
 
     );

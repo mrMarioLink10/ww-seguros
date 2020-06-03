@@ -9,13 +9,6 @@
       <div class="pt-12 pb-6 mt-5 ml-1 pr-5 sm:pb-2 md:pb-1 lg:pb-0 xl:pb-0" style="background-color: #F2F2F2">
         <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 ml-8 pb-3">
           <div class="mr-3 mt-3 sm:mt-2 md:mt-2 lg:mt-2 xl:mt-0">
-            <app-input [group]="form" label="Nombre Completo" name="full_name" placeholder="Ramón Melo de los Santos">
-            </app-input>
-          </div>
-          <div class="mr-3 mt-3 sm:mt-2 md:mt-2 lg:mt-2 xl:mt-0">
-            <app-number-input [group]="form" label="Edad" name='age' min="1" placeholder="25 años"></app-number-input>
-          </div>
-          <div class="mr-3 mt-3 sm:mt-2 md:mt-2 lg:mt-2 xl:mt-0">
             <app-input [group]="form" label="Nombre del Médico Tratante" name="doctor_name" placeholder="Cruz Jiminián">
             </app-input>
           </div>
@@ -24,7 +17,8 @@
               placeholder="Plaza de la Salud"></app-input>
           </div>
           <div class="mr-3 mt-3 sm:mt-2 md:mt-2 lg:mt-2 xl:mt-0">
-            <app-number-input [group]="form" label="Teléfono del Centro" name='hospital_telephone' placeholder=""></app-number-input>
+            <app-number-input [group]="form" label="Teléfono del Centro" name='hospital_telephone' placeholder="">
+            </app-number-input>
           </div>
         </div>
       </div>
@@ -123,15 +117,15 @@
 
               <div *ngIf="!(this.form.get('data').get('date'))">
                 <app-radio-button class="float-right inline" [group]="form.get('data')" [options]="yesNo"
-                name='recovered_radio' (selected)=selectChange($event)>
-                <!-- selectChange($event) -->
+                  name='recovered_radio' (selected)=selectChange($event)>
+                  <!-- selectChange($event) -->
                 </app-radio-button>
               </div>
 
               <div *ngIf="(this.form.get('data').get('date'))" class="lg:mt-12 xl:mt-12 pt-2">
                 <app-radio-button class="float-right inline" [group]="form.get('data')" [options]="yesNo"
-                name='recovered_radio' (selected)=selectChange($event)>
-                <!-- selectChange($event) -->
+                  name='recovered_radio' (selected)=selectChange($event)>
+                  <!-- selectChange($event) -->
                 </app-radio-button>
               </div>
 
@@ -143,7 +137,7 @@
 
                 <div class="mb-5 lg:-mr-3 xl:-mr-16">
 
-                  <label > <strong> Desde cuándo </strong> </label>
+                  <label> <strong> Desde cuándo </strong> </label>
 
                 </div>
 
@@ -214,8 +208,10 @@
 
                     <div class="mr-3">
 
-                      <app-number-input [group]="form.get('data').get('episode').get('episode_array').get(in.toString())"
-                        label="Duración" name="duration" placeholder="Ej.: 5 minutos, 10 días, 1 hora, 2 meses, etc." min="1">
+                      <app-number-input
+                        [group]="form.get('data').get('episode').get('episode_array').get(in.toString())"
+                        label="Duración" name="duration" placeholder="Ej.: 5 minutos, 10 días, 1 hora, 2 meses, etc."
+                        min="1">
                       </app-number-input>
 
                     </div>

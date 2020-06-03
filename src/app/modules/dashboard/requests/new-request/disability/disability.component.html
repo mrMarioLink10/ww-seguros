@@ -1943,7 +1943,7 @@
         <app-money-laundering [form]="money_laundering"> </app-money-laundering>
       </mat-tab> -->
       <mat-tab
-        *ngIf="disabilityGroup.get('insured_data').get('knowYourClient') || disabilityGroup.get('insured_data').get('KnowYourCustomer')"
+        *ngIf="disabilityGroup.get('insured_data').get('knowYourClient') || disabilityGroup.get('insured_data').get('knowYourCustomer')"
         label="Conozca a su cliente - Asegurado">
         <app-know-your-client *ngIf="disabilityGroup.get('insured_data').get('knowYourClient')"
           [form]="disabilityGroup.get('insured_data').get('knowYourClient')">

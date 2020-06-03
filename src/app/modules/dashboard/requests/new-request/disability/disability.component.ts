@@ -741,12 +741,12 @@ export class DisabilityComponent implements OnInit, DoCheck {
         // console.log("adiiooooooooooooooos 2 " + weightConst);
       }
 
-      if (this.disabilityGroup.get('questions').get('heightUnit').value == 'pies') {
+      if (this.disabilityGroup.get('questions').get('heightUnit').value == 'pie') {
         heightConst = this.disabilityGroup.get('questions').get('height').value / 3.281;
         // console.log("saludoooooooooooooooooos 3" + heightConst);
       }
-      else if (this.disabilityGroup.get('questions').get('heightUnit').value == 'centimetros') {
-        heightConst = this.disabilityGroup.get('questions').get('height').value / 100;
+      else if (this.disabilityGroup.get('questions').get('heightUnit').value == 'metro') {
+        heightConst = this.disabilityGroup.get('questions').get('height').value;
         // console.log("despedidadsdsaaaaaaaaaaaaaaaaasssssss 4" + heightConst);
       }
 
@@ -962,7 +962,7 @@ export class DisabilityComponent implements OnInit, DoCheck {
           }));
 
           if (this.role === 'WMA') { formInsured.addControl('knowYourClient', this.fb.group({})); }
-          else if (this.role === 'WWS') { formInsured.addControl('KnowYourCustomer', this.fb.group({})); }
+          else if (this.role === 'WWS') { formInsured.addControl('knowYourCustomer', this.fb.group({})); }
           break;
 
         case 'pep_radio_holder':
@@ -1180,7 +1180,7 @@ export class DisabilityComponent implements OnInit, DoCheck {
         case 'pep_radio_insured':
           formInsured.removeControl('pep');
           formInsured.removeControl('knowYourClient');
-          formInsured.removeControl('KnowYourCustomer');
+          formInsured.removeControl('knowYourCustomer');
           break;
 
 

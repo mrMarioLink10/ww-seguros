@@ -506,7 +506,7 @@ export class LifeComponent implements OnInit {
       noC: [{ value: this.noCotizacion }, Validators.required],
       isComplete: [false, Validators.required],
       person: this.fb.group({
-        firstName: [{ value: '', disabled: true }, [Validators.required]],
+        firstName: [{ value: '', disabled: false }, [Validators.required]],
         secondName: [''],
         lastName: ['', Validators.required],
         date: [{ value: '', disabled: true }, [Validators.required]],

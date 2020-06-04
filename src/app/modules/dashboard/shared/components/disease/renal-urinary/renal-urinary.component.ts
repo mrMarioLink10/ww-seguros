@@ -12,27 +12,27 @@ export class RenalUrinaryComponent implements OnInit {
 
   @Input() form: FormGroup;
 
-  accordionTitles=["Datos"];
+  accordionTitles = ["Datos"];
 
-  yes_no:FieldConfig ={
-    label:'',
+  yes_no: FieldConfig = {
+    label: '',
     options: [
 
-        {
-          value:'si',
-          viewValue: 'Si'
+      {
+        value: 'si',
+        viewValue: 'Si'
 
-        },
+      },
 
-        {
-          value:'no',
-          viewValue: 'No'
-        }
+      {
+        value: 'no',
+        viewValue: 'No'
+      }
     ]
   };
 
   // form:FormGroup;
-  analysisFormArray:FormArray;
+  analysisFormArray: FormArray;
   medicineOperationFormArray: FormArray;
   analysis_property;
   medicine_property;
@@ -43,67 +43,67 @@ export class RenalUrinaryComponent implements OnInit {
     const formM = this.form.get('data').get('medicine') as FormGroup;
     const formD = this.form.get('data') as FormGroup;
 
-    
-		if (event.valor === 'si') {
-      switch (event.name) {
-        
-        case 'analysis_radio':
 
-					        form.addControl('analysis_array', this.analysis_property);
-                  this.analysisFormArray = this.form.get('data').get('analysis').get('analysis_array') as FormArray;
-                  console.log(JSON.stringify(this.form.value));
-
-                  break;
-
-        case 'medication_radio':
-
-                  formM.addControl('medicine_array', this.medicine_property);
-                  this.medicineOperationFormArray = this.form.get('data').get('medicine').get('medicine_array') as FormArray;
-                  console.log(JSON.stringify(this.form.value));
-                  
-                  break;
-
-        case 'medical_consultation_radio':
-
-                  formD.addControl('medical_consultation', this.fb.group({
-					        	date: [new Date(), Validators.required],
-					        	frequency: ['', Validators.required],
-                  }));
-                  console.log(JSON.stringify(this.form.value));
-                  
-                  break;
-
-        }
-
-			}
-		 else if (event.valor === 'no') {
-	
+    if (event.valor === 'si') {
       switch (event.name) {
 
         case 'analysis_radio':
 
-            form.removeControl('analysis_array');
-            this.analysisFormArray = undefined;
-            break;
+          form.addControl('analysis_array', this.analysis_property);
+          this.analysisFormArray = this.form.get('data').get('analysis').get('analysis_array') as FormArray;
+          console.log(JSON.stringify(this.form.value));
+
+          break;
 
         case 'medication_radio':
 
-            formM.removeControl('medicine_array');
-            this.medicineOperationFormArray = undefined;
-            break;
+          formM.addControl('medicine_array', this.medicine_property);
+          this.medicineOperationFormArray = this.form.get('data').get('medicine').get('medicine_array') as FormArray;
+          console.log(JSON.stringify(this.form.value));
+
+          break;
 
         case 'medical_consultation_radio':
 
-            formD.removeControl('medical_consultation')
-            break;
+          formD.addControl('medical_consultation', this.fb.group({
+            date: [new Date(), Validators.required],
+            frequency: ['', Validators.required],
+          }));
+          console.log(JSON.stringify(this.form.value));
 
-        }
+          break;
 
-			}
-		
+      }
+
+    }
+    else if (event.valor === 'no') {
+
+      switch (event.name) {
+
+        case 'analysis_radio':
+
+          form.removeControl('analysis_array');
+          this.analysisFormArray = undefined;
+          break;
+
+        case 'medication_radio':
+
+          formM.removeControl('medicine_array');
+          this.medicineOperationFormArray = undefined;
+          break;
+
+        case 'medical_consultation_radio':
+
+          formD.removeControl('medical_consultation')
+          break;
+
+      }
+
+    }
+
   }
-  
-  analysisGroup ={
+
+  analysisGroup = {
     type: ['', Validators.required],
     date: [new Date(), Validators.required],
     results: ['', Validators.required]
@@ -117,25 +117,25 @@ export class RenalUrinaryComponent implements OnInit {
 
   }
 
-createFormArray(name: string) {
+  createFormArray(name: string) {
 
-		switch (name) {
+    switch (name) {
 
-			case 'analysis_array':
+      case 'analysis_array':
 
-				  return this.analysisGroup;
-          break;
+        return this.analysisGroup;
+        break;
 
       case 'medicine_array':
 
-          return this.medicineGroup;
-          break;
-
-      }
+        return this.medicineGroup;
+        break;
 
     }
 
-  constructor(private fb: FormBuilder, public formMethods: FormArrayGeneratorService,) { }
+  }
+
+  constructor(private fb: FormBuilder, public formMethods: FormArrayGeneratorService, ) { }
 
   ngOnInit() {
 
@@ -181,7 +181,7 @@ createFormArray(name: string) {
     //     medicine: this.fb.group({ 
 
     //       medicine_array: this.fb.array([this.formMethods.createItem(this.medicineGroup)])
-        
+
     //     }),
 
     //     medical_consultation_radio:['']
@@ -189,30 +189,28 @@ createFormArray(name: string) {
     //   })
 
     // })
-    
+
     // console.log(JSON.stringify(this.form.value));
 
   }
 
-  addBasicControls(){
+  addBasicControls() {
 
-    this.form.addControl('full_name', this.fb.control('', Validators.required));
-    this.form.addControl('age', this.fb.control('', [Validators.required, Validators.min(1)]));
     this.form.addControl('doctor_name', this.fb.control('', Validators.required));
     this.form.addControl('hospital_name', this.fb.control('', Validators.required));
     this.form.addControl('hospital_telephone', this.fb.control('', Validators.required));
 
-    this.form.addControl('data',  this.fb.group({
+    this.form.addControl('data', this.fb.group({
 
       diagnosis: this.fb.group({
         input: ['', Validators.required],
-        date:[new Date(), Validators.required]
+        date: [new Date(), Validators.required]
       }),
 
       symptom: this.fb.group({
         input: ['', Validators.required],
-        date:[new Date(), Validators.required],
-        duration:['', Validators.required]
+        date: [new Date(), Validators.required],
+        duration: ['', Validators.required]
       }),
 
       last_time_symptom: this.fb.group({
@@ -222,39 +220,39 @@ createFormArray(name: string) {
       }),
 
       analysis_radio: [''],
-      analysis:  this.fb.group({
+      analysis: this.fb.group({
 
-          analysis_array: this.fb.array([this.formMethods.createItem(this.analysisGroup)])
+        analysis_array: this.fb.array([this.formMethods.createItem(this.analysisGroup)])
 
       }),
 
       medication_radio: [''],
-      medicine: this.fb.group({ 
+      medicine: this.fb.group({
 
         medicine_array: this.fb.array([this.formMethods.createItem(this.medicineGroup)])
-      
+
       }),
 
-      medical_consultation_radio:['']
+      medical_consultation_radio: ['']
 
     })
-    
-  );
+
+    );
 
   }
 
-    addFormArray(array: any, name: string) {
+  addFormArray(array: any, name: string) {
 
-      const increment = array.length + 1;
-      array = this.formMethods.addElement(array, increment, this.createFormArray(name)).formArray;
-      
-      console.log(JSON.stringify(this.form.value));
-      // array.push(this.createFormArray(name));
-      
-    }
+    const increment = array.length + 1;
+    array = this.formMethods.addElement(array, increment, this.createFormArray(name)).formArray;
 
-    removeFormArray(index, array: any) {
-      array.removeAt(index);
-    }
+    console.log(JSON.stringify(this.form.value));
+    // array.push(this.createFormArray(name));
+
+  }
+
+  removeFormArray(index, array: any) {
+    array.removeAt(index);
+  }
 
 }

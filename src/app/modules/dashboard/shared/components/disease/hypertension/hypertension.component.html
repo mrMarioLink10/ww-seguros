@@ -5,14 +5,6 @@
   <ng-template #formTemplate>
     <div class="p-3 pb-0 mb-4" style="background-color: #F2F2F2">
       <div class="mt-3 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 xl:grid-cols-5">
-       <!-- <div class="mr-3">
-          <app-input [group]="form.get('personInfo')" label="Nombre Completo" name='name' placeholder="Alberto Matias">
-          </app-input>
-        </div>
-        <div class="mr-3">
-          <app-number-input [group]="form.get('personInfo')" label="Edad" name='age' placeholder="34" min="1">
-          </app-number-input>
-        </div> -->
         <div class="mr-3">
           <app-input [group]="form.get('personInfo')" label="Nombre del Médico Tratante" name='doctorName'
             placeholder="Santiago Alberto">
@@ -37,9 +29,9 @@
       </div>
       <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5">
 
-        <datepicker-month fieldId="dateDiagnostic"   [group]="form.get('diseaseInfo')" label="Fecha del diagnóstico"
-                    name='dateDiagnostic'>
-                  </datepicker-month >
+        <datepicker-month fieldId="dateDiagnostic" [group]="form.get('diseaseInfo')" label="Fecha del diagnóstico"
+          name='dateDiagnostic'>
+        </datepicker-month>
       </div>
       <hr class="w-full mb-6 ww-divider">
       <!-- ¿Cuáles medicamentos está usando y en qué dosis? -->
@@ -183,9 +175,9 @@
             <div *ngIf="question.name !== 'other'">
               <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 xl:grid-cols-5">
                 <div class="mr-3">
-                  <datepicker-month fieldId="date"   [group]="form.get('diagnosticStudies').get(question.group)" label="Fecha"
-                    name='date'>
-                  </datepicker-month >
+                  <datepicker-month fieldId="date" [group]="form.get('diagnosticStudies').get(question.group)"
+                    label="Fecha" name='date'>
+                  </datepicker-month>
                 </div>
                 <div class="mr-3">
                   <app-input [group]="form.get('diagnosticStudies').get(question.group)" label="Resultado"
@@ -202,8 +194,8 @@
                   </app-input>
                 </div>
                 <div class="mr-3">
-                  <datepicker-month fieldId="date"   [group]="form.get('diagnosticStudies').get(question.group)" label="Fecha"
-                    name='date'>
+                  <datepicker-month fieldId="date" [group]="form.get('diagnosticStudies').get(question.group)"
+                    label="Fecha" name='date'>
                   </datepicker-month>
                 </div>
                 <div class="mr-3">
@@ -232,8 +224,9 @@
       </div>
       <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4">
         <div class="mr-3">
-          <datepicker-month fieldId="lastConsultationDate"   [group]="form.get('diseaseInfo')" label="Fecha última consulta" name='lastConsultationDate'>
-          </datepicker-month >
+          <datepicker-month fieldId="lastConsultationDate" [group]="form.get('diseaseInfo')"
+            label="Fecha última consulta" name='lastConsultationDate'>
+          </datepicker-month>
         </div>
         <div class="mr-3">
           <app-input [group]="form.get('diseaseInfo')" label="Resultado" name='lastConsultationResults'>

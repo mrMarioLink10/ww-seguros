@@ -122,6 +122,29 @@ export class SpineComponent implements OnInit {
     this.form.addControl('usePhysiotherapy', this.fb.control('', Validators.required));
     this.form.addControl('useSurgery', this.fb.control('', Validators.required));
 
+    if (this.form.get('medications'))
+    {
+      this.medicationList = this.form.get('medications') as FormArray;
+    }
+
+    if (this.form.get('appliedStudies'))
+    {
+      this.appliedStudiesList = this.form.get('appliedStudies') as FormArray;
+    }
+
+    if (this.form.get('physiotherapies'))
+    {
+      this.physiotherapyList = this.form.get('physiotherapies') as FormArray;
+    }
+
+    if (this.form.get('surgeries'))
+    {
+      this.surgeryList = this.form.get('surgeries') as FormArray;
+    }
+    if (this.form.get('affectedSegment'))
+    {
+      this.affectedSegmentList = this.form.get('affectedSegment') as FormArray;
+    }
 
     // this.form.addControl('typeTreatment', this.fb.array([this.createFormArray('typeTreatment')]));
     // this.typesTreatmentList = this.form.get('typeTreatment') as FormArray;

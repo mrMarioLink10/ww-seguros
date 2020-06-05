@@ -27,7 +27,7 @@ import { FormDataFillingService } from 'src/app/modules/dashboard/services/share
   templateUrl: './life.component.html',
   styleUrls: ['./life.component.scss']
 })
-export class LifeComponent implements OnInit {
+export class LifeComponent implements OnInit, DoCheck {
 
   constructor(
     private fb: FormBuilder,
@@ -1368,10 +1368,70 @@ export class LifeComponent implements OnInit {
     return { total, isDirty };
   }
 
-  // ngDoCheck(): void {
+  ngDoCheck(): void {
   //   this.maxWidth = window.matchMedia('(max-width: 11270px)');
+    if (this.newRequest.get('contingentBeneficiary').get('hasAnotherCoverage').value == 'no' &&
+    this.newRequest.get('contingentBeneficiary').get('anotherCoverages')){
 
-  // }
+      const formQDoCheck = this.newRequest.get('contingentBeneficiary') as FormGroup;
+      formQDoCheck.removeControl('anotherCoverages');
+    }
+
+    if (this.newRequest.get('contingentBeneficiary').get('hasAnotherCoverage').value == 'si'){
+
+      if ((this.newRequest.get('contingentBeneficiary').get('changeAnotherCoverage').value == 'no'
+      || this.newRequest.get('contingentBeneficiary').get('changeAnotherCoverage').value == ''
+      || this.newRequest.get('contingentBeneficiary').get('changeAnotherCoverage').value == null
+      || this.newRequest.get('contingentBeneficiary').get('changeAnotherCoverage').value == undefined) &&
+      this.newRequest.get('contingentBeneficiary').get('changingCoverages')){
+
+        const formCBDoCheck = this.newRequest.get('contingentBeneficiary') as FormGroup;
+        formCBDoCheck.removeControl('changingCoverages');
+      }
+    }
+
+    if (this.newRequest.get('generalInformation').get('anyoneProposed').value == 'no' &&
+    this.newRequest.get('generalInformation').get('insuranceProposed')){
+
+      const formGIDoCheck = this.newRequest.get('generalInformation') as FormGroup;
+      formGIDoCheck.removeControl('insuranceProposed');
+    }
+    // tslint:disable-next-line: prefer-for-of
+    for (let x = 0; x < this.medicQuestions.length; x ++){
+
+        if (this.medicQuestions[x].name != 'haveHadWeightChanges' && this.medicQuestions[x].name != 'isWomen'
+        && this.newRequest.get('medicalHistory').get(this.medicQuestions[x].name).value == 'no' &&
+      this.newRequest.get('medicalHistory').get('informations').get(this.medicQuestions[x].group)){
+
+        const formHMIDoCheck = this.newRequest.get('medicalHistory').get('informations') as FormGroup;
+        formHMIDoCheck.removeControl(this.medicQuestions[x].group);
+
+        this[this.medicQuestions[x].array] = undefined;
+        // console.log( 'El array ' + this[this.medicQuestions[x].array] + ' es igual a ' + typeof this[this.medicQuestions[x].array]);
+      }
+    }
+
+    if (this.newRequest.get('medicalHistory').get('informations').get('womenInformation')){
+        if ((this.newRequest.get('medicalHistory').get('informations').get('womenInformation').value.haveDisorder == 'no'
+        || this.newRequest.get('medicalHistory').get('informations').get('womenInformation').value.haveDisorder == ''
+        || this.newRequest.get('medicalHistory').get('informations').get('womenInformation').value.haveDisorder == null
+        || this.newRequest.get('medicalHistory').get('informations').get('womenInformation').value.haveDisorder == undefined)
+        && this.newRequest.get('medicalHistory').get('informations').get('womenInformation').get('disorders')){
+
+        const formWIDoCheck = this.newRequest.get('medicalHistory').get('informations').get('womenInformation') as FormGroup;
+        formWIDoCheck.removeControl('disorders');
+        this.womenDisordersList = undefined;
+      }
+    }
+
+    if (this.newRequest.get('agentReport').get('isLessThan21').value == 'no' &&
+    this.newRequest.get('agentReport').get('familyInsurances')){
+
+      const formARDoCheck = this.newRequest.get('agentReport') as FormGroup;
+      formARDoCheck.removeControl('familyInsurances');
+      this.familyRelationshipInsurances = undefined;
+    }
+  }
 
   searchIdNumber(idNumber: string) {
     // this.appComponent.showOverlay = true;

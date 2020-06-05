@@ -1369,21 +1369,21 @@ export class LifeComponent implements OnInit, DoCheck {
   }
 
   ngDoCheck(): void {
-  //   this.maxWidth = window.matchMedia('(max-width: 11270px)');
+    //   this.maxWidth = window.matchMedia('(max-width: 11270px)');
     if (this.newRequest.get('contingentBeneficiary').get('hasAnotherCoverage').value == 'no' &&
-    this.newRequest.get('contingentBeneficiary').get('anotherCoverages')){
+      this.newRequest.get('contingentBeneficiary').get('anotherCoverages')) {
 
       const formQDoCheck = this.newRequest.get('contingentBeneficiary') as FormGroup;
       formQDoCheck.removeControl('anotherCoverages');
     }
 
-    if (this.newRequest.get('contingentBeneficiary').get('hasAnotherCoverage').value == 'si'){
+    if (this.newRequest.get('contingentBeneficiary').get('hasAnotherCoverage').value == 'si') {
 
       if ((this.newRequest.get('contingentBeneficiary').get('changeAnotherCoverage').value == 'no'
-      || this.newRequest.get('contingentBeneficiary').get('changeAnotherCoverage').value == ''
-      || this.newRequest.get('contingentBeneficiary').get('changeAnotherCoverage').value == null
-      || this.newRequest.get('contingentBeneficiary').get('changeAnotherCoverage').value == undefined) &&
-      this.newRequest.get('contingentBeneficiary').get('changingCoverages')){
+        || this.newRequest.get('contingentBeneficiary').get('changeAnotherCoverage').value == ''
+        || this.newRequest.get('contingentBeneficiary').get('changeAnotherCoverage').value == null
+        || this.newRequest.get('contingentBeneficiary').get('changeAnotherCoverage').value == undefined) &&
+        this.newRequest.get('contingentBeneficiary').get('changingCoverages')) {
 
         const formCBDoCheck = this.newRequest.get('contingentBeneficiary') as FormGroup;
         formCBDoCheck.removeControl('changingCoverages');
@@ -1391,17 +1391,17 @@ export class LifeComponent implements OnInit, DoCheck {
     }
 
     if (this.newRequest.get('generalInformation').get('anyoneProposed').value == 'no' &&
-    this.newRequest.get('generalInformation').get('insuranceProposed')){
+      this.newRequest.get('generalInformation').get('insuranceProposed')) {
 
       const formGIDoCheck = this.newRequest.get('generalInformation') as FormGroup;
       formGIDoCheck.removeControl('insuranceProposed');
     }
     // tslint:disable-next-line: prefer-for-of
-    for (let x = 0; x < this.medicQuestions.length; x ++){
+    for (let x = 0; x < this.medicQuestions.length; x++) {
 
-        if (this.medicQuestions[x].name != 'haveHadWeightChanges' && this.medicQuestions[x].name != 'isWomen'
+      if (this.medicQuestions[x].name != 'haveHadWeightChanges' && this.medicQuestions[x].name != 'isWomen'
         && this.newRequest.get('medicalHistory').get(this.medicQuestions[x].name).value == 'no' &&
-      this.newRequest.get('medicalHistory').get('informations').get(this.medicQuestions[x].group)){
+        this.newRequest.get('medicalHistory').get('informations').get(this.medicQuestions[x].group)) {
 
         const formHMIDoCheck = this.newRequest.get('medicalHistory').get('informations') as FormGroup;
         formHMIDoCheck.removeControl(this.medicQuestions[x].group);
@@ -1411,12 +1411,12 @@ export class LifeComponent implements OnInit, DoCheck {
       }
     }
 
-    if (this.newRequest.get('medicalHistory').get('informations').get('womenInformation')){
-        if ((this.newRequest.get('medicalHistory').get('informations').get('womenInformation').value.haveDisorder == 'no'
+    if (this.newRequest.get('medicalHistory').get('informations').get('womenInformation')) {
+      if ((this.newRequest.get('medicalHistory').get('informations').get('womenInformation').value.haveDisorder == 'no'
         || this.newRequest.get('medicalHistory').get('informations').get('womenInformation').value.haveDisorder == ''
         || this.newRequest.get('medicalHistory').get('informations').get('womenInformation').value.haveDisorder == null
         || this.newRequest.get('medicalHistory').get('informations').get('womenInformation').value.haveDisorder == undefined)
-        && this.newRequest.get('medicalHistory').get('informations').get('womenInformation').get('disorders')){
+        && this.newRequest.get('medicalHistory').get('informations').get('womenInformation').get('disorders')) {
 
         const formWIDoCheck = this.newRequest.get('medicalHistory').get('informations').get('womenInformation') as FormGroup;
         formWIDoCheck.removeControl('disorders');
@@ -1425,7 +1425,7 @@ export class LifeComponent implements OnInit, DoCheck {
     }
 
     if (this.newRequest.get('agentReport').get('isLessThan21').value == 'no' &&
-    this.newRequest.get('agentReport').get('familyInsurances')){
+      this.newRequest.get('agentReport').get('familyInsurances')) {
 
       const formARDoCheck = this.newRequest.get('agentReport') as FormGroup;
       formARDoCheck.removeControl('familyInsurances');
@@ -2412,6 +2412,7 @@ export class LifeComponent implements OnInit, DoCheck {
         this.showContent = true;
 
         const formCB = this.newRequest.get('contingentBeneficiary') as FormGroup;
+        const formGI = this.newRequest.get('generalInformation') as FormGroup;
         const formAR = this.newRequest.get('agentReport') as FormGroup;
         const formHMI = this.newRequest.get('medicalHistory').get('informations') as FormGroup;
         const formWI = this.newRequest.get('medicalHistory').get('informations').get('womenInformation') as FormGroup;
@@ -2421,6 +2422,7 @@ export class LifeComponent implements OnInit, DoCheck {
         this.changingCoveragesList = formCB.get('changingCoverages') as FormArray;
         this.womenDisordersList = formWI.get('disorders') as FormArray;
         this.heartPainList = formHMI.get('heartPain') as FormArray;
+        this.lostDriveLicenseList = formGI.get('lostDriveLicense') as FormArray;
         this.respiratoryDisorderList = formHMI.get('respiratoryDisorder') as FormArray;
         this.mentalNervousDisorderList = formHMI.get('mentalNervousDisorder') as FormArray;
         this.stomachDisorderList = formHMI.get('stomachDisorder') as FormArray;

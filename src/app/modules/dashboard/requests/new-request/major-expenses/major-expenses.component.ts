@@ -504,7 +504,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
         weightUnit: ['', Validators.required],
         heightUnit: ['', Validators.required],
         date: [{ value: '', disabled: true }, Validators.required],
-        sex: [{ value: '', disabled: true }, Validators.required],
+        sex: [{ value: '', disabled: false }, Validators.required],
         isContractor: ['', Validators.required],
         isJuridica: ['', Validators.required],
         nationality: ['', Validators.required],

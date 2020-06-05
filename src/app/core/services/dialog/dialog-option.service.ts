@@ -153,7 +153,7 @@ export class DialogOptionService {
 	confirmedSavedForm(form: string) {
 		return {
 			logo: 'check',
-			title: 'Enviado',
+			title: 'Confirmación',
 			text: `La solicitud de ${form} ha sido guardada`,
 			showButtons: false,
 		};

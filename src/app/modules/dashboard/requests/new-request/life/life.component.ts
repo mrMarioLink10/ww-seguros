@@ -1455,6 +1455,8 @@ export class LifeComponent implements OnInit, DoCheck {
           this.newRequest.get('releventPlanInformation').get('coverages').get('basicLife').setValue(response.data.suma_asegurada);
           this.newRequest.get('releventPlanInformation').get('coverages').get('survival').setValue(response.data.suma_asegurada_supervivencia);
           this.newRequest.get('releventPlanInformation').get('type').setValue(response.data.plan);
+          this.newRequest.get('releventPlanInformation').get('bonus').setValue(response.data.Prima);
+          this.newRequest.get('releventPlanInformation').get('nicotineEstandar').setValue(response.data.nicotineEstandar);
           switch (response.data.sexo) {
             case 'M':
               this.newRequest.get('person').get('sex').setValue('Masculino');
@@ -2441,7 +2443,7 @@ export class LifeComponent implements OnInit, DoCheck {
         this.testedPositiveForHIVList = formHMI.get('testedPositiveForHIV') as FormArray;
         this.diabetesDiagnosisList = formHMI.get('diabetesDiagnosis') as FormArray;
         this.doctorList = formHMI.get('doctors') as FormArray;
-
+this.lostDriveLicenseList = this.newRequest.get('generalInformation').get('lostDriveLicense') as FormArray;
 
       }
 

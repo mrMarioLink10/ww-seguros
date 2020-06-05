@@ -103,17 +103,32 @@
               <app-select class="mr-3" [options]="idType" [group]="newRequest.get('person')"></app-select>
               <app-input class="mr-3" [group]="newRequest.get('person')" label="Documento de identidad" name='id2'>
               </app-input>
-              <app-input class="mr-3" [group]="newRequest.get('person')" label="Edad" name='age'></app-input>
-              <div class="grid grid-cols-3 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3">
-                <app-select class="mr-3" [options]="weightUnit" [group]="newRequest.get('person')">
+              <div class="mr-3 grid col-span-4 grid-cols-1 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-6 xl:grid-cols-6">
+                <app-number-input class="mr-3" [group]="newRequest.get('person')" label="Edad" name='age' min="1">
+                </app-number-input>
+                <app-select class="mr-3" (selected)="onWeightUnitChange(newRequest.get('person'))"
+                  [options]="weightUnit" [group]="newRequest.get('person')">
                 </app-select>
-                <app-input class="mr-1" [group]="newRequest.get('person')" label="Peso / Kg" name='weight'>
-                </app-input>
-                <app-select class="mr-3" [options]="heightUnit" [group]="newRequest.get('person')">
+                <app-number-input (keyup)="getBmiUpdated(newRequest.get('person'))" class="mr-3"
+                  [group]="newRequest.get('person')" label="Peso" name='weight'>
+                </app-number-input>
+                <app-select class="mr-3" [options]="heightUnit"
+                  (selected)="onHeightUnitChange($event, newRequest.get('person'))" [group]="newRequest.get('person')">
                 </app-select>
-                <app-input class="mr-1" [group]="newRequest.get('person')" label="Altura / M" name='height'>
-                </app-input>
-                <app-input disabled="true" class="mr-3" [group]="newRequest.get('person')" label="BMI" name='bmi'>
+                <div *ngIf="this.newRequest.get('person').get('heightUnit').value === 'pie'" class="mr-3"
+                  class="grid grid-cols-2">
+                  <app-number-input (keyup)="getBmiUpdated(newRequest.get('person'))" class="mr-2"
+                    [group]="newRequest.get('person')" label="Pie" name='height'>
+                  </app-number-input>
+                  <app-number-input (keyup)="getBmiUpdated(newRequest.get('person'))" class="mr-2"
+                    [group]="newRequest.get('person')" name='inches' label="Pulgadas">
+                  </app-number-input>
+                </div>
+                <app-number-input (keyup)="getBmiUpdated(newRequest.get('person'))"
+                  *ngIf="this.newRequest.get('person').get('heightUnit').value !== 'pie'" class="mr-3"
+                  [group]="newRequest.get('person')" label="Altura" name='height'>
+                </app-number-input>
+                <app-input [group]="newRequest.get('person')" label="BMI" name='bmi'>
                 </app-input>
               </div>
               <app-select class="mr-3" [options]="status" [group]="newRequest.get('person')"></app-select>
@@ -313,44 +328,70 @@
                     <app-input class="mr-3"
                       [group]="newRequest.get('dependents').get('allDependents').get(index.toString())"
                       label="Cedula o documento de identidad" name='id2'></app-input>
-                    <app-radio-button class="mb-3"
-                      [group]="newRequest.get('dependents').get('allDependents').get(index.toString())" name="family"
-                      [options]="family"></app-radio-button>
+
+                    <app-select class="mr-3" [options]="nationality"
+                      [group]="newRequest.get('dependents').get('allDependents').get(index.toString())">
+                    </app-select>
                     <app-date-picker class="mr-3"
                       [group]="newRequest.get('dependents').get('allDependents').get(index.toString())"
                       label="Fecha de Nacimiento" name='date'>
                     </app-date-picker>
-                    <app-input class="mr-3"
-                      [group]="newRequest.get('dependents').get('allDependents').get(index.toString())" label="Edad"
-                      name='age'></app-input>
 
                     <app-radio-button class="mr-3"
                       [group]="newRequest.get('dependents').get('allDependents').get(index.toString())" name="sex"
                       [options]="sex"></app-radio-button>
-                    <div class="mr-3 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2">
-                      <app-select class="mr-3" [options]="weightUnit"
+                    <app-radio-button class="mb-3 col-span-2"
+                      [group]="newRequest.get('dependents').get('allDependents').get(index.toString())" name="family"
+                      [options]="family"></app-radio-button>
+                    <div
+                      class="mr-3 grid col-span-4 grid-cols-1 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-6 xl:grid-cols-6">
+                      <app-number-input class="mr-3"
+                        [group]="newRequest.get('dependents').get('allDependents').get(index.toString())" label="Edad"
+                        name='age' min="1">
+                      </app-number-input>
+                      <app-select class="mr-3"
+                        (selected)="onWeightUnitChange(newRequest.get('dependents').get('allDependents').get(index.toString()))"
+                        [options]="weightUnit"
                         [group]="newRequest.get('dependents').get('allDependents').get(index.toString())">
                       </app-select>
-                      <app-number-input class="mr-3"
-                        [group]="newRequest.get('dependents').get('allDependents').get(index.toString())" label="Peso"
-                        name='weight' min="1"></app-number-input>
+                      <app-number-input
+                        (keyup)="getBmiUpdated(newRequest.get('dependents').get('allDependents').get(index.toString()))"
+                        class="mr-3" [group]="newRequest.get('dependents').get('allDependents').get(index.toString())"
+                        label="Peso" name='weight'>
+                      </app-number-input>
                       <app-select class="mr-3" [options]="heightUnit"
+                        (selected)="onHeightUnitChange($event, newRequest.get('dependents').get('allDependents').get(index.toString()))"
                         [group]="newRequest.get('dependents').get('allDependents').get(index.toString())">
                       </app-select>
-                      <app-number-input class="mr-3"
-                        [group]="newRequest.get('dependents').get('allDependents').get(index.toString())" label="Altura"
-                        name='height' min="1"></app-number-input>
-                      <app-input disabled="true" class="mr-3"
-                        [group]="newRequest.get('dependents').get('allDependents').get(index.toString())" label="BMI"
-                        name='bmi'>
+                      <div
+                        *ngIf="this.newRequest.get('dependents').get('allDependents').get(index.toString()).get('heightUnit').value === 'pie'"
+                        class="mr-3" class="grid grid-cols-2">
+                        <app-number-input
+                          (keyup)="getBmiUpdated(newRequest.get('dependents').get('allDependents').get(index.toString()))"
+                          class="mr-2" [group]="newRequest.get('dependents').get('allDependents').get(index.toString())"
+                          label="Pie" name='height'>
+                        </app-number-input>
+                        <app-number-input
+                          (keyup)="getBmiUpdated(newRequest.get('dependents').get('allDependents').get(index.toString()))"
+                          class="mr-2" [group]="newRequest.get('dependents').get('allDependents').get(index.toString())"
+                          name='inches' label="Pulgadas">
+                        </app-number-input>
+                      </div>
+                      <app-number-input
+                        (keyup)="getBmiUpdated(newRequest.get('dependents').get('allDependents').get(index.toString()))"
+                        *ngIf="this.newRequest.get('dependents').get('allDependents').get(index.toString()).get('heightUnit').value !== 'pie'"
+                        class="mr-3" [group]="newRequest.get('dependents').get('allDependents').get(index.toString())"
+                        label="Altura" name='height'>
+                      </app-number-input>
+                      <app-input [group]="newRequest.get('dependents').get('allDependents').get(index.toString())"
+                        label="BMI" name='bmi'>
                       </app-input>
                     </div>
+
                     <!-- <app-input class="mr-3"
                       [group]="newRequest.get('dependents').get('allDependents').get(index.toString())"
                       label="Nacionalidad" name='nationality'></app-input> -->
-                    <app-select class="mr-3" [options]="nationality"
-                      [group]="newRequest.get('dependents').get('allDependents').get(index.toString())">
-                    </app-select>
+
 
                     <br>
                   </div>

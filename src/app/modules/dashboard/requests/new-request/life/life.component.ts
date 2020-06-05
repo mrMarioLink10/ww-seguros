@@ -27,7 +27,7 @@ import { FormDataFillingService } from 'src/app/modules/dashboard/services/share
   templateUrl: './life.component.html',
   styleUrls: ['./life.component.scss']
 })
-export class LifeComponent implements OnInit {
+export class LifeComponent implements OnInit, DoCheck {
 
   constructor(
     private fb: FormBuilder,
@@ -57,6 +57,7 @@ export class LifeComponent implements OnInit {
   existingCoveragesList: FormArray;
   changingCoveragesList: FormArray;
   insuranceProposedList: FormArray;
+  lostDriveLicenseList: FormArray;
   routeSelected = 'vida';
   heartPainList: FormArray;
   respiratoryDisorderList: FormArray;
@@ -515,9 +516,9 @@ export class LifeComponent implements OnInit {
         id2: ['', Validators.required],
         id2Type: ['', Validators.required],
         age: [{ value: '', disabled: true }, [Validators.required]],
-        weight: ['', Validators.required],
+        weight: ['', [Validators.required, Validators.min(0)]],
         weightUnit: ['', Validators.required],
-        height: ['', Validators.required],
+        height: ['', [Validators.required, Validators.min(0)]],
         heightUnit: ['', Validators.required],
         status: ['', Validators.required],
         bmi: [{ value: '', disabled: true }, [Validators.required]],
@@ -1059,8 +1060,14 @@ export class LifeComponent implements OnInit {
     });
 
     const heightUnitBmiSubscriber = this.newRequest.get('person').get('heightUnit').valueChanges.subscribe(value => {
-
       this.getBmi();
+      if (value === 'pie') {
+        setTimeout(() => {
+          const inchesBmiSubscriber = this.newRequest.get('person').get('inches').valueChanges.subscribe(response => {
+            this.getBmi();
+          });
+        }, 2000);
+      }
     });
 
     const weightUnitBmiSubscriber = this.newRequest.get('person').get('weightUnit').valueChanges.subscribe(value => {
@@ -1303,21 +1310,38 @@ export class LifeComponent implements OnInit {
 
     let weight = this.newRequest.get('person').get('weight').value;
     let height = this.newRequest.get('person').get('height').value;
+    let inches;
 
-    // if (this.newRequest.get('person').get('inches')) { inches = this.newRequest.get('person').get('inches').value; }
+    if (this.newRequest.get('person').get('inches')) { inches = this.newRequest.get('person').get('inches').value; }
 
     if (weightUnit === 'libras') { weight = weight / 2.205; }
     if (heightUnit === 'pie') {
-      height = height / 3.281;//(((height * 12) + inches) * 2.54);
+      height = (((height * 12) + inches) * 2.54) / 100;
     }
-
-    const bmi = weight / ((height / 100) * (height / 100));
+    const bmi = weight / ((height / 100) * (height * 100));
 
     if (bmi !== Infinity && !isNaN(bmi)) {
       const value = parseFloat(`${bmi}`).toFixed(2);
       this.newRequest.get('person').get('bmi').setValue(value);
     }
   }
+
+  onHeightUnitChange(evento) {
+    const form = this.newRequest.get('person') as FormGroup;
+    if (evento.valor === 'pie') {
+      form.addControl('inches', this.fb.control('', Validators.required));
+    } else {
+      form.removeControl('inches');
+    }
+
+    this.getBmi();
+  }
+
+  onWeightUnitChange() {
+    this.getBmi();
+
+  }
+
 
   isBenefitMinorThan100(group: string, subgroup: string): boolean {
     const form = this.newRequest.get(group).get(subgroup) as FormGroup;
@@ -1344,18 +1368,69 @@ export class LifeComponent implements OnInit {
     return { total, isDirty };
   }
 
-  // ngDoCheck(): void {
+  ngDoCheck(): void {
   //   this.maxWidth = window.matchMedia('(max-width: 11270px)');
+    if (this.newRequest.get('contingentBeneficiary').get('hasAnotherCoverage').value == 'no' &&
+    this.newRequest.get('contingentBeneficiary').get('anotherCoverages')){
 
-  // }
+      const formQDoCheck = this.newRequest.get('contingentBeneficiary') as FormGroup;
+      formQDoCheck.removeControl('anotherCoverages');
+    }
 
-  onHeightUnitChange(evento) {
-    const form = this.newRequest.get('person') as FormGroup;
-    /*if (evento.valor === 'pie') {
-      form.addControl('inches', this.fb.control('', Validators.required));
-    } else {
-      form.removeControl('inches');
-    }*/
+    if (this.newRequest.get('contingentBeneficiary').get('hasAnotherCoverage').value == 'si'){
+
+      if ((this.newRequest.get('contingentBeneficiary').get('changeAnotherCoverage').value == 'no'
+      || this.newRequest.get('contingentBeneficiary').get('changeAnotherCoverage').value == ''
+      || this.newRequest.get('contingentBeneficiary').get('changeAnotherCoverage').value == null
+      || this.newRequest.get('contingentBeneficiary').get('changeAnotherCoverage').value == undefined) &&
+      this.newRequest.get('contingentBeneficiary').get('changingCoverages')){
+
+        const formCBDoCheck = this.newRequest.get('contingentBeneficiary') as FormGroup;
+        formCBDoCheck.removeControl('changingCoverages');
+      }
+    }
+
+    if (this.newRequest.get('generalInformation').get('anyoneProposed').value == 'no' &&
+    this.newRequest.get('generalInformation').get('insuranceProposed')){
+
+      const formGIDoCheck = this.newRequest.get('generalInformation') as FormGroup;
+      formGIDoCheck.removeControl('insuranceProposed');
+    }
+    // tslint:disable-next-line: prefer-for-of
+    for (let x = 0; x < this.medicQuestions.length; x ++){
+
+        if (this.medicQuestions[x].name != 'haveHadWeightChanges' && this.medicQuestions[x].name != 'isWomen'
+        && this.newRequest.get('medicalHistory').get(this.medicQuestions[x].name).value == 'no' &&
+      this.newRequest.get('medicalHistory').get('informations').get(this.medicQuestions[x].group)){
+
+        const formHMIDoCheck = this.newRequest.get('medicalHistory').get('informations') as FormGroup;
+        formHMIDoCheck.removeControl(this.medicQuestions[x].group);
+
+        this[this.medicQuestions[x].array] = undefined;
+        // console.log( 'El array ' + this[this.medicQuestions[x].array] + ' es igual a ' + typeof this[this.medicQuestions[x].array]);
+      }
+    }
+
+    if (this.newRequest.get('medicalHistory').get('informations').get('womenInformation')){
+        if ((this.newRequest.get('medicalHistory').get('informations').get('womenInformation').value.haveDisorder == 'no'
+        || this.newRequest.get('medicalHistory').get('informations').get('womenInformation').value.haveDisorder == ''
+        || this.newRequest.get('medicalHistory').get('informations').get('womenInformation').value.haveDisorder == null
+        || this.newRequest.get('medicalHistory').get('informations').get('womenInformation').value.haveDisorder == undefined)
+        && this.newRequest.get('medicalHistory').get('informations').get('womenInformation').get('disorders')){
+
+        const formWIDoCheck = this.newRequest.get('medicalHistory').get('informations').get('womenInformation') as FormGroup;
+        formWIDoCheck.removeControl('disorders');
+        this.womenDisordersList = undefined;
+      }
+    }
+
+    if (this.newRequest.get('agentReport').get('isLessThan21').value == 'no' &&
+    this.newRequest.get('agentReport').get('familyInsurances')){
+
+      const formARDoCheck = this.newRequest.get('agentReport') as FormGroup;
+      formARDoCheck.removeControl('familyInsurances');
+      this.familyRelationshipInsurances = undefined;
+    }
   }
 
   searchIdNumber(idNumber: string) {
@@ -1379,7 +1454,7 @@ export class LifeComponent implements OnInit {
           this.newRequest.get('relevantPaymentInformation').get('method').setValue(response.data.formaPago);
           this.newRequest.get('releventPlanInformation').get('coverages').get('basicLife').setValue(response.data.suma_asegurada);
           this.newRequest.get('releventPlanInformation').get('coverages').get('survival').setValue(response.data.suma_asegurada_supervivencia);
-
+          this.newRequest.get('releventPlanInformation').get('type').setValue(response.data.plan);
           switch (response.data.sexo) {
             case 'M':
               this.newRequest.get('person').get('sex').setValue('Masculino');
@@ -1392,24 +1467,6 @@ export class LifeComponent implements OnInit {
             default:
               break;
           }
-
-          switch (response.data.plan) {
-            case 'Survivor':
-              this.newRequest.get('releventPlanInformation').get('type').setValue('WWSURVIVOR');
-              break;
-
-            case 'Term Value':
-              this.newRequest.get('releventPlanInformation').get('type').setValue('WWTERM VALUE');
-              break;
-
-            case 'Term':
-              this.newRequest.get('releventPlanInformation').get('type').setValue('WWTERM');
-              break;
-
-            default:
-              break;
-          }
-
         } else {
           this.showContent = false;
 
@@ -1537,7 +1594,6 @@ export class LifeComponent implements OnInit {
         case 'isExposed':
           formEP.addControl('insured', this.fb.group({
             lastPosition: ['', Validators.required],
-            time: ['', Validators.required],
             timeNumber: ['', Validators.required]
           }));
           if (!formQ.get('money-laundering')) {
@@ -1548,7 +1604,6 @@ export class LifeComponent implements OnInit {
         case 'isPayerExposed':
           formEP.addControl('payer', this.fb.group({
             lastPosition: ['', Validators.required],
-            time: ['', Validators.required],
             timeNumber: ['', Validators.required]
           }));
           if (!formPQ.get('money-laundering')) {
@@ -1559,7 +1614,6 @@ export class LifeComponent implements OnInit {
         case 'isContractorExposed':
           formEP.addControl('contractor', this.fb.group({
             lastPosition: ['', Validators.required],
-            time: ['', Validators.required],
             timeNumber: ['', Validators.required]
           }));
           if (!formCQ.get('money-laundering')) {
@@ -1632,7 +1686,6 @@ export class LifeComponent implements OnInit {
         case 'consumeAlcohol':
           formGI.addControl('alcohol', this.fb.group({
             quantity: ['', Validators.required],
-            frequency: ['', Validators.required],
           }));
           break;
 
@@ -1653,13 +1706,9 @@ export class LifeComponent implements OnInit {
           break;
 
         case 'haveLostDriveLicense':
-          formGI.addControl('lostDriveLicense', this.fb.group({
-            who: ['', Validators.required],
-            when: ['', Validators.required],
-            licenseNumber: ['', Validators.required],
-            state: ['', Validators.required],
-            information: ['', Validators.required],
-          }));
+          formGI.addControl('lostDriveLicense', this.fb.array([this.createFormArray('lostDriveLicense')]));
+          this.lostDriveLicenseList = formGI.get('lostDriveLicense') as FormArray;
+
           break;
 
         case 'doXtremeSport':
@@ -2068,6 +2117,8 @@ export class LifeComponent implements OnInit {
 
         case 'haveLostDriveLicense':
           formGI.removeControl('lostDriveLicense');
+          this.lostDriveLicenseList = undefined;
+
           break;
 
         case 'doXtremeSport':
@@ -2261,6 +2312,15 @@ export class LifeComponent implements OnInit {
           amount: ['', [Validators.required, Validators.min(0)]],
         });
         break;
+
+      case 'lostDriveLicense':
+        return this.fb.group({
+          who: ['', Validators.required],
+          when: ['', Validators.required],
+          licenseNumber: ['', Validators.required],
+          state: ['', Validators.required],
+          information: ['', Validators.required],
+        });
 
       default:
         break;

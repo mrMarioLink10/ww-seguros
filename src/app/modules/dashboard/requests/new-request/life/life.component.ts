@@ -551,12 +551,12 @@ export class LifeComponent implements OnInit, DoCheck {
       }),
       releventPlanInformation: this.fb.group({
         type: [{ value: '', disabled: true }, [Validators.required]],
-        bonus: ['', [Validators.required]],
-        timeAmount: ['', [Validators.required, Validators.min(1), Validators.max(90)]],
-        nicotineEstandar: ['', Validators.required],
+        bonus: [{ value: '', disabled: true }, [Validators.required]],
+        timeAmount: [{ value: '', disabled: true }, [Validators.required, Validators.min(1), Validators.max(90)]],
+        nicotineEstandar: [{ value: '', disabled: true }, Validators.required],
         coverages: this.fb.group({
-          basicLife: ['', Validators.required],
-          survival: ['', Validators.required],
+          basicLife: [{ value: '', disabled: true }, Validators.required],
+          survival: [{ value: '', disabled: true }, Validators.required],
         })
       }),
       relevantPaymentInformation: this.fb.group({
@@ -1457,6 +1457,7 @@ export class LifeComponent implements OnInit, DoCheck {
           this.newRequest.get('releventPlanInformation').get('type').setValue(response.data.plan);
           this.newRequest.get('releventPlanInformation').get('bonus').setValue(response.data.Prima);
           this.newRequest.get('releventPlanInformation').get('nicotineEstandar').setValue(response.data.nicotineEstandar);
+          this.newRequest.get('releventPlanInformation').get('timeAmount').setValue(response.data.periodo_cobertura);
           switch (response.data.sexo) {
             case 'M':
               this.newRequest.get('person').get('sex').setValue('Masculino');

@@ -109,6 +109,18 @@ export class DisabilityComponent implements OnInit, DoCheck {
     ]
   };
 
+  weightUnit = {
+    label: 'Unidad de peso',
+    options: $weightTypes,
+    name: 'weightUnit'
+  };
+
+  heightUnit = {
+    label: 'Unidad de altura',
+    options: $heightTypes,
+    name: 'heightUnit'
+  };
+
   status: FieldConfig = {
     label: 'Estado Civil',
     options: [
@@ -715,47 +727,86 @@ export class DisabilityComponent implements OnInit, DoCheck {
     return true;
   }
 
+  getBmi() {
+    const weightUnit = this.disabilityGroup.get('questions').get('weightUnit').value;
+    const heightUnit = this.disabilityGroup.get('questions').get('heightUnit').value;
+
+    let weight = this.disabilityGroup.get('questions').get('weight').value;
+    let height = this.disabilityGroup.get('questions').get('height').value;
+    let inches;
+
+    if (this.disabilityGroup.get('questions').get('inches')) { inches = this.disabilityGroup.get('questions').get('inches').value; }
+
+    if (weightUnit === 'libras') { weight = weight / 2.205; }
+    if (heightUnit === 'pie') {
+      height = (((height * 12) + inches) * 2.54) / 100;
+    }
+    const bmi = weight / ((height / 100) * (height * 100));
+
+    if (bmi !== Infinity && !isNaN(bmi)) {
+      const value = parseFloat(`${bmi}`).toFixed(2);
+      this.disabilityGroup.get('questions').get('bmiName').setValue(value);
+    }
+  }
+
+  onHeightUnitChange(evento) {
+    const form = this.disabilityGroup.get('questions') as FormGroup;
+    if (evento.valor === 'pie') {
+      form.addControl('inches', this.fb.control('', Validators.required));
+    } else {
+      form.removeControl('inches');
+    }
+
+    this.getBmi();
+  }
+
+  onWeightUnitChange() {
+    this.getBmi();
+
+  }
+
+
   // actualValue;
   y = 0
   x = 0;
   xx = 0;
   ngDoCheck(): void {
 
-    if (this.disabilityGroup.get('questions').get('weightUnit').value != '' &&
-      this.disabilityGroup.get('questions').get('heightUnit').value != '') {
-      // &&
-      // this.disabilityGroup.get('questions').get('weight').value != (null || undefined) &&
-      // this.disabilityGroup.get('questions').get('height').value != (null || undefined)
-      // console.log(this.disabilityGroup.get('questions').get('heightUnit').value);
-      // console.log(this.disabilityGroup.get('questions').get('weightUnit').value);
+    // if (this.disabilityGroup.get('questions').get('weightUnit').value != '' &&
+    //   this.disabilityGroup.get('questions').get('heightUnit').value != '') {
+    //   // &&
+    //   // this.disabilityGroup.get('questions').get('weight').value != (null || undefined) &&
+    //   // this.disabilityGroup.get('questions').get('height').value != (null || undefined)
+    //   // console.log(this.disabilityGroup.get('questions').get('heightUnit').value);
+    //   // console.log(this.disabilityGroup.get('questions').get('weightUnit').value);
 
-      let weightConst;
-      let heightConst;
+    //   let weightConst;
+    //   let heightConst;
 
-      if (this.disabilityGroup.get('questions').get('weightUnit').value == 'libras') {
-        weightConst = this.disabilityGroup.get('questions').get('weight').value / 2.205;
-        // console.log("holaaaaaaaaaaaaaaaaa 1 " + weightConst);
-      }
-      else if (this.disabilityGroup.get('questions').get('weightUnit').value == 'kilogramos') {
-        weightConst = this.disabilityGroup.get('questions').get('weight').value;
-        // console.log("adiiooooooooooooooos 2 " + weightConst);
-      }
+    //   if (this.disabilityGroup.get('questions').get('weightUnit').value == 'libras') {
+    //     weightConst = this.disabilityGroup.get('questions').get('weight').value / 2.205;
+    //     // console.log("holaaaaaaaaaaaaaaaaa 1 " + weightConst);
+    //   }
+    //   else if (this.disabilityGroup.get('questions').get('weightUnit').value == 'kilogramos') {
+    //     weightConst = this.disabilityGroup.get('questions').get('weight').value;
+    //     // console.log("adiiooooooooooooooos 2 " + weightConst);
+    //   }
 
-      if (this.disabilityGroup.get('questions').get('heightUnit').value == 'pie') {
-        heightConst = this.disabilityGroup.get('questions').get('height').value / 3.281;
-        // console.log("saludoooooooooooooooooos 3" + heightConst);
-      }
-      else if (this.disabilityGroup.get('questions').get('heightUnit').value == 'metro') {
-        heightConst = this.disabilityGroup.get('questions').get('height').value;
-        // console.log("despedidadsdsaaaaaaaaaaaaaaaaasssssss 4" + heightConst);
-      }
+    //   if (this.disabilityGroup.get('questions').get('heightUnit').value == 'pie') {
+    //     heightConst = this.disabilityGroup.get('questions').get('height').value / 3.281;
+    //     // console.log("saludoooooooooooooooooos 3" + heightConst);
+    //   }
+    //   else if (this.disabilityGroup.get('questions').get('heightUnit').value == 'metro') {
+    //     heightConst = this.disabilityGroup.get('questions').get('height').value;
+    //     // console.log("despedidadsdsaaaaaaaaaaaaaaaaasssssss 4" + heightConst);
+    //   }
 
-      this.bmi = Math.round((weightConst / (heightConst * heightConst) * 100)) / 100;
-      this.disabilityGroup.get('questions').get('bmiName').setValue(this.bmi)
-      // console.log(this.disabilityGroup.get('questions').get('weight').value / 2.205);
-      // console.log(this.disabilityGroup.get('questions').get('height').value / 3.281);
-      // console.log('this.bmi =======  aaaaaaaaaaaaaaaaaa ' + this.bmi);
-    }
+    //   this.bmi = Math.round((weightConst / (heightConst * heightConst) * 100)) / 100;
+    //   this.disabilityGroup.get('questions').get('bmiName').setValue(this.bmi)
+    //   // console.log(this.disabilityGroup.get('questions').get('weight').value / 2.205);
+    //   // console.log(this.disabilityGroup.get('questions').get('height').value / 3.281);
+    //   // console.log('this.bmi =======  aaaaaaaaaaaaaaaaaa ' + this.bmi);
+    // }
 
     let valueSalary;
     // const plan = this.disabilityGroup.get('plan') as FormGroup;
@@ -1456,8 +1507,8 @@ export class DisabilityComponent implements OnInit, DoCheck {
   }
 
   // getDataSubForms(id, name) {
-	// 	this.disabilityService.returnData(id).subscribe(data => {
-	// 		// console.log(data.data.asegurado.documentoIdentidad)
+  // 	this.disabilityService.returnData(id).subscribe(data => {
+  // 		// console.log(data.data.asegurado.documentoIdentidad)
   //     console.log(data);
   //     if (data !== undefined && data.data !== null &&
   //       data.data != undefined )
@@ -1480,7 +1531,7 @@ export class DisabilityComponent implements OnInit, DoCheck {
   //   });
 
   // // this.disabilityService.id = null;
-	// 	console.log('this.disabilityService.id es igual a ' + this.disabilityService.id);
+  // 	console.log('this.disabilityService.id es igual a ' + this.disabilityService.id);
   // }
 
 }

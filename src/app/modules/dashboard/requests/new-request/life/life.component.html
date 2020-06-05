@@ -77,7 +77,8 @@
               <div class="mr-3 grid col-span-4 grid-cols-1 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-6 xl:grid-cols-6">
                 <app-number-input class="mr-3" [group]="newRequest.get('person')" label="Edad" name='age' min="1">
                 </app-number-input>
-                <app-select class="mr-3" [options]="weightUnit" [group]="newRequest.get('person')">
+                <app-select class="mr-3" [options]="weightUnit" (selected)="onWeightUnitChange($event)"
+                  [group]="newRequest.get('person')">
                 </app-select>
                 <app-number-input class="mr-3" [group]="newRequest.get('person')" label="Peso" name='weight'>
                 </app-number-input>
@@ -86,12 +87,12 @@
                 </app-select>
                 <div *ngIf="this.newRequest.get('person').get('heightUnit').value === 'pie'" class="mr-3"
                   class="grid grid-cols-2">
-                  <app-number-input class="mr-3" [group]="newRequest.get('person')" label="Pie" name='height'>
+                  <app-number-input class="mr-2" [group]="newRequest.get('person')" label="Pie" name='height'>
                   </app-number-input>
-                <!-- <app-number-input [group]="newRequest.get('person')" name='inches' label="Pulgadas">
-                  </app-number-input>-->
+                  <app-number-input class="mr-2" [group]="newRequest.get('person')" name='inches' label="Pulgadas">
+                  </app-number-input>
                 </div>
-                <app-number-input *ngIf="this.newRequest.get('person').get('heightUnit').value !== 'pies'" class="mr-3"
+                <app-number-input *ngIf="this.newRequest.get('person').get('heightUnit').value !== 'pie'" class="mr-3"
                   [group]="newRequest.get('person')" label="Altura" name='height'>
                 </app-number-input>
                 <app-input [group]="newRequest.get('person')" label="BMI" name='bmi'>
@@ -437,12 +438,10 @@
                   class="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-5 xl:grid-cols-5">
                   <app-input class="mr-3" [group]="newRequest.get('exposedPerson').get('insured')"
                     label="Cargo actual o anterior" name='lastPosition'></app-input>
-                  <div class="grid grid-cols-2">
+                  <div class="">
                     <app-number-input class="mr-3" [group]="newRequest.get('exposedPerson').get('insured')"
-                      label="Tiempo" name="timeNumber">
+                      label="Tiempo en meses" name="timeNumber">
                     </app-number-input>
-                    <app-select class="mr-3" [options]="year" [group]="newRequest.get('exposedPerson').get('insured')">
-                    </app-select>
                   </div>
                 </div>
 
@@ -462,12 +461,10 @@
                     class="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-5 xl:grid-cols-5">
                     <app-input class="mr-3" [group]="newRequest.get('exposedPerson').get('payer')"
                       label="Cargo actual o anterior" name='lastPosition'></app-input>
-                    <div class="grid grid-cols-2">
+                    <div class="">
                       <app-number-input class="mr-3" [group]="newRequest.get('exposedPerson').get('payer')"
-                        label="Tiempo" name="timeNumber">
+                        label="Tiempo en meses" name="timeNumber">
                       </app-number-input>
-                      <app-select class="mr-3" [options]="year" [group]="newRequest.get('exposedPerson').get('payer')">
-                      </app-select>
                     </div>
                   </div>
                 </div>
@@ -487,13 +484,10 @@
                     class="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-5 xl:grid-cols-5">
                     <app-input class="mr-3" [group]="newRequest.get('exposedPerson').get('contractor')"
                       label="Cargo actual o anterior" name='lastPosition'></app-input>
-                    <div class="grid grid-cols-2">
+                    <div class="">
                       <app-number-input class="mr-3" [group]="newRequest.get('exposedPerson').get('contractor')"
-                        label="Tiempo" name="timeNumber">
+                        label="Tiempo en meses" name="timeNumber">
                       </app-number-input>
-                      <app-select class="mr-3" [options]="year"
-                        [group]="newRequest.get('exposedPerson').get('contractor')">
-                      </app-select>
                     </div>
                   </div>
                 </div>
@@ -511,8 +505,9 @@
             </mat-expansion-panel-header>
             <div>
               <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
-                <app-select class="mr-3" [group]="newRequest.get('releventPlanInformation')" [options]="planTypes">
-                </app-select>
+                <app-input class="mr-3" label="Tipo de Plan" name="type"
+                  [group]="newRequest.get('releventPlanInformation')">
+                </app-input>
                 <div class="grid grid-cols-2">
                   <app-number-input class="mr-3" [group]="newRequest.get('releventPlanInformation')"
                     label="Tiempo en años" name="timeAmount" min="1" max="90" maxInfo="90">
@@ -991,11 +986,8 @@
                   <div *ngIf="question.name === 'consumeAlcohol'">
                     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-4 mb-3">
                       <app-number-input class="mr-3" [group]="newRequest.get('generalInformation').get('alcohol')"
-                        name="quantity" label="Cantidad">
+                        name="quantity" label="Cantidad semanal">
                       </app-number-input>
-                      <app-input class="mr-3" [group]="newRequest.get('generalInformation').get('alcohol')"
-                        name="frequency" label="Frecuencia">
-                      </app-input>
                     </div>
                   </div>
                   <div *ngIf="question.name === 'thinkTravel'">
@@ -1024,25 +1016,51 @@
                     </app-text-area>
                   </div>
                   <div *ngIf="question.name === 'haveLostDriveLicense'">
-                    <div class="mt-2 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-4">
-                      <app-input class="mr-3" [group]="newRequest.get('generalInformation').get('lostDriveLicense')"
-                        name="who" label="¿Quién?">
-                      </app-input>
-                      <app-date-picker class="mr-3"
-                        [group]="newRequest.get('generalInformation').get('lostDriveLicense')" name="when"
-                        label="¿Cuándo?">
-                      </app-date-picker>
-                      <app-input class="mr-3" [group]="newRequest.get('generalInformation').get('lostDriveLicense')"
-                        name="licenseNumber" label="Número de licencia de conducir">
-                      </app-input>
-                      <app-input class="mr-3" [group]="newRequest.get('generalInformation').get('lostDriveLicense')"
-                        name="state" label="Estado que la expidió">
-                      </app-input>
+
+
+                    <div *ngFor="let studies of lostDriveLicenseList.controls; let i = index">
+                      <div class="mt-2 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-4">
+                        <app-input class="mr-3"
+                          [group]="newRequest.get('generalInformation').get('lostDriveLicense').get(i.toString())"
+                          name="who" label="¿Quién?">
+                        </app-input>
+                        <app-date-picker class="mr-3"
+                          [group]="newRequest.get('generalInformation').get('lostDriveLicense').get(i.toString())"
+                          name="when" label="¿Cuándo?">
+                        </app-date-picker>
+                        <app-input class="mr-3"
+                          [group]="newRequest.get('generalInformation').get('lostDriveLicense').get(i.toString())"
+                          name="licenseNumber" label="Número de licencia de conducir">
+                        </app-input>
+                        <app-input class="mr-3"
+                          [group]="newRequest.get('generalInformation').get('lostDriveLicense').get(i.toString())"
+                          name="state" label="Estado que la expidió">
+                        </app-input>
+                      </div>
+                      <div class="radio-button-label" style="font-size: 12px !important;">Detalle</div>
+                      <app-text-area
+                        [group]="newRequest.get('generalInformation').get('lostDriveLicense').get(i.toString())"
+                        name="information" label="Texto">
+                      </app-text-area>
+                      <div *ngIf="lostDriveLicenseList.length > 1"
+                        [ngClass]="{'': lostDriveLicenseList.length === 1, 'col-span-1': lostDriveLicenseList.length > 1} ">
+                        <button mat-mini-fab aria-label=" Eliminar estudio"
+                          (click)="diseaseService.removeToList(i, lostDriveLicenseList)" type="button"
+                          class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
+                          <mat-icon style="color: #18446B">remove</mat-icon>
+                        </button>
+                      </div>
+                      <hr class="w-full mt-3 mb-6 ww-divider">
+
                     </div>
-                    <div class="radio-button-label" style="font-size: 12px !important;">Detalle</div>
-                    <app-text-area [group]="newRequest.get('generalInformation').get('lostDriveLicense')"
-                      name="information" label="Texto">
-                    </app-text-area>
+
+                    <div class="my-6">
+                      <button mat-mini-fab aria-label="Agregar estudio"
+                        (click)="addToList(lostDriveLicenseList, 'lostDriveLicense')" type="button"
+                        class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
+                        <mat-icon style="color: #18446B">add</mat-icon>
+                      </button>
+                    </div>
                   </div>
 
                   <div *ngIf="question.name === 'anyoneProposed'">

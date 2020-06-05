@@ -1,6 +1,6 @@
 import { Component, OnInit, DoCheck, ViewChild } from '@angular/core';
 import { FieldConfig } from 'src/app/shared/components/form-components/models/field-config';
-import { FormGroup, FormBuilder, Validators, FormArray, FormControl } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormArray, FormControl, AbstractControl } from '@angular/forms';
 import { $sex, $res, $country, $time, $family, $allFamily, $weightTypes, $heightTypes } from '../../../../../core/form/objects';
 import { FormArrayGeneratorService } from 'src/app/core/services/forms/form-array-generator.service';
 import { questionsA, questionsB } from './questions';
@@ -341,9 +341,9 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
     family: ['', Validators.required],
     weightUnit: ['', Validators.required],
     heightUnit: ['', Validators.required],
-    weight: ['', [Validators.required, Validators.min(1)]],
+    weight: ['', [Validators.required, Validators.min(0)]],
     date: ['', Validators.required],
-    height: ['', [Validators.required, Validators.min(1)]],
+    height: ['', [Validators.required, Validators.min(0)]],
     sex: ['', Validators.required],
     id2: ['', Validators.required],
     nationality: ['', Validators.required],
@@ -708,6 +708,45 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
       this.noCotizacion = '';
     }
   }
+
+  getBmiUpdated(Form) {
+    const form = Form as FormGroup;
+    const weightUnit = form.get('weightUnit').value;
+    const heightUnit = form.get('heightUnit').value;
+
+    let weight = form.get('weight').value;
+    let height = form.get('height').value;
+    let inches;
+
+    if (form.get('inches')) { inches = form.get('inches').value; }
+
+    if (weightUnit === 'libras') { weight = weight / 2.205; }
+    if (heightUnit === 'pie') {
+      height = (((height * 12) + inches) * 2.54) / 100;
+    }
+    const bmi = weight / ((height / 100) * (height * 100));
+
+    if (bmi !== Infinity && !isNaN(bmi)) {
+      const value = parseFloat(`${bmi}`).toFixed(2);
+      form.get('bmi').setValue(value);
+    }
+  }
+
+  onHeightUnitChange(evento, form) {
+    const realForm = form as FormGroup;
+    if (evento.valor === 'pie') {
+      realForm.addControl('inches', this.fb.control('', Validators.required));
+    } else {
+      realForm.removeControl('inches');
+    }
+
+    this.getBmiUpdated(form);
+  }
+
+  onWeightUnitChange(form) {
+    this.getBmiUpdated(form);
+  }
+
   addEventChange() {
     this.newRequest.get('person').get('weightUnit').valueChanges.subscribe(value => {
       this.getBmi(this.newRequest.get('person').value.height, this.newRequest.get('person').value.weight);

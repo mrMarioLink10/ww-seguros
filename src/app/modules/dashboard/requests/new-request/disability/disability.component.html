@@ -622,34 +622,33 @@
                       [group]="disabilityGroup.get('questions').get('alcohol')" placeholder="Por ej: 4" min="1">
                     </app-number-input>
                   </div>
-                  <!-- </div> -->
-                  <div class="grid grid-cols-2">
-                    <app-number-input class="mr-3" label="Peso" name="weight" [group]="disabilityGroup.get('questions')"
-                      min="1">
-                    </app-number-input>
-                    <app-select class="mr-3" name="weightUnit" [options]="weightList"
-                      [group]="disabilityGroup.get('questions')">
-                      <!-- (selected)="selectChange($event)" -->
-                    </app-select>
-                  </div>
-                  <div class="grid grid-cols-2">
-                    <app-number-input class="mr-3" label="Estatura" name="height"
-                      [group]="disabilityGroup.get('questions')" min="1">
-                    </app-number-input>
-                    <app-select class="mr-3" name="heightUnit" [options]="heightList"
-                      [group]="disabilityGroup.get('questions')">
-                      <!-- (selected)="selectChange($event)" -->
-                    </app-select>
-                  </div>
-                  <div class="mr-3">
 
-
-                    <app-input label="IMC/BMI: kg/m²" name="bmiName" [group]="disabilityGroup.get('questions')"
-                      placeholder="Por ej: 4" min="1" disabled="true">
+                  <div
+                    class="mr-3 grid col-span-4 grid-cols-1 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-5 xl:grid-cols-5">
+                    <app-select class="mr-3" [options]="weightUnit" (selected)="onWeightUnitChange()"
+                      [group]="disabilityGroup.get('questions')">
+                    </app-select>
+                    <app-number-input (keyup)="getBmi()" class="mr-3" [group]="disabilityGroup.get('questions')"
+                      label="Peso" name='weight'>
+                    </app-number-input>
+                    <app-select class="mr-3" [options]="heightUnit" (selected)="onHeightUnitChange($event)"
+                      [group]="disabilityGroup.get('questions')">
+                    </app-select>
+                    <div *ngIf="disabilityGroup.get('questions').get('heightUnit').value === 'pie'" class="mr-3"
+                      class="grid grid-cols-2">
+                      <app-number-input (keyup)="getBmi()" class="mr-2" [group]="disabilityGroup.get('questions')"
+                        label="Pie" name='height'>
+                      </app-number-input>
+                      <app-number-input (keyup)="getBmi()" class="mr-2" [group]="disabilityGroup.get('questions')"
+                        name='inches' label="Pulgadas">
+                      </app-number-input>
+                    </div>
+                    <app-number-input (keyup)="getBmi()"
+                      *ngIf="this.disabilityGroup.get('questions').get('heightUnit').value !== 'pie'" class="mr-3"
+                      [group]="disabilityGroup.get('questions')" label="Altura" name='height'>
+                    </app-number-input>
+                    <app-input [group]="disabilityGroup.get('questions')" label="BMI" name='bmiName'>
                     </app-input>
-                    <!-- <app-input label="IMC/BMI: kg/m²" name="bmiName"
-                      [group]="disabilityGroup.get('questions')" placeholder="" disabled>
-                      </app-input> -->
                   </div>
                 </div>
                 <!-- Bloque 2 -->
@@ -1952,16 +1951,16 @@
           [form]="disabilityGroup.get('insured_data').get('knowYourCustomer')">
         </app-know-your-customer>
       </mat-tab>
-      <div *ngIf ="disabilityGroup.get('policyholder')">
+      <div *ngIf="disabilityGroup.get('policyholder')">
         <mat-tab
-        *ngIf="disabilityGroup.get('policyholder').get('knowYourClient') || disabilityGroup.get('policyholder').get('KnowYourCustomer')"
-        label="Conozca a su cliente - Contratante">
-        <app-know-your-client *ngIf="this.role === 'WMA'"
-          [form]="disabilityGroup.get('policyholder').get('knowYourClient')">
-        </app-know-your-client>
-        <app-know-your-customer *ngIf="this.role === 'WWS'"
-          [form]="disabilityGroup.get('policyholder').get('KnowYourCustomer')">
-        </app-know-your-customer>
+          *ngIf="disabilityGroup.get('policyholder').get('knowYourClient') || disabilityGroup.get('policyholder').get('KnowYourCustomer')"
+          label="Conozca a su cliente - Contratante">
+          <app-know-your-client *ngIf="this.role === 'WMA'"
+            [form]="disabilityGroup.get('policyholder').get('knowYourClient')">
+          </app-know-your-client>
+          <app-know-your-customer *ngIf="this.role === 'WWS'"
+            [form]="disabilityGroup.get('policyholder').get('KnowYourCustomer')">
+          </app-know-your-customer>
         </mat-tab>
       </div>
       <!-- <div *ngIf ="disabilityGroup.get('insured_data')"> -->

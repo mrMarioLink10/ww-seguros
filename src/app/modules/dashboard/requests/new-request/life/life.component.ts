@@ -1455,7 +1455,7 @@ export class LifeComponent implements OnInit, DoCheck {
           this.newRequest.get('releventPlanInformation').get('coverages').get('basicLife').setValue(response.data.suma_asegurada);
           this.newRequest.get('releventPlanInformation').get('coverages').get('survival').setValue(response.data.suma_asegurada_supervivencia);
           this.newRequest.get('releventPlanInformation').get('type').setValue(response.data.plan);
-          this.newRequest.get('releventPlanInformation').get('bonus').setValue(response.data.Prima);
+          this.newRequest.get('releventPlanInformation').get('bonus').setValue(response.data.prima);
           this.newRequest.get('releventPlanInformation').get('nicotineEstandar').setValue(response.data.nicotineEstandar);
           this.newRequest.get('releventPlanInformation').get('timeAmount').setValue(response.data.periodo_cobertura);
           switch (response.data.sexo) {

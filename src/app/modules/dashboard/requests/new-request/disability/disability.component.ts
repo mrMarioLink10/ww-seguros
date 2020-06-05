@@ -936,8 +936,14 @@ export class DisabilityComponent implements OnInit, DoCheck {
       // tslint:disable-next-line: prefer-for-of
       for (let x = 0; x < this.insuranceArray.controls.length; x++ ){
 
-        if (this.disabilityGroup.get('questions').get('questionnaire').get('insurance_array'
-        ).get(x.toString()).get('claim_radio').value == 'no' &&
+        if ((this.disabilityGroup.get('questions').get('questionnaire').get('insurance_array'
+        ).get(x.toString()).get('claim_radio').value == 'no' ||
+        this.disabilityGroup.get('questions').get('questionnaire').get('insurance_array'
+        ).get(x.toString()).get('claim_radio').value == '' ||
+        this.disabilityGroup.get('questions').get('questionnaire').get('insurance_array'
+        ).get(x.toString()).get('claim_radio').value == null || 
+        this.disabilityGroup.get('questions').get('questionnaire').get('insurance_array'
+        ).get(x.toString()).get('claim_radio').value == undefined) &&
         this.disabilityGroup.get('questions').get('questionnaire').get('insurance_array'
         ).get(x.toString()).get('claim')){
 
@@ -957,7 +963,10 @@ export class DisabilityComponent implements OnInit, DoCheck {
 
     if (this.disabilityGroup.get('contingent').get('hasAnotherCoverage').value == 'si'){
 
-      if (this.disabilityGroup.get('contingent').get('changeAnotherCoverage').value == 'no' &&
+      if ((this.disabilityGroup.get('contingent').get('changeAnotherCoverage').value == 'no'
+      || this.disabilityGroup.get('contingent').get('changeAnotherCoverage').value == ''
+      || this.disabilityGroup.get('contingent').get('changeAnotherCoverage').value == null
+      || this.disabilityGroup.get('contingent').get('changeAnotherCoverage').value == undefined) &&
       this.disabilityGroup.get('contingent').get('changingCoverages')){
 
         const formCBDoCheck = this.disabilityGroup.get('contingent') as FormGroup;

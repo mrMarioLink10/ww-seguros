@@ -77,7 +77,7 @@
               <div class="mr-3 grid col-span-4 grid-cols-1 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-6 xl:grid-cols-6">
                 <app-number-input class="mr-3" [group]="newRequest.get('person')" label="Edad" name='age' min="1">
                 </app-number-input>
-                <app-select class="mr-3" [options]="weightUnit" (selected)="onWeightUnitChange($event)"
+                <app-select class="mr-3" [options]="weightUnit" (selected)="onWeightUnitChange()"
                   [group]="newRequest.get('person')">
                 </app-select>
                 <app-number-input class="mr-3" [group]="newRequest.get('person')" label="Peso" name='weight'>

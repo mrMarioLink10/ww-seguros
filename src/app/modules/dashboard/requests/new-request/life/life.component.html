@@ -397,7 +397,7 @@
                 <app-input class="mr-3 pt-21" [group]="newRequest.get('payer').get('company')"
                   label="Parentesco con el asegurado" name='kinship'></app-input>
                 <div class="mr-3">
-                  <label for="">País(es) donde el contratante tributa por sus ingresos</label>
+                  <label for="">País(es) donde el pagador tributa por sus ingresos</label>
                   <app-select class="mr-3" [options]="country" name='contractorCountry'
                     [group]="newRequest.get('payer').get('company')"></app-select>
                 </div>
@@ -882,7 +882,7 @@
                   <div class="mr-3">
                     <app-date-picker
                       [group]="newRequest.get('contingentBeneficiary').get('anotherCoverages').get(i.toString())"
-                      name="date" label="Fecha de Solicitud">
+                      name="date" label="Fecha de Solicitud" [max]="todayDate">
                     </app-date-picker>
                   </div>
                   <div *ngIf="existingCoveragesList.length > 1"
@@ -939,7 +939,7 @@
                       </app-number-input>
                     </div>
                     <div class="mr-3">
-                      <app-date-picker
+                      <app-date-picker [max]="todayDate"
                         [group]="newRequest.get('contingentBeneficiary').get('changingCoverages').get(i.toString())"
                         name="date" label="Fecha de Solicitud">
                       </app-date-picker>
@@ -999,7 +999,7 @@
                   <div *ngIf="question.name === 'haveAlcoholTreatment'">
                     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-4">
                       <app-input class="mr-3" [group]="newRequest.get('generalInformation')" name="alcoholTreatment"
-                        label="¿Cuándo?">
+                        label="¿Cuándo?" [max]="todayDate">
                       </app-input>
                     </div>
                   </div>
@@ -1024,7 +1024,7 @@
                           [group]="newRequest.get('generalInformation').get('lostDriveLicense').get(i.toString())"
                           name="who" label="¿Quién?">
                         </app-input>
-                        <app-date-picker class="mr-3"
+                        <app-date-picker class="mr-3" [max]="todayDate"
                           [group]="newRequest.get('generalInformation').get('lostDriveLicense').get(i.toString())"
                           name="when" label="¿Cuándo?">
                         </app-date-picker>
@@ -1558,9 +1558,8 @@
                   <app-input [group]="newRequest.get('agentReport').get('agentInformation')" name="city" class="mr-3"
                     label="Ciudad">
                   </app-input>
-                  <app-input [group]="newRequest.get('agentReport').get('agentInformation')" name="country" class="mr-3"
-                    label="País">
-                  </app-input>
+                  <app-select class="mr-3" [options]="countryWithLabel" name="country"
+                    [group]="newRequest.get('agentReport').get('agentInformation')"></app-select>
                   <app-date-picker [group]="newRequest.get('agentReport').get('agentInformation')" name="date"
                     class="mr-3" label="Fecha">
                   </app-date-picker>
@@ -1576,7 +1575,7 @@
               </button>
             </mat-action-row>
           </mat-expansion-panel>
-          <mat-expansion-panel class="ww-mat-expansion" [expanded]="step === 14" (opened)="setStep(14)">
+          <mat-expansion-panel class="ww-mat-expansion" [expanded]="step === 15" (opened)="setStep(15)">
             <mat-expansion-panel-header class="body-13 icon-blue">
               Archivos adjuntos
             </mat-expansion-panel-header>

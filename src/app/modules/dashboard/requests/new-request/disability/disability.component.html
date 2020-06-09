@@ -45,8 +45,8 @@
                   </div>
 
                   <div class="mr-3 mt-2 sm:mt-0 md:mt-3 lg:mt-0 xl:mt-0">
-                    <app-date-picker [group]="disabilityGroup.get('insured_data')" label="Fecha de nacimiento"
-                      name='birthdate'>
+                    <app-date-picker [max]="todayDate" [group]="disabilityGroup.get('insured_data')"
+                      label="Fecha de nacimiento" name='birthdate'>
                     </app-date-picker>
                   </div>
 
@@ -247,7 +247,7 @@
                     </div>
 
                     <div class="mr-3 mt-4 lg:mt-3 xl:mt-3">
-                      <app-date-picker [group]="disabilityGroup.get('insured_data')"
+                      <app-date-picker [max]="todayDate" [group]="disabilityGroup.get('insured_data')"
                         label="Fecha de ingreso a la compañía" name='date'> </app-date-picker>
                     </div>
 
@@ -1382,7 +1382,8 @@
                             name="insurance_radio" [options]="YesNo" (selected)="selectChange($event)">
                           </app-radio-button>
                         </div>
-                        <div *ngIf="this.disabilityGroup.get('questions').get('questionnaire').get('insurance_radio').value == 'si'">
+                        <div
+                          *ngIf="this.disabilityGroup.get('questions').get('questionnaire').get('insurance_radio').value == 'si'">
                           <div *ngFor=" let elements of insuranceArray.controls; let in = index">
                             <div
                               class="mt-16 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">

@@ -165,9 +165,19 @@ export class InvalidControlEnhancerPipe implements PipeTransform {
         newValue = 'Información médica';
         return newValue;
 
+      case 'contractorQuestionnaires':
+        newValue = 'Formularios del contratante';
+        return newValue;
+
+      case 'questionnaires':
+        newValue = 'Formularios adicionales';
+        return newValue;
+
+
       case 'example':
         newValue = '';
         return newValue;
+
 
       default:
         return value;

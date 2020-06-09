@@ -27,6 +27,7 @@ import { AppComponent } from 'src/app/app.component';
 export class DisabilityComponent implements OnInit, DoCheck {
   sicknessQuestions: any[];
   coveragesQuestions: any[];
+  todayDate = new Date();
   changingCoveragesList: FormArray;
   role: string;
   routeSelected = 'disability';
@@ -675,15 +676,15 @@ export class DisabilityComponent implements OnInit, DoCheck {
         rent: ['', Validators.required]
       }),
       main: this.fb.group({
-        full_name: ['', Validators.required],
-        family: ['', Validators.required],
-        id_passport: ['', Validators.required],
+        full_name: [''],
+        family: [''],
+        id_passport: [''],
         main_array: this.fb.array([this.formMethods.createItem(this.mainGroup)])
       }),
       contingent: this.fb.group({
-        full_name: ['', Validators.required],
-        family: ['', Validators.required],
-        id_passport: ['', Validators.required],
+        full_name: [''],
+        family: [''],
+        id_passport: [''],
         contingent_array: this.fb.array([this.formMethods.createItem(this.contingentGroup)]),
         hasAnotherCoverage: ['', Validators.required],
         changeAnotherCoverage: ['', Validators.required],
@@ -764,7 +765,6 @@ export class DisabilityComponent implements OnInit, DoCheck {
     this.getBmi();
 
   }
-
 
   // actualValue;
   y = 0
@@ -900,128 +900,130 @@ export class DisabilityComponent implements OnInit, DoCheck {
     }
 
     if (this.disabilityGroup.get('questions').get('questionnaire').get('therapy_radio').value == 'no' &&
-    this.disabilityGroup.get('questions').get('questionnaire').get('therapy_array')){
+      this.disabilityGroup.get('questions').get('questionnaire').get('therapy_array')) {
 
       const formQDoCheck = this.disabilityGroup.get('questions').get('questionnaire') as FormGroup;
       formQDoCheck.removeControl('therapy_array');
     }
 
     if (this.disabilityGroup.get('questions').get('questionnaire').get('sick_pay_radio').value == 'no' &&
-    this.disabilityGroup.get('questions').get('questionnaire').get('sick_pay_array')){
+      this.disabilityGroup.get('questions').get('questionnaire').get('sick_pay_array')) {
 
       const formQDoCheck = this.disabilityGroup.get('questions').get('questionnaire') as FormGroup;
       formQDoCheck.removeControl('sick_pay_array');
     }
 
     if (this.disabilityGroup.get('questions').get('questionnaire').get('analysis_radio').value == 'no' &&
-    this.disabilityGroup.get('questions').get('questionnaire').get('analysis_array')){
+      this.disabilityGroup.get('questions').get('questionnaire').get('analysis_array')) {
 
       const formQDoCheck = this.disabilityGroup.get('questions').get('questionnaire') as FormGroup;
       formQDoCheck.removeControl('analysis_array');
     }
 
     if (this.disabilityGroup.get('questions').get('questionnaire').get('other_analysis_radio').value == 'no' &&
-    this.disabilityGroup.get('questions').get('questionnaire').get('other_analysis_array')){
+      this.disabilityGroup.get('questions').get('questionnaire').get('other_analysis_array')) {
 
       const formQDoCheck = this.disabilityGroup.get('questions').get('questionnaire') as FormGroup;
       formQDoCheck.removeControl('other_analysis_array');
     }
 
     if (this.disabilityGroup.get('questions').get('questionnaire').get('inpatientCare_radio').value == 'no' &&
-    this.disabilityGroup.get('questions').get('questionnaire').get('inpatientCare_array')){
+      this.disabilityGroup.get('questions').get('questionnaire').get('inpatientCare_array')) {
 
       const formQDoCheck = this.disabilityGroup.get('questions').get('questionnaire') as FormGroup;
       formQDoCheck.removeControl('inpatientCare_array');
     }
 
     if (this.disabilityGroup.get('questions').get('questionnaire').get('hospitalization_radio').value == 'no' &&
-    this.disabilityGroup.get('questions').get('questionnaire').get('hospitalization_array')){
+      this.disabilityGroup.get('questions').get('questionnaire').get('hospitalization_array')) {
 
       const formQDoCheck = this.disabilityGroup.get('questions').get('questionnaire') as FormGroup;
       formQDoCheck.removeControl('hospitalization_array');
     }
 
     if (this.disabilityGroup.get('questions').get('questionnaire').get('bloodSick_radio').value == 'no' &&
-    this.disabilityGroup.get('questions').get('questionnaire').get('bloodSick_array')){
+      this.disabilityGroup.get('questions').get('questionnaire').get('bloodSick_array')) {
 
       const formQDoCheck = this.disabilityGroup.get('questions').get('questionnaire') as FormGroup;
       formQDoCheck.removeControl('bloodSick_array');
     }
 
     if (this.disabilityGroup.get('questions').get('questionnaire').get('VIH_radio').value == 'no' &&
-    this.disabilityGroup.get('questions').get('questionnaire').get('VIH_array')){
+      this.disabilityGroup.get('questions').get('questionnaire').get('VIH_array')) {
 
       const formQDoCheck = this.disabilityGroup.get('questions').get('questionnaire') as FormGroup;
       formQDoCheck.removeControl('VIH_array');
     }
 
     if (this.disabilityGroup.get('questions').get('questionnaire').get('specialTherapy_radio').value == 'no' &&
-    this.disabilityGroup.get('questions').get('questionnaire').get('specialTherapy_array')){
+      this.disabilityGroup.get('questions').get('questionnaire').get('specialTherapy_array')) {
 
       const formQDoCheck = this.disabilityGroup.get('questions').get('questionnaire') as FormGroup;
       formQDoCheck.removeControl('specialTherapy_array');
     }
 
     if (this.disabilityGroup.get('questions').get('questionnaire').get('accident_radio').value == 'no' &&
-    this.disabilityGroup.get('questions').get('questionnaire').get('accident_array')){
+      this.disabilityGroup.get('questions').get('questionnaire').get('accident_array')) {
 
       const formQDoCheck = this.disabilityGroup.get('questions').get('questionnaire') as FormGroup;
       formQDoCheck.removeControl('accident_array');
     }
 
     if (this.disabilityGroup.get('questions').get('questionnaire').get('deny_radio').value == 'no' &&
-    this.disabilityGroup.get('questions').get('questionnaire').get('deny_array')){
+      this.disabilityGroup.get('questions').get('questionnaire').get('deny_array')) {
 
       const formQDoCheck = this.disabilityGroup.get('questions').get('questionnaire') as FormGroup;
       formQDoCheck.removeControl('deny_array');
     }
 
     if (this.disabilityGroup.get('questions').get('questionnaire').get('insurance_radio').value == 'no' &&
-    this.disabilityGroup.get('questions').get('questionnaire').get('insurance_array')){
+      this.disabilityGroup.get('questions').get('questionnaire').get('insurance_array')) {
 
       const formQDoCheck = this.disabilityGroup.get('questions').get('questionnaire') as FormGroup;
       formQDoCheck.removeControl('insurance_array');
     }
 
-    if (this.disabilityGroup.get('questions').get('questionnaire').get('insurance_array')){
+    if (this.disabilityGroup.get('questions').get('questionnaire').get('insurance_array')) {
       // tslint:disable-next-line: prefer-for-of
-      for (let x = 0; x < this.insuranceArray.controls.length; x++ ){
+      for (let x = 0; x < this.insuranceArray.controls.length; x++) {
 
         if ((this.disabilityGroup.get('questions').get('questionnaire').get('insurance_array'
         ).get(x.toString()).get('claim_radio').value == 'no' ||
-        this.disabilityGroup.get('questions').get('questionnaire').get('insurance_array'
-        ).get(x.toString()).get('claim_radio').value == '' ||
-        this.disabilityGroup.get('questions').get('questionnaire').get('insurance_array'
-        ).get(x.toString()).get('claim_radio').value == null || 
-        this.disabilityGroup.get('questions').get('questionnaire').get('insurance_array'
-        ).get(x.toString()).get('claim_radio').value == undefined) &&
-        this.disabilityGroup.get('questions').get('questionnaire').get('insurance_array'
-        ).get(x.toString()).get('claim')){
+          this.disabilityGroup.get('questions').get('questionnaire').get('insurance_array'
+          ).get(x.toString()).get('claim_radio').value == '' ||
+          this.disabilityGroup.get('questions').get('questionnaire').get('insurance_array'
+          ).get(x.toString()).get('claim_radio').value == null ||
+          this.disabilityGroup.get('questions').get('questionnaire').get('insurance_array'
+          ).get(x.toString()).get('claim_radio').value == undefined) &&
+          this.disabilityGroup.get('questions').get('questionnaire').get('insurance_array'
+          ).get(x.toString()).get('claim')) {
 
           const formQDoCheck = this.disabilityGroup.get('questions').get('questionnaire').get('insurance_array'
-        ).get(x.toString()) as FormGroup;
+          ).get(x.toString()) as FormGroup;
           formQDoCheck.removeControl('claim');
         }
       }
     }
 
     if (this.disabilityGroup.get('contingent').get('hasAnotherCoverage').value == 'no' &&
-    this.disabilityGroup.get('contingent').get('anotherCoverages')){
+      this.disabilityGroup.get('contingent').get('anotherCoverages')) {
 
       const formCBDoCheck = this.disabilityGroup.get('contingent') as FormGroup;
       formCBDoCheck.removeControl('anotherCoverages');
     }
 
-    if (this.disabilityGroup.get('contingent').get('hasAnotherCoverage').value == 'si'){
+    if (this.disabilityGroup.get('contingent').get('hasAnotherCoverage').value == 'si') {
 
-      if ((this.disabilityGroup.get('contingent').get('changeAnotherCoverage').value == 'no'
-      || this.disabilityGroup.get('contingent').get('changeAnotherCoverage').value == ''
-      || this.disabilityGroup.get('contingent').get('changeAnotherCoverage').value == null
-      || this.disabilityGroup.get('contingent').get('changeAnotherCoverage').value == undefined) &&
-      this.disabilityGroup.get('contingent').get('changingCoverages')){
+      if (this.disabilityGroup.get('contingent').get('changeAnotherCoverage')) {
+        if ((this.disabilityGroup.get('contingent').get('changeAnotherCoverage').value == 'no'
+          || this.disabilityGroup.get('contingent').get('changeAnotherCoverage').value == ''
+          || this.disabilityGroup.get('contingent').get('changeAnotherCoverage').value == null
+          || this.disabilityGroup.get('contingent').get('changeAnotherCoverage').value == undefined) &&
+          this.disabilityGroup.get('contingent').get('changingCoverages')) {
 
-        const formCBDoCheck = this.disabilityGroup.get('contingent') as FormGroup;
-        formCBDoCheck.removeControl('changingCoverages');
+          const formCBDoCheck = this.disabilityGroup.get('contingent') as FormGroup;
+          formCBDoCheck.removeControl('changingCoverages');
+        }
       }
     }
   }
@@ -1242,6 +1244,7 @@ export class DisabilityComponent implements OnInit, DoCheck {
 
         case 'hasAnotherCoverage':
           formCB.addControl('anotherCoverages', this.fb.array([this.createFormArray('coverages')]));
+          formCB.addControl('changeAnotherCoverage', this.fb.control('', Validators.required));
           this.existingCoveragesList = formCB.get('anotherCoverages') as FormArray;
           break;
 
@@ -1405,7 +1408,7 @@ export class DisabilityComponent implements OnInit, DoCheck {
           formCB.removeControl('anotherCoverages');
           this.existingCoveragesList = undefined;
           formCB.get('changeAnotherCoverage').reset();
-          formCB.removeControl('changingCoverages');
+          formCB.removeControl('changeAnotherCoverage');
           this.changingCoveragesList = undefined;
           break;
 

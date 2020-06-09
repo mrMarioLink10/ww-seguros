@@ -33,6 +33,14 @@ export class ArthritisComponent implements OnInit {
         group: 'surgeries'
       }
     ];
+    if (this.form.get('threatments'))
+    {
+this.threatmentList = this.form.get('threatments') as FormArray;
+    }
+    if (this.form.get('surgeries'))
+    {
+this.surgeriesList = this.form.get('surgeries') as FormArray;
+    }
   }
 
   addBasicControls() {

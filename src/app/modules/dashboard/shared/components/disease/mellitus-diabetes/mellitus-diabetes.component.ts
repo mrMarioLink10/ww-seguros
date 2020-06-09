@@ -109,6 +109,26 @@ export class MellitusDiabetesComponent implements OnInit {
         group: 'renalProblems',
       }
     ];
+    if (this.form.get('oralMedications'))
+    {
+this.oralMedicationList = this.form.get('oralMedications') as FormArray;
+    }
+    if (this.form.get('insulin'))
+    {
+this.insulinList = this.form.get('insulin') as FormArray;
+    }
+    if (this.form.get('bloodGlucoseAnalysis'))
+    {
+this.bloodGlucoseAnalysisList = this.form.get('bloodGlucoseAnalysis') as FormArray;
+    }
+    if (this.form.get('orineGlucoseAnalysis'))
+    {
+this.orineGlucoseAnalysisList = this.form.get('orineGlucoseAnalysis') as FormArray;
+    }
+    if (this.form.get('hbA1cResults'))
+    {
+this.hbA1cResultsList = this.form.get('hbA1cResults') as FormArray;
+    }
   }
 
   addBasicControls() {

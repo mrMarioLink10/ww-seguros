@@ -52,7 +52,7 @@ export class QuotesComponent implements OnInit {
     customClass: 'dashboard-button'
   };
 
-  displayedColumns: string[] = ['noCotizacion', 'nombre', 'tipoSeguro', 'plan', 'fecha', 'monto', 'estatus', 'acciones'];
+  displayedColumns: string[] = ['noCotizacion', 'nombre', 'edad', 'tipoSeguro', 'plan', 'fecha', 'monto', 'estatus', 'acciones'];
   dataSource;
 
   quotes: any[];

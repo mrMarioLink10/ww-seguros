@@ -31,6 +31,11 @@
           <td class="padding-cell" mat-cell *matCellDef="let element"> {{element.nombre}} </td>
         </ng-container>
 
+        <ng-container matColumnDef="edad" style="margin-right: 15px !important">
+          <th class="padding-cell" mat-header-cell *matHeaderCellDef mat-sort-header> Edad </th>
+          <td class="padding-cell" mat-cell *matCellDef="let element"> {{element.edad}} </td>
+        </ng-container>
+
         <ng-container matColumnDef="tipoSeguro" style="margin-right: 15px !important">
           <th class="padding-cell" mat-header-cell *matHeaderCellDef mat-sort-header> Tipo de seguro </th>
           <td class="padding-cell" mat-cell *matCellDef="let element"> {{element.tipoSeguro | titlecase}} </td>

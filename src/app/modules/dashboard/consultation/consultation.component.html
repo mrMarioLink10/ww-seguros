@@ -6,12 +6,12 @@
 
       <mat-tab label="Pólizas">
         <app-policy-filter (filters)="setPolicyFilters($event)" ></app-policy-filter>
-        <app-policy-table [filters]="policyFilters" (pendingPoliciesEmitter)="setPendingPolicies($event)" #policyTable></app-policy-table>
+        <app-policy-table [filters]="policyFilters" #policyTable></app-policy-table>
       </mat-tab>
 
       <mat-tab label="Facturas">
         <app-bills-filter (filters)="setBillsFilters($event)"></app-bills-filter>
-        <app-bills-table [filters]="billsFilter" #billTable></app-bills-table>
+        <app-bills-table [filters]="billsFilter" (pendingBillsEmitter)="setPendingPolicies($event)"  #billTable></app-bills-table>
       </mat-tab>
     </mat-tab-group>
   </div>

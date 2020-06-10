@@ -1319,13 +1319,6 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
             this.questionnairesGastosMayores.addControl('solicitudDiabetes', this.fb.group({}));
             break;
 
-          case 'haveMaleReproductiveOrgans':
-            if (this.person.value.age > FormValidationsConstant.maxMenAge) {
-              this.questionnairesGastosMayores.addControl('solicitudProstatica', this.fb.group({}));
-            }
-
-            break;
-
           case 'haveUrinarySystem':
             this.questionnairesGastosMayores.addControl('solicitudRenales', this.fb.group({}));
             break;
@@ -1361,11 +1354,6 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
             this.questionnairesGastosMayores.removeControl('solicitudDiabetes');
             break;
 
-          case 'haveMaleReproductiveOrgans':
-            this.questionnairesGastosMayores.removeControl('solicitudProstatica');
-
-            break;
-
           case 'haveUrinarySystem':
             this.questionnairesGastosMayores.removeControl('solicitudRenales');
             break;
@@ -1397,13 +1385,6 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
             questionnaire.addControl('solicitudDiabetes', this.fb.group({}));
             break;
 
-          case 'haveMaleReproductiveOrgans':
-            if (this.person.value.age > FormValidationsConstant.maxMenAge) {
-              questionnaire.addControl('solicitudProstatica', this.fb.group({}));
-            }
-
-            break;
-
           case 'haveUrinarySystem':
             questionnaire.addControl('solicitudRenales', this.fb.group({}));
             break;
@@ -1428,11 +1409,6 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
         switch (question) {
           case 'haveEndocrineDisorders':
             questionnaire.removeControl('solicitudDiabetes');
-            break;
-
-          case 'haveMaleReproductiveOrgans':
-            questionnaire.removeControl('solicitudProstatica');
-
             break;
 
           case 'haveUrinarySystem':

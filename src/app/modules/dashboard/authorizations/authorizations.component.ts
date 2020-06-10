@@ -65,10 +65,8 @@ export class AuthorizationsComponent implements OnInit {
 	authorizations: any[];
 	role: any;
 
-	@ViewChild(MatSort, { static: true })
-	sort: MatSort;
-	@ViewChild(MatPaginator, { static: true })
-	paginator: MatPaginator;
+	@ViewChild(MatSort, { static: true }) sort: MatSort;
+	@ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
 	testForm: FormGroup;
 	loading = false;
@@ -95,7 +93,8 @@ export class AuthorizationsComponent implements OnInit {
 				this.dataSource.sort = this.sort;
 				this.dataSource.paginator = this.paginator;
 				this.appComponent.showOverlay = false;
-
+				console.log(this.dataSource.sort);
+				console.log(this.sort);
 			}, err => console.log(err));
 	}
 

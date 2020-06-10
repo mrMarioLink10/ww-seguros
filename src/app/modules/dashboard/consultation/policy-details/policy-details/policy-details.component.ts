@@ -1,10 +1,10 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {FormBuilder, Validators} from '@angular/forms';
-import {MatTableDataSource} from '@angular/material/table';
-import {MatPaginator, MatSort} from '@angular/material';
-import {ActivatedRoute} from '@angular/router';
-import {Insured, PolicyDetail} from '../../models/policy-detail';
-import {PolicyService} from '../../../services/consultation/policy.service';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
+import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
+import { ActivatedRoute } from '@angular/router';
+import { Insured, PolicyDetail } from '../../models/policy-detail';
+import { PolicyService } from '../../../services/consultation/policy.service';
+import { AppComponent } from '../../../../../app.component';
 
 @Component({
   selector: 'app-policy-details',
@@ -13,8 +13,6 @@ import {PolicyService} from '../../../services/consultation/policy.service';
 })
 export class PolicyDetailsComponent implements OnInit {
 
-  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
-  @ViewChild(MatSort, { static: true }) sort: MatSort;
 
   policyId;
 
@@ -23,12 +21,20 @@ export class PolicyDetailsComponent implements OnInit {
   });
 
   dataSource: MatTableDataSource<any>;
-  displayedColumns: string[] = ['insuredId', 'certificate', 'fullName', 'validityDate', 'kinship'];
+  displayedColumns: string[] = ['insuredId', 'certificates', 'fullName', 'validityDate', 'kinship'];
   policyDetail: PolicyDetail;
   data: Insured[] = [];
   loading = false;
 
-  constructor(private fb: FormBuilder, private activatedRoute: ActivatedRoute, private policyService: PolicyService) {
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+
+  constructor(
+    private fb: FormBuilder,
+    private activatedRoute: ActivatedRoute,
+    private policyService: PolicyService,
+    private appComponent: AppComponent
+  ) {
     this.policyId = this.activatedRoute.snapshot.paramMap.get('policyId');
   }
 
@@ -41,13 +47,20 @@ export class PolicyDetailsComponent implements OnInit {
   searchPolicy(policyId: string) {
     this.policyId = policyId;
     this.loading = true;
+    setTimeout(() => {
+      this.appComponent.showOverlay = true;
+    });
     this.policyService.getPolicyDetails(policyId).subscribe((res: any) => {
       this.policyDetail = res.data;
       console.log('DETALLE DE POLIZA: ', res);
-      this.dataSource = new MatTableDataSource(this.policyDetail.insured);
+      const tableData = res.data.insured;
+      this.dataSource = new MatTableDataSource(tableData);
       this.dataSource.sort = this.sort;
+      console.log(this.dataSource.sort);
+      console.log(this.sort);
       this.dataSource.paginator = this.paginator;
       this.loading = false;
+      this.appComponent.showOverlay = false;
     });
 
   }

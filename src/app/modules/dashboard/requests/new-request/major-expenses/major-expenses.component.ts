@@ -747,6 +747,10 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
     this.getBmiUpdated(form);
   }
 
+  ageInputChange(event) {
+    console.log(event);
+  }
+
   addEventChange() {
     this.newRequest.get('person').get('weightUnit').valueChanges.subscribe(value => {
       this.getBmi(this.newRequest.get('person').value.height, this.newRequest.get('person').value.weight);
@@ -772,8 +776,24 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
       const timeDiff = Math.abs(Date.now() - new Date(value).getTime());
       const age = Math.floor(timeDiff / (1000 * 3600 * 24) / 365.25);
       this.newRequest.get('person').get('age').setValue(age);
-
     });
+
+    this.newRequest.get('person').get('age').valueChanges.subscribe(value => {
+      if (value >= 50 && this.newRequest.get('person').get('sex').value === 'Masculino') {
+        this.questionnairesGastosMayores.addControl('solicitudProstatica', this.fb.group({}));
+      } else {
+        this.questionnairesGastosMayores.removeControl('solicitudProstatica');
+      }
+    });
+
+    this.newRequest.get('person').get('sex').valueChanges.subscribe(value => {
+      if (value === 'Masculino' && this.newRequest.get('person').get('age').value >= 50) {
+        this.questionnairesGastosMayores.addControl('solicitudProstatica', this.fb.group({}));
+      } else {
+        this.questionnairesGastosMayores.removeControl('solicitudProstatica');
+      }
+    });
+
     this.isContractor = true;
     this.newRequest.get('person').get('isContractor').valueChanges.subscribe(value => {
 
@@ -915,7 +935,22 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
             const timeDiff = Math.abs(Date.now() - new Date(value).getTime());
             const age = Math.floor(timeDiff / (1000 * 3600 * 24) / 365.25);
             this.newRequest.get('dependents').get('allDependents').get(index.toString()).get('age').setValue(age);
+            // questionnaire.addControl('solicitudProstatica', this.fb.group({}));
 
+            const form = this.newRequest.get('dependents').get('allDependents').get(index.toString()) as FormGroup;
+            if (age >= 50 && form.get('sex').value === 'Masculino') {
+              form.addControl('solicitudProstatica', this.fb.group({}));
+            } else {
+              form.removeControl('solicitudProstatica');
+            }
+          });
+          this.newRequest.get('dependents').get('allDependents').get(index.toString()).get('sex').valueChanges.subscribe(value => {
+            const form = this.newRequest.get('dependents').get('allDependents').get(index.toString()) as FormGroup;
+            if (form.get('age').value >= 50 && value === 'Masculino') {
+              form.addControl('solicitudProstatica', this.fb.group({}));
+            } else {
+              form.removeControl('solicitudProstatica');
+            }
           });
           this.newRequest.get('dependents').get('allDependents').get(index.toString()).get('height').valueChanges.subscribe(value => {
             const weight = this.newRequest.get('dependents').get('allDependents').get(index.toString()).get('weight').value;

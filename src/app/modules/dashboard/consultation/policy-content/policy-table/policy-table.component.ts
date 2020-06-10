@@ -35,7 +35,7 @@ export class PolicyTableComponent implements OnInit {
   @Output() pendingPoliciesEmitter = new EventEmitter<number>();
 
   displayedColumns: string[] = ['id', 'clientName', 'product', 'insuredQuantity', 'validityDate',
-    'paymentState', 'totalBalance'];
+    'paymentState'];
 
     dataSource: MatTableDataSource<Policy>;
     data: Policy[] = [];

@@ -34,31 +34,39 @@
       <div class="w-full grid sm:grid-rows-2 background-gray px-10 py-4 border-r-blue-2" style="border-right-width: 50px">
         <div class="txt-blue grid grid-cols-1 sm:grid-cols-4">
           <div>
+            <span class="font-bold" >Nombre del cliente de la póliza:</span> {{policyDetail.clientName}}
+          </div>
+          <div>
+            <span class="font-bold" >Cantidad Asegurados:</span> {{policyDetail.cantidadAsegurados}}
+          </div>
+          <div>
             <span class="font-bold mr-2">Pago:</span> {{policyDetail.paymentCicle === 'P' ? 'Pendiente' : 'Pagado'}}
           </div>
+
           <div>
             <span class="font-bold" >Moneda:</span> {{policyDetail.currency}}$
           </div>
+
+        </div>
+        <div class="txt-blue mt-5 grid grid-cols-1 sm:grid-cols-4">
           <div>
             <span class="font-bold">Deducible:</span> {{policyDetail.deductible}}
           </div>
           <div>
             <span class="font-bold">Producto:</span> {{policyDetail.product}}
           </div>
-        </div>
-        <div class="txt-blue mt-5 grid grid-cols-1 sm:grid-cols-4">
           <div>
-            <span class="font-bold">Ini. Videncia:</span> {{policyDetail.initialDate}}
+            <span class="font-bold">Ini. Vigencia:</span> {{policyDetail.initialDate}}
           </div>
           <div>
-            <span class="font-bold">Fin. Videncia:</span> {{policyDetail.endDate}}
+            <span class="font-bold">Fin. Vigencia:</span> {{policyDetail.endDate}}
           </div>
-          <div>
+        <!--  <div>
             <span class="font-bold">Ramo:</span> {{policyDetail.branch}}
           </div>
           <div>
             <span class="font-bold" >Certificados:</span> {{policyDetail.certificates}}
-          </div>
+          </div> -->
         </div>
       </div>
     </div>
@@ -92,7 +100,7 @@
 
           <!-- VALIDITY Column -->
           <ng-container matColumnDef="validityDate" style="margin-right: 15px !important">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Vigencia </th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Fecha Nacimiento </th>
             <td mat-cell *matCellDef="let element"> {{element.validityDate}} </td>
           </ng-container>
 

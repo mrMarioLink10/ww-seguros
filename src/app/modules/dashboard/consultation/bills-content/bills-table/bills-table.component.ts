@@ -1,4 +1,4 @@
-import {Component, Input, OnInit, ViewChild} from '@angular/core';
+import {Component, Input, OnInit, EventEmitter,Output, ViewChild} from '@angular/core';
 import {Bill, BillFilter} from '../../models/bill';
 import {MatPaginator, MatTableDataSource, MatSort} from '@angular/material';
 import {BillsService} from '../../../services/consultation/bills.service';
@@ -16,7 +16,7 @@ export class BillsTableComponent implements OnInit {
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
   billsFilter: BillFilter;
-
+  @Output() pendingBillsEmitter = new EventEmitter<number>();
   @Input() set filters(billsFilter: BillFilter) {
     if (billsFilter) {
       this.billsFilter = billsFilter;
@@ -37,7 +37,10 @@ export class BillsTableComponent implements OnInit {
   dataSource;
   data: Bill[] = [];
   displayedColumns: string[] = ['policyId', 'billId' , 'clientName', 'expirationDate', 'paymentState', 'totalBalance', 'actions'];
-
+  emitPendingBills(policies: Bill[]) {
+    const filteredPolicies = policies.filter( p => p.paymentState === 'P');
+    this.pendingBillsEmitter.emit(filteredPolicies.length);
+  }
   constructor(private billsService: BillsService, private userService: UserService) { }
 
   ngOnInit() {
@@ -53,6 +56,8 @@ export class BillsTableComponent implements OnInit {
       this.dataSource = new MatTableDataSource(this.data);
       this.dataSource.sort = this.sort;
       this.dataSource.paginator = this.paginator;
+
+      this.emitPendingBills(this.data);
     });
   }
 

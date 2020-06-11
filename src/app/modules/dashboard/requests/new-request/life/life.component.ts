@@ -53,6 +53,7 @@ export class LifeComponent implements OnInit, DoCheck {
   maxWidth: any;
   primaryBenefitsArray: FormArray;
   contingentBeneficiaryArray: FormArray;
+  filesStudiesArray: FormArray;
   dependentsFormArray: FormArray;
   existingCoveragesList: FormArray;
   changingCoveragesList: FormArray;
@@ -651,6 +652,7 @@ export class LifeComponent implements OnInit, DoCheck {
         getAnswersFromInsured: ['', Validators.required],
       }),
       files: this.fb.group({
+        studies: this.fb.array([]),
       }),
       questionnaires: this.fb.group({}),
       contractorQuestionnaires: this.fb.group({}),
@@ -669,6 +671,7 @@ export class LifeComponent implements OnInit, DoCheck {
     this.primaryBenefitsArray = this.newRequest.get('primaryBenefits').get('dependentsC') as FormArray;
     this.contingentBeneficiaryArray = this.newRequest.get('contingentBeneficiary').get('dependentsC') as FormArray;
     this.dependentsFormArray = this.newRequest.get('dependents') as FormArray;
+    this.filesStudiesArray = this.newRequest.get('files').get('studies') as FormArray;
 
     this.coveragesQuestions = [
       {
@@ -900,6 +903,7 @@ export class LifeComponent implements OnInit, DoCheck {
 
     const ageSubscriber = this.newRequest.get('person').get('date').valueChanges.subscribe(value => {
       const form = this.newRequest.get('releventPlanInformation').get('coverages') as FormGroup;
+      const questionnairesForm = this.newRequest.get('questionnaires') as FormGroup;
 
       const timeDiff = Math.abs(Date.now() - new Date(value).getTime());
       const age = Math.floor(timeDiff / (1000 * 3600 * 24) / 365.25);
@@ -910,6 +914,12 @@ export class LifeComponent implements OnInit, DoCheck {
       form.removeControl('disability');
       form.removeControl('seriousIllnesses');
       form.removeControl('waiverPremiumPayment');
+
+      if (age >= 50) {
+        questionnairesForm.addControl('solicitudProstatica', this.fb.group({}));
+      } else {
+        questionnairesForm.removeControl('solicitudProstatica');
+      }
 
       if (age >= 18 && age <= 70) {
         form.addControl('advancePaymentOfCapital', this.fb.control('', [Validators.required, Validators.max(300000)]));
@@ -1178,6 +1188,23 @@ export class LifeComponent implements OnInit, DoCheck {
       reader.onload = () => {
         this.newRequest.get('files').patchValue({
           [formName]: reader.result
+        });
+
+        this.cd.markForCheck();
+      };
+    }
+  }
+
+  onStudiesChange(event, i) {
+    const reader = new FileReader();
+
+    if (event.target.files && event.target.files.length) {
+      const [file] = event.target.files;
+      reader.readAsDataURL(file);
+
+      reader.onload = () => {
+        this.newRequest.get('files').get('studies').get(i.toString()).patchValue({
+          ['study']: reader.result
         });
 
         this.cd.markForCheck();
@@ -2325,6 +2352,11 @@ export class LifeComponent implements OnInit, DoCheck {
           information: ['', Validators.required],
         });
 
+      case 'filesStudies':
+        return this.fb.group({
+          study: ['', Validators.required],
+        });
+
       default:
         break;
     }
@@ -2446,7 +2478,7 @@ export class LifeComponent implements OnInit, DoCheck {
         this.testedPositiveForHIVList = formHMI.get('testedPositiveForHIV') as FormArray;
         this.diabetesDiagnosisList = formHMI.get('diabetesDiagnosis') as FormArray;
         this.doctorList = formHMI.get('doctors') as FormArray;
-this.lostDriveLicenseList = this.newRequest.get('generalInformation').get('lostDriveLicense') as FormArray;
+        this.lostDriveLicenseList = this.newRequest.get('generalInformation').get('lostDriveLicense') as FormArray;
 
       }
 

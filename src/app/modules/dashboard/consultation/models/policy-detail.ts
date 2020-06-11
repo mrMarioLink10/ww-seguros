@@ -7,6 +7,8 @@ export interface PolicyDetail {
   initialDate: string;
   endDate: string;
   certificates: number;
+  cantidadAsegurados: number,
+  clientName: string,
   insured: Insured[];
 }
 

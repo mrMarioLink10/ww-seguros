@@ -29,13 +29,14 @@ export class DisabilityComponent implements OnInit, DoCheck {
   coveragesQuestions: any[];
   todayDate = new Date();
   changingCoveragesList: FormArray;
+  filesStudiesArray: FormArray;
   role: string;
   routeSelected = 'disability';
   accordionTitles = [
     'Sección A. Datos del propuesto Asegurado y Estatus laboral',
     'Sección B. Datos del Contratante', 'Sección C. Cuestionario Médico',
     'Sección D. Opción del Plan', 'Sección E. Beneficiarios Primarios',
-    'Beneficiario(s) Contigente(s)', 'En caso de Cesión Bancaria'];
+    'Beneficiario(s) Contigente(s)', 'En caso de Cesión Bancaria', 'Archivos Adjuntos'];
   bmi: number;
   // massName = 'PESO';
   // heightName = 'ALTURA';
@@ -694,11 +695,15 @@ export class DisabilityComponent implements OnInit, DoCheck {
         amount: ['', Validators.min(0)],
         contact: ['']
       }),
-      questionnaires: this.fb.group({})
+      questionnaires: this.fb.group({}),
+      files: this.fb.group({
+        studies: this.fb.array([]),
+      }),
     });
 
     this.mainFormArray = this.disabilityGroup.get('main').get('main_array') as FormArray;
     this.contingentFormArray = this.disabilityGroup.get('contingent').get('contingent_array') as FormArray;
+    this.filesStudiesArray = this.disabilityGroup.get('files').get('studies') as FormArray;
 
     this.disabilityGroup.get('insured_data').get('birthdate').valueChanges.subscribe(value => {
       const timeDiff = Math.abs(Date.now() - new Date(value).getTime());
@@ -1025,6 +1030,23 @@ export class DisabilityComponent implements OnInit, DoCheck {
           formCBDoCheck.removeControl('changingCoverages');
         }
       }
+    }
+  }
+
+  onStudiesChange(event, i) {
+    const reader = new FileReader();
+
+    if (event.target.files && event.target.files.length) {
+      const [file] = event.target.files;
+      reader.readAsDataURL(file);
+
+      reader.onload = () => {
+        this.disabilityGroup.get('files').get('studies').get(i.toString()).patchValue({
+          ['study']: reader.result
+        });
+
+        this.cd.markForCheck();
+      };
     }
   }
 
@@ -1527,6 +1549,10 @@ export class DisabilityComponent implements OnInit, DoCheck {
         });
         break;
 
+      case 'filesStudies':
+        return this.fb.group({
+          study: ['', Validators.required],
+        });
     }
   }
 

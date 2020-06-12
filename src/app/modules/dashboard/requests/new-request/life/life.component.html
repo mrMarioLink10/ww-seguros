@@ -1590,8 +1590,7 @@
                     </ngx-mat-file-input>
                     <mat-icon style="color: #e2e2e2;" matSuffix>publish</mat-icon>
                   </mat-form-field>
-                  <div *ngIf="filesStudiesArray.length > 1"
-                    [ngClass]="{'': filesStudiesArray.length === 1, 'col-span-1': filesStudiesArray.length > 1} ">
+                  <div [ngClass]="{'': filesStudiesArray.length === 1, 'col-span-1': filesStudiesArray.length > 1} ">
                     <button mat-mini-fab aria-label=" Eliminar estudio"
                       (click)="diseaseService.removeToList(i, filesStudiesArray)" type="button"
                       class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">

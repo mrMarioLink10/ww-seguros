@@ -2449,11 +2449,12 @@ export class LifeComponent implements OnInit, DoCheck {
 
         const formCB = this.newRequest.get('contingentBeneficiary') as FormGroup;
         const formGI = this.newRequest.get('generalInformation') as FormGroup;
+        const formF = this.newRequest.get('files') as FormGroup;
         const formAR = this.newRequest.get('agentReport') as FormGroup;
         const formHMI = this.newRequest.get('medicalHistory').get('informations') as FormGroup;
         const formWI = this.newRequest.get('medicalHistory').get('informations').get('womenInformation') as FormGroup;
 
-        this.familyRelationshipInsurances = formAR.get('familyInsurances') as FormArray;;
+        this.familyRelationshipInsurances = formAR.get('familyInsurances') as FormArray;
         this.existingCoveragesList = formCB.get('anotherCoverages') as FormArray;
         this.changingCoveragesList = formCB.get('changingCoverages') as FormArray;
         this.womenDisordersList = formWI.get('disorders') as FormArray;
@@ -2478,6 +2479,7 @@ export class LifeComponent implements OnInit, DoCheck {
         this.testedPositiveForHIVList = formHMI.get('testedPositiveForHIV') as FormArray;
         this.diabetesDiagnosisList = formHMI.get('diabetesDiagnosis') as FormArray;
         this.doctorList = formHMI.get('doctors') as FormArray;
+        this.filesStudiesArray = formF.get('studies') as FormArray;
         this.lostDriveLicenseList = this.newRequest.get('generalInformation').get('lostDriveLicense') as FormArray;
 
       }

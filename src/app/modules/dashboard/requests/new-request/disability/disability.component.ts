@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter, Input, DoCheck, ViewChild } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input, DoCheck, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormArray, FormControl } from '@angular/forms';
 import { FormArrayGeneratorService } from 'src/app/core/services/forms/form-array-generator.service';
 import { FieldConfig } from 'src/app/shared/components/form-components/models/field-config';
@@ -30,6 +30,7 @@ export class DisabilityComponent implements OnInit, DoCheck {
   todayDate = new Date();
   changingCoveragesList: FormArray;
   filesStudiesArray: FormArray;
+  arrayFilesTitles = [];
   role: string;
   routeSelected = 'disability';
   accordionTitles = [
@@ -511,7 +512,7 @@ export class DisabilityComponent implements OnInit, DoCheck {
     private dialogOption: DialogOptionService,
     public dialog: MatDialog,
     public appComponent: AppComponent,
-
+    private cd: ChangeDetectorRef
   ) { }
 
   ID = null;
@@ -1626,6 +1627,15 @@ export class DisabilityComponent implements OnInit, DoCheck {
         break;
     }
   }
+
+  arrayStudiesWatcher(i: number) {
+    if (this.arrayFilesTitles) {
+      if (this.arrayFilesTitles[i] && this.disabilityGroup.get('files').get('studies').get(i.toString()).value.study !== '') {
+        return this.arrayFilesTitles[i].studyUrl;
+      }
+    }
+  }
+
   getData(id) {
     console.log(id);
     this.disabilityService.returnData(id).subscribe(data => {
@@ -1635,9 +1645,10 @@ export class DisabilityComponent implements OnInit, DoCheck {
         data.data != undefined) {
         this.ID = data.data.id;
         this.dataMappingFromApi.iterateThroughtAllObject(data.data, this.disabilityGroup);
-
+        const formF = this.disabilityGroup.get('files') as FormGroup;
         console.log(this.disabilityGroup);
         console.log(data.data);
+
         this.therapyArray = this.disabilityGroup.get('questions').get('questionnaire').get('therapy_array') as FormArray;
         this.sickPayArray = this.disabilityGroup.get('questions').get('questionnaire').get('sick_pay_array') as FormArray;
         this.testArray = this.disabilityGroup.get('questions').get('questionnaire').get('analysis_array') as FormArray;
@@ -1653,8 +1664,10 @@ export class DisabilityComponent implements OnInit, DoCheck {
         this.insuranceArray = this.disabilityGroup.get('questions').get('questionnaire').get('insurance_array') as FormArray;
         this.existingCoveragesList = this.disabilityGroup.get('contingent').get('anotherCoverages') as FormArray;
         this.changingCoveragesList = this.disabilityGroup.get('contingent').get('changingCoverages') as FormArray;
-
+        this.filesStudiesArray = formF.get('studies') as FormArray;
         //this.disabilityGroup['controls'].num_financial_quote.setValue(data.data.num_financial_quote)
+
+        this.arrayFilesTitles = data.data.files.studies;
       }
 
     });

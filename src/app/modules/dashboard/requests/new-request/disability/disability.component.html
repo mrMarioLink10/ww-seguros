@@ -1923,7 +1923,8 @@
                 <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
                   <mat-form-field class="mr-3" appearance="outline">
                     <mat-label> Estudio </mat-label>
-                    <ngx-mat-file-input (change)="onStudiesChange($event, i)">
+                    <ngx-mat-file-input [valuePlaceholder]="arrayStudiesWatcher(i)"
+                      (change)="onStudiesChange($event, i)">
                     </ngx-mat-file-input>
                     <mat-icon style="color: #e2e2e2;" matSuffix>publish</mat-icon>
                   </mat-form-field>

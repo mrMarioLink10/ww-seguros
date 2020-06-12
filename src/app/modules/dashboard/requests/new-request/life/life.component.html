@@ -513,8 +513,8 @@
                     label="Tiempo en años" name="timeAmount" min="1" max="90" maxInfo="90">
                   </app-number-input>
                   <app-input class="mr-3" label="Estándar Nicotina" name="type"
-                  [group]="newRequest.get('releventPlanInformation')" name="nicotineEstandar">
-                </app-input>
+                    [group]="newRequest.get('releventPlanInformation')" name="nicotineEstandar">
+                  </app-input>
                   <!--<app-radio-button [group]="newRequest.get('releventPlanInformation')" name="nicotineEstandar"
                     [options]="nicotineStandar">
                   </app-radio-button> -->
@@ -1182,7 +1182,7 @@
                         [group]="newRequest.get('medicalHistory').get('informations').get(question.group).get(i.toString())"
                         name="date" label="Fecha">
                       </app-date-picker>
-                     <!-- <div class="grid grid-cols-2 mr-3">
+                      <!-- <div class="grid grid-cols-2 mr-3">
                         <app-number-input class="mr-3"
                           [group]="newRequest.get('medicalHistory').get('informations').get(question.group).get(i.toString())"
                           name="duration" label="Duración" min="1">
@@ -1589,7 +1589,8 @@
                 <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
                   <mat-form-field class="mr-3" appearance="outline">
                     <mat-label> Estudio </mat-label>
-                    <ngx-mat-file-input [valuePlaceholder]="fileNameWatcher('i')" (change)="onStudiesChange($event, i)">
+                    <ngx-mat-file-input [valuePlaceholder]="arrayStudiesWatcher(i)"
+                      (change)="onStudiesChange($event, i)">
                     </ngx-mat-file-input>
                     <mat-icon style="color: #e2e2e2;" matSuffix>publish</mat-icon>
                   </mat-form-field>

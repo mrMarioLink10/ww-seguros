@@ -140,7 +140,7 @@
                 title="¿Es el contratante una persona juridica?" [options]="diseaseService.yesOrNoOriginal">
               </app-radio-button>
               <app-radio-button class="mr-3 pt-21" (selected)="selectChange($event)" [group]="newRequest.get('person')"
-                name="sameAsPayer" title="¿Es el pagador el mismo propuesto asegurado?"
+                name="sameAsPayer" title="¿Es el pagador el mismo propuesto asegurado o Contratante?"
                 [options]="diseaseService.yesOrNoOriginal">
               </app-radio-button>
               <app-radio-button *ngIf="newRequest.get('person').get('payerIsLegalEntity')" class="mr-3 pt-21"
@@ -512,9 +512,12 @@
                   <app-number-input class="mr-3" [group]="newRequest.get('releventPlanInformation')"
                     label="Tiempo en años" name="timeAmount" min="1" max="90" maxInfo="90">
                   </app-number-input>
-                  <app-radio-button [group]="newRequest.get('releventPlanInformation')" name="nicotineEstandar"
+                  <app-input class="mr-3" label="Estándar Nicotina" name="type"
+                  [group]="newRequest.get('releventPlanInformation')" name="nicotineEstandar">
+                </app-input>
+                  <!--<app-radio-button [group]="newRequest.get('releventPlanInformation')" name="nicotineEstandar"
                     [options]="nicotineStandar">
-                  </app-radio-button>
+                  </app-radio-button> -->
                 </div>
               </div>
               <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
@@ -1179,7 +1182,7 @@
                         [group]="newRequest.get('medicalHistory').get('informations').get(question.group).get(i.toString())"
                         name="date" label="Fecha">
                       </app-date-picker>
-                      <div class="grid grid-cols-2 mr-3">
+                     <!-- <div class="grid grid-cols-2 mr-3">
                         <app-number-input class="mr-3"
                           [group]="newRequest.get('medicalHistory').get('informations').get(question.group).get(i.toString())"
                           name="duration" label="Duración" min="1">
@@ -1187,7 +1190,7 @@
                         <app-select [options]="year"
                           [group]="newRequest.get('medicalHistory').get('informations').get(question.group).get(i.toString())">
                         </app-select>
-                      </div>
+                      </div> -->
                       <app-input class="mr-3"
                         [group]="newRequest.get('medicalHistory').get('informations').get(question.group).get(i.toString())"
                         name="results" label="Resultados">

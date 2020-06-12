@@ -1046,7 +1046,7 @@ export class DisabilityComponent implements OnInit, DoCheck {
           ['study']: reader.result
         });
 
-        this.cd.markForCheck();
+        //this.markForCheck();
       };
     }
   }

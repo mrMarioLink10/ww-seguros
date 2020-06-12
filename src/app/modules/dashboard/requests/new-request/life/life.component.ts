@@ -2411,15 +2411,15 @@ export class LifeComponent implements OnInit, DoCheck {
   selectChangeUrl(event) {
     switch (event) {
       case 'vida':
-        this.router.navigate(['../life'], { relativeTo: this.route });
+        this.router.navigateByUrl('dashboard/requests/new-requests/life');
         break;
 
       case 'disability':
-        this.router.navigate(['../disability'], { relativeTo: this.route });
+        this.router.navigateByUrl('dashboard/requests/new-requests/disability');
         break;
 
       case 'gastos mayores':
-        this.router.navigate(['../major-expenses'], { relativeTo: this.route });
+        this.router.navigateByUrl('dashboard/requests/new-requests/major-expenses');
         break;
 
       default:

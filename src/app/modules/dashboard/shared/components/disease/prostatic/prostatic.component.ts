@@ -52,7 +52,7 @@ export class ProstaticComponent implements OnInit {
       {
         label: 'a. PSA Total',
         name: 'hasPSATotal',
-        group: 'PSATotalInfo',
+        group: 'psaTotalInfo',
       },
       {
         label: 'b. Ultrasonografía prostática',
@@ -84,7 +84,7 @@ export class ProstaticComponent implements OnInit {
           }));
           break;
         case 'hasPSATotal':
-          this.form.addControl('PSATotalInfo', this.studies());
+          this.form.addControl('psaTotalInfo', this.studies());
           break;
 
         case 'hasProstateUltrasound':
@@ -105,7 +105,7 @@ export class ProstaticComponent implements OnInit {
           break;
 
         case 'hasPSATotal':
-          this.form.removeControl('PSATotalInfo');
+          this.form.removeControl('psaTotalInfo');
           break;
 
 

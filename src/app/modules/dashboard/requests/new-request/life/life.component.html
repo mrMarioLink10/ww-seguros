@@ -140,7 +140,7 @@
                 title="¿Es el contratante una persona juridica?" [options]="diseaseService.yesOrNoOriginal">
               </app-radio-button>
               <app-radio-button class="mr-3 pt-21" (selected)="selectChange($event)" [group]="newRequest.get('person')"
-                name="sameAsPayer" title="¿Es el pagador el mismo propuesto asegurado?"
+                name="sameAsPayer" title="¿Es el pagador el mismo propuesto asegurado o Contratante?"
                 [options]="diseaseService.yesOrNoOriginal">
               </app-radio-button>
               <app-radio-button *ngIf="newRequest.get('person').get('payerIsLegalEntity')" class="mr-3 pt-21"

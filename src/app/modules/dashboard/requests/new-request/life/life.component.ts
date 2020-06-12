@@ -1604,6 +1604,7 @@ export class LifeComponent implements OnInit, DoCheck {
     }
 
     if (event.valor === 'si') {
+      //console.log(`aqui estoy yo '${event.name}'`);
       switch (event.name) {
         case 'diving':
           formAQ.addControl('solicitudBuceo', this.fb.group({}));
@@ -2385,7 +2386,16 @@ export class LifeComponent implements OnInit, DoCheck {
   }
 
   activitiesQuestionsLength() {
+    //console.log(this.newRequest.get('activitiesQuestionnaires'));
+    if (this.newRequest.get('activitiesQuestionnaires').get('id'))
+    {
     return Object.keys(this.newRequest.get('activitiesQuestionnaires').value).length > 1;
+    }
+    else
+    {
+
+      return Object.keys(this.newRequest.get('activitiesQuestionnaires').value).length > 0;
+    }
   }
 
   isFormValid(form: string) {

@@ -91,6 +91,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
   informationList: FormArray;
   filesStudiesArray: FormArray;
   familyWithDiseasesList: FormArray;
+  arrayFilesTitles = [];
   questions = questionsA;
   questionsB = questionsB;
   routeSelected = 'gastos mayores';
@@ -1516,6 +1517,14 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
     console.log('dependientes: ', this.newRequest.get('dependents').value.allDependents);
   }
 
+  arrayStudiesWatcher(i: number) {
+    if (this.arrayFilesTitles) {
+      if (this.arrayFilesTitles[i] && this.newRequest.get('files').get('studies').get(i.toString()).value.study !== '') {
+        return this.arrayFilesTitles[i].studyUrl;
+      }
+    }
+  }
+
   createFormArray(type: string): FormGroup {
     switch (type) {
       case 'medicInformation':
@@ -1636,6 +1645,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
         this.filesStudiesArray = this.newRequest.get('files').get('studies') as FormArray;
 
         this.isFormValidToFill = true;
+        this.arrayFilesTitles = data.data.files.studies;
 
         //this.addEventChange();
         /*let person = this.newRequest.get('person');

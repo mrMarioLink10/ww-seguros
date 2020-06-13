@@ -90,6 +90,7 @@ export class LifeComponent implements OnInit, DoCheck {
   sportsQuestions: any[];
   medicQuestions: any[];
   filesInformation: any;
+  arrayFilesTitles = [];
   needFinancialStatus = false;
   showNewQuoteRequest = false;
   todayDate = new Date();
@@ -1175,6 +1176,14 @@ export class LifeComponent implements OnInit, DoCheck {
   fileNameWatcher(type?: string) {
     if (this.filesInformation) {
       if (this.filesInformation[type + 'Url']) { return this.filesInformation[type + 'Url']; }
+    }
+  }
+
+  arrayStudiesWatcher(i: number) {
+    if (this.arrayFilesTitles) {
+      if (this.arrayFilesTitles[i] && this.newRequest.get('files').get('studies').get(i.toString()).value.study !== '') {
+        return this.arrayFilesTitles[i].studyUrl;
+      }
     }
   }
 
@@ -2387,12 +2396,10 @@ export class LifeComponent implements OnInit, DoCheck {
 
   activitiesQuestionsLength() {
     //console.log(this.newRequest.get('activitiesQuestionnaires'));
-    if (this.newRequest.get('activitiesQuestionnaires').get('id'))
-    {
-    return Object.keys(this.newRequest.get('activitiesQuestionnaires').value).length > 1;
+    if (this.newRequest.get('activitiesQuestionnaires').get('id')) {
+      return Object.keys(this.newRequest.get('activitiesQuestionnaires').value).length > 1;
     }
-    else
-    {
+    else {
 
       return Object.keys(this.newRequest.get('activitiesQuestionnaires').value).length > 0;
     }
@@ -2492,6 +2499,8 @@ export class LifeComponent implements OnInit, DoCheck {
         this.doctorList = formHMI.get('doctors') as FormArray;
         this.filesStudiesArray = formF.get('studies') as FormArray;
         this.lostDriveLicenseList = this.newRequest.get('generalInformation').get('lostDriveLicense') as FormArray;
+
+        this.arrayFilesTitles = data.data.files.studies;
 
       }
 

@@ -36,11 +36,11 @@
         <div *ngIf="!loading">
           <span class="font-bold">Nombre del cliente de la póliza:</span> {{policyDetail.clientName}}
         </div>
-        <div *ngIf="!loading">
+      <!--  <div *ngIf="!loading">
           <span class="font-bold">Cantidad Asegurados:</span> {{policyDetail.cantidadAsegurados}}
-        </div>
+        </div> -->
         <div *ngIf="!loading">
-          <span class="font-bold mr-2">Pago:</span> {{policyDetail.paymentCicle === 'P' ? 'Pendiente' : 'Pagado'}}
+          <span class="font-bold mr-2">Forma Pago:</span> {{policyDetail.paymentCicle }}
         </div>
 
         <div *ngIf="!loading">

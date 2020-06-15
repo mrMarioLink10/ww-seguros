@@ -12,6 +12,8 @@ export class RenalUrinaryComponent implements OnInit {
 
   @Input() form: FormGroup;
 
+  todayDate = new Date();
+
   accordionTitles = ["Datos"];
 
   yes_no: FieldConfig = {
@@ -113,7 +115,8 @@ export class RenalUrinaryComponent implements OnInit {
 
     medicine: ['', Validators.required],
     dose: ['', Validators.required],
-    medical_procedure: ['', Validators.required]
+    medical_procedure: ['', Validators.required],
+    date: ['', Validators.required],
 
   }
 
@@ -135,7 +138,7 @@ export class RenalUrinaryComponent implements OnInit {
 
   }
 
-  constructor(private fb: FormBuilder, public formMethods: FormArrayGeneratorService, ) { }
+  constructor(private fb: FormBuilder, public formMethods: FormArrayGeneratorService,) { }
 
   ngOnInit() {
 

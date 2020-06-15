@@ -24,19 +24,19 @@
     </div>
     <div class="px-6">
       <!-- ¿Cuándo se le diagnóstico por primera vez la hipertensión?-->
-      <div class="body-13 mb-8" style="color: black !important;">¿Cuándo se le diagnóstico por primera vez la
+      <div class="body-13 mb-8" style="color: black !important;">¿Cuándo se le diagnosticó por primera vez la
         hipertensión?
       </div>
       <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5">
 
-        <datepicker-month fieldId="dateDiagnostic" [group]="form.get('diseaseInfo')" label="Fecha del diagnóstico"
-          name='dateDiagnostic'>
+        <datepicker-month [max]="todayDate" fieldId="dateDiagnostic" [group]="form.get('diseaseInfo')"
+          label="Fecha del diagnóstico" name='dateDiagnostic'>
         </datepicker-month>
       </div>
       <hr class="w-full mb-6 ww-divider">
       <!-- ¿Cuáles medicamentos está usando y en qué dosis? -->
       <div>
-        <div class="body-13 mb-8" style="color: black !important;">¿¿Cuáles medicamentos está usando y en qué dosis?
+        <div class="body-13 mb-8" style="color: black !important;">¿Cuáles medicamentos está usando y en qué dosis?
         </div>
         <div *ngFor="let studies of medicationList.controls; let i = index"
           class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
@@ -175,8 +175,8 @@
             <div *ngIf="question.name !== 'other'">
               <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 xl:grid-cols-5">
                 <div class="mr-3">
-                  <datepicker-month fieldId="date" [group]="form.get('diagnosticStudies').get(question.group)"
-                    label="Fecha" name='date'>
+                  <datepicker-month [max]="todayDate" fieldId="date"
+                    [group]="form.get('diagnosticStudies').get(question.group)" label="Fecha" name='date'>
                   </datepicker-month>
                 </div>
                 <div class="mr-3">
@@ -188,14 +188,14 @@
             </div>
             <div *ngIf="question.name === 'other'">
               <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 xl:grid-cols-5">
-                 <div class="mr-3">
-                <app-input [group]="form.get('diagnosticStudies').get(question.group)" label="Nombre del estudio"
+                <div class="mr-3">
+                  <app-input [group]="form.get('diagnosticStudies').get(question.group)" label="Nombre del estudio"
                     name='name'>
                   </app-input>
                 </div>
                 <div class="mr-3">
-                  <datepicker-month fieldId="date" [group]="form.get('diagnosticStudies').get(question.group)"
-                    label="Fecha" name='date'>
+                  <datepicker-month [max]="todayDate" fieldId="date"
+                    [group]="form.get('diagnosticStudies').get(question.group)" label="Fecha" name='date'>
                   </datepicker-month>
                 </div>
                 <div class="mr-3">
@@ -224,7 +224,7 @@
       </div>
       <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4">
         <div class="mr-3">
-          <datepicker-month fieldId="lastConsultationDate" [group]="form.get('diseaseInfo')"
+          <datepicker-month [max]="todayDate" fieldId="lastConsultationDate" [group]="form.get('diseaseInfo')"
             label="Fecha última consulta" name='lastConsultationDate'>
           </datepicker-month>
         </div>

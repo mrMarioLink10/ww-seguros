@@ -275,6 +275,7 @@ export class LifeComponent implements OnInit, DoCheck {
   countryOfResidence = {
     options: $country,
     name: 'countryOfResidence',
+    label: 'País de Residencia'
   };
 
   res = $res;
@@ -282,6 +283,7 @@ export class LifeComponent implements OnInit, DoCheck {
   countryOfBirth = {
     options: $country,
     name: 'countryOfBirth',
+    label: 'País de Nacimiento'
   };
 
   currency = {
@@ -388,7 +390,8 @@ export class LifeComponent implements OnInit, DoCheck {
         viewValue: 'Unión Libre'
       }
     ],
-    name: 'status'
+    name: 'status',
+    label: 'Estado Civil'
   };
 
   idType: FieldConfig =
@@ -2459,6 +2462,7 @@ export class LifeComponent implements OnInit, DoCheck {
         this.dataMappingFromApi.iterateThroughtAllObject(data.data, this.newRequest);
 
         console.log(this.newRequest);
+        console.log(data.data);
         this.primaryBenefitsArray = this.newRequest.get('primaryBenefits').get('dependentsC') as FormArray;
         this.contingentBeneficiaryArray = this.newRequest.get('contingentBeneficiary').get('dependentsC') as FormArray;
         this.dependentsFormArray = this.newRequest.get('dependents') as FormArray;

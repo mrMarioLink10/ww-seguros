@@ -34,8 +34,8 @@
       <div class="body-13 mb-10" style="color: black !important;">¿Cuándo tuvo por primera vez los síntomas?
       </div>
       <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5">
-        <datepicker-month fieldId="dateFirstSymptoms" [group]="form" name="dateFirstSymptoms"
-          label="Fecha de primeros sintomas">
+        <datepicker-month [max]="todayDate" [max]="todayDate" fieldId="dateFirstSymptoms" [group]="form"
+          name="dateFirstSymptoms" label="Fecha de primeros sintomas">
         </datepicker-month>
       </div>
       <div class="body-13 mb-2">Describa los síntomas
@@ -48,7 +48,7 @@
         padecimiento?
       </div>
       <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5">
-        <datepicker-month fieldId="dateFirstDiagnosis" [group]="form" name="dateFirstDiagnosis"
+        <datepicker-month [max]="todayDate" fieldId="dateFirstDiagnosis" [group]="form" name="dateFirstDiagnosis"
           label="Fecha de diagnostico">
         </datepicker-month>
       </div>
@@ -90,7 +90,7 @@
         <div
           (click)="addToList(returnAsFormArray(form.get('affectedSegment').get(i.toString()).get('affectedVertebra')), 'affectedVertebra')"
           class="mb-2" style="color: #18446B; font-weight: bold;
-          margin-left: 10px; cursor: context-menu;"> Agregar vertebra </div>
+          margin-left: 10px; cursor: context-menu;"> Agregar vértebra </div>
         <!-- AQUI ES EL CAMPO DE VERTEBRA -->
 
         <div *ngIf="affectedSegmentList.length > 1"
@@ -123,8 +123,8 @@
         </app-select>
       </div>
       <div class="mr-3">
-        <datepicker-month fieldId="date" [group]="form.get('appliedStudies').get(i.toString())" name="date"
-          label="Fecha del estudio">
+        <datepicker-month fieldId="date" [max]="todayDate" [group]="form.get('appliedStudies').get(i.toString())"
+          name="date" label="Fecha del estudio">
         </datepicker-month>
       </div>
       <div class="mr-3">
@@ -151,7 +151,8 @@
       síntomas?</div>
     <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
       <div class="mr-3">
-        <datepicker-month fieldId="dateLastSymptoms" [group]="form" name="dateLastSymptoms" label="Fecha de ultima vez">
+        <datepicker-month [max]="todayDate" fieldId="dateLastSymptoms" [group]="form" name="dateLastSymptoms"
+          label="Fecha de ultima vez">
         </datepicker-month>
       </div>
       <div class="mr-3">
@@ -208,8 +209,8 @@
           <div *ngFor="let studies of physiotherapyList.controls; let i = index"
             class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
             <div class="mr-3">
-              <datepicker-month fieldId="date" [group]="form.get('physiotherapies').get(i.toString())" name="date"
-                label="Fecha">
+              <datepicker-month [max]="todayDate" fieldId="date" [group]="form.get('physiotherapies').get(i.toString())"
+                name="date" label="Fecha">
               </datepicker-month>
             </div>
             <div class="mr-3">

@@ -16,7 +16,7 @@ export const $sex: FieldConfig = {
 };
 
 export const $family: FieldConfig = {
-    label: 'Parentezco / Vinculación',
+    label: 'Parentesco / Vinculación',
     name: 'family',
     options: [
         {
@@ -346,7 +346,7 @@ export const $time = [
 ];
 
 export const $allFamily = {
-    label: 'Parentezco',
+    label: 'Parentesco',
     name: 'family',
     options: [
         {

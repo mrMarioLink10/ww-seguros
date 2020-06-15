@@ -289,6 +289,18 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
     name: 'country',
   };
 
+  countryOfResidence = {
+    options: $country,
+    name: 'countryOfResidence',
+    label: 'País de Residencia'
+  };
+
+  countryOfBirth = {
+    options: $country,
+    name: 'countryOfBirth',
+    label: 'País de Nacimiento'
+  };
+
   nationality = {
     label: 'Nacionalidad',
     options: $country,
@@ -518,13 +530,13 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
         height: ['', Validators.required],
         bmi: [{ value: '', disabled: true }, Validators.required],
         status: ['', Validators.required],
-        country: ['', Validators.required],
+        countryOfResidence: ['', Validators.required],
+        countryOfBirth: ['', Validators.required],
         city: ['', Validators.required],
         direction: ['', Validators.required],
         tel: [''],
         cel: ['', Validators.required],
         officeTel: [''],
-        fax: [''],
         email: ['', Validators.required],
         office: this.fb.group({
           company: [''],

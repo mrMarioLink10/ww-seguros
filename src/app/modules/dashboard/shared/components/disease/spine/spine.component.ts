@@ -19,6 +19,8 @@ export class SpineComponent implements OnInit {
   surgeryList: FormArray;
   affectedSegmentList: FormArray;
 
+  todayDate = new Date();
+
   segments: FieldConfig = {
     name: 'segment',
     label: 'Segmento Afectado',
@@ -122,27 +124,22 @@ export class SpineComponent implements OnInit {
     this.form.addControl('usePhysiotherapy', this.fb.control('', Validators.required));
     this.form.addControl('useSurgery', this.fb.control('', Validators.required));
 
-    if (this.form.get('medications'))
-    {
+    if (this.form.get('medications')) {
       this.medicationList = this.form.get('medications') as FormArray;
     }
 
-    if (this.form.get('appliedStudies'))
-    {
+    if (this.form.get('appliedStudies')) {
       this.appliedStudiesList = this.form.get('appliedStudies') as FormArray;
     }
 
-    if (this.form.get('physiotherapies'))
-    {
+    if (this.form.get('physiotherapies')) {
       this.physiotherapyList = this.form.get('physiotherapies') as FormArray;
     }
 
-    if (this.form.get('surgeries'))
-    {
+    if (this.form.get('surgeries')) {
       this.surgeryList = this.form.get('surgeries') as FormArray;
     }
-    if (this.form.get('affectedSegment'))
-    {
+    if (this.form.get('affectedSegment')) {
       this.affectedSegmentList = this.form.get('affectedSegment') as FormArray;
     }
 
@@ -169,7 +166,7 @@ export class SpineComponent implements OnInit {
 
       case 'affectedVertebra':
         return this.fb.group({
-          vertebra: ['', Validators.required],
+          vertebra: [''],
         });
         break;
 

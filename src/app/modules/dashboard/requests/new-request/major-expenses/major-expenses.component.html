@@ -132,7 +132,8 @@
                 </app-input>
               </div>
               <app-select class="mr-3" [options]="status" [group]="newRequest.get('person')"></app-select>
-              <app-select class="mr-3" [options]="country" [group]="newRequest.get('person')"></app-select>
+              <app-select class="mr-3" [options]="countryOfResidence" [group]="newRequest.get('person')"></app-select>
+              <app-select class="mr-3" [options]="countryOfBirth" [group]="newRequest.get('person')"></app-select>
               <app-input class="mr-3" [group]="newRequest.get('person')" label="Ciudad/Provincia" name='city'>
               </app-input>
               <app-input class="mr-3" [group]="newRequest.get('person')" label="Dirección de Residencia"
@@ -144,7 +145,6 @@
               </app-number-input>
               <app-number-input class="mr-3" [group]="newRequest.get('person')" label="Tel. Oficina" name='officeTel'>
               </app-number-input>
-              <app-input class="mr-3" [group]="newRequest.get('person')" label="Fax" name='fax'></app-input>
               <app-input class="mr-3" [group]="newRequest.get('person')" label="Correo" name='email'></app-input>
               <app-radio-button class="mr-3" [group]="newRequest.get('person')" name="isContractor"
                 [options]="isContractorData">
@@ -618,19 +618,19 @@
                     </mat-select>
                   </mat-form-field>
                   <app-input class="mr-3" [group]="newRequest.get('questionsB').get('information').get(i.toString())"
-                    name="ailment" label="Padecimientos">
+                    name="ailment" label="Padecimiento">
                   </app-input>
                   <app-date-picker class="mr-3"
                     [group]="newRequest.get('questionsB').get('information').get(i.toString())" name="date"
-                    label="Fecha de la cirugía">
+                    label="Fecha del Padecimiento">
                   </app-date-picker>
                   <app-input class="mr-3" [group]="newRequest.get('questionsB').get('information').get(i.toString())"
                     name="threatment" label="Tratamiento">
                   </app-input>
                   <div class="grid grid-cols-2">
                     <app-number-input class="mr-3"
-                      [group]="newRequest.get('questionsB').get('information').get(i.toString())" label="Duración"
-                      name='duration' min="1">
+                      [group]="newRequest.get('questionsB').get('information').get(i.toString())"
+                      label="Duración del Tratamiento" name='duration' min="1">
                     </app-number-input>
                     <app-select class="mr-3" [options]="year"
                       [group]="newRequest.get('questionsB').get('information').get(i.toString())"></app-select>

@@ -1,8 +1,8 @@
-import {Component, Input} from '@angular/core';
-import {FormGroup,FormControl} from '@angular/forms';
-import {MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS} from '@angular/material-moment-adapter';
-import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
-import {MatDatepicker} from '@angular/material/datepicker';
+import { Component, Input } from '@angular/core';
+import { FormGroup, FormControl } from '@angular/forms';
+import { MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/material-moment-adapter';
+import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
+import { MatDatepicker } from '@angular/material/datepicker';
 
 // Depending on whether rollup is used, moment needs to be imported differently.
 // Since Moment.js doesn't have a default export, we normally need to import using the `* as`
@@ -10,9 +10,9 @@ import {MatDatepicker} from '@angular/material/datepicker';
 // the `default as` syntax.
 import * as _moment from 'moment';
 // tslint:disable-next-line:no-duplicate-imports
-import {  Moment} from 'moment';
+import { Moment } from 'moment';
 
-const moment =   _moment;
+const moment = _moment;
 
 // See the Moment.js docs for the meaning of these formats:
 // https://momentjs.com/docs/#/displaying/format/
@@ -43,18 +43,20 @@ export const MY_FORMATS = {
       deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS]
     },
 
-    {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS},
+    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS },
   ],
 })
 export class DatepickerViewsSelectionSingleMonth {
   //date = new FormControl(moment());
-	@Input() label: string;
-	@Input() name: any;
-	@Input() min?: any;
-	@Input() max?: any;
-	@Input() group: FormGroup;
+  @Input() label: string;
+  @Input() name: any;
+  @Input() min?: any;
+  @Input() max?: any;
+  @Input() group: FormGroup;
   @Input() fieldId: string;
+
   date = new FormControl(moment());
+
   chosenYearHandler(normalizedYear: Moment) {
     const ctrlValue = this.date.value;
     ctrlValue.year(normalizedYear.year());

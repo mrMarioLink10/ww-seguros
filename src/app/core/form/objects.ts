@@ -39,6 +39,10 @@ export const $family: FieldConfig = {
             value: 'hermano/a',
             viewValue: 'Hermano/a'
         },
+        {
+            value: 'otros',
+            viewValue: 'Otros'
+        }
     ]
 };
 

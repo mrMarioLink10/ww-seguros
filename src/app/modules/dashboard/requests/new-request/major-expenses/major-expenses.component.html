@@ -758,6 +758,7 @@
                         [group]="newRequest.get('primaryBenefits').get('dependentsC').get(index.toString())"
                         label="Ocupación" name='ocupation'></app-input>
                       <app-select class="mr-3" [options]="family"
+                        (selected)="relationWatcher($event, newRequest.get('primaryBenefits').get('dependentsC').get(index.toString()))"
                         [group]="newRequest.get('primaryBenefits').get('dependentsC').get(index.toString())">
                       </app-select>
                       <app-number-input class="mr-3"

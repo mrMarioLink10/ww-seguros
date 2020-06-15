@@ -937,6 +937,10 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
     }
   }
 
+  relationWatcher(event, form) {
+    console.log(event);
+  }
+
   ngDoCheck() { }
 
   add(dependentsFormArray, group) {

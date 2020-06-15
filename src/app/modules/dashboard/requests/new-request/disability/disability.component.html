@@ -1916,7 +1916,34 @@
                 </div>
               </div>
             </ng-template>
-
+            <ng-template #formTemplate>
+              <div class="radio-button-label" style="font-size: 12px !important; max-width: 63vw;">Adjuntar estudios
+              </div>
+              <div *ngFor="let studies of filesStudiesArray.controls; let i = index">
+                <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
+                  <mat-form-field class="mr-3" appearance="outline">
+                    <mat-label> Estudio </mat-label>
+                    <ngx-mat-file-input [valuePlaceholder]="arrayStudiesWatcher(i)"
+                      (change)="onStudiesChange($event, i)">
+                    </ngx-mat-file-input>
+                    <mat-icon style="color: #e2e2e2;" matSuffix>publish</mat-icon>
+                  </mat-form-field>
+                  <div [ngClass]="{'': filesStudiesArray.length === 1, 'col-span-1': filesStudiesArray.length > 1} ">
+                    <button mat-mini-fab aria-label=" Eliminar estudio"
+                      (click)="diseaseService.removeToList(i, filesStudiesArray)" type="button"
+                      class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
+                      <mat-icon style="color: #18446B">remove</mat-icon>
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div class="mb-6">
+                <button mat-mini-fab aria-label="Agregar estudio" (click)="addToList(filesStudiesArray, 'filesStudies')"
+                  type="button" class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
+                  <mat-icon style="color: #18446B">add</mat-icon>
+                </button>
+              </div>
+            </ng-template>
           </app-forms-container>
         </div>
       </mat-tab>

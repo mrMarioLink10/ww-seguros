@@ -53,6 +53,7 @@ export class LifeComponent implements OnInit, DoCheck {
   maxWidth: any;
   primaryBenefitsArray: FormArray;
   contingentBeneficiaryArray: FormArray;
+  filesStudiesArray: FormArray;
   dependentsFormArray: FormArray;
   existingCoveragesList: FormArray;
   changingCoveragesList: FormArray;
@@ -89,6 +90,7 @@ export class LifeComponent implements OnInit, DoCheck {
   sportsQuestions: any[];
   medicQuestions: any[];
   filesInformation: any;
+  arrayFilesTitles = [];
   needFinancialStatus = false;
   showNewQuoteRequest = false;
   todayDate = new Date();
@@ -488,10 +490,10 @@ export class LifeComponent implements OnInit, DoCheck {
   @ViewChild('form', { static: false }) form;
 
   ngOnInit() {
-    this.userService.getWholeQuotes()
+   /* this.userService.getWholeQuotes()
       .subscribe(res => {
         console.log(res);
-      });
+      });*/
 
     this.route.params.subscribe(res => {
       this.ID = res.id;
@@ -651,6 +653,7 @@ export class LifeComponent implements OnInit, DoCheck {
         getAnswersFromInsured: ['', Validators.required],
       }),
       files: this.fb.group({
+        studies: this.fb.array([]),
       }),
       questionnaires: this.fb.group({}),
       contractorQuestionnaires: this.fb.group({}),
@@ -669,6 +672,7 @@ export class LifeComponent implements OnInit, DoCheck {
     this.primaryBenefitsArray = this.newRequest.get('primaryBenefits').get('dependentsC') as FormArray;
     this.contingentBeneficiaryArray = this.newRequest.get('contingentBeneficiary').get('dependentsC') as FormArray;
     this.dependentsFormArray = this.newRequest.get('dependents') as FormArray;
+    this.filesStudiesArray = this.newRequest.get('files').get('studies') as FormArray;
 
     this.coveragesQuestions = [
       {
@@ -900,6 +904,7 @@ export class LifeComponent implements OnInit, DoCheck {
 
     const ageSubscriber = this.newRequest.get('person').get('date').valueChanges.subscribe(value => {
       const form = this.newRequest.get('releventPlanInformation').get('coverages') as FormGroup;
+      const questionnairesForm = this.newRequest.get('questionnaires') as FormGroup;
 
       const timeDiff = Math.abs(Date.now() - new Date(value).getTime());
       const age = Math.floor(timeDiff / (1000 * 3600 * 24) / 365.25);
@@ -910,6 +915,12 @@ export class LifeComponent implements OnInit, DoCheck {
       form.removeControl('disability');
       form.removeControl('seriousIllnesses');
       form.removeControl('waiverPremiumPayment');
+
+      if (age >= 50) {
+        questionnairesForm.addControl('solicitudProstatica', this.fb.group({}));
+      } else {
+        questionnairesForm.removeControl('solicitudProstatica');
+      }
 
       if (age >= 18 && age <= 70) {
         form.addControl('advancePaymentOfCapital', this.fb.control('', [Validators.required, Validators.max(300000)]));
@@ -1168,6 +1179,14 @@ export class LifeComponent implements OnInit, DoCheck {
     }
   }
 
+  arrayStudiesWatcher(i: number) {
+    if (this.arrayFilesTitles) {
+      if (this.arrayFilesTitles[i] && this.newRequest.get('files').get('studies').get(i.toString()).value.study !== '') {
+        return this.arrayFilesTitles[i].studyUrl;
+      }
+    }
+  }
+
   onFileChange(event, formName) {
     const reader = new FileReader();
 
@@ -1178,6 +1197,23 @@ export class LifeComponent implements OnInit, DoCheck {
       reader.onload = () => {
         this.newRequest.get('files').patchValue({
           [formName]: reader.result
+        });
+
+        this.cd.markForCheck();
+      };
+    }
+  }
+
+  onStudiesChange(event, i) {
+    const reader = new FileReader();
+
+    if (event.target.files && event.target.files.length) {
+      const [file] = event.target.files;
+      reader.readAsDataURL(file);
+
+      reader.onload = () => {
+        this.newRequest.get('files').get('studies').get(i.toString()).patchValue({
+          ['study']: reader.result
         });
 
         this.cd.markForCheck();
@@ -1456,7 +1492,7 @@ export class LifeComponent implements OnInit, DoCheck {
           this.newRequest.get('releventPlanInformation').get('coverages').get('survival').setValue(response.data.suma_asegurada_supervivencia);
           this.newRequest.get('releventPlanInformation').get('type').setValue(response.data.plan);
           this.newRequest.get('releventPlanInformation').get('bonus').setValue(response.data.prima);
-          this.newRequest.get('releventPlanInformation').get('nicotineEstandar').setValue(response.data.nicotineEstandar);
+          this.newRequest.get('releventPlanInformation').get('nicotineEstandar').setValue(response.data.nicotineStandar);
           this.newRequest.get('releventPlanInformation').get('timeAmount').setValue(response.data.periodo_cobertura);
           switch (response.data.sexo) {
             case 'M':
@@ -1577,6 +1613,7 @@ export class LifeComponent implements OnInit, DoCheck {
     }
 
     if (event.valor === 'si') {
+      //console.log(`aqui estoy yo '${event.name}'`);
       switch (event.name) {
         case 'diving':
           formAQ.addControl('solicitudBuceo', this.fb.group({}));
@@ -2325,6 +2362,11 @@ export class LifeComponent implements OnInit, DoCheck {
           information: ['', Validators.required],
         });
 
+      case 'filesStudies':
+        return this.fb.group({
+          study: ['', Validators.required],
+        });
+
       default:
         break;
     }
@@ -2353,7 +2395,14 @@ export class LifeComponent implements OnInit, DoCheck {
   }
 
   activitiesQuestionsLength() {
-    return Object.keys(this.newRequest.get('activitiesQuestionnaires').value).length > 1;
+    //console.log(this.newRequest.get('activitiesQuestionnaires'));
+    if (this.newRequest.get('activitiesQuestionnaires').get('id')) {
+      return Object.keys(this.newRequest.get('activitiesQuestionnaires').value).length > 1;
+    }
+    else {
+
+      return Object.keys(this.newRequest.get('activitiesQuestionnaires').value).length > 0;
+    }
   }
 
   isFormValid(form: string) {
@@ -2379,15 +2428,15 @@ export class LifeComponent implements OnInit, DoCheck {
   selectChangeUrl(event) {
     switch (event) {
       case 'vida':
-        this.router.navigate(['../life'], { relativeTo: this.route });
+        this.router.navigateByUrl('dashboard/requests/new-requests/life');
         break;
 
       case 'disability':
-        this.router.navigate(['../disability'], { relativeTo: this.route });
+        this.router.navigateByUrl('dashboard/requests/new-requests/disability');
         break;
 
       case 'gastos mayores':
-        this.router.navigate(['../major-expenses'], { relativeTo: this.route });
+        this.router.navigateByUrl('dashboard/requests/new-requests/major-expenses');
         break;
 
       default:
@@ -2407,6 +2456,7 @@ export class LifeComponent implements OnInit, DoCheck {
       if (data !== undefined && data.data !== null &&
         data.data != undefined) {
         this.ID = data.data.id;
+        console.log(data.data);
         this.dataMappingFromApi.iterateThroughtAllObject(data.data, this.newRequest);
 
         console.log(this.newRequest);
@@ -2417,11 +2467,12 @@ export class LifeComponent implements OnInit, DoCheck {
 
         const formCB = this.newRequest.get('contingentBeneficiary') as FormGroup;
         const formGI = this.newRequest.get('generalInformation') as FormGroup;
+        const formF = this.newRequest.get('files') as FormGroup;
         const formAR = this.newRequest.get('agentReport') as FormGroup;
         const formHMI = this.newRequest.get('medicalHistory').get('informations') as FormGroup;
         const formWI = this.newRequest.get('medicalHistory').get('informations').get('womenInformation') as FormGroup;
 
-        this.familyRelationshipInsurances = formAR.get('familyInsurances') as FormArray;;
+        this.familyRelationshipInsurances = formAR.get('familyInsurances') as FormArray;
         this.existingCoveragesList = formCB.get('anotherCoverages') as FormArray;
         this.changingCoveragesList = formCB.get('changingCoverages') as FormArray;
         this.womenDisordersList = formWI.get('disorders') as FormArray;
@@ -2446,7 +2497,10 @@ export class LifeComponent implements OnInit, DoCheck {
         this.testedPositiveForHIVList = formHMI.get('testedPositiveForHIV') as FormArray;
         this.diabetesDiagnosisList = formHMI.get('diabetesDiagnosis') as FormArray;
         this.doctorList = formHMI.get('doctors') as FormArray;
-this.lostDriveLicenseList = this.newRequest.get('generalInformation').get('lostDriveLicense') as FormArray;
+        this.filesStudiesArray = formF.get('studies') as FormArray;
+        this.lostDriveLicenseList = this.newRequest.get('generalInformation').get('lostDriveLicense') as FormArray;
+
+        this.arrayFilesTitles = data.data.files.studies;
 
       }
 

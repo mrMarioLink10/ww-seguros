@@ -1,4 +1,4 @@
-import { Component, OnInit, DoCheck, ViewChild } from '@angular/core';
+import { Component, OnInit, DoCheck, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { FieldConfig } from 'src/app/shared/components/form-components/models/field-config';
 import { FormGroup, FormBuilder, Validators, FormArray, FormControl, AbstractControl } from '@angular/forms';
 import { $sex, $res, $country, $time, $family, $allFamily, $weightTypes, $heightTypes } from '../../../../../core/form/objects';
@@ -45,7 +45,8 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
     private majorExpensesService: MajorExpensesService,
     public dialog: MatDialog,
     public appComponent: AppComponent,
-    private currencyPipe: CurrencyPipe
+    private currencyPipe: CurrencyPipe,
+    private cd: ChangeDetectorRef
   ) { }
 
   get allDependents(): FormArray {
@@ -88,7 +89,9 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
   studentDependents: FormArray;
   proceduresArray: FormArray;
   informationList: FormArray;
+  filesStudiesArray: FormArray;
   familyWithDiseasesList: FormArray;
+  arrayFilesTitles = [];
   questions = questionsA;
   questionsB = questionsB;
   routeSelected = 'gastos mayores';
@@ -650,6 +653,9 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
           idType: [''],
         })
       }),
+      files: this.fb.group({
+        studies: this.fb.array([]),
+      }),
       comentary: [''],
       sectionAHelper: this.fb.group({
         haveMusculoskeletal: ['', Validators.required],
@@ -687,6 +693,8 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
     this.questionsFormArray = this.newRequest.get('questionsA') as FormArray;
     this.questionsBFormArray = this.newRequest.get('questionsB') as FormArray;
     this.informationList = this.newRequest.get('questionsB').get('information') as FormArray;
+    this.filesStudiesArray = this.newRequest.get('files').get('studies') as FormArray;
+
     // this.setQuestionsA();
 
     this.addEventChange();
@@ -900,6 +908,22 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
     return true;
   }
 
+  onStudiesChange(event, i) {
+    const reader = new FileReader();
+
+    if (event.target.files && event.target.files.length) {
+      const [file] = event.target.files;
+      reader.readAsDataURL(file);
+
+      reader.onload = () => {
+        this.newRequest.get('files').get('studies').get(i.toString()).patchValue({
+          ['study']: reader.result
+        });
+
+        this.cd.markForCheck();
+      };
+    }
+  }
 
   ngDoCheck() { }
 
@@ -1454,15 +1478,15 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
   selectChangeUrl(event) {
     switch (event) {
       case 'vida':
-        this.router.navigate(['../life'], { relativeTo: this.route });
+        this.router.navigateByUrl('dashboard/requests/new-requests/life');
         break;
 
       case 'disability':
-        this.router.navigate(['../disability'], { relativeTo: this.route });
+        this.router.navigateByUrl('dashboard/requests/new-requests/disability');
         break;
 
       case 'gastos mayores':
-        this.router.navigate(['../major-expenses'], { relativeTo: this.route });
+        this.router.navigateByUrl('dashboard/requests/new-requests/major-expenses');
         break;
 
       default:
@@ -1493,6 +1517,14 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
     console.log('dependientes: ', this.newRequest.get('dependents').value.allDependents);
   }
 
+  arrayStudiesWatcher(i: number) {
+    if (this.arrayFilesTitles) {
+      if (this.arrayFilesTitles[i] && this.newRequest.get('files').get('studies').get(i.toString()).value.study !== '') {
+        return this.arrayFilesTitles[i].studyUrl;
+      }
+    }
+  }
+
   createFormArray(type: string): FormGroup {
     switch (type) {
       case 'medicInformation':
@@ -1514,6 +1546,10 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
         });
         break;
 
+      case 'filesStudies':
+        return this.fb.group({
+          study: ['', Validators.required],
+        });
       default:
         break;
     }
@@ -1606,7 +1642,10 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
         this.questionsFormArray = this.newRequest.get('questionsA') as FormArray;
         this.questionsBFormArray = this.newRequest.get('questionsB') as FormArray;
         this.informationList = this.newRequest.get('questionsB').get('information') as FormArray;
+        this.filesStudiesArray = this.newRequest.get('files').get('studies') as FormArray;
+
         this.isFormValidToFill = true;
+        this.arrayFilesTitles = data.data.files.studies;
 
         //this.addEventChange();
         /*let person = this.newRequest.get('person');

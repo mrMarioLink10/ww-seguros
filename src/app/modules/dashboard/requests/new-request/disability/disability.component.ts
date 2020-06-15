@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter, Input, DoCheck, ViewChild } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input, DoCheck, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormArray, FormControl } from '@angular/forms';
 import { FormArrayGeneratorService } from 'src/app/core/services/forms/form-array-generator.service';
 import { FieldConfig } from 'src/app/shared/components/form-components/models/field-config';
@@ -29,13 +29,15 @@ export class DisabilityComponent implements OnInit, DoCheck {
   coveragesQuestions: any[];
   todayDate = new Date();
   changingCoveragesList: FormArray;
+  filesStudiesArray: FormArray;
+  arrayFilesTitles = [];
   role: string;
   routeSelected = 'disability';
   accordionTitles = [
     'Sección A. Datos del propuesto Asegurado y Estatus laboral',
     'Sección B. Datos del Contratante', 'Sección C. Cuestionario Médico',
     'Sección D. Opción del Plan', 'Sección E. Beneficiarios Primarios',
-    'Beneficiario(s) Contigente(s)', 'En caso de Cesión Bancaria'];
+    'Beneficiario(s) Contigente(s)', 'En caso de Cesión Bancaria', 'Archivos Adjuntos'];
   bmi: number;
   // massName = 'PESO';
   // heightName = 'ALTURA';
@@ -510,7 +512,7 @@ export class DisabilityComponent implements OnInit, DoCheck {
     private dialogOption: DialogOptionService,
     public dialog: MatDialog,
     public appComponent: AppComponent,
-
+    private cd: ChangeDetectorRef
   ) { }
 
   ID = null;
@@ -694,11 +696,15 @@ export class DisabilityComponent implements OnInit, DoCheck {
         amount: ['', Validators.min(0)],
         contact: ['']
       }),
-      questionnaires: this.fb.group({})
+      questionnaires: this.fb.group({}),
+      files: this.fb.group({
+        studies: this.fb.array([]),
+      }),
     });
 
     this.mainFormArray = this.disabilityGroup.get('main').get('main_array') as FormArray;
     this.contingentFormArray = this.disabilityGroup.get('contingent').get('contingent_array') as FormArray;
+    this.filesStudiesArray = this.disabilityGroup.get('files').get('studies') as FormArray;
 
     this.disabilityGroup.get('insured_data').get('birthdate').valueChanges.subscribe(value => {
       const timeDiff = Math.abs(Date.now() - new Date(value).getTime());
@@ -1025,6 +1031,23 @@ export class DisabilityComponent implements OnInit, DoCheck {
           formCBDoCheck.removeControl('changingCoverages');
         }
       }
+    }
+  }
+
+  onStudiesChange(event, i) {
+    const reader = new FileReader();
+
+    if (event.target.files && event.target.files.length) {
+      const [file] = event.target.files;
+      reader.readAsDataURL(file);
+
+      reader.onload = () => {
+        this.disabilityGroup.get('files').get('studies').get(i.toString()).patchValue({
+          ['study']: reader.result
+        });
+
+        //this.markForCheck();
+      };
     }
   }
 
@@ -1530,6 +1553,10 @@ export class DisabilityComponent implements OnInit, DoCheck {
         });
         break;
 
+      case 'filesStudies':
+        return this.fb.group({
+          study: ['', Validators.required],
+        });
     }
   }
 
@@ -1588,21 +1615,30 @@ export class DisabilityComponent implements OnInit, DoCheck {
   selectChangeUrl(event) {
     switch (event) {
       case 'vida':
-        this.router.navigate(['../life'], { relativeTo: this.route });
+        this.router.navigateByUrl('dashboard/requests/new-requests/life');
         break;
 
       case 'disability':
-        this.router.navigate(['../disability'], { relativeTo: this.route });
+        this.router.navigateByUrl('dashboard/requests/new-requests/disability');
         break;
 
       case 'gastos mayores':
-        this.router.navigate(['../major-expenses'], { relativeTo: this.route });
+        this.router.navigateByUrl('dashboard/requests/new-requests/major-expenses');
         break;
 
       default:
         break;
     }
   }
+
+  arrayStudiesWatcher(i: number) {
+    if (this.arrayFilesTitles) {
+      if (this.arrayFilesTitles[i] && this.disabilityGroup.get('files').get('studies').get(i.toString()).value.study !== '') {
+        return this.arrayFilesTitles[i].studyUrl;
+      }
+    }
+  }
+
   getData(id) {
     console.log(id);
     this.disabilityService.returnData(id).subscribe(data => {
@@ -1612,9 +1648,10 @@ export class DisabilityComponent implements OnInit, DoCheck {
         data.data != undefined) {
         this.ID = data.data.id;
         this.dataMappingFromApi.iterateThroughtAllObject(data.data, this.disabilityGroup);
-
+        const formF = this.disabilityGroup.get('files') as FormGroup;
         console.log(this.disabilityGroup);
         console.log(data.data);
+
         this.therapyArray = this.disabilityGroup.get('questions').get('questionnaire').get('therapy_array') as FormArray;
         this.sickPayArray = this.disabilityGroup.get('questions').get('questionnaire').get('sick_pay_array') as FormArray;
         this.testArray = this.disabilityGroup.get('questions').get('questionnaire').get('analysis_array') as FormArray;
@@ -1630,8 +1667,10 @@ export class DisabilityComponent implements OnInit, DoCheck {
         this.insuranceArray = this.disabilityGroup.get('questions').get('questionnaire').get('insurance_array') as FormArray;
         this.existingCoveragesList = this.disabilityGroup.get('contingent').get('anotherCoverages') as FormArray;
         this.changingCoveragesList = this.disabilityGroup.get('contingent').get('changingCoverages') as FormArray;
-
+        this.filesStudiesArray = formF.get('studies') as FormArray;
         //this.disabilityGroup['controls'].num_financial_quote.setValue(data.data.num_financial_quote)
+
+        this.arrayFilesTitles = data.data.files.studies;
       }
 
     });

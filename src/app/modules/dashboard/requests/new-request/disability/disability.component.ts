@@ -1139,8 +1139,9 @@ export class DisabilityComponent implements OnInit, DoCheck {
             timeNumber: ['', [Validators.required, Validators.min(1)]]
           }));
 
-          if (this.role === 'WMA') { formInsured.addControl('knowYourClient', this.fb.group({})); }
-          else if (this.role === 'WWS') { formInsured.addControl('knowYourCustomer', this.fb.group({})); }
+          // if (this.role === 'WMA') { formInsured.addControl('knowYourClient', this.fb.group({})); }
+          // else if (this.role === 'WWS') { formInsured.addControl('knowYourCustomer', this.fb.group({})); }
+          formInsured.addControl('knowYourCustomer', this.fb.group({}));
           break;
 
         case 'pep_radio_holder':
@@ -1155,8 +1156,9 @@ export class DisabilityComponent implements OnInit, DoCheck {
             timeNumber: ['', [Validators.required, Validators.min(1)]]
           }));
 
-          if (this.role === 'WMA') { formHolder.addControl('knowYourClient', this.fb.group({})); }
-          else if (this.role === 'WWS') { formHolder.addControl('KnowYourCustomer', this.fb.group({})); }
+          // if (this.role === 'WMA') { formHolder.addControl('knowYourClient', this.fb.group({})); }
+          // else if (this.role === 'WWS') { formHolder.addControl('KnowYourCustomer', this.fb.group({})); }
+          formHolder.addControl('KnowYourCustomer', this.fb.group({}));
           break;
 
         case 'haveArthritis':
@@ -1239,7 +1241,8 @@ export class DisabilityComponent implements OnInit, DoCheck {
             'Sección D. Opción del Plan', 'Sección E. Beneficiarios Primarios',
             'Beneficiario(s) Contigente(s)', 'En caso de Cesión Bancaria'];
           formGeneral.removeControl('policyholder');
-          formInsured.addControl('knowYourClientSecond', this.fb.group({}));
+          // formInsured.addControl('knowYourClientSecond', this.fb.group({}));
+          formInsured.addControl('knowYourClient', this.fb.group({}));
           break;
 
         case 'hasAnotherCoverage':
@@ -1358,14 +1361,14 @@ export class DisabilityComponent implements OnInit, DoCheck {
 
         case 'pep_radio_insured':
           formInsured.removeControl('pep');
-          formInsured.removeControl('knowYourClient');
+          // formInsured.removeControl('knowYourClient');
           formInsured.removeControl('knowYourCustomer');
           break;
 
 
         case 'pep_radio_holder':
           formHolder.removeControl('pep');
-          formHolder.removeControl('knowYourClient');
+          // formHolder.removeControl('knowYourClient');
           formHolder.removeControl('KnowYourCustomer');
           break;
 
@@ -1399,8 +1402,8 @@ export class DisabilityComponent implements OnInit, DoCheck {
             console.log('Ya existe, por tanto no hay que crear a policyholder de nuevo.');
           }
 
-          if (this.disabilityGroup.get('insured_data').get('knowYourClientSecond')) {
-            formInsured.removeControl('knowYourClientSecond');
+          if (this.disabilityGroup.get('insured_data').get('knowYourClient')) {
+            formInsured.removeControl('knowYourClient');
           }
           break;
 

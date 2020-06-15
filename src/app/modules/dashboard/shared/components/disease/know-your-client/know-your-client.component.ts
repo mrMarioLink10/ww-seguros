@@ -9,7 +9,7 @@ import { FieldConfig } from 'src/app/shared/components/form-components/models/fi
 	templateUrl: './know-your-client.component.html',
 	styles: []
 })
-export class KnowYourClientComponent implements OnInit, DoCheck {
+export class KnowYourClientComponent implements OnInit {
 
 	@Input() form: FormGroup;
 	accordionTitles = [
@@ -50,7 +50,7 @@ export class KnowYourClientComponent implements OnInit, DoCheck {
 				viewValue: 'US$250 mil a US$1 millón'
 			},
 			{
-				value: '10000000 a 10000000',
+				value: '1000000 a 10000000',
 				viewValue: 'US$1 millón a  US$10 millones'
 			},
 			{
@@ -72,7 +72,7 @@ export class KnowYourClientComponent implements OnInit, DoCheck {
 				viewValue: 'US$250 mil a US$1 millón'
 			},
 			{
-				value: '10000000 a 10000000',
+				value: '1000000 a 10000000',
 				viewValue: 'US$1 millón a  US$10 millones'
 			},
 			{
@@ -203,9 +203,9 @@ export class KnowYourClientComponent implements OnInit, DoCheck {
 
 	ngOnInit() {
 
-		//this.addBasicControls();
+		this.addBasicControls();
 
-		//this.branch_property = this.fb.array([this.formMethods.createItem(this.branchGroup)]);
+		this.branch_property = this.fb.array([this.formMethods.createItem(this.branchGroup)]);
 		console.log(this.form);
 		// 	this.form = this.fb.group({
 		// 		request: ['', Validators.required],
@@ -286,27 +286,27 @@ export class KnowYourClientComponent implements OnInit, DoCheck {
 
 	}
 
-	ngDoCheck(): void {
+	// ngDoCheck(): void {
 
-		if (this.form.get('exposed').get('branch_office_radio').value == 'si' &&
-			!this.form.get('exposed').get('branch_office').get('allBranch_office')) {
-			const varBranch = {
-				valor: 'si',
-				name: 'branch_office_radio'
-			};
-			this.selectChangeBranchOffice(varBranch);
-			console.log("HolAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA branch")
+	// 	if (this.form.get('exposed').get('branch_office_radio').value == 'si' &&
+	// 		!this.form.get('exposed').get('branch_office').get('allBranch_office')) {
+	// 		const varBranch = {
+	// 			valor: 'si',
+	// 			name: 'branch_office_radio'
+	// 		};
+	// 		this.selectChangeBranchOffice(varBranch);
+	// 		console.log("HolAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA branch")
 
-		}
-		if (this.form.get('exposed').get('investigated_representative').value == 'si' && !this.form.get('exposed').get('areatext')) {
-			const varInvestigated = {
-				valor: 'si',
-				name: 'investigated_representative'
-			};
-			this.selectChangeText(varInvestigated);
-			console.log("HolAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
-		}
-	}
+	// 	}
+	// 	if (this.form.get('exposed').get('investigated_representative').value == 'si' && !this.form.get('exposed').get('areatext')) {
+	// 		const varInvestigated = {
+	// 			valor: 'si',
+	// 			name: 'investigated_representative'
+	// 		};
+	// 		this.selectChangeText(varInvestigated);
+	// 		console.log("HolAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
+	// 	}
+	// }
 
 	addBasicControls() {
 

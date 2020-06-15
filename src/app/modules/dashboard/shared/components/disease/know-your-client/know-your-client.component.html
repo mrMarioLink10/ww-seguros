@@ -370,7 +370,7 @@
                 </app-radio-button>
             </div>
 
-            <div class=" mt-24" *ngIf="branchOfficeFormArray"> <!-- *ngIf="this.form.get('branch_office')" -->
+            <div class=" mt-24" *ngIf="this.form.get('exposed').get('branch_office_radio').value == 'si'"> <!-- *ngIf="this.form.get('branch_office')" -->
 
 
                     <div class="mt-8" *ngFor="let element of branchOfficeFormArray.controls; let index = index">
@@ -448,7 +448,7 @@
 
             </div>
 
-            <div *ngIf="this.form.get('exposed').get('areatext')" class=" mt-2">
+            <div *ngIf="this.form.get('exposed').get('investigated_representative').value == 'si'" class=" mt-2">
 
               <div class="mb-2 pt-8">
                 <label style="font-size: 12px;"> Especifique </label>

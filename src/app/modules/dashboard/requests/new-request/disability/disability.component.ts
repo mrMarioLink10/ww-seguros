@@ -1582,7 +1582,13 @@ export class DisabilityComponent implements OnInit, DoCheck {
   }
 
   questionsLength() {
-    return Object.keys(this.disabilityGroup.get('questionnaires').value).length;
+    if (this.disabilityGroup.get('questionnaires').get('id')) {
+      return Object.keys(this.disabilityGroup.get('questionnaires').value).length - 1;
+    }
+    else {
+
+      return Object.keys(this.disabilityGroup.get('questionnaires').value).length;
+    }
   }
 
   isBenefitMinorThan100(group: string, subgroup: string): boolean {

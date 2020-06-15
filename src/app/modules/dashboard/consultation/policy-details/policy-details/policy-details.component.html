@@ -36,22 +36,22 @@
         <div *ngIf="!loading">
           <span class="font-bold">Nombre del cliente de la póliza:</span> {{policyDetail.clientName}}
         </div>
-        <div *ngIf="!loading">
+      <!--  <div *ngIf="!loading">
           <span class="font-bold">Cantidad Asegurados:</span> {{policyDetail.cantidadAsegurados}}
-        </div>
+        </div> -->
         <div *ngIf="!loading">
-          <span class="font-bold mr-2">Pago:</span> {{policyDetail.paymentCicle === 'P' ? 'Pendiente' : 'Pagado'}}
+          <span class="font-bold mr-2">Forma Pago:</span> {{policyDetail.paymentCicle }}
         </div>
 
         <div *ngIf="!loading">
           <span class="font-bold">Moneda:</span> {{policyDetail.currency}}$
         </div>
-
-      </div>
-      <div class="txt-blue mt-5 grid grid-cols-1 sm:grid-cols-4">
         <div *ngIf="!loading">
           <span class="font-bold">Deducible:</span> {{policyDetail.deductible}}
         </div>
+      </div>
+      <div class="txt-blue mt-5 grid grid-cols-1 sm:grid-cols-4">
+
         <div *ngIf="!loading">
           <span class="font-bold">Producto:</span> {{policyDetail.product}}
         </div>

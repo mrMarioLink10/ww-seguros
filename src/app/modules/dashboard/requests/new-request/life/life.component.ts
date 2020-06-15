@@ -493,10 +493,10 @@ export class LifeComponent implements OnInit, DoCheck {
   @ViewChild('form', { static: false }) form;
 
   ngOnInit() {
-    this.userService.getWholeQuotes()
+   /* this.userService.getWholeQuotes()
       .subscribe(res => {
         console.log(res);
-      });
+      });*/
 
     this.route.params.subscribe(res => {
       this.ID = res.id;
@@ -2459,6 +2459,7 @@ export class LifeComponent implements OnInit, DoCheck {
       if (data !== undefined && data.data !== null &&
         data.data != undefined) {
         this.ID = data.data.id;
+        console.log(data.data);
         this.dataMappingFromApi.iterateThroughtAllObject(data.data, this.newRequest);
 
         console.log(this.newRequest);

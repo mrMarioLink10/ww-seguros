@@ -153,13 +153,19 @@ export class KnowYourCustomerComponent implements OnInit, DoCheck {
   constructor(private fb: FormBuilder, public formMethods: FormArrayGeneratorService, private life: LifeService) { }
 
   ngOnInit() {
-
+console.log(this.form);
+    if (this.form.get("id"))
+    {
+console.log("Edit Element");
+    }
+    else
+    {
     this.bank_property = this.fb.array([this.formMethods.createItem(this.bankGroup)]);
     this.commercial_property = this.fb.array([this.formMethods.createItem(this.commercialGroup)]);
     this.personal_property = this.fb.array([this.formMethods.createItem(this.personalGroup)]);
 
     this.addBasicControls();
-
+    }
     // this.customer= this.fb.group({
 
     //   request:['', [Validators.required, Validators.min(1)]],

@@ -1968,7 +1968,7 @@
 
       <!-- <mat-tab label="Política Antilavado">
         <app-money-laundering [form]="money_laundering"> </app-money-laundering>
-      </mat-tab> --> 
+      </mat-tab> -->
       <!-- <mat-tab
         *ngIf="this.disabilityGroup.get('insured_data').get('pep_radio_insured').value == 'si'"
         label="Conozca a su cliente - Asegurado">
@@ -1996,12 +1996,12 @@
         *ngIf="this.disabilityGroup.get('insured_data').get('pep_radio_insured').value == 'si'"
         label="Conozca a su cliente (Persona Física) - Asegurado">
         <app-know-your-customer
-          [form]="disabilityGroup.get('insured_data').get('knowYourCustomer')">
+          [form]="disabilityGroup.get('insured_data').get('KnowYourCustomer')">
         </app-know-your-customer>
       </mat-tab>
       <div *ngIf="disabilityGroup.get('policyholder')">
         <mat-tab
-          *ngIf="this.disabilityGroup.get('policyholder').get('pep_radio_holder').value == 'si'"
+          *ngIf="this.disabilityGroup.get('policyholder').get('pep_radio_holder').value == 'si' && disabilityGroup.get('policyholder').get('KnowYourCustomer')"
           label="Conozca a su cliente (Persona Física) - Contratante">
           <app-know-your-customer
             [form]="disabilityGroup.get('policyholder').get('KnowYourCustomer')">
@@ -2012,7 +2012,7 @@
       <mat-tab *ngIf="this.disabilityGroup.get('insured_data').get('policyholderKnowClientRadio').value == 'si'"
         label="Conozca a su cliente (Persona Jurídica) - Contratante">
         <app-know-your-client [form]="disabilityGroup.get('insured_data').get('knowYourClientSecond')">
-         
+
         </app-know-your-client>
       </mat-tab>
       </div> -->
@@ -2020,7 +2020,7 @@
         <mat-tab *ngIf="this.disabilityGroup.get('insured_data').get('policyholderKnowClientRadio').value == 'si'"
           label="Conozca a su cliente (Persona Jurídica) - Contratante">
           <app-know-your-client [form]="disabilityGroup.get('insured_data').get('knowYourClient')">
-           
+
           </app-know-your-client>
         </mat-tab>
       </div>

@@ -9,7 +9,7 @@
         <app-policy-table [filters]="policyFilters" #policyTable></app-policy-table>
       </mat-tab>
 
-      <mat-tab label="Facturas">
+      <mat-tab label="Facturas Pendientes">
         <app-bills-filter (filters)="setBillsFilters($event)"></app-bills-filter>
         <app-bills-table [filters]="billsFilter" (pendingBillsEmitter)="setPendingPolicies($event)"  #billTable></app-bills-table>
       </mat-tab>

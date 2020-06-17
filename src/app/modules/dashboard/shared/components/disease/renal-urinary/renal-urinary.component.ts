@@ -8,13 +8,14 @@ import { FieldConfig } from 'src/app/shared/components/form-components/models/fi
   templateUrl: './renal-urinary.component.html',
   styles: []
 })
+// tslint:disable: variable-name
 export class RenalUrinaryComponent implements OnInit {
 
   @Input() form: FormGroup;
 
   todayDate = new Date();
 
-  accordionTitles = ["Datos"];
+  accordionTitles = ['Datos'];
 
   yes_no: FieldConfig = {
     label: '',
@@ -45,155 +46,75 @@ export class RenalUrinaryComponent implements OnInit {
     const formM = this.form.get('data').get('medicine') as FormGroup;
     const formD = this.form.get('data') as FormGroup;
 
-
     if (event.valor === 'si') {
       switch (event.name) {
-
-        case 'analysis_radio':
-
-          form.addControl('analysis_array', this.analysis_property);
-          this.analysisFormArray = this.form.get('data').get('analysis').get('analysis_array') as FormArray;
-          console.log(JSON.stringify(this.form.value));
-
-          break;
-
-        case 'medication_radio':
-
-          formM.addControl('medicine_array', this.medicine_property);
-          this.medicineOperationFormArray = this.form.get('data').get('medicine').get('medicine_array') as FormArray;
-          console.log(JSON.stringify(this.form.value));
-
-          break;
-
         case 'medical_consultation_radio':
-
           formD.addControl('medical_consultation', this.fb.group({
             date: [new Date(), Validators.required],
             frequency: ['', Validators.required],
           }));
           console.log(JSON.stringify(this.form.value));
-
           break;
 
-      }
-
-    }
-    else if (event.valor === 'no') {
-
-      switch (event.name) {
-
         case 'analysis_radio':
+          form.addControl('analysis_array', this.fb.array([this.createFormArray('analysis_array')]));
+          this.analysisFormArray = this.form.get('data').get('analysis').get('analysis_array') as FormArray;
+          console.log(JSON.stringify(this.form.value));
+          break;
 
+        case 'medication_radio':
+          formM.addControl('medicine_array', this.fb.array([this.createFormArray('medicine_array')]));
+          this.medicineOperationFormArray = this.form.get('data').get('medicine').get('medicine_array') as FormArray;
+          console.log(JSON.stringify(this.form.value));
+          break;
+      }
+    } else if (event.valor === 'no') {
+      switch (event.name) {
+        case 'analysis_radio':
           form.removeControl('analysis_array');
           this.analysisFormArray = undefined;
           break;
 
         case 'medication_radio':
-
           formM.removeControl('medicine_array');
           this.medicineOperationFormArray = undefined;
           break;
 
         case 'medical_consultation_radio':
-
-          formD.removeControl('medical_consultation')
+          formD.removeControl('medical_consultation');
           break;
-
       }
-
     }
-
-  }
-
-  analysisGroup = {
-    type: ['', Validators.required],
-    date: [new Date(), Validators.required],
-    results: ['', Validators.required]
-  }
-
-  medicineGroup = {
-
-    medicine: ['', Validators.required],
-    dose: ['', Validators.required],
-    medical_procedure: ['', Validators.required],
-    date: ['', Validators.required],
-
   }
 
   createFormArray(name: string) {
-
     switch (name) {
-
       case 'analysis_array':
-
-        return this.analysisGroup;
+        return this.fb.group({
+          type: ['', Validators.required],
+          date: [new Date(), Validators.required],
+          results: ['', Validators.required]
+        });
         break;
 
       case 'medicine_array':
-
-        return this.medicineGroup;
+        return this.fb.group({
+          medicine: ['', Validators.required],
+          dose: ['', Validators.required],
+          medical_procedure: ['', Validators.required],
+          date: ['', Validators.required],
+        });
         break;
-
     }
-
   }
 
-  constructor(private fb: FormBuilder, public formMethods: FormArrayGeneratorService,) { }
+  constructor(private fb: FormBuilder, public formMethods: FormArrayGeneratorService) { }
 
   ngOnInit() {
-
-    this.analysis_property = this.fb.array([this.formMethods.createItem(this.analysisGroup)]);
-    this.medicine_property = this.fb.array([this.formMethods.createItem(this.medicineGroup)])
+    this.analysis_property = this.fb.array([this.createFormArray('analysis_array')]);
+    this.medicine_property = this.fb.array([this.createFormArray('medicine_array')]);
 
     this.addBasicControls();
-
-    // this.form= this.fb.group({
-    //   full_name: ['', Validators.required],
-    //   age:['',[ Validators.required, Validators.min(1)] ],
-    //   doctor_name: ['', Validators.required],
-    //   hospital_name:['', Validators.required],
-    //   hospital_telephone:['', Validators.required],
-
-    //   data: this.fb.group({
-
-    //     diagnosis: this.fb.group({
-    //       input: ['', Validators.required],
-    //       date:[new Date(), Validators.required]
-    //     }),
-
-    //     symptom: this.fb.group({
-    //       input: ['', Validators.required],
-    //       date:[new Date(), Validators.required],
-    //       duration:['', Validators.required]
-    //     }),
-
-    //     last_time_symptom: this.fb.group({
-
-    //       date: [new Date(), Validators.required]
-
-    //     }),
-
-    //     analysis_radio: [''],
-    //     analysis:  this.fb.group({
-
-    //         analysis_array: this.fb.array([this.formMethods.createItem(this.analysisGroup)])
-
-    //     }),
-
-    //     medication_radio: [''],
-    //     medicine: this.fb.group({ 
-
-    //       medicine_array: this.fb.array([this.formMethods.createItem(this.medicineGroup)])
-
-    //     }),
-
-    //     medical_consultation_radio:['']
-
-    //   })
-
-    // })
-
-    // console.log(JSON.stringify(this.form.value));
 
   }
 
@@ -217,22 +138,16 @@ export class RenalUrinaryComponent implements OnInit {
       }),
 
       last_time_symptom: this.fb.group({
-
         date: [new Date(), Validators.required]
-
       }),
 
       analysis_radio: [''],
       analysis: this.fb.group({
 
-        analysis_array: this.fb.array([this.formMethods.createItem(this.analysisGroup)])
-
       }),
 
       medication_radio: [''],
       medicine: this.fb.group({
-
-        medicine_array: this.fb.array([this.formMethods.createItem(this.medicineGroup)])
 
       }),
 
@@ -246,10 +161,10 @@ export class RenalUrinaryComponent implements OnInit {
 
   addFormArray(array: any, name: string) {
 
-    const increment = array.length + 1;
-    array = this.formMethods.addElement(array, increment, this.createFormArray(name)).formArray;
-
-    console.log(JSON.stringify(this.form.value));
+    // const increment = array.length + 1;
+    // array = this.formMethods.addElement(array, increment, this.createFormArray(name)).formArray;
+    array.push(this.createFormArray(name));
+    // console.log(JSON.stringify(this.form.value));
     // array.push(this.createFormArray(name));
 
   }

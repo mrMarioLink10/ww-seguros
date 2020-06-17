@@ -136,19 +136,18 @@
 
       <div class="mt-10">
 
-        <div class="my-5">
-          <label class="mr-1 mt-3 sm:mr-1 sm:mt-3 md:mr-6 md:mt-3 lg:mr-6 lg:mt-3 xl:mr-6 xl:mt-3"
-            style="display: inline-block"> ¿Se le han hecho estudios tales como urografía, imágenes, cistoscopía,
-            biopsia, entre otros, en relación con este padecimiento o está planeado alguno? </label>
-          <app-radio-button
-            class="float-right mt-3 -mr-5 -ml-4 sm:-mr-5 sm:-ml-4 md:mr-0 md:ml-0 lg:mr-0 lg:ml-0 xl:mr-0 xl:ml-0"
-            style="display: inline-block" [group]="form.get('data')" [options]="yes_no" name='analysis_radio'
+        <div
+          class="w-full xl:flex xl:justify-between lg:flex lg:justify-between md:flex md:justify-between sm:flex sm:justify-between">
+          <div class="radio-button-label" style="font-size: 12px !important;" style="display: inline-block"> ¿Se le
+            han hecho estudios tales como urografía, imágenes, cistoscopía,
+            biopsia, entre otros, en relación con este padecimiento o está planeado alguno? </div>
+          <app-radio-button [group]="form.get('data')" [options]="yes_no" name='analysis_radio'
             (selected)="selectChange($event)">
             <!-- (selected)="selectChangeBranchOffice($event)" -->
           </app-radio-button>
         </div>
 
-        <div class="mt-32 sm:mt-32 md:mt-24 lg:mt-20 xl:mt-20" *ngIf="form.get('data').get('analysis_radio').value == 'si'">
+        <div class="" *ngIf="form.get('data').get('analysis_radio').value == 'si'">
           <!-- *ngIf="analysisFormArray" -->
 
           <div *ngFor=" let elements of analysisFormArray.controls; let in = index">
@@ -200,29 +199,26 @@
 
       </div>
 
-      <hr class="ww-divider mt-10">
+      <hr class="ww-divider">
 
       <!-- Bloque 5 -->
 
       <div class="mt-10">
 
-        <div class="my-5">
-
-          <label class="mr-1 mt-3 sm:mr-1 sm:mt-3 md:mr-6 md:mt-3 lg:mr-6 lg:mt-3 xl:mr-6 xl:mt-3"
-            style="display: inline-block"> ¿Ha tomado o toma alguna medicación o ha sido operado? <small
-              *ngIf="medicineOperationFormArray"> (Ponga <strong> "n/a" </strong> en el/los respectivo(s) campo(s) sí
-              no ha hecho una de las 2 opciones.) </small> </label>
-
-          <app-radio-button
-            class="float-right mt-3 -mr-5 -ml-4 sm:-mr-5 sm:-ml-4 md:mr-0 md:ml-0 lg:mr-0 lg:ml-0 xl:mr-0 xl:ml-0"
-            style="display: inline-block" [group]="form.get('data')" [options]="yes_no" name='medication_radio'
+        <div
+          class="w-full xl:flex xl:justify-between lg:flex lg:justify-between md:flex md:justify-between sm:flex sm:justify-between">
+          <div class="radio-button-label" style="font-size: 12px !important;"> ¿Ha tomado o toma alguna medicación o ha
+            sido operado? <small *ngIf="medicineOperationFormArray"> (Ponga <strong> "n/a" </strong> en el/los
+              respectivo(s) campo(s) sí
+              no ha hecho una de las 2 opciones.) </small> </div>
+          <app-radio-button [group]="form.get('data')" [options]="yes_no" name='medication_radio'
             (selected)="selectChange($event)">
             <!-- (selected)="selectChangeBranchOffice($event)" -->
           </app-radio-button>
 
         </div>
 
-        <div class="mt-32 sm:mt-32 md:mt-24 lg:mt-20 xl:mt-20" *ngIf="form.get('data').get('medication_radio').value == 'si'">
+        <div class="" *ngIf="form.get('data').get('medication_radio').value == 'si'">
           <!-- *ngIf="analysisFormArray" -->
 
           <div *ngFor=" let elements of medicineOperationFormArray.controls; let in = index">
@@ -280,26 +276,24 @@
 
       </div>
 
-      <hr class="ww-divider mt-10">
+      <hr class="ww-divider">
 
       <!-- Bloque 6 -->
 
       <div class="mt-10">
 
-        <div>
-
-          <label class="mr-1 mt-3 sm:mr-1 sm:mt-3 md:mr-6 md:mt-3 lg:mr-6 lg:mt-3 xl:mr-6 xl:mt-3"> Indicar fecha de
-            la última consulta con su médico y con qué frecuencia usted lo ve por esta condición </label>
-          <app-radio-button
-            class="float-right inline mt-3 -mr-5 -ml-4 sm:-mr-5 sm:-ml-4 md:mr-0 md:ml-0 lg:mr-0 lg:ml-0 xl:mr-0 xl:ml-0"
-            [group]="form.get('data')" [options]="yes_no" name='medical_consultation_radio'
+        <div
+          class="w-full xl:flex xl:justify-between lg:flex lg:justify-between md:flex md:justify-between sm:flex sm:justify-between">
+          <div class="radio-button-label" style="font-size: 12px !important;">
+            Indicar fecha de
+            la última consulta con su médico y con qué frecuencia usted lo ve por esta condición </div>
+          <app-radio-button [group]="form.get('data')" [options]="yes_no" name='medical_consultation_radio'
             (selected)="selectChange($event)">
           </app-radio-button>
 
         </div>
 
-        <div class="mt-32 sm:mt-32 md:mt-20 lg:mt-20 xl:mt-20"
-          *ngIf="this.form.get('data').get('medical_consultation')">
+        <div class="" *ngIf="this.form.get('data').get('medical_consultation')">
 
           <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
 
@@ -333,7 +327,7 @@
 
       </div>
 
-      <hr class="ww-divider mt-10">
+      <hr class="ww-divider">
 
       <!-- Bloque 7 -->
 

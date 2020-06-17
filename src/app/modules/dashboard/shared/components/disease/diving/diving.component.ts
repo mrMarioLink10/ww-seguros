@@ -46,7 +46,7 @@ export class DivingComponent implements OnInit {
 {
 
   name:'treasures',
-  viewValue:'Busqueda de tesoros / expediciones especiales'
+  viewValue:'Busqueda de tesoros / Expediciones especiales'
 
 }, 
 {

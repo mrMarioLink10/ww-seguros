@@ -758,21 +758,19 @@
                         [group]="newRequest.get('primaryBenefits').get('dependentsC').get(index.toString())"
                         label="Ocupación" name='ocupation'></app-input>
                       <app-select class="mr-3" [options]="family"
-                        (selected)="relationWatcher($event, newRequest.get('primaryBenefits').get('dependentsC').get(index.toString()))"
                         [group]="newRequest.get('primaryBenefits').get('dependentsC').get(index.toString())">
+                        (selected)="relationWatcher($event,
+                        newRequest.get('primaryBenefits').get('dependentsC').get(index.toString()))"
                       </app-select>
+                      <app-input class="mr-3"
+                        [group]="newRequest.get('primaryBenefits').get('dependentsC').get(index.toString())"
+                        *ngIf="newRequest.get('primaryBenefits').get('dependentsC').get(index.toString()).get('specifyRelationship')"
+                        label="Especificar" name='specifyRelationship'></app-input>
                       <app-number-input class="mr-3"
                         [group]="newRequest.get('primaryBenefits').get('dependentsC').get(index.toString())"
                         label="Cantidad en %" name='quantity' min="1" max="100"></app-number-input>
                     </div>
-
                     <div class="pb-5">
-                      <button mat-mini-fab aria-label="Agregar reclamacion"
-                        (click)="add(primaryBenefitsArray,primaryBenefits)" type="button"
-                        class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
-                        <mat-icon style="color: #18446B">add</mat-icon>
-                      </button>
-
                       <button *ngIf="newRequest.get('primaryBenefits').get('dependentsC')['controls'].length > 1"
                         mat-mini-fab aria-label="Eliminar reclamacion"
                         (click)="formMethods.deleteOneElement(primaryBenefitsArray, index)" type="button"
@@ -783,6 +781,11 @@
                     <!-- <mat-divider class="pt-5"></mat-divider><br> -->
                   </div>
                 </div>
+                <button mat-mini-fab aria-label="Agregar reclamacion"
+                  (click)="add(primaryBenefitsArray,primaryBenefits)" type="button" class="dashboard-toolbar-buttons"
+                  style="border: 1px rgb(197, 197, 197) solid">
+                  <mat-icon style="color: #18446B">add</mat-icon>
+                </button>
               </div>
             </div>
             <div>
@@ -842,31 +845,31 @@
                         [group]="newRequest.get('contingentBeneficiary').get('dependentsC').get(index.toString())"
                         label="Ocupación" name='ocupation'></app-input>
                       <app-select class="mr-3" [options]="family"
-                        [group]="newRequest.get('contingentBeneficiary').get('dependentsC').get(index.toString())">
+                        [group]="newRequest.get('contingentBeneficiary').get('dependentsC').get(index.toString())"
+                        (selected)="relationWatcher($event, newRequest.get('contingentBeneficiary').get('dependentsC').get(index.toString()))">
                       </app-select>
+                      <app-input class="mr-3"
+                        [group]="newRequest.get('contingentBeneficiary').get('dependentsC').get(index.toString())"
+                        *ngIf="newRequest.get('contingentBeneficiary').get('dependentsC').get(index.toString()).get('specifyRelationship')"
+                        label="Especificar" name='specifyRelationship'></app-input>
                       <app-number-input class="mr-3"
                         [group]="newRequest.get('contingentBeneficiary').get('dependentsC').get(index.toString())"
                         label="Cantidad en %" name='quantity' min="1" max="100"></app-number-input>
                     </div>
-
-                    <div class="pb-5">
-                      <button mat-mini-fab aria-label="Agregar reclamacion"
-                        (click)="add(contingentBeneficiaryArray,primaryBenefits)" type="button"
-                        class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
-                        <mat-icon style="color: #18446B">add</mat-icon>
-                      </button>
-
-                      <button *ngIf="contingentBeneficiaryArray.length > 1" mat-mini-fab
-                        aria-label="Eliminar reclamacion"
-                        (click)="formMethods.deleteOneElement(contingentBeneficiaryArray, index)" type="button"
-                        class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
-                        <mat-icon style="color: #18446B">remove</mat-icon>
-                      </button>
-                    </div>
+                    <button *ngIf="contingentBeneficiaryArray.length > 1" mat-mini-fab aria-label="Eliminar reclamacion"
+                      (click)="formMethods.deleteOneElement(contingentBeneficiaryArray, index)" type="button"
+                      class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
+                      <mat-icon style="color: #18446B">remove</mat-icon>
+                    </button>
                     <br>
                     <mat-divider></mat-divider><br>
                   </div>
                 </div>
+                <button mat-mini-fab aria-label="Agregar reclamacion"
+                  (click)="add(contingentBeneficiaryArray,primaryBenefits)" type="button"
+                  class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
+                  <mat-icon style="color: #18446B">add</mat-icon>
+                </button>
               </div>
             </div>
             <div>
@@ -929,46 +932,94 @@
           <ng-template #formTemplate>
             <app-text-area label='Descripcion' style='height: 142px!important;' [group]="newRequest" label="texto"
               name='comentary'></app-text-area>
-            <div class="colorb">
-              <p class='formulary-labels'>Queda entendido y convenido que:</p><br><br>
-              <p>a. WorldWide Seguros, (en adelante “La Compañía”), se reserva el derecho de rechazar o aceptar
-                cualquier solicitud. La cobertura provista por La Compañía no entrará en vigor hasta que la
-                solicitud
-                sea recibida, aprobada y notificada por La Compañía.</p><br>
-              <p>b. Usted está de acuerdo que todas las respuestas mencionadas son completas y verdaderas. Si
-                hubiera
-                alguna(s) respuesta(s) falsa(s), inexacta(s), incompleta(s), fraude u omisión en esta solicitud,
-                entonces el contrato podrá serdado por terminado por La Compañía. </p><br>
-              <p>c. Con presentar una fotocopia o el original de este documento, autorizo voluntaria, libre y
-                expresamente, durante toda la vigencia de la póliza, aún después de mi fallecimiento, a cualquier
-                médico, profesional, hospital público oprivado, clínica, Caja de Seguro Social u otra entidad o
-                agencia
-                gubernamental u otra persona médica o relacionada médicamente, proveedor de servicio de salud,
-                empleador, asegurador o tenedor de pólizas de grupo, todosestos ya sea que estén ubicados en el
-                territorio de la República Dominicana o en el extranjero, para proveer a La Compañía o
-                representantes
-                autorizados, de copia del expediente clínico, de toda información que ésta requiera enrelación con
-                mi
-                salud de cualquier naturaleza y en cualquier etapa de mi vida, registrada en cualquier medio,
-                incluyendo, pero sin limitarse, registros respecto a consejos, indicaciones, cuidado (s) o
-                tratamiento
-                (s) proporcionado(s) a mí y/o a mis dependientes, sin limitación a información relacionada con
-                enfermedades mentales o el uso de drogas o alcohol. Esta es una manifestación libre y voluntaria.
-                Por lo
-                anteriormente manifestado, relevo (relevamos)y libero (liberamos) a todas esas personas,
-                instituciones
-                privadas y/o públicas, nacionales o extranjeras, de toda responsabilidad que le pueda comprometer
-                por
-                revelar, suministrar, mostrar o entregar copias simples o autenticadas de la información o
-                documentación
-                descrita anteriormente. </p><br>
-              <p>d. Autorizo a WorldWide Seguros, a solicitar, gestionar y obtener ante cualquiera entidad de
-                intermediación financiera y crediticia nacional o internacional, toda la información que sea
-                considerada
-                sobre mi historial de crédito, incluyendo de manera enunciativa y sin limitación alguna, a las
-                obligaciones y transacciones comerciales que sean llevadas o pudiesen ser llevadas a cabo con
-                cualquier
-                entidad económica.</p><br>
+            <div *ngIf="role !== 'WWS'" class="declaraciones px-4 sm:px-4 md:px-14 lg:px-12 xl:px-12">
+              En la medida de mis conocimientos, las declaraciones y respuestas suministradas en esta declaración son
+              verdaderas, completas y correctamente
+              anotadas. ADVERTENCIA: cualquier persona que a sabiendas y con la intención de dañar, defraudar o engañar
+              a cualquier asegurador, presente un
+              reclamo por beneficios de una póliza de seguro que contenga información falsa, incompleta o engañosa, o
+              que conscientemente presente
+              información falsa en una solicitud de seguros, podría ser hallado culpable de fraude de seguros.<br>
+              Queda entendido y convenido que:<br>
+              a. Worldwide Medical Assurance Ltd. Corp., (en adelante “La Compañía”), se reserva el derecho de rechazar
+              o aceptar cualquier solicitud. La cobertura
+              provista por La Compañía no entrará en vigor hasta que la solicitud sea recibida, aprobada y notificada
+              por La Compañía.<br>
+              b. Usted está de acuerdo que todas las respuestas mencionadas son completas y verdaderas. Si hubiera
+              alguna(s) respuesta(s) falsa(s), inexacta(s),
+              incompleta(s), fraude u omisión en esta solicitud, entonces el contrato podrá ser dado por terminado por
+              La Compañía.<br>
+              c. Con presentar una fotocopia o el original de este documento, autorizo voluntaria, libre y expresamente,
+              durante toda la vigencia de la póliza, aún
+              después de mi fallecimiento; a cualquier médico, profesional, hospital público o privado, clínica, Caja de
+              Seguro Social u otra entidad o agencia
+              gubernamental u otra persona médica o relacionada médicamente, proveedor de servicio de salud, empleador,
+              asegurador o tenedor de pólizas de
+              grupo, todos estos ya sea que estén ubicados en el territorio de la República de Panamá o en el
+              extranjero; para proveer a La Compañía o
+              representantes autorizados, de copia del expediente clínico, de toda información que ésta requiera en
+              relación con mi salud de cualquier naturaleza
+              y en cualquier etapa de mi vida, registrada en cualquier medio, incluyendo, pero sin limitarse, registros
+              respecto a consejos, indicaciones, cuidado (s)
+              o tratamiento (s) proporcionado (s) a mi y/o a mis dependientes, sin limitación a información relacionada
+              con enfermedades mentales o el uso de
+              drogas o alcohol. Esta es una manifestación libre y voluntaria, en pleno conocimiento de la Ley 68 de 20
+              de noviembre de 2003, y demás normas
+              afines. Por lo anteriormente manifestado, relevo (relevamos) y libero (liberamos) a todas esas personas,
+              instituciones privadas y/o públicas, nacionales
+              o extranjeras, de toda responsabilidad que le pueda comprometer por revelar, suministrar, mostrar o
+              entregar copias simples o autenticadas de la
+              información o documentación descrita anteriormente. Con la información o documentación facilitada, La
+              Compañía puede realizar una evaluación
+              adecuada sobre mi salud y la de mis dependientes, para determinar la cobertura de la póliza.<br>
+              d. Autorizo a Worldwide Medical Assurance Ltd. Corp., La Compañía, a solicitar, gestionar y obtener ante
+              cualquiera entidad de intermediación
+              financiera y crediticia nacional o internacional, toda la información que sea considerada sobre mi
+              historial de crédito, incluyendo de manera
+              enunciativa y sin limitación alguna, a las obligaciones y transacciones comerciales que sean llevadas o
+              pudiesen ser llevadas a cabo con cualquier
+              entidad económica.
+            </div>
+            <div *ngIf="role === 'WWS'" class="declaraciones px-4 sm:px-4 md:px-14 lg:px-12 xl:px-12">
+              <p class='formulary-labels'>Queda entendido y convenido que:</p><br>
+              a. WorldWide Seguros, (en adelante “La Compañía”), se reserva el derecho de rechazar o aceptar
+              cualquier solicitud. La cobertura provista por La Compañía no entrará en vigor hasta que la
+              solicitud
+              sea recibida, aprobada y notificada por La Compañía.<br>
+              b. Usted está de acuerdo que todas las respuestas mencionadas son completas y verdaderas. Si
+              hubiera
+              alguna(s) respuesta(s) falsa(s), inexacta(s), incompleta(s), fraude u omisión en esta solicitud,
+              entonces el contrato podrá serdado por terminado por La Compañía.<br>
+              c. Con presentar una fotocopia o el original de este documento, autorizo voluntaria, libre y
+              expresamente, durante toda la vigencia de la póliza, aún después de mi fallecimiento, a cualquier
+              médico, profesional, hospital público oprivado, clínica, Caja de Seguro Social u otra entidad o
+              agencia
+              gubernamental u otra persona médica o relacionada médicamente, proveedor de servicio de salud,
+              empleador, asegurador o tenedor de pólizas de grupo, todosestos ya sea que estén ubicados en el
+              territorio de la República Dominicana o en el extranjero, para proveer a La Compañía o
+              representantes
+              autorizados, de copia del expediente clínico, de toda información que ésta requiera enrelación con
+              mi
+              salud de cualquier naturaleza y en cualquier etapa de mi vida, registrada en cualquier medio,
+              incluyendo, pero sin limitarse, registros respecto a consejos, indicaciones, cuidado (s) o
+              tratamiento
+              (s) proporcionado(s) a mí y/o a mis dependientes, sin limitación a información relacionada con
+              enfermedades mentales o el uso de drogas o alcohol. Esta es una manifestación libre y voluntaria.
+              Por lo
+              anteriormente manifestado, relevo (relevamos)y libero (liberamos) a todas esas personas,
+              instituciones
+              privadas y/o públicas, nacionales o extranjeras, de toda responsabilidad que le pueda comprometer
+              por
+              revelar, suministrar, mostrar o entregar copias simples o autenticadas de la información o
+              documentación
+              descrita anteriormente.<br>
+              d. Autorizo a WorldWide Seguros, a solicitar, gestionar y obtener ante cualquiera entidad de
+              intermediación financiera y crediticia nacional o internacional, toda la información que sea
+              considerada
+              sobre mi historial de crédito, incluyendo de manera enunciativa y sin limitación alguna, a las
+              obligaciones y transacciones comerciales que sean llevadas o pudiesen ser llevadas a cabo con
+              cualquier
+              entidad económica.<br>
             </div>
           </ng-template>
         </app-forms-container>

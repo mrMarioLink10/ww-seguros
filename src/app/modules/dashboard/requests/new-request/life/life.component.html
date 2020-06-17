@@ -1330,7 +1330,7 @@
             </mat-expansion-panel-header>
             <div>
               <div class="px-6">
-                <div class="declaraciones px-4 sm:px-4 md:px-14 lg:px-12 xl:px-12">
+                <div *ngIf="role !== 'WWS'" class="declaraciones px-4 sm:px-4 md:px-14 lg:px-12 xl:px-12">
                   En la medida de mis conocimientos, las declaraciones y respuestas suministradas en esta declaración
                   son
                   verdaderas, completas y correctamente anotadas. ADVERTENCIA: cualquier persona que a sabiendas y con
@@ -1387,6 +1387,29 @@
                   incluyendo de manera enunciativa y sin limitación alguna, a las obligaciones y transacciones
                   comerciales
                   que sean llevadas o pudiesen ser llevadas a cabo con cualquier entidad económica.
+                </div>
+                <div *ngIf="role === 'WWS'" class="declaraciones px-4 sm:px-4 md:px-14 lg:px-12 xl:px-12">
+                  En la medida de mis conocimientos, las declaraciones y respuestas suministradas en esta declaración
+                  son verdaderas, completas y correctamente
+                  anotadas. ADVERTENCIA: cualquier persona que a sabiendas y con la intención de dañar, defraudar o
+                  engañar a cualquier asegurador, presente un
+                  reclamo por beneficios de una póliza de seguro que contenga información falsa, incompleta o engañosa,
+                  o que conscientemente presente
+                  información falsa en una solicitud de seguros, podría ser hallado culpable de fraude de seguros.
+                  <br>
+                  Autorizo a WorldWide Seguros S.A. (WORLDWIDE), a solicitar, gestionar y obtener ante cualesquiera
+                  entidades de intermediación financiera y
+                  crediticias nacional o internacional, toda la información que sea considerada conveniente sobre mi
+                  historial de crédito, incluyendo de manera
+                  enunciativa sin limitación alguna, a las obligaciones y transacciones comerciales que sean llevadas o
+                  pudieren ser llevadas a cabo con cualquier
+                  entidad económica. De igual forma, con presentar copia fotostática o el original de esta solicitud,
+                  autorizo expresamente a cualquier médico,
+                  profesional, hospital, clínica u otra entidad, agencia gubernamental o persona física o jurídica
+                  relacionada para proveer a WORLDWIDE todo informe,
+                  declaración, análisis, diagnóstico, registro profesional que requiera respecto al asegurado. Renuncio
+                  y me obligo a mantener indemne a cualesquiera
+                  de los mencionados más arriba por la provisión de la información médica requerida.
                 </div>
               </div>
             </div>

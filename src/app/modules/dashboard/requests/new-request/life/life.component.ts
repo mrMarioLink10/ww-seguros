@@ -1571,7 +1571,6 @@ export class LifeComponent implements OnInit, DoCheck {
     const formGI = this.newRequest.get('generalInformation') as FormGroup;
     const formHMI = this.newRequest.get('medicalHistory').get('informations') as FormGroup;
     const formWI = this.newRequest.get('medicalHistory').get('informations').get('womenInformation') as FormGroup;
-
     console.log(event);
     if (event.name === 'connectionType') {
       console.log(formAR);
@@ -2506,6 +2505,7 @@ export class LifeComponent implements OnInit, DoCheck {
         this.filesStudiesArray = formF.get('studies') as FormArray;
         this.lostDriveLicenseList = this.newRequest.get('generalInformation').get('lostDriveLicense') as FormArray;
 
+        this.insuranceProposedList = this.newRequest.get('generalInformation').get('insuranceProposed') as FormArray;
         this.arrayFilesTitles = data.data.files.studies;
 
       }

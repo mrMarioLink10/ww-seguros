@@ -937,8 +937,14 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
     }
   }
 
-  relationWatcher(event, form) {
-    console.log(event);
+  relationWatcher(event, realForm) {
+    console.log('event: ', event.valor, 'form: ', realForm);
+    const form = realForm as FormGroup;
+    if (event.valor === 'otros') {
+      form.addControl('specifyRelationship', this.fb.control('', Validators.required));
+    } else {
+      form.removeControl('specifyRelationship');
+    }
   }
 
   ngDoCheck() { }

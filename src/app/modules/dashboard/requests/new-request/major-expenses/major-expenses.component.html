@@ -758,21 +758,19 @@
                         [group]="newRequest.get('primaryBenefits').get('dependentsC').get(index.toString())"
                         label="Ocupación" name='ocupation'></app-input>
                       <app-select class="mr-3" [options]="family"
-                        (selected)="relationWatcher($event, newRequest.get('primaryBenefits').get('dependentsC').get(index.toString()))"
                         [group]="newRequest.get('primaryBenefits').get('dependentsC').get(index.toString())">
+                        (selected)="relationWatcher($event,
+                        newRequest.get('primaryBenefits').get('dependentsC').get(index.toString()))"
                       </app-select>
+                      <app-input class="mr-3"
+                        [group]="newRequest.get('primaryBenefits').get('dependentsC').get(index.toString())"
+                        *ngIf="newRequest.get('primaryBenefits').get('dependentsC').get(index.toString()).get('specifyRelationship')"
+                        label="Especificar" name='specifyRelationship'></app-input>
                       <app-number-input class="mr-3"
                         [group]="newRequest.get('primaryBenefits').get('dependentsC').get(index.toString())"
                         label="Cantidad en %" name='quantity' min="1" max="100"></app-number-input>
                     </div>
-
                     <div class="pb-5">
-                      <button mat-mini-fab aria-label="Agregar reclamacion"
-                        (click)="add(primaryBenefitsArray,primaryBenefits)" type="button"
-                        class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
-                        <mat-icon style="color: #18446B">add</mat-icon>
-                      </button>
-
                       <button *ngIf="newRequest.get('primaryBenefits').get('dependentsC')['controls'].length > 1"
                         mat-mini-fab aria-label="Eliminar reclamacion"
                         (click)="formMethods.deleteOneElement(primaryBenefitsArray, index)" type="button"
@@ -783,6 +781,11 @@
                     <!-- <mat-divider class="pt-5"></mat-divider><br> -->
                   </div>
                 </div>
+                <button mat-mini-fab aria-label="Agregar reclamacion"
+                  (click)="add(primaryBenefitsArray,primaryBenefits)" type="button" class="dashboard-toolbar-buttons"
+                  style="border: 1px rgb(197, 197, 197) solid">
+                  <mat-icon style="color: #18446B">add</mat-icon>
+                </button>
               </div>
             </div>
             <div>
@@ -842,31 +845,31 @@
                         [group]="newRequest.get('contingentBeneficiary').get('dependentsC').get(index.toString())"
                         label="Ocupación" name='ocupation'></app-input>
                       <app-select class="mr-3" [options]="family"
-                        [group]="newRequest.get('contingentBeneficiary').get('dependentsC').get(index.toString())">
+                        [group]="newRequest.get('contingentBeneficiary').get('dependentsC').get(index.toString())"
+                        (selected)="relationWatcher($event, newRequest.get('contingentBeneficiary').get('dependentsC').get(index.toString()))">
                       </app-select>
+                      <app-input class="mr-3"
+                        [group]="newRequest.get('contingentBeneficiary').get('dependentsC').get(index.toString())"
+                        *ngIf="newRequest.get('contingentBeneficiary').get('dependentsC').get(index.toString()).get('specifyRelationship')"
+                        label="Especificar" name='specifyRelationship'></app-input>
                       <app-number-input class="mr-3"
                         [group]="newRequest.get('contingentBeneficiary').get('dependentsC').get(index.toString())"
                         label="Cantidad en %" name='quantity' min="1" max="100"></app-number-input>
                     </div>
-
-                    <div class="pb-5">
-                      <button mat-mini-fab aria-label="Agregar reclamacion"
-                        (click)="add(contingentBeneficiaryArray,primaryBenefits)" type="button"
-                        class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
-                        <mat-icon style="color: #18446B">add</mat-icon>
-                      </button>
-
-                      <button *ngIf="contingentBeneficiaryArray.length > 1" mat-mini-fab
-                        aria-label="Eliminar reclamacion"
-                        (click)="formMethods.deleteOneElement(contingentBeneficiaryArray, index)" type="button"
-                        class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
-                        <mat-icon style="color: #18446B">remove</mat-icon>
-                      </button>
-                    </div>
+                    <button *ngIf="contingentBeneficiaryArray.length > 1" mat-mini-fab aria-label="Eliminar reclamacion"
+                      (click)="formMethods.deleteOneElement(contingentBeneficiaryArray, index)" type="button"
+                      class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
+                      <mat-icon style="color: #18446B">remove</mat-icon>
+                    </button>
                     <br>
                     <mat-divider></mat-divider><br>
                   </div>
                 </div>
+                <button mat-mini-fab aria-label="Agregar reclamacion"
+                  (click)="add(contingentBeneficiaryArray,primaryBenefits)" type="button"
+                  class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
+                  <mat-icon style="color: #18446B">add</mat-icon>
+                </button>
               </div>
             </div>
             <div>

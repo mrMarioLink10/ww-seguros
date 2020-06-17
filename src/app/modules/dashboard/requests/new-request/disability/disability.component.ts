@@ -1164,7 +1164,7 @@ export class DisabilityComponent implements OnInit, DoCheck {
 
           // if (this.role === 'WMA') { formInsured.addControl('knowYourClient', this.fb.group({})); }
           // else if (this.role === 'WWS') { formInsured.addControl('knowYourCustomer', this.fb.group({})); }
-          formInsured.addControl('knowYourCustomer', this.fb.group({}));
+          formInsured.addControl('KnowYourCustomer', this.fb.group({}));
           break;
 
         case 'pep_radio_holder':
@@ -1251,7 +1251,7 @@ export class DisabilityComponent implements OnInit, DoCheck {
           this.accordionTitles = [
             'Sección A. Datos del propuesto Asegurado y Estatus laboral', 'Sección C. Cuestionario Médico',
             'Sección D. Opción del Plan', 'Sección E. Beneficiarios Primarios',
-            'Beneficiario(s) Contigente(s)', 'En caso de Cesión Bancaria'];
+            'Beneficiario(s) Contigente(s)', 'En caso de Cesión Bancaria', 'Archivos Adjuntos'];
           formGeneral.removeControl('policyholder');
           break;
 
@@ -1262,7 +1262,7 @@ export class DisabilityComponent implements OnInit, DoCheck {
           this.accordionTitles = [
             'Sección A. Datos del propuesto Asegurado y Estatus laboral', 'Sección C. Cuestionario Médico',
             'Sección D. Opción del Plan', 'Sección E. Beneficiarios Primarios',
-            'Beneficiario(s) Contigente(s)', 'En caso de Cesión Bancaria'];
+            'Beneficiario(s) Contigente(s)', 'En caso de Cesión Bancaria', 'Archivos Adjuntos'];
           formGeneral.removeControl('policyholder');
           // formInsured.addControl('knowYourClientSecond', this.fb.group({}));
           formInsured.addControl('knowYourClient', this.fb.group({}));
@@ -1385,7 +1385,7 @@ export class DisabilityComponent implements OnInit, DoCheck {
         case 'pep_radio_insured':
           formInsured.removeControl('pep');
           // formInsured.removeControl('knowYourClient');
-          formInsured.removeControl('knowYourCustomer');
+          formInsured.removeControl('KnowYourCustomer');
           break;
 
 
@@ -1404,7 +1404,7 @@ export class DisabilityComponent implements OnInit, DoCheck {
               'Sección A. Datos del propuesto Asegurado y Estatus laboral',
               'Sección B. Datos del Contratante', 'Sección C. Cuestionario Médico',
               'Sección D. Opción del Plan', 'Sección E. Beneficiarios Primarios',
-              'Beneficiario(s) Contigente(s)', 'En caso de Cesión Bancaria'];
+              'Beneficiario(s) Contigente(s)', 'En caso de Cesión Bancaria', 'Archivos Adjuntos'];
           }
           else {
             console.log('Ya existe, por tanto no hay que crear a policyholder de nuevo.');
@@ -1419,7 +1419,7 @@ export class DisabilityComponent implements OnInit, DoCheck {
               'Sección A. Datos del propuesto Asegurado y Estatus laboral',
               'Sección B. Datos del Contratante', 'Sección C. Cuestionario Médico',
               'Sección D. Opción del Plan', 'Sección E. Beneficiarios Primarios',
-              'Beneficiario(s) Contigente(s)', 'En caso de Cesión Bancaria'];
+              'Beneficiario(s) Contigente(s)', 'En caso de Cesión Bancaria', 'Archivos Adjuntos'];
           }
           else {
             console.log('Ya existe, por tanto no hay que crear a policyholder de nuevo.');

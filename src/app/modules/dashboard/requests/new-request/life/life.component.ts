@@ -2061,6 +2061,7 @@ export class LifeComponent implements OnInit, DoCheck {
                 economicActivity: ['', Validators.required],
                 city: ['', Validators.required],
                 country: ['', Validators.required],
+                kinship: ['', Validators.required],
                 insurancePurpose: ['', Validators.required],
                 contractorCountry: ['', Validators.required],
               }),
@@ -2100,6 +2101,7 @@ export class LifeComponent implements OnInit, DoCheck {
                 city: ['', Validators.required],
                 country: ['', Validators.required],
                 kinship: ['', Validators.required],
+                insurancePurpose: ['', Validators.required],
                 contractorCountry: ['', Validators.required],
               })
             }));

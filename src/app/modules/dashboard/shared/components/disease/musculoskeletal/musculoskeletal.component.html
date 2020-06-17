@@ -178,7 +178,7 @@
 
           <div>
 
-            <div class="mt-32 sm:mt-32 md:mt-24 lg:mt-20 xl:mt-20" *ngIf="episodeFormArray">
+            <div class="mt-32 sm:mt-32 md:mt-24 lg:mt-20 xl:mt-20" *ngIf="this.form.get('data').get('episode_radio').value == 'si'">
               <!-- *ngIf="episodeFormArray" -->
 
               <div *ngFor=" let elements of episodeFormArray.controls; let in = index">
@@ -281,7 +281,7 @@
 
           <div>
 
-            <div class="mt-32 sm:mt-32 md:mt-24 lg:mt-20 xl:mt-20" *ngIf="surgeryFormArray">
+            <div class="mt-32 sm:mt-32 md:mt-24 lg:mt-20 xl:mt-20" *ngIf="this.form.get('data').get('surgery_radio').value == 'si'">
               <!-- *ngIf="episodeFormArray" -->
 
               <div *ngFor=" let elements of surgeryFormArray.controls; let in = index">

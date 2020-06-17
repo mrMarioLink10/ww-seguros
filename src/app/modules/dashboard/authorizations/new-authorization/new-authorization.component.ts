@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ViewChild, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, ChangeDetectorRef, DoCheck } from '@angular/core';
 import { FieldConfig } from '../../../../shared/components/form-components/models/field-config';
 import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
 import { FormHandlerService } from '../../../../core/services/forms/form-handler.service';
@@ -21,7 +21,7 @@ import { ParamMap, ActivatedRoute, Router } from '@angular/router';
 	templateUrl: './new-authorization.component.html',
 	styleUrls: ['./new-authorization.component.scss']
 })
-export class NewAuthorizationComponent implements OnInit, OnDestroy {
+export class NewAuthorizationComponent implements OnInit, OnDestroy, DoCheck {
 
 	constructor(
 		private fb: FormBuilder,
@@ -43,6 +43,8 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy {
 		'Información médica',
 		'Archivos adjuntos'
 	];
+
+	varIsMedical = 0 ;
 
 	filesInformation: Observable<any>;
 
@@ -233,6 +235,42 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy {
 			}
 		});
 
+	}
+
+	ngDoCheck() {
+
+		if (this.ID != null) {
+
+			if (this.authorization.get('informacionMedica').get('admision').get('nombreMedico').enable
+				) {
+					if (this.authorization.get('informacionMedica').get('isMedicalEqual').value == true
+					|| this.authorization.get('informacionMedica').get('isMedicalEqual').value == 'true') {
+
+						if (this.varIsMedical == 0) {
+
+							this.authorization.get('informacionMedica').get('admision').get('nombreMedico').disable();
+							this.authorization.get('informacionMedica').get('admision').get('telefono').disable();
+							this.authorization.get('informacionMedica').get('admision').get('direccion').disable();
+
+							this.nombreMedicoSB = this.authorization.get('informacionMedica').get('primerosSintomas').get('nombreMedico').valueChanges.subscribe(value => {
+								this.authorization.get('informacionMedica').get('admision').get('nombreMedico').setValue(value);
+							});
+							this.telefonoSB = this.authorization.get('informacionMedica').get('primerosSintomas').get('telefono').valueChanges.subscribe(value => {
+								this.authorization.get('informacionMedica').get('admision').get('telefono').setValue(value);
+							});
+							this.direccionSB = this.authorization.get('informacionMedica').get('primerosSintomas').get('direccion').valueChanges.subscribe(value => {
+								this.authorization.get('informacionMedica').get('admision').get('direccion').setValue(value);
+							});
+							this.varIsMedical++;
+						}
+					}
+				// 	else {
+				// 		this.nombreMedicoSB.unsubscribe();
+				// 		this.telefonoSB.unsubscribe();
+				// 		this.direccionSB.unsubscribe();
+				// }
+			}
+		}
 	}
 
 	fileNameWatcher(type?: string) {

@@ -86,7 +86,7 @@ this.surgeriesList = this.form.get('surgeries') as FormArray;
           this.form.removeControl('symptoms');
           break;
 
-        case 'stillHaveSymptons':
+        case 'hasBeenOperated':
           this.form.removeControl('surgeries');
           this.surgeriesList = undefined;
           break;

@@ -148,7 +148,7 @@
           </app-radio-button>
         </div>
 
-        <div class="mt-32 sm:mt-32 md:mt-24 lg:mt-20 xl:mt-20" *ngIf="analysisFormArray">
+        <div class="mt-32 sm:mt-32 md:mt-24 lg:mt-20 xl:mt-20" *ngIf="form.get('data').get('analysis_radio').value == 'si'">
           <!-- *ngIf="analysisFormArray" -->
 
           <div *ngFor=" let elements of analysisFormArray.controls; let in = index">
@@ -222,7 +222,7 @@
 
         </div>
 
-        <div class="mt-32 sm:mt-32 md:mt-24 lg:mt-20 xl:mt-20" *ngIf="medicineOperationFormArray">
+        <div class="mt-32 sm:mt-32 md:mt-24 lg:mt-20 xl:mt-20" *ngIf="form.get('data').get('medication_radio').value == 'si'">
           <!-- *ngIf="analysisFormArray" -->
 
           <div *ngFor=" let elements of medicineOperationFormArray.controls; let in = index">

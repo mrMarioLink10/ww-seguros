@@ -211,12 +211,15 @@ export class MusculoskeletalComponent implements OnInit {
     else {
       this.addBasicControls();
     }
+    // this.addBasicControls();
 
+    // this.episodeFormArray = this.form.get('data').get('episode').get('episode_array') as FormArray;
     this.therapyFormArray = this.form.get('data').get('therapy').get('therapy_array') as FormArray;
     this.surgeryFormArray = this.form.get('data').get('surgery').get('surgery_array') as FormArray;
     console.log(this.surgeryFormArray);
 
   }
+
   IssurgeryFormArray() {
     try {
       if (this.surgeryFormArray.length > 0) {

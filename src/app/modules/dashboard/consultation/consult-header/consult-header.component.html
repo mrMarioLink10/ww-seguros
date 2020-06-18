@@ -1,15 +1,19 @@
-<div class="flex flex-col sm:flex-row p-5">
-  <div class="w-full sm:w-1/2 flex flex-col background-gray px-10 py-4 border-r-blue-2" style="border-right-width: 50px">
-    <!--<div class="text-5xl txt-blue" >{{userName}}</div>
-    <div class="txt-blue">correo: {{userEmail}} </div> -->
+<div class="grid grid-cols-3">
+  <div class="mx-5 col-span-2 background-gray px-10 py-4 border-r-blue-2" style="border-right-width: 50px">
+    <div class="mt-4 txt-blue font-medium" style="font-size: 33px;">BIENVENIDO</div>
+    <div class="mt-4 txt-blue" style="font-size: 13px;">Puede consultar </div>
   </div>
 
-  <div *ngIf="pendingPolicies > 0" class="w-full mt-4 sm:mt-0 sm:w-1/2 sm:ml-5 flex shadow-xl cursor-pointer" (click)="activatePolicyTab()">
-    <div class="w-1/2 text-6xl text-center txt-red font-bold mt-4">
-      <p>{{pendingPolicies}}</p>
+  <div *ngIf="pendingPolicies > 0" class="mr-5 shadow-md cursor-pointer" style="border-radius: 5px;"
+    (click)="activatePolicyTab()">
+    <div class="text-6xl text-center txt-red font-bold flex justify-center"
+      style="background-color: #EE5352; max-height: 55px; border-top-left-radius: 5px; border-top-right-radius: 5px;">
+      <!-- <mat-icon style="color: white;">warning</mat-icon> -->
+      <img class="my-4" style="height: 30px; width: 30px;" src="../../../../../assets/iconos/warning.svg">
     </div>
-    <div class="w-1/2 background-red text-white font-bold text-2xl text-center px-4">
-      <p class="sm:mt-8">Pólizas Pendiente de Pago</p>
+    <div class="text-center">
+      <div class="font-extrabold mt-4" style="color: #3C405A; font-size: 16px;">Pólizas Pendiente de Pago</div>
+      <div class="font-extrabold mb-4" style="color: #EE5352; font-size: 25px;">{{pendingPolicies}}</div>
     </div>
   </div>
 </div>

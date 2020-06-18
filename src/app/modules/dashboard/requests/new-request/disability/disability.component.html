@@ -1,6 +1,6 @@
 <div class="p-6 pr-6 xs:pr-6 sm:pr-6 md:pr-12 lg:pr-12 xl:pr-12 bg-white">
   <form [formGroup]='disabilityGroup'>
-    <h3 class="uppercase dashboard-page-title pt-20">Solicitudes - Solicitud de Suscripción Disability</h3>
+    <h3 class="uppercase dashboard-page-title pt-8">Solicitudes - Solicitud de Suscripción Disability</h3>
     <div class="mt-6 p-3 pb-0" style="background-color: #F2F2F2">
       <div class="filter-title">Info. Inicio</div>
       <div class="mt-3 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4">
@@ -2032,19 +2032,16 @@
         </mat-tab>
       </div> -->
 
-      <mat-tab
-        *ngIf="this.disabilityGroup.get('insured_data').get('pep_radio_insured').value == 'si'"
+      <mat-tab *ngIf="this.disabilityGroup.get('insured_data').get('pep_radio_insured').value == 'si'"
         label="Conozca a su cliente (Persona Física) - Asegurado">
-        <app-know-your-customer
-          [form]="disabilityGroup.get('insured_data').get('KnowYourCustomer')">
+        <app-know-your-customer [form]="disabilityGroup.get('insured_data').get('KnowYourCustomer')">
         </app-know-your-customer>
       </mat-tab>
       <div *ngIf="disabilityGroup.get('policyholder')">
         <mat-tab
           *ngIf="this.disabilityGroup.get('policyholder').get('pep_radio_holder').value == 'si' && disabilityGroup.get('policyholder').get('KnowYourCustomer')"
           label="Conozca a su cliente (Persona Física) - Contratante">
-          <app-know-your-customer
-            [form]="disabilityGroup.get('policyholder').get('KnowYourCustomer')">
+          <app-know-your-customer [form]="disabilityGroup.get('policyholder').get('KnowYourCustomer')">
           </app-know-your-customer>
         </mat-tab>
       </div>
@@ -2056,7 +2053,7 @@
         </app-know-your-client>
       </mat-tab>
       </div> -->
-      <div *ngIf ="this.disabilityGroup.get('insured_data').get('insuredPolicyholderRadio').value == 'no'">
+      <div *ngIf="this.disabilityGroup.get('insured_data').get('insuredPolicyholderRadio').value == 'no'">
         <mat-tab *ngIf="this.disabilityGroup.get('insured_data').get('policyholderKnowClientRadio').value == 'si'"
           label="Conozca a su cliente (Persona Jurídica) - Contratante">
           <app-know-your-client [form]="disabilityGroup.get('insured_data').get('knowYourClient')">

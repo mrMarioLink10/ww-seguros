@@ -8,7 +8,7 @@ import { CanExitGuard } from './core/guards/can-exit.guard';
 const routes: Routes = [
 	{
 		path: '',
-		redirectTo: 'dashboard/requests',
+		redirectTo: 'dashboard/consult',
 		pathMatch: 'full'
 	},
 	{

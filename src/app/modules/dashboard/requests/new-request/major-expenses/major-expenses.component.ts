@@ -368,7 +368,6 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
     haveCerebrovascular: [false, Validators.required],
     haveNervousSystem: [false, Validators.required],
     haveVisionHearing: [false, Validators.required],
-    haveSpine: [false, Validators.required],
     haveCardiovascularSystem: [false, Validators.required],
     haveRespiratorySystem: [false, Validators.required],
     haveDigestiveSystem: [false, Validators.required],
@@ -443,7 +442,6 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
     haveCerebrovascular: '',
     haveNervousSystem: '',
     haveVisionHearing: '',
-    haveSpine: '',
     haveCardiovascularSystem: '',
     haveRespiratorySystem: '',
     haveDigestiveSystem: '',
@@ -617,7 +615,6 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
         haveCerebrovascular: [false, Validators.required],
         haveNervousSystem: [false, Validators.required],
         haveVisionHearing: [false, Validators.required],
-        haveSpine: [false, Validators.required],
         haveCardiovascularSystem: [false, Validators.required],
         haveRespiratorySystem: [false, Validators.required],
         haveDigestiveSystem: [false, Validators.required],
@@ -674,7 +671,6 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
         haveCerebrovascular: ['', Validators.required],
         haveNervousSystem: ['', Validators.required],
         haveVisionHearing: ['', Validators.required],
-        haveSpine: ['', Validators.required],
         haveCardiovascularSystem: ['', Validators.required],
         haveRespiratorySystem: ['', Validators.required],
         haveDigestiveSystem: ['', Validators.required],
@@ -1241,10 +1237,6 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
           break;
 
         case 'haveVisionHearing':
-          this.makeFalseAll(event.name);
-          break;
-
-        case 'haveSpine':
           this.makeFalseAll(event.name);
           break;
 

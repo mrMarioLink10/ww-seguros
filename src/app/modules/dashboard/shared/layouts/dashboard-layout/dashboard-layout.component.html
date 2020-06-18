@@ -104,13 +104,14 @@
       </mat-nav-list>
     </div>
   </mat-sidenav>
-  <mat-sidenav-content>
-    <mat-toolbar class="dashboard-toolbar " role="heading"  style="display: none;">
+  <mat-sidenav-content style="background-color: white !important;">
+    <mat-toolbar class="dashboard-toolbar " role="heading">
       <div class="flex grid grid-cols-2 w-full">
         <div class="">
           <button (click)="navigateBack()" mat-mini-fab aria-label="Example icon-button with a heart icon"
-            class="dashboard-toolbar-buttons" style="background-color: transparent !important;">
-            <mat-icon style="color: #18446B">arrow_back</mat-icon>
+            class="dashboard-toolbar-buttons"
+            style="background-color: #0179B2 !important; border-radius: 10px !important; margin-top: 40px; margin-left: 9px;">
+            <mat-icon style="color: white; font-weight: 600;">arrow_back</mat-icon>
           </button>
         </div>
         <div class="flex flex-row justify-end flex-wrap w">

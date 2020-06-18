@@ -184,13 +184,14 @@ export class KnowYourClientComponent implements OnInit {
 
 		if (event.valor === 'si') {
 
-			form.addControl('allBranch_office', this.branch_property);
+			form.addControl('allBranch_office', this.fb.array([this.createFormArray()]));
 			this.branchOfficeFormArray = this.form.get('exposed').get('branch_office').get('allBranch_office') as FormArray;
 		}
 		else if (event.valor === 'no') {
 
 			form.removeControl('allBranch_office');
-			this.branchOfficeFormArray = undefined;
+			// this.branchOfficeFormArray = undefined;
+			// console.log("holaaaaa");
 
 		}
 
@@ -198,14 +199,15 @@ export class KnowYourClientComponent implements OnInit {
 
 	createFormArray() {
 
-		return this.branchGroup;
+		return this.fb.group(this.branchGroup);
 	}
 
 	ngOnInit() {
 
+		// this.branch_property = this.fb.array([this.createFormArray()]);
+
 		this.addBasicControls();
 
-		this.branch_property = this.fb.array([this.formMethods.createItem(this.branchGroup)]);
 		console.log(this.form);
 		// 	this.form = this.fb.group({
 		// 		request: ['', Validators.required],
@@ -282,7 +284,7 @@ export class KnowYourClientComponent implements OnInit {
 
 		this.bodyMembersFormArray = this.form.get('management_body_composition').get('allMembers') as FormArray;
 		this.shareholdersFormArray = this.form.get('shareholders').get('allShareholders') as FormArray;
-		this.branchOfficeFormArray = this.form.get('exposed').get('branch_office').get('allBranch_office') as FormArray;
+		// this.branchOfficeFormArray = this.form.get('exposed').get('branch_office').get('allBranch_office') as FormArray;
 
 	}
 
@@ -351,7 +353,7 @@ export class KnowYourClientComponent implements OnInit {
 			stock_Exchange: ['', Validators.required],
 			branch_office_radio: [''],
 			branch_office: this.fb.group({
-				allBranch_office: this.fb.array([this.formMethods.createItem(this.branchGroup)])
+				// allBranch_office: this.fb.array([this.createFormArray()])
 			}),
 			investigated_representative: [''],
 
@@ -393,10 +395,13 @@ export class KnowYourClientComponent implements OnInit {
 
 	addBranchOffice(branchOfficeFormArray) {
 
-		const increment = branchOfficeFormArray.length + 1;
-		branchOfficeFormArray = this.formMethods.addElement(branchOfficeFormArray, increment, this.createFormArray()).formArray;
+		// const increment = branchOfficeFormArray.length + 1;
+		// branchOfficeFormArray = this.formMethods.addElement(branchOfficeFormArray, increment, this.createFormArray()).formArray;
 		// console.log(JSON.stringify(this.form.value));
+		branchOfficeFormArray.push(this.createFormArray());
 	}
 
-
+	removeFormArray(index, array: any) {
+		array.removeAt(index);
+	  }
 }

@@ -330,7 +330,7 @@
 
                           <div class="mb-6 mt-6 sm:mt-3 md:mt-5 lg:mt-3 xl:mt-3">
 
-                            <button mat-mini-fab aria-label="Agregar análisis"
+                            <button *ngIf="in == (bankFormArray.controls.length - 1)" mat-mini-fab aria-label="Agregar análisis"
                               (click)=" addFormArray(bankFormArray,'bank_array') " type="button"
                               class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
                               <mat-icon style="color: #18446B">add</mat-icon>
@@ -395,7 +395,7 @@
 
                           <div class="mb-6 mt-6 sm:mt-3 md:mt-5 lg:mt-5 xl:mt-3">
 
-                            <button mat-mini-fab aria-label="Agregar análisis"
+                            <button  *ngIf="in == (commercialFormArray.controls.length - 1)" mat-mini-fab aria-label="Agregar análisis"
                               (click)=" addFormArray(commercialFormArray,'commercial_array') " type="button"
                               class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
                               <mat-icon style="color: #18446B">add</mat-icon>
@@ -460,7 +460,7 @@
 
                           <div class="mb-6 mt-6 sm:mt-3 md:mt-5 lg:mt-4 xl:mt-3">
 
-                            <button mat-mini-fab aria-label="Agregar análisis"
+                            <button *ngIf="in == (personalFormArray.controls.length - 1)" mat-mini-fab aria-label="Agregar análisis"
                               (click)=" addFormArray(personalFormArray,'personal_array') " type="button"
                               class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
                               <mat-icon style="color: #18446B">add</mat-icon>

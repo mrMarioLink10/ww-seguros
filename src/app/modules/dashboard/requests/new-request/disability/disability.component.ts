@@ -31,6 +31,8 @@ export class DisabilityComponent implements OnInit, DoCheck {
   changingCoveragesList: FormArray;
   filesStudiesArray: FormArray;
   arrayFilesTitles = [];
+  filesDocumentsArray: FormArray;
+  arrayFilesTitlesDocuments = [];
   role: string;
   routeSelected = 'disability';
   accordionTitles = [
@@ -1497,8 +1499,8 @@ export class DisabilityComponent implements OnInit, DoCheck {
     const formQ = this.disabilityGroup.get('questions').get('questionnaire') as FormGroup;
     // const formS = this.disabilityGroup.get('questions').get('questionnaire') as FormGroup;
 
-    formP.addControl('main_array', this.mainProperty);
-    formC.addControl('contingent_array', this.contingentProperty);
+    // formP.addControl('main_array', this.mainProperty);
+    // formC.addControl('contingent_array', this.contingentProperty);
 
 
     switch (name) {
@@ -1511,62 +1513,62 @@ export class DisabilityComponent implements OnInit, DoCheck {
         break;
 
       case 'analysis_array':
-        formQ.addControl('analysis_array', this.testProperty);
+        // formQ.addControl('analysis_array', this.testProperty);
         return this.testGroup;
         break;
 
       case 'sick_pay_array':
-        formQ.addControl('sick_pay_array', this.sickPayProperty);
+        // formQ.addControl('sick_pay_array', this.sickPayProperty);
         return this.sickPayGroup;
         break;
 
       case 'therapy_array':
-        formQ.addControl('therapy_array', this.therapyProperty);
+        // formQ.addControl('therapy_array', this.therapyProperty);
         return this.therapyGroup;
         break;
 
       case 'other_analysis_array':
-        formQ.addControl('other_analysis_array', this.otherAnalysisProperty);
+        // formQ.addControl('other_analysis_array', this.otherAnalysisProperty);
         return this.otherAnalysisGroup;
         break;
 
       case 'inpatientCare_array':
-        formQ.addControl('inpatientCare_array', this.inpatientCareProperty);
+        // formQ.addControl('inpatientCare_array', this.inpatientCareProperty);
         return this.inpatientCareGroup;
         break;
 
       case 'hospitalization_array':
-        formQ.addControl('hospitalization_array', this.hospitalizationProperty);
+        // formQ.addControl('hospitalization_array', this.hospitalizationProperty);
         return this.hospitalizationGroup;
         break;
 
       case 'bloodSick_array':
-        formQ.addControl('bloodSick_array', this.bloodSickProperty);
+        // formQ.addControl('bloodSick_array', this.bloodSickProperty);
         return this.bloodSickGroup;
         break;
 
       case 'VIH_array':
-        formQ.addControl('VIH_array', this.VIHProperty);
+        // formQ.addControl('VIH_array', this.VIHProperty);
         return this.VIHGroup;
         break;
 
       case 'specialTherapy_array':
-        formQ.addControl('specialTherapy_array', this.specialTherapyProperty);
+        // formQ.addControl('specialTherapy_array', this.specialTherapyProperty);
         return this.specialTherapyGroup;
         break;
 
       case 'accident_array':
-        formQ.addControl('accident_array', this.accidentProperty);
+        // formQ.addControl('accident_array', this.accidentProperty);
         return this.accidentGroup;
         break;
 
       case 'deny_array':
-        formQ.addControl('deny_array', this.denyProperty);
+        // formQ.addControl('deny_array', this.denyProperty);
         return this.denyGroup;
         break;
 
       case 'insurance_array':
-        formQ.addControl('insurance_array', this.insuranceProperty);
+        // formQ.addControl('insurance_array', this.insuranceProperty);
         return this.insuranceGroup;
         break;
 
@@ -1668,6 +1670,16 @@ export class DisabilityComponent implements OnInit, DoCheck {
     if (this.arrayFilesTitles) {
       if (this.arrayFilesTitles[i] && this.disabilityGroup.get('files').get('studies').get(i.toString()).value.study !== '') {
         return this.arrayFilesTitles[i].studyUrl;
+      }
+    }
+  }
+
+  arrayDocumentsWatcher(i: number) {
+    if (this.arrayFilesTitlesDocuments) {
+      if (this.disabilityGroup.get('files').get('documents')) {
+        if (this.arrayFilesTitlesDocuments[i] && this.disabilityGroup.get('files').get('documents').get(i.toString()).value.study !== '') {
+          return this.arrayFilesTitlesDocuments[i].studyUrl;
+        }
       }
     }
   }

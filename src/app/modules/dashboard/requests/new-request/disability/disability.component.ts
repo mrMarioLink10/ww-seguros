@@ -1063,20 +1063,39 @@ export class DisabilityComponent implements OnInit, DoCheck {
     this.disabilityGroup.get('insured_data').get('job_hours').setValue(totalJobHours);
   }
 
-  onStudiesChange(event, i) {
-    const reader = new FileReader();
+  onStudiesChange(event, i, name) {
 
-    if (event.target.files && event.target.files.length) {
-      const [file] = event.target.files;
-      reader.readAsDataURL(file);
+    if (name == 'studies') {
+      const reader = new FileReader();
 
-      reader.onload = () => {
-        this.disabilityGroup.get('files').get('studies').get(i.toString()).patchValue({
-          ['study']: reader.result
-        });
+      if (event.target.files && event.target.files.length) {
+        const [file] = event.target.files;
+        reader.readAsDataURL(file);
 
-        //this.markForCheck();
-      };
+        reader.onload = () => {
+          this.disabilityGroup.get('files').get('studies').get(i.toString()).patchValue({
+            ['study']: reader.result
+          });
+
+          //this.markForCheck();
+        };
+      }
+    }
+    else if (name == 'documents') {
+      const reader = new FileReader();
+
+      if (event.target.files && event.target.files.length) {
+        const [file] = event.target.files;
+        reader.readAsDataURL(file);
+
+        reader.onload = () => {
+          this.disabilityGroup.get('files').get('documents').get(i.toString()).patchValue({
+            ['document']: reader.result
+          });
+
+          //this.markForCheck();
+        };
+      }
     }
   }
 
@@ -1092,6 +1111,7 @@ export class DisabilityComponent implements OnInit, DoCheck {
     }
     const formGeneral = this.disabilityGroup as FormGroup;
     const formCB = this.disabilityGroup.get('contingent') as FormGroup;
+    const formFiles = this.disabilityGroup.get('files') as FormGroup;
 
     console.log(event);
 
@@ -1295,6 +1315,8 @@ export class DisabilityComponent implements OnInit, DoCheck {
           formGeneral.removeControl('policyholder');
           // formInsured.addControl('knowYourClientSecond', this.fb.group({}));
           formInsured.addControl('knowYourClient', this.fb.group({}));
+          formFiles.addControl('documents', this.fb.array([]));
+          this.filesDocumentsArray = this.disabilityGroup.get('files').get('documents') as FormArray;
           break;
 
         case 'hasAnotherCoverage':
@@ -1457,6 +1479,8 @@ export class DisabilityComponent implements OnInit, DoCheck {
           if (this.disabilityGroup.get('insured_data').get('knowYourClient')) {
             formInsured.removeControl('knowYourClient');
           }
+          formFiles.removeControl('documents');
+          this.filesDocumentsArray = undefined;
           break;
 
         case 'hasAnotherCoverage':
@@ -1586,6 +1610,11 @@ export class DisabilityComponent implements OnInit, DoCheck {
         return this.fb.group({
           study: ['', Validators.required],
         });
+
+      case 'filesDocuments':
+        return this.fb.group({
+          document: ['', Validators.required],
+        });
     }
   }
 
@@ -1677,8 +1706,9 @@ export class DisabilityComponent implements OnInit, DoCheck {
   arrayDocumentsWatcher(i: number) {
     if (this.arrayFilesTitlesDocuments) {
       if (this.disabilityGroup.get('files').get('documents')) {
-        if (this.arrayFilesTitlesDocuments[i] && this.disabilityGroup.get('files').get('documents').get(i.toString()).value.study !== '') {
-          return this.arrayFilesTitlesDocuments[i].studyUrl;
+        // tslint:disable-next-line: max-line-length
+        if (this.arrayFilesTitlesDocuments[i] && this.disabilityGroup.get('files').get('documents').get(i.toString()).value.document !== '') {
+          return this.arrayFilesTitlesDocuments[i].documentUrl;
         }
       }
     }

@@ -933,6 +933,29 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
     }
   }
 
+  onBeneficiaryFileChangeOnArray(event, formName, i?: number, group?: string) {
+    const reader = new FileReader();
+
+    if (event.target.files && event.target.files.length) {
+      const [file] = event.target.files;
+      reader.readAsDataURL(file);
+
+      reader.onload = () => {
+        if (i !== null) {
+          this.newRequest.get(group).get('dependentsC').get(i.toString()).patchValue({
+            [formName]: reader.result
+          });
+        } else {
+          this.newRequest.get(group).get('personBenefited').patchValue({
+            [formName]: reader.result
+          });
+        }
+
+        this.cd.markForCheck();
+      };
+    }
+  }
+
   relationWatcher(event, realForm) {
     console.log('event: ', event.valor, 'form: ', realForm);
     const form = realForm as FormGroup;

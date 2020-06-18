@@ -768,6 +768,13 @@
                       <app-number-input class="mr-3"
                         [group]="newRequest.get('primaryBenefits').get('dependentsC').get(index.toString())"
                         label="Cantidad en %" name='quantity' min="1" max="100"></app-number-input>
+                      <mat-form-field class="mr-3" appearance="outline">
+                        <mat-label> Adjuntar documento de identidad si es mayor de edad </mat-label>
+                        <ngx-mat-file-input placeholder="Documento de Identidad"
+                          (change)="onBeneficiaryFileChangeOnArray($event, 'id2Attached', index, 'primaryBenefits')">
+                        </ngx-mat-file-input>
+                        <mat-icon style="color: #e2e2e2;" matSuffix>publish</mat-icon>
+                      </mat-form-field>
                     </div>
                     <div class="pb-5">
                       <button *ngIf="newRequest.get('primaryBenefits').get('dependentsC')['controls'].length > 1"
@@ -819,6 +826,13 @@
                 </app-select>
                 <app-input class="mr-3" [group]="newRequest.get('primaryBenefits').get('personBenefited')"
                   label="Documento de Identidad" name='id2'></app-input>
+                <mat-form-field class="mr-3" appearance="outline">
+                  <mat-label> Adjuntar documento de identidad </mat-label>
+                  <ngx-mat-file-input placeholder="Documento de Identidad"
+                    (change)="onBeneficiaryFileChangeOnArray($event, 'id2Attached', null, 'primaryBenefits')">
+                  </ngx-mat-file-input>
+                  <mat-icon style="color: #e2e2e2;" matSuffix>publish</mat-icon>
+                </mat-form-field>
               </div>
             </div>
           </ng-template>
@@ -859,6 +873,13 @@
                       <app-number-input class="mr-3"
                         [group]="newRequest.get('contingentBeneficiary').get('dependentsC').get(index.toString())"
                         label="Cantidad en %" name='quantity' min="1" max="100"></app-number-input>
+                      <mat-form-field class="mr-3" appearance="outline">
+                        <mat-label> Adjuntar documento de identidad si es mayor de edad </mat-label>
+                        <ngx-mat-file-input placeholder="Documento de Identidad"
+                          (change)="onBeneficiaryFileChangeOnArray($event, 'id2Attached', index, 'contingentBeneficiary')">
+                        </ngx-mat-file-input>
+                        <mat-icon style="color: #e2e2e2;" matSuffix>publish</mat-icon>
+                      </mat-form-field>
                     </div>
                     <button *ngIf="contingentBeneficiaryArray.length > 1" mat-mini-fab aria-label="Eliminar reclamacion"
                       (click)="formMethods.deleteOneElement(contingentBeneficiaryArray, index)" type="button"
@@ -909,6 +930,13 @@
                 </app-select>
                 <app-input class="mr-3" [group]="newRequest.get('contingentBeneficiary').get('personBenefited')"
                   label="Documento de Identidad" name='id2'></app-input>
+                <mat-form-field class="mr-3" appearance="outline">
+                  <mat-label> Adjuntar documento de identidad </mat-label>
+                  <ngx-mat-file-input placeholder="Documento de Identidad"
+                    (change)="onBeneficiaryFileChangeOnArray($event, 'id2Attached', null, 'contingentBeneficiary')">
+                  </ngx-mat-file-input>
+                  <mat-icon style="color: #e2e2e2;" matSuffix>publish</mat-icon>
+                </mat-form-field>
               </div>
             </div>
           </ng-template>

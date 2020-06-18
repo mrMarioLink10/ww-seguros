@@ -386,6 +386,7 @@ export class DisabilityComponent implements OnInit, DoCheck {
   mainGroup = {
     full_name: ['', Validators.required],
     id2: ['', Validators.required],
+    id2Attached: [''],
     nationality: ['', Validators.required],
     ocupation: ['', Validators.required],
     family: ['', Validators.required],
@@ -395,6 +396,7 @@ export class DisabilityComponent implements OnInit, DoCheck {
   contingentGroup = {
     full_name: ['', Validators.required],
     id2: ['', Validators.required],
+    id2Attached: [''],
     nationality: ['', Validators.required],
     ocupation: ['', Validators.required],
     family: ['', Validators.required],
@@ -683,12 +685,14 @@ export class DisabilityComponent implements OnInit, DoCheck {
         full_name: [''],
         family: [''],
         id_passport: [''],
+        id2Attached: [''],
         main_array: this.fb.array([this.formMethods.createItem(this.mainGroup)])
       }),
       contingent: this.fb.group({
         full_name: [''],
         family: [''],
         id_passport: [''],
+        id2Attached: [''],
         contingent_array: this.fb.array([this.formMethods.createItem(this.contingentGroup)]),
         hasAnotherCoverage: ['', Validators.required],
         changeAnotherCoverage: ['', Validators.required],
@@ -1700,6 +1704,39 @@ export class DisabilityComponent implements OnInit, DoCheck {
       if (this.arrayFilesTitles[i] && this.disabilityGroup.get('files').get('studies').get(i.toString()).value.study !== '') {
         return this.arrayFilesTitles[i].studyUrl;
       }
+    }
+  }
+
+  onBeneficiaryFileChangeOnArray(event, formName, i?: number, group?: string, subgroup?: string) {
+    const reader = new FileReader();
+
+    if (event.target.files && event.target.files.length) {
+      const [file] = event.target.files;
+      reader.readAsDataURL(file);
+
+      reader.onload = () => {
+        if (i !== null) {
+          this.disabilityGroup.get(group).get(subgroup).get(i.toString()).patchValue({
+            [formName]: reader.result
+          });
+        } else {
+          this.disabilityGroup.get(group).patchValue({
+            [formName]: reader.result
+          });
+        }
+
+        this.cd.markForCheck();
+      };
+    }
+  }
+
+  relationWatcher(event, realForm) {
+    console.log('event: ', event.valor, 'form: ', realForm);
+    const form = realForm as FormGroup;
+    if (event.valor === 'otros') {
+      form.addControl('specifyRelationship', this.fb.control('', Validators.required));
+    } else {
+      form.removeControl('specifyRelationship');
     }
   }
 

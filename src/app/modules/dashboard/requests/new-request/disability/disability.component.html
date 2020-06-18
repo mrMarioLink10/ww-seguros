@@ -99,18 +99,16 @@
                     </div>
                   </div>
                   <div class="mr-3 mt-5 md:mt-0 lg:mt-0 xl:mt-0">
-                    <datepicker-month [max]="disabilityGroup.get('insured_data').value.date_until" 
-                    fieldId="date_since" [group]="disabilityGroup.get('insured_data')" label="Desde" 
-                    name='date_since'>
+                    <datepicker-month [max]="disabilityGroup.get('insured_data').value.date_until" fieldId="date_since"
+                      [group]="disabilityGroup.get('insured_data')" label="Desde" name='date_since'>
                     </datepicker-month>
                     <!-- <app-date-picker [max]="disabilityGroup.get('insured_data').value.date_until"
                       [group]="disabilityGroup.get('insured_data')" label="Desde" name='date_since'>
                     </app-date-picker> -->
                   </div>
                   <div class="mr-3 mt-5 md:mt-0 lg:mt-0 xl:mt-0">
-                    <datepicker-month [min]="disabilityGroup.get('insured_data').value.date_since" 
-                    fieldId="date_until" [group]="disabilityGroup.get('insured_data')" label="Hasta" 
-                    name='date_until'>
+                    <datepicker-month [min]="disabilityGroup.get('insured_data').value.date_since" fieldId="date_until"
+                      [group]="disabilityGroup.get('insured_data')" label="Hasta" name='date_until'>
                     </datepicker-month>
                     <!-- <app-date-picker [min]="disabilityGroup.get('insured_data').value.date_since"
                       [group]="disabilityGroup.get('insured_data')" label="Hasta" name='date_until'>
@@ -781,9 +779,10 @@
                             </div>
                             <div
                               class="mb-8 -mx-2 sm:mb-8 sm:mx-0 md:mb-8 md:mx-0 lg:mb-8 lg:mx-0 lg:mt-2 xl:mx-0  xl:mb-8 mt-2">
-                              <button *ngIf="in == (therapyArray.controls.length - 1)" mat-mini-fab aria-label="Agregar tratamiento"
-                                (click)=" addFormArray(therapyArray,'therapy_array') " type="button"
-                                class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
+                              <button *ngIf="in == (therapyArray.controls.length - 1)" mat-mini-fab
+                                aria-label="Agregar tratamiento" (click)=" addFormArray(therapyArray,'therapy_array') "
+                                type="button" class="dashboard-toolbar-buttons"
+                                style="border: 1px rgb(197, 197, 197) solid">
                                 <mat-icon style="color: #18446B">add</mat-icon>
                               </button>
                               <button *ngIf="therapyArray.controls.length > 1" mat-mini-fab
@@ -831,9 +830,10 @@
                                 </app-text-area>
                               </div>
                             </div>
-                            <div 
+                            <div
                               class="mb-8 -mx-2 sm:mb-8 sm:mx-0 md:mb-8 md:mx-0 lg:mb-8 lg:mx-0 lg:mt-2 xl:mx-0 xl:mb-8 mt-2">
-                              <button *ngIf="in == (sickPayArray.controls.length - 1)" mat-mini-fab aria-label="Agregar licencia médica"
+                              <button *ngIf="in == (sickPayArray.controls.length - 1)" mat-mini-fab
+                                aria-label="Agregar licencia médica"
                                 (click)=" addFormArray(sickPayArray,'sick_pay_array') " type="button"
                                 class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
                                 <mat-icon style="color: #18446B">add</mat-icon>
@@ -890,9 +890,10 @@
                             </div>
                             <div
                               class="mb-8 -mx-2 sm:mb-8 sm:mx-0 md:mb-8 md:mx-0 lg:mb-8 lg:mx-0 lg:mt-2 xl:mx-0 xl:mb-8 mt-2">
-                              <button *ngIf="in == (testArray.controls.length - 1)" mat-mini-fab aria-label="Agregar estudio"
-                                (click)=" addFormArray(testArray,'analysis_array') " type="button"
-                                class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
+                              <button *ngIf="in == (testArray.controls.length - 1)" mat-mini-fab
+                                aria-label="Agregar estudio" (click)=" addFormArray(testArray,'analysis_array') "
+                                type="button" class="dashboard-toolbar-buttons"
+                                style="border: 1px rgb(197, 197, 197) solid">
                                 <mat-icon style="color: #18446B">add</mat-icon>
                               </button>
                               <button *ngIf="testArray.controls.length > 1" mat-mini-fab aria-label="Eliminar estudio"
@@ -935,7 +936,8 @@
                             </div>
                             <div
                               class="mb-8 -mx-2 sm:mb-8 sm:mx-0 md:mb-8 md:mx-0 lg:mb-8 lg:mx-0 lg:mt-2 xl:mx-0 xl:mb-8 mt-2">
-                              <button *ngIf="in == (otherAnalysisArray.controls.length - 1)" mat-mini-fab aria-label="Agregar otro estudio"
+                              <button *ngIf="in == (otherAnalysisArray.controls.length - 1)" mat-mini-fab
+                                aria-label="Agregar otro estudio"
                                 (click)=" addFormArray(otherAnalysisArray,'other_analysis_array') " type="button"
                                 class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
                                 <mat-icon style="color: #18446B">add</mat-icon>
@@ -990,7 +992,8 @@
                               </div>
                               <div
                                 class="mb-8 -mx-2 sm:mb-8 sm:mx-0 md:mb-8 md:mx-0 lg:mb-8 lg:mx-0 lg:mt-2 xl:mx-0 xl:mb-8 mt-2">
-                                <button *ngIf="in == (inpatientCareArray.controls.length - 1)" mat-mini-fab aria-label="Agregar hospitalización"
+                                <button *ngIf="in == (inpatientCareArray.controls.length - 1)" mat-mini-fab
+                                  aria-label="Agregar hospitalización"
                                   (click)=" addFormArray(inpatientCareArray,'inpatientCare_array') " type="button"
                                   class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
                                   <mat-icon style="color: #18446B">add</mat-icon>
@@ -1037,7 +1040,8 @@
                             </div>
                             <div
                               class="mb-8 -mx-2 sm:mb-8 sm:mx-0 md:mb-8 md:mx-0 lg:mb-8 lg:mx-0 lg:mt-2 xl:mx-0 xl:mb-8 mt-2">
-                              <button *ngIf="in == (hospitalizationArray.controls.length - 1)" mat-mini-fab aria-label="Agregar hospitalización futura"
+                              <button *ngIf="in == (hospitalizationArray.controls.length - 1)" mat-mini-fab
+                                aria-label="Agregar hospitalización futura"
                                 (click)=" addFormArray(hospitalizationArray,'hospitalization_array') " type="button"
                                 class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
                                 <mat-icon style="color: #18446B">add</mat-icon>
@@ -1196,7 +1200,8 @@
                           </div>
                           <div
                             class="mb-8 -mx-2 sm:mb-8 sm:mx-0 md:mb-8 md:mx-0 lg:mb-8 lg:mx-0 lg:mt-2 xl:mx-0 xl:mb-8 mt-2">
-                            <button *ngIf="in == (bloodSickArray.controls.length - 1)" mat-mini-fab aria-label="Agregar enfermedad de la sangre"
+                            <button *ngIf="in == (bloodSickArray.controls.length - 1)" mat-mini-fab
+                              aria-label="Agregar enfermedad de la sangre"
                               (click)=" addFormArray(bloodSickArray,'bloodSick_array') " type="button"
                               class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
                               <mat-icon style="color: #18446B">add</mat-icon>
@@ -1225,8 +1230,9 @@
                           </div>
                         </div>
                         <div class="inline float-right mt-1 sm:mt-1 md:mt-1 lg:mt-1 xl:-mt-5">
-                          <app-radio-button class="inline float-right mt-1 sm:mt-1 md:mt-1 lg:mt-1 xl:-mt-5" [group]="disabilityGroup.get('questions').get('questionnaire')"
-                            name="VIH_radio" [options]="YesNo" (selected)="selectChange($event)"> </app-radio-button>
+                          <app-radio-button class="inline float-right mt-1 sm:mt-1 md:mt-1 lg:mt-1 xl:-mt-5"
+                            [group]="disabilityGroup.get('questions').get('questionnaire')" name="VIH_radio"
+                            [options]="YesNo" (selected)="selectChange($event)"> </app-radio-button>
                         </div>
                         <div class="mt-8"
                           *ngIf="this.disabilityGroup.get('questions').get('questionnaire').get('VIH_radio').value == 'si'">
@@ -1245,9 +1251,10 @@
                             </div>
                             <div
                               class="mb-8 -mx-2 sm:mb-8 sm:mx-0 md:mb-8 md:mx-0 lg:mb-8 lg:mx-0 lg:mt-2 xl:mx-0 xl:mb-8 mt-2">
-                              <button *ngIf="in == (VIHArray.controls.length - 1)" mat-mini-fab aria-label="Agregar enfermedad de VIH"
-                                (click)=" addFormArray(VIHArray,'VIH_array') " type="button"
-                                class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
+                              <button *ngIf="in == (VIHArray.controls.length - 1)" mat-mini-fab
+                                aria-label="Agregar enfermedad de VIH" (click)=" addFormArray(VIHArray,'VIH_array') "
+                                type="button" class="dashboard-toolbar-buttons"
+                                style="border: 1px rgb(197, 197, 197) solid">
                                 <mat-icon style="color: #18446B">add</mat-icon>
                               </button>
                               <button *ngIf="VIHArray.controls.length > 1" mat-mini-fab
@@ -1299,7 +1306,8 @@
                             </div>
                             <div
                               class="mb-8 -mx-2 sm:mb-8 sm:mx-0 md:mb-8 md:mx-0 lg:mb-8 lg:mx-0 lg:mt-2 xl:mx-0 xl:mb-8 mt-2">
-                              <button *ngIf="in == (specialTherapyArray.controls.length - 1)" mat-mini-fab aria-label="Agregar tratamiento especial"
+                              <button *ngIf="in == (specialTherapyArray.controls.length - 1)" mat-mini-fab
+                                aria-label="Agregar tratamiento especial"
                                 (click)=" addFormArray(specialTherapyArray,'specialTherapy_array') " type="button"
                                 class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
                                 <mat-icon style="color: #18446B">add</mat-icon>
@@ -1351,7 +1359,8 @@
                             </div>
                             <div
                               class="mb-8 -mx-2 sm:mb-8 sm:mx-0 md:mb-8 md:mx-0 lg:mb-8 lg:mx-0 lg:mt-2 xl:mx-0 xl:mb-8 mt-2">
-                              <button *ngIf="in == (accidentArray.controls.length - 1)" mat-mini-fab aria-label="Agregar enfermedad/accidente con efectos secundarios"
+                              <button *ngIf="in == (accidentArray.controls.length - 1)" mat-mini-fab
+                                aria-label="Agregar enfermedad/accidente con efectos secundarios"
                                 (click)=" addFormArray(accidentArray,'accident_array') " type="button"
                                 class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
                                 <mat-icon style="color: #18446B">add</mat-icon>
@@ -1397,9 +1406,10 @@
                             </div>
                             <div
                               class="mb-8 -mx-2 sm:mb-8 sm:mx-0 md:mb-8 md:mx-0 lg:mb-8 lg:mx-0 lg:mt-2 xl:mx-0 xl:mb-8 mt-2">
-                              <button *ngIf="in == (denyArray.controls.length - 1)" mat-mini-fab aria-label="Agregar negación de seguro"
-                                (click)=" addFormArray(denyArray,'deny_array') " type="button"
-                                class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
+                              <button *ngIf="in == (denyArray.controls.length - 1)" mat-mini-fab
+                                aria-label="Agregar negación de seguro" (click)=" addFormArray(denyArray,'deny_array') "
+                                type="button" class="dashboard-toolbar-buttons"
+                                style="border: 1px rgb(197, 197, 197) solid">
                                 <mat-icon style="color: #18446B">add</mat-icon>
                               </button>
                               <button *ngIf="denyArray.controls.length > 1" mat-mini-fab
@@ -1482,7 +1492,8 @@
                             </div>
                             <div
                               class="mb-8 -mx-2 sm:mb-8 sm:mx-0 md:mb-8 md:mx-0 lg:mb-8 lg:mx-0 lg:mt-2 xl:mx-0 xl:mb-8 mt-2">
-                              <button *ngIf="in == (insuranceArray.controls.length - 1)" mat-mini-fab aria-label="Agregar negación de seguro"
+                              <button *ngIf="in == (insuranceArray.controls.length - 1)" mat-mini-fab
+                                aria-label="Agregar negación de seguro"
                                 (click)=" addFormArray(insuranceArray,'insurance_array') " type="button"
                                 class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
                                 <mat-icon style="color: #18446B">add</mat-icon>
@@ -1586,26 +1597,34 @@
                           <app-input [group]="disabilityGroup.get('main').get('main_array').get(in.toString())"
                             label="Ocupación" name='ocupation'></app-input>
                         </div>
-                        <div class="mr-3 mt-2 xl:mt-0">
-                          <!-- mb-3  sm:mb-3 xl:mt-8 xl:pt-1 -->
-                          <app-select [options]="family"
-                            [group]="disabilityGroup.get('main').get('main_array').get(in.toString())">
-                          </app-select>
-                          <!-- <app-input [group]="disabilityGroup.get('main').get('main_array').get(in.toString())"
-                            label="Parentesco" name="relationship" placeholder="Ej.: Su Hermano"></app-input> -->
-                        </div>
+                        <!-- mb-3  sm:mb-3 xl:mt-8 xl:pt-1 -->
+                        <app-select class="mr-3 mt-2 xl:mt-0" [options]="family"
+                          [group]="disabilityGroup.get('main').get('main_array').get(in.toString())"
+                          (selected)="relationWatcher($event, disabilityGroup.get('main').get('main_array').get(in.toString()))">
+                        </app-select>
+                        <app-input class="mr-3"
+                          [group]="disabilityGroup.get('main').get('main_array').get(in.toString())"
+                          *ngIf="disabilityGroup.get('main').get('main_array').get(in.toString()).get('specifyRelationship')"
+                          label="Especificar" name='specifyRelationship'></app-input>
                         <div class="mr-3 mt-2 xl:mt-0">
                           <!-- mb-3  sm:mb-3 xl:mt-8 xl:pt-1 -->
                           <app-number-input [group]="disabilityGroup.get('main').get('main_array').get(in.toString())"
                             label="Cant. en %" name="percentage" placeholder="Ej.: 35" min="1" max="100">
                           </app-number-input>
                         </div>
+                        <mat-form-field class="mr-3" appearance="outline">
+                          <mat-label> Adjuntar documento de identidad si es mayor de edad </mat-label>
+                          <ngx-mat-file-input placeholder="Documento de Identidad"
+                            (change)="onBeneficiaryFileChangeOnArray($event, 'id2Attached', in, 'main', 'main_array')">
+                          </ngx-mat-file-input>
+                          <mat-icon style="color: #e2e2e2;" matSuffix>publish</mat-icon>
+                        </mat-form-field>
                       </div>
                       <div
                         class="mb-8 -mx-2 sm:mb-8 sm:mx-0 md:mb-8 md:mx-0 lg:mb-8 lg:mx-0 lg:mt-2 xl:mx-0 xl:mb-8 mt-2">
-                        <button *ngIf="in == (mainFormArray.controls.length - 1)" mat-mini-fab aria-label="Agregar análisis"
-                          (click)=" addFormArray(mainFormArray,'main_array') " type="button"
-                          class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
+                        <button *ngIf="in == (mainFormArray.controls.length - 1)" mat-mini-fab
+                          aria-label="Agregar análisis" (click)=" addFormArray(mainFormArray,'main_array') "
+                          type="button" class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
                           <mat-icon style="color: #18446B">add</mat-icon>
                         </button>
                         <button *ngIf="mainFormArray.controls.length > 1" mat-mini-fab aria-label="Eliminar análisis"
@@ -1643,16 +1662,26 @@
                       <app-input [group]="disabilityGroup.get('main')" label="Nombres y Apellidos" name='full_name'
                         placeholder="Por ej: Julio Mena de los Santos"> </app-input>
                     </div>
-                    <div class="mr-3 mt-2 md:mt-0 lg:mt-0 xl:mt-0">
-                      <app-select [options]="family" [group]="disabilityGroup.get('main')">
-                      </app-select>
-                      <!-- <app-input [group]="disabilityGroup.get('main')" label="Parentesco" name='relationship'
+                    <app-select class="mr-3 mt-2 md:mt-0 lg:mt-0 xl:mt-0" [options]="family"
+                      [group]="disabilityGroup.get('main')"
+                      (selected)="relationWatcher($event, disabilityGroup.get('main'))">
+                    </app-select>
+                    <app-input class="mr-3" [group]="disabilityGroup.get('main')"
+                      *ngIf="disabilityGroup.get('main').get('specifyRelationship')" label="Especificar"
+                      name='specifyRelationship'></app-input>
+                    <!-- <app-input [group]="disabilityGroup.get('main')" label="Parentesco" name='relationship'
                         placeholder="Por ej: Su Hijo"> </app-input> -->
-                    </div>
                     <div class="mr-3 mt-2 md:col-span-2 lg:col-span-2 lg:mt-0 xl:col-span-1 xl:mt-0">
                       <app-input [group]="disabilityGroup.get('main')" label="Cédula/Pasaporte" name='id_passport'
                         placeholder="Por ej: 402-0070012-8"> </app-input>
                     </div>
+                    <mat-form-field class="mr-3" appearance="outline">
+                      <mat-label> Adjuntar documento de identidad si es mayor de edad </mat-label>
+                      <ngx-mat-file-input placeholder="Documento de Identidad"
+                        (change)="onBeneficiaryFileChangeOnArray($event, 'id2Attached', null, 'main')">
+                      </ngx-mat-file-input>
+                      <mat-icon style="color: #e2e2e2;" matSuffix>publish</mat-icon>
+                    </mat-form-field>
                   </div>
                 </div>
               </div>
@@ -1691,15 +1720,14 @@
                             [group]="disabilityGroup.get('contingent').get('contingent_array').get(in.toString())"
                             label="Ocupación" name='ocupation'></app-input>
                         </div>
-                        <div class="mr-3 mt-2 xl:mt-0">
-                          <!-- mb-3  sm:mb-3 xl:mt-8 xl:pt-1 -->
-                          <app-select [options]="family"
-                            [group]="disabilityGroup.get('contingent').get('contingent_array').get(in.toString())">
-                          </app-select>
-                          <!-- <app-input
-                            [group]="disabilityGroup.get('contingent').get('contingent_array').get(in.toString())"
-                            label="Parentesco" name="relationship" placeholder="Ej.: Su Hermano"></app-input>-->
-                        </div>
+                        <app-select class="mr-3 mt-2 xl:mt-0" [options]="family"
+                          [group]="disabilityGroup.get('contingent').get('contingent_array').get(in.toString())"
+                          (selected)="relationWatcher($event, disabilityGroup.get('contingent').get('contingent_array').get(in.toString()))">
+                        </app-select>
+                        <app-input class="mr-3"
+                          [group]="disabilityGroup.get('contingent').get('contingent_array').get(in.toString())"
+                          *ngIf="disabilityGroup.get('contingent').get('contingent_array').get(in.toString()).get('specifyRelationship')"
+                          label="Especificar" name='specifyRelationship'></app-input>
                         <div class="mr-3 mt-2 xl:mt-0">
                           <!-- mb-3  sm:mb-3 xl:mt-8 xl:pt-1 -->
                           <app-number-input
@@ -1707,12 +1735,19 @@
                             label="Cant. en %" name="percentage" placeholder="Ej.: 35" min="1" max="100">
                           </app-number-input>
                         </div>
+                        <mat-form-field class="mr-3" appearance="outline">
+                          <mat-label> Adjuntar documento de identidad si es mayor de edad </mat-label>
+                          <ngx-mat-file-input placeholder="Documento de Identidad"
+                            (change)="onBeneficiaryFileChangeOnArray($event, 'id2Attached', in, 'contingent', 'contingent_array')">
+                          </ngx-mat-file-input>
+                          <mat-icon style="color: #e2e2e2;" matSuffix>publish</mat-icon>
+                        </mat-form-field>
                       </div>
                       <div
                         class="mb-8 -mx-2 sm:mb-8 sm:mx-0 md:mb-8 md:mx-0 lg:mb-8 lg:mx-0 lg:mt-2 xl:mx-0 xl:mb-8 mt-2">
-                        <button *ngIf="in == (contingentFormArray.controls.length - 1)" mat-mini-fab aria-label="Agregar análisis"
-                          (click)=" addFormArray(contingentFormArray,'contingent_array') " type="button"
-                          class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
+                        <button *ngIf="in == (contingentFormArray.controls.length - 1)" mat-mini-fab
+                          aria-label="Agregar análisis" (click)=" addFormArray(contingentFormArray,'contingent_array') "
+                          type="button" class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
                           <mat-icon style="color: #18446B">add</mat-icon>
                         </button>
                         <button *ngIf="contingentFormArray.controls.length > 1" mat-mini-fab
@@ -1750,16 +1785,24 @@
                       <app-input [group]="disabilityGroup.get('contingent')" label="Nombres y Apellidos"
                         name='full_name' placeholder="Por ej: Julio Mena de los Santos"> </app-input>
                     </div>
-                    <div class="mr-3 mt-2 md:mt-0 lg:mt-0 xl:mt-0">
-                      <app-select [options]="family" [group]="disabilityGroup.get('contingent')">
-                      </app-select>
-                      <!-- <app-input [group]="disabilityGroup.get('contingent')" label="Parentesco" name='relationship'
-                        placeholder="Por ej: Su Hijo"> </app-input> -->
-                    </div>
+                    <app-select class="mr-3 mt-2 md:mt-0 lg:mt-0 xl:mt-0" [options]="family"
+                      [group]="disabilityGroup.get('contingent')"
+                      (selected)="relationWatcher($event, disabilityGroup.get('contingent'))">
+                    </app-select>
+                    <app-input class="mr-3" [group]="disabilityGroup.get('contingent')"
+                      *ngIf="disabilityGroup.get('contingent').get('specifyRelationship')" label="Especificar"
+                      name='specifyRelationship'></app-input>
                     <div class="mr-3 mt-2 md:col-span-2 lg:col-span-2 lg:mt-0 xl:col-span-1 xl:mt-0">
                       <app-input [group]="disabilityGroup.get('contingent')" label="Cédula/Pasaporte" name='id_passport'
                         placeholder="Por ej: 402-0070012-8"> </app-input>
                     </div>
+                    <mat-form-field class="mr-3" appearance="outline">
+                      <mat-label> Adjuntar documento de identidad si es mayor de edad </mat-label>
+                      <ngx-mat-file-input placeholder="Documento de Identidad"
+                        (change)="onBeneficiaryFileChangeOnArray($event, 'id2Attached', null, 'contingent')">
+                      </ngx-mat-file-input>
+                      <mat-icon style="color: #e2e2e2;" matSuffix>publish</mat-icon>
+                    </mat-form-field>
                   </div>
                 </div>
 

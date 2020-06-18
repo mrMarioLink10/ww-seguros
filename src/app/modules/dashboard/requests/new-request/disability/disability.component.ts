@@ -634,14 +634,14 @@ export class DisabilityComponent implements OnInit, DoCheck {
         telephone: ['', Validators.required],
         email: ['', [Validators.required, Validators.email]],
         job_description: ['', Validators.required],
-        job_hours: ['', [Validators.required, Validators.min(1)]],
+        job_hours: [{ value: '', disabled: true }, [Validators.required, Validators.min(0)]],
         date: ['', Validators.required],
         reason_pension: [''],
-        office_hours: ['', [Validators.required, Validators.min(1)]],
+        office_hours: ['', [Validators.required, Validators.min(0)]],
         company: ['', Validators.required],
         amount_pension: ['', Validators.min(1)],
         currency_pension: [''],
-        outside_hours: ['', [Validators.required, Validators.min(1)]],
+        outside_hours: ['', [Validators.required, Validators.min(0)]],
         pension_radio: ['', Validators.required],
         pep_radio_insured: ['', Validators.required],
         insuredPolicyholderRadio: ['', Validators.required]
@@ -1032,6 +1032,33 @@ export class DisabilityComponent implements OnInit, DoCheck {
         }
       }
     }
+
+    let totalJobHours;
+    let insideHours;
+    let outsideHours;
+
+    // if (this.disabilityGroup.get('insured_data').get('job_hours').valueChanges) {
+    //   totalJobHours = this.disabilityGroup.get('insured_data').get('job_hours').value;
+    // }
+
+    insideHours = this.disabilityGroup.get('insured_data').get('office_hours').value;
+    outsideHours = this.disabilityGroup.get('insured_data').get('outside_hours').value;
+
+    // if (insideHours == null || insideHours == undefined) {
+    //   insideHours = 0;
+    // }
+
+    // if (outsideHours == null || outsideHours == undefined) {
+    //   outsideHours = 0;
+    // }
+
+    totalJobHours = insideHours - outsideHours;
+
+    // if ((insideHours == null || insideHours == undefined) && (outsideHours == null || outsideHours == undefined) ) {
+    //   totalJobHours = '';
+    // }
+
+    this.disabilityGroup.get('insured_data').get('job_hours').setValue(totalJobHours);
   }
 
   onStudiesChange(event, i) {

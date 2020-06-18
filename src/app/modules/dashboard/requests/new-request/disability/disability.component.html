@@ -99,14 +99,22 @@
                     </div>
                   </div>
                   <div class="mr-3 mt-5 md:mt-0 lg:mt-0 xl:mt-0">
-                    <app-date-picker [max]="disabilityGroup.get('insured_data').value.date_until"
+                    <datepicker-month [max]="disabilityGroup.get('insured_data').value.date_until" 
+                    fieldId="date_since" [group]="disabilityGroup.get('insured_data')" label="Desde" 
+                    name='date_since'>
+                    </datepicker-month>
+                    <!-- <app-date-picker [max]="disabilityGroup.get('insured_data').value.date_until"
                       [group]="disabilityGroup.get('insured_data')" label="Desde" name='date_since'>
-                    </app-date-picker>
+                    </app-date-picker> -->
                   </div>
                   <div class="mr-3 mt-5 md:mt-0 lg:mt-0 xl:mt-0">
-                    <app-date-picker [min]="disabilityGroup.get('insured_data').value.date_since"
+                    <datepicker-month [min]="disabilityGroup.get('insured_data').value.date_since" 
+                    fieldId="date_until" [group]="disabilityGroup.get('insured_data')" label="Hasta" 
+                    name='date_until'>
+                    </datepicker-month>
+                    <!-- <app-date-picker [min]="disabilityGroup.get('insured_data').value.date_since"
                       [group]="disabilityGroup.get('insured_data')" label="Hasta" name='date_until'>
-                    </app-date-picker>
+                    </app-date-picker> -->
                   </div>
                   <div class="mr-3 mt-5 md:mt-0 lg:mt-3 xl:mt-0">
                     <app-input [group]="disabilityGroup.get('insured_data')" label="Nombre de la posición"
@@ -180,7 +188,7 @@
                     <div>
 
                       <div class="mb-3 mr-4">
-                        <label class="formulary-labels "> Promedio en horas en el lugar de trabajo </label>
+                        <label class="formulary-labels "> Promedio de horas de trabajo </label>
                       </div>
 
                       <div class="mr-3">

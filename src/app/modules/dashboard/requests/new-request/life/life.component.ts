@@ -493,10 +493,10 @@ export class LifeComponent implements OnInit, DoCheck {
   @ViewChild('form', { static: false }) form;
 
   ngOnInit() {
-   /* this.userService.getWholeQuotes()
-      .subscribe(res => {
-        console.log(res);
-      });*/
+    /* this.userService.getWholeQuotes()
+       .subscribe(res => {
+         console.log(res);
+       });*/
 
     this.route.params.subscribe(res => {
       this.ID = res.id;
@@ -1187,6 +1187,16 @@ export class LifeComponent implements OnInit, DoCheck {
       if (this.arrayFilesTitles[i] && this.newRequest.get('files').get('studies').get(i.toString()).value.study !== '') {
         return this.arrayFilesTitles[i].studyUrl;
       }
+    }
+  }
+
+  relationWatcher(event, realForm) {
+    console.log('event: ', event.valor, 'form: ', realForm);
+    const form = realForm as FormGroup;
+    if (event.valor === 'otros') {
+      form.addControl('specifyRelationship', this.fb.control('', Validators.required));
+    } else {
+      form.removeControl('specifyRelationship');
     }
   }
 

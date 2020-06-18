@@ -629,12 +629,17 @@
                           [group]="newRequest.get('primaryBenefits').get('dependentsC').get(index.toString())"
                           label="Ocupación" name='ocupation'></app-input>
                         <app-select class="mr-3" [options]="family"
-                          [group]="newRequest.get('primaryBenefits').get('dependentsC').get(index.toString())">
+                          [group]="newRequest.get('primaryBenefits').get('dependentsC').get(index.toString())"
+                          (selected)="relationWatcher($event, newRequest.get('primaryBenefits').get('dependentsC').get(index.toString()))">
                         </app-select>
+                        <app-input class="mr-3"
+                          [group]="newRequest.get('primaryBenefits').get('dependentsC').get(index.toString())"
+                          *ngIf="newRequest.get('primaryBenefits').get('dependentsC').get(index.toString()).get('specifyRelationship')"
+                          label="Especificar" name='specifyRelationship'></app-input>
                         <app-number-input class="mr-3" min="1" max="100"
                           [group]="newRequest.get('primaryBenefits').get('dependentsC').get(index.toString())"
                           label="Cant. en %" name='quantity'></app-number-input>
-                        <mat-form-field class="mr-3 col-span-2" appearance="outline">
+                        <mat-form-field class="mr-3" appearance="outline">
                           <mat-label> Adjuntar documento de identidad si es mayor de edad </mat-label>
                           <ngx-mat-file-input placeholder="Documento de Identidad"
                             (change)="onFileChangeOnArray($event, 'id2Attached', index, 'primaryBenefits')">
@@ -684,7 +689,12 @@
                   <app-input class="mr-3" [group]="newRequest.get('primaryBenefits').get('personBenefited')"
                     label="Nombre" name="name"></app-input>
                   <app-select class="mr-3" [options]="family"
-                    [group]="newRequest.get('primaryBenefits').get('personBenefited')"></app-select>
+                    [group]="newRequest.get('primaryBenefits').get('personBenefited')"
+                    (selected)="relationWatcher($event, newRequest.get('primaryBenefits').get('personBenefited'))">
+                  </app-select>
+                  <app-input class="mr-3" [group]="newRequest.get('primaryBenefits').get('personBenefited')"
+                    *ngIf="newRequest.get('primaryBenefits').get('personBenefited').get('specifyRelationship')"
+                    label="Especificar" name='specifyRelationship'></app-input>
                   <app-input class="mr-3" [group]="newRequest.get('primaryBenefits').get('personBenefited')"
                     label="Cédula/Pasaporte" name='id2'></app-input>
                   <mat-form-field class="mr-3" appearance="outline">
@@ -726,12 +736,17 @@
                           [group]="newRequest.get('contingentBeneficiary').get('dependentsC').get(index.toString())"
                           label="Ocupación" name='ocupation'></app-input>
                         <app-select class="mr-3" [options]="family"
-                          [group]="newRequest.get('contingentBeneficiary').get('dependentsC').get(index.toString())">
+                          [group]="newRequest.get('contingentBeneficiary').get('dependentsC').get(index.toString())"
+                          (selected)="relationWatcher($event, newRequest.get('contingentBeneficiary').get('dependentsC').get(index.toString()))">
                         </app-select>
+                        <app-input class="mr-3"
+                          [group]="newRequest.get('contingentBeneficiary').get('dependentsC').get(index.toString())"
+                          *ngIf="newRequest.get('contingentBeneficiary').get('dependentsC').get(index.toString()).get('specifyRelationship')"
+                          label="Especificar" name='specifyRelationship'></app-input>
                         <app-number-input class="mr-3" min="1" max="100"
                           [group]="newRequest.get('contingentBeneficiary').get('dependentsC').get(index.toString())"
                           label="Cant. en %" name='quantity'></app-number-input>
-                        <mat-form-field class="mr-3 col-span-2" appearance="outline">
+                        <mat-form-field class="mr-3" appearance="outline">
                           <mat-label> Adjuntar documento de identidad si es mayor de edad </mat-label>
                           <ngx-mat-file-input placeholder="Documento de Identidad"
                             (change)="onFileChangeOnArray($event, 'id2Attached', index, 'contingentBeneficiary')">
@@ -781,7 +796,12 @@
                   <app-input class="mr-3" [group]="newRequest.get('contingentBeneficiary').get('personBenefited')"
                     label="Nombre" name="name"></app-input>
                   <app-select class="mr-3" [options]="family"
-                    [group]="newRequest.get('contingentBeneficiary').get('personBenefited')"></app-select>
+                    [group]="newRequest.get('contingentBeneficiary').get('personBenefited')"
+                    (selected)="relationWatcher($event, newRequest.get('contingentBeneficiary').get('personBenefited'))">
+                  </app-select>
+                  <app-input class="mr-3" [group]="newRequest.get('contingentBeneficiary').get('personBenefited')"
+                    *ngIf="newRequest.get('contingentBeneficiary').get('personBenefited').get('specifyRelationship')"
+                    label="Especificar" name='specifyRelationship'></app-input>
                   <app-input class="mr-3" [group]="newRequest.get('contingentBeneficiary').get('personBenefited')"
                     label="Cédula/Pasaporte" name='id2'></app-input>
                   <mat-form-field class="mr-3" appearance="outline">

@@ -340,9 +340,9 @@
                     <app-radio-button class="mr-3"
                       [group]="newRequest.get('dependents').get('allDependents').get(index.toString())" name="sex"
                       [options]="sex"></app-radio-button>
-                    <app-radio-button class="mb-3 col-span-2"
+                    <app-select class="mr-3 col-span-2"
                       [group]="newRequest.get('dependents').get('allDependents').get(index.toString())" name="family"
-                      [options]="family"></app-radio-button>
+                      [options]="family"></app-select>
                     <div
                       class="mr-3 grid col-span-4 grid-cols-1 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-6 xl:grid-cols-6">
                       <app-number-input class="mr-3"
@@ -485,10 +485,10 @@
               esta solicitud que haya padecido o padezca de alguna de las siguientes enfermedades:
             </p>
             <hr class="w-full mb-10 ww-divider">
-            <div *ngFor="let question of questions">
+            <div *ngFor="let question of questions; let idx = index">
               <div
                 class="w-full xl:flex xl:justify-between lg:flex lg:justify-between md:flex md:justify-between sm:flex sm:justify-between">
-                <div class="radio-button-label self-center" style="max-width: 65%;">¿{{question.question}}
+                <div class="radio-button-label self-center" style="max-width: 65%;">{{idx+1}} .{{question.question}}
                 </div>
                 <div class="flex">
                   <div class="self-center">
@@ -1086,7 +1086,8 @@
           [form]="newRequest.get('contractor').get('conozcaSuClientePersona')">
         </app-know-your-customer>
       </mat-tab>
-      <mat-tab *ngFor=" let element of dependentsFormArray.controls; let i = index" [label]="'D0'+ (i+1)">
+      <mat-tab *ngFor=" let element of dependentsFormArray.controls; let i = index"
+        [label]="'D'+ (i+1) +' - '+ newRequest.get('dependents').get('allDependents').get(i.toString()).value.name +' '+ newRequest.get('dependents').get('allDependents').get(i.toString()).value.lastName">
         <app-hypertension
           *ngIf="newRequest.get('dependents').get('allDependents').get(i.toString()).get('solicitudHipertensionArterial')"
           [form]="newRequest.get('dependents').get('allDependents').get(i.toString()).get('solicitudHipertensionArterial')">

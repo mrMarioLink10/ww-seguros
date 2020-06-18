@@ -404,6 +404,38 @@
                         name='policyholderKnowClientRadio' (selected)="selectChange($event)">
                       </app-radio-button>
                     </div>
+
+                    <!-- <div>
+                      <div class="radio-button-label" style="font-size: 12px !important; max-width: 63vw;">Adjuntar documentos (Opcional)
+                      </div>
+                      <div *ngFor="let studies of filesDocumentsArray.controls; let i = index">
+                        <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
+                          <mat-form-field class="mr-3" appearance="outline">
+                            <mat-label> Estudio </mat-label>
+                            <ngx-mat-file-input [valuePlaceholder]="arrayDocumentsWatcher(i)"
+                              (change)="onStudiesChange($event, i)">
+                            </ngx-mat-file-input>
+                            <mat-icon style="color: #e2e2e2;" matSuffix>publish</mat-icon>
+                          </mat-form-field>
+                          <div class="grid grid-cols-2">
+                            <div class="">
+                              <button mat-mini-fab aria-label="Agregar estudio" (click)="addToList(filesDocumentsArray, 'filesStudies')"
+                                type="button" class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
+                                <mat-icon style="color: #18446B">add</mat-icon>
+                              </button>
+                            </div>
+                            <div [ngClass]="{'': filesDocumentsArray.length === 1, 'col-span-1': filesDocumentsArray.length > 1} ">
+                              <button mat-mini-fab aria-label=" Eliminar estudio"
+                                (click)="diseaseService.removeToList(i, filesDocumentsArray)" type="button"
+                                class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
+                                <mat-icon style="color: #18446B">remove</mat-icon>
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>                 
+                    </div> -->
+
                   </div>
 
                 </div>
@@ -749,7 +781,7 @@
                             </div>
                             <div
                               class="mb-8 -mx-2 sm:mb-8 sm:mx-0 md:mb-8 md:mx-0 lg:mb-8 lg:mx-0 lg:mt-2 xl:mx-0  xl:mb-8 mt-2">
-                              <button mat-mini-fab aria-label="Agregar tratamiento"
+                              <button *ngIf="in == (therapyArray.controls.length - 1)" mat-mini-fab aria-label="Agregar tratamiento"
                                 (click)=" addFormArray(therapyArray,'therapy_array') " type="button"
                                 class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
                                 <mat-icon style="color: #18446B">add</mat-icon>
@@ -799,9 +831,9 @@
                                 </app-text-area>
                               </div>
                             </div>
-                            <div
+                            <div 
                               class="mb-8 -mx-2 sm:mb-8 sm:mx-0 md:mb-8 md:mx-0 lg:mb-8 lg:mx-0 lg:mt-2 xl:mx-0 xl:mb-8 mt-2">
-                              <button mat-mini-fab aria-label="Agregar licencia médica"
+                              <button *ngIf="in == (sickPayArray.controls.length - 1)" mat-mini-fab aria-label="Agregar licencia médica"
                                 (click)=" addFormArray(sickPayArray,'sick_pay_array') " type="button"
                                 class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
                                 <mat-icon style="color: #18446B">add</mat-icon>
@@ -858,7 +890,7 @@
                             </div>
                             <div
                               class="mb-8 -mx-2 sm:mb-8 sm:mx-0 md:mb-8 md:mx-0 lg:mb-8 lg:mx-0 lg:mt-2 xl:mx-0 xl:mb-8 mt-2">
-                              <button mat-mini-fab aria-label="Agregar estudio"
+                              <button *ngIf="in == (testArray.controls.length - 1)" mat-mini-fab aria-label="Agregar estudio"
                                 (click)=" addFormArray(testArray,'analysis_array') " type="button"
                                 class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
                                 <mat-icon style="color: #18446B">add</mat-icon>
@@ -903,7 +935,7 @@
                             </div>
                             <div
                               class="mb-8 -mx-2 sm:mb-8 sm:mx-0 md:mb-8 md:mx-0 lg:mb-8 lg:mx-0 lg:mt-2 xl:mx-0 xl:mb-8 mt-2">
-                              <button mat-mini-fab aria-label="Agregar otro estudio"
+                              <button *ngIf="in == (otherAnalysisArray.controls.length - 1)" mat-mini-fab aria-label="Agregar otro estudio"
                                 (click)=" addFormArray(otherAnalysisArray,'other_analysis_array') " type="button"
                                 class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
                                 <mat-icon style="color: #18446B">add</mat-icon>
@@ -958,7 +990,7 @@
                               </div>
                               <div
                                 class="mb-8 -mx-2 sm:mb-8 sm:mx-0 md:mb-8 md:mx-0 lg:mb-8 lg:mx-0 lg:mt-2 xl:mx-0 xl:mb-8 mt-2">
-                                <button mat-mini-fab aria-label="Agregar hospitalización"
+                                <button *ngIf="in == (inpatientCareArray.controls.length - 1)" mat-mini-fab aria-label="Agregar hospitalización"
                                   (click)=" addFormArray(inpatientCareArray,'inpatientCare_array') " type="button"
                                   class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
                                   <mat-icon style="color: #18446B">add</mat-icon>
@@ -1005,7 +1037,7 @@
                             </div>
                             <div
                               class="mb-8 -mx-2 sm:mb-8 sm:mx-0 md:mb-8 md:mx-0 lg:mb-8 lg:mx-0 lg:mt-2 xl:mx-0 xl:mb-8 mt-2">
-                              <button mat-mini-fab aria-label="Agregar hospitalización futura"
+                              <button *ngIf="in == (hospitalizationArray.controls.length - 1)" mat-mini-fab aria-label="Agregar hospitalización futura"
                                 (click)=" addFormArray(hospitalizationArray,'hospitalization_array') " type="button"
                                 class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
                                 <mat-icon style="color: #18446B">add</mat-icon>
@@ -1164,7 +1196,7 @@
                           </div>
                           <div
                             class="mb-8 -mx-2 sm:mb-8 sm:mx-0 md:mb-8 md:mx-0 lg:mb-8 lg:mx-0 lg:mt-2 xl:mx-0 xl:mb-8 mt-2">
-                            <button mat-mini-fab aria-label="Agregar enfermedad de la sangre"
+                            <button *ngIf="in == (bloodSickArray.controls.length - 1)" mat-mini-fab aria-label="Agregar enfermedad de la sangre"
                               (click)=" addFormArray(bloodSickArray,'bloodSick_array') " type="button"
                               class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
                               <mat-icon style="color: #18446B">add</mat-icon>
@@ -1193,10 +1225,10 @@
                           </div>
                         </div>
                         <div class="inline float-right mt-1 sm:mt-1 md:mt-1 lg:mt-1 xl:-mt-5">
-                          <app-radio-button [group]="disabilityGroup.get('questions').get('questionnaire')"
+                          <app-radio-button class="inline float-right mt-1 sm:mt-1 md:mt-1 lg:mt-1 xl:-mt-5" [group]="disabilityGroup.get('questions').get('questionnaire')"
                             name="VIH_radio" [options]="YesNo" (selected)="selectChange($event)"> </app-radio-button>
                         </div>
-                        <div class="mt-16"
+                        <div class="mt-8"
                           *ngIf="this.disabilityGroup.get('questions').get('questionnaire').get('VIH_radio').value == 'si'">
                           <div *ngFor=" let elements of VIHArray.controls; let in = index">
                             <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
@@ -1213,7 +1245,7 @@
                             </div>
                             <div
                               class="mb-8 -mx-2 sm:mb-8 sm:mx-0 md:mb-8 md:mx-0 lg:mb-8 lg:mx-0 lg:mt-2 xl:mx-0 xl:mb-8 mt-2">
-                              <button mat-mini-fab aria-label="Agregar enfermedad de VIH"
+                              <button *ngIf="in == (VIHArray.controls.length - 1)" mat-mini-fab aria-label="Agregar enfermedad de VIH"
                                 (click)=" addFormArray(VIHArray,'VIH_array') " type="button"
                                 class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
                                 <mat-icon style="color: #18446B">add</mat-icon>
@@ -1267,7 +1299,7 @@
                             </div>
                             <div
                               class="mb-8 -mx-2 sm:mb-8 sm:mx-0 md:mb-8 md:mx-0 lg:mb-8 lg:mx-0 lg:mt-2 xl:mx-0 xl:mb-8 mt-2">
-                              <button mat-mini-fab aria-label="Agregar tratamiento especial"
+                              <button *ngIf="in == (specialTherapyArray.controls.length - 1)" mat-mini-fab aria-label="Agregar tratamiento especial"
                                 (click)=" addFormArray(specialTherapyArray,'specialTherapy_array') " type="button"
                                 class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
                                 <mat-icon style="color: #18446B">add</mat-icon>
@@ -1319,7 +1351,7 @@
                             </div>
                             <div
                               class="mb-8 -mx-2 sm:mb-8 sm:mx-0 md:mb-8 md:mx-0 lg:mb-8 lg:mx-0 lg:mt-2 xl:mx-0 xl:mb-8 mt-2">
-                              <button mat-mini-fab aria-label="Agregar enfermedad/accidente con efectos secundarios"
+                              <button *ngIf="in == (accidentArray.controls.length - 1)" mat-mini-fab aria-label="Agregar enfermedad/accidente con efectos secundarios"
                                 (click)=" addFormArray(accidentArray,'accident_array') " type="button"
                                 class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
                                 <mat-icon style="color: #18446B">add</mat-icon>
@@ -1365,7 +1397,7 @@
                             </div>
                             <div
                               class="mb-8 -mx-2 sm:mb-8 sm:mx-0 md:mb-8 md:mx-0 lg:mb-8 lg:mx-0 lg:mt-2 xl:mx-0 xl:mb-8 mt-2">
-                              <button mat-mini-fab aria-label="Agregar negación de seguro"
+                              <button *ngIf="in == (denyArray.controls.length - 1)" mat-mini-fab aria-label="Agregar negación de seguro"
                                 (click)=" addFormArray(denyArray,'deny_array') " type="button"
                                 class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
                                 <mat-icon style="color: #18446B">add</mat-icon>
@@ -1450,7 +1482,7 @@
                             </div>
                             <div
                               class="mb-8 -mx-2 sm:mb-8 sm:mx-0 md:mb-8 md:mx-0 lg:mb-8 lg:mx-0 lg:mt-2 xl:mx-0 xl:mb-8 mt-2">
-                              <button mat-mini-fab aria-label="Agregar negación de seguro"
+                              <button *ngIf="in == (insuranceArray.controls.length - 1)" mat-mini-fab aria-label="Agregar negación de seguro"
                                 (click)=" addFormArray(insuranceArray,'insurance_array') " type="button"
                                 class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
                                 <mat-icon style="color: #18446B">add</mat-icon>
@@ -1571,7 +1603,7 @@
                       </div>
                       <div
                         class="mb-8 -mx-2 sm:mb-8 sm:mx-0 md:mb-8 md:mx-0 lg:mb-8 lg:mx-0 lg:mt-2 xl:mx-0 xl:mb-8 mt-2">
-                        <button mat-mini-fab aria-label="Agregar análisis"
+                        <button *ngIf="in == (mainFormArray.controls.length - 1)" mat-mini-fab aria-label="Agregar análisis"
                           (click)=" addFormArray(mainFormArray,'main_array') " type="button"
                           class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
                           <mat-icon style="color: #18446B">add</mat-icon>
@@ -1678,7 +1710,7 @@
                       </div>
                       <div
                         class="mb-8 -mx-2 sm:mb-8 sm:mx-0 md:mb-8 md:mx-0 lg:mb-8 lg:mx-0 lg:mt-2 xl:mx-0 xl:mb-8 mt-2">
-                        <button mat-mini-fab aria-label="Agregar análisis"
+                        <button *ngIf="in == (contingentFormArray.controls.length - 1)" mat-mini-fab aria-label="Agregar análisis"
                           (click)=" addFormArray(contingentFormArray,'contingent_array') " type="button"
                           class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
                           <mat-icon style="color: #18446B">add</mat-icon>

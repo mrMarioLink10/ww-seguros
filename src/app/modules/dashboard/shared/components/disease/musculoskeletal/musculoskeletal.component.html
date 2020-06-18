@@ -178,7 +178,7 @@
 
           <div>
 
-            <div *ngIf="this.form.get('data').get('episode_radio').value == 'si'">
+            <div class="mt-32 sm:mt-32 md:mt-24 lg:mt-20 xl:mt-20" *ngIf="this.form.get('data').get('episode_radio').value == 'si'">
               <!-- *ngIf="episodeFormArray" -->
 
               <div *ngFor=" let elements of episodeFormArray.controls; let in = index">
@@ -227,7 +227,7 @@
                     <div
                       class="pt-1 grid grid-cols-3 sm:grid-cols-3 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 mb-6 sm:mb-5 md:mb-0 lg:mb-0 xl:mb-0 ">
 
-                      <div>
+                      <div class="ml-1 sm:ml-0 md:ml-0 lg:ml-1 xl:ml-1" *ngIf="in == (episodeFormArray.controls.length - 1)">
 
                         <button mat-mini-fab aria-label="Agregar análisis"
                           (click)=" addFormArray(episodeFormArray,'episode_array') " type="button"
@@ -281,7 +281,7 @@
 
           <div>
 
-            <div *ngIf="this.form.get('data').get('surgery_radio').value == 'si'">
+            <div class="mt-32 sm:mt-32 md:mt-24 lg:mt-20 xl:mt-20" *ngIf="this.form.get('data').get('surgery_radio').value == 'si'">
               <!-- *ngIf="episodeFormArray" -->
 
               <div *ngFor=" let elements of surgeryFormArray.controls; let in = index">
@@ -324,7 +324,7 @@
 
                 <div class="mb-8 -mx-2 sm:mb-8 sm:mx-0 md:mb-8 md:mx-0 lg:mb-8 lg:mx-0 lg:mt-2 xl:mx-0 xl:mb-8">
 
-                  <button mat-mini-fab aria-label="Agregar análisis"
+                  <button *ngIf="in == (surgeryFormArray.controls.length - 1)" mat-mini-fab aria-label="Agregar análisis"
                     (click)=" addFormArray(surgeryFormArray,'surgery_array') " type="button"
                     class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
                     <mat-icon style="color: #18446B">add</mat-icon>
@@ -422,7 +422,7 @@
                 <div class="mt-4 -mx-2 mb-8 sm:mb-8 sm:mx-0 md:mb-8 md:mx-0 lg:mb-8 lg:mx-0 xl:mb-8 xl:mx-0">
                   <!-- mb-8  sm:mb-8 sm:mx-0 md:mb-8 md:mx-0 lg:mb-8 lg:mx-0 lg:mt-2 xl:mx-0 xl:mb-8 -->
 
-                  <button mat-mini-fab aria-label="Agregar análisis"
+                  <button *ngIf="in == (therapyFormArray.controls.length - 1)" mat-mini-fab aria-label="Agregar análisis"
                     (click)=" addFormArray(therapyFormArray,'therapy_array') " type="button"
                     class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
                     <mat-icon style="color: #18446B">add</mat-icon>

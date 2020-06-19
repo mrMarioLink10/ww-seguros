@@ -1843,6 +1843,10 @@ export class DisabilityComponent implements OnInit, DoCheck {
         this.existingCoveragesList = this.disabilityGroup.get('contingent').get('anotherCoverages') as FormArray;
         this.changingCoveragesList = this.disabilityGroup.get('contingent').get('changingCoverages') as FormArray;
         this.filesStudiesArray = formF.get('studies') as FormArray;
+        if (this.disabilityGroup.get('files') && this.disabilityGroup.get('files').get('documentsKnowClient'))
+        {
+        this.filesDocumentsKnowClientArray = this.disabilityGroup.get('files').get('documentsKnowClient') as FormArray;
+        }
         //this.disabilityGroup['controls'].num_financial_quote.setValue(data.data.num_financial_quote)
 
         this.arrayFilesTitles = data.data.files.studies;

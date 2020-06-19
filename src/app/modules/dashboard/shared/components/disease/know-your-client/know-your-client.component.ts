@@ -208,7 +208,12 @@ export class KnowYourClientComponent implements OnInit {
 
 		this.addBasicControls();
 
-		console.log(this.form);
+    console.log(this.form);
+    if (this.form.get('exposed').get('branch_office') &&
+    this.form.get('exposed').get('branch_office').get('allBranch_office'))
+    {
+      this.branchOfficeFormArray = this.form.get('exposed').get('branch_office').get('allBranch_office') as FormArray;
+    }
 		// 	this.form = this.fb.group({
 		// 		request: ['', Validators.required],
 

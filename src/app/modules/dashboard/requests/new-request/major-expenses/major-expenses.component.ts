@@ -95,6 +95,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
   questions = questionsA;
   questionsB = questionsB;
   routeSelected = 'gastos mayores';
+  isThereAWomen = false;
   student = {
     name: ['', Validators.required],
     univercity: ['', Validators.required],
@@ -956,6 +957,76 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
     }
   }
 
+  canShow(questionName: string) {
+    if (questionName === 'havePregnant' && this.isThereAWomen === true) {
+      return true;
+    } else if (questionName === 'haveReproductiveOrganDisorders' && this.isThereAWomen === true) {
+      return true;
+    } else if ((questionName === 'havePregnant' || questionName === 'haveReproductiveOrganDisorders') && this.isThereAWomen === false) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+
+  canPersonOptionShow(questionName: string) {
+    const isWomen = this.newRequest.get('person').value.sex === 'Femenino';
+
+    if (questionName === 'havePregnant' && isWomen === true) {
+      return true;
+    } else if (questionName === 'haveReproductiveOrganDisorders' && isWomen === true) {
+      return true;
+    } else if ((questionName === 'havePregnant' || questionName === 'haveReproductiveOrganDisorders') && isWomen === false) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+
+  canDependentOptionShow(questionName: string, id: number) {
+    const isWomen = this.newRequest.get('dependents').get('allDependents').value[id].sex === 'Femenino';
+    console.log(this.newRequest.get('dependents').get('allDependents').value[id].sex);
+    if (questionName === 'havePregnant' && isWomen === true) {
+      return true;
+    } else if (questionName === 'haveReproductiveOrganDisorders' && isWomen === true) {
+      return true;
+    } else if ((questionName === 'havePregnant' || questionName === 'haveReproductiveOrganDisorders') && isWomen === false) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+
+  thereIsAWomenOnTheRequest() {
+    let womenCount = 0;
+    this.cd.detectChanges();
+
+    setTimeout(() => {
+      for (const idx in this.newRequest.get('dependents').get('allDependents').value) {
+        if (this.newRequest.get('dependents').get('allDependents').value.hasOwnProperty(idx)) {
+          const element = this.newRequest.get('dependents').get('allDependents').value[idx];
+          console.log(element.sex);
+          if (element.sex === 'Femenino') {
+            womenCount += 1;
+          }
+        }
+      }
+
+      console.log(this.newRequest.value.person.sex);
+      if (this.newRequest.get('person').get('sex').value === 'Femenino') {
+        womenCount += 1;
+      }
+
+      if (womenCount > 0) {
+        console.log('Hay mujer');
+        this.isThereAWomen = true;
+      } else {
+        this.isThereAWomen = false;
+      }
+    }, 500);
+
+  }
+
   relationWatcher(event, realForm) {
     console.log('event: ', event.valor, 'form: ', realForm);
     const form = realForm as FormGroup;
@@ -1537,7 +1608,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
     if (weight !== '' && height !== '') {
       if (weightUnit === 'libras') { weight = weight / 2.205; }
       if (heightUnit === 'pie') {
-        height = height / 3.281;//(((height * 12) + inches) * 2.54);
+        height = height / 3.281; //(((height * 12) + inches) * 2.54);
       }
 
       const bmi = weight / ((height / 100) * (height / 100));
@@ -1687,12 +1758,12 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
         //this.addEventChange();
         /*let person = this.newRequest.get('person');
         this.iterateThroughtObject(data.data.person, person);
-/// Person
+  /// Person
         let personOffice = this.newRequest.get('person').get('office');
         this.iterateThroughtObject(data.data.person.office, personOffice);
         let personaConozcaSuClientePersona = this.newRequest.get('person').get('conozcaSuClientePersona');
         this.iterateThroughtObject(data.data.person.conozcaSuClientePersona, personaConozcaSuClientePersona);
-/// Contractor
+  /// Contractor
         let contractor = this.newRequest.get('contractor');
         this.iterateThroughtObject(data.data.contractor, contractor);
         let contractorOffice = this.newRequest.get('contractor').get('office');
@@ -1701,37 +1772,37 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
         this.iterateThroughtObject(data.data.contractor.conozcaSuClientePersona, ContractorConozcaSuClientePersona);
         let ContractorConozcaSuClientePersonaJuridica = this.newRequest.get('contractor').get('conozcaSuClientePersonaJuridica');
         this.iterateThroughtObject(data.data.contractor.conozcaSuClientePersonaJuridica, ContractorConozcaSuClientePersonaJuridica);
-
-/// ExpoxedPerson
-let exposedPerson = this.newRequest.get('exposedPerson');
-this.iterateThroughtObject(data.data.exposedPerson, exposedPerson);
-let contractorExposedInfo = this.newRequest.get('exposedPerson').get('contractorExposedInfo');
-this.iterateThroughtObject(data.data.exposedPerson.contractorExposedInfo, contractorExposedInfo);
-let headLineExposedInfo = this.newRequest.get('exposedPerson').get('headLineExposedInfo');
-this.iterateThroughtObject(data.data.exposedPerson.headLineExposedInfo, headLineExposedInfo);
-
-/// Incomes
-let incomes = this.newRequest.get('incomes');
-this.iterateThroughtObject(data.data.incomes, incomes);
-if (data.data.dependents !== null)
-{
-// Dependents
-let dependents = this.newRequest.get('dependents');
-this.iterateThroughtObject(data.data.dependents, dependents);
-
-if(data.data.dependents.allDependents !== null && data.data.dependents.allDependents.length > 0)
-{
-data.data.dependents.allDependents.foreach( (element) =>{
+  
+  /// ExpoxedPerson
+  let exposedPerson = this.newRequest.get('exposedPerson');
+  this.iterateThroughtObject(data.data.exposedPerson, exposedPerson);
+  let contractorExposedInfo = this.newRequest.get('exposedPerson').get('contractorExposedInfo');
+  this.iterateThroughtObject(data.data.exposedPerson.contractorExposedInfo, contractorExposedInfo);
+  let headLineExposedInfo = this.newRequest.get('exposedPerson').get('headLineExposedInfo');
+  this.iterateThroughtObject(data.data.exposedPerson.headLineExposedInfo, headLineExposedInfo);
+  
+  /// Incomes
+  let incomes = this.newRequest.get('incomes');
+  this.iterateThroughtObject(data.data.incomes, incomes);
+  if (data.data.dependents !== null)
+  {
+  // Dependents
+  let dependents = this.newRequest.get('dependents');
+  this.iterateThroughtObject(data.data.dependents, dependents);
+  
+  if(data.data.dependents.allDependents !== null && data.data.dependents.allDependents.length > 0)
+  {
+  data.data.dependents.allDependents.foreach( (element) =>{
   this.iterateThroughtObject(element, dependents)
   });
-}
-if(data.data.dependents.students !== null && data.data.dependents.students.length > 0)
-{
-data.data.dependents.students.foreach( (element) =>{
+  }
+  if(data.data.dependents.students !== null && data.data.dependents.students.length > 0)
+  {
+  data.data.dependents.students.foreach( (element) =>{
   this.iterateThroughtObject(element, dependents)
   });
-}
-}*/
+  }
+  }*/
       }
 
 

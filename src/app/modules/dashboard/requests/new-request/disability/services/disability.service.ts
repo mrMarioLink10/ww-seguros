@@ -214,6 +214,10 @@ export class DisabilityService {
     {
       value: 'resonancia magnética',
       viewValue: 'Resonancia magnética'
+    },
+    {
+      value: 'Otros',
+      viewValue: 'Otros'
     }
   ];
 

@@ -405,32 +405,30 @@
                     <div *ngIf="disabilityGroup.get('insured_data').get('policyholderKnowClientRadio').value == 'si'">
                       <div class="radio-button-label" style="font-size: 12px !important; max-width: 63vw;">Adjuntar documentos (Opcional)
                       </div>
-                      <div *ngFor="let studies of filesDocumentsArray.controls; let i = index">
-                        <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
+                      <div *ngFor="let studies of filesDocumentsKnowClientArray.controls; let i = index">
+                        <div class="grid grid-cols-2"> <!-- grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4-->
                           <mat-form-field class="mr-3" appearance="outline">
-                            <mat-label> Estudio </mat-label>
-                            <ngx-mat-file-input [valuePlaceholder]="arrayDocumentsWatcher(i)"
-                              (change)="onStudiesChange($event, i, 'documents')">
+                            <mat-label> Documento </mat-label>
+                            <ngx-mat-file-input [valuePlaceholder]="arrayDocumentsKnowClientWatcher(i)"
+                              (change)="onStudiesChange($event, i, 'documentsKnowClient')">
                             </ngx-mat-file-input>
                             <mat-icon style="color: #e2e2e2;" matSuffix>publish</mat-icon>
                           </mat-form-field>
-                          <div class="grid grid-cols-2">
-                            <div class="">
-                              <button *ngIf="i == (insuranceArray.controls.length - 1)" mat-mini-fab aria-label="Agregar estudio" (click)="addToList(filesDocumentsArray, 'filesDocuments')"
-                                type="button" class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
-                                <mat-icon style="color: #18446B">add</mat-icon>
-                              </button>
-                            </div>
-                            <div [ngClass]="{'': filesDocumentsArray.length === 1, 'col-span-1': filesDocumentsArray.length > 1} ">
+                            <div [ngClass]="{'': filesDocumentsKnowClientArray.length === 1, 'col-span-1': filesDocumentsKnowClientArray.length > 1} ">
                               <button mat-mini-fab aria-label=" Eliminar estudio"
-                                (click)="diseaseService.removeToList(i, filesDocumentsArray)" type="button"
+                                (click)="diseaseService.removeToList(i, filesDocumentsKnowClientArray)" type="button"
                                 class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
                                 <mat-icon style="color: #18446B">remove</mat-icon>
                               </button>
                             </div>
-                          </div>
                         </div>
-                      </div>                 
+                      </div>      
+                      <div class="">
+                        <button  mat-mini-fab aria-label="Agregar estudio" (click)="addToList(filesDocumentsKnowClientArray, 'filesDocumentsKnowClient')"
+                          type="button" class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
+                          <mat-icon style="color: #18446B">add</mat-icon>
+                        </button>
+                      </div>           
                     </div>
                   </div>
                 </div>
@@ -616,8 +614,8 @@
 
               <div class="ml-3">
                 <!-- Bloque 1 -->
-                <div class="mt-4 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4">
-                  <div class="md:mt-5 lg:mt-0 xl:mt-0">
+                <div class="mt-4 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
+                  <div class="md:mt-8 lg:mt-1 xl:mt-0">
                     <div>
                       <label class="radio-button-label"> ¿Es fumador? </label>
                     </div>
@@ -627,21 +625,25 @@
                     </div>
                   </div>
                   <!-- <div > -->
-                  <div class="md:mt-5 lg:mt-0 xl:mt-0 grid grid-cols-2"
-                    *ngIf="this.disabilityGroup.get('questions').get('smoker_radio').value == 'si'">
-                    <div class="-mr-3">
+                    <div class="mr-3 mt-3 sm:mt-2 md:mt-8 lg:mt-1 xl:mt-0" *ngIf="this.disabilityGroup.get('questions').get('smoker_radio').value == 'si'">
                       <app-number-input label="Consumo diario de tabaco (Paquetes)" name="quantity"
                         [group]="disabilityGroup.get('questions').get('smoke')" placeholder="Por ej: 2" min="1">
                       </app-number-input>
-                    </div>
-                    <div class="ml-6 mr-3">
-                      <app-input label="Duración" name="duration"
-                        [group]="disabilityGroup.get('questions').get('smoke')" placeholder="">
-                      </app-input>
-                    </div>
-                  </div>
+                    </div>     
+                    <div *ngIf="this.disabilityGroup.get('questions').get('smoker_radio').value == 'si'" class="grid grid-cols-1 md:grid-cols-2">
+                      <div class="mt-3 sm:mt-2 md:mt-8 lg:mt-1 xl:mt-0 mr-3" >
+                        <app-number-input label="Duración" name="duration"
+                          [group]="disabilityGroup.get('questions').get('smoke')" placeholder="">
+                        </app-number-input>
+                      </div>
+                      <div class="mt-3 sm:mt-2 md:mt-8 lg:mt-1 xl:mt-0 mr-3">
+                        <app-select class="mr-3" [options]="durationTime" name="timeDuration"
+                        [group]="disabilityGroup.get('questions').get('smoke')">
+                      </app-select>
+                      </div> 
+                    </div>                    
                   <!-- </div> -->
-                  <div class="mt-6 sm:mt-5 md:mt-5 lg:mt-1 xl:mt-0">
+                  <div class="mt-3 sm:mt-2 md:mt-8 lg:mt-2 xl:mt-0">
                     <div>
                       <label class="radio-button-label"> ¿Consume alcohol? </label>
                     </div>
@@ -651,41 +653,44 @@
                     </div>
                   </div>
                   <!-- <div class="mr-3"> -->
-                  <div class="mr-3 md:mt-5 lg:mt-1 xl:mt-0"
+                  <div class="mr-3 mt-3 sm:mt-2 md:mt-10 lg:mt-2 xl:mt-0"
                     *ngIf="this.disabilityGroup.get('questions').get('alcohol_radio').value == 'si'">
                     <app-number-input label="Consumo semanal de alcohol (Copas)" name="quantity"
                       [group]="disabilityGroup.get('questions').get('alcohol')" placeholder="Por ej: 4" min="1">
                     </app-number-input>
                   </div>
-
+                </div>
+                <div>
                   <div
-                    class="mr-3 grid col-span-4 grid-cols-1 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-5 xl:grid-cols-5">
-                    <app-select class="mr-3" [options]="weightUnit" (selected)="onWeightUnitChange()"
+                    class="mr-3 mt-3 grid col-span-4 grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-5 xl:grid-cols-5">
+                    <app-select class="md:mr-3" [options]="weightUnit" (selected)="onWeightUnitChange()"
                       [group]="disabilityGroup.get('questions')">
                     </app-select>
-                    <app-number-input (keyup)="getBmi()" class="mr-3" [group]="disabilityGroup.get('questions')"
+                    <app-number-input (keyup)="getBmi()" class="md:mr-3 mt-3 sm:mt-2 md:mt-0" [group]="disabilityGroup.get('questions')"
                       label="Peso" name='weight'>
                     </app-number-input>
-                    <app-select class="mr-3" [options]="heightUnit" (selected)="onHeightUnitChange($event)"
+                    <app-select class="md:mr-3 mt-3 sm:mt-2 md:mt-5 lg:mt-0" [options]="heightUnit" (selected)="onHeightUnitChange($event)"
                       [group]="disabilityGroup.get('questions')">
                     </app-select>
-                    <div *ngIf="disabilityGroup.get('questions').get('heightUnit').value === 'pie'" class="mr-3"
-                      class="grid grid-cols-2">
-                      <app-number-input (keyup)="getBmi()" class="mr-2" [group]="disabilityGroup.get('questions')"
+                    <div *ngIf="disabilityGroup.get('questions').get('heightUnit').value === 'pie'" class="mr-3 "
+                      class="grid grid-cols-1 md:grid-cols-2">
+                      <app-number-input (keyup)="getBmi()" class="md:mr-2 mt-3 sm:mt-2 md:mt-5 lg:mt-0" [group]="disabilityGroup.get('questions')"
                         label="Pie" name='height'>
                       </app-number-input>
-                      <app-number-input (keyup)="getBmi()" class="mr-2" [group]="disabilityGroup.get('questions')"
+                      <app-number-input (keyup)="getBmi()" class="md:mr-2 mt-3 sm:mt-2 md:mt-5 lg:mt-0" [group]="disabilityGroup.get('questions')"
                         name='inches' label="Pulgadas">
                       </app-number-input>
                     </div>
                     <app-number-input (keyup)="getBmi()"
-                      *ngIf="this.disabilityGroup.get('questions').get('heightUnit').value !== 'pie'" class="mr-3"
+                      *ngIf="this.disabilityGroup.get('questions').get('heightUnit').value !== 'pie'" 
+                      class="md:mr-3 mt-3 sm:mt-2 md:mt-5 lg:mt-0"
                       [group]="disabilityGroup.get('questions')" label="Altura" name='height'>
                     </app-number-input>
-                    <app-input [group]="disabilityGroup.get('questions')" label="BMI" name='bmiName'>
+                    <app-input class="md:mr-3 mt-3 sm:mt-2 md:mt-5 lg:mt-0" [group]="disabilityGroup.get('questions')" label="BMI" name='bmiName'>
                     </app-input>
                   </div>
                 </div>
+
                 <!-- Bloque 2 -->
                 <div class="mt-8">
                   <label class="formulary-labels"> Favor marcar SÍ o NO según corresponda. </label>
@@ -709,7 +714,7 @@
                         *ngIf="this.disabilityGroup.get('questions').get('questionnaire').get('health_radio').value == 'si'">
                         <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
                           <div class="mr-3">
-                            <app-date-picker
+                            <app-date-picker [max]="todayDate"
                               [group]="disabilityGroup.get('questions').get('questionnaire').get('health')"
                               label="¿Desde qué fecha?" name='date'> </app-date-picker>
                           </div>
@@ -757,7 +762,7 @@
                                   name='diagnosis' label="Diagnóstico" placeholder=""> </app-input>
                               </div>
                               <div class="mr-3">
-                                <app-date-picker
+                                <app-date-picker [max]="todayDate"
                                   [group]="disabilityGroup.get('questions').get('questionnaire').get('therapy_array').get(in.toString())"
                                   label="¿Desde qué fecha?" name='date'> </app-date-picker>
                               </div>
@@ -811,7 +816,7 @@
                           <div *ngFor=" let elements of sickPayArray.controls; let in = index">
                             <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
                               <div class="mr-3">
-                                <app-date-picker
+                                <app-date-picker [max]="todayDate"
                                   [group]="disabilityGroup.get('questions').get('questionnaire').get('sick_pay_array').get(in.toString())"
                                   label="¿Desde qué fecha?" name='date'> </app-date-picker>
                               </div>
@@ -871,11 +876,11 @@
                           <div *ngFor=" let elements of testArray.controls; let in = index">
                             <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
                               <div class="mr-3">
-                                <app-date-picker
+                                <app-date-picker [max]="todayDate"
                                   [group]="disabilityGroup.get('questions').get('questionnaire').get('analysis_array').get(in.toString())"
                                   label="¿En qué fecha?" name='date'> </app-date-picker>
                               </div>
-                              <div class="mr-3 mt-2 sm:mt-2 md:mt-0 lg:mt-0 xl:mt-0">
+                              <div class="mr-3 mt-3 sm:mt-3 md:mt-0 lg:mt-0 xl:mt-0">
                                 <!-- <app-input label="¿Cuál?" name='name'
                                   [group]="disabilityGroup.get('questions').get('questionnaire').get('analysis')">
                                 </app-input> -->
@@ -884,9 +889,15 @@
                                   <!-- .get('analysis_array').get(in.toString()) -->
                                 </app-select>
                               </div>
+                              <div class="mr-3 mt-3 sm:mt-3 md:mt-3 lg:mt-0 xl:mt-0" 
+                                *ngIf="disabilityGroup.get('questions').get('questionnaire').get('analysis_array').get(in.toString()).get('test').value == 'Otros'">
+                                <app-input label="Indicar estudio" name='specifyStudy'   
+                                  [group]="disabilityGroup.get('questions').get('questionnaire').get('analysis_array').get(in.toString())">
+                                </app-input>
+                              </div>
                             </div>
                             <div
-                              class="mb-8 -mx-2 sm:mb-8 sm:mx-0 md:mb-8 md:mx-0 lg:mb-8 lg:mx-0 lg:mt-2 xl:mx-0 xl:mb-8 mt-2">
+                              class="mb-8 -mx-2 sm:mb-8 sm:mx-0 md:mb-8 md:mx-0 lg:mb-8 lg:mx-0 xl:mx-0 xl:mb-8 mt-3">
                               <button *ngIf="in == (testArray.controls.length - 1)" mat-mini-fab
                                 aria-label="Agregar estudio" (click)=" addFormArray(testArray,'analysis_array') "
                                 type="button" class="dashboard-toolbar-buttons"
@@ -977,7 +988,7 @@
                             <div *ngFor=" let elements of inpatientCareArray.controls; let in = index">
                               <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
                                 <div class="mr-3">
-                                  <app-date-picker
+                                  <app-date-picker [max]="todayDate"
                                     [group]="disabilityGroup.get('questions').get('questionnaire').get('inpatientCare_array').get(in.toString())"
                                     label="¿En qué fecha?" name='date'> </app-date-picker>
                                 </div>
@@ -1137,7 +1148,7 @@
                               </div> -->
                             </div>
                             <!-- AQUI ISAI -->
-                            <div class="radio-button-label mt-4">Seleccione cuales enfermedades o desordenes padece o ha
+                            <div class="radio-button-label mt-4">Seleccione cuáles enfermedades o desórdenes padece o ha
                               padecido:
                             </div>
                             <div *ngFor="let question of sicknessQuestions">
@@ -1178,7 +1189,7 @@
                         <div *ngFor=" let elements of bloodSickArray.controls; let in = index">
                           <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
                             <div class="mr-3">
-                              <app-date-picker
+                              <app-date-picker [max]="todayDate"
                                 [group]="disabilityGroup.get('questions').get('questionnaire').get('bloodSick_array').get(in.toString())"
                                 label="¿En qué fecha?" name='date'> </app-date-picker>
                             </div>
@@ -1236,7 +1247,7 @@
                           <div *ngFor=" let elements of VIHArray.controls; let in = index">
                             <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
                               <div class="mr-3">
-                                <app-date-picker
+                                <app-date-picker [max]="todayDate"
                                   [group]="disabilityGroup.get('questions').get('questionnaire').get('VIH_array').get(in.toString())"
                                   label="¿En qué fecha?" name='date'> </app-date-picker>
                               </div>
@@ -1284,7 +1295,7 @@
                           <div *ngFor=" let elements of specialTherapyArray.controls; let in = index">
                             <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
                               <div class="mr-3">
-                                <app-date-picker
+                                <app-date-picker [max]="todayDate"
                                   [group]="disabilityGroup.get('questions').get('questionnaire').get('specialTherapy_array').get(in.toString())"
                                   label="¿En qué fecha?" name='date'> </app-date-picker>
                               </div>
@@ -1338,7 +1349,7 @@
                           <div *ngFor=" let elements of accidentArray.controls; let in = index">
                             <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
                               <div class="mr-3">
-                                <app-date-picker
+                                <app-date-picker [max]="todayDate"
                                   [group]="disabilityGroup.get('questions').get('questionnaire').get('accident_array').get(in.toString())"
                                   label="¿En qué fecha?" name='date'> </app-date-picker>
                               </div>
@@ -1463,7 +1474,7 @@
                                 </app-select>
                               </div>
                               <div class="mr-3 mt-5 sm:mt-3 md:mt-5 lg:mt-4 xl:mt-3">
-                                <app-date-picker
+                                <app-date-picker [max]="todayDate"
                                   [group]="disabilityGroup.get('questions').get('questionnaire').get('insurance_array').get(in.toString())"
                                   label="Fecha en que se emitió" name='date'> </app-date-picker>
                               </div>
@@ -1858,7 +1869,7 @@
                       </app-number-input>
                     </div>
                     <div class="mr-3">
-                      <app-date-picker
+                      <app-date-picker [max]="todayDate"
                         [group]="disabilityGroup.get('contingent').get('anotherCoverages').get(i.toString())"
                         name="date" label="Fecha de Solicitud">
                       </app-date-picker>
@@ -1917,7 +1928,7 @@
                         </app-number-input>
                       </div>
                       <div class="mr-3">
-                        <app-date-picker
+                        <app-date-picker [max]="todayDate"
                           [group]="disabilityGroup.get('contingent').get('changingCoverages').get(i.toString())"
                           name="date" label="Fecha de Solicitud">
                         </app-date-picker>

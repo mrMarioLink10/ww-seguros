@@ -31,8 +31,8 @@ export class DisabilityComponent implements OnInit, DoCheck {
   changingCoveragesList: FormArray;
   filesStudiesArray: FormArray;
   arrayFilesTitles = [];
-  filesDocumentsArray: FormArray;
-  arrayFilesTitlesDocuments = [];
+  filesDocumentsKnowClientArray: FormArray;
+  arrayFilesTitlesDocumentsKnowClient = [];
   role: string;
   routeSelected = 'disability';
   accordionTitles = [
@@ -149,7 +149,7 @@ export class DisabilityComponent implements OnInit, DoCheck {
   };
 
   countryList: FieldConfig = {
-    label: 'País',
+    label: 'País de Nacimiento',
     options: $country
   };
 
@@ -343,6 +343,20 @@ export class DisabilityComponent implements OnInit, DoCheck {
     ]
   };
 
+  durationTime: FieldConfig = {
+    label: 'Tiempo',
+    options: [
+      {
+        value: 'mes(es)',
+        viewValue: 'Mes(es)'
+      },
+      {
+        value: 'año(s)',
+        viewValue: 'Año(s)'
+      }
+    ]
+  };
+
   family = $family;
 
   typeRequestGroup: FormGroup;
@@ -439,7 +453,7 @@ export class DisabilityComponent implements OnInit, DoCheck {
     address: ['', Validators.required],
     country: ['', Validators.required],
     city: ['', Validators.required],
-    postal_address: ['', Validators.required],
+    postal_address: [''],
     country_residence: ['', Validators.required],
     relationship: ['', Validators.required],
     pep_radio_holder: ['', Validators.required],
@@ -572,6 +586,26 @@ export class DisabilityComponent implements OnInit, DoCheck {
         label: 'Desórdenes osteoarticulares (discal, vertebral y paravertebral, lumbado, clática)',
         name: 'haveSpine'
       },
+      {
+        label: 'Padecimientos de hígado',
+        name: 'haveLiver'
+      },
+      {
+        label: 'Padecimientos digestivos',
+        name: 'haveDigestive'
+      },
+      {
+        label: 'Padecimientos reumáticos',
+        name: 'haveRheumatic'
+      },
+      {
+        label: 'Desórdenes respiratorios o pulmonares',
+        name: 'haveLung'
+      },
+      {
+        label: 'Padecimientos ginecológicos',
+        name: 'haveGynecology'
+      }
     ];
 
     this.coveragesQuestions = [
@@ -1042,29 +1076,49 @@ export class DisabilityComponent implements OnInit, DoCheck {
     let totalJobHours;
     let insideHours;
     let outsideHours;
-
     // if (this.disabilityGroup.get('insured_data').get('job_hours').valueChanges) {
     //   totalJobHours = this.disabilityGroup.get('insured_data').get('job_hours').value;
     // }
-
     insideHours = this.disabilityGroup.get('insured_data').get('office_hours').value;
     outsideHours = this.disabilityGroup.get('insured_data').get('outside_hours').value;
-
     // if (insideHours == null || insideHours == undefined) {
     //   insideHours = 0;
     // }
-
     // if (outsideHours == null || outsideHours == undefined) {
     //   outsideHours = 0;
     // }
-
     totalJobHours = insideHours - outsideHours;
-
     // if ((insideHours == null || insideHours == undefined) && (outsideHours == null || outsideHours == undefined) ) {
     //   totalJobHours = '';
     // }
-
     this.disabilityGroup.get('insured_data').get('job_hours').setValue(totalJobHours);
+
+    if (this.disabilityGroup.get('questions').get('questionnaire').get('analysis_array')){
+      let formQDoCheckArray;
+      // tslint:disable-next-line: prefer-for-of
+      for (let x = 0; x < this.testArray.controls.length; x++) {
+
+       formQDoCheckArray = this.disabilityGroup.get('questions').get('questionnaire').get
+        ('analysis_array').get(x.toString()) as FormGroup;
+
+       if (this.disabilityGroup.get('questions').get('questionnaire').get
+        ('analysis_array').get(x.toString()).get('test').value == 'Otros') {
+
+          if (!(this.disabilityGroup.get('questions').get('questionnaire').get
+          ('analysis_array').get(x.toString()).get('specifyStudy'))){
+            formQDoCheckArray.addControl('specifyStudy', this.fb.control('', Validators.required));
+          }
+        }
+       if (this.disabilityGroup.get('questions').get('questionnaire').get
+        ('analysis_array').get(x.toString()).get('test').value != 'Otros') {
+
+          if (this.disabilityGroup.get('questions').get('questionnaire').get
+          ('analysis_array').get(x.toString()).get('specifyStudy')) {
+            formQDoCheckArray.removeControl('specifyStudy');
+          }
+        }
+      }
+    }
   }
 
   onStudiesChange(event, i, name) {
@@ -1085,7 +1139,7 @@ export class DisabilityComponent implements OnInit, DoCheck {
         };
       }
     }
-    else if (name == 'documents') {
+    else if (name == 'documentsKnowClient') {
       const reader = new FileReader();
 
       if (event.target.files && event.target.files.length) {
@@ -1093,7 +1147,7 @@ export class DisabilityComponent implements OnInit, DoCheck {
         reader.readAsDataURL(file);
 
         reader.onload = () => {
-          this.disabilityGroup.get('files').get('documents').get(i.toString()).patchValue({
+          this.disabilityGroup.get('files').get('documentsKnowClient').get(i.toString()).patchValue({
             ['document']: reader.result
           });
 
@@ -1126,7 +1180,8 @@ export class DisabilityComponent implements OnInit, DoCheck {
         case 'smoker_radio':
           form.addControl('smoke', this.fb.group({
             quantity: ['', [Validators.required, Validators.min(1)]],
-            duration: ['', Validators.required]
+            duration: ['', [Validators.required, Validators.min(0)]],
+            timeDuration: ['', Validators.required]
           }));
           break;
 
@@ -1196,6 +1251,11 @@ export class DisabilityComponent implements OnInit, DoCheck {
             haveMusculoSkeletal: ['', Validators.required],
             haveProstatics: ['', Validators.required],
             haveSpine: ['', Validators.required],
+            haveLiver: ['', Validators.required],
+            haveDigestive: ['', Validators.required],
+            haveRheumatic: ['', Validators.required],
+            haveLung: ['', Validators.required],
+            haveGynecology: ['', Validators.required]
           }));
           break;
 
@@ -1301,6 +1361,9 @@ export class DisabilityComponent implements OnInit, DoCheck {
           if (this.disabilityGroup.get('insured_data').get('policyholderKnowClientRadio')) {
             formInsured.removeControl('policyholderKnowClientRadio');
           }
+          if (this.disabilityGroup.get('files').get('documentsKnowClient')) {
+            formFiles.removeControl('documentsKnowClient');
+          }
           this.accordionTitles = [
             'Sección A. Datos del propuesto Asegurado y Estatus laboral', 'Sección C. Cuestionario Médico',
             'Sección D. Opción del Plan', 'Sección E. Beneficiarios Primarios',
@@ -1319,8 +1382,8 @@ export class DisabilityComponent implements OnInit, DoCheck {
           formGeneral.removeControl('policyholder');
           // formInsured.addControl('knowYourClientSecond', this.fb.group({}));
           formInsured.addControl('knowYourClient', this.fb.group({}));
-          formFiles.addControl('documents', this.fb.array([]));
-          this.filesDocumentsArray = this.disabilityGroup.get('files').get('documents') as FormArray;
+          formFiles.addControl('documentsKnowClient', this.fb.array([]));
+          this.filesDocumentsKnowClientArray = this.disabilityGroup.get('files').get('documentsKnowClient') as FormArray;
           break;
 
         case 'hasAnotherCoverage':
@@ -1483,8 +1546,8 @@ export class DisabilityComponent implements OnInit, DoCheck {
           if (this.disabilityGroup.get('insured_data').get('knowYourClient')) {
             formInsured.removeControl('knowYourClient');
           }
-          formFiles.removeControl('documents');
-          this.filesDocumentsArray = undefined;
+          formFiles.removeControl('documentsKnowClient');
+          // this.filesDocumentsArray = undefined;
           break;
 
         case 'hasAnotherCoverage':
@@ -1615,7 +1678,7 @@ export class DisabilityComponent implements OnInit, DoCheck {
           study: ['', Validators.required],
         });
 
-      case 'filesDocuments':
+      case 'filesDocumentsKnowClient':
         return this.fb.group({
           document: ['', Validators.required],
         });
@@ -1740,12 +1803,12 @@ export class DisabilityComponent implements OnInit, DoCheck {
     }
   }
 
-  arrayDocumentsWatcher(i: number) {
-    if (this.arrayFilesTitlesDocuments) {
-      if (this.disabilityGroup.get('files').get('documents')) {
+  arrayDocumentsKnowClientWatcher(i: number) {
+    if (this.arrayFilesTitlesDocumentsKnowClient) {
+      if (this.disabilityGroup.get('files').get('documentsKnowClient')) {
         // tslint:disable-next-line: max-line-length
-        if (this.arrayFilesTitlesDocuments[i] && this.disabilityGroup.get('files').get('documents').get(i.toString()).value.document !== '') {
-          return this.arrayFilesTitlesDocuments[i].documentUrl;
+        if (this.arrayFilesTitlesDocumentsKnowClient[i] && this.disabilityGroup.get('files').get('documentsKnowClient').get(i.toString()).value.document !== '') {
+          return this.arrayFilesTitlesDocumentsKnowClient[i].documentUrl;
         }
       }
     }
@@ -1783,6 +1846,8 @@ export class DisabilityComponent implements OnInit, DoCheck {
         //this.disabilityGroup['controls'].num_financial_quote.setValue(data.data.num_financial_quote)
 
         this.arrayFilesTitles = data.data.files.studies;
+        // this.filesDocumentsKnowClientArray = formF.get('documentsKnowClient') as FormArray;
+        // this.arrayFilesTitlesDocumentsKnowClient = data.data.files.documentsKnowClient;
       }
 
     });

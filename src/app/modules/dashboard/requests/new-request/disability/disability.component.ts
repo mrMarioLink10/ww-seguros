@@ -1087,7 +1087,7 @@ export class DisabilityComponent implements OnInit, DoCheck {
     // if (outsideHours == null || outsideHours == undefined) {
     //   outsideHours = 0;
     // }
-    totalJobHours = insideHours - outsideHours;
+    totalJobHours = (insideHours + outsideHours) / 2;
     // if ((insideHours == null || insideHours == undefined) && (outsideHours == null || outsideHours == undefined) ) {
     //   totalJobHours = '';
     // }

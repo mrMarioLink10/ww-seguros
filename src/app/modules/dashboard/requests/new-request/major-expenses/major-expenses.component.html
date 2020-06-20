@@ -95,7 +95,8 @@
               </app-input>
               <app-date-picker class="mr-3" [group]="newRequest.get('person')" label="Fecha de Nacimiento" name='date'>
               </app-date-picker>
-              <app-radio-button class="mr-3" [group]="newRequest.get('person')" name="sex" [options]="sex">
+              <app-radio-button (selected)="thereIsAWomenOnTheRequest()" class="mr-3" [group]="newRequest.get('person')"
+                name="sex" [options]="sex">
               </app-radio-button>
               <!-- <app-input class="mr-3" [group]="newRequest.get('person')" label="Nacionalidad" name='nationality'>
               </app-input> -->
@@ -337,7 +338,7 @@
                       label="Fecha de Nacimiento" name='date'>
                     </app-date-picker>
 
-                    <app-radio-button class="mr-3"
+                    <app-radio-button class="mr-3" (selected)="thereIsAWomenOnTheRequest()"
                       [group]="newRequest.get('dependents').get('allDependents').get(index.toString())" name="sex"
                       [options]="sex"></app-radio-button>
                     <app-select class="mr-3 col-span-2"
@@ -486,7 +487,7 @@
             </p>
             <hr class="w-full mb-10 ww-divider">
             <div *ngFor="let question of questions; let idx = index">
-              <div
+              <div *ngIf="canShow(question.name)"
                 class="w-full xl:flex xl:justify-between lg:flex lg:justify-between md:flex md:justify-between sm:flex sm:justify-between">
                 <div class="radio-button-label self-center" style="max-width: 65%;">{{idx+1}} .{{question.question}}
                 </div>
@@ -508,7 +509,7 @@
                     <div [formGroup]="newRequest.get('questionsA')">
                       <mat-checkbox (click)="$event.stopPropagation()" class="mat-menu-item"
                         (change)="valueChange($event, question.name, 'solicitante')" [formControlName]="question.name"
-                        role="menuitemcheckbox">
+                        role="menuitemcheckbox" *ngIf="canPersonOptionShow(question.name)">
                         {{newRequest.get('person').value.firstName}}
                         {{newRequest.get('person').value.lastName}}</mat-checkbox>
                     </div>
@@ -516,7 +517,8 @@
                       <div formArrayName="allDependents" *ngFor="let dpd of allDependents.controls; index as i">
                         <div [formGroupName]="i">
                           <mat-checkbox [formControlName]="question.name" class="mat-menu-item" role="menuitemcheckbox"
-                            (change)="valueChange($event, question.name, i)" (click)="$event.stopPropagation()">
+                            (change)="valueChange($event, question.name, i)" (click)="$event.stopPropagation()"
+                            *ngIf="canDependentOptionShow(question.name, i)">
                             D{{i+1}} - {{dpd.value.name}} {{dpd.value.lastName}}</mat-checkbox>
                         </div>
                       </div>
@@ -570,7 +572,7 @@
                 </div>
               </div>
 
-              <hr class=" w-full ww-divider">
+              <hr *ngIf="canShow(question.name)" class=" w-full ww-divider">
 
             </div>
 

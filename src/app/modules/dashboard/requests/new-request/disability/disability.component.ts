@@ -579,7 +579,7 @@ export class DisabilityComponent implements OnInit, DoCheck {
         name: 'haveMusculoSkeletal'
       },
       {
-        label: 'Desórdenes urologicos y tiene mas de 50 años',
+        label: 'Desórdenes urológicos',
         name: 'haveProstatics'
       },
       {
@@ -815,7 +815,7 @@ export class DisabilityComponent implements OnInit, DoCheck {
   // actualValue;
   y = 0
   x = 0;
-  xx = 0;
+  // xx = 0;
   ngDoCheck(): void {
 
     // if (this.disabilityGroup.get('questions').get('weightUnit').value != '' &&
@@ -902,47 +902,46 @@ export class DisabilityComponent implements OnInit, DoCheck {
 
     // tslint:disable-next-line: align
     if (this.age >= 50 && this.disabilityGroup.get('insured_data').get('gender').value == 'masculino') {
-      if (this.xx != 0) {
-        this.xx = 0;
-      }
+      // if (this.xx != 0) {
+      //   this.xx = 0;
+      // }
       const questionnaires = this.disabilityGroup.get('questionnaires') as FormGroup;
       if (this.x == 0) {
         if (!this.disabilityGroup.get('questionnaires').get('solicitudProstatica')) {
           questionnaires.addControl('solicitudProstatica', this.fb.group({}));
-        }
-        this.disabilityGroup.get('questions').get('questionnaire').get('sicknessType_radio').setValue('si');
-
-        const var1 = {
-          name: 'sicknessType_radio', valor: 'si'
-        };
-
-        this.selectChange(var1);
-
-        if (this.disabilityGroup.get('questions').get('questionnaire').get('sicknessType')) {
-          this.disabilityGroup.get('questions').get('questionnaire').get('sicknessType').get('haveProstatics').setValue('si');
           this.x++;
         }
+        // this.disabilityGroup.get('questions').get('questionnaire').get('sicknessType_radio').setValue('si');
+        // const var1 = {
+        //   name: 'sicknessType_radio', valor: 'si'
+        // };
+        // this.selectChange(var1);
+        // if (this.disabilityGroup.get('questions').get('questionnaire').get('sicknessType')) {
+        //   this.disabilityGroup.get('questions').get('questionnaire').get('sicknessType').get('haveProstatics').setValue('si');
+        //   this.x++;
+        // }
       }
     }
     else if (this.age < 50 || this.disabilityGroup.get('insured_data').get('gender').value == 'femenino') {
-      if (this.xx == 0) {
-        this.x++;
-      }
+      // if (this.xx == 0) {
+      //   this.x++;
+      // }
       const questionnaires = this.disabilityGroup.get('questionnaires') as FormGroup;
       if (this.x != 0) {
         if (this.disabilityGroup.get('questionnaires').get('solicitudProstatica')) {
           questionnaires.removeControl('solicitudProstatica');
-        }
-        if (this.disabilityGroup.get('questions').get('questionnaire').get('sicknessType')) {
-          this.disabilityGroup.get('questions').get('questionnaire').get('sicknessType').get('haveProstatics').setValue('no');
           this.x = 0;
-          this.xx++;
         }
+        // if (this.disabilityGroup.get('questions').get('questionnaire').get('sicknessType')) {
+        //   this.disabilityGroup.get('questions').get('questionnaire').get('sicknessType').get('haveProstatics').setValue('no');
+        //   this.x = 0;
+        //   this.xx++;
+        // }
       }
-      if (!this.disabilityGroup.get('questionnaires').get('solicitudProstatica') &&
-        !this.disabilityGroup.get('questions').get('questionnaire').get('sicknessType')) {
-        this.x = 0;
-      }
+      // if (!this.disabilityGroup.get('questionnaires').get('solicitudProstatica') &&
+      //   !this.disabilityGroup.get('questions').get('questionnaire').get('sicknessType')) {
+      //   this.x = 0;
+      // }
     }
 
     if (this.disabilityGroup.get('questions').get('questionnaire').get('therapy_radio').value == 'no' &&
@@ -1317,9 +1316,9 @@ export class DisabilityComponent implements OnInit, DoCheck {
           questionnaires.addControl('solicitudMusculoesqueleticos', this.fb.group({}));
           break;
 
-        case 'haveProstatics':
-          questionnaires.addControl('solicitudProstatica', this.fb.group({}));
-          break;
+        // case 'haveProstatics':
+        //   questionnaires.addControl('solicitudProstatica', this.fb.group({}));
+        //   break;
 
         case 'haveSpine':
           questionnaires.addControl('columnaVertebralColumnaVertebral', this.fb.group({}));
@@ -1492,9 +1491,9 @@ export class DisabilityComponent implements OnInit, DoCheck {
           questionnaires.removeControl('solicitudMusculoesqueleticos');
           break;
 
-        case 'haveProstatics':
-          questionnaires.removeControl('solicitudProstatica');
-          break;
+        // case 'haveProstatics':
+        //   questionnaires.removeControl('solicitudProstatica');
+        //   break;
 
         case 'haveSpine':
           questionnaires.removeControl('columnaVertebralColumnaVertebral');

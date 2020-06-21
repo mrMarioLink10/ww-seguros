@@ -122,7 +122,7 @@ export class MusculoskeletalComponent implements OnInit {
         return this.fb.group({
           date: [new Date(), Validators.required],
           duration: ['', [Validators.required, Validators.min(1)]],
-          DayMonthYear: ['', Validators.required]
+          dayMonthYear: ['', Validators.required]
         });
         break;
 
@@ -211,14 +211,14 @@ export class MusculoskeletalComponent implements OnInit {
       episode_radio: ['', Validators.required],
       episode: this.fb.group({
 
-        episode_array: this.fb.array([this.createFormArray('episode_array')])
+        // episode_array: this.fb.array([this.createFormArray('episode_array')])
 
       }),
 
       surgery_radio: ['', Validators.required],
       surgery: this.fb.group({
 
-        surgery_array: this.fb.array([this.createFormArray('surgery_array')])
+        // surgery_array: this.fb.array([this.createFormArray('surgery_array')])
 
       }),
 

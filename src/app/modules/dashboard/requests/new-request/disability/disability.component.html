@@ -436,7 +436,7 @@
                 </div>
 
                 <div *ngIf="disabilityGroup.get('insured_data').get('pep_radio_insured').value == 'si'"
-                  class="mt-4 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-3 xl:grid-cols-6">
+                  class="mt-4 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
                   <app-input class="mr-3" [group]="disabilityGroup.get('insured_data').get('pep')"
                     label="Cargo actual o anterior" name='lastPosition'></app-input>
                   <div class="grid grid-cols-2">
@@ -446,17 +446,17 @@
                     <app-select class="mr-3" [options]="year" [group]="disabilityGroup.get('insured_data').get('pep')">
                     </app-select>
                   </div>
-                  <div>
+                  <!-- <div>
                   </div>
                   <app-radio-button class="mr-3" title="Asegurado"
                     [group]="disabilityGroup.get('insured_data').get('pep')" name="insured" [options]="YesNo">
                   </app-radio-button>
                   <app-radio-button class="mr-3" title="Contratante"
                     [group]="disabilityGroup.get('insured_data').get('pep')" name="contractor" [options]="YesNo">
-                  </app-radio-button>
+                  </app-radio-button> -->
                   <app-radio-button class="mr-3" title="Pagador"
                     [group]="disabilityGroup.get('insured_data').get('pep')" name="payer" [options]="YesNo">
-                  </app-radio-button>
+                  </app-radio-button> 
                 </div>
               </div>
 
@@ -574,20 +574,20 @@
                 </div>
 
                 <div class="mr-3 mt-8 sm:mt-6 md:mt-6 md:pt-1 lg:col-span-2 lg:mt-4 lg:pt-0 xl:pt-0 xl:mt-3">
-                  <app-input label="Representante Legal (Persona Jurídica)"
+                  <app-input label="Representante Legal"
                     [group]="disabilityGroup.get('policyholder')" name="representative"
                     placeholder="Manuel de los Santos Ramírez"> </app-input>
                 </div>
 
                 <div class="mr-3 mt-8 sm:mt-6 md:mt-6 md:col-span-2 lg:col-span-1 xl:col-span-1 lg:mt-4 xl:mt-3">
-                  <app-input label="Cédula o Pasaporte" [group]="disabilityGroup.get('policyholder')" name="passport_id"
+                  <app-input label="Cédula o Pasaporte del representante legal" [group]="disabilityGroup.get('policyholder')" name="passport_id"
                     placeholder="402-0070000-8"> </app-input>
                 </div>
 
               </div>
 
               <div *ngIf="disabilityGroup.get('policyholder').get('pep_radio_holder').value =='si'"
-                class="mt-4 ml-3 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-3 xl:grid-cols-6">
+                class="mt-4 ml-3 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
                 <app-input class="mr-3" [group]="disabilityGroup.get('policyholder').get('pep')"
                   label="Cargo actual o anterior" name='lastPosition'></app-input>
                 <div class="grid grid-cols-2">
@@ -597,16 +597,16 @@
                   <app-select class="mr-3" [options]="year" [group]="disabilityGroup.get('policyholder').get('pep')">
                   </app-select>
                 </div>
-                <div>
+                <!-- <div>
                 </div>
                 <app-radio-button class="mr-3" title="Asegurado"
                   [group]="disabilityGroup.get('policyholder').get('pep')" name="insured" [options]="YesNo">
                 </app-radio-button>
                 <app-radio-button class="mr-3" title="Contratante"
                   [group]="disabilityGroup.get('policyholder').get('pep')" name="contractor" [options]="YesNo">
-                </app-radio-button>
+                </app-radio-button> -->
                 <app-radio-button class="mr-3" title="Pagador" [group]="disabilityGroup.get('policyholder').get('pep')"
-                  name="payer" [options]="YesNo"></app-radio-button>
+                  name="payer" [options]="YesNo"></app-radio-button> 
               </div>
 
             </ng-template>
@@ -1816,22 +1816,6 @@
                   </div>
                 </div>
 
-                <!-- <hr class="ww-divider mt-6"> -->
-
-                <!-- <div class="mt-6">
-                  <label style="font-size: 12px;"> En caso de Cesión Bancaria, complete los siguientes datos: </label>
-                </div>
-
-                <div class='mt-5 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4'>
-                  <app-select class="mr-3" [options]="family"
-                    [group]="disabilityGroup.get('contingent').get('bankTransfer')"></app-select>
-                  <app-number-input class="mr-3" [group]="disabilityGroup.get('contingent').get('bankTransfer')"
-                    label="Suma cedida" name="amount" min="0"></app-number-input>
-                  <app-number-input class="mr-3" [group]="disabilityGroup.get('contingent').get('bankTransfer')"
-                    label="Contacto" name="contact"></app-number-input>
-                  <div></div>
-                </div> -->
-
                 <hr class="ww-divider mt-6 mb-6">
 
                 <div
@@ -1993,7 +1977,7 @@
             </ng-template>
 
             <!-- Seccion G -->
-            <ng-template #formTemplate>
+            <!-- <ng-template #formTemplate>
               <div class="ml-3">
                 <div class="mt-0">
                   <label style="font-size: 12px;"> En caso de Cesión Bancaria, complete los siguientes datos: </label>
@@ -2008,14 +1992,14 @@
                   <div></div>
                 </div>
               </div>
-            </ng-template>
+            </ng-template> -->
             <ng-template #formTemplate>
-              <div class="radio-button-label" style="font-size: 12px !important; max-width: 63vw;">Adjuntar estudios
+              <div class="radio-button-label" style="font-size: 12px !important; max-width: 63vw;">Adjuntar estudios y/o documentos
               </div>
               <div *ngFor="let studies of filesStudiesArray.controls; let i = index">
                 <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
                   <mat-form-field class="mr-3" appearance="outline">
-                    <mat-label> Estudio </mat-label>
+                    <mat-label> Estudio/Documento </mat-label>
                     <ngx-mat-file-input [valuePlaceholder]="arrayStudiesWatcher(i)"
                       (change)="onStudiesChange($event, i, 'studies')">
                     </ngx-mat-file-input>

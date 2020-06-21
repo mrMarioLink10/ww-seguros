@@ -39,7 +39,7 @@ export class DisabilityComponent implements OnInit, DoCheck {
     'Sección A. Datos del propuesto Asegurado y Estatus laboral',
     'Sección B. Datos del Contratante', 'Sección C. Cuestionario Médico',
     'Sección D. Opción del Plan', 'Sección E. Beneficiarios Primarios',
-    'Beneficiario(s) Contigente(s)', 'En caso de Cesión Bancaria', 'Archivos Adjuntos'];
+    'Beneficiario(s) Contigente(s)', 'Archivos Adjuntos'];
   bmi: number;
   // massName = 'PESO';
   // heightName = 'ALTURA';
@@ -731,11 +731,11 @@ export class DisabilityComponent implements OnInit, DoCheck {
         hasAnotherCoverage: ['', Validators.required],
         changeAnotherCoverage: ['', Validators.required],
       }),
-      bankTransfer: this.fb.group({
-        bankEntity: [''],
-        amount: ['', Validators.min(0)],
-        contact: ['']
-      }),
+      // bankTransfer: this.fb.group({
+      //   bankEntity: [''],
+      //   amount: ['', Validators.min(0)],
+      //   contact: ['']
+      // }),
       questionnaires: this.fb.group({}),
       files: this.fb.group({
         studies: this.fb.array([]),
@@ -1086,7 +1086,7 @@ export class DisabilityComponent implements OnInit, DoCheck {
     // if (outsideHours == null || outsideHours == undefined) {
     //   outsideHours = 0;
     // }
-    totalJobHours = (insideHours + outsideHours) / 2;
+    totalJobHours = (insideHours + outsideHours);
     // if ((insideHours == null || insideHours == undefined) && (outsideHours == null || outsideHours == undefined) ) {
     //   totalJobHours = '';
     // }
@@ -1266,9 +1266,9 @@ export class DisabilityComponent implements OnInit, DoCheck {
           console.log(this.role);
 
           formInsured.addControl('pep', this.fb.group({
-            contractor: ['', Validators.required],
-            payer: ['', Validators.required],
-            insured: ['', Validators.required],
+              // contractor: ['', Validators.required],
+              payer: ['', Validators.required],
+              // insured: ['', Validators.required],
             lastPosition: ['', Validators.required],
             time: ['', Validators.required],
             timeNumber: ['', [Validators.required, Validators.min(1)]]
@@ -1283,9 +1283,9 @@ export class DisabilityComponent implements OnInit, DoCheck {
           console.log(this.role);
 
           formHolder.addControl('pep', this.fb.group({
-            contractor: ['', Validators.required],
+            // contractor: ['', Validators.required],
             payer: ['', Validators.required],
-            insured: ['', Validators.required],
+            // insured: ['', Validators.required],
             lastPosition: ['', Validators.required],
             time: ['', Validators.required],
             timeNumber: ['', [Validators.required, Validators.min(1)]]
@@ -1366,7 +1366,7 @@ export class DisabilityComponent implements OnInit, DoCheck {
           this.accordionTitles = [
             'Sección A. Datos del propuesto Asegurado y Estatus laboral', 'Sección C. Cuestionario Médico',
             'Sección D. Opción del Plan', 'Sección E. Beneficiarios Primarios',
-            'Beneficiario(s) Contigente(s)', 'En caso de Cesión Bancaria', 'Archivos Adjuntos'];
+            'Beneficiario(s) Contigente(s)', 'Archivos Adjuntos'];
           formGeneral.removeControl('policyholder');
           break;
 
@@ -1377,7 +1377,7 @@ export class DisabilityComponent implements OnInit, DoCheck {
           this.accordionTitles = [
             'Sección A. Datos del propuesto Asegurado y Estatus laboral', 'Sección C. Cuestionario Médico',
             'Sección D. Opción del Plan', 'Sección E. Beneficiarios Primarios',
-            'Beneficiario(s) Contigente(s)', 'En caso de Cesión Bancaria', 'Archivos Adjuntos'];
+            'Beneficiario(s) Contigente(s)', 'Archivos Adjuntos'];
           formGeneral.removeControl('policyholder');
           // formInsured.addControl('knowYourClientSecond', this.fb.group({}));
           formInsured.addControl('knowYourClient', this.fb.group({}));
@@ -1521,7 +1521,7 @@ export class DisabilityComponent implements OnInit, DoCheck {
               'Sección A. Datos del propuesto Asegurado y Estatus laboral',
               'Sección B. Datos del Contratante', 'Sección C. Cuestionario Médico',
               'Sección D. Opción del Plan', 'Sección E. Beneficiarios Primarios',
-              'Beneficiario(s) Contigente(s)', 'En caso de Cesión Bancaria', 'Archivos Adjuntos'];
+              'Beneficiario(s) Contigente(s)', 'Archivos Adjuntos'];
           }
           else {
             console.log('Ya existe, por tanto no hay que crear a policyholder de nuevo.');
@@ -1536,7 +1536,7 @@ export class DisabilityComponent implements OnInit, DoCheck {
               'Sección A. Datos del propuesto Asegurado y Estatus laboral',
               'Sección B. Datos del Contratante', 'Sección C. Cuestionario Médico',
               'Sección D. Opción del Plan', 'Sección E. Beneficiarios Primarios',
-              'Beneficiario(s) Contigente(s)', 'En caso de Cesión Bancaria', 'Archivos Adjuntos'];
+              'Beneficiario(s) Contigente(s)', 'Archivos Adjuntos'];
           }
           else {
             console.log('Ya existe, por tanto no hay que crear a policyholder de nuevo.');
@@ -1850,7 +1850,7 @@ export class DisabilityComponent implements OnInit, DoCheck {
 
         this.arrayFilesTitles = data.data.files.studies;
         // this.filesDocumentsKnowClientArray = formF.get('documentsKnowClient') as FormArray;
-        // this.arrayFilesTitlesDocumentsKnowClient = data.data.files.documentsKnowClient;
+        this.arrayFilesTitlesDocumentsKnowClient = data.data.files.documentsKnowClient;
       }
 
     });

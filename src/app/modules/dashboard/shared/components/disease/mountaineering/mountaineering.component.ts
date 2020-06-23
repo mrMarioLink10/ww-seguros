@@ -20,14 +20,14 @@ export class MountaineeringComponent implements OnInit, DoCheck {
   YesNo: FieldConfig = {
     label: '',
     options: [
-        {
-          value: 'si',
-          viewValue: 'Si'
-        },
-        {
-          value: 'no',
-          viewValue: 'No'
-        }
+      {
+        value: 'si',
+        viewValue: 'Si'
+      },
+      {
+        value: 'no',
+        viewValue: 'No'
+      }
     ]
   }
 
@@ -35,7 +35,7 @@ export class MountaineeringComponent implements OnInit, DoCheck {
 
   ngOnInit() {
 
-  this.addBasicControls();
+    this.addBasicControls();
     // this.mountaineering= this.fb.group({
 
     //   name:['', Validators.required],
@@ -97,13 +97,13 @@ export class MountaineeringComponent implements OnInit, DoCheck {
     const formZ = this.form.get('climb_zone') as FormGroup;
     // console.log(this.dataText);
     if (this.c == 0 && (this.form.get('climb_zone').get('africa').value == 'si'
-    || this.form.get('climb_zone').get('alpes').value == 'si'
-    || this.form.get('climb_zone').get('himalaya').value == 'si'
-    || this.form.get('climb_zone').get('andes').value == 'si'
-    || this.form.get('climb_zone').get('mcKinley').value == 'si'
-    || this.form.get('climb_zone').get('alaska').value == 'si'
-    || this.form.get('climb_zone').get('mountain_range').value == 'si'
-    || this.form.get('climb_zone').get('others').value == 'si')) {
+      || this.form.get('climb_zone').get('alpes').value == 'si'
+      || this.form.get('climb_zone').get('himalaya').value == 'si'
+      || this.form.get('climb_zone').get('andes').value == 'si'
+      || this.form.get('climb_zone').get('mcKinley').value == 'si'
+      || this.form.get('climb_zone').get('alaska').value == 'si'
+      || this.form.get('climb_zone').get('mountain_range').value == 'si'
+      || this.form.get('climb_zone').get('others').value == 'si')) {
 
       if (!this.form.get('climb_zone').get('area_text')) {
         formZ.addControl('area_text', this.fb.group({
@@ -116,9 +116,9 @@ export class MountaineeringComponent implements OnInit, DoCheck {
     }
   }
 
-  addBasicControls(){
+  addBasicControls() {
 
-    this.form.addControl('name', this.fb.control('', Validators.required));
+    // this.form.addControl('name', this.fb.control('', Validators.required));
     this.form.addControl('activities', this.fb.group({
 
       artificial_wall_radio: ['', Validators.required],
@@ -150,14 +150,14 @@ export class MountaineeringComponent implements OnInit, DoCheck {
 
     this.form.addControl('climb_zone', this.fb.group({
 
-        africa: ['', Validators.required],
-        alpes: ['', Validators.required],
-        himalaya: ['', Validators.required],
-        andes: ['', Validators.required],
-        mcKinley: ['', Validators.required],
-        alaska: ['', Validators.required],
-        mountain_range: ['', Validators.required],
-        others: ['', Validators.required]
+      africa: ['', Validators.required],
+      alpes: ['', Validators.required],
+      himalaya: ['', Validators.required],
+      andes: ['', Validators.required],
+      mcKinley: ['', Validators.required],
+      alaska: ['', Validators.required],
+      mountain_range: ['', Validators.required],
+      others: ['', Validators.required]
 
     }));
 
@@ -184,88 +184,88 @@ export class MountaineeringComponent implements OnInit, DoCheck {
 
     if (event.valor === 'si') {
 
-          switch (event.name) {
+      switch (event.name) {
 
-              case 'organization_radio':
+        case 'organization_radio':
 
-                form.addControl('area_text', this.fb.group({
-                  info: ['', Validators.required]
-                }));
-                console.log(JSON.stringify(this.form.value));
+          form.addControl('area_text', this.fb.group({
+            info: ['', Validators.required]
+          }));
+          console.log(JSON.stringify(this.form.value));
 
-                break;
+          break;
 
-              case 'africa':
-              case 'alpes':
-              case 'himalaya':
-              case 'andes':
-              case 'mcKinley':
-              case 'alaska':
-              case 'mountain_range':
-              case 'others':
+        case 'africa':
+        case 'alpes':
+        case 'himalaya':
+        case 'andes':
+        case 'mcKinley':
+        case 'alaska':
+        case 'mountain_range':
+        case 'others':
 
-                if(this.c >= 8) {
-                  console.log('No se se hara nada porque el valor de c es ' + this.c);
-                }
-
-                else if (this.c == 0){
-                  this.c++;
-                  console.log('El valor de c es ' + this.c);
-                  formZ.addControl('area_text', this.fb.group({
-                    info: ['', Validators.required]
-                  }));
-                  console.log(JSON.stringify(this.form.value));
-
-                }
-                else if(this.c > 0) {
-                  this.c++;
-                  console.log('Este campo ya existe. El nuevo valor de c ahora es ' + this.c);
-                }
-                break;
-
-              case 'radio':
-
-                formE.addControl('cave', this.fb.group({
-                  date: [new Date(), Validators.required],
-                  quantity: ['', [Validators.required, Validators.min(0)]],
-                  grotto_radio: ['', Validators.required],
-                  dive_radio: ['', Validators.required]
-                }));
-                console.log(JSON.stringify(this.form.value));
-
-                break;
-
-              case 'grotto_radio':
-
-                formG.addControl('grotto', this.fb.group({
-                  info: ['', Validators.required]
-                }));
-                console.log(JSON.stringify(this.form.value));
-
-                break;
-
-              case 'dive_radio':
-
-                formG.addControl('underwater', this.fb.group({
-                  info: ['', Validators.required]
-                }));
-                console.log(JSON.stringify(this.form.value));
-
-                break;
-
-              case 'type_radio':
-
-                formS.addControl('sport', this.fb.group({
-                  info: ['', Validators.required]
-                }));
-                console.log(JSON.stringify(this.form.value));
-
-                break;
+          if (this.c >= 8) {
+            console.log('No se se hara nada porque el valor de c es ' + this.c);
           }
-      }
 
-      // tslint:disable-next-line: one-line
-      else if (event.valor === 'no') {
+          else if (this.c == 0) {
+            this.c++;
+            console.log('El valor de c es ' + this.c);
+            formZ.addControl('area_text', this.fb.group({
+              info: ['', Validators.required]
+            }));
+            console.log(JSON.stringify(this.form.value));
+
+          }
+          else if (this.c > 0) {
+            this.c++;
+            console.log('Este campo ya existe. El nuevo valor de c ahora es ' + this.c);
+          }
+          break;
+
+        case 'radio':
+
+          formE.addControl('cave', this.fb.group({
+            date: [new Date(), Validators.required],
+            quantity: ['', [Validators.required, Validators.min(0)]],
+            grotto_radio: ['', Validators.required],
+            dive_radio: ['', Validators.required]
+          }));
+          console.log(JSON.stringify(this.form.value));
+
+          break;
+
+        case 'grotto_radio':
+
+          formG.addControl('grotto', this.fb.group({
+            info: ['', Validators.required]
+          }));
+          console.log(JSON.stringify(this.form.value));
+
+          break;
+
+        case 'dive_radio':
+
+          formG.addControl('underwater', this.fb.group({
+            info: ['', Validators.required]
+          }));
+          console.log(JSON.stringify(this.form.value));
+
+          break;
+
+        case 'type_radio':
+
+          formS.addControl('sport', this.fb.group({
+            info: ['', Validators.required]
+          }));
+          console.log(JSON.stringify(this.form.value));
+
+          break;
+      }
+    }
+
+    // tslint:disable-next-line: one-line
+    else if (event.valor === 'no') {
 
       switch (event.name) {
 
@@ -284,21 +284,21 @@ export class MountaineeringComponent implements OnInit, DoCheck {
         case 'mountain_range':
         case 'others':
 
-            if (this.c == 0){
-              console.log("No se se hara nada porque el valor de c es " + this.c);
-            }
+          if (this.c == 0) {
+            console.log("No se se hara nada porque el valor de c es " + this.c);
+          }
 
-            else if (this.c == 1) {
-              this.c--;
-              this.dataText = this.form.get('climb_zone').get('area_text').get('info').value;
-              console.log('El campo ha sido eliminado. El valor de c ahora es ' + this.c);
-              formZ.removeControl('area_text');
+          else if (this.c == 1) {
+            this.c--;
+            this.dataText = this.form.get('climb_zone').get('area_text').get('info').value;
+            console.log('El campo ha sido eliminado. El valor de c ahora es ' + this.c);
+            formZ.removeControl('area_text');
 
-            }
-            else if (this.c > 1) {
-              this.c--;
-              console.log("No se puede eliminar aún. El nuevo valor de c es " + this.c);
-            }
+          }
+          else if (this.c > 1) {
+            this.c--;
+            console.log("No se puede eliminar aún. El nuevo valor de c es " + this.c);
+          }
 
           break;
 
@@ -325,7 +325,7 @@ export class MountaineeringComponent implements OnInit, DoCheck {
           formS.removeControl('sport');
 
           break;
-    }
+      }
 
     }
   }

@@ -103,6 +103,28 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
   };
   family = $family;
 
+  sportsQuestions = [
+    {
+      label: 'Participado en deportes submarinos, buceo SCUBA',
+      name: 'diving',
+      group: ''
+    },
+    {
+      label: 'Carreras en un “scooter”, motorizado, motocicleta, carro u otro vehículo impulsado',
+      name: 'racing',
+      group: ''
+    },
+    {
+      label: 'Planeadores de mano, paracaidismo, saltos BASE, saltos en cuerda elástica (bungee jumping), paracaidismo con cometa (para-kiting), paracaidismo planeador (skydiving)',
+      name: 'skydiving',
+      group: ''
+    },
+    {
+      label: 'Esquí con helicóptero, o escalar rocas o montaña',
+      name: 'mountaineering',
+      group: ''
+    },
+  ];
 
   yesOrNo: FieldConfig = {
     label: '',
@@ -132,7 +154,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
     };
   isJuridicaData: FieldConfig =
     {
-      label: 'Es el Contratante Persona Juridica?',
+      label: '¿Es el contratante Persona Juridica?',
       options: [
         {
           value: 'Si',
@@ -147,7 +169,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
     };
   isContractorData: FieldConfig =
     {
-      label: 'Es el Contractante?',
+      label: '¿Es el contratante?',
       options: [
         {
           value: 'Si',
@@ -282,7 +304,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
     name: 'plans',
   };
   // tslint:disable-next-line: max-line-length
-  titles = FormValidationsConstant.titlesForMajorExpensesComplete;
+  titles = FormValidationsConstant.titlesForMajorExpenses;
 
   country = {
     label: 'País',
@@ -688,8 +710,8 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
         haveStd: ['', Validators.required],
         havePhysiologicalDisorder: ['', Validators.required],
         haveHighRiskSport: ['', Validators.required],
-        havePregnant: ['', Validators.required],
-        haveReproductiveOrganDisorders: ['', Validators.required],
+        havePregnant: [''],
+        haveReproductiveOrganDisorders: [''],
       })
 
 
@@ -811,12 +833,13 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
       }
     });
 
-    this.isContractor = true;
+    this.isContractor = false;
     this.newRequest.get('person').get('isContractor').valueChanges.subscribe(value => {
 
       this.isContractor = true;
       if (value === 'Si') {
         this.isContractor = false;
+        this.newRequest.get('person').get('isJuridica').setValue('');
         this.titles = FormValidationsConstant.titlesForMajorExpenses;
       } else {
         this.titles = FormValidationsConstant.titlesForMajorExpensesComplete;
@@ -985,7 +1008,6 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
 
   canDependentOptionShow(questionName: string, id: number) {
     const isWomen = this.newRequest.get('dependents').get('allDependents').value[id].sex === 'Femenino';
-    console.log(this.newRequest.get('dependents').get('allDependents').value[id].sex);
     if (questionName === 'havePregnant' && isWomen === true) {
       return true;
     } else if (questionName === 'haveReproductiveOrganDisorders' && isWomen === true) {
@@ -1425,7 +1447,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
   valueChange($event, question, typeOrIndex) {
     console.log('tipo/index: ', typeOrIndex, 'event:', $event, 'question: ', question);
     if (typeOrIndex === 'solicitante') {
-      if ($event.checked === true) {
+      if ($event.checked === true || $event.valor === 'si') {
         switch (question) {
           case 'havePregnant':
             this.questionsA.addControl('pregnant', this.fb.group({
@@ -1435,8 +1457,10 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
 
           case 'haveHighRiskSport':
             this.questionsA.addControl('highRiskSport', this.fb.group({
-              date: ['', Validators.required],
-              info: ['', Validators.required],
+              diving: ['', Validators.required],
+              racing: ['', Validators.required],
+              skydiving: ['', Validators.required],
+              mountaineering: ['', Validators.required],
             }));
             break;
 
@@ -1447,6 +1471,23 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
               time: ['', Validators.required],
             }));
             break;
+
+          case 'diving':
+            this.questionnairesGastosMayores.addControl('solicitudBuceo', this.fb.group({}));
+            break;
+
+          case 'racing':
+            this.questionnairesGastosMayores.addControl('solicitudMoto', this.fb.group({}));
+            break;
+
+          case 'skydiving':
+            this.questionnairesGastosMayores.addControl('solicitudAviacion', this.fb.group({}));
+            break;
+
+          case 'mountaineering':
+            this.questionnairesGastosMayores.addControl('solicitudMontanismo', this.fb.group({}));
+            break;
+
           case 'haveEndocrineDisorders':
             this.questionnairesGastosMayores.addControl('solicitudDiabetes', this.fb.group({}));
             break;
@@ -1469,11 +1510,28 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
           default:
             break;
         }
-      } else if ($event.checked === false) {
+      } else if ($event.checked === false || $event.valor === 'no') {
         switch (question) {
           case 'havePregnant':
             this.questionsA.removeControl('pregnant');
             break;
+
+          case 'diving':
+            this.questionnairesGastosMayores.removeControl('solicitudBuceo');
+            break;
+
+          case 'racing':
+            this.questionnairesGastosMayores.removeControl('solicitudMoto');
+            break;
+
+          case 'skydiving':
+            this.questionnairesGastosMayores.removeControl('solicitudAviacion');
+            break;
+
+          case 'mountaineering':
+            this.questionnairesGastosMayores.removeControl('solicitudMontanismo');
+            break;
+
           case 'haveHighRiskSport':
             this.questionsA.removeControl('highRiskSport');
             break;
@@ -1510,11 +1568,51 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
       const questionnaire = dependents.at(typeOrIndex) as FormGroup;
       // const questionnaire = dependent.get('questionnairesGastosMayores') as FormGroup;
 
-      if ($event.checked === true) {
+      if ($event.checked === true || $event.valor === 'si') {
         console.log('true');
         switch (question) {
           case 'haveEndocrineDisorders':
             questionnaire.addControl('solicitudDiabetes', this.fb.group({}));
+            break;
+
+          case 'havePregnant':
+            questionnaire.addControl('pregnant', this.fb.group({
+              time: ['', Validators.required]
+            }));
+            break;
+
+          case 'haveNicotine':
+            questionnaire.addControl('nicotine', this.fb.group({
+              quantity: ['', Validators.required],
+              timerange: ['', Validators.required],
+              time: ['', Validators.required],
+            }));
+            break;
+
+          case 'haveHighRiskSport':
+            questionnaire.addControl('highRiskSport', this.fb.group({
+              diving: ['', Validators.required],
+              racing: ['', Validators.required],
+              skydiving: ['', Validators.required],
+              mountaineering: ['', Validators.required],
+            }));
+            break;
+
+          case 'diving':
+            console.log('entrodondee');
+            questionnaire.addControl('solicitudBuceo', this.fb.group({}));
+            break;
+
+          case 'racing':
+            questionnaire.addControl('solicitudMoto', this.fb.group({}));
+            break;
+
+          case 'skydiving':
+            questionnaire.addControl('solicitudAviacion', this.fb.group({}));
+            break;
+
+          case 'mountaineering':
+            questionnaire.addControl('solicitudMontanismo', this.fb.group({}));
             break;
 
           case 'haveUrinarySystem':
@@ -1535,7 +1633,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
           default:
             break;
         }
-      } else if ($event.checked === false) {
+      } else if ($event.checked === false || $event.valor === 'no') {
         console.log('false');
 
         switch (question) {
@@ -1543,8 +1641,36 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
             questionnaire.removeControl('solicitudDiabetes');
             break;
 
+          case 'havePregnant':
+            questionnaire.removeControl('pregnant');
+            break;
+
+          case 'haveNicotine':
+            questionnaire.removeControl('nicotine');
+            break;
+
+          case 'haveHighRiskSport':
+            questionnaire.removeControl('highRiskSport');
+            break;
+
           case 'haveUrinarySystem':
             questionnaire.removeControl('solicitudRenales');
+            break;
+
+          case 'diving':
+            questionnaire.removeControl('solicitudBuceo');
+            break;
+
+          case 'racing':
+            questionnaire.removeControl('solicitudMoto');
+            break;
+
+          case 'skydiving':
+            questionnaire.removeControl('solicitudAviacion');
+            break;
+
+          case 'mountaineering':
+            questionnaire.removeControl('solicitudMontanismo');
             break;
 
           case 'haveMusculoskeletal':

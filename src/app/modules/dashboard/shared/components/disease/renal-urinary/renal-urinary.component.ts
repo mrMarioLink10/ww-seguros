@@ -115,10 +115,15 @@ export class RenalUrinaryComponent implements OnInit {
     this.medicine_property = this.fb.array([this.createFormArray('medicine_array')]);
 
     this.addBasicControls();
-if (this.form.get('data').get('analysis').get('analysis_array'))
+if (  this.form.get('data') &&
+      this.form.get('data').get('analysis') &&
+      this.form.get('data').get('analysis').get('analysis_array'))
 {
   this.analysisFormArray = this.form.get('data').get('analysis').get('analysis_array') as FormArray;
-}if (this.form.get('data').get('medicine').get('medicine_array'))
+}if (
+  this.form.get('data') &&
+  this.form.get('data').get('medicine') &&
+  this.form.get('data').get('medicine').get('medicine_array'))
 {
   this.medicineOperationFormArray = this.form.get('data').get('medicine').get('medicine_array') as FormArray;
 }

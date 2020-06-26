@@ -1,11 +1,11 @@
-import { Component, OnInit, ViewChild, ChangeDetectorRef } from '@angular/core';
-import { FormGroup, FormArray, FormBuilder, Validators } from '@angular/forms';
+import { Component, OnInit, ViewChild, ChangeDetectorRef, SimpleChanges } from '@angular/core';
+import { FormGroup, FormArray, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { FieldConfig, Validator } from '../../../../../../shared/components/form-components/models/field-config';
 import { FormHandlerService } from '../../../../../../core/services/forms/form-handler.service';
 import { RefundService } from '../../../../claims/new-claim/claim-types/refund/services/refund.service';
 import { Observable } from 'rxjs';
 import { BaseDialogComponent } from 'src/app/shared/components/base-dialog/base-dialog.component';
-import { map, first } from 'rxjs/operators';
+import { map, first, startWith } from 'rxjs/operators';
 import { DialogService } from 'src/app/core/services/dialog/dialog.service';
 import { DialogOptionService } from 'src/app/core/services/dialog/dialog-option.service';
 import { MatDialog } from '@angular/material/dialog';
@@ -48,6 +48,10 @@ export class RefundComponent implements OnInit {
 		]
 	};
 
+	dataAutoCompleteIdNumber = [];
+
+	filteredOptions: Observable<any[]>;
+
 	cuentaTipos: FieldConfig = {
 		label: 'Tipo de Cuenta',
 		options: [
@@ -82,64 +86,113 @@ export class RefundComponent implements OnInit {
 
 	ID = null;
 
+	timeAutoComplete = 0;
+
 	ngOnInit() {
-		this.route.params.subscribe(res => {
-			this.ID = res.id;
-		});
 
-		if (this.ID != null) {
-			console.log('El ID es ' + this.ID);
-			this.getData(this.ID);
-		} else if (this.ID == null) {
-			console.log('ID esta vacio');
-		}
+		this.returnAutoCompleteData();
 
-		console.log(this.ID);
+		setTimeout(() => {
 
+			this.route.params.subscribe(res => {
+				this.ID = res.id;
+			});
 
-		this.refundForm = this.fb.group({
-			fecha: [new Date(), Validators.required],
-			informacion: this.fb.group({
-				noPoliza: [{ value: '', disabled: true }, [Validators.required]],
-				idNumber: ['', Validators.required],
-				nombre: [{ value: '', disabled: true }, [Validators.required]],
-				direccion: ['', Validators.required],
-				telefono: ['', Validators.required],
-				correo: ['', [Validators.required, Validators.email]],
-			}),
-			diagnosticos: this.fb.array([this.createDiagnostic()]),
-			haveAditionalComentary: [''],
-			comentary: [''],
-			forma: ['', Validators.required],
-			totalAmount: ['', Validators.required],
-			agreeWithDeclaration: ['', [Validators.required, Validators.requiredTrue]],
-			isComplete: [false, Validators.required],
-			areDiagnosticDatesValid: [true, Validators.required],
-		});
+			if (this.ID != null) {
+				console.log('El ID es ' + this.ID);
+				this.getData(this.ID);
+			} else if (this.ID == null) {
+				console.log('ID esta vacio');
+			}
 
-		this.diagnosticList = this.refundForm.get('diagnosticos') as FormArray;
+			console.log(this.ID);
 
-		this.refundForm.get('diagnosticos').valueChanges.subscribe(value => {
-			this.validDatesCounter = 0;
-			let total = 0;
+			this.refundForm = this.fb.group({
+				fecha: [new Date(), Validators.required],
+				informacion: this.fb.group({
+					noPoliza: [{ value: '', disabled: true }, [Validators.required]],
+					idNumber: ['', Validators.required],
+					nombre: [{ value: '', disabled: true }, [Validators.required]],
+					direccion: ['', Validators.required],
+					telefono: ['', Validators.required],
+					correo: ['', [Validators.required, Validators.email]],
+				}),
+				diagnosticos: this.fb.array([this.createDiagnostic()]),
+				haveAditionalComentary: [''],
+				comentary: [''],
+				forma: ['', Validators.required],
+				totalAmount: ['', Validators.required],
+				agreeWithDeclaration: ['', [Validators.required, Validators.requiredTrue]],
+				isComplete: [false, Validators.required],
+				areDiagnosticDatesValid: [true, Validators.required],
+			});
 
-			for (const element in value) {
-				if (value.hasOwnProperty(element)) {
-					total += this.refundForm.get('diagnosticos').get(element.toString()).value.monto;
+			this.diagnosticList = this.refundForm.get('diagnosticos') as FormArray;
 
-					if (this.calculatedDate(this.refundForm.get('diagnosticos').get(element.toString()).value.fecha) >= 6) {
-						this.receiveDateValidator(false);
+			this.refundForm.get('diagnosticos').valueChanges.subscribe(value => {
+				this.validDatesCounter = 0;
+				let total = 0;
 
-					} else {
-						this.receiveDateValidator(true);
+				for (const element in value) {
+					if (value.hasOwnProperty(element)) {
+						total += this.refundForm.get('diagnosticos').get(element.toString()).value.monto;
 
+						if (this.calculatedDate(this.refundForm.get('diagnosticos').get(element.toString()).value.fecha) >= 6) {
+							this.receiveDateValidator(false);
+
+						} else {
+							this.receiveDateValidator(true);
+
+						}
 					}
 				}
-			}
-			this.refundForm.get('totalAmount').setValue(total);
-			this.totalAmount = total;
-		});
+				this.refundForm.get('totalAmount').setValue(total);
+				this.totalAmount = total;
+			});
+
+			this.filteredOptions = this.refundForm.get('informacion').get('idNumber').valueChanges
+			.pipe(
+			  startWith(''),
+			  map(value => typeof value === 'string' ? value : value),
+			  map(value => value ? this._filter(value) : this.dataAutoCompleteIdNumber.slice())
+			);
+
+			this.timeAutoComplete = 1;
+		}, 15000);
+
 	}
+
+	displayFn(user: any) {
+		return user ? user : '';
+	  }
+
+	  private _filter(value: string): any[] {
+		const filterValue = value.toLowerCase();
+
+		return this.dataAutoCompleteIdNumber.filter(option => option.toLowerCase().indexOf(filterValue) === 0);
+	  }
+
+	//   consoleMethod(nameOption){
+	// 	// console.log("El valor de name es " + nameOption);
+	// 	// console.log("El value de idNumber es " + this.refundForm.get('informacion').get('idNumber').value);
+	// 	// console.log("El json de todo el formulario: ", JSON.stringify(this.refundForm.value) );
+	// 	console.log('El tipo de dato de ' +
+	// 	// tslint:disable-next-line: radix
+	// 	Number.parseInt((nameOption).slice((nameOption).indexOf(' - ') + 3)) + ' es: ' +
+	// 	// tslint:disable-next-line: radix
+	// 	(typeof Number.parseInt((nameOption).slice((nameOption).indexOf(' - ') + 3)) ) );
+	//   }
+
+	  returnAutoCompleteData() {
+		this.refund.getIdNumbers().subscribe(data => {
+			// tslint:disable-next-line: prefer-for-of
+			for (let x = 0; x < data.data.length; x++) {
+				this.dataAutoCompleteIdNumber.push(data.data[x].asegurado.nombres_asegurado +
+					' ' + data.data[x].asegurado.apellidos_asegurado + ' - '
+					+ data.data[x].asegurado.id_asegurado);
+			}
+		});
+	  }
 
 	onFileChange(event, formName, index) {
 		const reader = new FileReader();
@@ -257,6 +310,9 @@ export class RefundComponent implements OnInit {
 	}
 
 	searchIdNumber(idNumber: string) {
+
+		idNumber = (idNumber).slice((idNumber).indexOf(' - ') + 3);
+
 		this.appComponent.showOverlay = true;
 		this.userService.getInsurancePeople(idNumber)
 			.subscribe((response: any) => {

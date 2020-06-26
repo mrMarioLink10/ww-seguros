@@ -39,7 +39,7 @@ export class DisabilityComponent implements OnInit, DoCheck {
     'Sección A. Datos del propuesto Asegurado y Estatus laboral',
     'Sección B. Datos del Contratante', 'Sección C. Cuestionario Médico',
     'Sección D. Opción del Plan', 'Sección E. Beneficiarios Primarios',
-    'Beneficiario(s) Contigente(s)', 'En caso de Cesión Bancaria', 'Archivos Adjuntos'];
+    'Beneficiario(s) Contigente(s)', 'Archivos Adjuntos'];
   bmi: number;
   // massName = 'PESO';
   // heightName = 'ALTURA';
@@ -579,7 +579,7 @@ export class DisabilityComponent implements OnInit, DoCheck {
         name: 'haveMusculoSkeletal'
       },
       {
-        label: 'Desórdenes urologicos y tiene mas de 50 años',
+        label: 'Desórdenes urológicos',
         name: 'haveProstatics'
       },
       {
@@ -731,11 +731,11 @@ export class DisabilityComponent implements OnInit, DoCheck {
         hasAnotherCoverage: ['', Validators.required],
         changeAnotherCoverage: ['', Validators.required],
       }),
-      bankTransfer: this.fb.group({
-        bankEntity: [''],
-        amount: ['', Validators.min(0)],
-        contact: ['']
-      }),
+      // bankTransfer: this.fb.group({
+      //   bankEntity: [''],
+      //   amount: ['', Validators.min(0)],
+      //   contact: ['']
+      // }),
       questionnaires: this.fb.group({}),
       files: this.fb.group({
         studies: this.fb.array([]),
@@ -815,7 +815,7 @@ export class DisabilityComponent implements OnInit, DoCheck {
   // actualValue;
   y = 0
   x = 0;
-  xx = 0;
+  // xx = 0;
   ngDoCheck(): void {
 
     // if (this.disabilityGroup.get('questions').get('weightUnit').value != '' &&
@@ -902,47 +902,46 @@ export class DisabilityComponent implements OnInit, DoCheck {
 
     // tslint:disable-next-line: align
     if (this.age >= 50 && this.disabilityGroup.get('insured_data').get('gender').value == 'masculino') {
-      if (this.xx != 0) {
-        this.xx = 0;
-      }
+      // if (this.xx != 0) {
+      //   this.xx = 0;
+      // }
       const questionnaires = this.disabilityGroup.get('questionnaires') as FormGroup;
       if (this.x == 0) {
         if (!this.disabilityGroup.get('questionnaires').get('solicitudProstatica')) {
           questionnaires.addControl('solicitudProstatica', this.fb.group({}));
-        }
-        this.disabilityGroup.get('questions').get('questionnaire').get('sicknessType_radio').setValue('si');
-
-        const var1 = {
-          name: 'sicknessType_radio', valor: 'si'
-        };
-
-        this.selectChange(var1);
-
-        if (this.disabilityGroup.get('questions').get('questionnaire').get('sicknessType')) {
-          this.disabilityGroup.get('questions').get('questionnaire').get('sicknessType').get('haveProstatics').setValue('si');
           this.x++;
         }
+        // this.disabilityGroup.get('questions').get('questionnaire').get('sicknessType_radio').setValue('si');
+        // const var1 = {
+        //   name: 'sicknessType_radio', valor: 'si'
+        // };
+        // this.selectChange(var1);
+        // if (this.disabilityGroup.get('questions').get('questionnaire').get('sicknessType')) {
+        //   this.disabilityGroup.get('questions').get('questionnaire').get('sicknessType').get('haveProstatics').setValue('si');
+        //   this.x++;
+        // }
       }
     }
     else if (this.age < 50 || this.disabilityGroup.get('insured_data').get('gender').value == 'femenino') {
-      if (this.xx == 0) {
-        this.x++;
-      }
+      // if (this.xx == 0) {
+      //   this.x++;
+      // }
       const questionnaires = this.disabilityGroup.get('questionnaires') as FormGroup;
       if (this.x != 0) {
         if (this.disabilityGroup.get('questionnaires').get('solicitudProstatica')) {
           questionnaires.removeControl('solicitudProstatica');
-        }
-        if (this.disabilityGroup.get('questions').get('questionnaire').get('sicknessType')) {
-          this.disabilityGroup.get('questions').get('questionnaire').get('sicknessType').get('haveProstatics').setValue('no');
           this.x = 0;
-          this.xx++;
         }
+        // if (this.disabilityGroup.get('questions').get('questionnaire').get('sicknessType')) {
+        //   this.disabilityGroup.get('questions').get('questionnaire').get('sicknessType').get('haveProstatics').setValue('no');
+        //   this.x = 0;
+        //   this.xx++;
+        // }
       }
-      if (!this.disabilityGroup.get('questionnaires').get('solicitudProstatica') &&
-        !this.disabilityGroup.get('questions').get('questionnaire').get('sicknessType')) {
-        this.x = 0;
-      }
+      // if (!this.disabilityGroup.get('questionnaires').get('solicitudProstatica') &&
+      //   !this.disabilityGroup.get('questions').get('questionnaire').get('sicknessType')) {
+      //   this.x = 0;
+      // }
     }
 
     if (this.disabilityGroup.get('questions').get('questionnaire').get('therapy_radio').value == 'no' &&
@@ -1087,7 +1086,7 @@ export class DisabilityComponent implements OnInit, DoCheck {
     // if (outsideHours == null || outsideHours == undefined) {
     //   outsideHours = 0;
     // }
-    totalJobHours = (insideHours + outsideHours) / 2;
+    totalJobHours = (insideHours + outsideHours);
     // if ((insideHours == null || insideHours == undefined) && (outsideHours == null || outsideHours == undefined) ) {
     //   totalJobHours = '';
     // }
@@ -1267,9 +1266,9 @@ export class DisabilityComponent implements OnInit, DoCheck {
           console.log(this.role);
 
           formInsured.addControl('pep', this.fb.group({
-            contractor: ['', Validators.required],
-            payer: ['', Validators.required],
-            insured: ['', Validators.required],
+              // contractor: ['', Validators.required],
+              payer: ['', Validators.required],
+              // insured: ['', Validators.required],
             lastPosition: ['', Validators.required],
             time: ['', Validators.required],
             timeNumber: ['', [Validators.required, Validators.min(1)]]
@@ -1284,9 +1283,9 @@ export class DisabilityComponent implements OnInit, DoCheck {
           console.log(this.role);
 
           formHolder.addControl('pep', this.fb.group({
-            contractor: ['', Validators.required],
+            // contractor: ['', Validators.required],
             payer: ['', Validators.required],
-            insured: ['', Validators.required],
+            // insured: ['', Validators.required],
             lastPosition: ['', Validators.required],
             time: ['', Validators.required],
             timeNumber: ['', [Validators.required, Validators.min(1)]]
@@ -1317,9 +1316,9 @@ export class DisabilityComponent implements OnInit, DoCheck {
           questionnaires.addControl('solicitudMusculoesqueleticos', this.fb.group({}));
           break;
 
-        case 'haveProstatics':
-          questionnaires.addControl('solicitudProstatica', this.fb.group({}));
-          break;
+        // case 'haveProstatics':
+        //   questionnaires.addControl('solicitudProstatica', this.fb.group({}));
+        //   break;
 
         case 'haveSpine':
           questionnaires.addControl('columnaVertebralColumnaVertebral', this.fb.group({}));
@@ -1367,7 +1366,7 @@ export class DisabilityComponent implements OnInit, DoCheck {
           this.accordionTitles = [
             'Sección A. Datos del propuesto Asegurado y Estatus laboral', 'Sección C. Cuestionario Médico',
             'Sección D. Opción del Plan', 'Sección E. Beneficiarios Primarios',
-            'Beneficiario(s) Contigente(s)', 'En caso de Cesión Bancaria', 'Archivos Adjuntos'];
+            'Beneficiario(s) Contigente(s)', 'Archivos Adjuntos'];
           formGeneral.removeControl('policyholder');
           break;
 
@@ -1378,7 +1377,7 @@ export class DisabilityComponent implements OnInit, DoCheck {
           this.accordionTitles = [
             'Sección A. Datos del propuesto Asegurado y Estatus laboral', 'Sección C. Cuestionario Médico',
             'Sección D. Opción del Plan', 'Sección E. Beneficiarios Primarios',
-            'Beneficiario(s) Contigente(s)', 'En caso de Cesión Bancaria', 'Archivos Adjuntos'];
+            'Beneficiario(s) Contigente(s)', 'Archivos Adjuntos'];
           formGeneral.removeControl('policyholder');
           // formInsured.addControl('knowYourClientSecond', this.fb.group({}));
           formInsured.addControl('knowYourClient', this.fb.group({}));
@@ -1492,9 +1491,9 @@ export class DisabilityComponent implements OnInit, DoCheck {
           questionnaires.removeControl('solicitudMusculoesqueleticos');
           break;
 
-        case 'haveProstatics':
-          questionnaires.removeControl('solicitudProstatica');
-          break;
+        // case 'haveProstatics':
+        //   questionnaires.removeControl('solicitudProstatica');
+        //   break;
 
         case 'haveSpine':
           questionnaires.removeControl('columnaVertebralColumnaVertebral');
@@ -1522,7 +1521,7 @@ export class DisabilityComponent implements OnInit, DoCheck {
               'Sección A. Datos del propuesto Asegurado y Estatus laboral',
               'Sección B. Datos del Contratante', 'Sección C. Cuestionario Médico',
               'Sección D. Opción del Plan', 'Sección E. Beneficiarios Primarios',
-              'Beneficiario(s) Contigente(s)', 'En caso de Cesión Bancaria', 'Archivos Adjuntos'];
+              'Beneficiario(s) Contigente(s)', 'Archivos Adjuntos'];
           }
           else {
             console.log('Ya existe, por tanto no hay que crear a policyholder de nuevo.');
@@ -1537,7 +1536,7 @@ export class DisabilityComponent implements OnInit, DoCheck {
               'Sección A. Datos del propuesto Asegurado y Estatus laboral',
               'Sección B. Datos del Contratante', 'Sección C. Cuestionario Médico',
               'Sección D. Opción del Plan', 'Sección E. Beneficiarios Primarios',
-              'Beneficiario(s) Contigente(s)', 'En caso de Cesión Bancaria', 'Archivos Adjuntos'];
+              'Beneficiario(s) Contigente(s)', 'Archivos Adjuntos'];
           }
           else {
             console.log('Ya existe, por tanto no hay que crear a policyholder de nuevo.');
@@ -1843,11 +1842,15 @@ export class DisabilityComponent implements OnInit, DoCheck {
         this.existingCoveragesList = this.disabilityGroup.get('contingent').get('anotherCoverages') as FormArray;
         this.changingCoveragesList = this.disabilityGroup.get('contingent').get('changingCoverages') as FormArray;
         this.filesStudiesArray = formF.get('studies') as FormArray;
+        if (this.disabilityGroup.get('files') && this.disabilityGroup.get('files').get('documentsKnowClient'))
+        {
+        this.filesDocumentsKnowClientArray = this.disabilityGroup.get('files').get('documentsKnowClient') as FormArray;
+        }
         //this.disabilityGroup['controls'].num_financial_quote.setValue(data.data.num_financial_quote)
 
         this.arrayFilesTitles = data.data.files.studies;
         // this.filesDocumentsKnowClientArray = formF.get('documentsKnowClient') as FormArray;
-        // this.arrayFilesTitlesDocumentsKnowClient = data.data.files.documentsKnowClient;
+        this.arrayFilesTitlesDocumentsKnowClient = data.data.files.documentsKnowClient;
       }
 
     });

@@ -49,7 +49,7 @@ export class RacingComponent implements OnInit {
     },
     {
       label: "Carrera sobre hielo",
-      name: "ice_race",
+      name: "iceRace",
       group:'ice_race_field'
     },
     {
@@ -250,7 +250,7 @@ export class RacingComponent implements OnInit {
         
             break;
 
-          case 'ice_race':
+          case 'iceRace':
     
             formP.addControl('ice_race_field', this.fb.group({
 
@@ -331,7 +331,7 @@ export class RacingComponent implements OnInit {
         
             break;
 
-          case 'ice_race':
+          case 'iceRace':
       
             formP.removeControl('ice_race_field');
             console.log("Esto es el switch de Carrera sobre hielo en checked igual a false, de past_months")
@@ -446,7 +446,7 @@ export class RacingComponent implements OnInit {
           
               break;
   
-            case 'ice_race':
+            case 'iceRace':
       
               formP.addControl('ice_race_field', this.fb.group({
   
@@ -527,7 +527,7 @@ export class RacingComponent implements OnInit {
           
               break;
   
-            case 'ice_race':
+            case 'iceRace':
         
               formP.removeControl('ice_race_field');
               console.log("Esto es el switch de Carrera sobre hielo en checked igual a false, de future_months")
@@ -585,7 +585,7 @@ export class RacingComponent implements OnInit {
         rally:[false],
         marathon:[false],
         trial:[false],
-        ice_race:[false],
+        iceRace:[false],
         others:[false],
 
       }));
@@ -602,7 +602,7 @@ export class RacingComponent implements OnInit {
         rally:[false],
         marathon:[false],
         trial:[false],
-        ice_race:[false],
+        iceRace:[false],
         others:[false],
 
       }));

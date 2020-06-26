@@ -38,4 +38,7 @@ export class RefundService {
     this.route.navigateByUrl(`/dashboard/claims/new-claim/refund/${id}`);
   }
 
+  getIdNumbers(): Observable<any> {
+    return this.http.get(`${environment.apiUrl}/api/DatosEmpresa`);
+  }
 }

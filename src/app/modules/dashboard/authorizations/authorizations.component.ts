@@ -114,9 +114,9 @@ export class AuthorizationsComponent implements OnInit {
 
 	seeRequest(id: number) {
 		if (this.role === 'WWS') {
-			window.open(`https://wwsdevportalbackend.azurewebsites.net/PrecertificadoView/Index/${id}/?location=true`, '_blank');
+			window.open(`http://wwsdevportalbackend.azurewebsites.net/PrecertificadoView/Index/${id}/?location=true`, '_blank');
 		} else {
-			window.open(`https://wwsdevportalbackend.azurewebsites.net/PrecertificadoView/Index/${id}/?location=false`, '_blank');
+			window.open(`http://wwsdevportalbackend.azurewebsites.net/PrecertificadoView/Index/${id}/?location=false`, '_blank');
 		}
 	}
 

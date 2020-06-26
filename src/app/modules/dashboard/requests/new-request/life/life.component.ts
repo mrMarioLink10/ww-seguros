@@ -491,13 +491,13 @@ export class LifeComponent implements OnInit, DoCheck {
   };
 
   @ViewChild('form', { static: false }) form;
+  @ViewChild('matAccordion', { static: false }) matAccordion;
 
   ngOnInit() {
     /* this.userService.getWholeQuotes()
        .subscribe(res => {
          console.log(res);
        });*/
-
     this.route.params.subscribe(res => {
       this.ID = res.id;
     });
@@ -1103,6 +1103,7 @@ export class LifeComponent implements OnInit, DoCheck {
       console.log('noCotizacion esta vacio');
     }
 
+
   }
 
   foreignWithoutResidenceChecker(event: any, target: string, form: any, targetForm: any) {
@@ -1544,6 +1545,22 @@ export class LifeComponent implements OnInit, DoCheck {
       window.open('https://cotizadores.wwseguros.com.do/?cia=wws', '_blank');
     } else if (this.userService.getRoleCotizador() === 'WMA') {
       window.open('https://cotizadores.wwseguros.com.do/?cia=wwm', '_blank');
+    }
+  }
+
+  showWarningDot(form: any): boolean {
+    if (!this.ID) {
+      if (!form.valid && this.form.submitted) {
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      if (form.valid) {
+        return false;
+      } else {
+        return true;
+      }
     }
   }
 
@@ -2475,6 +2492,7 @@ export class LifeComponent implements OnInit, DoCheck {
 
         console.log(this.newRequest);
         console.log(data.data);
+
         this.primaryBenefitsArray = this.newRequest.get('primaryBenefits').get('dependentsC') as FormArray;
         this.contingentBeneficiaryArray = this.newRequest.get('contingentBeneficiary').get('dependentsC') as FormArray;
         this.dependentsFormArray = this.newRequest.get('dependents') as FormArray;
@@ -2483,9 +2501,20 @@ export class LifeComponent implements OnInit, DoCheck {
         const formCB = this.newRequest.get('contingentBeneficiary') as FormGroup;
         const formGI = this.newRequest.get('generalInformation') as FormGroup;
         const formF = this.newRequest.get('files') as FormGroup;
+        const formP = this.newRequest.get('person') as FormGroup;
         const formAR = this.newRequest.get('agentReport') as FormGroup;
         const formHMI = this.newRequest.get('medicalHistory').get('informations') as FormGroup;
         const formWI = this.newRequest.get('medicalHistory').get('informations').get('womenInformation') as FormGroup;
+
+        if (formP.get('sameAsContractor').value === 'si') {
+          formP.removeControl('contractorIsLegalEntity');
+          this.newRequest.removeControl('contractor');
+        }
+
+        if (formP.get('sameAsPayer').value === 'si') {
+          formP.removeControl('payerIsLegalEntity');
+          this.newRequest.removeControl('payer');
+        }
 
         this.familyRelationshipInsurances = formAR.get('familyInsurances') as FormArray;
         this.existingCoveragesList = formCB.get('anotherCoverages') as FormArray;
@@ -2528,6 +2557,7 @@ export class LifeComponent implements OnInit, DoCheck {
 
   sendForm(form: FormGroup, formType: string, sendType: string, id?: number) {
     console.log(id);
+    console.log(this.matAccordion);
 
     this.formHandler.sendForm(form, formType, sendType, this.appComponent, id);
 

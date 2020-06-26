@@ -6,6 +6,6 @@
       class="mr-3 radio-button">
       <span style="white-space: normal;"> {{option.viewValue}} </span> </mat-radio-button>
   </mat-radio-group>
-  <mat-error style="font-size: 12px !important" *ngIf="group.get(name).touched && !group.get(name).valid">Debe completar
-    este campo</mat-error>
+  <mat-error style="font-size: 10px;" *ngIf="group.get(name).touched && !group.get(name).valid">Este campo es
+    obligatorio.</mat-error>
 </div>

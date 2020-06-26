@@ -1,10 +1,10 @@
 <mat-form-field color="accent" appearance="outline" class="w-full" style="font-size: small !important;"
   [formGroup]="group">
   <mat-label>{{options.label}}</mat-label>
-  <mat-select [formControlName]="name"  (selectionChange)="emitter($event)">
+  <mat-select [formControlName]="name" (selectionChange)="emitter($event)">
     <mat-option *ngFor="let type of options.options" [value]="type.value" [routerLink]="type.link">{{type.viewValue}}
     </mat-option>
   </mat-select>
-  <mat-error *ngIf="group.get(name).touched && !group.get(name).valid ">Debe llenar el campo de {{options.label}}
+  <mat-error *ngIf="group.get(name).touched && !group.get(name).valid ">Este campo es obligatorio.
   </mat-error>
 </mat-form-field>

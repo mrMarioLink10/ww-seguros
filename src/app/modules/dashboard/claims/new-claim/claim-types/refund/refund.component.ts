@@ -91,7 +91,9 @@ export class RefundComponent implements OnInit {
 	ngOnInit() {
 
 		this.returnAutoCompleteData();
-
+		setTimeout(() => {
+			this.appComponent.showOverlay = true;
+		});
 		setTimeout(() => {
 
 			this.route.params.subscribe(res => {
@@ -151,26 +153,28 @@ export class RefundComponent implements OnInit {
 			});
 
 			this.filteredOptions = this.refundForm.get('informacion').get('idNumber').valueChanges
-			.pipe(
-			  startWith(''),
-			  map(value => typeof value === 'string' ? value : value),
-			  map(value => value ? this._filter(value) : this.dataAutoCompleteIdNumber.slice())
-			);
+				.pipe(
+					startWith(''),
+					map(value => typeof value === 'string' ? value : value),
+					map(value => value ? this._filter(value) : this.dataAutoCompleteIdNumber.slice())
+				);
 
 			this.timeAutoComplete = 1;
+			this.appComponent.showOverlay = false;
+
 		}, 15000);
 
 	}
 
 	displayFn(user: any) {
 		return user ? user : '';
-	  }
+	}
 
-	  private _filter(value: string): any[] {
+	private _filter(value: string): any[] {
 		const filterValue = value.toLowerCase();
 
 		return this.dataAutoCompleteIdNumber.filter(option => option.toLowerCase().indexOf(filterValue) === 0);
-	  }
+	}
 
 	//   consoleMethod(nameOption){
 	// 	// console.log("El valor de name es " + nameOption);
@@ -183,7 +187,7 @@ export class RefundComponent implements OnInit {
 	// 	(typeof Number.parseInt((nameOption).slice((nameOption).indexOf(' - ') + 3)) ) );
 	//   }
 
-	  returnAutoCompleteData() {
+	returnAutoCompleteData() {
 		this.refund.getIdNumbers().subscribe(data => {
 			// tslint:disable-next-line: prefer-for-of
 			for (let x = 0; x < data.data.length; x++) {
@@ -192,7 +196,7 @@ export class RefundComponent implements OnInit {
 					+ data.data[x].asegurado.id_asegurado);
 			}
 		});
-	  }
+	}
 
 	onFileChange(event, formName, index) {
 		const reader = new FileReader();

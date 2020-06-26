@@ -6,7 +6,6 @@
     onkeypress="return (event.charCode == 8 || event.charCode == 0) ? null : ((event.charCode >= 46 && event.charCode <= 57))"
     matInput class="" type="number" [min]="min" [max]="max" [placeholder]="placeholder">
   <mat-error *ngIf="(group.get(name).touched && !group.get(name).valid) && !group.get(name).errors?.max">Este campo es
-    obligatorio. No agregue
-    caracteres especiales.</mat-error>
+    obligatorio.</mat-error>
   <mat-error *ngIf="group.get(name).errors?.max && maxInfo">El numero no puede ser mayor a {{maxInfo}}.</mat-error>
 </mat-form-field>

@@ -168,9 +168,9 @@ export class DialogOptionService {
 		}
 
 		return {
-			logo: 'error',
+			logo: 'warning',
 			title: 'Campos Inválidos',
-			text: 'Por favor revise el formulario y valide que todo esta completo' + text,
+			text: 'Revisar las secciones y los campos que aparecen en rojo',
 			showButtons: false
 		};
 	}

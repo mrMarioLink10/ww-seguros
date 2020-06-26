@@ -9,6 +9,8 @@ module.exports = {
       gridTemplateColumns: {
         // Simple 16 column grid
         '21': 'repeat(21, minmax(0, 1fr))',
+        '22': 'repeat(22, minmax(0, 1fr))',
+        '26': 'repeat(26, minmax(0, 1fr))',
       }
     }
   },

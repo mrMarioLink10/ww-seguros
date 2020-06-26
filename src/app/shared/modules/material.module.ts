@@ -32,6 +32,8 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSortModule } from '@angular/material/sort';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+
 
 /**
  * NgModule that includes all Material modules.
@@ -71,7 +73,8 @@ import { MatSortModule } from '@angular/material/sort';
 		MatRadioModule,
 		MatDialogModule,
 		MatProgressSpinnerModule,
-		MatSortModule
+		MatSortModule,
+		MatAutocompleteModule
 	]
 })
 export class MaterialModule { }

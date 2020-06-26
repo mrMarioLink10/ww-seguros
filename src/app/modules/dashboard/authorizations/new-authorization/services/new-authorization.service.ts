@@ -37,4 +37,8 @@ export class NewAuthorizationService {
     this.route.navigateByUrl(`/dashboard/authorizations/new-authorization/${id}`);
   }
 
+  getIdNumbers(): Observable<any> {
+    return this.http.get(`${environment.apiUrl}/api/DatosEmpresa`);
+  }
+
 }

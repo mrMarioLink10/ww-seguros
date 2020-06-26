@@ -44,7 +44,7 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy, DoCheck {
 		'Archivos adjuntos'
 	];
 
-	varIsMedical = 0 ;
+	varIsMedical = 0;
 
 	dataAutoCompleteIdNumber = [];
 
@@ -143,7 +143,9 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy, DoCheck {
 	ngOnInit() {
 
 		this.returnAutoCompleteData();
-
+		setTimeout(() => {
+			this.appComponent.showOverlay = true;
+		});
 		setTimeout(() => {
 
 			this.route.params.subscribe(res => {
@@ -248,11 +250,12 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy, DoCheck {
 
 			// tslint:disable-next-line: align
 			this.filteredOptions = this.authorization.get('informacionAsegurado').get('idNumber').valueChanges
-			.pipe(
-			  startWith(''),
-			  map(value => typeof value === 'string' ? value : value),
-			  map(value => value ? this._filter(value) : this.dataAutoCompleteIdNumber.slice())
-			);
+				.pipe(
+					startWith(''),
+					map(value => typeof value === 'string' ? value : value),
+					map(value => value ? this._filter(value) : this.dataAutoCompleteIdNumber.slice())
+				);
+			this.appComponent.showOverlay = false;
 
 			this.timeAutoComplete = 1;
 		}, 15000);
@@ -261,13 +264,13 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy, DoCheck {
 
 	displayFn(user: any) {
 		return user ? user : '';
-	  }
+	}
 
-	  private _filter(value: string): any[] {
+	private _filter(value: string): any[] {
 		const filterValue = value.toLowerCase();
 
 		return this.dataAutoCompleteIdNumber.filter(option => option.toLowerCase().indexOf(filterValue) === 0);
-	  }
+	}
 
 	returnAutoCompleteData() {
 		this.newAuthorization.getIdNumbers().subscribe(data => {
@@ -278,35 +281,35 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy, DoCheck {
 					+ data.data[x].asegurado.id_asegurado);
 			}
 		});
-	  }
+	}
 
 	ngDoCheck() {
 
 		if (this.ID != null) {
 
 			if (this.authorization.get('informacionMedica').get('admision').get('nombreMedico').enable
-				) {
-					if (this.authorization.get('informacionMedica').get('isMedicalEqual').value == true
+			) {
+				if (this.authorization.get('informacionMedica').get('isMedicalEqual').value == true
 					|| this.authorization.get('informacionMedica').get('isMedicalEqual').value == 'true') {
 
-						if (this.varIsMedical == 0) {
+					if (this.varIsMedical == 0) {
 
-							this.authorization.get('informacionMedica').get('admision').get('nombreMedico').disable();
-							this.authorization.get('informacionMedica').get('admision').get('telefono').disable();
-							this.authorization.get('informacionMedica').get('admision').get('direccion').disable();
+						this.authorization.get('informacionMedica').get('admision').get('nombreMedico').disable();
+						this.authorization.get('informacionMedica').get('admision').get('telefono').disable();
+						this.authorization.get('informacionMedica').get('admision').get('direccion').disable();
 
-							this.nombreMedicoSB = this.authorization.get('informacionMedica').get('primerosSintomas').get('nombreMedico').valueChanges.subscribe(value => {
-								this.authorization.get('informacionMedica').get('admision').get('nombreMedico').setValue(value);
-							});
-							this.telefonoSB = this.authorization.get('informacionMedica').get('primerosSintomas').get('telefono').valueChanges.subscribe(value => {
-								this.authorization.get('informacionMedica').get('admision').get('telefono').setValue(value);
-							});
-							this.direccionSB = this.authorization.get('informacionMedica').get('primerosSintomas').get('direccion').valueChanges.subscribe(value => {
-								this.authorization.get('informacionMedica').get('admision').get('direccion').setValue(value);
-							});
-							this.varIsMedical++;
-						}
+						this.nombreMedicoSB = this.authorization.get('informacionMedica').get('primerosSintomas').get('nombreMedico').valueChanges.subscribe(value => {
+							this.authorization.get('informacionMedica').get('admision').get('nombreMedico').setValue(value);
+						});
+						this.telefonoSB = this.authorization.get('informacionMedica').get('primerosSintomas').get('telefono').valueChanges.subscribe(value => {
+							this.authorization.get('informacionMedica').get('admision').get('telefono').setValue(value);
+						});
+						this.direccionSB = this.authorization.get('informacionMedica').get('primerosSintomas').get('direccion').valueChanges.subscribe(value => {
+							this.authorization.get('informacionMedica').get('admision').get('direccion').setValue(value);
+						});
+						this.varIsMedical++;
 					}
+				}
 				// 	else {
 				// 		this.nombreMedicoSB.unsubscribe();
 				// 		this.telefonoSB.unsubscribe();

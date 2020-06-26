@@ -505,6 +505,20 @@ body {
   width: 100% !important;
 }
 
+.example-headers-align .mat-expansion-panel-header-title,
+.example-headers-align .mat-expansion-panel-header-description {
+  flex-basis: 0;
+}
+
+.example-headers-align .mat-expansion-panel-header-description {
+  justify-content: space-between;
+  align-items: center;
+}
+
+.example-headers-align .mat-form-field+.mat-form-field {
+  margin-left: 8px;
+}
+
 /** OVERWRITING ANOTHER CLASSES */
 /** OVERWRITING ANOTHER CLASSES */
 /** OVERWRITING ANOTHER CLASSES */
@@ -614,6 +628,13 @@ button.active:focus {
   }
 
 
+}
+
+.warning-accordion-dot {
+  height: 15px;
+  width: 15px;
+  border-radius: 8px;
+  background-color: #FF0000;
 }
 
 .info-cot {

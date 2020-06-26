@@ -209,6 +209,8 @@ export class FormHandlerService {
 					break;
 
 				case 'send':
+					form.markAllAsTouched();
+					form.updateValueAndValidity();
 					if (result === 'true') {
 						let dialog;
 						// dialog = this.dialog.open(BaseDialogComponent, {
@@ -432,7 +434,7 @@ export class FormHandlerService {
 		setTimeout(() => {
 			dialog.close();
 
-		}, 4000);
+		}, 7000);
 	}
 
 	navigateToMenu(route) {

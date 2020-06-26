@@ -43,10 +43,18 @@
   <div *ngIf="showContent">
     <mat-tab-group>
       <mat-tab label="Asegurado" class="mat-tab-forms">
-        <mat-accordion class="ww-mat-accordion" [togglePosition]="'before'">
+        <mat-accordion #matAccordion="matAccordion" name="matAccordion" class="ww-mat-accordion example-headers-align"
+          [togglePosition]="'before'">
           <mat-expansion-panel class="ww-mat-expansion" [expanded]="step === 0" (opened)="setStep(0)">
             <mat-expansion-panel-header class="body-13 icon-blue">
-              Información del Propuesto Asegurado
+              <mat-panel-title>
+                Información del Propuesto Asegurado
+              </mat-panel-title>
+              <mat-panel-description>
+                <div></div>
+                <!-- <mat-icon style="color: #FF0000;">warning</mat-icon> -->
+                <div *ngIf="showWarningDot(newRequest.get('person'))" class="warning-accordion-dot"></div>
+              </mat-panel-description>
             </mat-expansion-panel-header>
             <div class="mt-3 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-4">
               <app-input class="mr-3 " [group]="newRequest.get('person')" label="Primer Nombre" name='firstName'>
@@ -124,7 +132,7 @@
                 title="¿Es el contratante una persona juridica?" [options]="diseaseService.yesOrNoOriginal">
               </app-radio-button>
               <app-radio-button class="mr-3" (selected)="selectChange($event)" [group]="newRequest.get('person')"
-                name="sameAsPayer" title="¿Es el pagador el mismo propuesto asegurado o Contratante?"
+                name="sameAsPayer" title="¿Es el pagador el mismo asegurado o Contratante?"
                 [options]="diseaseService.yesOrNoOriginal">
               </app-radio-button>
               <app-radio-button *ngIf="newRequest.get('person').get('payerIsLegalEntity')" class="mr-3"
@@ -140,7 +148,14 @@
           </mat-expansion-panel>
           <mat-expansion-panel class="ww-mat-expansion" [expanded]="step === 1" (opened)="setStep(1)">
             <mat-expansion-panel-header class="body-13 icon-blue">
-              Perfil Financiero
+              <mat-panel-title>
+                Perfil Financiero
+              </mat-panel-title>
+              <mat-panel-description>
+                <div></div>
+                <!-- <mat-icon style="color: #FF0000;">warning</mat-icon> -->
+                <div *ngIf="showWarningDot(newRequest.get('financialProfile'))" class="warning-accordion-dot"></div>
+              </mat-panel-description>
             </mat-expansion-panel-header>
             <div>
               <app-radio-button class="mr-3" title="Ingresos anuales actividad principal"
@@ -162,7 +177,13 @@
           </mat-expansion-panel>
           <mat-expansion-panel class="ww-mat-expansion" [expanded]="step === 2" (opened)="setStep(2)">
             <mat-expansion-panel-header class="body-13 icon-blue">
-              Datos laborales
+              <mat-panel-title>
+                Datos laborales
+              </mat-panel-title>
+              <mat-panel-description>
+                <div></div>
+                <div *ngIf="showWarningDot(newRequest.get('employer'))" class="warning-accordion-dot"></div>
+              </mat-panel-description>
             </mat-expansion-panel-header>
             <div>
               <div class="mt-3 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-4">
@@ -192,8 +213,13 @@
           <mat-expansion-panel *ngIf="newRequest.get('contractor')" class="ww-mat-expansion" [expanded]="step === 3"
             (opened)="setStep(3)">
             <mat-expansion-panel-header class="body-13 icon-blue">
-              Contratante (completar sólo si no fuese el asegurado. De ser una Persona Jurídica, completar el Formulario
-              Persona Jurídica.)
+              <mat-panel-title>
+                Contratante
+              </mat-panel-title>
+              <mat-panel-description>
+                <div></div>
+                <div *ngIf="showWarningDot(newRequest.get('contractor'))" class="warning-accordion-dot"></div>
+              </mat-panel-description>
             </mat-expansion-panel-header>
             <div>
               <div class="mt-3 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-4">
@@ -298,8 +324,13 @@
           <mat-expansion-panel *ngIf="newRequest.get('payer')" class="ww-mat-expansion" [expanded]="step === 4"
             (opened)="setStep(4)">
             <mat-expansion-panel-header class="body-13 icon-blue">
-              Pagador (completar sólo si no fuese el contratante. De ser una Persona Jurídica, completar el Formulario
-              Persona Jurídica.)
+              <mat-panel-title>
+                Pagador
+              </mat-panel-title>
+              <mat-panel-description>
+                <div></div>
+                <div *ngIf="showWarningDot(newRequest.get('payer'))" class="warning-accordion-dot"></div>
+              </mat-panel-description>
             </mat-expansion-panel-header>
             <div>
               <div class="mt-3 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-4">
@@ -395,7 +426,13 @@
           </mat-expansion-panel>
           <mat-expansion-panel class="ww-mat-expansion" [expanded]="step === 5" (opened)="setStep(5)">
             <mat-expansion-panel-header class="body-13 icon-blue">
-              Persona políticamente expuesta
+              <mat-panel-title>
+                Persona políticamente expuesta
+              </mat-panel-title>
+              <mat-panel-description>
+                <div></div>
+                <div *ngIf="showWarningDot(newRequest.get('exposedPerson'))" class="warning-accordion-dot"></div>
+              </mat-panel-description>
             </mat-expansion-panel-header>
             <div>
               <div class="px-6">
@@ -485,7 +522,14 @@
           </mat-expansion-panel>
           <mat-expansion-panel class="ww-mat-expansion" [expanded]="step === 6" (opened)="setStep(6)">
             <mat-expansion-panel-header class="body-13 icon-blue">
-              Información pertinente al plan
+              <mat-panel-title>
+                Información pertinente al plan
+              </mat-panel-title>
+              <mat-panel-description>
+                <div></div>
+                <div *ngIf="showWarningDot(newRequest.get('releventPlanInformation'))" class="warning-accordion-dot">
+                </div>
+              </mat-panel-description>
             </mat-expansion-panel-header>
             <div>
               <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
@@ -590,7 +634,14 @@
           </mat-expansion-panel>
           <mat-expansion-panel class="ww-mat-expansion" [expanded]="step === 7" (opened)="setStep(7)">
             <mat-expansion-panel-header class="body-13 icon-blue">
-              Información pertinente al pago de la prima
+              <mat-panel-title>
+                Información pertinente al pago de la prima
+              </mat-panel-title>
+              <mat-panel-description>
+                <div></div>
+                <div *ngIf="showWarningDot(newRequest.get('relevantPaymentInformation'))" class="warning-accordion-dot">
+                </div>
+              </mat-panel-description>
             </mat-expansion-panel-header>
             <div>
               <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-4">
@@ -608,7 +659,14 @@
           </mat-expansion-panel>
           <mat-expansion-panel class="ww-mat-expansion" [expanded]="step === 8" (opened)="setStep(8)">
             <mat-expansion-panel-header class="body-13 icon-blue">
-              Designación de los Beneficiario(s) Primario(s)
+              <mat-panel-title>
+                Designación de los Beneficiario(s) Primario(s)
+              </mat-panel-title>
+              <mat-panel-description>
+                <div></div>
+                <div *ngIf="showWarningDot(newRequest.get('primaryBenefits'))" class="warning-accordion-dot">
+                </div>
+              </mat-panel-description>
             </mat-expansion-panel-header>
             <div>
               <div [formGroup]="newRequest.get('primaryBenefits')">
@@ -715,7 +773,14 @@
           </mat-expansion-panel>
           <mat-expansion-panel class="ww-mat-expansion" [expanded]="step === 9" (opened)="setStep(9)">
             <mat-expansion-panel-header class="body-13 icon-blue">
-              Beneficiario(s) Contingente(s)
+              <mat-panel-title>
+                Beneficiario(s) Contingente(s)
+              </mat-panel-title>
+              <mat-panel-description>
+                <div></div>
+                <div *ngIf="showWarningDot(newRequest.get('contingentBeneficiary'))" class="warning-accordion-dot">
+                </div>
+              </mat-panel-description>
             </mat-expansion-panel-header>
             <div>
               <div [formGroup]="newRequest.get('contingentBeneficiary')">
@@ -822,7 +887,14 @@
           </mat-expansion-panel>
           <mat-expansion-panel class="ww-mat-expansion" [expanded]="step === 10" (opened)="setStep(10)">
             <mat-expansion-panel-header class="body-13 icon-blue">
-              En caso de Cesión Bancaria
+              <mat-panel-title>
+                En caso de Cesión Bancaria
+              </mat-panel-title>
+              <mat-panel-description>
+                <div></div>
+                <div *ngIf="showWarningDot(newRequest.get('bankTransfer'))" class="warning-accordion-dot">
+                </div>
+              </mat-panel-description>
             </mat-expansion-panel-header>
             <div>
               <div class="radio-button-label" style="font-size: 12px !important;">En caso de Cesión Bancaria complete
@@ -845,7 +917,14 @@
           </mat-expansion-panel>
           <mat-expansion-panel class="ww-mat-expansion" [expanded]="step === 11" (opened)="setStep(11)">
             <mat-expansion-panel-header class="body-13 icon-blue">
-              Información general
+              <mat-panel-title>
+                Información general
+              </mat-panel-title>
+              <mat-panel-description>
+                <div></div>
+                <div *ngIf="showWarningDot(newRequest.get('generalInformation'))" class="warning-accordion-dot">
+                </div>
+              </mat-panel-description>
             </mat-expansion-panel-header>
             <div>
               <div
@@ -1137,7 +1216,14 @@
           </mat-expansion-panel>
           <mat-expansion-panel class="ww-mat-expansion" [expanded]="step === 12" (opened)="setStep(12)">
             <mat-expansion-panel-header class="body-13 icon-blue">
-              Historial Médico
+              <mat-panel-title>
+                Historial Médico
+              </mat-panel-title>
+              <mat-panel-description>
+                <div></div>
+                <div *ngIf="showWarningDot(newRequest.get('medicalHistory'))" class="warning-accordion-dot">
+                </div>
+              </mat-panel-description>
             </mat-expansion-panel-header>
             <div>
               <div class="radio-button-label mb-6">
@@ -1441,7 +1527,14 @@
           </mat-expansion-panel>
           <mat-expansion-panel class="ww-mat-expansion" [expanded]="step === 14" (opened)="setStep(14)">
             <mat-expansion-panel-header class="body-13 icon-blue">
-              Reporte del agente
+              <mat-panel-title>
+                Reporte del agente
+              </mat-panel-title>
+              <mat-panel-description>
+                <div></div>
+                <div *ngIf="showWarningDot(newRequest.get('agentReport'))" class="warning-accordion-dot">
+                </div>
+              </mat-panel-description>
             </mat-expansion-panel-header>
             <div>
               <div class="px-6">
@@ -1607,7 +1700,14 @@
           </mat-expansion-panel>
           <mat-expansion-panel class="ww-mat-expansion" [expanded]="step === 15" (opened)="setStep(15)">
             <mat-expansion-panel-header class="body-13 icon-blue">
-              Archivos adjuntos
+              <mat-panel-title>
+                Archivos adjuntos
+              </mat-panel-title>
+              <mat-panel-description>
+                <div></div>
+                <div *ngIf="showWarningDot(newRequest.get('files'))" class="warning-accordion-dot">
+                </div>
+              </mat-panel-description>
             </mat-expansion-panel-header>
             <div [formGroup]="newRequest.get('files')">
               <div class="radio-button-label" style="font-size: 12px !important; max-width: 63vw;">Adjuntar estudios

@@ -11,24 +11,25 @@
       </div>
       <!-- <app-number-input class="mr-3" [group]="authorization.get('informacionAsegurado')" label="ID Number"
         name='idNumber' placeholder=""></app-number-input> -->
-        <div class="mr-3 col-span-2 ml-5 md:ml-0">
-          <form [formGroup]="authorization.get('informacionAsegurado')">
-            <mat-form-field color="accent" appearance="outline" class="w-full bg-transparente" style="font-size: small !important;"
-            >
-              <mat-label>ID Number</mat-label>
-                <input formControlName="idNumber" matInput class="" type="text" [matAutocomplete]="auto"
-                placeholder="Juan Juan - 00010002">
-                <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
-                  <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
-                    {{option}}
-                  </mat-option>
-                </mat-autocomplete>
-                    <mat-error *ngIf="authorization.get('informacionAsegurado').get('idNumber').touched && !authorization.get('informacionAsegurado').get('idNumber').valid">
-                      Este campo es obligatorio
-                    </mat-error>        
-            </mat-form-field>
-          </form>    
-        </div>
+      <div class="mr-3 col-span-2 ml-5 md:ml-0">
+        <form [formGroup]="authorization.get('informacionAsegurado')">
+          <mat-form-field color="accent" appearance="outline" class="w-full bg-transparente"
+            style="font-size: small !important;">
+            <mat-label>ID Number</mat-label>
+            <input formControlName="idNumber" matInput class="" type="text" [matAutocomplete]="auto"
+              placeholder="Juan Juan - 00010002">
+            <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+              <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                {{option}}
+              </mat-option>
+            </mat-autocomplete>
+            <mat-error
+              *ngIf="authorization.get('informacionAsegurado').get('idNumber').touched && !authorization.get('informacionAsegurado').get('idNumber').valid">
+              Este campo es obligatorio
+            </mat-error>
+          </mat-form-field>
+        </form>
+      </div>
       <button style="margin-left: 15px;" *ngIf="ID === null || ID === undefined"
         (click)="searchIdNumber(authorization.get('informacionAsegurado').value.idNumber)" type="submit"
         class="nofocus flex justify-center small-search-button">
@@ -38,10 +39,19 @@
   </div>
 
   <div *ngIf="showContent" class="pb-1 mt-4">
-
-    <app-forms-container [titles]="accordionTitles">
-
-      <ng-template #formTemplate>
+    <mat-accordion #matAccordion="matAccordion" name="matAccordion" class="ww-mat-accordion example-headers-align"
+      [togglePosition]="'before'">
+      <mat-expansion-panel class="ww-mat-expansion" [expanded]="step === 0" (opened)="setStep(0)">
+        <mat-expansion-panel-header class="body-13 icon-blue">
+          <mat-panel-title>
+            Información del Asegurado
+          </mat-panel-title>
+          <mat-panel-description>
+            <div></div>
+            <!-- <mat-icon style="color: #FF0000;">warning</mat-icon> -->
+            <div *ngIf="showWarningDot(authorization.get('informacionAsegurado'))" class="warning-accordion-dot"></div>
+          </mat-panel-description>
+        </mat-expansion-panel-header>
         <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
           <app-input class="mr-3" [group]="authorization.get('informacionAsegurado')" label="Nombres" name='nombres'>
           </app-input>
@@ -109,9 +119,25 @@
           </div>
         </div>
 
-      </ng-template>
+        <mat-action-row class="action-row">
+          <button mat-button class="next-button" (click)="nextStep()" type="button">
+            Siguiente
+          </button>
+        </mat-action-row>
+      </mat-expansion-panel>
 
-      <ng-template #formTemplate>
+      <mat-expansion-panel class="ww-mat-expansion" [expanded]="step === 1" (opened)="setStep(1)">
+        <mat-expansion-panel-header class="body-13 icon-blue">
+          <mat-panel-title>
+            Información médica
+          </mat-panel-title>
+          <mat-panel-description>
+            <div></div>
+            <!-- <mat-icon style="color: #FF0000;">warning</mat-icon> -->
+            <div *ngIf="showWarningDot(authorization.get('informacionMedica'))" class="warning-accordion-dot"></div>
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+
         <div class="grid grid-cols-1  sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4">
 
           <!--  PRIMERA COLUMNA -->
@@ -189,9 +215,24 @@
             </app-input> -->
           </div>
         </div>
-      </ng-template>
+        <mat-action-row class="action-row">
+          <button mat-button class="next-button" (click)="nextStep()" type="button">
+            Siguiente
+          </button>
+        </mat-action-row>
+      </mat-expansion-panel>
 
-      <ng-template #formTemplate>
+      <mat-expansion-panel class="ww-mat-expansion" [expanded]="step === 2" (opened)="setStep(2)">
+        <mat-expansion-panel-header class="body-13 icon-blue">
+          <mat-panel-title>
+            Archivos adjuntos
+          </mat-panel-title>
+          <mat-panel-description>
+            <div></div>
+            <!-- <mat-icon style="color: #FF0000;">warning</mat-icon> -->
+            <div *ngIf="showWarningDot(authorization.get('files'))" class="warning-accordion-dot"></div>
+          </mat-panel-description>
+        </mat-expansion-panel-header>
         <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
           <!-- <input id="file" type="file" class="form-control"> -->
           <mat-form-field class="mr-3" appearance="outline">
@@ -216,8 +257,28 @@
             <mat-icon style="color: #e2e2e2;" matSuffix>publish</mat-icon>
           </mat-form-field>
         </div>
+        <mat-action-row class="action-row">
+          <button mat-button class="next-button" (click)="nextStep()" type="button">
+            Siguiente
+          </button>
+        </mat-action-row>
+      </mat-expansion-panel>
+    </mat-accordion>
+    <!-- <app-forms-container [titles]="accordionTitles">
+
+      <ng-template #formTemplate>
+
+
       </ng-template>
-    </app-forms-container>
+
+      <ng-template #formTemplate>
+
+      </ng-template>
+
+      <ng-template #formTemplate>
+
+      </ng-template>
+    </app-forms-container> -->
 
   </div>
   <form #form="ngForm" [formGroup]="authorization">

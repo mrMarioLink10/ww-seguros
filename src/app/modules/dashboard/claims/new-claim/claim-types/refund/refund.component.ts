@@ -33,6 +33,7 @@ export class RefundComponent implements OnInit {
 	validDatesCounter = 0;
 	filesInformation = [];
 	showContent = false;
+	step: number;
 
 	formaPago: FieldConfig = {
 		label: 'Especifique forma de pago',
@@ -166,8 +167,43 @@ export class RefundComponent implements OnInit {
 
 	}
 
+	showWarningDot(form: any): boolean {
+		if (!this.ID) {
+			if (form === this.refundForm.get('forma') && this.refundForm.get('infoTransferencia')) {
+				console.log(!this.refundForm.get('infoTransferencia').valid);
+
+				if (!this.refundForm.get('infoTransferencia').valid && this.form.submitted) {
+					return true;
+				} else {
+					return false;
+				}
+			} else {
+				if (!form.valid && this.form.submitted) {
+					return true;
+				} else {
+					return false;
+				}
+			}
+		} else {
+			if (form.valid) {
+				return false;
+			} else {
+				return true;
+			}
+		}
+	}
+
 	displayFn(user: any) {
 		return user ? user : '';
+	}
+
+	setStep(index: number) {
+		this.step = index;
+	}
+
+	nextStep() {
+		this.step++;
+
 	}
 
 	private _filter(value: string): any[] {
@@ -217,7 +253,6 @@ export class RefundComponent implements OnInit {
 	}
 
 	fileNameWatcher(type?: string, index?: number) {
-		console.log(this.filesInformation);
 		if (this.filesInformation[index]) {
 			if (this.filesInformation[index][type + 'Url']) { return this.filesInformation[index][type + 'Url']; }
 		}

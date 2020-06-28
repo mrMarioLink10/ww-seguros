@@ -513,6 +513,7 @@ body {
 .example-headers-align .mat-expansion-panel-header-description {
   justify-content: space-between;
   align-items: center;
+  max-width: 330px;
 }
 
 .example-headers-align .mat-form-field+.mat-form-field {

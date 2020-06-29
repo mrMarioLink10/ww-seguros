@@ -9,13 +9,14 @@ import { FieldConfig } from 'src/app/shared/components/form-components/models/fi
 })
 export class SkydivingComponent implements OnInit {
 
-  accordionTitles=["Cuestionario"]
+  accordionTitles = ['Cuestionario'];
 
   // skydive:FormGroup;
 
-  @Input() form:FormGroup;
-
-  constructor(private fb:FormBuilder) { }
+  @Input() form: FormGroup;
+  @Input() showWarningDot: boolean;
+  step: number;
+  constructor(private fb: FormBuilder) { }
 
   ngOnInit() {
 
@@ -45,18 +46,18 @@ export class SkydivingComponent implements OnInit {
 
   }
 
-  addBasicControls(){
+  addBasicControls() {
 
     // this.form.addControl('name', this.fb.control('', Validators.required));
     this.form.addControl('goal', this.fb.control('', Validators.required));
     this.form.addControl('license', this.fb.control('', Validators.required));
     this.form.addControl('aircraft', this.fb.group({
 
-      type:['', Validators.required],
-      weight:['', Validators.required],
-      total:['', [Validators.required, Validators.min(1)]],
-      average:['', [Validators.required, Validators.min(1)]],
-      flight_hours:['', [Validators.required, Validators.min(1)]]
+      type: ['', Validators.required],
+      weight: ['', Validators.required],
+      total: ['', [Validators.required, Validators.min(1)]],
+      average: ['', [Validators.required, Validators.min(1)]],
+      flight_hours: ['', [Validators.required, Validators.min(1)]]
 
     }));
     this.form.addControl('info', this.fb.control('', Validators.required));
@@ -64,5 +65,12 @@ export class SkydivingComponent implements OnInit {
 
   }
 
+  setStep(index: number) {
+    this.step = index;
+  }
+
+  nextStep(panel?: string) {
+    this.step++;
+  }
 
 }

@@ -1863,14 +1863,24 @@
         </mat-accordion>
       </mat-tab>
       <mat-tab label="Cuestionarios Actividades" *ngIf="activitiesQuestionsLength()" class="mat-tab-forms">
-        <app-diving *ngIf="newRequest.get('activitiesQuestionnaires').get('solicitudBuceo')"
-          [form]="newRequest.get('activitiesQuestionnaires').get('solicitudBuceo')"></app-diving>
-        <app-skydiving *ngIf="newRequest.get('activitiesQuestionnaires').get('solicitudAviacion')"
-          [form]="newRequest.get('activitiesQuestionnaires').get('solicitudAviacion')"></app-skydiving>
-        <app-racing *ngIf="newRequest.get('activitiesQuestionnaires').get('solicitudMoto')"
-          [form]="newRequest.get('activitiesQuestionnaires').get('solicitudMoto')"></app-racing>
-        <app-mountaineering *ngIf="newRequest.get('activitiesQuestionnaires').get('solicitudMontanismo')"
-          [form]="newRequest.get('activitiesQuestionnaires').get('solicitudMontanismo')"></app-mountaineering>
+        <mat-accordion #matAccordion="matAccordion" name="matAccordion" class="ww-mat-accordion example-headers-align"
+          [togglePosition]="'before'">
+          <app-diving
+            [showWarningDot]="showWarningDot(newRequest.get('activitiesQuestionnaires').get('solicitudBuceo'))"
+            *ngIf="newRequest.get('activitiesQuestionnaires').get('solicitudBuceo')"
+            [form]="newRequest.get('activitiesQuestionnaires').get('solicitudBuceo')"></app-diving>
+          <app-skydiving
+            [showWarningDot]="showWarningDot(newRequest.get('activitiesQuestionnaires').get('solicitudAviacion'))"
+            *ngIf="newRequest.get('activitiesQuestionnaires').get('solicitudAviacion')"
+            [form]="newRequest.get('activitiesQuestionnaires').get('solicitudAviacion')"></app-skydiving>
+          <app-racing [showWarningDot]="showWarningDot(newRequest.get('activitiesQuestionnaires').get('solicitudMoto'))"
+            *ngIf="newRequest.get('activitiesQuestionnaires').get('solicitudMoto')"
+            [form]="newRequest.get('activitiesQuestionnaires').get('solicitudMoto')"></app-racing>
+          <app-mountaineering
+            [showWarningDot]="showWarningDot(newRequest.get('activitiesQuestionnaires').get('solicitudMontanismo'))"
+            *ngIf="newRequest.get('activitiesQuestionnaires').get('solicitudMontanismo')"
+            [form]="newRequest.get('activitiesQuestionnaires').get('solicitudMontanismo')"></app-mountaineering>
+        </mat-accordion>
       </mat-tab>
       <mat-tab label="Cuestionarios Adicionales" *ngIf="questionsLength() > 0" class="mat-tab-forms">
         <app-hypertension *ngIf="newRequest.get('questionnaires').get('solicitudHipertensionArterial')"

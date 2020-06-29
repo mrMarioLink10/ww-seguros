@@ -9,92 +9,93 @@ import { FieldConfig } from 'src/app/shared/components/form-components/models/fi
 })
 export class RacingComponent implements OnInit {
 
-  accordionTitles=["Cuestionario"]
+  accordionTitles = ['Cuestionario'];
 
-  races=[
+  races = [
     {
-      label: "Velocidad en circuito",
-      name: "speed",
-      group:'speed_field'
+      label: 'Velocidad en circuito',
+      name: 'speed',
+      group: 'speed_field'
     },
     {
-      label: "Enduro en circuito",
-      name: "enduro",
-      group:'enduro_field'
+      label: 'Enduro en circuito',
+      name: 'enduro',
+      group: 'enduro_field'
     },
     {
-      label: "Moto Cross",
-      name: "motocross",      
-      group:'moto_field'
+      label: 'Moto Cross',
+      name: 'motocross',
+      group: 'moto_field'
     },
     {
-      label: "Carreras en cuesta",
-      name: "race",
-      group:'race_field'
+      label: 'Carreras en cuesta',
+      name: 'race',
+      group: 'race_field'
     },
     {
-      label: "Rallye, raid europeo, regularidad",
-      name: "rally",
-      group:'rally_field'
+      label: 'Rallye, raid europeo, regularidad',
+      name: 'rally',
+      group: 'rally_field'
     },
     {
-      label: "Raid todo terreno, maratón",
-      name: "marathon",
-      group:'marathon_field'
+      label: 'Raid todo terreno, maratón',
+      name: 'marathon',
+      group: 'marathon_field'
     },
     {
-      label: "Trial",
-      name: "trial",
-      group:'trial_field'
+      label: 'Trial',
+      name: 'trial',
+      group: 'trial_field'
     },
     {
-      label: "Carrera sobre hielo",
-      name: "iceRace",
-      group:'ice_race_field'
+      label: 'Carrera sobre hielo',
+      name: 'iceRace',
+      group: 'ice_race_field'
     },
     {
-      label: "Otras (¿Cuáles?)",
-      name: "others",
-      group:'others_field'
+      label: 'Otras (¿Cuáles?)',
+      name: 'others',
+      group: 'others_field'
     },
-  ]
+  ];
 
-  typeOptions: FieldConfig={
+  typeOptions: FieldConfig = {
 
-    label:'',
-    options:[
+    label: '',
+    options: [
       {
-        value:'profesional',
-        viewValue:'Profesional Moto'
+        value: 'profesional',
+        viewValue: 'Profesional Moto'
       },
       {
-        value:'aficionado',
-        viewValue:'Aficionado'
+        value: 'aficionado',
+        viewValue: 'Aficionado'
       }
     ]
-  }
+  };
 
-  yesNo: FieldConfig={
+  yesNo: FieldConfig = {
 
-    label:'',
-    options:[
+    label: '',
+    options: [
       {
-        value:'si',
-        viewValue:'Si'
+        value: 'si',
+        viewValue: 'Si'
       },
       {
-        value:'no',
-        viewValue:'No'
+        value: 'no',
+        viewValue: 'No'
       }
     ]
-  }
+  };
 
 
-  @Input() form:FormGroup;
-
+  @Input() form: FormGroup;
+  @Input() showWarningDot: boolean;
+  step: number;
   // racing:FormGroup
 
-  constructor(private fb:FormBuilder) { }
+  constructor(private fb: FormBuilder) { }
 
   ngOnInit() {
 
@@ -109,7 +110,7 @@ export class RacingComponent implements OnInit {
     //   formation:['', Validators.required],
     //   past_months: this.fb.group({
 
-    //     speed:[false],     
+    //     speed:[false],
     //     enduro:[false],
     //     motocross:[false],
     //     race:[false],
@@ -125,9 +126,9 @@ export class RacingComponent implements OnInit {
 
     //     brand:['', Validators.required],
     //     engine:['', Validators.required],
-    //     type_radio:['', Validators.required], 
+    //     type_radio:['', Validators.required],
 
-    //     speed:[false],     
+    //     speed:[false],
     //     enduro:[false],
     //     motocross:[false],
     //     race:[false],
@@ -153,466 +154,466 @@ export class RacingComponent implements OnInit {
 
   }
 
-  selectChangeP(event){
+  selectChangeP(event) {
 
-    let nameCB=event.source._elementRef.nativeElement.attributes[2].nodeValue;
+    const nameCB = event.source._elementRef.nativeElement.attributes[2].nodeValue;
 
-    const formP= this.form.get('past_months') as FormGroup;
-    
-    console.log(event)
-    console.log(nameCB)
+    const formP = this.form.get('past_months') as FormGroup;
 
-    if(event.checked==true){
+    console.log(event);
+    console.log(nameCB);
 
-        switch(nameCB){
-        
-          case 'speed':
-        
-            formP.addControl('speed_field', this.fb.group({
+    if (event.checked === true) {
 
-              number:['', [Validators.required, Validators.min(1)]],
-              name:['', Validators.required]
-        
-            }));
-            console.log("Esto es el switch de Velocidad en circuito, en checked igual a true, de past_months")
-        
-            break;
-          
-          case 'enduro':
-      
-            formP.addControl('enduro_field', this.fb.group({
+      switch (nameCB) {
 
-              number:['', [Validators.required, Validators.min(1)]],
-              name:['', Validators.required]
-        
-            }));
-            console.log("Esto es el switch de Enduro en circuito, en checked igual a true, de past_months")
-        
-            break;
-            
-          case 'motocross':
-    
-            formP.addControl('moto_field', this.fb.group({
+        case 'speed':
 
-              number:['', [Validators.required, Validators.min(1)]],
-              name:['', Validators.required]
-        
-            }));
-            console.log("Esto es el switch de Motocross, en checked igual a true, de past_months")
-        
-            break;
-            
-          case 'race':
-    
-            formP.addControl('race_field', this.fb.group({
+          formP.addControl('speed_field', this.fb.group({
 
-              number:['', [Validators.required, Validators.min(1)]],
-              name:['', Validators.required]
-        
-            }));
-            console.log("Esto es el switch de Carreras en cuesta, en checked igual a true, de past_months")
-        
-            break;
-            
-          case 'rally':
-    
-            formP.addControl('rally_field', this.fb.group({
+            number: ['', [Validators.required, Validators.min(1)]],
+            name: ['', Validators.required]
 
-              number:['', [Validators.required, Validators.min(1)]],
-              name:['', Validators.required]
-        
-            }));
-            console.log("Esto es el switch de Rallye, raid europeo, regularidad en checked igual a true, de past_months")
-        
-            break;
+          }));
+          console.log('Esto es el switch de Velocidad en circuito, en checked igual a true, de past_months');
 
-          case 'marathon':
-    
-            formP.addControl('marathon_field', this.fb.group({
+          break;
 
-              number:['', [Validators.required, Validators.min(1)]],
-              name:['', Validators.required]
-        
-            }));
-            console.log("Esto es el switch de Raid todo terreno, maratón en checked igual a true, de past_months")
-        
-            break;
+        case 'enduro':
 
-          case 'trial':
-    
-            formP.addControl('trial_field', this.fb.group({
+          formP.addControl('enduro_field', this.fb.group({
 
-              number:['', [Validators.required, Validators.min(1)]],
-              name:['', Validators.required]
-        
-            }));
-            console.log("Esto es el switch de Trial en checked igual a true, de past_months")
-        
-            break;
+            number: ['', [Validators.required, Validators.min(1)]],
+            name: ['', Validators.required]
 
-          case 'iceRace':
-    
-            formP.addControl('ice_race_field', this.fb.group({
+          }));
+          console.log('Esto es el switch de Enduro en circuito, en checked igual a true, de past_months');
 
-              number:['', [Validators.required, Validators.min(1)]],
-              name:['', Validators.required]
-        
-            }));
-            console.log("Esto es el switch de Carrera sobre hielo en checked igual a true, de past_months")
-        
-            break;
+          break;
 
-          case 'others':
-    
-            formP.addControl('others_field', this.fb.group({
+        case 'motocross':
 
-              number:['', [Validators.required, Validators.min(1)]],
-              name:['', Validators.required]
-        
-            }));
-            console.log("Esto es el switch de Otras (¿Cuáles?) en checked igual a true, de past_months")
-        
-            break;
-        
-        }
+          formP.addControl('moto_field', this.fb.group({
+
+            number: ['', [Validators.required, Validators.min(1)]],
+            name: ['', Validators.required]
+
+          }));
+          console.log('Esto es el switch de Motocross, en checked igual a true, de past_months');
+
+          break;
+
+        case 'race':
+
+          formP.addControl('race_field', this.fb.group({
+
+            number: ['', [Validators.required, Validators.min(1)]],
+            name: ['', Validators.required]
+
+          }));
+          console.log('Esto es el switch de Carreras en cuesta, en checked igual a true, de past_months');
+
+          break;
+
+        case 'rally':
+
+          formP.addControl('rally_field', this.fb.group({
+
+            number: ['', [Validators.required, Validators.min(1)]],
+            name: ['', Validators.required]
+
+          }));
+          console.log('Esto es el switch de Rallye, raid europeo, regularidad en checked igual a true, de past_months');
+
+          break;
+
+        case 'marathon':
+
+          formP.addControl('marathon_field', this.fb.group({
+
+            number: ['', [Validators.required, Validators.min(1)]],
+            name: ['', Validators.required]
+
+          }));
+          console.log('Esto es el switch de Raid todo terreno, maratón en checked igual a true, de past_months');
+
+          break;
+
+        case 'trial':
+
+          formP.addControl('trial_field', this.fb.group({
+
+            number: ['', [Validators.required, Validators.min(1)]],
+            name: ['', Validators.required]
+
+          }));
+          console.log('Esto es el switch de Trial en checked igual a true, de past_months');
+
+          break;
+
+        case 'iceRace':
+
+          formP.addControl('ice_race_field', this.fb.group({
+
+            number: ['', [Validators.required, Validators.min(1)]],
+            name: ['', Validators.required]
+
+          }));
+          console.log('Esto es el switch de Carrera sobre hielo en checked igual a true, de past_months');
+
+          break;
+
+        case 'others':
+
+          formP.addControl('others_field', this.fb.group({
+
+            number: ['', [Validators.required, Validators.min(1)]],
+            name: ['', Validators.required]
+
+          }));
+          console.log('Esto es el switch de Otras (¿Cuáles?) en checked igual a true, de past_months');
+
+          break;
+
       }
+    } else if (event.checked === false) {
 
-      else if(event.checked==false){
+      switch (nameCB) {
 
-        switch(nameCB){
-        
-          case 'speed':
-        
-            formP.removeControl('speed_field');
-            console.log("Esto es el switch de Velocidad en circuito, en checked igual a false, de past_months")
-        
-            break;
-            
-          case 'enduro':
-      
-            formP.removeControl('enduro_field');
-            console.log("Esto es el switch de Enduro en circuito, en checked igual a false, de past_months")
-        
-            break;
+        case 'speed':
 
-          case 'motocross':
-      
-            formP.removeControl('moto_field');
-            console.log("Esto es el switch de Motocross, en checked igual a false, de past_months")
-        
-            break;
-            
-          case 'race':
-      
-            formP.removeControl('race_field');
-            console.log("Esto es el switch de Carreras en cuesta, en checked igual a false, de past_months")
-        
-            break;
-            
+          formP.removeControl('speed_field');
+          console.log('Esto es el switch de Velocidad en circuito, en checked igual a false, de past_months');
 
-          case 'rally':
-      
-            formP.removeControl('rally_field');
-            console.log("Esto es el switch de Rallye, raid europeo, regularidad en checked igual a false, de past_months")
-        
-            break;
+          break;
 
-          case 'marathon':
-      
-            formP.removeControl('marathon_field');
-            console.log("Esto es el switch de Raid todo terreno, maratón en checked igual a false, de past_months")
-        
-            break;
+        case 'enduro':
 
-          case 'trial':
-      
-            formP.removeControl('trial_field');
-            console.log("Esto es el switch de Trial en checked igual a false, de past_months")
-        
-            break;
+          formP.removeControl('enduro_field');
+          console.log('Esto es el switch de Enduro en circuito, en checked igual a false, de past_months');
 
-          case 'iceRace':
-      
-            formP.removeControl('ice_race_field');
-            console.log("Esto es el switch de Carrera sobre hielo en checked igual a false, de past_months")
-        
-            break;
+          break;
 
-          case 'others':
-      
-            formP.removeControl('others_field');
-            console.log("Esto es el switch de Otras (¿Cuáles?) en checked igual a false, de past_months")
-        
-            break;
-        
-        }
+        case 'motocross':
+
+          formP.removeControl('moto_field');
+          console.log('Esto es el switch de Motocross, en checked igual a false, de past_months');
+
+          break;
+
+        case 'race':
+
+          formP.removeControl('race_field');
+          console.log('Esto es el switch de Carreras en cuesta, en checked igual a false, de past_months');
+
+          break;
+
+
+        case 'rally':
+
+          formP.removeControl('rally_field');
+          console.log('Esto es el switch de Rallye, raid europeo, regularidad en checked igual a false, de past_months');
+
+          break;
+
+        case 'marathon':
+
+          formP.removeControl('marathon_field');
+          console.log('Esto es el switch de Raid todo terreno, maratón en checked igual a false, de past_months');
+
+          break;
+
+        case 'trial':
+
+          formP.removeControl('trial_field');
+          console.log('Esto es el switch de Trial en checked igual a false, de past_months');
+
+          break;
+
+        case 'iceRace':
+
+          formP.removeControl('ice_race_field');
+          console.log('Esto es el switch de Carrera sobre hielo en checked igual a false, de past_months');
+
+          break;
+
+        case 'others':
+
+          formP.removeControl('others_field');
+          console.log('Esto es el switch de Otras (¿Cuáles?) en checked igual a false, de past_months');
+
+          break;
+
       }
     }
+  }
+  setStep(index: number) {
+    this.step = index;
+  }
 
-    selectChangeF(event){
+  nextStep(panel?: string) {
+    this.step++;
+  }
+  selectChangeF(event) {
 
-      let nameCB=event.source._elementRef.nativeElement.attributes[2].nodeValue;
-  
-      const formP= this.form.get('future_months') as FormGroup;
-      
-      console.log(event)
-      console.log(nameCB)
-  
-      if(event.checked==true){
-  
-          switch(nameCB){
-          
-            case 'speed':
-          
-              formP.addControl('speed_field', this.fb.group({
-  
-                number:['', [Validators.required, Validators.min(1)]],
-                name:['', Validators.required]
-          
-              }));
-              console.log("Esto es el switch de Velocidad en circuito, en checked igual a true, future_months")
-          
-              break;
-            
-            case 'enduro':
-        
-              formP.addControl('enduro_field', this.fb.group({
-  
-                number:['', [Validators.required, Validators.min(1)]],
-                name:['', Validators.required]
-          
-              }));
-              console.log("Esto es el switch de Enduro en circuito, en checked igual a true, future_months")
-          
-              break;
-              
-            case 'motocross':
-      
-              formP.addControl('moto_field', this.fb.group({
-  
-                number:['', [Validators.required, Validators.min(1)]],
-                name:['', Validators.required]
-          
-              }));
-              console.log("Esto es el switch de Motocross, en checked igual a true, future_months")
-          
-              break;
-              
-            case 'race':
-      
-              formP.addControl('race_field', this.fb.group({
-  
-                number:['', [Validators.required, Validators.min(1)]],
-                name:['', Validators.required]
-          
-              }));
-              console.log("Esto es el switch de Carreras en cuesta, en checked igual a true, future_months")
-          
-              break;
-              
-            case 'rally':
-      
-              formP.addControl('rally_field', this.fb.group({
-  
-                number:['', [Validators.required, Validators.min(1)]],
-                name:['', Validators.required]
-          
-              }));
-              console.log("Esto es el switch de Rallye, raid europeo, regularidad en checked igual a true, future_months")
-          
-              break;
-  
-            case 'marathon':
-      
-              formP.addControl('marathon_field', this.fb.group({
-  
-                number:['', [Validators.required, Validators.min(1)]],
-                name:['', Validators.required]
-          
-              }));
-              console.log("Esto es el switch de Raid todo terreno, maratón en checked igual a true, future_months")
-          
-              break;
-  
-            case 'trial':
-      
-              formP.addControl('trial_field', this.fb.group({
-  
-                number:['', [Validators.required, Validators.min(1)]],
-                name:['', Validators.required]
-          
-              }));
-              console.log("Esto es el switch de Trial en checked igual a true, future_months")
-          
-              break;
-  
-            case 'iceRace':
-      
-              formP.addControl('ice_race_field', this.fb.group({
-  
-                number:['', [Validators.required, Validators.min(1)]],
-                name:['', Validators.required]
-          
-              }));
-              console.log("Esto es el switch de Carrera sobre hielo en checked igual a true, future_months")
-          
-              break;
-  
-            case 'others':
-      
-              formP.addControl('others_field', this.fb.group({
-  
-                number:['', [Validators.required, Validators.min(1)]],
-                name:['', Validators.required]
-          
-              }));
-              console.log("Esto es el switch de Otras (¿Cuáles?) en checked igual a true, future_months")
-          
-              break;
-          
-          }
-        }
-  
-        else if(event.checked==false){
-  
-          switch(nameCB){
-          
-            case 'speed':
-          
-              formP.removeControl('speed_field');
-              console.log("Esto es el switch de Velocidad en circuito, en checked igual a false, de future_months")
-          
-              break;
-              
-            case 'enduro':
-        
-              formP.removeControl('enduro_field');
-              console.log("Esto es el switch de Enduro en circuito, en checked igual a false, de future_months")
-          
-              break;
-  
-            case 'motocross':
-        
-              formP.removeControl('moto_field');
-              console.log("Esto es el switch de Motocross, en checked igual a false, de future_months")
-          
-              break;
-              
-            case 'race':
-        
-              formP.removeControl('race_field');
-              console.log("Esto es el switch de Carreras en cuesta, en checked igual a false, de future_months")
-          
-              break;
-              
-  
-            case 'rally':
-        
-              formP.removeControl('rally_field');
-              console.log("Esto es el switch de Rallye, raid europeo, regularidad en checked igual a false, de future_months")
-          
-              break;
-  
-            case 'marathon':
-        
-              formP.removeControl('marathon_field');
-              console.log("Esto es el switch de Raid todo terreno, maratón en checked igual a false, de future_months")
-          
-              break;
-  
-            case 'trial':
-        
-              formP.removeControl('trial_field');
-              console.log("Esto es el switch de Trial en checked igual a false, de future_months")
-          
-              break;
-  
-            case 'iceRace':
-        
-              formP.removeControl('ice_race_field');
-              console.log("Esto es el switch de Carrera sobre hielo en checked igual a false, de future_months")
-          
-              break;
-  
-            case 'others':
-        
-              formP.removeControl('others_field');
-              console.log("Esto es el switch de Otras (¿Cuáles?) en checked igual a false, de future_months")
-          
-              break;
-          
-          }
-        }
+    const nameCB = event.source._elementRef.nativeElement.attributes[2].nodeValue;
+
+    const formP = this.form.get('future_months') as FormGroup;
+
+    console.log(event);
+    console.log(nameCB);
+
+    if (event.checked === true) {
+
+      switch (nameCB) {
+
+        case 'speed':
+
+          formP.addControl('speed_field', this.fb.group({
+
+            number: ['', [Validators.required, Validators.min(1)]],
+            name: ['', Validators.required]
+
+          }));
+          console.log('Esto es el switch de Velocidad en circuito, en checked igual a true, future_months');
+
+          break;
+
+        case 'enduro':
+
+          formP.addControl('enduro_field', this.fb.group({
+
+            number: ['', [Validators.required, Validators.min(1)]],
+            name: ['', Validators.required]
+
+          }));
+          console.log('Esto es el switch de Enduro en circuito, en checked igual a true, future_months');
+
+          break;
+
+        case 'motocross':
+
+          formP.addControl('moto_field', this.fb.group({
+
+            number: ['', [Validators.required, Validators.min(1)]],
+            name: ['', Validators.required]
+
+          }));
+          console.log('Esto es el switch de Motocross, en checked igual a true, future_months');
+
+          break;
+
+        case 'race':
+
+          formP.addControl('race_field', this.fb.group({
+
+            number: ['', [Validators.required, Validators.min(1)]],
+            name: ['', Validators.required]
+
+          }));
+          console.log('Esto es el switch de Carreras en cuesta, en checked igual a true, future_months');
+
+          break;
+
+        case 'rally':
+
+          formP.addControl('rally_field', this.fb.group({
+
+            number: ['', [Validators.required, Validators.min(1)]],
+            name: ['', Validators.required]
+
+          }));
+          console.log('Esto es el switch de Rallye, raid europeo, regularidad en checked igual a true, future_months');
+
+          break;
+
+        case 'marathon':
+
+          formP.addControl('marathon_field', this.fb.group({
+
+            number: ['', [Validators.required, Validators.min(1)]],
+            name: ['', Validators.required]
+
+          }));
+          console.log('Esto es el switch de Raid todo terreno, maratón en checked igual a true, future_months');
+
+          break;
+
+        case 'trial':
+
+          formP.addControl('trial_field', this.fb.group({
+
+            number: ['', [Validators.required, Validators.min(1)]],
+            name: ['', Validators.required]
+
+          }));
+          console.log('Esto es el switch de Trial en checked igual a true, future_months');
+
+          break;
+
+        case 'iceRace':
+
+          formP.addControl('ice_race_field', this.fb.group({
+
+            number: ['', [Validators.required, Validators.min(1)]],
+            name: ['', Validators.required]
+
+          }));
+          console.log('Esto es el switch de Carrera sobre hielo en checked igual a true, future_months');
+
+          break;
+
+        case 'others':
+
+          formP.addControl('others_field', this.fb.group({
+
+            number: ['', [Validators.required, Validators.min(1)]],
+            name: ['', Validators.required]
+
+          }));
+          console.log('Esto es el switch de Otras (¿Cuáles?) en checked igual a true, future_months');
+
+          break;
+
       }
+    } else if (event.checked === false) {
 
-    selectRadio(event){
+      switch (nameCB) {
 
-      const formA= this.form.get('accidents') as FormGroup;
+        case 'speed':
 
-      if(event.valor=='si'){
+          formP.removeControl('speed_field');
+          console.log('Esto es el switch de Velocidad en circuito, en checked igual a false, de future_months');
 
-        formA.addControl('outcome', this.fb.group({
+          break;
 
-          date:[new Date(), Validators.required],
-          consequences:['', Validators.required],
-          status:['', Validators.required]  
+        case 'enduro':
 
-        }))
+          formP.removeControl('enduro_field');
+          console.log('Esto es el switch de Enduro en circuito, en checked igual a false, de future_months');
 
-        console.log(JSON.stringify(this.form.value));
+          break;
+
+        case 'motocross':
+
+          formP.removeControl('moto_field');
+          console.log('Esto es el switch de Motocross, en checked igual a false, de future_months');
+
+          break;
+
+        case 'race':
+
+          formP.removeControl('race_field');
+          console.log('Esto es el switch de Carreras en cuesta, en checked igual a false, de future_months');
+
+          break;
+
+
+        case 'rally':
+
+          formP.removeControl('rally_field');
+          console.log('Esto es el switch de Rallye, raid europeo, regularidad en checked igual a false, de future_months');
+
+          break;
+
+        case 'marathon':
+
+          formP.removeControl('marathon_field');
+          console.log('Esto es el switch de Raid todo terreno, maratón en checked igual a false, de future_months');
+
+          break;
+
+        case 'trial':
+
+          formP.removeControl('trial_field');
+          console.log('Esto es el switch de Trial en checked igual a false, de future_months');
+
+          break;
+
+        case 'iceRace':
+
+          formP.removeControl('ice_race_field');
+          console.log('Esto es el switch de Carrera sobre hielo en checked igual a false, de future_months');
+
+          break;
+
+        case 'others':
+
+          formP.removeControl('others_field');
+          console.log('Esto es el switch de Otras (¿Cuáles?) en checked igual a false, de future_months');
+
+          break;
+
       }
+    }
+  }
 
-      else if(event.valor=='no'){
-        
-        formA.removeControl('outcome')
-      }
+  selectRadio(event) {
 
+    const formA = this.form.get('accidents') as FormGroup;
+
+    if (event.valor === 'si') {
+
+      formA.addControl('outcome', this.fb.group({
+
+        date: ['', Validators.required],
+        consequences: ['', Validators.required],
+        status: ['', Validators.required]
+
+      }));
+
+      console.log(JSON.stringify(this.form.value));
+    } else if (event.valor === 'no') {
+
+      formA.removeControl('outcome');
     }
 
-    addBasicControls(){
+  }
 
-      // this.form.addControl('last_names', this.fb.control('', Validators.required));
-      // this.form.addControl('name', this.fb.control('', Validators.required));
-      // this.form.addControl('date', this.fb.control(new Date(), Validators.required));
-      this.form.addControl('competition_date', this.fb.control(new Date(), Validators.required));
-      this.form.addControl('formation', this.fb.control('', Validators.required));
-      this.form.addControl('past_months', this.fb.group({
+  addBasicControls() {
 
-        speed:[false],     
-        enduro:[false],
-        motocross:[false],
-        race:[false],
-        rally:[false],
-        marathon:[false],
-        trial:[false],
-        iceRace:[false],
-        others:[false],
+    // this.form.addControl('last_names', this.fb.control('', Validators.required));
+    // this.form.addControl('name', this.fb.control('', Validators.required));
+    // this.form.addControl('date', this.fb.control(new Date(), Validators.required));
+    this.form.addControl('competition_date', this.fb.control('', Validators.required));
+    this.form.addControl('formation', this.fb.control('', Validators.required));
+    this.form.addControl('past_months', this.fb.group({
 
-      }));
-      this.form.addControl('future_months', this.fb.group({
+      speed: [false],
+      enduro: [false],
+      motocross: [false],
+      race: [false],
+      rally: [false],
+      marathon: [false],
+      trial: [false],
+      iceRace: [false],
+      others: [false],
 
-        brand:['', Validators.required],
-        engine:['', Validators.required],
-        type_radio:['', Validators.required], 
+    }));
+    this.form.addControl('future_months', this.fb.group({
 
-        speed:[false],     
-        enduro:[false],
-        motocross:[false],
-        race:[false],
-        rally:[false],
-        marathon:[false],
-        trial:[false],
-        iceRace:[false],
-        others:[false],
+      brand: ['', Validators.required],
+      engine: ['', Validators.required],
+      type_radio: ['', Validators.required],
 
-      }));
-      this.form.addControl('accidents', this.fb.group({
+      speed: [false],
+      enduro: [false],
+      motocross: [false],
+      race: [false],
+      rally: [false],
+      marathon: [false],
+      trial: [false],
+      iceRace: [false],
+      others: [false],
 
-        radio:['', Validators.required],
+    }));
+    this.form.addControl('accidents', this.fb.group({
 
-      }));
-      this.form.addControl('info', this.fb.control('', Validators.required));
+      radio: ['', Validators.required],
 
-    }
+    }));
+    this.form.addControl('info', this.fb.control('', Validators.required));
+
+  }
 
 }

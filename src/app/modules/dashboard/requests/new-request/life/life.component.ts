@@ -110,6 +110,10 @@ export class LifeComponent implements OnInit, DoCheck {
       {
         value: 'Trimestral',
         viewValue: 'Trimestral',
+      },
+      {
+        value: 'Mensual',
+        viewValue: 'Mensual',
       }
     ]
   };

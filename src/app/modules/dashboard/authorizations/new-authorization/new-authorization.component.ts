@@ -107,6 +107,7 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy, DoCheck {
 	formSubmitted = false;
 	todayDate = new Date();
 	showContent = false;
+	step: number;
 
 	@ViewChild('form', { static: false }) form;
 
@@ -267,6 +268,33 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy, DoCheck {
 
 	displayFn(user: any) {
 		return user ? user : '';
+	}
+
+	setStep(index: number) {
+		this.step = index;
+	}
+
+	nextStep() {
+		this.step++;
+
+	}
+
+	showWarningDot(form: any): boolean {
+		if (!this.ID) {
+
+			if (!form.valid && this.form.submitted) {
+				return true;
+			} else {
+				return false;
+			}
+
+		} else {
+			if (form.valid) {
+				return false;
+			} else {
+				return true;
+			}
+		}
 	}
 
 	private _filter(value: string): any[] {

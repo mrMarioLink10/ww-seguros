@@ -47,6 +47,7 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy, DoCheck {
 	varIsMedical = 0;
 
 	dataAutoCompleteIdNumber = [];
+	dataAutoCompleteIdNumberObject = [];
 
 	filteredOptions: Observable<any[]>;
 
@@ -143,6 +144,7 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy, DoCheck {
 	ngOnInit() {
 
 		this.returnAutoCompleteData();
+
 		setTimeout(() => {
 			this.appComponent.showOverlay = true;
 		});
@@ -255,6 +257,7 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy, DoCheck {
 					map(value => typeof value === 'string' ? value : value),
 					map(value => value ? this._filter(value) : this.dataAutoCompleteIdNumber.slice())
 				);
+
 			this.appComponent.showOverlay = false;
 
 			this.timeAutoComplete = 1;
@@ -279,6 +282,12 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy, DoCheck {
 				this.dataAutoCompleteIdNumber.push(data.data[x].asegurado.nombres_asegurado +
 					' ' + data.data[x].asegurado.apellidos_asegurado + ' - '
 					+ data.data[x].asegurado.id_asegurado);
+
+				this.dataAutoCompleteIdNumberObject.push({
+					name: data.data[x].asegurado.nombres_asegurado +
+					' ' + data.data[x].asegurado.apellidos_asegurado + ' - '
+					+ data.data[x].asegurado.id_asegurado,
+					value: data.data[x].asegurado.id_asegurado});
 			}
 		});
 	}
@@ -346,7 +355,10 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy, DoCheck {
 
 	searchIdNumber(idNumber: string) {
 
-		idNumber = (idNumber).slice((idNumber).indexOf(' - ') + 3);
+		const idNumberObject = this.dataAutoCompleteIdNumberObject.find(nombre =>
+			nombre.name == idNumber);
+		// console.log(idNumberObject);
+		idNumber = (idNumberObject.value).toString();
 
 		this.appComponent.showOverlay = true;
 

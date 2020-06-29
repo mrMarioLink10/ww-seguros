@@ -10,7 +10,8 @@ import { FieldConfig } from 'src/app/shared/components/form-components/models/fi
 })
 export class ProstaticComponent implements OnInit {
   @Input() form: FormGroup;
-
+  @Input() showWarningDot: boolean;
+  step: number;
   treatmentUndergoneList: FormArray;
   studiesList: FormArray;
 
@@ -70,7 +71,13 @@ export class ProstaticComponent implements OnInit {
       },
     ]
   }
+  setStep(index: number) {
+    this.step = index;
+  }
 
+  nextStep(panel?: string) {
+    this.step++;
+  }
   selectChange(event) {
     console.log(event);
     if (event.valor === 'si') {

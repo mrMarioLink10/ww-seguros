@@ -10,6 +10,8 @@ import { FieldConfig } from 'src/app/shared/components/form-components/models/fi
 export class FinancialStatusComponent implements OnInit {
 
   @Input() form: FormGroup;
+  @Input() showWarningDot: boolean;
+  step: number;
 
   // accordionTitles=["Datos"]
 
@@ -198,6 +200,13 @@ export class FinancialStatusComponent implements OnInit {
 
   }
 
+  setStep(index: number) {
+    this.step = index;
+  }
+
+  nextStep(panel?: string) {
+    this.step++;
+  }
 
   addBasicControls() {
 

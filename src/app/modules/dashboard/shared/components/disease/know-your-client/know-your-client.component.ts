@@ -12,6 +12,9 @@ import { FieldConfig } from 'src/app/shared/components/form-components/models/fi
 export class KnowYourClientComponent implements OnInit {
 
 	@Input() form: FormGroup;
+	@Input() showWarningDot: boolean;
+	step: number;
+
 	accordionTitles = [
 		'Datos Generales',
 		'Datos del representante o apoderado legal',
@@ -201,6 +204,13 @@ export class KnowYourClientComponent implements OnInit {
 
 		return this.fb.group(this.branchGroup);
 	}
+	setStep(index: number) {
+		this.step = index;
+	}
+
+	nextStep(panel?: string) {
+		this.step++;
+	}
 
 	ngOnInit() {
 
@@ -208,12 +218,11 @@ export class KnowYourClientComponent implements OnInit {
 
 		this.addBasicControls();
 
-    console.log(this.form);
-    if (this.form.get('exposed').get('branch_office') &&
-    this.form.get('exposed').get('branch_office').get('allBranch_office'))
-    {
-      this.branchOfficeFormArray = this.form.get('exposed').get('branch_office').get('allBranch_office') as FormArray;
-    }
+		console.log(this.form);
+		if (this.form.get('exposed').get('branch_office') &&
+			this.form.get('exposed').get('branch_office').get('allBranch_office')) {
+			this.branchOfficeFormArray = this.form.get('exposed').get('branch_office').get('allBranch_office') as FormArray;
+		}
 		// 	this.form = this.fb.group({
 		// 		request: ['', Validators.required],
 
@@ -408,5 +417,5 @@ export class KnowYourClientComponent implements OnInit {
 
 	removeFormArray(index, array: any) {
 		array.removeAt(index);
-	  }
+	}
 }

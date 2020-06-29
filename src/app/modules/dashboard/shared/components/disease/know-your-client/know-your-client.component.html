@@ -1,15 +1,15 @@
-<div class="mb-8">
-  <!-- <div class="uppercase dashboard-page-title pt-10">
-    FORMULARIO POLÍTICA CONOZCA A SU CLIENTE (KNOW YOUR CUSTOMER) (PERSONA JURÍDICA) </div> -->
+<mat-expansion-panel class="ww-mat-expansion" [expanded]="step === 0" (opened)="setStep(0)">
+  <mat-expansion-panel-header class="body-13 icon-blue">
+    <mat-panel-title>
+      Formulario Política Conozca a su Cliente (Know Your Customer) (Persona Jurídica)
+    </mat-panel-title>
+    <mat-panel-description>
+      <div></div>
+      <div *ngIf="showWarningDot" class="warning-accordion-dot"></div>
+    </mat-panel-description>
+  </mat-expansion-panel-header>
 
-  <div class="pb-1 mt-4">
-
-    <app-forms-container [isQuestionnarie]="false"
-      [titles]="['Formulario Política Conozca a su Cliente (Know Your Customer) (Persona Jurídica)']">
-
-      <ng-template #formTemplate>
-
-        <!-- <div class="pt-12 pb-12 mt-5 ml-1" style="background-color: #F2F2F2">
+  <!-- <div class="pt-12 pb-12 mt-5 ml-1" style="background-color: #F2F2F2">
 
          <div class="ml-8 mr-10 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4">
 
@@ -20,285 +20,283 @@
 
         </div>-->
 
-        <!-- Sección Datos Generales -->
+  <!-- Sección Datos Generales -->
 
-        <div class="mt-12">
+  <div class="mt-12">
 
-          <h3 style="font-size: 16px; color: #18446B; font-weight: 500;"> Datos Generales </h3>
+    <h3 style="font-size: 16px; color: #18446B; font-weight: 500;"> Datos Generales </h3>
 
-        </div>
+  </div>
 
-        <div class="mt-4 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4">
+  <div class="mt-4 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4">
+
+    <div class="mr-3">
+      <app-input [group]="form.get('general_data')" label="Nombre de la sociedad" name='society_name' placeholder="">
+      </app-input>
+    </div>
+
+    <div class="mr-3 mt-8 sm:mt-5 md:mt-0 lg:mt-0 xl:mt-0">
+      <app-input [group]="form.get('general_data')" label="Nombre Comercial" name='commercial_name' placeholder="">
+      </app-input>
+    </div>
+
+    <div class="mr-3 mt-8 sm:mt-5 md:mt-8 lg:mt-2 xl:mt-0">
+
+      <app-number-input [group]="form.get('general_data')" label="Núm. Contribuyente o equivalente"
+        name='contributor_num' min="1" placeholder=""></app-number-input>
+
+    </div>
+
+    <div class="mr-3 mt-8 sm:mt-5 md:mt-8 lg:mt-2 xl:mt-0">
+      <app-input [group]="form.get('general_data')" label="Domicilio Social" name='home' placeholder="">
+      </app-input>
+    </div>
+
+    <div class="mr-3 mt-8 sm:mt-5 md:mt-8 lg:mt-2 xl:mt-5">
+
+      <app-number-input [group]="form.get('general_data')" label="Teléfono (s)" name='telephone' min="1" placeholder="">
+      </app-number-input>
+
+    </div>
+
+    <div class="mr-3 mt-8 sm:mt-5 md:mt-8 lg:mt-2 xl:mt-5">
+      <app-input [group]="form.get('general_data')" label="Correo" name='email' placeholder=""></app-input>
+    </div>
+
+    <div class="mr-3 mt-8 sm:mt-5 md:mt-8 lg:mt-2 xl:mt-5">
+      <!--  mt-4 -->
+      <app-input [group]="form.get('general_data')" label="Actividad Comercial" name='commercial_activity'
+        placeholder=""></app-input>
+    </div>
+
+    <div class="mr-3 mt-8 sm:mt-5 md:mt-8 lg:mt-2 xl:mt-5">
+      <app-select name="list_countrys" [options]="countryList" [group]="form.get('general_data')"></app-select>
+    </div>
+
+  </div>
+
+  <!-- Sección Datos del representante o apoderado legal -->
+
+  <div class="mt-12">
+
+    <h3 style="font-size: 16px; color: #18446B; font-weight: 500;"> Datos del representante o apoderado legal
+    </h3>
+
+  </div>
+
+  <div class="mt-4 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4">
+
+    <div class="mr-3 xl:mt-8">
+      <app-input [group]="form.get('representative_data')" label="Nombre (s) y Apellido (s)" name='name_lastname'
+        placeholder=""></app-input>
+    </div>
+
+    <div class="mr-3 mt-5 sm:mt-3 md:mt-0 lg:mt-0 xl:mt-8">
+      <app-input [group]="form.get('representative_data')" label="Lugar de Nacimiento" name='birthplace' placeholder="">
+      </app-input>
+    </div>
+
+    <div class="mt-5 sm:mt-3 md:mt-5 lg:mt-2 xl:mt-0">
+
+      <div class="pb-3">
+        <label class="formulary-labels"> Fecha de nacimiento </label>
+      </div>
+
+      <div class="mr-3">
+        <app-date-picker [group]="form.get('representative_data')" label="Fecha" name='birthdate'>
+        </app-date-picker>
+      </div>
+
+    </div>
+
+    <div class="mr-3 mt-5 sm:mt-3 md:mt-10 md:pt-3 lg:mt-10 lg:pt-0 xl:mt-8 xl:pt-0">
+      <app-input [group]="form.get('representative_data')" label="Cargo o relación con la Sociedad"
+        name='society_position' placeholder=""></app-input>
+    </div>
+
+    <div class="mr-3 mt-5 sm:mt-3 md:mt-5 lg:mt-2 xl:mt-2">
+      <app-input [group]="form.get('representative_data')" label="Nacionalidad" name='nationality' placeholder="">
+      </app-input>
+    </div>
+
+    <div class="mr-3 mt-5 sm:mt-3 md:mt-5 lg:mt-2 xl:mt-2">
+
+      <app-number-input [group]="form.get('representative_data')" label="Teléfono Residencial" name='home_telephone'
+        placeholder=""></app-number-input>
+
+    </div>
+
+    <div class="mr-3 mt-5 sm:mt-3 md:mt-5 lg:mt-2 xl:mt-2">
+
+      <app-number-input [group]="form.get('representative_data')" label="Celular" name='cellphone' placeholder="">
+      </app-number-input>
+
+    </div>
+
+    <div class="mr-3 mt-5 sm:mt-3 md:mt-5 lg:mt-2 xl:mt-2">
+      <app-input [group]="form.get('representative_data')" label="Cédula / Pasaporte" name='id_passport' placeholder="">
+      </app-input>
+    </div>
+
+    <div class="mr-3 mt-5 sm:mt-3 md:mt-5 lg:mt-2 xl:mt-2">
+      <app-input [group]="form.get('representative_data')" label="Correo" name='representative_email' placeholder="">
+      </app-input>
+    </div>
+
+    <div class="mr-3 mt-5 sm:mt-3 md:mt-5 lg:mt-2 xl:mt-2">
+      <app-input [group]="form.get('representative_data')" label="Dirección Residencial" name='address' placeholder="">
+      </app-input>
+    </div>
+
+  </div>
+
+  <!-- Sección Composición del órgano de gestión -->
+
+  <div class="mt-12">
+
+    <h3 style="font-size: 16px; color: #18446B; font-weight: 500;"> Composición del órgano de gestión </h3>
+
+  </div>
+
+  <div class="" [formGroup]="form.get('management_body_composition')">
+    <div formArrayName="allMembers">
+      <div class="mt-10" *ngFor="let element of bodyMembersFormArray.controls; let index = index">
+
+        <div [formGroupName]="index"
+          class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4">
 
           <div class="mr-3">
-            <app-input [group]="form.get('general_data')" label="Nombre de la sociedad" name='society_name'
-              placeholder=""></app-input>
+            <app-input [group]="form.get('management_body_composition').get('allMembers').get(index.toString())"
+              label="Nombre (s) y Apellido (s)" name='name_lastname'></app-input>
           </div>
 
-          <div class="mr-3 mt-8 sm:mt-5 md:mt-0 lg:mt-0 xl:mt-0">
-            <app-input [group]="form.get('general_data')" label="Nombre Comercial" name='commercial_name'
-              placeholder=""></app-input>
+          <div class="mr-3 mt-3 sm:mt-3 md:mt-0 lg:mt-0 xl:mt-0">
+            <app-input [group]="form.get('management_body_composition').get('allMembers').get(index.toString())"
+              label="Cargo" name='position'></app-input>
           </div>
 
-          <div class="mr-3 mt-8 sm:mt-5 md:mt-8 lg:mt-2 xl:mt-0">
-
-            <app-number-input [group]="form.get('general_data')" label="Núm. Contribuyente o equivalente"
-              name='contributor_num' min="1" placeholder=""></app-number-input>
-
+          <div class="mr-3 mt-3 sm:mt-3 md:mt-3 lg:mt-0 xl:mt-0">
+            <app-input [group]="form.get('management_body_composition').get('allMembers').get(index.toString())"
+              label="Cédula / Pasaporte" name='id_passport_management_body'></app-input>
           </div>
 
-          <div class="mr-3 mt-8 sm:mt-5 md:mt-8 lg:mt-2 xl:mt-0">
-            <app-input [group]="form.get('general_data')" label="Domicilio Social" name='home' placeholder="">
-            </app-input>
+          <div class="mr-3 mt-3 sm:mt-3 md:mt-3 lg:mt-0 xl:mt-0">
+            <app-input [group]="form.get('management_body_composition').get('allMembers').get(index.toString())"
+              label="Nacionalidad" name='nationality_management_body'></app-input>
           </div>
-
-          <div class="mr-3 mt-8 sm:mt-5 md:mt-8 lg:mt-2 xl:mt-5">
-
-            <app-number-input [group]="form.get('general_data')" label="Teléfono (s)" name='telephone' min="1"
-              placeholder=""></app-number-input>
-
-          </div>
-
-          <div class="mr-3 mt-8 sm:mt-5 md:mt-8 lg:mt-2 xl:mt-5">
-            <app-input [group]="form.get('general_data')" label="Correo" name='email' placeholder=""></app-input>
-          </div>
-
-          <div class="mr-3 mt-8 sm:mt-5 md:mt-8 lg:mt-2 xl:mt-5">
-            <!--  mt-4 -->
-            <app-input [group]="form.get('general_data')" label="Actividad Comercial" name='commercial_activity'
-              placeholder=""></app-input>
-          </div>
-
-          <div class="mr-3 mt-8 sm:mt-5 md:mt-8 lg:mt-2 xl:mt-5">
-            <app-select name="list_countrys" [options]="countryList" [group]="form.get('general_data')"></app-select>
-          </div>
-
+        </div>
+        <div class="mt-3 sm:mt-3 md:mt-5 lg:mt-3 xl:mt-3">
+          <button *ngIf="index == (bodyMembersFormArray.controls.length - 1)" mat-mini-fab
+            aria-label="Agregar reclamacion" (click)="addMBody(bodyMembersFormArray,management_bodyFormGroup)"
+            type="button" class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
+            <mat-icon style="color: #18446B">add</mat-icon>
+          </button>
+          <button *ngIf="bodyMembersFormArray.controls.length > 1" mat-mini-fab aria-label="Eliminar reclamacion"
+            (click)="formMethods.deleteOneElement(bodyMembersFormArray, index)" type="button"
+            class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
+            <mat-icon style="color: #18446B">remove</mat-icon>
+          </button>
         </div>
 
-        <!-- Sección Datos del representante o apoderado legal -->
+      </div>
+    </div>
+  </div>
 
-        <div class="mt-12">
+  <!-- Sección Principales Accionistas - Beneﬁciario Final -->
 
-          <h3 style="font-size: 16px; color: #18446B; font-weight: 500;"> Datos del representante o apoderado legal
-          </h3>
+  <div class="mt-12">
 
-        </div>
+    <h3 style="font-size: 16px; color: #18446B; font-weight: 500;"> Principales Accionistas - Beneﬁciario Final
+    </h3>
 
-        <div class="mt-4 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4">
+  </div>
 
-          <div class="mr-3 xl:mt-8">
-            <app-input [group]="form.get('representative_data')" label="Nombre (s) y Apellido (s)" name='name_lastname'
-              placeholder=""></app-input>
-          </div>
+  <div class="mt-6 py-5 mb-4" style="background-color: #E6E7E8;">
 
-          <div class="mr-3 mt-5 sm:mt-3 md:mt-0 lg:mt-0 xl:mt-8">
-            <app-input [group]="form.get('representative_data')" label="Lugar de Nacimiento" name='birthplace'
-              placeholder=""></app-input>
-          </div>
+    <p class="pl-10 pr-8" style="font-size: 12px;"> Persona(s) física(s) que ejerce el control efectivo ﬁnal sobre
+      una persona jurídica o tenga como mínimo el 20% del capital de la persona jurídica incluyendo a la persona
+      física en beneﬁcio de quien o quienes se lleva a cabo una transacción. </p>
 
-          <div class="mt-5 sm:mt-3 md:mt-5 lg:mt-2 xl:mt-0">
+  </div>
 
-            <div class="pb-3">
-              <label class="formulary-labels"> Fecha de nacimiento </label>
+  <div class="">
+    <div [formGroup]="form.get('shareholders')">
+      <div formArrayName="allShareholders">
+        <div class="mt-8" *ngFor="let element of shareholdersFormArray.controls; let index = index">
+
+          <div [formGroupName]="index"
+            class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4">
+
+            <div class="mr-3 ">
+              <app-input [group]="form.get('shareholders').get('allShareholders').get(index.toString())"
+                label="Nombre (s) y Apellido (s)" name='name_lastname_shareholder'></app-input>
             </div>
 
-            <div class="mr-3">
-              <app-date-picker [group]="form.get('representative_data')" label="Fecha" name='birthdate'>
-              </app-date-picker>
-            </div>
+            <div class="mr-3 mt-8 sm:mt-5 md:mt-0 lg:mt-0 xl:mt-0">
 
-          </div>
-
-          <div class="mr-3 mt-5 sm:mt-3 md:mt-10 md:pt-3 lg:mt-10 lg:pt-0 xl:mt-8 xl:pt-0">
-            <app-input [group]="form.get('representative_data')" label="Cargo o relación con la Sociedad"
-              name='society_position' placeholder=""></app-input>
-          </div>
-
-          <div class="mr-3 mt-5 sm:mt-3 md:mt-5 lg:mt-2 xl:mt-2">
-            <app-input [group]="form.get('representative_data')" label="Nacionalidad" name='nationality' placeholder="">
-            </app-input>
-          </div>
-
-          <div class="mr-3 mt-5 sm:mt-3 md:mt-5 lg:mt-2 xl:mt-2">
-
-            <app-number-input [group]="form.get('representative_data')" label="Teléfono Residencial"
-              name='home_telephone' placeholder=""></app-number-input>
-
-          </div>
-
-          <div class="mr-3 mt-5 sm:mt-3 md:mt-5 lg:mt-2 xl:mt-2">
-
-            <app-number-input [group]="form.get('representative_data')" label="Celular" name='cellphone' placeholder="">
-            </app-number-input>
-
-          </div>
-
-          <div class="mr-3 mt-5 sm:mt-3 md:mt-5 lg:mt-2 xl:mt-2">
-            <app-input [group]="form.get('representative_data')" label="Cédula / Pasaporte" name='id_passport'
-              placeholder=""></app-input>
-          </div>
-
-          <div class="mr-3 mt-5 sm:mt-3 md:mt-5 lg:mt-2 xl:mt-2">
-            <app-input [group]="form.get('representative_data')" label="Correo" name='representative_email'
-              placeholder=""></app-input>
-          </div>
-
-          <div class="mr-3 mt-5 sm:mt-3 md:mt-5 lg:mt-2 xl:mt-2">
-            <app-input [group]="form.get('representative_data')" label="Dirección Residencial" name='address'
-              placeholder=""></app-input>
-          </div>
-
-        </div>
-
-        <!-- Sección Composición del órgano de gestión -->
-
-        <div class="mt-12">
-
-          <h3 style="font-size: 16px; color: #18446B; font-weight: 500;"> Composición del órgano de gestión </h3>
-
-        </div>
-
-        <div class="" [formGroup]="form.get('management_body_composition')">
-          <div formArrayName="allMembers">
-            <div class="mt-10" *ngFor="let element of bodyMembersFormArray.controls; let index = index">
-
-              <div [formGroupName]="index"
-                class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4">
-
-                <div class="mr-3">
-                  <app-input [group]="form.get('management_body_composition').get('allMembers').get(index.toString())"
-                    label="Nombre (s) y Apellido (s)" name='name_lastname'></app-input>
-                </div>
-
-                <div class="mr-3 mt-3 sm:mt-3 md:mt-0 lg:mt-0 xl:mt-0">
-                  <app-input [group]="form.get('management_body_composition').get('allMembers').get(index.toString())"
-                    label="Cargo" name='position'></app-input>
-                </div>
-
-                <div class="mr-3 mt-3 sm:mt-3 md:mt-3 lg:mt-0 xl:mt-0">
-                  <app-input [group]="form.get('management_body_composition').get('allMembers').get(index.toString())"
-                    label="Cédula / Pasaporte" name='id_passport_management_body'></app-input>
-                </div>
-
-                <div class="mr-3 mt-3 sm:mt-3 md:mt-3 lg:mt-0 xl:mt-0">
-                  <app-input [group]="form.get('management_body_composition').get('allMembers').get(index.toString())"
-                    label="Nacionalidad" name='nationality_management_body'></app-input>
-                </div>
-              </div>
-              <div class="mt-3 sm:mt-3 md:mt-5 lg:mt-3 xl:mt-3">
-                <button *ngIf="index == (bodyMembersFormArray.controls.length - 1)" mat-mini-fab
-                  aria-label="Agregar reclamacion" (click)="addMBody(bodyMembersFormArray,management_bodyFormGroup)"
-                  type="button" class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
-                  <mat-icon style="color: #18446B">add</mat-icon>
-                </button>
-                <button *ngIf="bodyMembersFormArray.controls.length > 1" mat-mini-fab aria-label="Eliminar reclamacion"
-                  (click)="formMethods.deleteOneElement(bodyMembersFormArray, index)" type="button"
-                  class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
-                  <mat-icon style="color: #18446B">remove</mat-icon>
-                </button>
-              </div>
-
-            </div>
-          </div>
-        </div>
-
-        <!-- Sección Principales Accionistas - Beneﬁciario Final -->
-
-        <div class="mt-12">
-
-          <h3 style="font-size: 16px; color: #18446B; font-weight: 500;"> Principales Accionistas - Beneﬁciario Final
-          </h3>
-
-        </div>
-
-        <div class="mt-6 py-5 mb-4" style="background-color: #E6E7E8;">
-
-          <p class="pl-10 pr-8" style="font-size: 12px;"> Persona(s) física(s) que ejerce el control efectivo ﬁnal sobre
-            una persona jurídica o tenga como mínimo el 20% del capital de la persona jurídica incluyendo a la persona
-            física en beneﬁcio de quien o quienes se lleva a cabo una transacción. </p>
-
-        </div>
-
-        <div class="">
-          <div [formGroup]="form.get('shareholders')">
-            <div formArrayName="allShareholders">
-              <div class="mt-8" *ngFor="let element of shareholdersFormArray.controls; let index = index">
-
-                <div [formGroupName]="index"
-                  class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4">
-
-                  <div class="mr-3 ">
-                    <app-input [group]="form.get('shareholders').get('allShareholders').get(index.toString())"
-                      label="Nombre (s) y Apellido (s)" name='name_lastname_shareholder'></app-input>
-                  </div>
-
-                  <div class="mr-3 mt-8 sm:mt-5 md:mt-0 lg:mt-0 xl:mt-0">
-
-                    <app-number-input [group]="form.get('shareholders').get('allShareholders').get(index.toString())"
-                      label="% de Participación" name='participation_percentage' min="1" max="100" placeholder="">
-                    </app-number-input>
-
-                  </div>
-
-                  <div class="mr-3 mt-8 sm:mt-5 md:mt-8 lg:mt-3 xl:mt-0">
-                    <app-input [group]="form.get('shareholders').get('allShareholders').get(index.toString())"
-                      label="Cédula / Pasaporte" name='id_passport_shareholder'></app-input>
-                  </div>
-
-                  <div class="mr-3 mt-8 sm:mt-5 md:mt-8 lg:mt-3 xl:mt-0">
-                    <app-input [group]="form.get('shareholders').get('allShareholders').get(index.toString())"
-                      label="Nacionalidad" name='nationality_shareholder'></app-input>
-                  </div>
-                </div>
-                <div class="mt-5 sm:mt-3 md:mt-5 lg:mt-1 xl:mt-3">
-                  <button *ngIf="index == (shareholdersFormArray.controls.length - 1)" mat-mini-fab
-                    aria-label="Agregar reclamacion"
-                    (click)="addShareholders(shareholdersFormArray,shareholdersFormGroup)" type="button"
-                    class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
-                    <mat-icon style="color: #18446B">add</mat-icon>
-                  </button>
-                  <button *ngIf="shareholdersFormArray.controls.length > 1" mat-mini-fab
-                    aria-label="Eliminar reclamacion"
-                    (click)="formMethods.deleteOneElement(shareholdersFormArray, index)" type="button"
-                    class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
-                    <mat-icon style="color: #18446B">remove</mat-icon>
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4">
-
-            <div>
+              <app-number-input [group]="form.get('shareholders').get('allShareholders').get(index.toString())"
+                label="% de Participación" name='participation_percentage' min="1" max="100" placeholder="">
+              </app-number-input>
 
             </div>
 
-            <div>
-
+            <div class="mr-3 mt-8 sm:mt-5 md:mt-8 lg:mt-3 xl:mt-0">
+              <app-input [group]="form.get('shareholders').get('allShareholders').get(index.toString())"
+                label="Cédula / Pasaporte" name='id_passport_shareholder'></app-input>
             </div>
 
-            <div class="mr-3 mt-8 mb-6 sm:mb-4 sm:mt-8 md:mb-0 md:mt-8 lg:mb-0 lg:mt-8 xl:mb-0 xl:mt-0">
-
-              <app-number-input [group]="form.get('shareholders')" label="Núm. de Empleados" name='employee_numbers'
-                min="1" placeholder=""></app-number-input>
-
+            <div class="mr-3 mt-8 sm:mt-5 md:mt-8 lg:mt-3 xl:mt-0">
+              <app-input [group]="form.get('shareholders').get('allShareholders').get(index.toString())"
+                label="Nacionalidad" name='nationality_shareholder'></app-input>
             </div>
           </div>
-
+          <div class="mt-5 sm:mt-3 md:mt-5 lg:mt-1 xl:mt-3">
+            <button *ngIf="index == (shareholdersFormArray.controls.length - 1)" mat-mini-fab
+              aria-label="Agregar reclamacion" (click)="addShareholders(shareholdersFormArray,shareholdersFormGroup)"
+              type="button" class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
+              <mat-icon style="color: #18446B">add</mat-icon>
+            </button>
+            <button *ngIf="shareholdersFormArray.controls.length > 1" mat-mini-fab aria-label="Eliminar reclamacion"
+              (click)="formMethods.deleteOneElement(shareholdersFormArray, index)" type="button"
+              class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
+              <mat-icon style="color: #18446B">remove</mat-icon>
+            </button>
+          </div>
         </div>
+      </div>
+    </div>
+    <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4">
 
-        <!-- Sección Personas Políticamente Expuestas -->
+      <div>
 
-        <div class="mt-12">
+      </div>
 
-          <h3 style="font-size: 16px; color: #18446B; font-weight: 500;"> Personas Políticamente Expuestas </h3>
+      <div>
 
-        </div>
+      </div>
 
-        <div class="mt-6">
+      <div class="mr-3 mt-8 mb-6 sm:mb-4 sm:mt-8 md:mb-0 md:mt-8 lg:mb-0 lg:mt-8 xl:mb-0 xl:mt-0">
 
-          <!-- Bloque 1 -->
-          <!-- <div class="grid grid-cols-1">
+        <app-number-input [group]="form.get('shareholders')" label="Núm. de Empleados" name='employee_numbers' min="1"
+          placeholder=""></app-number-input>
+
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Sección Personas Políticamente Expuestas -->
+
+  <div class="mt-12">
+
+    <h3 style="font-size: 16px; color: #18446B; font-weight: 500;"> Personas Políticamente Expuestas </h3>
+
+  </div>
+
+  <div class="mt-6">
+
+    <!-- Bloque 1 -->
+    <!-- <div class="grid grid-cols-1">
             <div class=" py-5" style="background-color: #E6E7E8;">
 
               <p class="pl-10 pr-8" style="font-size: 12px;"> Las Personas Políticamente Expuestas son aquéllas que desempeñan o han desempeñado funciones
@@ -343,264 +341,261 @@
 
           </div> -->
 
-          <!-- <hr class="ww-divider mt-4"> -->
+    <!-- <hr class="ww-divider mt-4"> -->
 
 
-          <!-- Bloque 2 -->
+    <!-- Bloque 2 -->
+    <div>
+
+      <div class="mt-5 mb-6 pb-1">
+
+        <label class="ml-5 mr-6 mt-3 radio-button-label" style="display: inline-block"> ¿Cotiza la Sociedad en la
+          Bolsa de Valores? </label>
+        <app-radio-button class="float-right mt-3" style="display: inline-block" [group]="form.get('exposed')"
+          [options]="exposed_politically" name='stock_Exchange'>
+        </app-radio-button>
+
+      </div>
+
+    </div>
+
+    <hr class="ww-divider mt-10 sm:mt-10 md:mt-10 lg:mt-0 xl:mt-0">
+
+
+    <!-- Bloque 3 -->
+    <div class="mb-4">
+
+      <div class="my-5">
+        <label class="ml-5 mr-6 mt-3 radio-button-label" style="display: inline-block"> ¿Tiene la Sociedad
+          sucursales o afiliadas? </label>
+        <app-radio-button class="float-right mt-3" style="display: inline-block" [group]="form.get('exposed')"
+          [options]="exposed_politically" name='branch_office_radio' (selected)="selectChangeBranchOffice($event)">
+          <!-- (selected)="selectChangeBranchOffice($event)" -->
+        </app-radio-button>
+      </div>
+
+      <div class=" mt-24" *ngIf="this.form.get('exposed').get('branch_office_radio').value == 'si'">
+        <!-- *ngIf="this.form.get('branch_office')" -->
+
+
+        <div class="mt-8" *ngFor="let element of branchOfficeFormArray.controls; let index = index">
+
+          <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4">
+
+            <div class="mr-3 ">
+              <app-input
+                [group]="form.get('exposed').get('branch_office').get('allBranch_office').get(index.toString())"
+                label="Sucursales o aﬁliadas" name='branch_office_name'></app-input>
+            </div>
+
+            <div class="mr-3 ">
+              <app-input
+                [group]="form.get('exposed').get('branch_office').get('allBranch_office').get(index.toString())"
+                label="Dirección" name='branch_office_address'></app-input>
+            </div>
+
+            <div class="mr-3 ">
+              <app-select name="list_countrys_branch_office" [options]="countryList"
+                [group]="form.get('exposed').get('branch_office').get('allBranch_office').get(index.toString())">
+              </app-select>
+            </div>
+
+            <div class="mr-3 ">
+
+              <app-number-input
+                [group]="form.get('exposed').get('branch_office').get('allBranch_office').get(index.toString())"
+                label="Número de registro" name='register_number_branch_office' min="1" placeholder="12345">
+              </app-number-input>
+
+            </div>
+
+            <div class="mr-3 ">
+
+              <app-number-input
+                [group]="form.get('exposed').get('branch_office').get('allBranch_office').get(index.toString())"
+                label="Teléfonos" name='telephone_branch_office' placeholder=""></app-number-input>
+
+            </div>
+
+            <div class="mr-3 ">
+              <app-input
+                [group]="form.get('exposed').get('branch_office').get('allBranch_office').get(index.toString())"
+                label="Otros" name='other_info_branch_office'></app-input>
+            </div>
+
+          </div>
           <div>
-
-            <div class="mt-5 mb-6 pb-1">
-
-              <label class="ml-5 mr-6 mt-3 radio-button-label" style="display: inline-block"> ¿Cotiza la Sociedad en la
-                Bolsa de Valores? </label>
-              <app-radio-button class="float-right mt-3" style="display: inline-block" [group]="form.get('exposed')"
-                [options]="exposed_politically" name='stock_Exchange'>
-              </app-radio-button>
-
-            </div>
-
-          </div>
-
-          <hr class="ww-divider mt-10 sm:mt-10 md:mt-10 lg:mt-0 xl:mt-0">
-
-
-          <!-- Bloque 3 -->
-          <div class="mb-4">
-
-            <div class="my-5">
-              <label class="ml-5 mr-6 mt-3 radio-button-label" style="display: inline-block"> ¿Tiene la Sociedad
-                sucursales o afiliadas? </label>
-              <app-radio-button class="float-right mt-3" style="display: inline-block" [group]="form.get('exposed')"
-                [options]="exposed_politically" name='branch_office_radio'
-                (selected)="selectChangeBranchOffice($event)">
-                <!-- (selected)="selectChangeBranchOffice($event)" -->
-              </app-radio-button>
-            </div>
-
-            <div class=" mt-24" *ngIf="this.form.get('exposed').get('branch_office_radio').value == 'si'">
-              <!-- *ngIf="this.form.get('branch_office')" -->
-
-
-              <div class="mt-8" *ngFor="let element of branchOfficeFormArray.controls; let index = index">
-
-                <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4">
-
-                  <div class="mr-3 ">
-                    <app-input
-                      [group]="form.get('exposed').get('branch_office').get('allBranch_office').get(index.toString())"
-                      label="Sucursales o aﬁliadas" name='branch_office_name'></app-input>
-                  </div>
-
-                  <div class="mr-3 ">
-                    <app-input
-                      [group]="form.get('exposed').get('branch_office').get('allBranch_office').get(index.toString())"
-                      label="Dirección" name='branch_office_address'></app-input>
-                  </div>
-
-                  <div class="mr-3 ">
-                    <app-select name="list_countrys_branch_office" [options]="countryList"
-                      [group]="form.get('exposed').get('branch_office').get('allBranch_office').get(index.toString())">
-                    </app-select>
-                  </div>
-
-                  <div class="mr-3 ">
-
-                    <app-number-input
-                      [group]="form.get('exposed').get('branch_office').get('allBranch_office').get(index.toString())"
-                      label="Número de registro" name='register_number_branch_office' min="1" placeholder="12345">
-                    </app-number-input>
-
-                  </div>
-
-                  <div class="mr-3 ">
-
-                    <app-number-input
-                      [group]="form.get('exposed').get('branch_office').get('allBranch_office').get(index.toString())"
-                      label="Teléfonos" name='telephone_branch_office' placeholder=""></app-number-input>
-
-                  </div>
-
-                  <div class="mr-3 ">
-                    <app-input
-                      [group]="form.get('exposed').get('branch_office').get('allBranch_office').get(index.toString())"
-                      label="Otros" name='other_info_branch_office'></app-input>
-                  </div>
-
-                </div>
-                <div>
-                  <button *ngIf="index == (branchOfficeFormArray.controls.length - 1)" mat-mini-fab
-                    aria-label="Agregar reclamacion" (click)="addBranchOffice(branchOfficeFormArray)" type="button"
-                    class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
-                    <mat-icon style="color: #18446B">add</mat-icon>
-                  </button>
-                  <button *ngIf="branchOfficeFormArray.controls.length > 1" mat-mini-fab
-                    aria-label="Eliminar reclamacion"
-                    (click)="formMethods.deleteOneElement(branchOfficeFormArray, index)" type="button"
-                    class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
-                    <mat-icon style="color: #18446B">remove</mat-icon>
-                  </button>
-                </div>
-
-              </div>
-            </div>
-
-          </div>
-
-          <hr class="ww-divider mt-10 sm:mt-10 md:mt-10 lg:mt-0 xl:mt-0">
-
-
-          <!-- Bloque 4 -->
-          <div class="mt-8">
-
-            <div class="ml-5">
-
-              <label class="mr-6 inline radio-button-label"> Indique si el Representante Legal, Apoderado o la Sociedad
-                misma son o han sido objeto de investigación, indagación o condena por actividades ilícitas o delitos de
-                lavado o blanqueo de dinero o financiamiento de terrorismo. </label>
-              <app-radio-button class="float-right inline" [group]="form.get('exposed')" [options]="exposed_politically"
-                name='investigated_representative' (selected)="selectChangeText($event)">
-              </app-radio-button>
-
-            </div>
-
-            <div *ngIf="this.form.get('exposed').get('investigated_representative').value == 'si'" class=" mt-2">
-
-              <div class="mb-2 pt-8">
-                <label style="font-size: 12px;"> Especifique </label>
-              </div>
-
-              <div>
-                <app-text-area label="Texto" name='specify_investigated_representative'
-                  [group]="form.get('exposed').get('areatext')"></app-text-area>
-              </div>
-
-            </div>
-
+            <button *ngIf="index == (branchOfficeFormArray.controls.length - 1)" mat-mini-fab
+              aria-label="Agregar reclamacion" (click)="addBranchOffice(branchOfficeFormArray)" type="button"
+              class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
+              <mat-icon style="color: #18446B">add</mat-icon>
+            </button>
+            <button *ngIf="branchOfficeFormArray.controls.length > 1" mat-mini-fab aria-label="Eliminar reclamacion"
+              (click)="formMethods.deleteOneElement(branchOfficeFormArray, index)" type="button"
+              class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
+              <mat-icon style="color: #18446B">remove</mat-icon>
+            </button>
           </div>
 
         </div>
+      </div>
 
-        <!-- Sección Perfil Financiero -->
+    </div>
 
-        <div class="mt-12">
+    <hr class="ww-divider mt-10 sm:mt-10 md:mt-10 lg:mt-0 xl:mt-0">
 
-          <h3 style="font-size: 16px; color: #18446B; font-weight: 500;"> Perfil Financiero </h3>
 
+    <!-- Bloque 4 -->
+    <div class="mt-8">
+
+      <div class="ml-5">
+
+        <label class="mr-6 inline radio-button-label"> Indique si el Representante Legal, Apoderado o la Sociedad
+          misma son o han sido objeto de investigación, indagación o condena por actividades ilícitas o delitos de
+          lavado o blanqueo de dinero o financiamiento de terrorismo. </label>
+        <app-radio-button class="float-right inline" [group]="form.get('exposed')" [options]="exposed_politically"
+          name='investigated_representative' (selected)="selectChangeText($event)">
+        </app-radio-button>
+
+      </div>
+
+      <div *ngIf="this.form.get('exposed').get('investigated_representative').value == 'si'" class=" mt-2">
+
+        <div class="mb-2 pt-8">
+          <label style="font-size: 12px;"> Especifique </label>
         </div>
 
-        <!-- Bloque 1 -->
-        <div class="mt-4">
-
-          <div>
-            <app-radio-button [group]="form.get('finance')" [options]="main_annual_income_options"
-              name='main_annual_income'>
-            </app-radio-button>
-          </div>
-
-          <div class="mt-6">
-            <app-radio-button [group]="form.get('finance')" [options]="other_annual_income_options"
-              name="annual_income_others">
-            </app-radio-button>
-          </div>
-
+        <div>
+          <app-text-area label="Texto" name='specify_investigated_representative'
+            [group]="form.get('exposed').get('areatext')"></app-text-area>
         </div>
 
-        <hr class="ww-divider">
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- Sección Perfil Financiero -->
+
+  <div class="mt-12">
+
+    <h3 style="font-size: 16px; color: #18446B; font-weight: 500;"> Perfil Financiero </h3>
+
+  </div>
+
+  <!-- Bloque 1 -->
+  <div class="mt-4">
+
+    <div>
+      <app-radio-button [group]="form.get('finance')" [options]="main_annual_income_options" name='main_annual_income'>
+      </app-radio-button>
+    </div>
+
+    <div class="mt-6">
+      <app-radio-button [group]="form.get('finance')" [options]="other_annual_income_options"
+        name="annual_income_others">
+      </app-radio-button>
+    </div>
+
+  </div>
+
+  <hr class="ww-divider">
 
 
-        <!-- Bloque 2 -->
-        <div class="mt-8">
+  <!-- Bloque 2 -->
+  <div class="mt-8">
 
-          <label> <strong> Documentos Necesarios: </strong> </label>
+    <label> <strong> Documentos Necesarios: </strong> </label>
 
 
-          <div class="grid grid-cols-1  mt-6">
+    <div class="grid grid-cols-1  mt-6">
 
-            <div class="grid grid-cols-1 xl:grid-cols-2">
-              <div class="xl:mr-64 xl:pr-4">
-                <form [formGroup]="form.get('finance').get('documents')">
-                  <mat-checkbox class="radio-button-label" formControlName="mercantile_register_document"> <span
-                      style="white-space: normal;"> {{documents[0].viewValue}} </span> </mat-checkbox>
-                </form>
-              </div>
-
-              <div class="mt-5 xl:-ml-3 xl:-mr-4 xl:mt-0">
-                <form [formGroup]="form.get('finance').get('documents')">
-                  <mat-checkbox class="radio-button-label" formControlName="id_shareholder_document"> <span
-                      style="white-space: normal;"> {{documents[2].viewValue}} </span> </mat-checkbox>
-                </form>
-              </div>
-            </div>
-
-            <div class="grid grid-cols-1 xl:grid-cols-2 xl:mt-5">
-              <div class="mt-5 xl:mr-6 xl:mt-0">
-                <form [formGroup]="form.get('finance').get('documents')">
-                  <mat-checkbox class="radio-button-label" formControlName="id_representative_document"> <span
-                      style="white-space: normal;"> {{documents[1].viewValue}} </span> </mat-checkbox>
-                </form>
-              </div>
-
-              <div class="mt-5 xl:-ml-3 xl:mr-16 xl:pr-3 xl:mt-0">
-                <form [formGroup]="form.get('finance').get('documents')">
-                  <mat-checkbox class="radio-button-label" formControlName="managemente_body_document"> <span
-                      style="white-space: normal;"> {{documents[3].viewValue}} </span> </mat-checkbox>
-                </form>
-              </div>
-            </div>
-
-          </div>
-
+      <div class="grid grid-cols-1 xl:grid-cols-2">
+        <div class="xl:mr-64 xl:pr-4">
+          <form [formGroup]="form.get('finance').get('documents')">
+            <mat-checkbox class="radio-button-label" formControlName="mercantile_register_document"> <span
+                style="white-space: normal;"> {{documents[0].viewValue}} </span> </mat-checkbox>
+          </form>
         </div>
 
-        <!-- Sección Declaración -->
+        <div class="mt-5 xl:-ml-3 xl:-mr-4 xl:mt-0">
+          <form [formGroup]="form.get('finance').get('documents')">
+            <mat-checkbox class="radio-button-label" formControlName="id_shareholder_document"> <span
+                style="white-space: normal;"> {{documents[2].viewValue}} </span> </mat-checkbox>
+          </form>
+        </div>
+      </div>
 
-        <div class="mt-12">
-
-          <h3 style="font-size: 16px; color: #18446B; font-weight: 500;"> Declaración </h3>
-
+      <div class="grid grid-cols-1 xl:grid-cols-2 xl:mt-5">
+        <div class="mt-5 xl:mr-6 xl:mt-0">
+          <form [formGroup]="form.get('finance').get('documents')">
+            <mat-checkbox class="radio-button-label" formControlName="id_representative_document"> <span
+                style="white-space: normal;"> {{documents[1].viewValue}} </span> </mat-checkbox>
+          </form>
         </div>
 
-        <div class="mt-6" style="background-color: #E6E7E8;">
-          <p class="py-5 px-8" style="font-size: 12px;"> Por la presente declaro bajo la fe de juramento que los datos
-            suministrados anteriormente y
-            contenidos en este formulario son verdaderos, correctos y actualizados; y que no he omitido ninguna
-            información requerida explícita o implícitamente en este formulario, y que todas las actividades de la
-            sociedad son ejercidas dentro de las normas legales y que los recursos utilizados para el pago de los
-            seguros en mención, provienen de la actividad comercial declarada. </p>
+        <div class="mt-5 xl:-ml-3 xl:mr-16 xl:pr-3 xl:mt-0">
+          <form [formGroup]="form.get('finance').get('documents')">
+            <mat-checkbox class="radio-button-label" formControlName="managemente_body_document"> <span
+                style="white-space: normal;"> {{documents[3].viewValue}} </span> </mat-checkbox>
+          </form>
         </div>
+      </div>
 
-        <!-- Sección Datos del corredor (quien declara haber revisado los datos dados por el cliente o contratante) -->
+    </div>
 
-        <div class="mt-12">
+  </div>
 
-          <h3 style="font-size: 16px; color: #18446B; font-weight: 500;"> Datos del corredor (quien declara haber
-            revisado los datos dados por el cliente o contratante) </h3>
+  <!-- Sección Declaración -->
 
-        </div>
+  <div class="mt-12">
 
-        <div class="mt-4 mb-3 mt-5 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4">
+    <h3 style="font-size: 16px; color: #18446B; font-weight: 500;"> Declaración </h3>
 
-          <div class="mr-3">
+  </div>
 
-            <app-input [group]="form.get('broker')" label="Nombre/Razón Social" name='social_name' placeholder="">
-            </app-input>
+  <div class="mt-6" style="background-color: #E6E7E8;">
+    <p class="py-5 px-8" style="font-size: 12px;"> Por la presente declaro bajo la fe de juramento que los datos
+      suministrados anteriormente y
+      contenidos en este formulario son verdaderos, correctos y actualizados; y que no he omitido ninguna
+      información requerida explícita o implícitamente en este formulario, y que todas las actividades de la
+      sociedad son ejercidas dentro de las normas legales y que los recursos utilizados para el pago de los
+      seguros en mención, provienen de la actividad comercial declarada. </p>
+  </div>
 
-          </div>
+  <!-- Sección Datos del corredor (quien declara haber revisado los datos dados por el cliente o contratante) -->
 
-          <div class="mr-3 mt-3 sm:mt-3 md:mt-0 lg:mt-0 xl:mt-0">
+  <div class="mt-12">
 
-            <!-- <app-input [group]="form.get('broker')" label="No. Licencia" name='license_num' type="number" placeholder=""></app-input>  -->
+    <h3 style="font-size: 16px; color: #18446B; font-weight: 500;"> Datos del corredor (quien declara haber
+      revisado los datos dados por el cliente o contratante) </h3>
 
-            <app-number-input [group]="form.get('broker')" label="No. Licencia" name='license_num' placeholder="1"
-              min="1"></app-number-input>
+  </div>
 
-          </div>
+  <div class="mt-4 mb-3 mt-5 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4">
 
-        </div>
+    <div class="mr-3">
 
-        <!-- Sección Para uso de la aseguradora -->
+      <app-input [group]="form.get('broker')" label="Nombre/Razón Social" name='social_name' placeholder="">
+      </app-input>
 
-        <!--  <div class="mt-12">
+    </div>
+
+    <div class="mr-3 mt-3 sm:mt-3 md:mt-0 lg:mt-0 xl:mt-0">
+
+      <!-- <app-input [group]="form.get('broker')" label="No. Licencia" name='license_num' type="number" placeholder=""></app-input>  -->
+
+      <app-number-input [group]="form.get('broker')" label="No. Licencia" name='license_num' placeholder="1" min="1">
+      </app-number-input>
+
+    </div>
+
+  </div>
+
+  <!-- Sección Para uso de la aseguradora -->
+
+  <!--  <div class="mt-12">
 
           <h3 style="font-size: 16px; color: #18446B; font-weight: 500;"> Para uso de la aseguradora </h3>
 
@@ -622,10 +617,9 @@
 
         </div> -->
 
-      </ng-template>
-
-    </app-forms-container>
-
-  </div>
-
-</div>
+  <mat-action-row class="action-row">
+    <button mat-button class="next-button" (click)="nextStep()" type="button">
+      Cerrar
+    </button>
+  </mat-action-row>
+</mat-expansion-panel>

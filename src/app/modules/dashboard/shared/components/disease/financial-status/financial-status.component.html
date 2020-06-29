@@ -1,234 +1,232 @@
-<div class="mx-4 mb-8">
-  <!-- <div class="uppercase dashboard-page-title pt-10">
-      Estado Financiero Confidencial </div> -->
+<mat-expansion-panel class="ww-mat-expansion" [expanded]="step === 0" (opened)="setStep(0)">
+  <mat-expansion-panel-header class="body-13 icon-blue">
+    <mat-panel-title>
+      Estado Financiero Confidencial
+    </mat-panel-title>
+    <mat-panel-description>
+      <div></div>
+      <div *ngIf="showWarningDot" class="warning-accordion-dot"></div>
+    </mat-panel-description>
+  </mat-expansion-panel-header>
+  <div class="ml-4">
 
-  <div class="mt-6">
-
-    <app-forms-container [isQuestionnarie]="false" [titles]="['Estado Financiero Confidencial']">
-
-      <ng-template #formTemplate>
-
-        <div class="ml-4">
-
-          <!-- Mini Bloque del campo nombre, fecha y campo moneda -->
-          <!--     <div class="mt-3 grid grid-cols-1 mb-12 sm:mb-6 sm:grid-cols-1 md:mb-6 md:grid-cols-2 lg:mb-0 lg:grid-cols-2 xl:grid-cols-2 mr-3">
+    <!-- Mini Bloque del campo nombre, fecha y campo moneda -->
+    <!--     <div class="mt-3 grid grid-cols-1 mb-12 sm:mb-6 sm:grid-cols-1 md:mb-6 md:grid-cols-2 lg:mb-0 lg:grid-cols-2 xl:grid-cols-2 mr-3">
 
                         <app-input [group]="form"
                         label="Nombre completo del solicitante" name='name' placeholder="Por ej: Kevin Ricardo Tavárez de los Santos"></app-input>
 
                     </div> -->
 
-          <div class="mt-4">
-            <label style="font-size: 12px;"> Los siguientes datos financieros han sido proporcionados con el propósito
-              de establecer asegurabilidad en conexión con una solicitud pendiente de Seguro de Vida en mi vida. Estos
-              datos han sido proporcionados como un estado verdadero y preciso de mi condición financiera. </label>
-          </div>
+    <div class="mt-4">
+      <label style="font-size: 12px;"> Los siguientes datos financieros han sido proporcionados con el propósito
+        de establecer asegurabilidad en conexión con una solicitud pendiente de Seguro de Vida en mi vida. Estos
+        datos han sido proporcionados como un estado verdadero y preciso de mi condición financiera. </label>
+    </div>
 
-          <!-- Tambien podria hacer estos grids como el grid de salario mensual de disability -->
-          <div class="mt-6 pt-1 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-            <div class="grid grid-cols-2 mb-3 xl:mb-0">
-              <div class="mr-3">
-                <app-date-picker [group]="form" label="Fecha" name='date'> </app-date-picker>
-              </div>
-              <div class="mr-3">
-                <app-select name="currency" [options]="currencyOptions" [group]="form"
-                  (selected)="selectChange($event)"></app-select>
-              </div>
-            </div>
-          </div>
+    <!-- Tambien podria hacer estos grids como el grid de salario mensual de disability -->
+    <div class="mt-6 pt-1 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+      <div class="grid grid-cols-2 mb-3 xl:mb-0">
+        <div class="mr-3">
+          <app-date-picker [group]="form" label="Fecha" name='date'> </app-date-picker>
+        </div>
+        <div class="mr-3">
+          <app-select name="currency" [options]="currencyOptions" [group]="form" (selected)="selectChange($event)">
+          </app-select>
+        </div>
+      </div>
+    </div>
 
-          <hr class="ww-divider mt-10">
+    <hr class="ww-divider mt-10">
 
-          <!-- Bloque 1 -->
-          <div class="mt-10">
+    <!-- Bloque 1 -->
+    <div class="mt-10">
 
-            <div class="">
+      <div class="">
 
-              <div class="mt-6 pb-8 w-full ">
-                <div class="table-responsive" style="overflow-y: hidden; overflow-x: auto; max-width: 100%;">
-                  <table mat-table [dataSource]="dataSource" class="w-full dashboard-basic-table">
-                    <!-- Position Column -->
-                    <ng-container matColumnDef="activo" style="margin-right: 15px !important">
-                      <th class="padding-cell" mat-header-cell *matHeaderCellDef
-                        style="color: #007DB7 !important; font-weight: bold !important;"> Activo</th>
-                      <td class="padding-cell" mat-cell *matCellDef="let element">
+        <div class="mt-6 pb-8 w-full ">
+          <div class="table-responsive" style="overflow-y: hidden; overflow-x: auto; max-width: 100%;">
+            <table mat-table [dataSource]="dataSource" class="w-full dashboard-basic-table">
+              <!-- Position Column -->
+              <ng-container matColumnDef="activo" style="margin-right: 15px !important">
+                <th class="padding-cell" mat-header-cell *matHeaderCellDef
+                  style="color: #007DB7 !important; font-weight: bold !important;"> Activo</th>
+                <td class="padding-cell" mat-cell *matCellDef="let element">
 
-                        <div class="mt-12 mb-10">
-                          <div class="mt-4 mr-3 xl:mr-64">
-                            {{element.labelActive}}
-                          </div>
+                  <div class="mt-12 mb-10">
+                    <div class="mt-4 mr-3 xl:mr-64">
+                      {{element.labelActive}}
+                    </div>
 
-                          <div class="mt-3 xl:-mt-8 float-right">
-                            <div class="w-56">
+                    <div class="mt-3 xl:-mt-8 float-right">
+                      <div class="w-56">
 
-                              <app-number-input [group]="form.get('table').get('active')" [label]="currencyLabel"
-                                [name]='element.nameActive' min="1" placeholder="Por ej: 1000 dolares">
-                              </app-number-input>
-                            </div>
-                          </div>
-                        </div>
+                        <app-number-input [group]="form.get('table').get('active')" [label]="currencyLabel"
+                          [name]='element.nameActive' min="1" placeholder="Por ej: 1000 dolares">
+                        </app-number-input>
+                      </div>
+                    </div>
+                  </div>
 
-                      </td>
-                    </ng-container>
+                </td>
+              </ng-container>
 
-                    <ng-container matColumnDef="pasivo" style="margin-right: 15px !important">
-                      <th class="padding-cell" mat-header-cell *matHeaderCellDef
-                        style="color: #007DB7 !important; font-weight: bold !important;"> Pasivo </th>
-                      <td class="padding-cell" mat-cell *matCellDef="let element">
+              <ng-container matColumnDef="pasivo" style="margin-right: 15px !important">
+                <th class="padding-cell" mat-header-cell *matHeaderCellDef
+                  style="color: #007DB7 !important; font-weight: bold !important;"> Pasivo </th>
+                <td class="padding-cell" mat-cell *matCellDef="let element">
 
-                        <div class="mt-12 mb-10">
-                          <div class="mt-4 mr-3 xl:mr-64">
-                            {{element.labelPasive}}
-                          </div>
+                  <div class="mt-12 mb-10">
+                    <div class="mt-4 mr-3 xl:mr-64">
+                      {{element.labelPasive}}
+                    </div>
 
-                          <div class="mt-3 xl:-mt-8 float-right">
-                            <div class="w-56">
-                              <app-number-input [group]="form.get('table').get('pasive')" [label]="currencyLabel"
-                                [name]='element.namePasive' min="1" placeholder="Por ej: 10000 pesos">
-                              </app-number-input>
-                            </div>
-                          </div>
-                        </div>
+                    <div class="mt-3 xl:-mt-8 float-right">
+                      <div class="w-56">
+                        <app-number-input [group]="form.get('table').get('pasive')" [label]="currencyLabel"
+                          [name]='element.namePasive' min="1" placeholder="Por ej: 10000 pesos">
+                        </app-number-input>
+                      </div>
+                    </div>
+                  </div>
 
-                      </td>
-                    </ng-container>
+                </td>
+              </ng-container>
 
-                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-                  </table>
-                </div>
-
-              </div>
-
-
-            </div>
-
-          </div>
-
-          <hr class="ww-divider mt-10">
-
-          <!-- Bloque 2 -->
-          <div class="mt-10">
-
-            <div class="grid grid-cols-1 lg:grid-cols-2">
-
-              <div class="mt-6 pb-8 w-full ">
-                <div class="table-responsive" style="overflow-y: hidden; overflow-x: auto; max-width: 100%;">
-                  <table mat-table [dataSource]="dataSourceSecond" class="w-full dashboard-basic-table">
-                    <!-- Position Column -->
-                    <ng-container matColumnDef="ingresos" style="margin-right: 15px !important">
-                      <th class="padding-cell" mat-header-cell *matHeaderCellDef
-                        style="color: #007DB7 !important; font-weight: bold !important;"> Ingresos</th>
-                      <td class="padding-cell" mat-cell *matCellDef="let element">
-
-                        <div class="mt-10 xl:mt-8 mb-6 xl:mb-5">
-                          <div class="-mt-2">
-                            {{element.incomeLabel}}
-                          </div>
-                        </div>
-
-                      </td>
-                    </ng-container>
-
-                    <ng-container matColumnDef="pasado" style="margin-right: 15px !important">
-                      <th class="padding-cell" mat-header-cell *matHeaderCellDef
-                        style="color: #007DB7 !important; font-weight: bold !important;"> Año Pasado </th>
-                      <td class="padding-cell" mat-cell *matCellDef="let element">
-
-                        <div class="mt-10 xl:mt-8 mb-6 xl:mb-5">
-                          <div class="w-40">
-                            <app-number-input [group]="form.get('incomeTable').get('lastYear')" [label]="currencyLabel"
-                              [name]='element.pastField' min="1" placeholder="Por ej: 5000 pesos"></app-number-input>
-                          </div>
-                        </div>
-
-                      </td>
-                    </ng-container>
-
-                    <ng-container matColumnDef="antepasado" style="margin-right: 15px !important">
-                      <th class="padding-cell" mat-header-cell *matHeaderCellDef
-                        style="color: #007DB7 !important; font-weight: bold !important;"> Año AntePasado </th>
-                      <td class="padding-cell" mat-cell *matCellDef="let element">
-
-                        <div class="mt-10 xl:mt-8 mb-6 xl:mb-5">
-                          <div class="w-40">
-                            <app-number-input [group]="form.get('incomeTable').get('beforeLastYear')"
-                              [label]="currencyLabel" [name]='element.beforePastField' min="1"
-                              placeholder="Por ej: 3000 dolares"></app-number-input>
-                          </div>
-                        </div>
-
-                      </td>
-                    </ng-container>
-
-                    <tr mat-header-row *matHeaderRowDef="displayedColumnsSecond"></tr>
-                    <tr mat-row *matRowDef="let row; columns: displayedColumnsSecond;"></tr>
-                  </table>
-                </div>
-
-              </div>
-
-            </div>
-
-          </div>
-
-
-
-          <hr class="ww-divider mt-10">
-
-          <!-- Bloque 3 -->
-          <div class="mt-10 ">
-
-            <div>
-              <label class="formulary-labels"> No tengo demandas o juicios pendientes en contra de mi persona en este
-                momento excepto: </label> <label style="font-size: 11px;"> (Sí no tiene, entonces ponga <strong>
-                  N/A</strong>) </label>
-            </div>
-
-            <div class="mt-4 mr-3 mb-16 sm:mb-0">
-              <app-text-area label="Por favor, facilite información detallada." name='lawsuit' [group]="form">
-              </app-text-area>
-            </div>
-          </div>
-
-          <hr class="ww-divider mt-10">
-
-          <!-- Bloque 4 -->
-          <div class="mt-10 ">
-
-            <div>
-              <label class="formulary-labels"> Comentarios adicionales: </label> <label style="font-size: 11px;"> (Sí no
-                tiene nada más que agregar, solo ponga <strong> N/A</strong>) </label>
-            </div>
-
-            <div class="mt-4 mr-3 mb-16 sm:mb-0">
-              <app-text-area label="Por favor, facilite información detallada." name='info' [group]="form">
-              </app-text-area>
-            </div>
-          </div>
-
-          <!-- Declaración -->
-          <div class="pt-5 pl-3 pb-5 mt-12 ml-1 -mr-2 sm:-mr-0 md:mr-0 lg:mr-0 xl:mr-0 mb-4"
-            style="background-color: #E6E7E8;">
-
-            <div class="pl-1 pr-1 sm:pl-2 sm:pr-2 md:pl-8 md:pr-6 lg:pl-8 lg:pr-6 xl:pl-8 pr-6">
-
-              <label style="font-size: 12px;"> Por la presente declaro bajo la fe de juramento que los datos
-                suministrados anteriormente y contenidos en este documento son verdaderos, correctos y actualizados y
-                que no he omitido información requerida explícita o implícitamente en este documento. Autorizo a la
-                aseguradora a realizar las actividades necesarias para la comprobación de la información suministada,
-                así como el acceso a mi información crediticia ante entidades de información ﬁnancieras y burós de
-                crédito. </label>
-
-            </div>
-
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
           </div>
 
         </div>
 
-      </ng-template>
 
-    </app-forms-container>
+      </div>
+
+    </div>
+
+    <hr class="ww-divider mt-10">
+
+    <!-- Bloque 2 -->
+    <div class="mt-10">
+
+      <div class="grid grid-cols-1 lg:grid-cols-2">
+
+        <div class="mt-6 pb-8 w-full ">
+          <div class="table-responsive" style="overflow-y: hidden; overflow-x: auto; max-width: 100%;">
+            <table mat-table [dataSource]="dataSourceSecond" class="w-full dashboard-basic-table">
+              <!-- Position Column -->
+              <ng-container matColumnDef="ingresos" style="margin-right: 15px !important">
+                <th class="padding-cell" mat-header-cell *matHeaderCellDef
+                  style="color: #007DB7 !important; font-weight: bold !important;"> Ingresos</th>
+                <td class="padding-cell" mat-cell *matCellDef="let element">
+
+                  <div class="mt-10 xl:mt-8 mb-6 xl:mb-5">
+                    <div class="-mt-2">
+                      {{element.incomeLabel}}
+                    </div>
+                  </div>
+
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="pasado" style="margin-right: 15px !important">
+                <th class="padding-cell" mat-header-cell *matHeaderCellDef
+                  style="color: #007DB7 !important; font-weight: bold !important;"> Año Pasado </th>
+                <td class="padding-cell" mat-cell *matCellDef="let element">
+
+                  <div class="mt-10 xl:mt-8 mb-6 xl:mb-5">
+                    <div class="w-40">
+                      <app-number-input [group]="form.get('incomeTable').get('lastYear')" [label]="currencyLabel"
+                        [name]='element.pastField' min="1" placeholder="Por ej: 5000 pesos"></app-number-input>
+                    </div>
+                  </div>
+
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="antepasado" style="margin-right: 15px !important">
+                <th class="padding-cell" mat-header-cell *matHeaderCellDef
+                  style="color: #007DB7 !important; font-weight: bold !important;"> Año AntePasado </th>
+                <td class="padding-cell" mat-cell *matCellDef="let element">
+
+                  <div class="mt-10 xl:mt-8 mb-6 xl:mb-5">
+                    <div class="w-40">
+                      <app-number-input [group]="form.get('incomeTable').get('beforeLastYear')" [label]="currencyLabel"
+                        [name]='element.beforePastField' min="1" placeholder="Por ej: 3000 dolares"></app-number-input>
+                    </div>
+                  </div>
+
+                </td>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="displayedColumnsSecond"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumnsSecond;"></tr>
+            </table>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+
+    <hr class="ww-divider mt-10">
+
+    <!-- Bloque 3 -->
+    <div class="mt-10 ">
+
+      <div>
+        <label class="formulary-labels"> No tengo demandas o juicios pendientes en contra de mi persona en este
+          momento excepto: </label> <label style="font-size: 11px;"> (Sí no tiene, entonces ponga <strong>
+            N/A</strong>) </label>
+      </div>
+
+      <div class="mt-4 mr-3 mb-16 sm:mb-0">
+        <app-text-area label="Por favor, facilite información detallada." name='lawsuit' [group]="form">
+        </app-text-area>
+      </div>
+    </div>
+
+    <hr class="ww-divider mt-10">
+
+    <!-- Bloque 4 -->
+    <div class="mt-10 ">
+
+      <div>
+        <label class="formulary-labels"> Comentarios adicionales: </label> <label style="font-size: 11px;"> (Sí no
+          tiene nada más que agregar, solo ponga <strong> N/A</strong>) </label>
+      </div>
+
+      <div class="mt-4 mr-3 mb-16 sm:mb-0">
+        <app-text-area label="Por favor, facilite información detallada." name='info' [group]="form">
+        </app-text-area>
+      </div>
+    </div>
+
+    <!-- Declaración -->
+    <div class="pt-5 pl-3 pb-5 mt-12 ml-1 -mr-2 sm:-mr-0 md:mr-0 lg:mr-0 xl:mr-0 mb-4"
+      style="background-color: #E6E7E8;">
+
+      <div class="pl-1 pr-1 sm:pl-2 sm:pr-2 md:pl-8 md:pr-6 lg:pl-8 lg:pr-6 xl:pl-8 pr-6">
+
+        <label style="font-size: 12px;"> Por la presente declaro bajo la fe de juramento que los datos
+          suministrados anteriormente y contenidos en este documento son verdaderos, correctos y actualizados y
+          que no he omitido información requerida explícita o implícitamente en este documento. Autorizo a la
+          aseguradora a realizar las actividades necesarias para la comprobación de la información suministada,
+          así como el acceso a mi información crediticia ante entidades de información ﬁnancieras y burós de
+          crédito. </label>
+
+      </div>
+
+    </div>
 
   </div>
-</div>
+  <mat-action-row class="action-row">
+    <button mat-button class="next-button" (click)="nextStep()" type="button">
+      Cerrar
+    </button>
+  </mat-action-row>
+</mat-expansion-panel>

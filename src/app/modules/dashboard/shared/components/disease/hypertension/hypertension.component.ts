@@ -9,7 +9,8 @@ import { DiseaseService } from '../shared/disease/disease.service';
 })
 export class HypertensionComponent implements OnInit, DoCheck {
   @Input() form: FormGroup;
-
+  @Input() showWarningDot: boolean;
+  step: number;
   medicationList: FormArray;
   changedMedicationList: FormArray;
 
@@ -221,7 +222,13 @@ export class HypertensionComponent implements OnInit, DoCheck {
       console.log('HolAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA otherInfo2');
     }
   }
+  setStep(index: number) {
+    this.step = index;
+  }
 
+  nextStep(panel?: string) {
+    this.step++;
+  }
   addBasicControls() {
     this.form.addControl('personInfo', this.fb.group({
       doctorName: ['', Validators.required],

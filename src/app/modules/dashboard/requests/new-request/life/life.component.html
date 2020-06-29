@@ -1883,47 +1883,91 @@
         </mat-accordion>
       </mat-tab>
       <mat-tab label="Cuestionarios Adicionales" *ngIf="questionsLength() > 0" class="mat-tab-forms">
-        <app-hypertension *ngIf="newRequest.get('questionnaires').get('solicitudHipertensionArterial')"
-          [form]="newRequest.get('questionnaires').get('solicitudHipertensionArterial')"></app-hypertension>
-        <app-mellitus-diabetes *ngIf="newRequest.get('questionnaires').get('solicitudDiabetes')"
-          [form]="newRequest.get('questionnaires').get('solicitudDiabetes')"></app-mellitus-diabetes>
-        <app-prostatic *ngIf="newRequest.get('questionnaires').get('solicitudProstatica')"
-          [form]="newRequest.get('questionnaires').get('solicitudProstatica')"></app-prostatic>
+        <mat-accordion #matAccordion="matAccordion" name="matAccordion" class="ww-mat-accordion example-headers-align"
+          [togglePosition]="'before'">
+          <app-hypertension
+            [showWarningDot]="showWarningDot(newRequest.get('questionnaires').get('solicitudHipertensionArterial'))"
+            *ngIf="newRequest.get('questionnaires').get('solicitudHipertensionArterial')"
+            [form]="newRequest.get('questionnaires').get('solicitudHipertensionArterial')"></app-hypertension>
+          <app-mellitus-diabetes
+            [showWarningDot]="showWarningDot(newRequest.get('questionnaires').get('solicitudDiabetes'))"
+            *ngIf="newRequest.get('questionnaires').get('solicitudDiabetes')"
+            [form]="newRequest.get('questionnaires').get('solicitudDiabetes')"></app-mellitus-diabetes>
+          <app-prostatic [showWarningDot]="showWarningDot(newRequest.get('questionnaires').get('solicitudProstatica'))"
+            *ngIf="newRequest.get('questionnaires').get('solicitudProstatica')"
+            [form]="newRequest.get('questionnaires').get('solicitudProstatica')"></app-prostatic>
+        </mat-accordion>
       </mat-tab>
       <mat-tab label="Formulario de Estado Financiero"
         *ngIf="newRequest.get('questionnaires').get('solicitudEstadoFinancieroConfidencial')" class="mat-tab-forms">
-        <app-financial-status *ngIf="newRequest.get('questionnaires').get('solicitudEstadoFinancieroConfidencial')"
-          [form]="newRequest.get('questionnaires').get('solicitudEstadoFinancieroConfidencial')"></app-financial-status>
+        <mat-accordion #matAccordion="matAccordion" name="matAccordion" class="ww-mat-accordion example-headers-align"
+          [togglePosition]="'before'">
+          <app-financial-status
+            [showWarningDot]="showWarningDot(newRequest.get('questionnaires').get('solicitudEstadoFinancieroConfidencial'))"
+            *ngIf="newRequest.get('questionnaires').get('solicitudEstadoFinancieroConfidencial')"
+            [form]="newRequest.get('questionnaires').get('solicitudEstadoFinancieroConfidencial')">
+          </app-financial-status>
+        </mat-accordion>
+
       </mat-tab>
       <mat-tab *ngIf="this.newRequest.get('person').get('contractorLegalEntity')"
         label="Conozca a su cliente - Contratante">
-        <app-know-your-client *ngIf="this.role === 'WMA'"
-          [form]="newRequest.get('person').get('contractorLegalEntity')">
-        </app-know-your-client>
-        <app-know-your-customer *ngIf="this.role === 'WWS'"
-          [form]="newRequest.get('person').get('contractorLegalEntity')">
-        </app-know-your-customer>
+        <mat-accordion #matAccordion="matAccordion" name="matAccordion" class="ww-mat-accordion example-headers-align"
+          [togglePosition]="'before'">
+          <app-know-your-client [showWarningDot]="showWarningDot(newRequest.get('person').get('contractorLegalEntity'))"
+            *ngIf="this.role === 'WMA'" [form]="newRequest.get('person').get('contractorLegalEntity')">
+          </app-know-your-client>
+          <app-know-your-customer
+            [showWarningDot]="showWarningDot(newRequest.get('person').get('contractorLegalEntity'))"
+            *ngIf="this.role === 'WWS'" [form]="newRequest.get('person').get('contractorLegalEntity')">
+          </app-know-your-customer>
+        </mat-accordion>
+
       </mat-tab>
       <mat-tab *ngIf="this.newRequest.get('person').get('payerLegalEntity')" label="Conozca a su cliente - Pagador">
-        <app-know-your-client *ngIf="this.role === 'WMA'" [form]="newRequest.get('person').get('payerLegalEntity')">
-        </app-know-your-client>
-        <app-know-your-customer *ngIf="this.role === 'WWS'" [form]="newRequest.get('person').get('payerLegalEntity')">
-        </app-know-your-customer>
+        <mat-accordion #matAccordion="matAccordion" name="matAccordion" class="ww-mat-accordion example-headers-align"
+          [togglePosition]="'before'">
+          <app-know-your-client [showWarningDot]="showWarningDot(newRequest.get('person').get('payerLegalEntity'))"
+            *ngIf="this.role === 'WMA'" [form]="newRequest.get('person').get('payerLegalEntity')">
+          </app-know-your-client>
+          <app-know-your-customer [showWarningDot]="showWarningDot(newRequest.get('person').get('payerLegalEntity'))"
+            *ngIf="this.role === 'WWS'" [form]="newRequest.get('person').get('payerLegalEntity')">
+          </app-know-your-customer>
+        </mat-accordion>
+
       </mat-tab>
       <mat-tab *ngIf="newRequest.get('questionnaires').get('solucionAntiLavadoDinero')"
         label="Formulario politica Anti-lavado de Dinero/Financiamiento y Terrorismo (AML)">
-        <app-money-laundering [form]="newRequest.get('questionnaires').get('solucionAntiLavadoDinero')">
-        </app-money-laundering>
+        <mat-accordion #matAccordion="matAccordion" name="matAccordion" class="ww-mat-accordion example-headers-align"
+          [togglePosition]="'before'">
+          <app-money-laundering
+            [showWarningDot]="showWarningDot(newRequest.get('questionnaires').get('solucionAntiLavadoDinero'))"
+            [form]="newRequest.get('questionnaires').get('solucionAntiLavadoDinero')">
+          </app-money-laundering>
+        </mat-accordion>
+
       </mat-tab>
       <mat-tab *ngIf="newRequest.get('contractorQuestionnaires').get('solucionAntiLavadoDinero')"
         label="Formulario politica Anti-lavado de Dinero/Financiamiento y Terrorismo (AML) - Contratante">
-        <app-money-laundering [form]="newRequest.get('contractorQuestionnaires').get('solucionAntiLavadoDinero')">
-        </app-money-laundering>
+        <mat-accordion #matAccordion="matAccordion" name="matAccordion" class="ww-mat-accordion example-headers-align"
+          [togglePosition]="'before'">
+          <app-money-laundering
+            [showWarningDot]="showWarningDot(newRequest.get('contractorQuestionnaires').get('solucionAntiLavadoDinero'))"
+            [form]="newRequest.get('contractorQuestionnaires').get('solucionAntiLavadoDinero')">
+          </app-money-laundering>
+        </mat-accordion>
+
       </mat-tab>
       <mat-tab *ngIf="newRequest.get('payerQuestionnaires').get('solucionAntiLavadoDinero')"
         label="Formulario politica Anti-lavado de Dinero/Financiamiento y Terrorismo (AML) - Pagador">
-        <app-money-laundering [form]="newRequest.get('payerQuestionnaires').get('solucionAntiLavadoDinero')">
-        </app-money-laundering>
+        <mat-accordion #matAccordion="matAccordion" name="matAccordion" class="ww-mat-accordion example-headers-align"
+          [togglePosition]="'before'">
+          <app-money-laundering
+            [showWarningDot]="showWarningDot(newRequest.get('payerQuestionnaires').get('solucionAntiLavadoDinero'))"
+            [form]="newRequest.get('payerQuestionnaires').get('solucionAntiLavadoDinero')">
+          </app-money-laundering>
+        </mat-accordion>
+
       </mat-tab>
     </mat-tab-group>
   </div>

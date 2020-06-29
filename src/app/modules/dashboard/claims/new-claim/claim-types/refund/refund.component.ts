@@ -50,6 +50,7 @@ export class RefundComponent implements OnInit {
 	};
 
 	dataAutoCompleteIdNumber = [];
+	dataAutoCompleteIdNumberObject = [];
 
 	filteredOptions: Observable<any[]>;
 
@@ -230,6 +231,12 @@ export class RefundComponent implements OnInit {
 				this.dataAutoCompleteIdNumber.push(data.data[x].asegurado.nombres_asegurado +
 					' ' + data.data[x].asegurado.apellidos_asegurado + ' - '
 					+ data.data[x].asegurado.id_asegurado);
+
+				this.dataAutoCompleteIdNumberObject.push({
+					name: data.data[x].asegurado.nombres_asegurado +
+					' ' + data.data[x].asegurado.apellidos_asegurado + ' - '
+					+ data.data[x].asegurado.id_asegurado,
+					value: data.data[x].asegurado.id_asegurado});
 			}
 		});
 	}
@@ -350,7 +357,10 @@ export class RefundComponent implements OnInit {
 
 	searchIdNumber(idNumber: string) {
 
-		idNumber = (idNumber).slice((idNumber).indexOf(' - ') + 3);
+		const idNumberObject = this.dataAutoCompleteIdNumberObject.find(nombre =>
+			nombre.name == idNumber);
+		// console.log(idNumberObject);
+		idNumber = (idNumberObject.value).toString();
 
 		this.appComponent.showOverlay = true;
 		this.userService.getInsurancePeople(idNumber)

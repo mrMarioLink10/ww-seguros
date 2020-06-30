@@ -92,80 +92,144 @@ export class RefundComponent implements OnInit {
 
 	ngOnInit() {
 
+		this.appComponent.showOverlay = true;
+
 		this.returnAutoCompleteData();
-		setTimeout(() => {
-			this.appComponent.showOverlay = true;
+		// setTimeout(() => {
+		// 	this.appComponent.showOverlay = true;
+		// });
+		// setTimeout(() => {
+
+		// 	this.route.params.subscribe(res => {
+		// 		this.ID = res.id;
+		// 	});
+
+		// 	if (this.ID != null) {
+		// 		console.log('El ID es ' + this.ID);
+		// 		this.getData(this.ID);
+		// 	} else if (this.ID == null) {
+		// 		console.log('ID esta vacio');
+		// 	}
+
+		// 	console.log(this.ID);
+
+		// 	this.refundForm = this.fb.group({
+		// 		fecha: [new Date(), Validators.required],
+		// 		informacion: this.fb.group({
+		// 			noPoliza: [{ value: '', disabled: true }, [Validators.required]],
+		// 			idNumber: ['', Validators.required],
+		// 			nombre: [{ value: '', disabled: true }, [Validators.required]],
+		// 			direccion: ['', Validators.required],
+		// 			telefono: ['', Validators.required],
+		// 			correo: ['', [Validators.required, Validators.email]],
+		// 		}),
+		// 		diagnosticos: this.fb.array([this.createDiagnostic()]),
+		// 		haveAditionalComentary: [''],
+		// 		comentary: [''],
+		// 		forma: ['', Validators.required],
+		// 		totalAmount: ['', Validators.required],
+		// 		agreeWithDeclaration: ['', [Validators.required, Validators.requiredTrue]],
+		// 		isComplete: [false, Validators.required],
+		// 		areDiagnosticDatesValid: [true, Validators.required],
+		// 	});
+
+		// 	this.diagnosticList = this.refundForm.get('diagnosticos') as FormArray;
+
+		// 	this.refundForm.get('diagnosticos').valueChanges.subscribe(value => {
+		// 		this.validDatesCounter = 0;
+		// 		let total = 0;
+
+		// 		for (const element in value) {
+		// 			if (value.hasOwnProperty(element)) {
+		// 				total += this.refundForm.get('diagnosticos').get(element.toString()).value.monto;
+
+		// 				if (this.calculatedDate(this.refundForm.get('diagnosticos').get(element.toString()).value.fecha) >= 6) {
+		// 					this.receiveDateValidator(false);
+
+		// 				} else {
+		// 					this.receiveDateValidator(true);
+
+		// 				}
+		// 			}
+		// 		}
+		// 		this.refundForm.get('totalAmount').setValue(total);
+		// 		this.totalAmount = total;
+		// 	});
+
+		// 	this.filteredOptions = this.refundForm.get('informacion').get('idNumber').valueChanges
+		// 		.pipe(
+		// 			startWith(''),
+		// 			map(value => typeof value === 'string' ? value : value),
+		// 			map(value => value ? this._filter(value) : this.dataAutoCompleteIdNumber.slice())
+		// 		);
+
+		// 	this.timeAutoComplete = 1;
+		// 	this.appComponent.showOverlay = false;
+
+		// }, 15000);
+
+		this.route.params.subscribe(res => {
+			this.ID = res.id;
 		});
-		setTimeout(() => {
 
-			this.route.params.subscribe(res => {
-				this.ID = res.id;
-			});
+		if (this.ID != null) {
+			console.log('El ID es ' + this.ID);
+			this.getData(this.ID);
+		} else if (this.ID == null) {
+			console.log('ID esta vacio');
+		}
 
-			if (this.ID != null) {
-				console.log('El ID es ' + this.ID);
-				this.getData(this.ID);
-			} else if (this.ID == null) {
-				console.log('ID esta vacio');
-			}
+		console.log(this.ID);
 
-			console.log(this.ID);
+		this.refundForm = this.fb.group({
+			fecha: [new Date(), Validators.required],
+			informacion: this.fb.group({
+				noPoliza: [{ value: '', disabled: true }, [Validators.required]],
+				idNumber: ['', Validators.required],
+				nombre: [{ value: '', disabled: true }, [Validators.required]],
+				direccion: ['', Validators.required],
+				telefono: ['', Validators.required],
+				correo: ['', [Validators.required, Validators.email]],
+			}),
+			diagnosticos: this.fb.array([this.createDiagnostic()]),
+			haveAditionalComentary: [''],
+			comentary: [''],
+			forma: ['', Validators.required],
+			totalAmount: ['', Validators.required],
+			agreeWithDeclaration: ['', [Validators.required, Validators.requiredTrue]],
+			isComplete: [false, Validators.required],
+			areDiagnosticDatesValid: [true, Validators.required],
+		});
 
-			this.refundForm = this.fb.group({
-				fecha: [new Date(), Validators.required],
-				informacion: this.fb.group({
-					noPoliza: [{ value: '', disabled: true }, [Validators.required]],
-					idNumber: ['', Validators.required],
-					nombre: [{ value: '', disabled: true }, [Validators.required]],
-					direccion: ['', Validators.required],
-					telefono: ['', Validators.required],
-					correo: ['', [Validators.required, Validators.email]],
-				}),
-				diagnosticos: this.fb.array([this.createDiagnostic()]),
-				haveAditionalComentary: [''],
-				comentary: [''],
-				forma: ['', Validators.required],
-				totalAmount: ['', Validators.required],
-				agreeWithDeclaration: ['', [Validators.required, Validators.requiredTrue]],
-				isComplete: [false, Validators.required],
-				areDiagnosticDatesValid: [true, Validators.required],
-			});
+		this.diagnosticList = this.refundForm.get('diagnosticos') as FormArray;
 
-			this.diagnosticList = this.refundForm.get('diagnosticos') as FormArray;
+		this.refundForm.get('diagnosticos').valueChanges.subscribe(value => {
+			this.validDatesCounter = 0;
+			let total = 0;
 
-			this.refundForm.get('diagnosticos').valueChanges.subscribe(value => {
-				this.validDatesCounter = 0;
-				let total = 0;
+			for (const element in value) {
+				if (value.hasOwnProperty(element)) {
+					total += this.refundForm.get('diagnosticos').get(element.toString()).value.monto;
 
-				for (const element in value) {
-					if (value.hasOwnProperty(element)) {
-						total += this.refundForm.get('diagnosticos').get(element.toString()).value.monto;
+					if (this.calculatedDate(this.refundForm.get('diagnosticos').get(element.toString()).value.fecha) >= 6) {
+						this.receiveDateValidator(false);
 
-						if (this.calculatedDate(this.refundForm.get('diagnosticos').get(element.toString()).value.fecha) >= 6) {
-							this.receiveDateValidator(false);
+					} else {
+						this.receiveDateValidator(true);
 
-						} else {
-							this.receiveDateValidator(true);
-
-						}
 					}
 				}
-				this.refundForm.get('totalAmount').setValue(total);
-				this.totalAmount = total;
-			});
+			}
+			this.refundForm.get('totalAmount').setValue(total);
+			this.totalAmount = total;
+		});
 
 			this.filteredOptions = this.refundForm.get('informacion').get('idNumber').valueChanges
-				.pipe(
-					startWith(''),
-					map(value => typeof value === 'string' ? value : value),
-					map(value => value ? this._filter(value) : this.dataAutoCompleteIdNumber.slice())
-				);
-
-			this.timeAutoComplete = 1;
-			this.appComponent.showOverlay = false;
-
-		}, 15000);
-
+			.pipe(
+				startWith(''),
+				map(value => typeof value === 'string' ? value : value),
+				map(value => value ? this._filter(value) : this.dataAutoCompleteIdNumber.slice())
+			);
 	}
 
 	showWarningDot(form: any): boolean {
@@ -225,6 +289,7 @@ export class RefundComponent implements OnInit {
 	//   }
 
 	returnAutoCompleteData() {
+
 		this.refund.getIdNumbers().subscribe(data => {
 			// tslint:disable-next-line: prefer-for-of
 			for (let x = 0; x < data.data.length; x++) {
@@ -238,6 +303,8 @@ export class RefundComponent implements OnInit {
 					+ data.data[x].asegurado.id_asegurado,
 					value: data.data[x].asegurado.id_asegurado});
 			}
+			this.timeAutoComplete = 1;
+			this.appComponent.showOverlay = false;
 		});
 	}
 

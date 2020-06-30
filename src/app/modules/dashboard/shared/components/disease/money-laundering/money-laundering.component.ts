@@ -11,6 +11,8 @@ import { FormHandlerService } from '../../../../../../core/services/forms/form-h
 export class MoneyLaunderingComponent implements OnInit {
 
 	@Input() form: FormGroup;
+	@Input() showWarningDot: boolean;
+	step: number;
 
 	accordionTitles = [
 		'Datos Generales',
@@ -144,6 +146,13 @@ export class MoneyLaunderingComponent implements OnInit {
 		// });
 	}
 
+	setStep(index: number) {
+		this.step = index;
+	}
+
+	nextStep(panel?: string) {
+		this.step++;
+	}
 
 	addBasicControls() {
 

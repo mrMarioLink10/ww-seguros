@@ -12,9 +12,10 @@ import { LifeService } from '../../../../requests/new-request/life/services/life
 })
 export class KnowYourCustomerComponent implements OnInit, DoCheck {
 
-  @Input() form:FormGroup;
-  @Input() title:string;
-
+  @Input() form: FormGroup;
+  @Input() title: string;
+  @Input() showWarningDot: boolean;
+  step: number;
   // accordionTitles=['Datos Generales','Datos Profesionales', 'Persona políticamente expuesta',
   // 'Pólizas con prima anual, igual o mayor a US$10,000.00','Declaración de fuente y origen de
   // recursos de la transacción','Perfil financiero', 'Referencias bancarias', 'Referencias comerciales',
@@ -60,48 +61,48 @@ export class KnowYourCustomerComponent implements OnInit, DoCheck {
   }
 
   main_annual_income_options: FieldConfig = {
-		label: 'Ingresos anuales actividad principal',
-		options: [
-			{
-				value: 'menos de 10000',
-				viewValue: '< de US$10 mil'
-			},
-			{
-				value: '10000 a 30000',
-				viewValue: 'US$10 mil a US$30 mil'
-			},
-			{
-				value: '30000 a 50000',
-				viewValue: 'US$30 mil a US$50 mil'
-			},
-			{
-				value: 'mas de 50000',
-				viewValue: '> de US$50 mil'
-			}
-		]
-	};
-
-	other_annual_income_options: FieldConfig = {
-		label: 'Ingresos anuales por otras actividades',
-		options: [
+    label: 'Ingresos anuales actividad principal',
+    options: [
       {
-				value: 'menos de 10000',
-				viewValue: '< de US$10 mil'
-			},
-			{
-				value: '10000 a 30000',
-				viewValue: 'US$10 mil a US$30 mil'
-			},
-			{
-				value: '30000 a 50000',
-				viewValue: 'US$30 mil a US$50 mil'
-			},
-			{
-				value: 'mas de 50000',
-				viewValue: '> de US$50 mil'
-			}
-		]
-	};
+        value: 'menos de 10000',
+        viewValue: '< de US$10 mil'
+      },
+      {
+        value: '10000 a 30000',
+        viewValue: 'US$10 mil a US$30 mil'
+      },
+      {
+        value: '30000 a 50000',
+        viewValue: 'US$30 mil a US$50 mil'
+      },
+      {
+        value: 'mas de 50000',
+        viewValue: '> de US$50 mil'
+      }
+    ]
+  };
+
+  other_annual_income_options: FieldConfig = {
+    label: 'Ingresos anuales por otras actividades',
+    options: [
+      {
+        value: 'menos de 10000',
+        viewValue: '< de US$10 mil'
+      },
+      {
+        value: '10000 a 30000',
+        viewValue: 'US$10 mil a US$30 mil'
+      },
+      {
+        value: '30000 a 50000',
+        viewValue: 'US$30 mil a US$50 mil'
+      },
+      {
+        value: 'mas de 50000',
+        viewValue: '> de US$50 mil'
+      }
+    ]
+  };
 
   countryList: FieldConfig = {
     label: 'País de Residencia',
@@ -109,19 +110,19 @@ export class KnowYourCustomerComponent implements OnInit, DoCheck {
   };
 
   documents = [
-      {
-    		viewValue:'1. Copia de Documento de Identidad o pasaporte',
-  		},
- 	    {
-    		viewValue: '2. Estados financieros auditados de los dos(2) últimos ejercicios',
-  		},
-   		{
-    		viewValue: '3. Cartas de referencias bancarias',
-  		},
-  		{
-    		viewValue: '4. Documentación que pruebe la fuente y origen de recursos de transacción',
-  		},
-	   ];
+    {
+      viewValue: '1. Copia de Documento de Identidad o pasaporte',
+    },
+    {
+      viewValue: '2. Estados financieros auditados de los dos(2) últimos ejercicios',
+    },
+    {
+      viewValue: '3. Cartas de referencias bancarias',
+    },
+    {
+      viewValue: '4. Documentación que pruebe la fuente y origen de recursos de transacción',
+    },
+  ];
 
   bankFormArray: FormArray;
   bank_property;
@@ -135,7 +136,7 @@ export class KnowYourCustomerComponent implements OnInit, DoCheck {
   commercialFormArray: FormArray;
   commercial_property;
 
-  commercialGroup ={
+  commercialGroup = {
     name_social: ['', Validators.required],
     description: ['', Validators.required],
     telephone: ['', Validators.required]
@@ -233,27 +234,27 @@ export class KnowYourCustomerComponent implements OnInit, DoCheck {
 
 
     if (this.form.get('policy').get('total_policy_radio').value == 'si' &&
-		!this.form.get('questions')) {
-			const varPolicy = {
+      !this.form.get('questions')) {
+      const varPolicy = {
         valor: 'si',
         name: 'total_policy_radio'
       };
       // tslint:disable-next-line: align
       this.selectChange(varPolicy);
-			console.log('HolAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA policy');
+      console.log('HolAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA policy');
 
-      }
+    }
     if (this.form.get('questions')) {
-          if (this.form.get('questions').get('transaction').get('investigation_radio').value == 'si' &&
-          !this.form.get('questions').get('transaction').get('investigation')) {
-            const varInvestigation = {
-              valor: 'si',
-              name: 'investigation_radio'
-            };
-            this.selectChange(varInvestigation);
-            console.log('HolAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA transaction');
-        }
+      if (this.form.get('questions').get('transaction').get('investigation_radio').value == 'si' &&
+        !this.form.get('questions').get('transaction').get('investigation')) {
+        const varInvestigation = {
+          valor: 'si',
+          name: 'investigation_radio'
+        };
+        this.selectChange(varInvestigation);
+        console.log('HolAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA transaction');
       }
+    }
     // if (this.life.idKNOWCustomer != null) {
     //   console.log('this.iD es igual a ' + this.life.idKNOWCustomer);
     //   // if(!this.form){
@@ -298,39 +299,39 @@ export class KnowYourCustomerComponent implements OnInit, DoCheck {
     // }
   }
 
-  addBasicControls(){
+  addBasicControls() {
 
 
     this.form.addControl('request', this.fb.control('', [Validators.required, Validators.min(1)]));
     this.form.addControl('general_data', this.fb.group({
 
-        first_name: ['', Validators.required],
-        middle_name: ['', Validators.required],
-        last_names: ['', Validators.required],
-        birthdate: [new Date(), Validators.required],
-        gender: ['', Validators.required],
-        id_passport: ['', Validators.required],
-        marital_status: ['', Validators.required],
-        nationality: ['', Validators.required],
-        country: ['', Validators.required],
-        post_office_box: ['', Validators.required],
-        address: ['', Validators.required],
-        telephone: ['', Validators.required],
-        cellphone: ['', Validators.required],
-        email: ['', [Validators.required, Validators.email]],
+      first_name: ['', Validators.required],
+      middle_name: ['', Validators.required],
+      last_names: ['', Validators.required],
+      birthdate: [new Date(), Validators.required],
+      gender: ['', Validators.required],
+      id_passport: ['', Validators.required],
+      marital_status: ['', Validators.required],
+      nationality: ['', Validators.required],
+      country: ['', Validators.required],
+      post_office_box: ['', Validators.required],
+      address: ['', Validators.required],
+      telephone: ['', Validators.required],
+      cellphone: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
 
     }));
 
     this.form.addControl('professional_data', this.fb.group({
 
-        profession: ['', Validators.required],
-        occupation: ['', Validators.required],
-        company:  ['', Validators.required],
-        company_address:  ['', Validators.required],
-        time_in_the_job:  ['', Validators.required],
-        telephone:  ['', Validators.required],
-        fax:  ['', Validators.required],
-        email:  ['', Validators.required],
+      profession: ['', Validators.required],
+      occupation: ['', Validators.required],
+      company: ['', Validators.required],
+      company_address: ['', Validators.required],
+      time_in_the_job: ['', Validators.required],
+      telephone: ['', Validators.required],
+      fax: ['', Validators.required],
+      email: ['', Validators.required],
 
     }));
 
@@ -365,23 +366,23 @@ export class KnowYourCustomerComponent implements OnInit, DoCheck {
   prueba = 'No Existen';
   selectChange(event) {
 
-		// const formP = this.form.get('exposed') as FormGroup;
+    // const formP = this.form.get('exposed') as FormGroup;
     const formQ = this.form as FormGroup;
     let formI;
 
-		// tslint:disable-next-line: align
-		if (event.valor === 'si') {
+    // tslint:disable-next-line: align
+    if (event.valor === 'si') {
 
       switch (event.name) {
 
         // case'exposed_person_radio':
-				// 	formP.addControl('position', this.fb.group({
+        // 	formP.addControl('position', this.fb.group({
         //     info: ['', Validators.required]
         //   }));
         //   // console.log(JSON.stringify(this.form.value));
         // break;
 
-        case'total_policy_radio':
+        case 'total_policy_radio':
 
           formQ.addControl('questions', this.fb.group({
 
@@ -399,57 +400,57 @@ export class KnowYourCustomerComponent implements OnInit, DoCheck {
 
             }),
 
-            bank:  this.fb.group({
+            bank: this.fb.group({
 
               bank_array: this.fb.array([this.formMethods.createItem(this.bankGroup)])
 
-          }),
+            }),
 
-            commercial:  this.fb.group({
+            commercial: this.fb.group({
 
               commercial_array: this.fb.array([this.formMethods.createItem(this.commercialGroup)])
 
-          }),
+            }),
 
-            personal:  this.fb.group({
+            personal: this.fb.group({
 
               personal_array: this.fb.array([this.formMethods.createItem(this.personalGroup)])
 
-          }),
+            }),
 
-          documents: this.fb.group({
+            documents: this.fb.group({
 
-            id_passport: [false],
-				    bank_reference_letter: [false],
-				    financial_status: [false],
-				    transaction_source_documentation: [false],
+              id_passport: [false],
+              bank_reference_letter: [false],
+              financial_status: [false],
+              transaction_source_documentation: [false],
 
-          }),
+            }),
 
           }));
           this.bankFormArray = this.form.get('questions').get('bank').get('bank_array') as FormArray;
           this.commercialFormArray = this.form.get('questions').get('commercial').get('commercial_array') as FormArray;
           this.personalFormArray = this.form.get('questions').get('personal').get('personal_array') as FormArray;
-// tslint:disable-next-line: align
-					this.prueba = 'Existen';
+          // tslint:disable-next-line: align
+          this.prueba = 'Existen';
           console.log(this.prueba);
 
           break;
 
 
-        case'investigation_radio':
+        case 'investigation_radio':
 
-        formI = this.form.get('questions').get('transaction') as FormGroup;
+          formI = this.form.get('questions').get('transaction') as FormGroup;
 
-        formI.addControl('investigation', this.fb.group({
+          formI.addControl('investigation', this.fb.group({
             info: ['', Validators.required]
           }));
           // console.log(JSON.stringify(this.form.value));
-// tslint:disable-next-line: align
+          // tslint:disable-next-line: align
           break;
-        }
-			}
-		 else if (event.valor === 'no') {
+      }
+    }
+    else if (event.valor === 'no') {
 
       switch (event.name) {
 
@@ -459,7 +460,7 @@ export class KnowYourCustomerComponent implements OnInit, DoCheck {
 
         //   break;
 
-        case'total_policy_radio':
+        case 'total_policy_radio':
 
           formQ.removeControl('questions');
 
@@ -472,7 +473,7 @@ export class KnowYourCustomerComponent implements OnInit, DoCheck {
 
           break;
 
-        case'investigation_radio':
+        case 'investigation_radio':
 
           formI = this.form.get('questions').get('transaction') as FormGroup;
 
@@ -480,47 +481,53 @@ export class KnowYourCustomerComponent implements OnInit, DoCheck {
 
           break;
 
-        }
-			}
+      }
+    }
 
   }
+  setStep(index: number) {
+    this.step = index;
+  }
 
+  nextStep(panel?: string) {
+    this.step++;
+  }
   createFormArray(name: string) {
 
-		switch (name) {
+    switch (name) {
 
-			case 'bank_array':
+      case 'bank_array':
 
-          return this.bankGroup;
-          // tslint:disable-next-line: align
-          break;
+        return this.bankGroup;
+        // tslint:disable-next-line: align
+        break;
 
       case 'commercial_array':
 
-          return this.commercialGroup;
-          break;
+        return this.commercialGroup;
+        break;
 
       case 'personal_array':
 
-          return this.personalGroup;
-          break;
+        return this.personalGroup;
+        break;
 
-      }
-
-    }
-
-    addFormArray(array: any, name: string) {
-
-      const increment = array.length + 1;
-      array = this.formMethods.addElement(array, increment, this.createFormArray(name)).formArray;
-
-      // console.log(JSON.stringify(this.form.value));
-      // array.push(this.createFormArray(name));
-
-    }
-
-    removeFormArray(index, array: any) {
-      array.removeAt(index);
     }
 
   }
+
+  addFormArray(array: any, name: string) {
+
+    const increment = array.length + 1;
+    array = this.formMethods.addElement(array, increment, this.createFormArray(name)).formArray;
+
+    // console.log(JSON.stringify(this.form.value));
+    // array.push(this.createFormArray(name));
+
+  }
+
+  removeFormArray(index, array: any) {
+    array.removeAt(index);
+  }
+
+}

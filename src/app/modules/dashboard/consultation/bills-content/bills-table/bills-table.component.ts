@@ -68,9 +68,9 @@ export class BillsTableComponent implements OnInit {
   getBillDownloadLink(billId) {
     switch (this.userRole) {
       case 'WWS':
-        return `http://wwsdevportalbackend.azurewebsites.net/InvoiceView/invoiceRd/${billId}`;
+        return `http://wwsdevportalbackend.azurewebsites.net/InvoiceView/ExportRDToPDF/${billId}`;
       case 'WMA':
-        return `http://wwsdevportalbackend.azurewebsites.net/InvoiceView/invoicepm/${billId}`;
+        return `http://wwsdevportalbackend.azurewebsites.net/InvoiceView/ExportPMToPDF/${billId}`;
       default:
         return'';
     }

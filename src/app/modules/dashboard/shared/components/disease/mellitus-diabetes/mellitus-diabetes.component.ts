@@ -10,6 +10,8 @@ import { DiseaseService } from '../shared/disease/disease.service';
 })
 export class MellitusDiabetesComponent implements OnInit {
   @Input() form: FormGroup;
+  @Input() showWarningDot: boolean;
+  step: number;
 
   oralMedicationList: FormArray;
   insulinList: FormArray;
@@ -109,25 +111,20 @@ export class MellitusDiabetesComponent implements OnInit {
         group: 'renalProblems',
       }
     ];
-    if (this.form.get('oralMedications'))
-    {
-this.oralMedicationList = this.form.get('oralMedications') as FormArray;
+    if (this.form.get('oralMedications')) {
+      this.oralMedicationList = this.form.get('oralMedications') as FormArray;
     }
-    if (this.form.get('insulin'))
-    {
-this.insulinList = this.form.get('insulin') as FormArray;
+    if (this.form.get('insulin')) {
+      this.insulinList = this.form.get('insulin') as FormArray;
     }
-    if (this.form.get('bloodGlucoseAnalysis'))
-    {
-this.bloodGlucoseAnalysisList = this.form.get('bloodGlucoseAnalysis') as FormArray;
+    if (this.form.get('bloodGlucoseAnalysis')) {
+      this.bloodGlucoseAnalysisList = this.form.get('bloodGlucoseAnalysis') as FormArray;
     }
-    if (this.form.get('orineGlucoseAnalysis'))
-    {
-this.orineGlucoseAnalysisList = this.form.get('orineGlucoseAnalysis') as FormArray;
+    if (this.form.get('orineGlucoseAnalysis')) {
+      this.orineGlucoseAnalysisList = this.form.get('orineGlucoseAnalysis') as FormArray;
     }
-    if (this.form.get('hbA1cResults'))
-    {
-this.hbA1cResultsList = this.form.get('hbA1cResults') as FormArray;
+    if (this.form.get('hbA1cResults')) {
+      this.hbA1cResultsList = this.form.get('hbA1cResults') as FormArray;
     }
   }
 
@@ -282,6 +279,13 @@ this.hbA1cResultsList = this.form.get('hbA1cResults') as FormArray;
     }
   }
 
+  setStep(index: number) {
+    this.step = index;
+  }
+
+  nextStep(panel?: string) {
+    this.step++;
+  }
 
   addToList(list: any, type: string) {
     list.push(this.createFormArray(type));

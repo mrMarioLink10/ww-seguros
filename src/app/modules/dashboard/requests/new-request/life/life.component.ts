@@ -2170,6 +2170,10 @@ export class LifeComponent implements OnInit, DoCheck {
           this.changingCoveragesList = undefined;
           break;
 
+        case 'haveSmoked':
+          formGI.removeControl('smoked');
+          break;
+
         case 'consumeAlcohol':
           formGI.removeControl('alcohol');
           break;
@@ -2197,7 +2201,21 @@ export class LifeComponent implements OnInit, DoCheck {
           break;
 
         case 'doXtremeSport':
-          formGI.removeControl('xtremeSport');
+          formGI.removeControl('xtremeSports');
+
+          if (this.newRequest.get('activitiesQuestionnaires').get('solicitudBuceo')){
+            formAQ.removeControl('solicitudBuceo');
+          }
+          if (this.newRequest.get('activitiesQuestionnaires').get('solicitudAviacion')){
+            formAQ.removeControl('solicitudAviacion');
+          }
+          if (this.newRequest.get('activitiesQuestionnaires').get('solicitudMoto')){
+            formAQ.removeControl('solicitudMoto');
+          }
+          if (this.newRequest.get('activitiesQuestionnaires').get('solicitudMontanismo')){
+            formAQ.removeControl('solicitudMontanismo');
+          }
+
           break;
 
         case 'anyoneProposed':

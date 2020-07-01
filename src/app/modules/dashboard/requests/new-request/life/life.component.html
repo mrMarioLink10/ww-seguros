@@ -580,7 +580,7 @@
                   </div>
                   <app-number-input isMoney="true" class="mr-3"
                     [group]="newRequest.get('releventPlanInformation').get('coverages')" maxInfo="400,000"
-                    label="Suma Asegurada" name="accidentalDeathDismemberment">
+                    label="Suma Asegurada" name="accidentalDeathDismemberment" max='400000'>
                   </app-number-input>
                 </div>
                 <div class="mr-3" *ngIf="newRequest.get('releventPlanInformation').get('coverages').get('disability')">
@@ -589,7 +589,7 @@
                   </div>
                   <app-number-input isMoney="true" class="mr-3"
                     [group]="newRequest.get('releventPlanInformation').get('coverages')" maxInfo="400,000"
-                    label="Suma Asegurada" name="disability">
+                    label="Suma Asegurada" name="disability" max='400000'>
                   </app-number-input>
                 </div>
                 <div class="mr-3"
@@ -599,7 +599,7 @@
                   </div>
                   <app-number-input isMoney="true" class="mr-3"
                     [group]="newRequest.get('releventPlanInformation').get('coverages')" maxInfo="400,000"
-                    label="Suma Asegurada" name="seriousIllnesses">
+                    label="Suma Asegurada" name="seriousIllnesses" max='400000'>
                   </app-number-input>
                 </div>
                 <div class="mr-3"
@@ -620,7 +620,7 @@
                   <div style="max-width: 50%;">
                     <app-number-input isMoney="true" class="mr-3"
                       [group]="newRequest.get('releventPlanInformation').get('coverages')" maxInfo="300,000"
-                      label="Suma Asegurada" name="advancePaymentOfCapital">
+                      label="Suma Asegurada" name="advancePaymentOfCapital" max='300000'>
                     </app-number-input>
                   </div>
                 </div>

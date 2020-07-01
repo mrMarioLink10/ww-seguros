@@ -2557,6 +2557,8 @@ export class LifeComponent implements OnInit, DoCheck {
 
     this.life.id = null;
     console.log('this.life.id es igual a ' + this.life.id);
+    this.newRequest.markAllAsTouched();
+    this.newRequest.updateValueAndValidity();
   }
 
   sendForm(form: FormGroup, formType: string, sendType: string, id?: number) {

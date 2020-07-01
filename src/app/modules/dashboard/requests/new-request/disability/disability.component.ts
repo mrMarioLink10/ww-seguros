@@ -1880,6 +1880,9 @@ export class DisabilityComponent implements OnInit, DoCheck {
         this.arrayFilesTitles = data.data.files.studies;
         // this.filesDocumentsKnowClientArray = formF.get('documentsKnowClient') as FormArray;
         this.arrayFilesTitlesDocumentsKnowClient = data.data.files.documentsKnowClient;
+
+        this.disabilityGroup.markAllAsTouched();
+        this.disabilityGroup.updateValueAndValidity();
       }
 
     });

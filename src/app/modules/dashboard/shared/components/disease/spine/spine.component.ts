@@ -9,6 +9,8 @@ import { FieldConfig } from 'src/app/shared/components/form-components/models/fi
 })
 export class SpineComponent implements OnInit {
   @Input() form: FormGroup;
+  @Input() showWarningDot: boolean;
+  step: number;
 
   accordionTitle = ['Datos'];
 
@@ -209,6 +211,14 @@ export class SpineComponent implements OnInit {
   returnAsFormArray(formArray: any) {
     return formArray as FormArray;
 
+  }
+
+  setStep(index: number) {
+    this.step = index;
+  }
+
+  nextStep(panel?: string) {
+    this.step++;
   }
 
   selectChange(event) {

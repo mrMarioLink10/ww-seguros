@@ -13,6 +13,8 @@ import { FormArrayGeneratorService } from 'src/app/core/services/forms/form-arra
 export class MusculoskeletalComponent implements OnInit {
 
   @Input() form: FormGroup;
+  @Input() showWarningDot: boolean;
+  step: number;
 
   yesNo: FieldConfig = {
     label: '',
@@ -174,16 +176,13 @@ export class MusculoskeletalComponent implements OnInit {
     // this.addBasicControls();
 
     // this.episodeFormArray = this.form.get('data').get('episode').get('episode_array') as FormArray;
-    if (this.form.get('data').get('therapy')  && this.form.get('data').get('therapy').get('therapy_array'))
-    {
-    this.therapyFormArray = this.form.get('data').get('therapy').get('therapy_array') as FormArray;
+    if (this.form.get('data').get('therapy') && this.form.get('data').get('therapy').get('therapy_array')) {
+      this.therapyFormArray = this.form.get('data').get('therapy').get('therapy_array') as FormArray;
     }
-    if (this.form.get('data').get('surgery')  && this.form.get('data').get('surgery').get('surgery_array'))
-    {
+    if (this.form.get('data').get('surgery') && this.form.get('data').get('surgery').get('surgery_array')) {
       this.surgeryFormArray = this.form.get('data').get('surgery').get('surgery_array') as FormArray;
-  }
-    if (this.form.get('data').get('episode')  && this.form.get('data').get('episode').get('episode_array'))
-    {
+    }
+    if (this.form.get('data').get('episode') && this.form.get('data').get('episode').get('episode_array')) {
       this.episodeFormArray = this.form.get('data').get('episode').get('episode_array') as FormArray;
     }
 
@@ -245,6 +244,14 @@ export class MusculoskeletalComponent implements OnInit {
 
   removeFormArray(index, array: any) {
     array.removeAt(index);
+  }
+
+  setStep(index: number) {
+    this.step = index;
+  }
+
+  nextStep(panel?: string) {
+    this.step++;
   }
 
 }

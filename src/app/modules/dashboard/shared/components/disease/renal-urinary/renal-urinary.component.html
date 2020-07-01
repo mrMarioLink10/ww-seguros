@@ -1,126 +1,54 @@
-<!-- Area Superior -->
-
-<!-- <div class="uppercase dashboard-page-title pt-10">
-    CUESTIONARIO DE PADECIMIENTOS RENALES Y TRACTO URINARIO </div> -->
-<app-forms-container [isQuestionnarie]="false" [titles]="['Cuestionario de padecimientos renales y tracto urinario']">
-  <ng-template #formTemplate>
-    <div class="pt-10 pb-8 mt-5 ml-1 pr-5 sm:pb-4 md:pb-3 lg:pb-2 xl:pb-2" style="background-color: #F2F2F2">
-      <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 ml-8 pb-3">
-        <div class="mr-3 mt-3 sm:mt-2 md:mt-2 lg:mt-2 xl:mt-0">
-          <app-input [group]="form" label="Nombre del Médico Tratante" name="doctor_name" placeholder="Cruz Jiminián">
-          </app-input>
-        </div>
-        <div class="mr-3 mt-3 sm:mt-2 md:mt-2 lg:mt-2 xl:mt-0">
-          <app-input [group]="form" label="Centro de Salud donde trabaja" name="hospital_name"
-            placeholder="Plaza de la Salud"></app-input>
-        </div>
-        <div class="mr-3 mt-3 sm:mt-2 md:mt-2 lg:mt-2 xl:mt-0">
-          <app-number-input [group]="form" label="Teléfono del Centro" name='hospital_telephone' placeholder="">
-          </app-number-input>
-        </div>
+<mat-expansion-panel class="ww-mat-expansion" [expanded]="step === 50" (opened)="setStep(50)">
+  <mat-expansion-panel-header class="body-13 icon-blue">
+    <mat-panel-title>
+      Cuestionario de padecimientos renales y tracto urinario
+    </mat-panel-title>
+    <mat-panel-description>
+      <div></div>
+      <div *ngIf="showWarningDot" class="warning-accordion-dot"></div>
+    </mat-panel-description>
+  </mat-expansion-panel-header>
+  <div class="pt-10 pb-8 mt-5 ml-1 pr-5 sm:pb-4 md:pb-3 lg:pb-2 xl:pb-2" style="background-color: #F2F2F2">
+    <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 ml-8 pb-3">
+      <div class="mr-3 mt-3 sm:mt-2 md:mt-2 lg:mt-2 xl:mt-0">
+        <app-input [group]="form" label="Nombre del Médico Tratante" name="doctor_name" placeholder="Cruz Jiminián">
+        </app-input>
+      </div>
+      <div class="mr-3 mt-3 sm:mt-2 md:mt-2 lg:mt-2 xl:mt-0">
+        <app-input [group]="form" label="Centro de Salud donde trabaja" name="hospital_name"
+          placeholder="Plaza de la Salud"></app-input>
+      </div>
+      <div class="mr-3 mt-3 sm:mt-2 md:mt-2 lg:mt-2 xl:mt-0">
+        <app-number-input [group]="form" label="Teléfono del Centro" name='hospital_telephone' placeholder="">
+        </app-number-input>
       </div>
     </div>
+  </div>
 
-    <div class="ml-1 sm:ml-3 md:ml-3 lg:ml-3 xl:ml-3">
+  <div class="ml-1 sm:ml-3 md:ml-3 lg:ml-3 xl:ml-3">
 
-      <!-- Bloque 1 -->
-      <div class="mt-10">
+    <!-- Bloque 1 -->
+    <div class="mt-10">
 
-        <label> Indique el diagnóstico y fecha del mismo </label>
+      <label> Indique el diagnóstico y fecha del mismo </label>
 
-        <div class="mt-8 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
+      <div class="mt-8 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
 
-          <div class="mr-3 mt-8">
+        <div class="mr-3 mt-8">
 
-            <app-input [group]="form.get('data').get('diagnosis')" label="Diagnóstico" name="input"
-              placeholder="Usted está enfermo"></app-input>
-
-          </div>
-
-          <div class="mr-3">
-
-            <div>
-
-              <div class="mb-3 -mr-8"> <label> <strong> Fecha del diagnóstico </strong> </label> </div>
-
-              <div>
-                <app-date-picker [group]="form.get('data').get('diagnosis')" label="Fecha" name='date'>
-                </app-date-picker>
-              </div>
-
-            </div>
-
-          </div>
+          <app-input [group]="form.get('data').get('diagnosis')" label="Diagnóstico" name="input"
+            placeholder="Usted está enfermo"></app-input>
 
         </div>
 
-      </div>
+        <div class="mr-3">
 
-      <hr class="ww-divider mt-3">
+          <div>
 
-      <!-- Bloque 2 -->
-
-      <div class="mt-10" *ngIf="form.get('data').get('symptom')">
-
-        <div>
-
-          <label> Describa los síntomas, fecha de inicio y duración o frecuencia de los mismos. </label>
-
-          <div class="mt-8 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
-
-            <div class="mr-3 mt-8">
-
-              <app-input [group]="form.get('data').get('symptom')" label="Síntomas" name="input" placeholder="Fiebre">
-              </app-input>
-
-            </div>
-
-            <div class="mr-3">
-
-              <div>
-
-                <div class="mb-3"> <label> <strong> Fecha de inicio </strong> </label> </div>
-
-                <div>
-                  <app-date-picker [group]="form.get('data').get('symptom')" label="Fecha" name='date'>
-                  </app-date-picker>
-                </div>
-
-              </div>
-
-            </div>
-
-            <div class="mr-3 sm:mt-0 md:mt-0 lg:mt-8 xl:mt-8">
-
-              <app-input [group]="form.get('data').get('symptom')" label="Duración o frecuencia" name="duration"
-                placeholder="5 minutos, 1 hora, 10 segundos, etc..."></app-input>
-
-            </div>
-
-          </div>
-
-        </div>
-
-      </div>
-
-      <hr class="ww-divider mt-3">
-
-      <!-- Bloque 3 -->
-
-      <div class="mt-10">
-
-        <label class="mb-"> ¿Cuándo tuvo los últimos síntomas? </label>
-
-        <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
-
-          <div class="mt-10">
+            <div class="mb-3 -mr-8"> <label> <strong> Fecha del diagnóstico </strong> </label> </div>
 
             <div>
-              <label> <strong> Fecha </strong> </label>
-            </div>
-
-            <div class="mt-4 mr-3">
-              <app-date-picker [group]="form.get('data').get('last_time_symptom')" label="Fecha" name='date'>
+              <app-date-picker [group]="form.get('data').get('diagnosis')" label="Fecha" name='date'>
               </app-date-picker>
             </div>
 
@@ -130,69 +58,46 @@
 
       </div>
 
-      <hr class="ww-divider mt-3">
+    </div>
 
-      <!-- Bloque 4 -->
+    <hr class="ww-divider mt-3">
 
-      <div class="mt-10">
+    <!-- Bloque 2 -->
 
-        <div class="my-5">
-          <label class="radio-button-label mr-1 mt-3 sm:mr-1 sm:mt-3 md:mr-6 md:mt-3 lg:mr-6 lg:mt-3 xl:mr-6 xl:mt-3"
-            style="font-size: 12px !important; display: inline-block"> ¿Se le han hecho estudios tales como urografía, imágenes, cistoscopía,
-            biopsia, entre otros, en relación con este padecimiento o está planeado alguno? </label>
-          <app-radio-button
-            class="float-right mt-3 -mr-5 -ml-4 sm:-mr-5 sm:-ml-4 md:mr-0 md:ml-0 lg:mr-0 lg:ml-0 xl:mr-0 xl:ml-0"
-            style="font-size: 12px !important; display: inline-block" [group]="form.get('data')" [options]="yes_no" name='analysis_radio'
-            (selected)="selectChange($event)">
-            <!-- (selected)="selectChangeBranchOffice($event)" -->
-          </app-radio-button>
-        </div>
+    <div class="mt-10" *ngIf="form.get('data').get('symptom')">
 
-        <div class="mt-32 sm:mt-32 md:mt-24 lg:mt-20 xl:mt-20" *ngIf="form.get('data').get('analysis_radio').value == 'si'">
-          <!-- *ngIf="analysisFormArray" -->
+      <div>
 
-          <div *ngFor=" let elements of analysisFormArray.controls; let in = index">
+        <label> Describa los síntomas, fecha de inicio y duración o frecuencia de los mismos. </label>
 
-            <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
+        <div class="mt-8 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
 
-              <div class="mr-3">
+          <div class="mr-3 mt-8">
 
-                <app-input [group]="form.get('data').get('analysis').get('analysis_array').get(in.toString())"
-                  label="Tipo de Estudio" name="type" placeholder="Ej.: Urografía"></app-input>
+            <app-input [group]="form.get('data').get('symptom')" label="Síntomas" name="input" placeholder="Fiebre">
+            </app-input>
 
-              </div>
+          </div>
 
-              <div class="mr-3">
+          <div class="mr-3">
 
-                <app-date-picker [group]="form.get('data').get('analysis').get('analysis_array').get(in.toString())"
-                  label="Fecha" name='date'> </app-date-picker>
+            <div>
 
-              </div>
+              <div class="mb-3"> <label> <strong> Fecha de inicio </strong> </label> </div>
 
-              <div class="mr-3">
-
-                <app-input [group]="form.get('data').get('analysis').get('analysis_array').get(in.toString())"
-                  label="Resultado" name="results" placeholder="Ej.: Piedras en los riñones"></app-input>
-
+              <div>
+                <app-date-picker [group]="form.get('data').get('symptom')" label="Fecha" name='date'>
+                </app-date-picker>
               </div>
 
             </div>
 
-            <div class="mb-6">
+          </div>
 
-              <button *ngIf="in == (analysisFormArray.controls.length - 1)" mat-mini-fab aria-label="Agregar análisis"
-                (click)=" addFormArray(analysisFormArray,'analysis_array') " type="button"
-                class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
-                <mat-icon style="color: #18446B">add</mat-icon>
-              </button>
+          <div class="mr-3 sm:mt-0 md:mt-0 lg:mt-8 xl:mt-8">
 
-              <button *ngIf="analysisFormArray.controls.length > 1" mat-mini-fab aria-label="Eliminar análisis"
-                (click)=" removeFormArray(in, analysisFormArray) " type="button" class="dashboard-toolbar-buttons"
-                style="border: 1px rgb(197, 197, 197) solid">
-                <mat-icon style="color: #18446B">remove</mat-icon>
-              </button>
-
-            </div>
+            <app-input [group]="form.get('data').get('symptom')" label="Duración o frecuencia" name="duration"
+              placeholder="5 minutos, 1 hora, 10 segundos, etc..."></app-input>
 
           </div>
 
@@ -200,132 +105,98 @@
 
       </div>
 
-      <hr class="ww-divider mt-10">
+    </div>
 
-      <!-- Bloque 5 -->
+    <hr class="ww-divider mt-3">
 
-      <div class="mt-10">
+    <!-- Bloque 3 -->
 
-        <div class="my-5">
-      
-          <label class="radio-button-label mr-1 mt-3 sm:mr-1 sm:mt-3 md:mr-6 md:mt-3 lg:mr-6 lg:mt-3 xl:mr-6 xl:mt-3"
-            style="font-size: 12px !important; display: inline-block"> ¿Ha tomado o toma alguna medicación o ha sido operado? <label
-              *ngIf="medicineOperationFormArray"> (Ponga <strong> "n/a" </strong> en el/los respectivo(s) campo(s) sí
-              no ha hecho una de las 2 opciones.) </label> </label>
+    <div class="mt-10">
 
-          <app-radio-button
-            class="float-right mt-3 -mr-5 -ml-4 sm:-mr-5 sm:-ml-4 md:mr-0 md:ml-0 lg:mr-0 lg:ml-0 xl:mr-0 xl:ml-0"
-            style="display: inline-block" [group]="form.get('data')" [options]="yes_no" name='medication_radio'
-            (selected)="selectChange($event)">
-            <!-- (selected)="selectChangeBranchOffice($event)" -->
-          </app-radio-button>
+      <label class="mb-"> ¿Cuándo tuvo los últimos síntomas? </label>
 
-        </div>
+      <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
 
-        <div class="mt-32 sm:mt-32 md:mt-24 lg:mt-20 xl:mt-20" *ngIf="form.get('data').get('medication_radio').value == 'si'">
-          <!-- *ngIf="analysisFormArray" -->
+        <div class="mt-10">
 
-          <div *ngFor=" let elements of medicineOperationFormArray.controls; let in = index">
+          <div>
+            <label> <strong> Fecha </strong> </label>
+          </div>
 
-            <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
-
-              <div class="mr-3">
-
-                <app-input [group]="form.get('data').get('medicine').get('medicine_array').get(in.toString())"
-                  label="Medicamento" name="medicine" placeholder="Ej.: Tabletas de..."></app-input>
-
-              </div>
-
-              <div class="mr-3">
-
-                <app-input [group]="form.get('data').get('medicine').get('medicine_array').get(in.toString())"
-                  label="Dosis" name="dose" placeholder="Ej.: 5 mg, 10 ml, etc."></app-input>
-
-              </div>
-
-              <datepicker-month class="mr-3" [max]="todayDate" [max]="todayDate" fieldId="dateFirstSymptoms"
-                [group]="form.get('data').get('medicine').get('medicine_array').get(in.toString())" name="date"
-                label="Fecha de medicación / procedimiento">
-              </datepicker-month>
-
-              <div class="mr-3 mb-3 sm:mb-0 md:mb-0 lg:mb-0 xl:mb-0">
-
-                <app-input [group]="form.get('data').get('medicine').get('medicine_array').get(in.toString())"
-                  label="Procedimiento realizado" name="medical_procedure"
-                  placeholder="Ej.: Extracción de cálculos formes"></app-input>
-
-              </div>
-
-            </div>
-
-            <div class="mb-6">
-
-              <button *ngIf="in == (medicineOperationFormArray.controls.length - 1)" mat-mini-fab aria-label="Agregar medicación"
-                (click)=" addFormArray(medicineOperationFormArray,'medicine_array') " type="button"
-                class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
-                <mat-icon style="color: #18446B">add</mat-icon>
-              </button>
-
-              <button *ngIf="medicineOperationFormArray.controls.length > 1" mat-mini-fab
-                aria-label="Eliminar medicación" (click)=" removeFormArray(in, medicineOperationFormArray) "
-                type="button" class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
-                <mat-icon style="color: #18446B">remove</mat-icon>
-              </button>
-
-            </div>
-
+          <div class="mt-4 mr-3">
+            <app-date-picker [group]="form.get('data').get('last_time_symptom')" label="Fecha" name='date'>
+            </app-date-picker>
           </div>
 
         </div>
 
       </div>
 
-      <hr class="ww-divider mt-10">
+    </div>
 
-      <!-- Bloque 6 -->
+    <hr class="ww-divider mt-3">
 
-      <div class="mt-10">
+    <!-- Bloque 4 -->
 
-        <div>
-      
-          <label style="font-size: 12px !important;" class="radio-button-label mr-1 mt-3 sm:mr-1 sm:mt-3 md:mr-6 md:mt-3 lg:mr-6 lg:mt-3 xl:mr-6 xl:mt-3"> Indicar fecha de
-            la última consulta con su médico y con qué frecuencia usted lo ve por esta condición </label>
-          <app-radio-button
-            class="float-right inline mt-3 -mr-5 -ml-4 sm:-mr-5 sm:-ml-4 md:mr-0 md:ml-0 lg:mr-0 lg:ml-0 xl:mr-0 xl:ml-0"
-            [group]="form.get('data')" [options]="yes_no" name='medical_consultation_radio'
-            (selected)="selectChange($event)">
-          </app-radio-button>
+    <div class="mt-10">
 
-        </div>
+      <div class="my-5">
+        <label class="radio-button-label mr-1 mt-3 sm:mr-1 sm:mt-3 md:mr-6 md:mt-3 lg:mr-6 lg:mt-3 xl:mr-6 xl:mt-3"
+          style="font-size: 12px !important; display: inline-block"> ¿Se le han hecho estudios tales como urografía,
+          imágenes, cistoscopía,
+          biopsia, entre otros, en relación con este padecimiento o está planeado alguno? </label>
+        <app-radio-button
+          class="float-right mt-3 -mr-5 -ml-4 sm:-mr-5 sm:-ml-4 md:mr-0 md:ml-0 lg:mr-0 lg:ml-0 xl:mr-0 xl:ml-0"
+          style="font-size: 12px !important; display: inline-block" [group]="form.get('data')" [options]="yes_no"
+          name='analysis_radio' (selected)="selectChange($event)">
+          <!-- (selected)="selectChangeBranchOffice($event)" -->
+        </app-radio-button>
+      </div>
 
-        <div class="mt-32 sm:mt-32 md:mt-20 lg:mt-20 xl:mt-20" 
-        *ngIf="this.form.get('data').get('medical_consultation')">
+      <div class="mt-32 sm:mt-32 md:mt-24 lg:mt-20 xl:mt-20"
+        *ngIf="form.get('data').get('analysis_radio').value == 'si'">
+        <!-- *ngIf="analysisFormArray" -->
+
+        <div *ngFor=" let elements of analysisFormArray.controls; let in = index">
 
           <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
 
             <div class="mr-3">
 
-              <div class="mb-5">
-
-                <label> <strong> Fecha </strong> </label>
-
-              </div>
-
-              <div>
-
-                <app-date-picker [group]="form.get('data').get('medical_consultation')" label="Fecha" name='date'>
-                </app-date-picker>
-
-              </div>
+              <app-input [group]="form.get('data').get('analysis').get('analysis_array').get(in.toString())"
+                label="Tipo de Estudio" name="type" placeholder="Ej.: Urografía"></app-input>
 
             </div>
 
-            <div class="mr-3 mt-0 sm:mt-0 md:mt-10 lg:mt-10 xl:mt-10">
+            <div class="mr-3">
 
-              <app-input [group]="form.get('data').get('medical_consultation')" label="Frecuencia de visita"
-                name="frequency" placeholder="Ej.: Una vez a la semana"></app-input>
+              <app-date-picker [group]="form.get('data').get('analysis').get('analysis_array').get(in.toString())"
+                label="Fecha" name='date'> </app-date-picker>
 
             </div>
+
+            <div class="mr-3">
+
+              <app-input [group]="form.get('data').get('analysis').get('analysis_array').get(in.toString())"
+                label="Resultado" name="results" placeholder="Ej.: Piedras en los riñones"></app-input>
+
+            </div>
+
+          </div>
+
+          <div class="mb-6">
+
+            <button *ngIf="in == (analysisFormArray.controls.length - 1)" mat-mini-fab aria-label="Agregar análisis"
+              (click)=" addFormArray(analysisFormArray,'analysis_array') " type="button"
+              class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
+              <mat-icon style="color: #18446B">add</mat-icon>
+            </button>
+
+            <button *ngIf="analysisFormArray.controls.length > 1" mat-mini-fab aria-label="Eliminar análisis"
+              (click)=" removeFormArray(in, analysisFormArray) " type="button" class="dashboard-toolbar-buttons"
+              style="border: 1px rgb(197, 197, 197) solid">
+              <mat-icon style="color: #18446B">remove</mat-icon>
+            </button>
 
           </div>
 
@@ -333,27 +204,169 @@
 
       </div>
 
-      <hr class="ww-divider mt-10">
+    </div>
 
-      <!-- Bloque 7 -->
+    <hr class="ww-divider mt-10">
 
-      <div class="pt-5 pl-3 pb-5 mt-10 ml-1 -mr-2 sm:-mr-0 md:mr-0 lg:mr-0 xl:mr-0" style="background-color: #E6E7E8;">
+    <!-- Bloque 5 -->
 
-        <div class="pl-1 pr-1 sm:pl-2 sm:pr-2 md:pl-8 md:pr-6 lg:pl-8 lg:pr-6 xl:pl-8 pr-6">
+    <div class="mt-10">
 
-          <label style="font-size: 12px;"> Declaro bajo la más solemne fe del juramento que los datos suministrados
-            anteriormente y contenidos en este cuestionario son verdaderos, correctos y
-            actualizados y que no he omitido ni alterado ninguna información, requerida explícita o
-            implícitamente en este cuestionario. Reconozco que el haber completado y ﬁrmado el
-            presente cuestionario no supone la aceptación por parte de WorldWide, hasta tanto la
-            Aseguradora realice la debida evaluación y aprobación del mismo. </label>
+      <div class="my-5">
+
+        <label class="radio-button-label mr-1 mt-3 sm:mr-1 sm:mt-3 md:mr-6 md:mt-3 lg:mr-6 lg:mt-3 xl:mr-6 xl:mt-3"
+          style="font-size: 12px !important; display: inline-block"> ¿Ha tomado o toma alguna medicación o ha sido
+          operado? <label *ngIf="medicineOperationFormArray"> (Ponga <strong> "n/a" </strong> en el/los respectivo(s)
+            campo(s) sí
+            no ha hecho una de las 2 opciones.) </label> </label>
+
+        <app-radio-button
+          class="float-right mt-3 -mr-5 -ml-4 sm:-mr-5 sm:-ml-4 md:mr-0 md:ml-0 lg:mr-0 lg:ml-0 xl:mr-0 xl:ml-0"
+          style="display: inline-block" [group]="form.get('data')" [options]="yes_no" name='medication_radio'
+          (selected)="selectChange($event)">
+          <!-- (selected)="selectChangeBranchOffice($event)" -->
+        </app-radio-button>
+
+      </div>
+
+      <div class="mt-32 sm:mt-32 md:mt-24 lg:mt-20 xl:mt-20"
+        *ngIf="form.get('data').get('medication_radio').value == 'si'">
+        <!-- *ngIf="analysisFormArray" -->
+
+        <div *ngFor=" let elements of medicineOperationFormArray.controls; let in = index">
+
+          <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
+
+            <div class="mr-3">
+
+              <app-input [group]="form.get('data').get('medicine').get('medicine_array').get(in.toString())"
+                label="Medicamento" name="medicine" placeholder="Ej.: Tabletas de..."></app-input>
+
+            </div>
+
+            <div class="mr-3">
+
+              <app-input [group]="form.get('data').get('medicine').get('medicine_array').get(in.toString())"
+                label="Dosis" name="dose" placeholder="Ej.: 5 mg, 10 ml, etc."></app-input>
+
+            </div>
+
+            <datepicker-month class="mr-3" [max]="todayDate" [max]="todayDate" fieldId="dateFirstSymptoms"
+              [group]="form.get('data').get('medicine').get('medicine_array').get(in.toString())" name="date"
+              label="Fecha de medicación / procedimiento">
+            </datepicker-month>
+
+            <div class="mr-3 mb-3 sm:mb-0 md:mb-0 lg:mb-0 xl:mb-0">
+
+              <app-input [group]="form.get('data').get('medicine').get('medicine_array').get(in.toString())"
+                label="Procedimiento realizado" name="medical_procedure"
+                placeholder="Ej.: Extracción de cálculos formes"></app-input>
+
+            </div>
+
+          </div>
+
+          <div class="mb-6">
+
+            <button *ngIf="in == (medicineOperationFormArray.controls.length - 1)" mat-mini-fab
+              aria-label="Agregar medicación" (click)=" addFormArray(medicineOperationFormArray,'medicine_array') "
+              type="button" class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
+              <mat-icon style="color: #18446B">add</mat-icon>
+            </button>
+
+            <button *ngIf="medicineOperationFormArray.controls.length > 1" mat-mini-fab aria-label="Eliminar medicación"
+              (click)=" removeFormArray(in, medicineOperationFormArray) " type="button"
+              class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
+              <mat-icon style="color: #18446B">remove</mat-icon>
+            </button>
+
+          </div>
 
         </div>
 
       </div>
 
+    </div>
+
+    <hr class="ww-divider mt-10">
+
+    <!-- Bloque 6 -->
+
+    <div class="mt-10">
+
+      <div>
+
+        <label style="font-size: 12px !important;"
+          class="radio-button-label mr-1 mt-3 sm:mr-1 sm:mt-3 md:mr-6 md:mt-3 lg:mr-6 lg:mt-3 xl:mr-6 xl:mt-3"> Indicar
+          fecha de
+          la última consulta con su médico y con qué frecuencia usted lo ve por esta condición </label>
+        <app-radio-button
+          class="float-right inline mt-3 -mr-5 -ml-4 sm:-mr-5 sm:-ml-4 md:mr-0 md:ml-0 lg:mr-0 lg:ml-0 xl:mr-0 xl:ml-0"
+          [group]="form.get('data')" [options]="yes_no" name='medical_consultation_radio'
+          (selected)="selectChange($event)">
+        </app-radio-button>
+
+      </div>
+
+      <div class="mt-32 sm:mt-32 md:mt-20 lg:mt-20 xl:mt-20" *ngIf="this.form.get('data').get('medical_consultation')">
+
+        <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
+
+          <div class="mr-3">
+
+            <div class="mb-5">
+
+              <label> <strong> Fecha </strong> </label>
+
+            </div>
+
+            <div>
+
+              <app-date-picker [group]="form.get('data').get('medical_consultation')" label="Fecha" name='date'>
+              </app-date-picker>
+
+            </div>
+
+          </div>
+
+          <div class="mr-3 mt-0 sm:mt-0 md:mt-10 lg:mt-10 xl:mt-10">
+
+            <app-input [group]="form.get('data').get('medical_consultation')" label="Frecuencia de visita"
+              name="frequency" placeholder="Ej.: Una vez a la semana"></app-input>
+
+          </div>
+
+        </div>
+
+      </div>
 
     </div>
 
-  </ng-template>
-</app-forms-container>
+    <hr class="ww-divider mt-10">
+
+    <!-- Bloque 7 -->
+
+    <div class="pt-5 pl-3 pb-5 mt-10 ml-1 -mr-2 sm:-mr-0 md:mr-0 lg:mr-0 xl:mr-0" style="background-color: #E6E7E8;">
+
+      <div class="pl-1 pr-1 sm:pl-2 sm:pr-2 md:pl-8 md:pr-6 lg:pl-8 lg:pr-6 xl:pl-8 pr-6">
+
+        <label style="font-size: 12px;"> Declaro bajo la más solemne fe del juramento que los datos suministrados
+          anteriormente y contenidos en este cuestionario son verdaderos, correctos y
+          actualizados y que no he omitido ni alterado ninguna información, requerida explícita o
+          implícitamente en este cuestionario. Reconozco que el haber completado y ﬁrmado el
+          presente cuestionario no supone la aceptación por parte de WorldWide, hasta tanto la
+          Aseguradora realice la debida evaluación y aprobación del mismo. </label>
+
+      </div>
+
+    </div>
+
+
+  </div>
+
+  <mat-action-row class="action-row">
+    <button mat-button class="next-button" (click)="nextStep()" type="button">
+      Cerrar
+    </button>
+  </mat-action-row>
+</mat-expansion-panel>

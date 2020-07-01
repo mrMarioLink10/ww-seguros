@@ -9,6 +9,8 @@ import { FieldConfig } from 'src/app/shared/components/form-components/models/fi
 })
 export class CardiovascularComponent implements OnInit, DoCheck {
 	@Input() form: FormGroup;
+	@Input() showWarningDot: boolean;
+	step: number;
 
 	accordionTitle = ['Datos'];
 
@@ -57,7 +59,7 @@ export class CardiovascularComponent implements OnInit, DoCheck {
 	medicalTreatmentList: FormArray;
 	hypertensionStudiesList: FormArray;
 	changedTreatmentList: FormArray;
-  liquidAnomalyList: FormArray;
+	liquidAnomalyList: FormArray;
 
 
 	diseaseInfoGroup() {
@@ -217,18 +219,26 @@ export class CardiovascularComponent implements OnInit, DoCheck {
 		}
 	}
 
+	setStep(index: number) {
+		this.step = index;
+	}
+
+	nextStep(panel?: string) {
+		this.step++;
+	}
+
 	ngOnInit() {
 		this.addBasicControls();
 
 		this.form.addControl('studies', this.fb.array([this.createFormArray('studies')]));
 		this.studiesList = this.form.get('studies') as FormArray;
-console.log(this.studiesList);
+		console.log(this.studiesList);
 		this.form.addControl('medicalTreatment', this.fb.array([this.createFormArray('medicalTreatment')]));
-    this.medicalTreatmentList = this.form.get('medicalTreatment') as FormArray;
-    try{
-    this.studiesList = this.form.get('studies') as FormArray;
-    }
-    catch{}
+		this.medicalTreatmentList = this.form.get('medicalTreatment') as FormArray;
+		try {
+			this.studiesList = this.form.get('studies') as FormArray;
+		}
+		catch{ }
 		this.questions = [
 			{
 				label: 'Dolor de Pecho (anginas):',
@@ -281,47 +291,47 @@ console.log(this.studiesList);
 	ngDoCheck(): void {
 
 		if (this.form.get('haveAnotherDisease').value == 'si' &&
-		!this.form.get('anotherDiseases')) {
+			!this.form.get('anotherDiseases')) {
 			const varDisease = {
-        valor: 'si',
-        name: 'haveAnotherDisease'
-      };
-      // tslint:disable-next-line: align
-      this.selectChange(varDisease);
+				valor: 'si',
+				name: 'haveAnotherDisease'
+			};
+			// tslint:disable-next-line: align
+			this.selectChange(varDisease);
 			console.log('HolAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA anotherDiseases');
-	  }
+		}
 
-	  if (this.form.get('haveFamilyWithCardio').value == 'si' &&
-		!this.form.get('familyWithCardio')) {
+		if (this.form.get('haveFamilyWithCardio').value == 'si' &&
+			!this.form.get('familyWithCardio')) {
 			const varFamilyCardio = {
-        valor: 'si',
-        name: 'haveFamilyWithCardio'
-      };
-      // tslint:disable-next-line: align
-      this.selectChange(varFamilyCardio);
+				valor: 'si',
+				name: 'haveFamilyWithCardio'
+			};
+			// tslint:disable-next-line: align
+			this.selectChange(varFamilyCardio);
 			console.log('HolAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA familyWithCardio');
-	  }
+		}
 
-	  if (this.form.get('haveHypertensionStudies').value == 'si' &&
-		!this.form.get('hypertensionStudies')) {
+		if (this.form.get('haveHypertensionStudies').value == 'si' &&
+			!this.form.get('hypertensionStudies')) {
 			const varArterial = {
-        valor: 'si',
-        name: 'haveHypertensionStudies'
-      };
-      // tslint:disable-next-line: align
-      this.selectChange(varArterial);
+				valor: 'si',
+				name: 'haveHypertensionStudies'
+			};
+			// tslint:disable-next-line: align
+			this.selectChange(varArterial);
 			console.log('HolAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA hypertensionStudies');
-      }
+		}
 
-	  if (this.form.get('haveLiquidAnomaly').value == 'si') {
+		if (this.form.get('haveLiquidAnomaly').value == 'si') {
 			const varAnomaly = {
-        valor: 'si',
-        name: 'haveLiquidAnomaly'
-      };
-      // tslint:disable-next-line: align
-      this.selectChange(varAnomaly);
+				valor: 'si',
+				name: 'haveLiquidAnomaly'
+			};
+			// tslint:disable-next-line: align
+			this.selectChange(varAnomaly);
 			console.log('HolAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA liquidAnomaly');
-      }
+		}
 	}
 
 	addBasicControls() {

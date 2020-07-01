@@ -14,6 +14,8 @@ export class ArthritisComponent implements OnInit {
   constructor(private fb: FormBuilder, public diseaseService: DiseaseService) { }
 
   questions: any[];
+  @Input() showWarningDot: boolean;
+  step: number;
 
   threatmentList: FormArray;
   surgeriesList: FormArray;
@@ -33,13 +35,11 @@ export class ArthritisComponent implements OnInit {
         group: 'surgeries'
       }
     ];
-    if (this.form.get('threatments'))
-    {
-this.threatmentList = this.form.get('threatments') as FormArray;
+    if (this.form.get('threatments')) {
+      this.threatmentList = this.form.get('threatments') as FormArray;
     }
-    if (this.form.get('surgeries'))
-    {
-this.surgeriesList = this.form.get('surgeries') as FormArray;
+    if (this.form.get('surgeries')) {
+      this.surgeriesList = this.form.get('surgeries') as FormArray;
     }
   }
 
@@ -120,6 +120,14 @@ this.surgeriesList = this.form.get('surgeries') as FormArray;
       default:
         break;
     }
+  }
+
+  setStep(index: number) {
+    this.step = index;
+  }
+
+  nextStep(panel?: string) {
+    this.step++;
   }
 
   addToList(list: any, type: string) {

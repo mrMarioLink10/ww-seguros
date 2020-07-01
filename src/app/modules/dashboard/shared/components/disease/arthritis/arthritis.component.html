@@ -1,189 +1,198 @@
-<!-- <div class="uppercase dashboard-page-title mt-8 pb-4">cuestionario de artritis</div> -->
-
-
-<app-forms-container [isQuestionnarie]="false" [titles]="['Cuestionario de artritis']">
-  <ng-template #formTemplate>
-    <div class="p-3 pb-0 mb-4" style="background-color: #F2F2F2">
-      <div class="mt-3 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 xl:grid-cols-5">
-        <!--    <div class="mr-3">
-          <app-input [group]="form" label="Nombre Completo" name='name' placeholder="Alberto Matias">
-          </app-input>
-        </div>
-        <div class="mr-3">
-          <app-number-input [group]="form" label="Edad" name='age' placeholder="34" min="1">
-          </app-number-input>
-        </div> -->
-        <div class="mr-3">
-          <app-input [group]="form" label="Nombre del Médico Tratante" name='doctorName' placeholder="Santiago Alberto">
-          </app-input>
-        </div>
-        <div class="mr-3">
-          <app-input [group]="form" label="Centro de Salud donde trabaja" name='healthCenter'
-            placeholder="Hospital Ney Arias Lora">
-          </app-input>
-        </div>
-        <div class="mr-3">
-          <app-number-input [group]="form" label="Teléfono del Centro" name='hcNumber' placeholder="8207776677">
-          </app-number-input>
-        </div>
-      </div>
-    </div>
-    <!-- PRIMEROS SINTOMAS -->
-    <div class="body-13 mb-8" style="color: black !important;">¿Qué tipo de artritis padece?
-    </div>
-    <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5">
-      <app-input [group]="form" name="arthritisType" label="Tipo">
-      </app-input>
-    </div>
-    <div class="body-13 mb-2">Si no cuenta con un diagnóstico preciso, describa sus síntomas.
-    </div>
-    <app-text-area [group]="form" name="symptons" label="Texto">
-    </app-text-area>
-    <hr class="w-full mb-6 ww-divider">
-    <!-- TIPO DE ARTRITIS -->
-    <div class="body-13 mb-8" style="color: black !important;">Articulaciones más afectadas
-    </div>
-    <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5">
+<mat-expansion-panel class="ww-mat-expansion" [expanded]="step === 20" (opened)="setStep(20)">
+  <mat-expansion-panel-header class="body-13 icon-blue">
+    <mat-panel-title>
+      Información del Propuesto Asegurado
+    </mat-panel-title>
+    <mat-panel-description>
+      <div></div>
+      <div *ngIf="showWarningDot" class="warning-accordion-dot"></div>
+    </mat-panel-description>
+  </mat-expansion-panel-header>
+  Cuestionario de artritis
+  <div class="p-3 pb-0 mb-4" style="background-color: #F2F2F2">
+    <div class="mt-3 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 xl:grid-cols-5">
+      <!--    <div class="mr-3">
+                      <app-input [group]="form" label="Nombre Completo" name='name' placeholder="Alberto Matias">
+                      </app-input>
+                    </div>
+                    <div class="mr-3">
+                      <app-number-input [group]="form" label="Edad" name='age' placeholder="34" min="1">
+                      </app-number-input>
+                    </div> -->
       <div class="mr-3">
-        <app-input [group]="form" name="jointsMostAffected" label="Articulaciones">
+        <app-input [group]="form" label="Nombre del Médico Tratante" name='doctorName' placeholder="Santiago Alberto">
         </app-input>
       </div>
       <div class="mr-3">
-        <datepicker-month fieldId="firstDiagnostic" [group]="form" name="firstDiagnostic"
-          label="Fecha primer diagnóstico enfermedad">
-        </datepicker-month>
+        <app-input [group]="form" label="Centro de Salud donde trabaja" name='healthCenter'
+          placeholder="Hospital Ney Arias Lora">
+        </app-input>
+      </div>
+      <div class="mr-3">
+        <app-number-input [group]="form" label="Teléfono del Centro" name='hcNumber' placeholder="8207776677">
+        </app-number-input>
       </div>
     </div>
-    <hr class="w-full mb-6 ww-divider">
-    <!-- TIPOS DE TRATAMIENTO -->
-    <div *ngFor="let question of questions">
-      <div
-        class="w-full xl:flex xl:justify-between lg:flex lg:justify-between md:flex md:justify-between sm:flex sm:justify-between">
-        <div class="radio-button-label" style="font-size: 12px !important;">{{question.label}}</div>
-        <app-radio-button [group]="form" [name]="question.name" [options]="diseaseService.yesOrNoOriginal"
-          (selected)="selectChange($event)">
-        </app-radio-button>
+  </div>
+  <!-- PRIMEROS SINTOMAS -->
+  <div class="body-13 mb-8" style="color: black !important;">¿Qué tipo de artritis padece?
+  </div>
+  <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5">
+    <app-input [group]="form" name="arthritisType" label="Tipo">
+    </app-input>
+  </div>
+  <div class="body-13 mb-2">Si no cuenta con un diagnóstico preciso, describa sus síntomas.
+  </div>
+  <app-text-area [group]="form" name="symptons" label="Texto">
+  </app-text-area>
+  <hr class="w-full mb-6 ww-divider">
+  <!-- TIPO DE ARTRITIS -->
+  <div class="body-13 mb-8" style="color: black !important;">Articulaciones más afectadas
+  </div>
+  <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5">
+    <div class="mr-3">
+      <app-input [group]="form" name="jointsMostAffected" label="Articulaciones">
+      </app-input>
+    </div>
+    <div class="mr-3">
+      <datepicker-month fieldId="firstDiagnostic" [group]="form" name="firstDiagnostic"
+        label="Fecha primer diagnóstico enfermedad">
+      </datepicker-month>
+    </div>
+  </div>
+  <hr class="w-full mb-6 ww-divider">
+  <!-- TIPOS DE TRATAMIENTO -->
+  <div *ngFor="let question of questions">
+    <div
+      class="w-full xl:flex xl:justify-between lg:flex lg:justify-between md:flex md:justify-between sm:flex sm:justify-between">
+      <div class="radio-button-label" style="font-size: 12px !important;">{{question.label}}</div>
+      <app-radio-button [group]="form" [name]="question.name" [options]="diseaseService.yesOrNoOriginal"
+        (selected)="selectChange($event)">
+      </app-radio-button>
+    </div>
+    <div *ngIf="form.value[question.name] === 'si'">
+      <div *ngIf="question.name === 'stillHaveSymptons'">
+        <div class="body-13 mb-2">Especifique si los síntomas son constantes, variables, muestran una mejoría, o
+          presentan un empeoramiento progresivo
+        </div>
+        <app-text-area [group]="form.get('symptoms')" name="information" label="Texto">
+        </app-text-area>
+        <div class="body-13 mb-2">Fecha última vez que tuvo síntomas
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5">
+          <datepicker-month fieldId="date" [group]="form.get('symptoms')" name="date" label="Fecha">
+          </datepicker-month>
+        </div>
       </div>
-      <div *ngIf="form.value[question.name] === 'si'">
-        <div *ngIf="question.name === 'stillHaveSymptons'">
-          <div class="body-13 mb-2">Especifique si los síntomas son constantes, variables, muestran una mejoría, o
-            presentan un empeoramiento progresivo
-          </div>
-          <app-text-area [group]="form.get('symptoms')" name="information" label="Texto">
-          </app-text-area>
-          <div class="body-13 mb-2">Fecha última vez que tuvo síntomas
-          </div>
-          <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5">
-            <datepicker-month fieldId="date" [group]="form.get('symptoms')" name="date" label="Fecha">
+      <div *ngIf="question.name === 'hasBeenOperated'">
+        <div *ngFor="let studies of surgeriesList.controls; let i = index"
+          class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-5 xl:grid-cols-5">
+          <div class="mr-3">
+            <datepicker-month fieldId="date" [group]="form.get('surgeries').get(i.toString())" name="date"
+              label="Fecha de la cirugía">
             </datepicker-month>
           </div>
-        </div>
-        <div *ngIf="question.name === 'hasBeenOperated'">
-          <div *ngFor="let studies of surgeriesList.controls; let i = index"
-            class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-5 xl:grid-cols-5">
-            <div class="mr-3">
-              <datepicker-month fieldId="date" [group]="form.get('surgeries').get(i.toString())" name="date"
-                label="Fecha de la cirugía">
-              </datepicker-month>
-            </div>
-            <div class="mr-3">
-              <app-input [group]="form.get('surgeries').get(i.toString())" name="surgeonName"
-                label="Nombre del Cirujano">
-              </app-input>
-            </div>
-            <div class="mr-3">
-              <app-input [group]="form.get('surgeries').get(i.toString())" name="healthCenter"
-                label="Centro Médico Cirugía">
-              </app-input>
-            </div>
-            <div class="mr-3">
-              <app-input [group]="form.get('surgeries').get(i.toString())" name="laborLicenseTime"
-                label="Tiempo de Licencia Laboral">
-              </app-input>
-            </div>
-            <div *ngIf="surgeriesList.length > 1"
-              [ngClass]="{'': surgeriesList.length === 1, 'col-span-1': surgeriesList.length > 1} ">
-              <button mat-mini-fab aria-label=" Eliminar estudio" (click)="removeToList(i, surgeriesList)" type="button"
-                class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
-                <mat-icon style="color: #18446B">remove</mat-icon>
-              </button>
-            </div>
+          <div class="mr-3">
+            <app-input [group]="form.get('surgeries').get(i.toString())" name="surgeonName" label="Nombre del Cirujano">
+            </app-input>
           </div>
-          <div class="mb-8">
-            <button mat-mini-fab aria-label="Agregar estudio" (click)="addToList(surgeriesList, 'surgeries')"
-              type="button" class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
-              <mat-icon style="color: #18446B">add</mat-icon>
+          <div class="mr-3">
+            <app-input [group]="form.get('surgeries').get(i.toString())" name="healthCenter"
+              label="Centro Médico Cirugía">
+            </app-input>
+          </div>
+          <div class="mr-3">
+            <app-input [group]="form.get('surgeries').get(i.toString())" name="laborLicenseTime"
+              label="Tiempo de Licencia Laboral">
+            </app-input>
+          </div>
+          <div *ngIf="surgeriesList.length > 1"
+            [ngClass]="{'': surgeriesList.length === 1, 'col-span-1': surgeriesList.length > 1} ">
+            <button mat-mini-fab aria-label=" Eliminar estudio" (click)="removeToList(i, surgeriesList)" type="button"
+              class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
+              <mat-icon style="color: #18446B">remove</mat-icon>
             </button>
           </div>
         </div>
-      </div>
-      <hr class=" w-full mb-6 ww-divider">
-    </div>
-    <!-- TIPOS DE TRATAMIENTO -->
-    <div class="body-13 mb-8" style="color: black !important;"> ¿Cuál es el tratamiento médico actual que recibe
-      (medicamentos, fisioterapia, etc.)?
-    </div>
-    <div *ngFor="let studies of threatmentList.controls; let i = index"
-      class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-5 xl:grid-cols-5">
-      <div class="mr-3">
-        <app-input [group]="form.get('threatments').get(i.toString())" name="name" label="Nombre tratamiento">
-        </app-input>
-      </div>
-      <div class="mr-3">
-        <app-input [group]="form.get('threatments').get(i.toString())" name="medication" label="Medicamento">
-        </app-input>
-      </div>
-      <div class="mr-3">
-        <app-input [group]="form.get('threatments').get(i.toString())" name="dose" label="Dosis">
-        </app-input>
-      </div>
-      <div class="mr-3">
-        <app-input [group]="form.get('threatments').get(i.toString())" name="info" label="Otros">
-        </app-input>
-      </div>
-      <div *ngIf="threatmentList.length > 1"
-        [ngClass]="{'': threatmentList.length === 1, 'col-span-1': threatmentList.length > 1} ">
-        <button mat-mini-fab aria-label=" Eliminar estudio" (click)="removeToList(i, threatmentList)" type="button"
-          class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
-          <mat-icon style="color: #18446B">remove</mat-icon>
-        </button>
+        <div class="mb-8">
+          <button mat-mini-fab aria-label="Agregar estudio" (click)="addToList(surgeriesList, 'surgeries')"
+            type="button" class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
+            <mat-icon style="color: #18446B">add</mat-icon>
+          </button>
+        </div>
       </div>
     </div>
-    <div class="mb-8">
-      <button mat-mini-fab aria-label="Agregar estudio" (click)="addToList(threatmentList, 'threatments')" type="button"
+    <hr class=" w-full mb-6 ww-divider">
+  </div>
+  <!-- TIPOS DE TRATAMIENTO -->
+  <div class="body-13 mb-8" style="color: black !important;"> ¿Cuál es el tratamiento médico actual que recibe
+    (medicamentos, fisioterapia, etc.)?
+  </div>
+  <div *ngFor="let studies of threatmentList.controls; let i = index"
+    class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-5 xl:grid-cols-5">
+    <div class="mr-3">
+      <app-input [group]="form.get('threatments').get(i.toString())" name="name" label="Nombre tratamiento">
+      </app-input>
+    </div>
+    <div class="mr-3">
+      <app-input [group]="form.get('threatments').get(i.toString())" name="medication" label="Medicamento">
+      </app-input>
+    </div>
+    <div class="mr-3">
+      <app-input [group]="form.get('threatments').get(i.toString())" name="dose" label="Dosis">
+      </app-input>
+    </div>
+    <div class="mr-3">
+      <app-input [group]="form.get('threatments').get(i.toString())" name="info" label="Otros">
+      </app-input>
+    </div>
+    <div *ngIf="threatmentList.length > 1"
+      [ngClass]="{'': threatmentList.length === 1, 'col-span-1': threatmentList.length > 1} ">
+      <button mat-mini-fab aria-label=" Eliminar estudio" (click)="removeToList(i, threatmentList)" type="button"
         class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
-        <mat-icon style="color: #18446B">add</mat-icon>
+        <mat-icon style="color: #18446B">remove</mat-icon>
       </button>
     </div>
-    <hr class=" w-full mb-6 ww-divider">
-    <!-- NECESITA BASTON -->
-    <div
-      class="w-full xl:flex xl:justify-between lg:flex lg:justify-between md:flex md:justify-between sm:flex sm:justify-between">
-      <div class="radio-button-label" style="font-size: 12px !important;">¿Necesita usted un bastón o cualquier forma de
-        ayuda para moverse?</div>
-      <app-radio-button [group]="form" name="needAssistance" [options]="diseaseService.yesOrNoOriginal">
-      </app-radio-button>
+  </div>
+  <div class="mb-8">
+    <button mat-mini-fab aria-label="Agregar estudio" (click)="addToList(threatmentList, 'threatments')" type="button"
+      class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
+      <mat-icon style="color: #18446B">add</mat-icon>
+    </button>
+  </div>
+  <hr class=" w-full mb-6 ww-divider">
+  <!-- NECESITA BASTON -->
+  <div
+    class="w-full xl:flex xl:justify-between lg:flex lg:justify-between md:flex md:justify-between sm:flex sm:justify-between">
+    <div class="radio-button-label" style="font-size: 12px !important;">¿Necesita usted un bastón o cualquier forma de
+      ayuda para moverse?</div>
+    <app-radio-button [group]="form" name="needAssistance" [options]="diseaseService.yesOrNoOriginal">
+    </app-radio-button>
+  </div>
+  <hr class=" w-full mb-6 ww-divider">
+  <!--Proporcione cualquier otra información adicional que considere útil para la tramitación de su solicitud de seguro. -->
+  <div class="mt-8 mb-4">
+    <div class="body-13  mb-8">Proporcione cualquier otra información
+      adicional que considere útil para la tramitación de su solicitud de seguro.
     </div>
-    <hr class=" w-full mb-6 ww-divider">
-    <!--Proporcione cualquier otra información adicional que considere útil para la tramitación de su solicitud de seguro. -->
-    <div class="mt-8 mb-4">
-      <div class="body-13  mb-8">Proporcione cualquier otra información
-        adicional que considere útil para la tramitación de su solicitud de seguro.
-      </div>
-      <div class="mr-3">
-        <app-text-area [group]="form" name="aditionalInfo" label="Texto"></app-text-area>
-      </div>
+    <div class="mr-3">
+      <app-text-area [group]="form" name="aditionalInfo" label="Texto"></app-text-area>
     </div>
-    <hr class="w-full mb-6 ww-divider">
-    <div class="declaraciones my-4 px-4 sm:px-4 md:px-14 lg:px-12 xl:px-12">
-      Declaro bajo la más solemne fe del juramento que los datos suministrados anteriormente y contenidos en este
-      cuestionario son verdaderos, correctos y actualizados y que no he omitido ni alterado ninguna información,
-      requerida
-      explícita o implícitamente en este cuestionario. Reconozco que el haber completado y firmado el presente
-      cuestionario no supone la aceptación por parte de la Aseguradora, hasta tanto la Aseguradora realice la
-      debida
-      evaluación
-      y aprobación del mismo.
-    </div>
-  </ng-template>
-</app-forms-container>
+  </div>
+  <hr class="w-full mb-6 ww-divider">
+  <div class="declaraciones my-4 px-4 sm:px-4 md:px-14 lg:px-12 xl:px-12">
+    Declaro bajo la más solemne fe del juramento que los datos suministrados anteriormente y contenidos en este
+    cuestionario son verdaderos, correctos y actualizados y que no he omitido ni alterado ninguna información,
+    requerida
+    explícita o implícitamente en este cuestionario. Reconozco que el haber completado y firmado el presente
+    cuestionario no supone la aceptación por parte de la Aseguradora, hasta tanto la Aseguradora realice la
+    debida
+    evaluación
+    y aprobación del mismo.
+  </div>
+  <mat-action-row class="action-row">
+    <button mat-button class="next-button" (click)="nextStep()" type="button">
+      Cerrar
+    </button>
+  </mat-action-row>
+</mat-expansion-panel>

@@ -41,6 +41,8 @@ export class DisabilityComponent implements OnInit, DoCheck {
     'Sección D. Opción del Plan', 'Sección E. Beneficiarios Primarios',
     'Beneficiario(s) Contigente(s)', 'Archivos Adjuntos'];
   bmi: number;
+  step: number;
+
   // massName = 'PESO';
   // heightName = 'ALTURA';
   showContent = false;
@@ -515,7 +517,6 @@ export class DisabilityComponent implements OnInit, DoCheck {
 
   @ViewChild('form', { static: false }) form;
 
-
   constructor(
     private fb: FormBuilder,
     private dataMappingFromApi: FormDataFillingService,
@@ -752,6 +753,35 @@ export class DisabilityComponent implements OnInit, DoCheck {
       // this.disabilityGroup.get('person').get('this.age').setValue(this.age);
       console.log('La persona tiene ' + this.age + ' de edad');
     });
+
+  }
+
+  setStep(index: number) {
+    this.step = index;
+  }
+
+  nextStep(panel?: string) {
+    this.step++;
+  }
+
+  showWarningDot(form: any): boolean {
+
+    if (this.form !== undefined) {
+      if (!this.ID) {
+        if (!form.valid && this.form.submitted) {
+          return true;
+        } else {
+          return false;
+        }
+
+      } else {
+        if (form.valid) {
+          return false;
+        } else {
+          return true;
+        }
+      }
+    }
 
   }
 
@@ -1092,27 +1122,27 @@ export class DisabilityComponent implements OnInit, DoCheck {
     // }
     this.disabilityGroup.get('insured_data').get('job_hours').setValue(totalJobHours);
 
-    if (this.disabilityGroup.get('questions').get('questionnaire').get('analysis_array')){
+    if (this.disabilityGroup.get('questions').get('questionnaire').get('analysis_array')) {
       let formQDoCheckArray;
       // tslint:disable-next-line: prefer-for-of
       for (let x = 0; x < this.testArray.controls.length; x++) {
 
-       formQDoCheckArray = this.disabilityGroup.get('questions').get('questionnaire').get
-        ('analysis_array').get(x.toString()) as FormGroup;
+        formQDoCheckArray = this.disabilityGroup.get('questions').get('questionnaire').get
+          ('analysis_array').get(x.toString()) as FormGroup;
 
-       if (this.disabilityGroup.get('questions').get('questionnaire').get
-        ('analysis_array').get(x.toString()).get('test').value == 'Otros') {
+        if (this.disabilityGroup.get('questions').get('questionnaire').get
+          ('analysis_array').get(x.toString()).get('test').value == 'Otros') {
 
           if (!(this.disabilityGroup.get('questions').get('questionnaire').get
-          ('analysis_array').get(x.toString()).get('specifyStudy'))){
+            ('analysis_array').get(x.toString()).get('specifyStudy'))) {
             formQDoCheckArray.addControl('specifyStudy', this.fb.control('', Validators.required));
           }
         }
-       if (this.disabilityGroup.get('questions').get('questionnaire').get
-        ('analysis_array').get(x.toString()).get('test').value != 'Otros') {
+        if (this.disabilityGroup.get('questions').get('questionnaire').get
+          ('analysis_array').get(x.toString()).get('test').value != 'Otros') {
 
           if (this.disabilityGroup.get('questions').get('questionnaire').get
-          ('analysis_array').get(x.toString()).get('specifyStudy')) {
+            ('analysis_array').get(x.toString()).get('specifyStudy')) {
             formQDoCheckArray.removeControl('specifyStudy');
           }
         }
@@ -1266,9 +1296,9 @@ export class DisabilityComponent implements OnInit, DoCheck {
           console.log(this.role);
 
           formInsured.addControl('pep', this.fb.group({
-              // contractor: ['', Validators.required],
-              payer: ['', Validators.required],
-              // insured: ['', Validators.required],
+            // contractor: ['', Validators.required],
+            payer: ['', Validators.required],
+            // insured: ['', Validators.required],
             lastPosition: ['', Validators.required],
             time: ['', Validators.required],
             timeNumber: ['', [Validators.required, Validators.min(1)]]
@@ -1842,9 +1872,8 @@ export class DisabilityComponent implements OnInit, DoCheck {
         this.existingCoveragesList = this.disabilityGroup.get('contingent').get('anotherCoverages') as FormArray;
         this.changingCoveragesList = this.disabilityGroup.get('contingent').get('changingCoverages') as FormArray;
         this.filesStudiesArray = formF.get('studies') as FormArray;
-        if (this.disabilityGroup.get('files') && this.disabilityGroup.get('files').get('documentsKnowClient'))
-        {
-        this.filesDocumentsKnowClientArray = this.disabilityGroup.get('files').get('documentsKnowClient') as FormArray;
+        if (this.disabilityGroup.get('files') && this.disabilityGroup.get('files').get('documentsKnowClient')) {
+          this.filesDocumentsKnowClientArray = this.disabilityGroup.get('files').get('documentsKnowClient') as FormArray;
         }
         //this.disabilityGroup['controls'].num_financial_quote.setValue(data.data.num_financial_quote)
 

@@ -25,10 +25,20 @@
     </div>
     <mat-tab-group class="mt-4">
       <mat-tab label="Asegurado" class="mat-tab-forms">
-        <div class="pt-10">
-          <app-forms-container [titles]="accordionTitles">
-            <!-- Seccion A -->
-            <ng-template #formTemplate>
+
+        <div *ngIf="this.form !== undefined">
+          <mat-accordion #matAccordion="matAccordion" name="matAccordion" class="ww-mat-accordion example-headers-align"
+            [togglePosition]="'before'">
+            <mat-expansion-panel class="ww-mat-expansion" [expanded]="step === 0" (opened)="setStep(0)">
+              <mat-expansion-panel-header class="body-13 icon-blue">
+                <mat-panel-title>
+                  Sección A. Datos del propuesto Asegurado y Estatus laboral
+                </mat-panel-title>
+                <mat-panel-description>
+                  <div></div>
+                  <div *ngIf="showWarningDot(disabilityGroup.get('insured_data'))" class="warning-accordion-dot"></div>
+                </mat-panel-description>
+              </mat-expansion-panel-header>
               <div class="ml-3">
 
                 <!-- Bloque 1 -->
@@ -403,31 +413,36 @@
                       </app-radio-button>
                     </div>
                     <div *ngIf="disabilityGroup.get('insured_data').get('policyholderKnowClientRadio').value == 'si'">
-                      <div class="radio-button-label" style="font-size: 12px !important; max-width: 63vw;">Adjuntar documentos (Opcional)
+                      <div class="radio-button-label" style="font-size: 12px !important; max-width: 63vw;">Adjuntar
+                        documentos (Opcional)
                       </div>
-                     <div *ngIf="disabilityGroup.get('files') && disabilityGroup.get('files').get('documentsKnowClient')">
-                      <div  *ngFor="let studies of filesDocumentsKnowClientArray.controls; let i = index">
-                        <div class="grid grid-cols-2"> <!-- grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4-->
-                          <mat-form-field class="mr-3" appearance="outline">
-                            <mat-label> Documento </mat-label>
-                            <ngx-mat-file-input [valuePlaceholder]="arrayDocumentsKnowClientWatcher(i)"
-                              (change)="onStudiesChange($event, i, 'documentsKnowClient')">
-                            </ngx-mat-file-input>
-                            <mat-icon style="color: #e2e2e2;" matSuffix>publish</mat-icon>
-                          </mat-form-field>
-                            <div [ngClass]="{'': filesDocumentsKnowClientArray.length === 1, 'col-span-1': filesDocumentsKnowClientArray.length > 1} ">
+                      <div
+                        *ngIf="disabilityGroup.get('files') && disabilityGroup.get('files').get('documentsKnowClient')">
+                        <div *ngFor="let studies of filesDocumentsKnowClientArray.controls; let i = index">
+                          <div class="grid grid-cols-2">
+                            <!-- grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4-->
+                            <mat-form-field class="mr-3" appearance="outline">
+                              <mat-label> Documento </mat-label>
+                              <ngx-mat-file-input [valuePlaceholder]="arrayDocumentsKnowClientWatcher(i)"
+                                (change)="onStudiesChange($event, i, 'documentsKnowClient')">
+                              </ngx-mat-file-input>
+                              <mat-icon style="color: #e2e2e2;" matSuffix>publish</mat-icon>
+                            </mat-form-field>
+                            <div
+                              [ngClass]="{'': filesDocumentsKnowClientArray.length === 1, 'col-span-1': filesDocumentsKnowClientArray.length > 1} ">
                               <button mat-mini-fab aria-label=" Eliminar estudio"
                                 (click)="diseaseService.removeToList(i, filesDocumentsKnowClientArray)" type="button"
                                 class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
                                 <mat-icon style="color: #18446B">remove</mat-icon>
                               </button>
                             </div>
+                          </div>
                         </div>
                       </div>
-                    </div>
                       <div class="">
-                        <button  mat-mini-fab aria-label="Agregar estudio" (click)="addToList(filesDocumentsKnowClientArray, 'filesDocumentsKnowClient')"
-                          type="button" class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
+                        <button mat-mini-fab aria-label="Agregar estudio"
+                          (click)="addToList(filesDocumentsKnowClientArray, 'filesDocumentsKnowClient')" type="button"
+                          class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
                           <mat-icon style="color: #18446B">add</mat-icon>
                         </button>
                       </div>
@@ -456,15 +471,27 @@
                   </app-radio-button> -->
                   <app-radio-button class="mr-3" title="Pagador"
                     [group]="disabilityGroup.get('insured_data').get('pep')" name="payer" [options]="YesNo">
-                  </app-radio-button> 
+                  </app-radio-button>
                 </div>
               </div>
+              <mat-action-row class="action-row">
+                <button mat-button class="next-button" (click)="nextStep()" type="button">
+                  Siguiente
+                </button>
+              </mat-action-row>
+            </mat-expansion-panel>
 
-            </ng-template>
-
-            <!-- Seccion B -->
-            <ng-template #formTemplate *ngIf="this.disabilityGroup.get('policyholder')">
-
+            <mat-expansion-panel *ngIf="this.disabilityGroup.get('policyholder')" class="ww-mat-expansion"
+              [expanded]="step === 1" (opened)="setStep(1)">
+              <mat-expansion-panel-header class="body-13 icon-blue">
+                <mat-panel-title>
+                  Sección B. Datos del Contratante
+                </mat-panel-title>
+                <mat-panel-description>
+                  <div></div>
+                  <div *ngIf="showWarningDot(disabilityGroup.get('policyholder'))" class="warning-accordion-dot"></div>
+                </mat-panel-description>
+              </mat-expansion-panel-header>
               <div class="ml-3 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
 
                 <div class="lg:col-span-1 xl:col-span-2 mr-3">
@@ -511,7 +538,8 @@
 
                   <div class="ml-8 mr-3">
                     <app-select [group]="disabilityGroup.get('policyholder')" name="currency"
-                      [options]='currencyOptions'> </app-select>
+                      [options]='currencyOptions'>
+                    </app-select>
                   </div>
 
                 </div>
@@ -574,18 +602,17 @@
                 </div>
 
                 <div class="mr-3 mt-8 sm:mt-6 md:mt-6 md:pt-1 lg:col-span-2 lg:mt-4 lg:pt-0 xl:pt-0 xl:mt-3">
-                  <app-input label="Representante Legal"
-                    [group]="disabilityGroup.get('policyholder')" name="representative"
-                    placeholder="Manuel de los Santos Ramírez"> </app-input>
+                  <app-input label="Representante Legal" [group]="disabilityGroup.get('policyholder')"
+                    name="representative" placeholder="Manuel de los Santos Ramírez"> </app-input>
                 </div>
 
                 <div class="mr-3 mt-8 sm:mt-6 md:mt-6 md:col-span-2 lg:col-span-1 xl:col-span-1 lg:mt-4 xl:mt-3">
-                  <app-input label="Cédula o Pasaporte del representante legal" [group]="disabilityGroup.get('policyholder')" name="passport_id"
-                    placeholder="402-0070000-8"> </app-input>
+                  <app-input label="Cédula o Pasaporte del representante legal"
+                    [group]="disabilityGroup.get('policyholder')" name="passport_id" placeholder="402-0070000-8">
+                  </app-input>
                 </div>
 
               </div>
-
               <div *ngIf="disabilityGroup.get('policyholder').get('pep_radio_holder').value =='si'"
                 class="mt-4 ml-3 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
                 <app-input class="mr-3" [group]="disabilityGroup.get('policyholder').get('pep')"
@@ -606,14 +633,25 @@
                   [group]="disabilityGroup.get('policyholder').get('pep')" name="contractor" [options]="YesNo">
                 </app-radio-button> -->
                 <app-radio-button class="mr-3" title="Pagador" [group]="disabilityGroup.get('policyholder').get('pep')"
-                  name="payer" [options]="YesNo"></app-radio-button> 
+                  name="payer" [options]="YesNo"></app-radio-button>
               </div>
+              <mat-action-row class="action-row">
+                <button mat-button class="next-button" (click)="nextStep()" type="button">
+                  Siguiente
+                </button>
+              </mat-action-row>
+            </mat-expansion-panel>
 
-            </ng-template>
-
-            <!-- Seccion C -->
-            <ng-template #formTemplate>
-
+            <mat-expansion-panel class="ww-mat-expansion" [expanded]="step === 2" (opened)="setStep(2)">
+              <mat-expansion-panel-header class="body-13 icon-blue">
+                <mat-panel-title>
+                  Sección C. Cuestionario Médico
+                </mat-panel-title>
+                <mat-panel-description>
+                  <div></div>
+                  <div *ngIf="showWarningDot(disabilityGroup.get('questions'))" class="warning-accordion-dot"></div>
+                </mat-panel-description>
+              </mat-expansion-panel-header>
               <div class="ml-3">
                 <!-- Bloque 1 -->
                 <div class="mt-4 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
@@ -627,23 +665,25 @@
                     </div>
                   </div>
                   <!-- <div > -->
-                    <div class="mr-3 mt-3 sm:mt-2 md:mt-8 lg:mt-1 xl:mt-0" *ngIf="this.disabilityGroup.get('questions').get('smoker_radio').value == 'si'">
-                      <app-number-input label="Consumo diario de tabaco (Paquetes)" name="quantity"
-                        [group]="disabilityGroup.get('questions').get('smoke')" placeholder="Por ej: 2" min="1">
+                  <div class="mr-3 mt-3 sm:mt-2 md:mt-8 lg:mt-1 xl:mt-0"
+                    *ngIf="this.disabilityGroup.get('questions').get('smoker_radio').value == 'si'">
+                    <app-number-input label="Consumo diario de tabaco (Paquetes)" name="quantity"
+                      [group]="disabilityGroup.get('questions').get('smoke')" placeholder="Por ej: 2" min="1">
+                    </app-number-input>
+                  </div>
+                  <div *ngIf="this.disabilityGroup.get('questions').get('smoker_radio').value == 'si'"
+                    class="grid grid-cols-1 md:grid-cols-2">
+                    <div class="mt-3 sm:mt-2 md:mt-8 lg:mt-1 xl:mt-0 mr-3">
+                      <app-number-input label="Duración" name="duration"
+                        [group]="disabilityGroup.get('questions').get('smoke')" placeholder="">
                       </app-number-input>
                     </div>
-                    <div *ngIf="this.disabilityGroup.get('questions').get('smoker_radio').value == 'si'" class="grid grid-cols-1 md:grid-cols-2">
-                      <div class="mt-3 sm:mt-2 md:mt-8 lg:mt-1 xl:mt-0 mr-3" >
-                        <app-number-input label="Duración" name="duration"
-                          [group]="disabilityGroup.get('questions').get('smoke')" placeholder="">
-                        </app-number-input>
-                      </div>
-                      <div class="mt-3 sm:mt-2 md:mt-8 lg:mt-1 xl:mt-0 mr-3">
-                        <app-select class="mr-3" [options]="durationTime" name="timeDuration"
+                    <div class="mt-3 sm:mt-2 md:mt-8 lg:mt-1 xl:mt-0 mr-3">
+                      <app-select class="mr-3" [options]="durationTime" name="timeDuration"
                         [group]="disabilityGroup.get('questions').get('smoke')">
                       </app-select>
-                      </div>
                     </div>
+                  </div>
                   <!-- </div> -->
                   <div class="mt-3 sm:mt-2 md:mt-8 lg:mt-2 xl:mt-0">
                     <div>
@@ -668,27 +708,28 @@
                     <app-select class="md:mr-3" [options]="weightUnit" (selected)="onWeightUnitChange()"
                       [group]="disabilityGroup.get('questions')">
                     </app-select>
-                    <app-number-input (keyup)="getBmi()" class="md:mr-3 mt-3 sm:mt-2 md:mt-0" [group]="disabilityGroup.get('questions')"
-                      label="Peso" name='weight'>
+                    <app-number-input (keyup)="getBmi()" class="md:mr-3 mt-3 sm:mt-2 md:mt-0"
+                      [group]="disabilityGroup.get('questions')" label="Peso" name='weight'>
                     </app-number-input>
-                    <app-select class="md:mr-3 mt-3 sm:mt-2 md:mt-5 lg:mt-0" [options]="heightUnit" (selected)="onHeightUnitChange($event)"
-                      [group]="disabilityGroup.get('questions')">
+                    <app-select class="md:mr-3 mt-3 sm:mt-2 md:mt-5 lg:mt-0" [options]="heightUnit"
+                      (selected)="onHeightUnitChange($event)" [group]="disabilityGroup.get('questions')">
                     </app-select>
                     <div *ngIf="disabilityGroup.get('questions').get('heightUnit').value === 'pie'" class="mr-3 "
                       class="grid grid-cols-1 md:grid-cols-2">
-                      <app-number-input (keyup)="getBmi()" class="md:mr-2 mt-3 sm:mt-2 md:mt-5 lg:mt-0" [group]="disabilityGroup.get('questions')"
-                        label="Pie" name='height'>
+                      <app-number-input (keyup)="getBmi()" class="md:mr-2 mt-3 sm:mt-2 md:mt-5 lg:mt-0"
+                        [group]="disabilityGroup.get('questions')" label="Pie" name='height'>
                       </app-number-input>
-                      <app-number-input (keyup)="getBmi()" class="md:mr-2 mt-3 sm:mt-2 md:mt-5 lg:mt-0" [group]="disabilityGroup.get('questions')"
-                        name='inches' label="Pulgadas">
+                      <app-number-input (keyup)="getBmi()" class="md:mr-2 mt-3 sm:mt-2 md:mt-5 lg:mt-0"
+                        [group]="disabilityGroup.get('questions')" name='inches' label="Pulgadas">
                       </app-number-input>
                     </div>
                     <app-number-input (keyup)="getBmi()"
                       *ngIf="this.disabilityGroup.get('questions').get('heightUnit').value !== 'pie'"
-                      class="md:mr-3 mt-3 sm:mt-2 md:mt-5 lg:mt-0"
-                      [group]="disabilityGroup.get('questions')" label="Altura" name='height'>
+                      class="md:mr-3 mt-3 sm:mt-2 md:mt-5 lg:mt-0" [group]="disabilityGroup.get('questions')"
+                      label="Altura" name='height'>
                     </app-number-input>
-                    <app-input class="md:mr-3 mt-3 sm:mt-2 md:mt-5 lg:mt-0" [group]="disabilityGroup.get('questions')" label="BMI" name='bmiName'>
+                    <app-input class="md:mr-3 mt-3 sm:mt-2 md:mt-5 lg:mt-0" [group]="disabilityGroup.get('questions')"
+                      label="BMI" name='bmiName'>
                     </app-input>
                   </div>
                 </div>
@@ -1522,11 +1563,23 @@
                   </div>
                 </div>
               </div>
-            </ng-template>
+              <mat-action-row class="action-row">
+                <button mat-button class="next-button" (click)="nextStep()" type="button">
+                  Siguiente
+                </button>
+              </mat-action-row>
+            </mat-expansion-panel>
 
-            <!-- Seccion D -->
-            <ng-template #formTemplate>
-
+            <mat-expansion-panel class="ww-mat-expansion" [expanded]="step === 3" (opened)="setStep(3)">
+              <mat-expansion-panel-header class="body-13 icon-blue">
+                <mat-panel-title>
+                  Sección D. Opción del Plan
+                </mat-panel-title>
+                <mat-panel-description>
+                  <div></div>
+                  <div *ngIf="showWarningDot(disabilityGroup.get('plan'))" class="warning-accordion-dot"></div>
+                </mat-panel-description>
+              </mat-expansion-panel-header>
               <div class="ml-3 mt-4">
 
                 <label class="formulary-labels"> Por favor seleccione una de las siguientes opciones para el beneficio
@@ -1574,11 +1627,23 @@
                 </div>
 
               </div>
+              <mat-action-row class="action-row">
+                <button mat-button class="next-button" (click)="nextStep()" type="button">
+                  Siguiente
+                </button>
+              </mat-action-row>
+            </mat-expansion-panel>
 
-            </ng-template>
-
-            <!-- Seccion E -->
-            <ng-template #formTemplate>
+            <mat-expansion-panel class="ww-mat-expansion" [expanded]="step === 4" (opened)="setStep(4)">
+              <mat-expansion-panel-header class="body-13 icon-blue">
+                <mat-panel-title>
+                  Sección E. Beneficiarios Primarios
+                </mat-panel-title>
+                <mat-panel-description>
+                  <div></div>
+                  <div *ngIf="showWarningDot(disabilityGroup.get('main'))" class="warning-accordion-dot"></div>
+                </mat-panel-description>
+              </mat-expansion-panel-header>
               <div class="ml-3 mt-4">
                 <div>
                   <div>
@@ -1695,10 +1760,23 @@
                   </div>
                 </div>
               </div>
-            </ng-template>
+              <mat-action-row class="action-row">
+                <button mat-button class="next-button" (click)="nextStep()" type="button">
+                  Siguiente
+                </button>
+              </mat-action-row>
+            </mat-expansion-panel>
 
-            <!-- Seccion F -->
-            <ng-template #formTemplate>
+            <mat-expansion-panel class="ww-mat-expansion" [expanded]="step === 5" (opened)="setStep(5)">
+              <mat-expansion-panel-header class="body-13 icon-blue">
+                <mat-panel-title>
+                  Beneficiario(s) Contigente(s)
+                </mat-panel-title>
+                <mat-panel-description>
+                  <div></div>
+                  <div *ngIf="showWarningDot(disabilityGroup.get('contingent'))" class="warning-accordion-dot"></div>
+                </mat-panel-description>
+              </mat-expansion-panel-header>
               <div class="ml-3 mt-4">
                 <div>
                   <div>
@@ -1974,27 +2052,25 @@
                   </div>
                 </div>
               </div>
-            </ng-template>
+              <mat-action-row class="action-row">
+                <button mat-button class="next-button" (click)="nextStep()" type="button">
+                  Siguiente
+                </button>
+              </mat-action-row>
+            </mat-expansion-panel>
 
-            <!-- Seccion G -->
-            <!-- <ng-template #formTemplate>
-              <div class="ml-3">
-                <div class="mt-0">
-                  <label style="font-size: 12px;"> En caso de Cesión Bancaria, complete los siguientes datos: </label>
-                </div>
-                <div class='mt-5 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4'>
-                  <app-input class="mr-3" label='Entidad Financiera' name="bankEntity"
-                    [group]="disabilityGroup.get('bankTransfer')"></app-input>
-                  <app-number-input class="mr-3" [group]="disabilityGroup.get('bankTransfer')" label="Suma cedida"
-                    name="amount" min="0"></app-number-input>
-                  <app-number-input class="mr-3" [group]="disabilityGroup.get('bankTransfer')" label="Contacto"
-                    name="contact"></app-number-input>
+            <mat-expansion-panel class="ww-mat-expansion" [expanded]="step === 6" (opened)="setStep(6)">
+              <mat-expansion-panel-header class="body-13 icon-blue">
+                <mat-panel-title>
+                  Archivos Adjuntos
+                </mat-panel-title>
+                <mat-panel-description>
                   <div></div>
-                </div>
-              </div>
-            </ng-template> -->
-            <ng-template #formTemplate>
-              <div class="radio-button-label" style="font-size: 12px !important; max-width: 63vw;">Adjuntar estudios y/o documentos
+                  <div *ngIf="showWarningDot(disabilityGroup.get('files'))" class="warning-accordion-dot"></div>
+                </mat-panel-description>
+              </mat-expansion-panel-header>
+              <div class="radio-button-label" style="font-size: 12px !important; max-width: 63vw;">Adjuntar estudios y/o
+                documentos
               </div>
               <div *ngFor="let studies of filesStudiesArray.controls; let i = index">
                 <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
@@ -2020,27 +2096,52 @@
                   <mat-icon style="color: #18446B">add</mat-icon>
                 </button>
               </div>
-            </ng-template>
-          </app-forms-container>
+              <mat-action-row class="action-row">
+                <button mat-button class="next-button" (click)="nextStep()" type="button">
+                  Siguiente
+                </button>
+              </mat-action-row>
+            </mat-expansion-panel>
+          </mat-accordion>
+
         </div>
       </mat-tab>
       <mat-tab label="Cuestionarios médicos" *ngIf="questionsLength() > 0" class="mat-tab-forms">
-        <app-hypertension *ngIf="disabilityGroup.get('questionnaires').get('solicitudHipertensionArterial')"
-          [form]="disabilityGroup.get('questionnaires').get('solicitudHipertensionArterial')"></app-hypertension>
-        <app-mellitus-diabetes *ngIf="disabilityGroup.get('questionnaires').get('solicitudDiabetes')"
-          [form]="disabilityGroup.get('questionnaires').get('solicitudDiabetes')"></app-mellitus-diabetes>
-        <app-arthritis *ngIf="disabilityGroup.get('questionnaires').get('solicitudArtitris')"
-          [form]="disabilityGroup.get('questionnaires').get('solicitudArtitris')"></app-arthritis>
-        <app-spine *ngIf="disabilityGroup.get('questionnaires').get('columnaVertebralColumnaVertebral')"
-          [form]="disabilityGroup.get('questionnaires').get('columnaVertebralColumnaVertebral')"></app-spine>
-        <app-musculoskeletal *ngIf="disabilityGroup.get('questionnaires').get('solicitudMusculoesqueleticos')"
-          [form]="disabilityGroup.get('questionnaires').get('solicitudMusculoesqueleticos')"></app-musculoskeletal>
-        <app-cardiovascular *ngIf="disabilityGroup.get('questionnaires').get('solicitudCardioVasculares')"
-          [form]="disabilityGroup.get('questionnaires').get('solicitudCardioVasculares')"></app-cardiovascular>
-        <app-renal-urinary *ngIf="disabilityGroup.get('questionnaires').get('solicitudRenales')"
-          [form]="disabilityGroup.get('questionnaires').get('solicitudRenales')"></app-renal-urinary>
-        <app-prostatic *ngIf="disabilityGroup.get('questionnaires').get('solicitudProstatica')"
-          [form]="disabilityGroup.get('questionnaires').get('solicitudProstatica')"></app-prostatic>
+        <mat-accordion #matAccordion="matAccordion" name="matAccordion" class="ww-mat-accordion example-headers-align"
+          [togglePosition]="'before'">
+          <app-hypertension
+            [showWarningDot]="showWarningDot(disabilityGroup.get('questionnaires').get('solicitudHipertensionArterial'))"
+            *ngIf="disabilityGroup.get('questionnaires').get('solicitudHipertensionArterial')"
+            [form]="disabilityGroup.get('questionnaires').get('solicitudHipertensionArterial')"></app-hypertension>
+          <app-mellitus-diabetes
+            [showWarningDot]="showWarningDot(disabilityGroup.get('questionnaires').get('solicitudDiabetes'))"
+            *ngIf="disabilityGroup.get('questionnaires').get('solicitudDiabetes')"
+            [form]="disabilityGroup.get('questionnaires').get('solicitudDiabetes')"></app-mellitus-diabetes>
+          <app-arthritis
+            [showWarningDot]="showWarningDot(disabilityGroup.get('questionnaires').get('solicitudArtitris'))"
+            *ngIf="disabilityGroup.get('questionnaires').get('solicitudArtitris')"
+            [form]="disabilityGroup.get('questionnaires').get('solicitudArtitris')"></app-arthritis>
+          <app-spine
+            [showWarningDot]="showWarningDot(disabilityGroup.get('questionnaires').get('columnaVertebralColumnaVertebral'))"
+            *ngIf="disabilityGroup.get('questionnaires').get('columnaVertebralColumnaVertebral')"
+            [form]="disabilityGroup.get('questionnaires').get('columnaVertebralColumnaVertebral')"></app-spine>
+          <app-musculoskeletal
+            [showWarningDot]="showWarningDot(disabilityGroup.get('questionnaires').get('solicitudMusculoesqueleticos'))"
+            *ngIf="disabilityGroup.get('questionnaires').get('solicitudMusculoesqueleticos')"
+            [form]="disabilityGroup.get('questionnaires').get('solicitudMusculoesqueleticos')"></app-musculoskeletal>
+          <app-cardiovascular
+            [showWarningDot]="showWarningDot(disabilityGroup.get('questionnaires').get('solicitudCardioVasculares'))"
+            *ngIf="disabilityGroup.get('questionnaires').get('solicitudCardioVasculares')"
+            [form]="disabilityGroup.get('questionnaires').get('solicitudCardioVasculares')"></app-cardiovascular>
+          <app-renal-urinary
+            [showWarningDot]="showWarningDot(disabilityGroup.get('questionnaires').get('solicitudRenales'))"
+            *ngIf="disabilityGroup.get('questionnaires').get('solicitudRenales')"
+            [form]="disabilityGroup.get('questionnaires').get('solicitudRenales')"></app-renal-urinary>
+          <app-prostatic
+            [showWarningDot]="showWarningDot(disabilityGroup.get('questionnaires').get('solicitudProstatica'))"
+            *ngIf="disabilityGroup.get('questionnaires').get('solicitudProstatica')"
+            [form]="disabilityGroup.get('questionnaires').get('solicitudProstatica')"></app-prostatic>
+        </mat-accordion>
       </mat-tab>
 
       <!-- <mat-tab label="Política Antilavado">
@@ -2071,15 +2172,27 @@
 
       <mat-tab *ngIf="this.disabilityGroup.get('insured_data').get('pep_radio_insured').value == 'si'"
         label="Conozca a su cliente (Persona Física) - Asegurado">
-        <app-know-your-customer [form]="disabilityGroup.get('insured_data').get('KnowYourCustomer')">
-        </app-know-your-customer>
+        <mat-accordion #matAccordion="matAccordion" name="matAccordion" class="ww-mat-accordion example-headers-align"
+          [togglePosition]="'before'">
+          <app-know-your-customer
+            [showWarningDot]="showWarningDot(disabilityGroup.get('insured_data').get('KnowYourCustomer'))"
+            [form]="disabilityGroup.get('insured_data').get('KnowYourCustomer')">
+          </app-know-your-customer>
+        </mat-accordion>
+
       </mat-tab>
       <div *ngIf="disabilityGroup.get('policyholder')">
         <mat-tab
           *ngIf="this.disabilityGroup.get('policyholder').get('pep_radio_holder').value == 'si' && disabilityGroup.get('policyholder').get('KnowYourCustomer')"
           label="Conozca a su cliente (Persona Física) - Contratante">
-          <app-know-your-customer [form]="disabilityGroup.get('policyholder').get('KnowYourCustomer')">
-          </app-know-your-customer>
+          <mat-accordion #matAccordion="matAccordion" name="matAccordion" class="ww-mat-accordion example-headers-align"
+            [togglePosition]="'before'">
+            <app-know-your-customer
+              [showWarningDot]="showWarningDot(disabilityGroup.get('policyholder').get('KnowYourCustomer'))"
+              [form]="disabilityGroup.get('policyholder').get('KnowYourCustomer')">
+            </app-know-your-customer>
+          </mat-accordion>
+
         </mat-tab>
       </div>
       <!-- <div *ngIf ="this.disabilityGroup.get('insured_data').get('insuredPolicyholderRadio').value == 'no'">
@@ -2093,9 +2206,14 @@
       <div *ngIf="this.disabilityGroup.get('insured_data').get('insuredPolicyholderRadio').value == 'no'">
         <mat-tab *ngIf="this.disabilityGroup.get('insured_data').get('policyholderKnowClientRadio').value == 'si'"
           label="Conozca a su cliente (Persona Jurídica) - Contratante">
-          <app-know-your-client [form]="disabilityGroup.get('insured_data').get('knowYourClient')">
+          <mat-accordion #matAccordion="matAccordion" name="matAccordion" class="ww-mat-accordion example-headers-align"
+            [togglePosition]="'before'">
+            <app-know-your-client
+              [showWarningDot]="showWarningDot(disabilityGroup.get('insured_data').get('knowYourClient'))"
+              [form]="disabilityGroup.get('insured_data').get('knowYourClient')">
+            </app-know-your-client>
+          </mat-accordion>
 
-          </app-know-your-client>
         </mat-tab>
       </div>
     </mat-tab-group>

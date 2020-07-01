@@ -12,6 +12,8 @@ import { FieldConfig } from 'src/app/shared/components/form-components/models/fi
 export class RenalUrinaryComponent implements OnInit {
 
   @Input() form: FormGroup;
+  @Input() showWarningDot: boolean;
+  step: number;
 
   todayDate = new Date();
 
@@ -115,18 +117,16 @@ export class RenalUrinaryComponent implements OnInit {
     this.medicine_property = this.fb.array([this.createFormArray('medicine_array')]);
 
     this.addBasicControls();
-if (  this.form.get('data') &&
+    if (this.form.get('data') &&
       this.form.get('data').get('analysis') &&
-      this.form.get('data').get('analysis').get('analysis_array'))
-{
-  this.analysisFormArray = this.form.get('data').get('analysis').get('analysis_array') as FormArray;
-}if (
-  this.form.get('data') &&
-  this.form.get('data').get('medicine') &&
-  this.form.get('data').get('medicine').get('medicine_array'))
-{
-  this.medicineOperationFormArray = this.form.get('data').get('medicine').get('medicine_array') as FormArray;
-}
+      this.form.get('data').get('analysis').get('analysis_array')) {
+      this.analysisFormArray = this.form.get('data').get('analysis').get('analysis_array') as FormArray;
+    } if (
+      this.form.get('data') &&
+      this.form.get('data').get('medicine') &&
+      this.form.get('data').get('medicine').get('medicine_array')) {
+      this.medicineOperationFormArray = this.form.get('data').get('medicine').get('medicine_array') as FormArray;
+    }
   }
 
   addBasicControls() {
@@ -182,6 +182,14 @@ if (  this.form.get('data') &&
 
   removeFormArray(index, array: any) {
     array.removeAt(index);
+  }
+
+  setStep(index: number) {
+    this.step = index;
+  }
+
+  nextStep(panel?: string) {
+    this.step++;
   }
 
 }

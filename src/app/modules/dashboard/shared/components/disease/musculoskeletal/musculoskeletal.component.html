@@ -1,491 +1,493 @@
-<!-- <div class="uppercase dashboard-page-title pt-10">
-  CUESTIONARIO DE TRASTORNOS MUSCULOESQUELÉTICOS </div> -->
-
-<div>
-
-  <app-forms-container [isQuestionnarie]="false" [titles]="['Cuestionario de trastornos musculoesqueléticos']">
-
-    <ng-template #formTemplate>
-      <div class="pt-12 pb-6 mt-5 ml-1 pr-5 sm:pb-2 md:pb-1 lg:pb-0 xl:pb-0" style="background-color: #F2F2F2">
-        <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 ml-8 pb-3">
-          <div class="mr-3 mt-3 sm:mt-2 md:mt-2 lg:mt-2 xl:mt-0">
-            <app-input [group]="form" label="Nombre del Médico Tratante" name="doctor_name" placeholder="Cruz Jiminián">
-            </app-input>
-          </div>
-          <div class="mr-3 mt-3 sm:mt-2 md:mt-2 lg:mt-2 xl:mt-0">
-            <app-input [group]="form" label="Centro de Salud donde trabaja" name="hospital_name"
-              placeholder="Plaza de la Salud"></app-input>
-          </div>
-          <div class="mr-3 mt-3 sm:mt-2 md:mt-2 lg:mt-2 xl:mt-0">
-            <app-number-input [group]="form" label="Teléfono del Centro" name='hospital_telephone' placeholder="">
-            </app-number-input>
-          </div>
-        </div>
+<mat-expansion-panel class="ww-mat-expansion" [expanded]="step === 30" (opened)="setStep(30)">
+  <mat-expansion-panel-header class="body-13 icon-blue">
+    <mat-panel-title>
+      Cuestionario de trastornos musculoesqueléticos
+    </mat-panel-title>
+    <mat-panel-description>
+      <div></div>
+      <div *ngIf="showWarningDot" class="warning-accordion-dot"></div>
+    </mat-panel-description>
+  </mat-expansion-panel-header>
+  <div class="pt-12 pb-6 mt-5 ml-1 pr-5 sm:pb-2 md:pb-1 lg:pb-0 xl:pb-0" style="background-color: #F2F2F2">
+    <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 ml-8 pb-3">
+      <div class="mr-3 mt-3 sm:mt-2 md:mt-2 lg:mt-2 xl:mt-0">
+        <app-input [group]="form" label="Nombre del Médico Tratante" name="doctor_name" placeholder="Cruz Jiminián">
+        </app-input>
       </div>
+      <div class="mr-3 mt-3 sm:mt-2 md:mt-2 lg:mt-2 xl:mt-0">
+        <app-input [group]="form" label="Centro de Salud donde trabaja" name="hospital_name"
+          placeholder="Plaza de la Salud"></app-input>
+      </div>
+      <div class="mr-3 mt-3 sm:mt-2 md:mt-2 lg:mt-2 xl:mt-0">
+        <app-number-input [group]="form" label="Teléfono del Centro" name='hospital_telephone' placeholder="">
+        </app-number-input>
+      </div>
+    </div>
+  </div>
 
-      <!-- Bloque 1 -->
-      <div class="ml-1 sm:ml-3 md:ml-3 lg:ml-3 xl:ml-3">
+  <!-- Bloque 1 -->
+  <div class="ml-1 sm:ml-3 md:ml-3 lg:ml-3 xl:ml-3">
 
-        <div class="mt-10 mb-10">
+    <div class="mt-10 mb-10">
 
-          <div>
+      <div>
 
-            <label class="radio-button-label"> ¿Padece o ha padecido de algún trastorno esquelético? </label>
-            <app-radio-button
-              class="float-right inline mt-3 sm:mt-3 md:mt-3 lg:mt-0 xl:mt-0 -ml-5 -mr-4 sm:ml-0 sm:-mr-1 md:ml-0 md:mr-0 lg:ml-0 lg:mr-0 xl:ml-0 xl:mr-0"
-              [group]="form.get('data')" [options]="yesNo" name='skeletal_disorder_radio'
-              (selected)="selectChange($event)">
-              <!-- selectChange($event) -->
-            </app-radio-button>
+        <label class="radio-button-label"> ¿Padece o ha padecido de algún trastorno esquelético? </label>
+        <app-radio-button
+          class="float-right inline mt-3 sm:mt-3 md:mt-3 lg:mt-0 xl:mt-0 -ml-5 -mr-4 sm:ml-0 sm:-mr-1 md:ml-0 md:mr-0 lg:ml-0 lg:mr-0 xl:ml-0 xl:mr-0"
+          [group]="form.get('data')" [options]="yesNo" name='skeletal_disorder_radio' (selected)="selectChange($event)">
+          <!-- selectChange($event) -->
+        </app-radio-button>
 
-          </div>
-          <!-- mt-32 sm:mt-32 md:mt-20 lg:mt-20 xl:mt-20 -->
-          <div class=" mt-32 sm:mt-32 md:mt-20 lg:mt-20 xl:mt-20" *ngIf="this.form.get('data').get('disorder')">
+      </div>
+      <!-- mt-32 sm:mt-32 md:mt-20 lg:mt-20 xl:mt-20 -->
+      <div class=" mt-32 sm:mt-32 md:mt-20 lg:mt-20 xl:mt-20" *ngIf="this.form.get('data').get('disorder')">
 
-            <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
+        <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
 
-              <div class="mr-3 mt-3 sm:mt-3 md:mt-10 lg:mt-12 lg:pt-3 xl:mt-10 xl:pt-0">
-                <!-- mt-0 sm:mt-0 md:mt-10 lg:mt-10 xl:mt-10 -->
+          <div class="mr-3 mt-3 sm:mt-3 md:mt-10 lg:mt-12 lg:pt-3 xl:mt-10 xl:pt-0">
+            <!-- mt-0 sm:mt-0 md:mt-10 lg:mt-10 xl:mt-10 -->
 
-                <app-input [group]="form.get('data').get('disorder')"
-                  label="Parte(s) del cuerpo está(n) o fue(ron) afect..." name="bodyPart"
-                  placeholder="Ej.: Epicondilitis"></app-input>
-
-              </div>
-
-              <div class="mr-3 mt-4 sm:mt-3 md:mt-10 lg:mt-12 lg:pt-3 xl:mt-10 xl:pt-0">
-                <!-- mt-0 sm:mt-0 md:mt-10 lg:mt-10 xl:mt-10 -->
-
-                <app-input [group]="form.get('data').get('disorder')" label="Causa del problema o diagnóstico"
-                  name="cause" placeholder="Ej.: Por jugar mucho tenis"></app-input>
-
-              </div>
-
-              <div class="mr-3 mt-4 sm:mt-3 md:mt-4 lg:mt-0 xl:mt-0">
-
-                <div class="mb-5 lg:-mr-3 xl:-mr-16">
-
-                  <label> <strong> Primera vez que notó algún síntoma </strong> </label>
-
-                </div>
-
-                <div>
-
-                  <app-date-picker [group]="form.get('data').get('disorder')" label="Fecha" name='date'>
-                  </app-date-picker>
-
-                </div>
-
-              </div>
-
-            </div>
+            <app-input [group]="form.get('data').get('disorder')"
+              label="Parte(s) del cuerpo está(n) o fue(ron) afect..." name="bodyPart" placeholder="Ej.: Epicondilitis">
+            </app-input>
 
           </div>
 
-        </div>
+          <div class="mr-3 mt-4 sm:mt-3 md:mt-10 lg:mt-12 lg:pt-3 xl:mt-10 xl:pt-0">
+            <!-- mt-0 sm:mt-0 md:mt-10 lg:mt-10 xl:mt-10 -->
 
-        <hr class="ww-divider mt-12 lg:mt-0 xl:mt-0">
+            <app-input [group]="form.get('data').get('disorder')" label="Causa del problema o diagnóstico" name="cause"
+              placeholder="Ej.: Por jugar mucho tenis"></app-input>
 
-        <!-- Bloque 2 -->
+          </div>
 
-        <div class="mt-10">
+          <div class="mr-3 mt-4 sm:mt-3 md:mt-4 lg:mt-0 xl:mt-0">
 
-          <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-4 xl:grid-cols-4">
+            <div class="mb-5 lg:-mr-3 xl:-mr-16">
 
-            <div class="mr-0 sm:mr-0 md:-mr-20 lg:-mr-20 xl:mr-0">
-
-              <div *ngIf="!(this.form.get('data').get('date'))" class="">
-                <label class="radio-button-label"> ¿Está totalmente recuperado? </label>
-              </div>
-
-              <div *ngIf="(this.form.get('data').get('date'))" class="lg:mt-12 xl:mt-12 pt-2">
-                <label class="radio-button-label"> ¿Está totalmente recuperado? </label>
-              </div>
+              <label> <strong> Primera vez que notó algún síntoma </strong> </label>
 
             </div>
 
             <div>
-              <!-- Espacio -->
-            </div>
 
-            <div *ngIf="!(this.form.get('data').get('date'))">
-              <!-- Espacio -->
-            </div>
-
-            <div
-              class="mt-3 sm:mt-3 md:mt-0 -ml-5 -mr-4 sm:ml-0 sm:-mr-1 md:ml-0 md:mr-0 lg:ml-0 lg:mr-0 xl:ml-0 xl:mr-0">
-
-              <div *ngIf="!(this.form.get('data').get('date'))">
-                <app-radio-button class="float-right inline" [group]="form.get('data')" [options]="yesNo"
-                  name='recovered_radio' (selected)=selectChange($event)>
-                  <!-- selectChange($event) -->
-                </app-radio-button>
-              </div>
-
-              <div *ngIf="(this.form.get('data').get('date'))" class="lg:mt-12 xl:mt-12 pt-2">
-                <app-radio-button class="float-right inline" [group]="form.get('data')" [options]="yesNo"
-                  name='recovered_radio' (selected)=selectChange($event)>
-                  <!-- selectChange($event) -->
-                </app-radio-button>
-              </div>
+              <app-date-picker [group]="form.get('data').get('disorder')" label="Fecha" name='date'>
+              </app-date-picker>
 
             </div>
-
-            <div class="pl-0 lg:pl-6" *ngIf="this.form.get('data').get('date')">
-
-              <div class="pr-3 mt-4 sm:mt-3 md:mt-0 lg:mt-0 xl:mt-0 md:w-1/2 lg:mr-0 lg:w-full xl:mr-0 xl:w-full">
-
-                <div class="mb-5 lg:-mr-3 xl:-mr-16">
-
-                  <label> <strong> Desde cuándo </strong> </label>
-
-                </div>
-
-                <div>
-
-                  <app-date-picker [group]="form.get('data')" label="Fecha" name='date'> </app-date-picker>
-
-                </div>
-
-              </div>
-
-            </div>
-
-          </div>
-
-          <div class="" *ngIf="this.form.get('data').get('areaText')">
-
-            <app-text-area label="Síntomas residuales" name='residual_symptoms'
-              [group]="form.get('data').get('areaText')"></app-text-area>
-
-          </div>
-
-        </div>
-
-        <hr class="ww-divider mb-1 sm:mb-1 md:mb-1 mt-2">
-
-        <!-- Bloque 3 -->
-        <div class="mt-10">
-
-          <div>
-            <label class="radio-button-label"> ¿Ha habido más de un episodio? </label>
-            <app-radio-button
-              class="float-right inline mt-3 sm:mt-3 md:mt-3 lg:mt-0 xl:mt-0 -ml-5 -mr-4 sm:ml-0 sm:-mr-1 md:ml-0 md:mr-0 lg:ml-0 lg:mr-0 xl:ml-0 xl:mr-0"
-              [group]="form.get('data')" [options]="yesNo" name='episode_radio' (selected)="selectChange($event)">
-              <!-- (selected)="selectChange($event)" -->
-            </app-radio-button>
-          </div>
-
-          <div>
-
-            <div class="mt-32 sm:mt-32 md:mt-24 lg:mt-20 xl:mt-20" *ngIf="this.form.get('data').get('episode_radio').value == 'si'">
-              <!-- *ngIf="episodeFormArray" -->
-
-              <div *ngFor=" let elements of episodeFormArray.controls; let in = index">
-
-                <div
-                  class="grid grid-cols-1 sm:grid-cols-1: md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 md:mb-4 lg:mb-0 xl:mb-0">
-
-                  <div class="mr-3">
-
-                    <div class="mb-4">
-
-                      <label> <strong> Fecha del episodio </strong> </label>
-
-                    </div>
-
-                    <div>
-
-                      <app-date-picker [group]="form.get('data').get('episode').get('episode_array').get(in.toString())"
-                        label="Fecha" name='date'> </app-date-picker>
-
-                    </div>
-
-                  </div>
-
-                  <div
-                    class=" grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 lg:mt-8 lg:pt-1 lg:grid-cols-3 xl:mt-8 xl:pt-1 xl:grid-cols-3">
-
-                    <div class="mr-3">
-
-                      <app-number-input
-                        [group]="form.get('data').get('episode').get('episode_array').get(in.toString())"
-                        label="Duración" name="duration" placeholder="Ej.: 5 minutos, 10 días, 1 hora, 2 meses, etc."
-                        min="1">
-                      </app-number-input>
-
-                    </div>
-
-                    <div class="mr-3 mb-2 sm:mb-0 md:mb-0 lg:mb-0 xl:mb-0">
-
-                      <app-select name="dayMonthYear" [options]="timeSelect"
-                        [group]="form.get('data').get('episode').get('episode_array').get(in.toString())">
-                      </app-select>
-
-                    </div>
-
-                    <div
-                      class="pt-1 grid grid-cols-3 sm:grid-cols-3 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 mb-6 sm:mb-5 md:mb-0 lg:mb-0 xl:mb-0 ">
-
-                      <div class="ml-1 sm:ml-0 md:ml-0 lg:ml-1 xl:ml-1" *ngIf="in == (episodeFormArray.controls.length - 1)">
-
-                        <button mat-mini-fab aria-label="Agregar análisis"
-                          (click)=" addFormArray(episodeFormArray,'episode_array') " type="button"
-                          class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
-                          <mat-icon style="color: #18446B">add</mat-icon>
-                        </button>
-
-                      </div>
-
-                      <div class="ml-1 sm:ml-0 md:ml-0 lg:ml-1 xl:ml-1">
-
-                        <button *ngIf="episodeFormArray.controls.length > 1" mat-mini-fab aria-label="Eliminar análisis"
-                          (click)=" removeFormArray(in, episodeFormArray) " type="button"
-                          class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
-                          <mat-icon style="color: #18446B">remove</mat-icon>
-                        </button>
-                      </div>
-
-                    </div>
-
-
-                  </div>
-
-                </div>
-
-
-              </div>
-
-            </div>
-
-          </div>
-
-        </div>
-
-        <hr class="ww-divider mt-12 sm:mt-12 md:mt-12 lg:mt-8 xl:mt-8">
-
-        <!-- Bloque 4 -->
-
-        <div class="mt-10">
-
-          <div>
-
-            <label class="radio-button-label"> ¿Fue necesaria una cirugía o se ha planeado una? </label>
-            <app-radio-button
-              class="float-right inline mt-3 sm:mt-3 md:mt-3 lg:mt-0 xl:mt-0 -ml-5 -mr-4 sm:ml-0 sm:-mr-1 md:ml-0 md:mr-0 lg:ml-0 lg:mr-0 xl:ml-0 xl:mr-0"
-              [group]="form.get('data')" [options]="yesNo" name='surgery_radio' (selected)="selectChange($event)">
-              <!-- (selected)="selectChange($event)" -->
-            </app-radio-button>
-
-          </div>
-
-          <div>
-
-            <div class="mt-32 sm:mt-32 md:mt-24 lg:mt-20 xl:mt-20" *ngIf="this.form.get('data').get('surgery_radio').value == 'si'">
-              <!-- *ngIf="episodeFormArray" -->
-
-              <div *ngFor=" let elements of surgeryFormArray.controls; let in = index">
-
-                <div
-                  class="grid grid-cols-1 sm:grid-cols-1: md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 md:mb-4 lg:mb-0 xl:mb-0">
-
-                  <div class="mb-3 sm:mb-3 md:mb-0 lg:mb-0 xl:mb-0 mr-3">
-
-                    <div class="mb-4 -mr-4">
-
-                      <label> <strong> Fecha de la cirugía </strong> </label>
-
-                    </div>
-
-                    <div>
-
-                      <app-date-picker [group]="form.get('data').get('surgery').get('surgery_array').get(in.toString())"
-                        label="Fecha" name='date'> </app-date-picker>
-
-                    </div>
-
-                  </div>
-
-                  <div class="mr-3 mb-3 sm:mb-3 md:mt-8 md:pt-1 lg:mt-8 lg:pt-1 xl:mt-8 xl:pt-1">
-
-                    <app-input [group]="form.get('data').get('surgery').get('surgery_array').get(in.toString())"
-                      label="Cirugía" name="name" placeholder="Ej.: Cirugía Reconstructiva"></app-input>
-
-                  </div>
-
-                  <div class="mr-3 mb-3  sm:mb-3 xl:mt-8 xl:pt-1">
-
-                    <app-input [group]="form.get('data').get('surgery').get('surgery_array').get(in.toString())"
-                      label="Lugar" name="place" placeholder="Ej.: Plaza de la Salud"></app-input>
-
-                  </div>
-
-                </div>
-
-                <div class="mb-8 -mx-2 sm:mb-8 sm:mx-0 md:mb-8 md:mx-0 lg:mb-8 lg:mx-0 lg:mt-2 xl:mx-0 xl:mb-8">
-
-                  <button *ngIf="in == (surgeryFormArray.controls.length - 1)" mat-mini-fab aria-label="Agregar análisis"
-                    (click)=" addFormArray(surgeryFormArray,'surgery_array') " type="button"
-                    class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
-                    <mat-icon style="color: #18446B">add</mat-icon>
-                  </button>
-
-                  <button *ngIf="surgeryFormArray.controls.length > 1" mat-mini-fab aria-label="Eliminar análisis"
-                    (click)=" removeFormArray(in, surgeryFormArray) " type="button" class="dashboard-toolbar-buttons"
-                    style="border: 1px rgb(197, 197, 197) solid">
-                    <mat-icon style="color: #18446B">remove</mat-icon>
-                  </button>
-
-                </div>
-
-              </div>
-
-            </div>
-
-          </div>
-
-
-        </div>
-
-        <hr class="ww-divider mt-12 sm:mt-12 md:mt-12 lg:mt-8 xl:mt-8">
-
-        <!-- Bloque 5 -->
-
-        <div class="mt-10">
-
-          <div>
-
-            <label class=""> ¿Qué otro tratamiento se le ha aconsejado? (e.g. medicamentos antiinflamatorios,
-              calmantes para el dolor, fisioterapia, cirugía, entre otros) <small> (Sí no se le ha indicado más
-                tratamiento, simplemente ponga <strong> "n/a" </strong> en los campos de a continuación) </small>
-            </label>
-
-          </div>
-
-          <div>
-
-            <div class="mt-16 sm:mt-16 md:mt-12 lg:mt-10 xl:mt-10" *ngIf="therapyFormArray">
-              <!-- *ngIf="episodeFormArray" -->
-
-              <div *ngFor=" let elements of therapyFormArray.controls; let in = index">
-
-                <div
-                  class="grid grid-cols-1 sm:grid-cols-1: md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4 md:mb-4 lg:mb-0 xl:mb-0">
-
-                  <div class="sm:mb-1 md:mb-0 lg:mb-0 xl:mb-0">
-                    <!-- sm:mb-3 md:mb-0 lg:mb-0 xl:mb-0 mr-3 -->
-
-                    <div class="mb-4 -mr-4">
-                      <!-- -mr-4 -->
-
-                      <label> <strong> Fecha del tratamiento </strong> </label>
-
-                    </div>
-
-                    <div class="mr-3">
-
-                      <app-date-picker [group]="form.get('data').get('therapy').get('therapy_array').get(in.toString())"
-                        label="Fecha" name='date'> </app-date-picker>
-
-                    </div>
-
-                  </div>
-
-                  <div class="mr-3 mt-8 md:mt-8 md:pt-1 lg:mt-8 lg:pt-1 xl:mt-8 xl:pt-1">
-                    <!-- mb-3 sm:mb-3 md:mt-8 md:pt-1 lg:mt-8 lg:pt-1 xl:mt-8 xl:pt-1 -->
-
-                    <app-input [group]="form.get('data').get('therapy').get('therapy_array').get(in.toString())"
-                      label="Nombre tratamiento" name="name"
-                      placeholder="Ej.: Reposo relativo, relajantes musculares, etc..."></app-input>
-
-                  </div>
-
-                  <div class="mr-3 mt-8 sm:mt-3 md:mt-5 md:pt-0 lg:mt-8 lg:pt-1 xl:mt-8 xl:pt-1">
-                    <!-- mb-3  sm:mb-3 xl:mt-8 xl:pt-1 -->
-
-                    <app-input [group]="form.get('data').get('therapy').get('therapy_array').get(in.toString())"
-                      label="Dosis" name="dose" placeholder="Ej.: 10 ml, 5 mg, etc..."></app-input>
-
-                  </div>
-
-                  <div class="mr-3 mt-8 sm:mt-3 md:mt-5 md:pt-0 lg:mt-8 lg:pt-1 xl:mt-8 xl:pt-1">
-                    <!-- mb-3  sm:mb-3 xl:mt-8 xl:pt-1 -->
-
-                    <app-input [group]="form.get('data').get('therapy').get('therapy_array').get(in.toString())"
-                      label="Otros" name="others"
-                      placeholder="Ejercicios para relajar el cuerpo, cirugía, inyecciones, etc."></app-input>
-
-                  </div>
-
-                </div>
-
-                <div class="mt-4 -mx-2 mb-8 sm:mb-8 sm:mx-0 md:mb-8 md:mx-0 lg:mb-8 lg:mx-0 xl:mb-8 xl:mx-0">
-                  <!-- mb-8  sm:mb-8 sm:mx-0 md:mb-8 md:mx-0 lg:mb-8 lg:mx-0 lg:mt-2 xl:mx-0 xl:mb-8 -->
-
-                  <button *ngIf="in == (therapyFormArray.controls.length - 1)" mat-mini-fab aria-label="Agregar análisis"
-                    (click)=" addFormArray(therapyFormArray,'therapy_array') " type="button"
-                    class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
-                    <mat-icon style="color: #18446B">add</mat-icon>
-                  </button>
-
-                  <button *ngIf="therapyFormArray.controls.length > 1" mat-mini-fab aria-label="Eliminar análisis"
-                    (click)=" removeFormArray(in, therapyFormArray) " type="button" class="dashboard-toolbar-buttons"
-                    style="border: 1px rgb(197, 197, 197) solid">
-                    <mat-icon style="color: #18446B">remove</mat-icon>
-                  </button>
-
-                </div>
-
-              </div>
-
-            </div>
-
-          </div>
-
-        </div>
-
-        <hr class="ww-divider mt-12 sm:mt-12 md:mt-12 lg:mt-8 xl:mt-8">
-
-        <!-- Bloque 6 -->
-
-        <div class="mt-10">
-
-          <label> Proporcione cualquier otra información adicional que considere útil para la tramitación de su
-            solicitud de seguro. <small> (Sí no tiene más información que agregar, simplemente ponga <strong> "n/a"
-              </strong> en el campo a continuación) </small> </label>
-
-          <div class="mt-8">
-
-            <app-text-area label="Texto" name='aditional_info' [group]="form.get('data')"></app-text-area>
-
-          </div>
-
-        </div>
-
-        <hr class="ww-divider mt-12 sm:mt-12 md:mt-12 lg:mt-8 xl:mt-8">
-
-        <!-- Bloque 7 -->
-        <!-- <div class="pt-5 pl-3 pb-5 mt-10 ml-1 -mr-2 sm:-mr-0 md:mr-0 lg:mr-0 xl:mr-0" style="background-color: #E6E7E8;">
-
-                    <div class="pl-1 pr-1 sm:pl-2 sm:pr-2 md:pl-8 md:pr-6 lg:pl-8 lg:pr-6 xl:pl-8 pr-6"> -->
-        <div class="pt-5 pl-3 pb-5 mt-10 ml-1 -mr-2 sm:-mr-0 md:mr-0 lg:mr-0 xl:mr-0"
-          style="background-color: #E6E7E8;">
-
-          <div class="pl-1 pr-1 sm:pl-2 sm:pr-2 md:pl-8 md:pr-6 lg:pl-8 lg:pr-6 xl:pl-8 pr-6">
-
-            <label style="font-size: 12px;"> Declaro bajo la más solemne fe del juramento que los datos suministrados
-              anteriormente y contenidos en este cuestionario son verdaderos, correctos y actualizados y que no he
-              omitido ni alterado ninguna información, requerida explícita o implícitamente en este cuestionario.
-              Reconozco que el haber completado y ﬁrmado el presente cuestionario no supone la aceptación de
-              WorldWide, hasta tanto realice la debida evaluación y aprobación del mismo. </label>
 
           </div>
 
         </div>
 
       </div>
-    </ng-template>
 
-  </app-forms-container>
+    </div>
 
-</div>
+    <hr class="ww-divider mt-12 lg:mt-0 xl:mt-0">
+
+    <!-- Bloque 2 -->
+
+    <div class="mt-10">
+
+      <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-4 xl:grid-cols-4">
+
+        <div class="mr-0 sm:mr-0 md:-mr-20 lg:-mr-20 xl:mr-0">
+
+          <div *ngIf="!(this.form.get('data').get('date'))" class="">
+            <label class="radio-button-label"> ¿Está totalmente recuperado? </label>
+          </div>
+
+          <div *ngIf="(this.form.get('data').get('date'))" class="lg:mt-12 xl:mt-12 pt-2">
+            <label class="radio-button-label"> ¿Está totalmente recuperado? </label>
+          </div>
+
+        </div>
+
+        <div>
+          <!-- Espacio -->
+        </div>
+
+        <div *ngIf="!(this.form.get('data').get('date'))">
+          <!-- Espacio -->
+        </div>
+
+        <div class="mt-3 sm:mt-3 md:mt-0 -ml-5 -mr-4 sm:ml-0 sm:-mr-1 md:ml-0 md:mr-0 lg:ml-0 lg:mr-0 xl:ml-0 xl:mr-0">
+
+          <div *ngIf="!(this.form.get('data').get('date'))">
+            <app-radio-button class="float-right inline" [group]="form.get('data')" [options]="yesNo"
+              name='recovered_radio' (selected)=selectChange($event)>
+              <!-- selectChange($event) -->
+            </app-radio-button>
+          </div>
+
+          <div *ngIf="(this.form.get('data').get('date'))" class="lg:mt-12 xl:mt-12 pt-2">
+            <app-radio-button class="float-right inline" [group]="form.get('data')" [options]="yesNo"
+              name='recovered_radio' (selected)=selectChange($event)>
+              <!-- selectChange($event) -->
+            </app-radio-button>
+          </div>
+
+        </div>
+
+        <div class="pl-0 lg:pl-6" *ngIf="this.form.get('data').get('date')">
+
+          <div class="pr-3 mt-4 sm:mt-3 md:mt-0 lg:mt-0 xl:mt-0 md:w-1/2 lg:mr-0 lg:w-full xl:mr-0 xl:w-full">
+
+            <div class="mb-5 lg:-mr-3 xl:-mr-16">
+
+              <label> <strong> Desde cuándo </strong> </label>
+
+            </div>
+
+            <div>
+
+              <app-date-picker [group]="form.get('data')" label="Fecha" name='date'> </app-date-picker>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="" *ngIf="this.form.get('data').get('areaText')">
+
+        <app-text-area label="Síntomas residuales" name='residual_symptoms' [group]="form.get('data').get('areaText')">
+        </app-text-area>
+
+      </div>
+
+    </div>
+
+    <hr class="ww-divider mb-1 sm:mb-1 md:mb-1 mt-2">
+
+    <!-- Bloque 3 -->
+    <div class="mt-10">
+
+      <div>
+        <label class="radio-button-label"> ¿Ha habido más de un episodio? </label>
+        <app-radio-button
+          class="float-right inline mt-3 sm:mt-3 md:mt-3 lg:mt-0 xl:mt-0 -ml-5 -mr-4 sm:ml-0 sm:-mr-1 md:ml-0 md:mr-0 lg:ml-0 lg:mr-0 xl:ml-0 xl:mr-0"
+          [group]="form.get('data')" [options]="yesNo" name='episode_radio' (selected)="selectChange($event)">
+          <!-- (selected)="selectChange($event)" -->
+        </app-radio-button>
+      </div>
+
+      <div>
+
+        <div class="mt-32 sm:mt-32 md:mt-24 lg:mt-20 xl:mt-20"
+          *ngIf="this.form.get('data').get('episode_radio').value == 'si'">
+          <!-- *ngIf="episodeFormArray" -->
+
+          <div *ngFor=" let elements of episodeFormArray.controls; let in = index">
+
+            <div
+              class="grid grid-cols-1 sm:grid-cols-1: md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 md:mb-4 lg:mb-0 xl:mb-0">
+
+              <div class="mr-3">
+
+                <div class="mb-4">
+
+                  <label> <strong> Fecha del episodio </strong> </label>
+
+                </div>
+
+                <div>
+
+                  <app-date-picker [group]="form.get('data').get('episode').get('episode_array').get(in.toString())"
+                    label="Fecha" name='date'> </app-date-picker>
+
+                </div>
+
+              </div>
+
+              <div
+                class=" grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 lg:mt-8 lg:pt-1 lg:grid-cols-3 xl:mt-8 xl:pt-1 xl:grid-cols-3">
+
+                <div class="mr-3">
+
+                  <app-number-input [group]="form.get('data').get('episode').get('episode_array').get(in.toString())"
+                    label="Duración" name="duration" placeholder="Ej.: 5 minutos, 10 días, 1 hora, 2 meses, etc."
+                    min="1">
+                  </app-number-input>
+
+                </div>
+
+                <div class="mr-3 mb-2 sm:mb-0 md:mb-0 lg:mb-0 xl:mb-0">
+
+                  <app-select name="dayMonthYear" [options]="timeSelect"
+                    [group]="form.get('data').get('episode').get('episode_array').get(in.toString())">
+                  </app-select>
+
+                </div>
+
+                <div
+                  class="pt-1 grid grid-cols-3 sm:grid-cols-3 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 mb-6 sm:mb-5 md:mb-0 lg:mb-0 xl:mb-0 ">
+
+                  <div class="ml-1 sm:ml-0 md:ml-0 lg:ml-1 xl:ml-1"
+                    *ngIf="in == (episodeFormArray.controls.length - 1)">
+
+                    <button mat-mini-fab aria-label="Agregar análisis"
+                      (click)=" addFormArray(episodeFormArray,'episode_array') " type="button"
+                      class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
+                      <mat-icon style="color: #18446B">add</mat-icon>
+                    </button>
+
+                  </div>
+
+                  <div class="ml-1 sm:ml-0 md:ml-0 lg:ml-1 xl:ml-1">
+
+                    <button *ngIf="episodeFormArray.controls.length > 1" mat-mini-fab aria-label="Eliminar análisis"
+                      (click)=" removeFormArray(in, episodeFormArray) " type="button" class="dashboard-toolbar-buttons"
+                      style="border: 1px rgb(197, 197, 197) solid">
+                      <mat-icon style="color: #18446B">remove</mat-icon>
+                    </button>
+                  </div>
+
+                </div>
+
+
+              </div>
+
+            </div>
+
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <hr class="ww-divider mt-12 sm:mt-12 md:mt-12 lg:mt-8 xl:mt-8">
+
+    <!-- Bloque 4 -->
+
+    <div class="mt-10">
+
+      <div>
+
+        <label class="radio-button-label"> ¿Fue necesaria una cirugía o se ha planeado una? </label>
+        <app-radio-button
+          class="float-right inline mt-3 sm:mt-3 md:mt-3 lg:mt-0 xl:mt-0 -ml-5 -mr-4 sm:ml-0 sm:-mr-1 md:ml-0 md:mr-0 lg:ml-0 lg:mr-0 xl:ml-0 xl:mr-0"
+          [group]="form.get('data')" [options]="yesNo" name='surgery_radio' (selected)="selectChange($event)">
+          <!-- (selected)="selectChange($event)" -->
+        </app-radio-button>
+
+      </div>
+
+      <div>
+
+        <div class="mt-32 sm:mt-32 md:mt-24 lg:mt-20 xl:mt-20"
+          *ngIf="this.form.get('data').get('surgery_radio').value == 'si'">
+          <!-- *ngIf="episodeFormArray" -->
+
+          <div *ngFor=" let elements of surgeryFormArray.controls; let in = index">
+
+            <div
+              class="grid grid-cols-1 sm:grid-cols-1: md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 md:mb-4 lg:mb-0 xl:mb-0">
+
+              <div class="mb-3 sm:mb-3 md:mb-0 lg:mb-0 xl:mb-0 mr-3">
+
+                <div class="mb-4 -mr-4">
+
+                  <label> <strong> Fecha de la cirugía </strong> </label>
+
+                </div>
+
+                <div>
+
+                  <app-date-picker [group]="form.get('data').get('surgery').get('surgery_array').get(in.toString())"
+                    label="Fecha" name='date'> </app-date-picker>
+
+                </div>
+
+              </div>
+
+              <div class="mr-3 mb-3 sm:mb-3 md:mt-8 md:pt-1 lg:mt-8 lg:pt-1 xl:mt-8 xl:pt-1">
+
+                <app-input [group]="form.get('data').get('surgery').get('surgery_array').get(in.toString())"
+                  label="Cirugía" name="name" placeholder="Ej.: Cirugía Reconstructiva"></app-input>
+
+              </div>
+
+              <div class="mr-3 mb-3  sm:mb-3 xl:mt-8 xl:pt-1">
+
+                <app-input [group]="form.get('data').get('surgery').get('surgery_array').get(in.toString())"
+                  label="Lugar" name="place" placeholder="Ej.: Plaza de la Salud"></app-input>
+
+              </div>
+
+            </div>
+
+            <div class="mb-8 -mx-2 sm:mb-8 sm:mx-0 md:mb-8 md:mx-0 lg:mb-8 lg:mx-0 lg:mt-2 xl:mx-0 xl:mb-8">
+
+              <button *ngIf="in == (surgeryFormArray.controls.length - 1)" mat-mini-fab aria-label="Agregar análisis"
+                (click)=" addFormArray(surgeryFormArray,'surgery_array') " type="button"
+                class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
+                <mat-icon style="color: #18446B">add</mat-icon>
+              </button>
+
+              <button *ngIf="surgeryFormArray.controls.length > 1" mat-mini-fab aria-label="Eliminar análisis"
+                (click)=" removeFormArray(in, surgeryFormArray) " type="button" class="dashboard-toolbar-buttons"
+                style="border: 1px rgb(197, 197, 197) solid">
+                <mat-icon style="color: #18446B">remove</mat-icon>
+              </button>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+    </div>
+
+    <hr class="ww-divider mt-12 sm:mt-12 md:mt-12 lg:mt-8 xl:mt-8">
+
+    <!-- Bloque 5 -->
+
+    <div class="mt-10">
+
+      <div>
+
+        <label class=""> ¿Qué otro tratamiento se le ha aconsejado? (e.g. medicamentos antiinflamatorios,
+          calmantes para el dolor, fisioterapia, cirugía, entre otros) <small> (Sí no se le ha indicado más
+            tratamiento, simplemente ponga <strong> "n/a" </strong> en los campos de a continuación) </small>
+        </label>
+
+      </div>
+
+      <div>
+
+        <div class="mt-16 sm:mt-16 md:mt-12 lg:mt-10 xl:mt-10" *ngIf="therapyFormArray">
+          <!-- *ngIf="episodeFormArray" -->
+
+          <div *ngFor=" let elements of therapyFormArray.controls; let in = index">
+
+            <div
+              class="grid grid-cols-1 sm:grid-cols-1: md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4 md:mb-4 lg:mb-0 xl:mb-0">
+
+              <div class="sm:mb-1 md:mb-0 lg:mb-0 xl:mb-0">
+                <!-- sm:mb-3 md:mb-0 lg:mb-0 xl:mb-0 mr-3 -->
+
+                <div class="mb-4 -mr-4">
+                  <!-- -mr-4 -->
+
+                  <label> <strong> Fecha del tratamiento </strong> </label>
+
+                </div>
+
+                <div class="mr-3">
+
+                  <app-date-picker [group]="form.get('data').get('therapy').get('therapy_array').get(in.toString())"
+                    label="Fecha" name='date'> </app-date-picker>
+
+                </div>
+
+              </div>
+
+              <div class="mr-3 mt-8 md:mt-8 md:pt-1 lg:mt-8 lg:pt-1 xl:mt-8 xl:pt-1">
+                <!-- mb-3 sm:mb-3 md:mt-8 md:pt-1 lg:mt-8 lg:pt-1 xl:mt-8 xl:pt-1 -->
+
+                <app-input [group]="form.get('data').get('therapy').get('therapy_array').get(in.toString())"
+                  label="Nombre tratamiento" name="name"
+                  placeholder="Ej.: Reposo relativo, relajantes musculares, etc..."></app-input>
+
+              </div>
+
+              <div class="mr-3 mt-8 sm:mt-3 md:mt-5 md:pt-0 lg:mt-8 lg:pt-1 xl:mt-8 xl:pt-1">
+                <!-- mb-3  sm:mb-3 xl:mt-8 xl:pt-1 -->
+
+                <app-input [group]="form.get('data').get('therapy').get('therapy_array').get(in.toString())"
+                  label="Dosis" name="dose" placeholder="Ej.: 10 ml, 5 mg, etc..."></app-input>
+
+              </div>
+
+              <div class="mr-3 mt-8 sm:mt-3 md:mt-5 md:pt-0 lg:mt-8 lg:pt-1 xl:mt-8 xl:pt-1">
+                <!-- mb-3  sm:mb-3 xl:mt-8 xl:pt-1 -->
+
+                <app-input [group]="form.get('data').get('therapy').get('therapy_array').get(in.toString())"
+                  label="Otros" name="others"
+                  placeholder="Ejercicios para relajar el cuerpo, cirugía, inyecciones, etc."></app-input>
+
+              </div>
+
+            </div>
+
+            <div class="mt-4 -mx-2 mb-8 sm:mb-8 sm:mx-0 md:mb-8 md:mx-0 lg:mb-8 lg:mx-0 xl:mb-8 xl:mx-0">
+              <!-- mb-8  sm:mb-8 sm:mx-0 md:mb-8 md:mx-0 lg:mb-8 lg:mx-0 lg:mt-2 xl:mx-0 xl:mb-8 -->
+
+              <button *ngIf="in == (therapyFormArray.controls.length - 1)" mat-mini-fab aria-label="Agregar análisis"
+                (click)=" addFormArray(therapyFormArray,'therapy_array') " type="button"
+                class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
+                <mat-icon style="color: #18446B">add</mat-icon>
+              </button>
+
+              <button *ngIf="therapyFormArray.controls.length > 1" mat-mini-fab aria-label="Eliminar análisis"
+                (click)=" removeFormArray(in, therapyFormArray) " type="button" class="dashboard-toolbar-buttons"
+                style="border: 1px rgb(197, 197, 197) solid">
+                <mat-icon style="color: #18446B">remove</mat-icon>
+              </button>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <hr class="ww-divider mt-12 sm:mt-12 md:mt-12 lg:mt-8 xl:mt-8">
+
+    <!-- Bloque 6 -->
+
+    <div class="mt-10">
+
+      <label> Proporcione cualquier otra información adicional que considere útil para la tramitación de su
+        solicitud de seguro. <small> (Sí no tiene más información que agregar, simplemente ponga <strong> "n/a"
+          </strong> en el campo a continuación) </small> </label>
+
+      <div class="mt-8">
+
+        <app-text-area label="Texto" name='aditional_info' [group]="form.get('data')"></app-text-area>
+
+      </div>
+
+    </div>
+
+    <hr class="ww-divider mt-12 sm:mt-12 md:mt-12 lg:mt-8 xl:mt-8">
+
+    <!-- Bloque 7 -->
+    <!-- <div class="pt-5 pl-3 pb-5 mt-10 ml-1 -mr-2 sm:-mr-0 md:mr-0 lg:mr-0 xl:mr-0" style="background-color: #E6E7E8;">
+
+                    <div class="pl-1 pr-1 sm:pl-2 sm:pr-2 md:pl-8 md:pr-6 lg:pl-8 lg:pr-6 xl:pl-8 pr-6"> -->
+    <div class="pt-5 pl-3 pb-5 mt-10 ml-1 -mr-2 sm:-mr-0 md:mr-0 lg:mr-0 xl:mr-0" style="background-color: #E6E7E8;">
+
+      <div class="pl-1 pr-1 sm:pl-2 sm:pr-2 md:pl-8 md:pr-6 lg:pl-8 lg:pr-6 xl:pl-8 pr-6">
+
+        <label style="font-size: 12px;"> Declaro bajo la más solemne fe del juramento que los datos suministrados
+          anteriormente y contenidos en este cuestionario son verdaderos, correctos y actualizados y que no he
+          omitido ni alterado ninguna información, requerida explícita o implícitamente en este cuestionario.
+          Reconozco que el haber completado y ﬁrmado el presente cuestionario no supone la aceptación de
+          WorldWide, hasta tanto realice la debida evaluación y aprobación del mismo. </label>
+
+      </div>
+
+    </div>
+
+  </div>
+  <mat-action-row class="action-row">
+    <button mat-button class="next-button" (click)="nextStep()" type="button">
+      Cerrar
+    </button>
+  </mat-action-row>
+</mat-expansion-panel>

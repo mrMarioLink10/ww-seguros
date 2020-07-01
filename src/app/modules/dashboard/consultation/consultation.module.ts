@@ -12,9 +12,13 @@ import {MaterialModule} from '../../../shared/modules/material.module';
 import { BillsFilterComponent } from './bills-content/bills-filter/bills-filter.component';
 import { BillsTableComponent } from './bills-content/bills-table/bills-table.component';
 import { PolicyDetailsComponent } from './policy-details/policy-details/policy-details.component';
+import { BillsTableConsultComponent } from './bills-content/bills-table-consult/bills-table-consult.component';
+import { BillsFilterConsultComponent } from './bills-content/bills-filter-consult/bills-filter-consult.component';
 
 @NgModule({
-  declarations: [ConsultationComponent, ConsultHeaderComponent, PolicyFilterComponent, PolicyTableComponent, BillsFilterComponent, BillsTableComponent, PolicyDetailsComponent],
+  declarations: [ConsultationComponent, ConsultHeaderComponent, PolicyFilterComponent,
+    PolicyTableComponent, BillsFilterComponent, BillsTableComponent, PolicyDetailsComponent,
+    BillsTableConsultComponent, BillsFilterConsultComponent],
   imports: [
     CommonModule,
     ConsultationRoutingModule,

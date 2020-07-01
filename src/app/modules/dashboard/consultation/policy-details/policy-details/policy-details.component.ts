@@ -5,6 +5,8 @@ import { ActivatedRoute } from '@angular/router';
 import { Insured, PolicyDetail } from '../../models/policy-detail';
 import { PolicyService } from '../../../services/consultation/policy.service';
 import { AppComponent } from '../../../../../app.component';
+import { BillFilter } from '../../models/bill';
+
 
 @Component({
   selector: 'app-policy-details',
@@ -28,6 +30,9 @@ export class PolicyDetailsComponent implements OnInit {
 
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+
+  billsFilterConsult: BillFilter;
+  pendingPoliciesConsult = 0;
 
   constructor(
     private fb: FormBuilder,
@@ -63,6 +68,14 @@ export class PolicyDetailsComponent implements OnInit {
       this.appComponent.showOverlay = false;
     });
 
+  }
+
+  setBillsFiltersConsult(event) {
+    this.billsFilterConsult = event;
+  }
+
+  setPendingPoliciesConsult(event) {
+    this.pendingPoliciesConsult = event;
   }
 
 }

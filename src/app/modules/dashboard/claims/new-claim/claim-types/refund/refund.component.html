@@ -1,15 +1,14 @@
-<div *ngIf="timeAutoComplete == 1" class="uppercase dashboard-page-title pb-4">Solicitud de reembolso del asegurado
-</div>
+<div class="uppercase dashboard-page-title pb-4">Solicitud de reembolso del asegurado
+</div> <!-- *ngIf="timeAutoComplete == 1" -->
 
-<div *ngIf="timeAutoComplete == 1" class="p-3 pb-2 mb-4" style="background-color: #F2F2F2">
+<div class="p-3 pb-2 mb-4" style="background-color: #F2F2F2"> <!-- *ngIf="timeAutoComplete == 1" -->
   <div class="mt-3 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 xl:grid-cols-5">
     <app-date-picker class="mr-3" [group]="refundForm" name="fecha" label="Fecha"></app-date-picker>
-    <!-- <div class="mr-3">
-      <app-number-input [group]="refundForm.get('informacion')" label="ID Number" name='idNumber' placeholder="Juan Juan - 00010002"
-        min="1">
-      </app-number-input>
-    </div> -->
-    <div class="mr-3 col-span-2">
+    <div *ngIf="timeAutoComplete == 0" class="mr-3 col-span-2">
+      <app-input [group]="refundForm.get('informacion')" label="ID Number" name='idNumber' placeholder="Juan Juan - 00010002">
+      </app-input>
+    </div>
+    <div *ngIf="timeAutoComplete == 1" class="mr-3 col-span-2">
       <form [formGroup]="refundForm.get('informacion')">
         <mat-form-field color="accent" appearance="outline" class="w-full bg-transparente"
           style="font-size: small !important;">
@@ -35,16 +34,16 @@
     </button>
   </div>
 </div>
-<div *ngIf="timeAutoComplete == 1">
+<!-- <div *ngIf="timeAutoComplete == 1"> -->
   <div *ngIf="showContent" class="p-3 pb-0 mb-4" style="background-color: #F2F2F2">
     <div class="filter-title" style="color: #18446B !important">Asegurado</div>
     <div class="mt-3 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 xl:grid-cols-5">
 
     </div>
   </div>
-</div>
+<!-- </div> -->
 
-<div *ngIf="timeAutoComplete == 1">
+<div > <!-- *ngIf="timeAutoComplete == 1" -->
   <mat-accordion *ngIf="showContent" #matAccordion="matAccordion" name="matAccordion"
     class="ww-mat-accordion example-headers-align" [togglePosition]="'before'">
     <mat-expansion-panel class="ww-mat-expansion" [expanded]="step === 0" (opened)="setStep(0)">

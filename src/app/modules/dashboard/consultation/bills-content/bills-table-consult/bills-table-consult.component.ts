@@ -5,12 +5,13 @@ import {BillsService} from '../../../services/consultation/bills.service';
 import {UserService} from '../../../../../core/services/user/user.service';
 import {HttpParams} from '@angular/common/http';
 
+
 @Component({
-  selector: 'app-bills-table',
-  templateUrl: './bills-table.component.html',
-  styleUrls: ['./bills-table.component.scss']
+  selector: 'app-bills-table-consult',
+  templateUrl: './bills-table-consult.component.html',
+  styleUrls: ['./bills-table-consult.component.scss']
 })
-export class BillsTableComponent implements OnInit {
+export class BillsTableConsultComponent implements OnInit {
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
@@ -41,6 +42,7 @@ export class BillsTableComponent implements OnInit {
     const filteredPolicies = policies.filter( p => p.paymentState === 'P');
     this.pendingBillsEmitter.emit(filteredPolicies.length);
   }
+
   constructor(private billsService: BillsService, private userService: UserService) { }
 
   ngOnInit() {
@@ -58,6 +60,7 @@ export class BillsTableComponent implements OnInit {
       this.dataSource.paginator = this.paginator;
 
       this.emitPendingBills(this.data);
+      console.log(this.dataSource);
     });
   }
 
@@ -68,9 +71,9 @@ export class BillsTableComponent implements OnInit {
   getBillDownloadLink(billId) {
     switch (this.userRole) {
       case 'WWS':
-        return `http://wwsdevportalbackend.azurewebsites.net/InvoiceView/ExportRDToPDF/${billId}`;
+        return `http://wwsdevportalbackend.azurewebsites.net/InvoiceView/invoiceRd/${billId}`;
       case 'WMA':
-        return `http://wwsdevportalbackend.azurewebsites.net/InvoiceView/ExportPMToPDF/${billId}`;
+        return `http://wwsdevportalbackend.azurewebsites.net/InvoiceView/invoicepm/${billId}`;
       default:
         return'';
     }

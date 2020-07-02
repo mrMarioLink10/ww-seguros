@@ -2,6 +2,7 @@ export interface PolicyDetail {
   paymentCicle: string;
   currency: string;
   deductible: string;
+  category: string,
   product: string;
   branch: string;
   initialDate: string;

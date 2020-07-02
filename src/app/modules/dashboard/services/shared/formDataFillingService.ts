@@ -59,6 +59,8 @@ export class FormDataFillingService {
         }
         else
         {
+          if (key !== "anonimousUser")
+          {
           if (!this.has(formDataGroup.controls, key)) {
             formDataGroup.addControl(key, this.fb.group({
               id: ['', Validators.required]
@@ -72,6 +74,7 @@ export class FormDataFillingService {
             console.log("DELETE DATAAAAA");
             formDataGroup.removeControl(key);
           }
+        }
         }
       }
 

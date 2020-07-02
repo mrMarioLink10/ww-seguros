@@ -196,7 +196,7 @@ export class RefundComponent implements OnInit {
 			comentary: [''],
 			forma: ['', Validators.required],
 			totalAmount: ['', Validators.required],
-			agreeWithDeclaration: ['', [Validators.required, Validators.requiredTrue]],
+			agreeWithDeclaration: ['', [Validators.requiredTrue]],
 			isComplete: [false, Validators.required],
 			areDiagnosticDatesValid: [true, Validators.required],
 		});
@@ -345,7 +345,6 @@ export class RefundComponent implements OnInit {
 
 		for (const key in testing) {
 			if (testing.hasOwnProperty(key)) {
-				console.log(testing[key]);
 				if (testing[key] === false) {
 					this.validDatesCounter++;
 				}
@@ -500,7 +499,9 @@ export class RefundComponent implements OnInit {
 			this.refundForm['controls'].comentary.setValue(data.data.comentary);
 			this.refundForm['controls'].fecha.setValue(data.data.fecha);
 			this.refundForm['controls'].forma.setValue(data.data.forma);
-			this.refundForm['controls'].agreeWithDeclaration.setValue(data.data.agreeWithDeclaration);
+			if (data.data.agreeWithDeclaration === 'true') {
+				this.refundForm['controls'].agreeWithDeclaration.setValue(true);
+			}
 			this.refundForm['controls'].areDiagnosticDatesValid.setValue(data.data.areDiagnosticDatesValid);
 
 			const sd = {
@@ -535,18 +536,20 @@ export class RefundComponent implements OnInit {
 				formID2.addControl('id', this.fb.control(data.data.infoTransferencia.id, Validators.required));
 			}
 
+
 			const formID3 = this.refundForm.get('informacion') as FormGroup;
 			formID3.addControl('id', this.fb.control(data.data.informacion.id, Validators.required));
 
-			this.cd.markForCheck();
+			this.refundForm.markAllAsTouched();
+			this.refundForm.updateValueAndValidity();
+			// this.cd.markForCheck();
 
 		});
 		this.refund.id = null;
 		console.log('this.refund.id es igual a ' + this.refund.id);
 		this.appComponent.showOverlay = false;
 
-		this.refundForm.markAllAsTouched();
-		this.refundForm.updateValueAndValidity();
+
 	}
 
 

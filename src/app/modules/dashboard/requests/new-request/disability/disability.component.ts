@@ -1853,8 +1853,12 @@ export class DisabilityComponent implements OnInit, DoCheck {
         this.ID = data.data.id;
         this.dataMappingFromApi.iterateThroughtAllObject(data.data, this.disabilityGroup);
         const formF = this.disabilityGroup.get('files') as FormGroup;
+        const formCB = this.disabilityGroup.get('contingent') as FormGroup;
+        const formM = this.disabilityGroup.get('main') as FormGroup;
         console.log(this.disabilityGroup);
         console.log(data.data);
+
+
 
         this.therapyArray = this.disabilityGroup.get('questions').get('questionnaire').get('therapy_array') as FormArray;
         this.sickPayArray = this.disabilityGroup.get('questions').get('questionnaire').get('sick_pay_array') as FormArray;
@@ -1875,6 +1879,15 @@ export class DisabilityComponent implements OnInit, DoCheck {
         if (this.disabilityGroup.get('files') && this.disabilityGroup.get('files').get('documentsKnowClient')) {
           this.filesDocumentsKnowClientArray = this.disabilityGroup.get('files').get('documentsKnowClient') as FormArray;
         }
+
+        if (formCB.get('hasAnotherCoverage').value !== 'si') {
+          formCB.removeControl('anotherCoverages');
+          this.existingCoveragesList = undefined;
+          formCB.get('changeAnotherCoverage').reset();
+          formCB.removeControl('changeAnotherCoverage');
+          this.changingCoveragesList = undefined;
+        }
+
         //this.disabilityGroup['controls'].num_financial_quote.setValue(data.data.num_financial_quote)
 
         this.arrayFilesTitles = data.data.files.studies;

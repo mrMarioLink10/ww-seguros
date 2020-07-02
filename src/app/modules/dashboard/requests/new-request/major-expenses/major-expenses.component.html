@@ -157,10 +157,11 @@
               <app-number-input class="mr-3" [group]="newRequest.get('person')" label="Tel. Oficina" name='officeTel'>
               </app-number-input>
               <app-input class="mr-3" [group]="newRequest.get('person')" label="Correo" name='email'></app-input>
-              <app-radio-button class="mr-3" [group]="newRequest.get('person')" name="isContractor"
-                [options]="isContractorData">
+              <app-radio-button class="mr-3" (selected)="selectChange($event)" [group]="newRequest.get('person')"
+                name="isContractor" [options]="isContractorData">
               </app-radio-button>
-              <app-radio-button *ngIf="isContractor" class="mr-3" [group]="newRequest.get('person')" name="isJuridica"
+              <app-radio-button *ngIf="newRequest.get('person').get('isContractor').value === 'No'"
+                (selected)="selectChange($event)" class="mr-3" [group]="newRequest.get('person')" name="isJuridica"
                 [options]="isJuridicaData">
               </app-radio-button>
             </div>

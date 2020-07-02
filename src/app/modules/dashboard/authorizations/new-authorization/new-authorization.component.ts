@@ -699,12 +699,14 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy, DoCheck {
 			formID6.addControl('id', this.fb.control(data.data.informacionMedica.primerosSintomas.id, Validators.required));
 
 			console.log(JSON.stringify(this.authorization.value));
+
+			this.authorization.markAllAsTouched();
+			this.authorization.updateValueAndValidity();
 		});
 		this.newAuthorization.id = null;
 		console.log('this.newAuthorization.id es igual a ' + this.newAuthorization.id);
 		this.appComponent.showOverlay = false;
-		this.authorization.markAllAsTouched();
-		this.authorization.updateValueAndValidity();
+
 	}
 
 	sendForm(form: FormGroup, formType: string, sendType: string, id?: number) {

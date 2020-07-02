@@ -1904,6 +1904,8 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
         this.isFormValidToFill = true;
         this.arrayFilesTitles = data.data.files.studies;
 
+        this.newRequest.markAllAsTouched();
+        this.newRequest.updateValueAndValidity();
         //this.addEventChange();
         /*let person = this.newRequest.get('person');
         this.iterateThroughtObject(data.data.person, person);

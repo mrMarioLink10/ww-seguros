@@ -1,4 +1,4 @@
-import { Component, OnInit, DoCheck, ViewChild, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, DoCheck, ViewChild, ChangeDetectorRef, Input } from '@angular/core';
 import { FieldConfig } from 'src/app/shared/components/form-components/models/field-config';
 import { FormGroup, FormBuilder, Validators, FormArray, FormControl, AbstractControl } from '@angular/forms';
 import { $sex, $res, $country, $time, $family, $allFamily, $weightTypes, $heightTypes } from '../../../../../core/form/objects';
@@ -335,11 +335,11 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
     options: [
       {
         value: 'Soltero',
-        viewValue: 'soltero'
+        viewValue: 'Soltero'
       },
       {
         value: 'Casado',
-        viewValue: 'casado'
+        viewValue: 'Casado'
       },
       {
         value: 'Únion Libre',
@@ -499,7 +499,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
   notFoundQuote = false;
 
   @ViewChild('form', { static: false }) ogForm;
-
+  step: number;
 
   searchQuote(noCotizacion) {
     if (noCotizacion !== undefined && noCotizacion !== '') {
@@ -1059,6 +1059,22 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
     }
   }
 
+  showWarningDot(Form: any): boolean {
+    if (!this.ID) {
+      if (!Form.valid && this.ogForm.submitted) {
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      if (Form.valid) {
+        return false;
+      } else {
+        return true;
+      }
+    }
+  }
+
   ngDoCheck() { }
 
   add(dependentsFormArray, group) {
@@ -1250,6 +1266,13 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
     this.proceduresArray.updateValueAndValidity();
   }
 
+  setStep(index: number) {
+    this.step = index;
+  }
+
+  nextStep(panel?: string) {
+    this.step++;
+  }
 
   selectChange(event) {
     const questionsForm = this.newRequest.get('questionsA') as FormGroup;

@@ -78,14 +78,24 @@
             <!-- <app-radio-button class="mr-3" [group]="newRequest" name="payment" [options]="payments"></app-radio-button>
             <app-select class="mr-3" [options]="plans" [group]="newRequest"></app-select> -->
             <app-input class="mr-3" [group]="newRequest" name="plans" label="Plan"></app-input>
-            <app-input class="mr-3" [group]="newRequest" name="deducibles" label="deducibles"></app-input>
+            <app-input class="mr-3" [group]="newRequest" name="deducibles" label="Deducibles"></app-input>
             <!--<app-radio-button class="mr-3" [group]="newRequest" name="deducibles" [options]="deducibles">
             </app-radio-button>-->
           </div>
         </div>
-        <app-forms-container [titles]="titles">
-          <!-- SOLICITANTE -->
-          <ng-template #formTemplate>
+        <mat-accordion #matAccordion="matAccordion" name="matAccordion" class="ww-mat-accordion example-headers-align"
+          [togglePosition]="'before'">
+          <mat-expansion-panel class="ww-mat-expansion" [expanded]="step === 0" (opened)="setStep(0)">
+            <mat-expansion-panel-header class="body-13 icon-blue">
+              <mat-panel-title>
+                Solicitante
+              </mat-panel-title>
+              <mat-panel-description>
+                <div></div>
+                <div *ngIf="showWarningDot(newRequest.get('person'))" class="warning-accordion-dot"></div>
+              </mat-panel-description>
+            </mat-expansion-panel-header>
+
             <div class="mt-3 grid grid-cols-1 sm:grid-cols-3 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
               <app-input class="mr-3" [group]="newRequest.get('person')" label="Primer Nombre" name='firstName'>
               </app-input>
@@ -174,9 +184,25 @@
               <app-select class="mr-3" [options]="country" [group]="newRequest.get('person').get('office')">
               </app-select>
             </div>
-          </ng-template>
-          <!-- POLITICAMENTE EXPUESTAS -->
-          <ng-template #formTemplate>
+
+            <mat-action-row class="action-row">
+              <button mat-button class="next-button" (click)="nextStep()" type="button">
+                Siguiente
+              </button>
+            </mat-action-row>
+          </mat-expansion-panel>
+
+          <mat-expansion-panel class="ww-mat-expansion" [expanded]="step === 1" (opened)="setStep(1)">
+            <mat-expansion-panel-header class="body-13 icon-blue">
+              <mat-panel-title>
+                Persona políticamente expuesta
+              </mat-panel-title>
+              <mat-panel-description>
+                <div></div>
+                <div *ngIf="showWarningDot(newRequest.get('exposedPerson'))" class="warning-accordion-dot"></div>
+              </mat-panel-description>
+            </mat-expansion-panel-header>
+
             <div class="colorb">
               <p>Las Personas Políticamente Expuestas son aquéllas que desempeñan o han desempeñado funciones
                 públicas
@@ -236,9 +262,26 @@
                 </div>
               </div>
             </div>
-          </ng-template>
-          <!-- CONTRATANTE -->
-          <ng-template #formTemplate *ngIf="isContractor && !isJuridica">
+
+            <mat-action-row class="action-row">
+              <button mat-button class="next-button" (click)="nextStep()" type="button">
+                Siguiente
+              </button>
+            </mat-action-row>
+          </mat-expansion-panel>
+
+          <mat-expansion-panel *ngIf="isContractor && !isJuridica" class="ww-mat-expansion" [expanded]="step === 2"
+            (opened)="setStep(2)">
+            <mat-expansion-panel-header class="body-13 icon-blue">
+              <mat-panel-title>
+                Contratante
+              </mat-panel-title>
+              <mat-panel-description>
+                <div></div>
+                <div *ngIf="showWarningDot(newRequest.get('contractor'))" class="warning-accordion-dot"></div>
+              </mat-panel-description>
+            </mat-expansion-panel-header>
+
             <div class="mt-3 grid grid-cols-1 sm:grid-cols-3 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
               <app-input class="mr-3" [group]="newRequest.get('contractor')" label="Primer Nombre" name='firstName'>
               </app-input>
@@ -305,15 +348,47 @@
               <app-select class="mr-3" [options]="country" [group]="newRequest.get('contractor').get('office')">
               </app-select>
             </div>
-          </ng-template>
-          <ng-template #formTemplate>
+
+            <mat-action-row class="action-row">
+              <button mat-button class="next-button" (click)="nextStep()" type="button">
+                Siguiente
+              </button>
+            </mat-action-row>
+          </mat-expansion-panel>
+
+          <mat-expansion-panel class="ww-mat-expansion" [expanded]="step === 3" (opened)="setStep(3)">
+            <mat-expansion-panel-header class="body-13 icon-blue">
+              <mat-panel-title>
+                Perfil Financiero
+              </mat-panel-title>
+              <mat-panel-description>
+                <div></div>
+                <div *ngIf="showWarningDot(newRequest.get('incomes'))" class="warning-accordion-dot"></div>
+              </mat-panel-description>
+            </mat-expansion-panel-header>
+
             <app-radio-button class="mr-3" [group]="newRequest.get('incomes')" name="principalIncome" [options]="mony"
               title='Ingresos anuales actividad principal'></app-radio-button>
             <app-radio-button class="mr-3" [group]="newRequest.get('incomes')" name="otherIncomes" [options]="mony"
               title='Ingresos anuales por otras actividades'></app-radio-button>
-          </ng-template>
-          <!-- DEPENDIENTES -->
-          <ng-template #formTemplate>
+
+            <mat-action-row class="action-row">
+              <button mat-button class="next-button" (click)="nextStep()" type="button">
+                Siguiente
+              </button>
+            </mat-action-row>
+          </mat-expansion-panel>
+          <mat-expansion-panel class="ww-mat-expansion" [expanded]="step === 4" (opened)="setStep(4)">
+            <mat-expansion-panel-header class="body-13 icon-blue">
+              <mat-panel-title>
+                Dependientes
+              </mat-panel-title>
+              <mat-panel-description>
+                <div></div>
+                <div *ngIf="showWarningDot(newRequest.get('dependents'))" class="warning-accordion-dot"></div>
+              </mat-panel-description>
+            </mat-expansion-panel-header>
+
             <div [formGroup]="newRequest.get('dependents')">
               <div formArrayName="allDependents">
                 <div *ngFor="let element of dependentsFormArray.controls; let index = index">
@@ -463,9 +538,24 @@
               </div>
             </div>
 
-          </ng-template>
-          <!-- QUESTIONS A-->
-          <ng-template #formTemplate>
+
+            <mat-action-row class="action-row">
+              <button mat-button class="next-button" (click)="nextStep()" type="button">
+                Siguiente
+              </button>
+            </mat-action-row>
+          </mat-expansion-panel>
+          <mat-expansion-panel class="ww-mat-expansion" [expanded]="step === 5" (opened)="setStep(5)">
+            <mat-expansion-panel-header class="body-13 icon-blue">
+              <mat-panel-title>
+                Sección A
+              </mat-panel-title>
+              <mat-panel-description>
+                <div></div>
+                <div *ngIf="showWarningDot(newRequest.get('sectionAHelper'))" class="warning-accordion-dot"></div>
+              </mat-panel-description>
+            </mat-expansion-panel-header>
+
             <div>
               <!-- <p class="formulary-labels pb-3">Según su mejor entendimiento y conocimiento, hay alguna
                     persona nombrada en esta solicitud que haya padecido o padezca de alguna de las siguientes enfermedades:</p>
@@ -641,9 +731,24 @@
 
             </div>
 
-          </ng-template>
-          <!-- QUESTIONS B -->
-          <ng-template #formTemplate>
+
+            <mat-action-row class="action-row">
+              <button mat-button class="next-button" (click)="nextStep()" type="button">
+                Siguiente
+              </button>
+            </mat-action-row>
+          </mat-expansion-panel>
+          <mat-expansion-panel class="ww-mat-expansion" [expanded]="step === 6" (opened)="setStep(6)">
+            <mat-expansion-panel-header class="body-13 icon-blue">
+              <mat-panel-title>
+                Sección B
+              </mat-panel-title>
+              <mat-panel-description>
+                <div></div>
+                <div *ngIf="showWarningDot(newRequest.get('questionsB'))" class="warning-accordion-dot"></div>
+              </mat-panel-description>
+            </mat-expansion-panel-header>
+
             <div class="formulary-labels pb-3">Además de las enfermedades o
               padecimientos mencionados en la Sección A, a su mejor entendimiento y conocimiento, hay alguna persona
               nombrada en esta solicitud que:
@@ -798,9 +903,24 @@
               <hr class=" w-full mb-6 ww-divider">
 
             </div>
-          </ng-template>
-          <!-- PRIMARY BENEFITS -->
-          <ng-template #formTemplate>
+
+            <mat-action-row class="action-row">
+              <button mat-button class="next-button" (click)="nextStep()" type="button">
+                Siguiente
+              </button>
+            </mat-action-row>
+          </mat-expansion-panel>
+          <mat-expansion-panel class="ww-mat-expansion" [expanded]="step === 7" (opened)="setStep(7)">
+            <mat-expansion-panel-header class="body-13 icon-blue">
+              <mat-panel-title>
+                Sección C Beneficiarios Primarios
+              </mat-panel-title>
+              <mat-panel-description>
+                <div></div>
+                <div *ngIf="showWarningDot(newRequest.get('primaryBenefits'))" class="warning-accordion-dot"></div>
+              </mat-panel-description>
+            </mat-expansion-panel-header>
+
             <div [formGroup]="newRequest.get('primaryBenefits')">
               <div formArrayName="dependentsC">
                 <div *ngFor="let element of primaryBenefitsArray.controls; let index = index">
@@ -902,9 +1022,25 @@
                 </mat-form-field>
               </div>
             </div>
-          </ng-template>
-          <!-- CONTINGENT BENEFICIARY -->
-          <ng-template #formTemplate>
+
+            <mat-action-row class="action-row">
+              <button mat-button class="next-button" (click)="nextStep()" type="button">
+                Siguiente
+              </button>
+            </mat-action-row>
+          </mat-expansion-panel>
+          <mat-expansion-panel class="ww-mat-expansion" [expanded]="step === 8" (opened)="setStep(8)">
+            <mat-expansion-panel-header class="body-13 icon-blue">
+              <mat-panel-title>
+                Beneficiario(s) Contingente(s)
+              </mat-panel-title>
+              <mat-panel-description>
+                <div></div>
+                <div *ngIf="showWarningDot(newRequest.get('contingentBeneficiary'))" class="warning-accordion-dot">
+                </div>
+              </mat-panel-description>
+            </mat-expansion-panel-header>
+
             <div [formGroup]="newRequest.get('contingentBeneficiary')">
               <div formArrayName="dependentsC">
                 <div
@@ -1006,8 +1142,24 @@
                 </mat-form-field>
               </div>
             </div>
-          </ng-template>
-          <ng-template #formTemplate>
+
+            <mat-action-row class="action-row">
+              <button mat-button class="next-button" (click)="nextStep()" type="button">
+                Siguiente
+              </button>
+            </mat-action-row>
+          </mat-expansion-panel>
+          <mat-expansion-panel class="ww-mat-expansion" [expanded]="step === 9" (opened)="setStep(9)">
+            <mat-expansion-panel-header class="body-13 icon-blue">
+              <mat-panel-title>
+                Archivos Adjuntos
+              </mat-panel-title>
+              <mat-panel-description>
+                <div></div>
+                <div *ngIf="showWarningDot(newRequest.get('files'))" class="warning-accordion-dot"></div>
+              </mat-panel-description>
+            </mat-expansion-panel-header>
+
             <div class="radio-button-label" style="font-size: 12px !important; max-width: 63vw;">Adjuntar estudios
             </div>
             <div *ngFor="let studies of filesStudiesArray.controls; let i = index">
@@ -1033,20 +1185,37 @@
                 <mat-icon style="color: #18446B">add</mat-icon>
               </button>
             </div>
-          </ng-template>
-          <ng-template #formTemplate>
+
+            <mat-action-row class="action-row">
+              <button mat-button class="next-button" (click)="nextStep()" type="button">
+                Siguiente
+              </button>
+            </mat-action-row>
+          </mat-expansion-panel>
+          <mat-expansion-panel class="ww-mat-expansion" [expanded]="step === 10" (opened)="setStep(10)">
+            <mat-expansion-panel-header class="body-13 icon-blue">
+              <mat-panel-title>
+                Comentarios adicionales
+              </mat-panel-title>
+              <mat-panel-description>
+                <div></div>
+                <div></div>
+              </mat-panel-description>
+            </mat-expansion-panel-header>
             <app-text-area label='Descripcion' style='height: 142px!important;' [group]="newRequest" label="texto"
               name='comentary'></app-text-area>
             <div *ngIf="role !== 'WWS'" class="declaraciones px-4 sm:px-4 md:px-14 lg:px-12 xl:px-12">
               En la medida de mis conocimientos, las declaraciones y respuestas suministradas en esta declaración son
               verdaderas, completas y correctamente
-              anotadas. ADVERTENCIA: cualquier persona que a sabiendas y con la intención de dañar, defraudar o engañar
+              anotadas. ADVERTENCIA: cualquier persona que a sabiendas y con la intención de dañar, defraudar o
+              engañar
               a cualquier asegurador, presente un
               reclamo por beneficios de una póliza de seguro que contenga información falsa, incompleta o engañosa, o
               que conscientemente presente
               información falsa en una solicitud de seguros, podría ser hallado culpable de fraude de seguros.<br>
               Queda entendido y convenido que:<br>
-              a. Worldwide Medical Assurance Ltd. Corp., (en adelante “La Compañía”), se reserva el derecho de rechazar
+              a. Worldwide Medical Assurance Ltd. Corp., (en adelante “La Compañía”), se reserva el derecho de
+              rechazar
               o aceptar cualquier solicitud. La cobertura
               provista por La Compañía no entrará en vigor hasta que la solicitud sea recibida, aprobada y notificada
               por La Compañía.<br>
@@ -1054,19 +1223,24 @@
               alguna(s) respuesta(s) falsa(s), inexacta(s),
               incompleta(s), fraude u omisión en esta solicitud, entonces el contrato podrá ser dado por terminado por
               La Compañía.<br>
-              c. Con presentar una fotocopia o el original de este documento, autorizo voluntaria, libre y expresamente,
+              c. Con presentar una fotocopia o el original de este documento, autorizo voluntaria, libre y
+              expresamente,
               durante toda la vigencia de la póliza, aún
-              después de mi fallecimiento; a cualquier médico, profesional, hospital público o privado, clínica, Caja de
+              después de mi fallecimiento; a cualquier médico, profesional, hospital público o privado, clínica, Caja
+              de
               Seguro Social u otra entidad o agencia
-              gubernamental u otra persona médica o relacionada médicamente, proveedor de servicio de salud, empleador,
+              gubernamental u otra persona médica o relacionada médicamente, proveedor de servicio de salud,
+              empleador,
               asegurador o tenedor de pólizas de
               grupo, todos estos ya sea que estén ubicados en el territorio de la República de Panamá o en el
               extranjero; para proveer a La Compañía o
               representantes autorizados, de copia del expediente clínico, de toda información que ésta requiera en
               relación con mi salud de cualquier naturaleza
-              y en cualquier etapa de mi vida, registrada en cualquier medio, incluyendo, pero sin limitarse, registros
+              y en cualquier etapa de mi vida, registrada en cualquier medio, incluyendo, pero sin limitarse,
+              registros
               respecto a consejos, indicaciones, cuidado (s)
-              o tratamiento (s) proporcionado (s) a mi y/o a mis dependientes, sin limitación a información relacionada
+              o tratamiento (s) proporcionado (s) a mi y/o a mis dependientes, sin limitación a información
+              relacionada
               con enfermedades mentales o el uso de
               drogas o alcohol. Esta es una manifestación libre y voluntaria, en pleno conocimiento de la Ley 68 de 20
               de noviembre de 2003, y demás normas
@@ -1126,122 +1300,176 @@
               cualquier
               entidad económica.<br>
             </div>
-          </ng-template>
-        </app-forms-container>
+            <mat-action-row class="action-row">
+              <button mat-button class="next-button" (click)="nextStep()" type="button">
+                Siguiente
+              </button>
+            </mat-action-row>
+          </mat-expansion-panel>
+        </mat-accordion>
 
-        <app-know-your-customer *ngIf="isSolicitantePep"
+        <!-- <app-know-your-customer *ngIf="isSolicitantePep"
           [form]="newRequest.get('person').get('conozcaSuClientePersona')" [title]="TitleConozcaClienteAsegurado">
         </app-know-your-customer>
         <app-know-your-customer *ngIf="isContractorPep" [title]="TitleConozcaClienteContratante"
           [form]="newRequest.get('contractor').get('conozcaSuClientePersona')">
         </app-know-your-customer>
         <app-know-your-client *ngIf="isJuridica"
-          [form]="newRequest.get('contractor').get('conozcaSuClientePersonaJuridica')"> </app-know-your-client>
+          [form]="newRequest.get('contractor').get('conozcaSuClientePersonaJuridica')"> </app-know-your-client> -->
 
-        <app-hypertension
-          *ngIf="newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudHipertensionArterial')"
-          [form]="newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudHipertensionArterial')">
-        </app-hypertension>
-        <app-cardiovascular
-          *ngIf="newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudCardioVasculares')"
-          [form]="newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudCardioVasculares')">
-        </app-cardiovascular>
-        <app-mellitus-diabetes
-          *ngIf="newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudDiabetes')"
-          [form]="newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudDiabetes')">
-        </app-mellitus-diabetes>
-        <app-arthritis *ngIf="newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudArtitris')"
-          [form]="newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudArtitris')">
-        </app-arthritis>
-        <app-spine
-          *ngIf="newRequest.get('questionsA').get('questionnairesGastosMayores').get('columnaVertebralColumnaVertebral')"
-          [form]="newRequest.get('questionsA').get('questionnairesGastosMayores').get('columnaVertebralColumnaVertebral')">
-        </app-spine>
-        <app-musculoskeletal
-          *ngIf="newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudMusculoesqueleticos')"
-          [form]="newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudMusculoesqueleticos')">
-        </app-musculoskeletal>
-        <app-renal-urinary
-          *ngIf="newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudRenales')"
-          [form]="newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudRenales')">
-        </app-renal-urinary>
-        <app-prostatic
-          *ngIf="newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudProstatica')"
-          [form]="newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudProstatica')">
-        </app-prostatic>
-        <app-diving *ngIf="newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudBuceo')"
-          [form]="newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudBuceo')">
-          ></app-diving>
-        <app-racing *ngIf="newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudMoto')"
-          [form]="newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudMoto')">
-          ></app-racing>
-        <app-skydiving *ngIf="newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudAviacion')"
-          [form]="newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudAviacion')">
-          ></app-skydiving>
-        <app-mountaineering
-          *ngIf="newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudMontanismo')"
-          [form]="newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudMontanismo')">
-          ></app-mountaineering>
+      </mat-tab>
+      <mat-tab label="Cuestionarios Adicionales" class="mat-tab-forms">
+        <mat-accordion #matAccordion="matAccordion" name="matAccordion" class="ww-mat-accordion example-headers-align"
+          [togglePosition]="'before'">
+          <app-hypertension
+            [showWarningDot]="showWarningDot(newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudHipertensionArterial'))"
+            *ngIf="newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudHipertensionArterial')"
+            [form]="newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudHipertensionArterial')">
+          </app-hypertension>
+          <app-cardiovascular
+            [showWarningDot]="showWarningDot(newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudCardioVasculares'))"
+            *ngIf="newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudCardioVasculares')"
+            [form]="newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudCardioVasculares')">
+          </app-cardiovascular>
+          <app-mellitus-diabetes
+            [showWarningDot]="showWarningDot(newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudDiabetes'))"
+            *ngIf="newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudDiabetes')"
+            [form]="newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudDiabetes')">
+          </app-mellitus-diabetes>
+          <app-arthritis
+            [showWarningDot]="showWarningDot(newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudArtitris'))"
+            *ngIf="newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudArtitris')"
+            [form]="newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudArtitris')">
+          </app-arthritis>
+          <app-spine
+            [showWarningDot]="showWarningDot(newRequest.get('questionsA').get('questionnairesGastosMayores').get('columnaVertebralColumnaVertebral'))"
+            *ngIf="newRequest.get('questionsA').get('questionnairesGastosMayores').get('columnaVertebralColumnaVertebral')"
+            [form]="newRequest.get('questionsA').get('questionnairesGastosMayores').get('columnaVertebralColumnaVertebral')">
+          </app-spine>
+          <app-musculoskeletal
+            [showWarningDot]="showWarningDot(newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudMusculoesqueleticos'))"
+            *ngIf="newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudMusculoesqueleticos')"
+            [form]="newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudMusculoesqueleticos')">
+          </app-musculoskeletal>
+          <app-renal-urinary
+            [showWarningDot]="showWarningDot(newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudRenales'))"
+            *ngIf="newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudRenales')"
+            [form]="newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudRenales')">
+          </app-renal-urinary>
+          <app-prostatic
+            [showWarningDot]="showWarningDot(newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudProstatica'))"
+            *ngIf="newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudProstatica')"
+            [form]="newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudProstatica')">
+          </app-prostatic>
+        </mat-accordion>
+      </mat-tab>
+      <mat-tab label="Cuestionarios Actividades" class="mat-tab-forms">
+        <mat-accordion #matAccordion="matAccordion" name="matAccordion" class="ww-mat-accordion example-headers-align"
+          [togglePosition]="'before'">
+          <app-diving
+            [showWarningDot]="showWarningDot(newRequest.get('questionnairesGastosMayores').get('solicitudBuceo'))"
+            *ngIf="newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudBuceo')"
+            [form]="newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudBuceo')">
+            ></app-diving>
+          <app-racing
+            [showWarningDot]="showWarningDot(newRequest.get('questionnairesGastosMayores').get('solicitudMoto'))"
+            *ngIf="newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudMoto')"
+            [form]="newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudMoto')">
+            ></app-racing>
+          <app-skydiving
+            [showWarningDot]="showWarningDot(newRequest.get('questionnairesGastosMayores').get('solicitudAviacion'))"
+            *ngIf="newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudAviacion')"
+            [form]="newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudAviacion')">
+            ></app-skydiving>
+          <app-mountaineering
+            [showWarningDot]="showWarningDot(newRequest.get('questionnairesGastosMayores').get('solicitudMontanismo'))"
+            *ngIf="newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudMontanismo')"
+            [form]="newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudMontanismo')">
+            ></app-mountaineering>
+        </mat-accordion>
       </mat-tab>
       <mat-tab *ngIf="isJuridica || isSolicitantePep || isContractorPep" label="Conozca a su cliente">
-        <app-know-your-client *ngIf="isJuridica"
-          [form]="newRequest.get('contractor').get('conozcaSuClientePersonaJuridica')">
-        </app-know-your-client>
-        <app-know-your-customer *ngIf="isSolicitantePep"
-          [form]="newRequest.get('person').get('conozcaSuClientePersona')">
-        </app-know-your-customer>
-        <app-know-your-customer *ngIf="isContractorPep"
-          [form]="newRequest.get('contractor').get('conozcaSuClientePersona')">
-        </app-know-your-customer>
+        <mat-accordion #matAccordion="matAccordion" name="matAccordion" class="ww-mat-accordion example-headers-align"
+          [togglePosition]="'before'">
+          <app-know-your-client
+            [showWarningDot]="showWarningDot(newRequest.get('contractor').get('conozcaSuClientePersonaJuridica'))"
+            *ngIf="isJuridica" [form]="newRequest.get('contractor').get('conozcaSuClientePersonaJuridica')">
+          </app-know-your-client>
+          <app-know-your-customer
+            [showWarningDot]="showWarningDot(newRequest.get('person').get('conozcaSuClientePersona'))"
+            *ngIf="isSolicitantePep" [form]="newRequest.get('person').get('conozcaSuClientePersona')">
+          </app-know-your-customer>
+          <app-know-your-customer
+            [showWarningDot]="showWarningDot(newRequest.get('contractor').get('conozcaSuClientePersona'))"
+            *ngIf="isContractorPep" [form]="newRequest.get('contractor').get('conozcaSuClientePersona')">
+          </app-know-your-customer>
+        </mat-accordion>
       </mat-tab>
       <mat-tab *ngFor=" let element of dependentsFormArray.controls; let i = index"
         [label]="'D'+ (i+1) +' - '+ newRequest.get('dependents').get('allDependents').get(i.toString()).value.name +' '+ newRequest.get('dependents').get('allDependents').get(i.toString()).value.lastName">
-        <app-hypertension
-          *ngIf="newRequest.get('dependents').get('allDependents').get(i.toString()).get('solicitudHipertensionArterial')"
-          [form]="newRequest.get('dependents').get('allDependents').get(i.toString()).get('solicitudHipertensionArterial')">
-        </app-hypertension>
-        <app-cardiovascular
-          *ngIf="newRequest.get('dependents').get('allDependents').get(i.toString()).get('solicitudCardioVasculares')"
-          [form]="newRequest.get('dependents').get('allDependents').get(i.toString()).get('solicitudCardioVasculares')">
-        </app-cardiovascular>
-        <app-mellitus-diabetes
-          *ngIf="newRequest.get('dependents').get('allDependents').get(i.toString()).get('solicitudDiabetes')"
-          [form]="newRequest.get('dependents').get('allDependents').get(i.toString()).get('solicitudDiabetes')">
-        </app-mellitus-diabetes>
-        <app-arthritis
-          *ngIf="newRequest.get('dependents').get('allDependents').get(i.toString()).get('solicitudArtitris')"
-          [form]="newRequest.get('dependents').get('allDependents').get(i.toString()).get('solicitudArtitris')">
-        </app-arthritis>
-        <app-spine
-          *ngIf="newRequest.get('dependents').get('allDependents').get(i.toString()).get('columnaVertebralColumnaVertebral')"
-          [form]="newRequest.get('dependents').get('allDependents').get(i.toString()).get('columnaVertebralColumnaVertebral')">
-        </app-spine>
-        <app-musculoskeletal
-          *ngIf="newRequest.get('dependents').get('allDependents').get(i.toString()).get('solicitudMusculoesqueleticos')"
-          [form]="newRequest.get('dependents').get('allDependents').get(i.toString()).get('solicitudMusculoesqueleticos')">
-        </app-musculoskeletal>
-        <app-renal-urinary
-          *ngIf="newRequest.get('dependents').get('allDependents').get(i.toString()).get('solicitudRenales')"
-          [form]="newRequest.get('dependents').get('allDependents').get(i.toString()).get('solicitudRenales')">
-        </app-renal-urinary>
-        <app-prostatic
-          *ngIf="newRequest.get('dependents').get('allDependents').get(i.toString()).get('solicitudProstatica')"
-          [form]="newRequest.get('dependents').get('allDependents').get(i.toString()).get('solicitudProstatica')">
-        </app-prostatic>
-        <app-diving *ngIf="newRequest.get('dependents').get('allDependents').get(i.toString()).get('solicitudBuceo')"
-          [form]="newRequest.get('dependents').get('allDependents').get(i.toString()).get('solicitudBuceo')">
-          ></app-diving>
-        <app-racing *ngIf="newRequest.get('dependents').get('allDependents').get(i.toString()).get('solicitudMoto')"
-          [form]="newRequest.get('dependents').get('allDependents').get(i.toString()).get('solicitudMoto')">
-          ></app-racing>
-        <app-skydiving
-          *ngIf="newRequest.get('dependents').get('allDependents').get(i.toString()).get('solicitudAviacion')"
-          [form]="newRequest.get('dependents').get('allDependents').get(i.toString()).get('solicitudAviacion')">
-          ></app-skydiving>
-        <app-mountaineering
-          *ngIf="newRequest.get('dependents').get('allDependents').get(i.toString()).get('solicitudMontanismo')"
-          [form]="newRequest.get('dependents').get('allDependents').get(i.toString()).get('solicitudMontanismo')">
-          ></app-mountaineering>
+        <mat-accordion #matAccordion="matAccordion" name="matAccordion" class="ww-mat-accordion example-headers-align"
+          [togglePosition]="'before'">
+          <app-hypertension
+            [showWarningDot]="showWarningDot(newRequest.get('dependents').get('allDependents').get(i.toString()).get('solicitudHipertensionArterial'))"
+            *ngIf="newRequest.get('dependents').get('allDependents').get(i.toString()).get('solicitudHipertensionArterial')"
+            [form]="newRequest.get('dependents').get('allDependents').get(i.toString()).get('solicitudHipertensionArterial')">
+          </app-hypertension>
+          <app-cardiovascular
+            [showWarningDot]="showWarningDot(newRequest.get('dependents').get('allDependents').get(i.toString()).get('solicitudCardioVasculares'))"
+            *ngIf="newRequest.get('dependents').get('allDependents').get(i.toString()).get('solicitudCardioVasculares')"
+            [form]="newRequest.get('dependents').get('allDependents').get(i.toString()).get('solicitudCardioVasculares')">
+          </app-cardiovascular>
+          <app-mellitus-diabetes
+            [showWarningDot]="showWarningDot(newRequest.get('dependents').get('allDependents').get(i.toString()).get('solicitudDiabetes'))"
+            *ngIf="newRequest.get('dependents').get('allDependents').get(i.toString()).get('solicitudDiabetes')"
+            [form]="newRequest.get('dependents').get('allDependents').get(i.toString()).get('solicitudDiabetes')">
+          </app-mellitus-diabetes>
+          <app-arthritis
+            [showWarningDot]="showWarningDot(newRequest.get('dependents').get('allDependents').get(i.toString()).get('solicitudArtitris'))"
+            *ngIf="newRequest.get('dependents').get('allDependents').get(i.toString()).get('solicitudArtitris')"
+            [form]="newRequest.get('dependents').get('allDependents').get(i.toString()).get('solicitudArtitris')">
+          </app-arthritis>
+          <app-spine
+            [showWarningDot]="showWarningDot(newRequest.get('dependents').get('allDependents').get(i.toString()).get('columnaVertebralColumnaVertebral'))"
+            *ngIf="newRequest.get('dependents').get('allDependents').get(i.toString()).get('columnaVertebralColumnaVertebral')"
+            [form]="newRequest.get('dependents').get('allDependents').get(i.toString()).get('columnaVertebralColumnaVertebral')">
+          </app-spine>
+          <app-musculoskeletal
+            [showWarningDot]="showWarningDot(newRequest.get('dependents').get('allDependents').get(i.toString()).get('solicitudMusculoesqueleticos'))"
+            *ngIf="newRequest.get('dependents').get('allDependents').get(i.toString()).get('solicitudMusculoesqueleticos')"
+            [form]="newRequest.get('dependents').get('allDependents').get(i.toString()).get('solicitudMusculoesqueleticos')">
+          </app-musculoskeletal>
+          <app-renal-urinary
+            [showWarningDot]="showWarningDot(newRequest.get('dependents').get('allDependents').get(i.toString()).get('solicitudRenales'))"
+            *ngIf="newRequest.get('dependents').get('allDependents').get(i.toString()).get('solicitudRenales')"
+            [form]="newRequest.get('dependents').get('allDependents').get(i.toString()).get('solicitudRenales')">
+          </app-renal-urinary>
+          <app-prostatic
+            [showWarningDot]="showWarningDot(newRequest.get('dependents').get('allDependents').get(i.toString()).get('solicitudProstatica'))"
+            *ngIf="newRequest.get('dependents').get('allDependents').get(i.toString()).get('solicitudProstatica')"
+            [form]="newRequest.get('dependents').get('allDependents').get(i.toString()).get('solicitudProstatica')">
+          </app-prostatic>
+          <app-diving
+            [showWarningDot]="showWarningDot(newRequest.get('dependents').get('allDependents').get(i.toString()).get('solicitudBuceo'))"
+            *ngIf="newRequest.get('dependents').get('allDependents').get(i.toString()).get('solicitudBuceo')"
+            [form]="newRequest.get('dependents').get('allDependents').get(i.toString()).get('solicitudBuceo')">
+            ></app-diving>
+          <app-racing
+            [showWarningDot]="showWarningDot(newRequest.get('dependents').get('allDependents').get(i.toString()).get('solicitudMoto'))"
+            *ngIf="newRequest.get('dependents').get('allDependents').get(i.toString()).get('solicitudMoto')"
+            [form]="newRequest.get('dependents').get('allDependents').get(i.toString()).get('solicitudMoto')">
+            ></app-racing>
+          <app-skydiving
+            [showWarningDot]="showWarningDot(newRequest.get('dependents').get('allDependents').get(i.toString()).get('solicitudAviacion'))"
+            *ngIf="newRequest.get('dependents').get('allDependents').get(i.toString()).get('solicitudAviacion')"
+            [form]="newRequest.get('dependents').get('allDependents').get(i.toString()).get('solicitudAviacion')">
+            ></app-skydiving>
+          <app-mountaineering
+            [showWarningDot]="showWarningDot(newRequest.get('dependents').get('allDependents').get(i.toString()).get('solicitudMontanismo'))"
+            *ngIf="newRequest.get('dependents').get('allDependents').get(i.toString()).get('solicitudMontanismo')"
+            [form]="newRequest.get('dependents').get('allDependents').get(i.toString()).get('solicitudMontanismo')">
+            ></app-mountaineering>
+        </mat-accordion>
       </mat-tab>
     </mat-tab-group>
 

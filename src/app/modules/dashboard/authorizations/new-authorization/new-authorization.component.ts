@@ -421,9 +421,10 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy, DoCheck {
 
 				this.dataAutoCompleteIdNumberObject.push({
 					name: data.data[x].asegurado.nombres_asegurado +
-					' ' + data.data[x].asegurado.apellidos_asegurado + ' - '
-					+ data.data[x].asegurado.id_asegurado,
-					value: data.data[x].asegurado.id_asegurado});
+						' ' + data.data[x].asegurado.apellidos_asegurado + ' - '
+						+ data.data[x].asegurado.id_asegurado,
+					value: data.data[x].asegurado.id_asegurado
+				});
 			}
 			this.appComponent.showOverlay = false;
 			this.timeAutoComplete = 1;
@@ -702,6 +703,8 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy, DoCheck {
 		this.newAuthorization.id = null;
 		console.log('this.newAuthorization.id es igual a ' + this.newAuthorization.id);
 		this.appComponent.showOverlay = false;
+		this.authorization.markAllAsTouched();
+		this.authorization.updateValueAndValidity();
 	}
 
 	sendForm(form: FormGroup, formType: string, sendType: string, id?: number) {

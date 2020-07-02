@@ -224,7 +224,7 @@ export class RefundComponent implements OnInit {
 			this.totalAmount = total;
 		});
 
-			this.filteredOptions = this.refundForm.get('informacion').get('idNumber').valueChanges
+		this.filteredOptions = this.refundForm.get('informacion').get('idNumber').valueChanges
 			.pipe(
 				startWith(''),
 				map(value => typeof value === 'string' ? value : value),
@@ -299,9 +299,10 @@ export class RefundComponent implements OnInit {
 
 				this.dataAutoCompleteIdNumberObject.push({
 					name: data.data[x].asegurado.nombres_asegurado +
-					' ' + data.data[x].asegurado.apellidos_asegurado + ' - '
-					+ data.data[x].asegurado.id_asegurado,
-					value: data.data[x].asegurado.id_asegurado});
+						' ' + data.data[x].asegurado.apellidos_asegurado + ' - '
+						+ data.data[x].asegurado.id_asegurado,
+					value: data.data[x].asegurado.id_asegurado
+				});
 			}
 			this.timeAutoComplete = 1;
 			this.appComponent.showOverlay = false;
@@ -543,6 +544,9 @@ export class RefundComponent implements OnInit {
 		this.refund.id = null;
 		console.log('this.refund.id es igual a ' + this.refund.id);
 		this.appComponent.showOverlay = false;
+
+		this.refundForm.markAllAsTouched();
+		this.refundForm.updateValueAndValidity();
 	}
 
 

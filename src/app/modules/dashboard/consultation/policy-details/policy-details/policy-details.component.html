@@ -1,128 +1,151 @@
 <div class="px-4">
   <div class="text-blue-800 font-bold text-xl mt-10">CONSULTA - PÓLIZA</div>
-  <mat-tab-group mat-stretch-tabs class="mt-10">
-    <mat-tab label="Detalles Póliza" class="mat-tab-forms">
-      <div class="flex flex-col sm:flex-row">
 
-        <form [formGroup]="form" (ngSubmit)="searchPolicy(form.value.policyId)" class="p-3 mt-5"
-          style="background-color: #F2F2F2">
-          <div class="filter-title">Filtro Consultar otra Poliza</div>
-          <div class="mt-3 flex">
-            <div class="mr-3">
-              <mat-form-field color="accent" appearance="outline" class="w-full bg-transparente"
-                style="font-size: small !important;">
-                <mat-label>Póliza</mat-label>
-                <input formControlName="policyId" matInput>
-              </mat-form-field>
+  <div class="mt-3">
+    <div class="flex flex-col sm:flex-row">
+
+      <form [formGroup]="form" (ngSubmit)="searchPolicy(form.value.policyId)" class="p-3 mt-5"
+        style="background-color: #F2F2F2">
+        <div class="filter-title">Filtro Consultar otra Poliza</div>
+        <div class="mt-3 flex">
+          <div class="mr-3">
+            <mat-form-field color="accent" appearance="outline" class="w-full bg-transparente"
+              style="font-size: small !important;">
+              <mat-label>Póliza</mat-label>
+              <input formControlName="policyId" matInput>
+            </mat-form-field>
+          </div>
+  
+          <div>
+            <button mat-mini-fab color="primary" aria-label="Buscar" type="submit" [disabled]="!form.valid">
+              <mat-icon>search</mat-icon>
+            </button>
+          </div>
+        </div>
+      </form>
+  
+      <div class="sm:ml-auto sm:mt-10">
+        <p class="text-blue-800 font-bold text-3xl px-5 mt-3">PÓLIZA: {{policyId}}</p>
+      </div>
+    </div>
+  
+  
+  
+    <div class="mt-5">
+      <div class="w-full grid sm:grid-rows-2 background-gray px-10 py-4 border-r-blue-2" style="border-right-width: 50px">
+        <div class="txt-blue grid grid-cols-1 sm:grid-cols-4">
+          <div *ngIf="!loading">
+            <span class="font-bold">Nombre del cliente de la póliza:</span> {{policyDetail.clientName}}
+          </div>
+        <!--  <div *ngIf="!loading">
+            <span class="font-bold">Cantidad Asegurados:</span> {{policyDetail.cantidadAsegurados}}
+          </div> -->
+          <div *ngIf="!loading">
+            <span class="font-bold mr-2">Forma Pago:</span> {{policyDetail.paymentCicle }}
+          </div>
+          
+          <!-- <div *ngIf="!loading">
+            <span class="font-bold">Moneda:</span> {{policyDetail.currency}}$
+          </div>
+          <div *ngIf="!loading && !policyDetail.category.includes('DISABILITY')">
+            <span class="font-bold" *ngIf="policyDetail.category.includes('VIDA')">Termino de la Póliza y la Suma Asegurada:</span>
+            <span class="font-bold" *ngIf="policyDetail.category.includes('SALUD')">Deducible:</span> {{policyDetail.deductible}}
+          </div> -->
+
+          <div *ngIf="!loading">
+            <span class="font-bold">Moneda:</span> {{policyDetail.currency}}$
+          </div>
+          <div *ngIf="!loading">
+            <span class="font-bold">Deducible:</span> {{policyDetail.deductible}}
+          </div>
+        </div>
+        <div class="txt-blue mt-5 grid grid-cols-1 sm:grid-cols-4">
+  
+          <div *ngIf="!loading">
+            <span class="font-bold">Producto:</span> {{policyDetail.product}}
+          </div>
+          <div *ngIf="!loading">
+            <span class="font-bold">Ini. Vigencia:</span> {{policyDetail.initialDate}}
+          </div>
+          <div *ngIf="!loading">
+            <span class="font-bold">Fin. Vigencia:</span> {{policyDetail.endDate}}
+          </div>
+          <!--  <div>
+              <span class="font-bold">Ramo:</span> {{policyDetail.branch}}
             </div>
-
             <div>
-              <button mat-mini-fab color="primary" aria-label="Buscar" type="submit" [disabled]="!form.valid">
-                <mat-icon>search</mat-icon>
-              </button>
-            </div>
-          </div>
-        </form>
-
-        <div class="sm:ml-auto sm:mt-10">
-          <p class="text-blue-800 font-bold text-3xl px-5 mt-3">PÓLIZA: {{policyId}}</p>
-        </div>
-      </div>
-
-
-
-      <div class="mt-5">
-        <div class="w-full grid sm:grid-rows-2 background-gray px-10 py-4 border-r-blue-2" style="border-right-width: 50px">
-          <div class="txt-blue grid grid-cols-1 sm:grid-cols-4">
-            <div *ngIf="!loading">
-              <span class="font-bold">Nombre del cliente de la póliza:</span> {{policyDetail.clientName}}
-            </div>
-          <!--  <div *ngIf="!loading">
-              <span class="font-bold">Cantidad Asegurados:</span> {{policyDetail.cantidadAsegurados}}
+              <span class="font-bold" >Certificados:</span> {{policyDetail.certificates}}
             </div> -->
-            <div *ngIf="!loading">
-              <span class="font-bold mr-2">Forma Pago:</span> {{policyDetail.paymentCicle }}
-            </div>
-
-            <div *ngIf="!loading">
-              <span class="font-bold">Moneda:</span> {{policyDetail.currency}}$
-            </div>
-            <div *ngIf="!loading && !policyDetail.category.includes('DISABILITY')">
-              <span class="font-bold" *ngIf="policyDetail.category.includes('VIDA')">Termino de la Póliza y la Suma Asegurada:</span>
-              <span class="font-bold" *ngIf="policyDetail.category.includes('SALUD')">Deducible:</span> {{policyDetail.deductible}}
-            </div>
-          </div>
-          <div class="txt-blue mt-5 grid grid-cols-1 sm:grid-cols-4">
-
-            <div *ngIf="!loading">
-              <span class="font-bold">Producto:</span> {{policyDetail.product}}
-            </div>
-            <div *ngIf="!loading">
-              <span class="font-bold">Ini. Vigencia:</span> {{policyDetail.initialDate}}
-            </div>
-            <div *ngIf="!loading">
-              <span class="font-bold">Fin. Vigencia:</span> {{policyDetail.endDate}}
-            </div>
-            <!--  <div>
-                <span class="font-bold">Ramo:</span> {{policyDetail.branch}}
-              </div>
-              <div>
-                <span class="font-bold" >Certificados:</span> {{policyDetail.certificates}}
-              </div> -->
-          </div>
         </div>
       </div>
+    </div>
+  </div>
 
+  <mat-tab-group mat-stretch-tabs class="mt-5">
+    <mat-tab label="Datos Póliza" class="mat-tab-forms"> 
+    
       <div class="mt-5">
         <div>
           <span class="font-light">Lista de Asegurados</span>
         </div>
-
+    
         <div>
           <div class="table-responsive policy-details-table">
             <table mat-table matSort [dataSource]="dataSource" class="mt-5 w-full dashboard-basic-table">
-
+    
               <ng-container matColumnDef="insuredId" style="margin-right: 15px !important">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> ID Asegurado </th>
                 <td mat-cell *matCellDef="let element" id="insuredIdCell">{{element.insuredId}}</td>
               </ng-container>
-
+    
               <ng-container matColumnDef="certificates" style="margin-right: 15px !important">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> Certificado </th>
                 <td mat-cell *matCellDef="let element"> {{element.certificates}} </td>
               </ng-container>
-
+    
               <ng-container matColumnDef="fullName" style="margin-right: 15px !important">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> Nombre y Apellido </th>
                 <td mat-cell *matCellDef="let element"> {{element.fullName}} </td>
               </ng-container>
-
+    
               <ng-container matColumnDef="validityDate" style="margin-right: 15px !important">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> Fecha Nacimiento </th>
                 <td mat-cell *matCellDef="let element"> {{element.validityDate}} </td>
               </ng-container>
-
+    
               <ng-container matColumnDef="kinship" style="margin-right: 15px !important">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> Parentesco </th>
                 <td mat-cell *matCellDef="let element"> {{element.kinship}} </td>
               </ng-container>
-
+    
               <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
               <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
             </table>
           </div>
-
+    
         </div>
-
+    
       </div>
-
+    
       <mat-paginator id="table-paginator" color="accent" class="dashboard-table-paginator" [pageSizeOptions]="[5, 10, 20]"
         showFirstLastButtons></mat-paginator>
     </mat-tab>
-    <mat-tab label="Facturas Pendientes" class="mat-tab-forms">
+    <mat-tab label="Reclamos" class="mat-tab-forms">
+
+      <app-claim-filter (filters)="setClaimsFilters($event)"> </app-claim-filter>
+      <app-claim-table [policyId]="policyId" [filters]="ClaimsFilter"> </app-claim-table>
+
+    </mat-tab>
+    <mat-tab label="Facturas Pendientes" class="mat-tab-forms"> 
       <app-bills-filter-consult (filters)="setBillsFiltersConsult($event)"></app-bills-filter-consult>
       <app-bills-table-consult [filters]="billsFilterConsult" (pendingBillsEmitter)="setPendingPoliciesConsult($event)" #billTable>
       </app-bills-table-consult>
+    </mat-tab>
+    <mat-tab label="Recibos" class="mat-tab-forms">
+      <p> Hola recibos </p>
+<!-- 
+      <app-receipt-filter (filters)="setReceiptFilters($event)"> </app-receipt-filter>
+      <app-receipt-table [filters]="ReceiptFilter"> </app-receipt-table> -->
     </mat-tab>
   </mat-tab-group>
 

@@ -14,11 +14,15 @@ import { BillsTableComponent } from './bills-content/bills-table/bills-table.com
 import { PolicyDetailsComponent } from './policy-details/policy-details/policy-details.component';
 import { BillsTableConsultComponent } from './bills-content/bills-table-consult/bills-table-consult.component';
 import { BillsFilterConsultComponent } from './bills-content/bills-filter-consult/bills-filter-consult.component';
+import { ClaimTableComponent } from './claim/claim-table/claim-table.component';
+import { ClaimFilterComponent } from './claim/claim-filter/claim-filter.component';
+import { ReceiptTableComponent } from './receipt/receipt-table/receipt-table.component';
+import { ReceiptFilterComponent } from './receipt/receipt-filter/receipt-filter.component';
 
 @NgModule({
   declarations: [ConsultationComponent, ConsultHeaderComponent, PolicyFilterComponent,
     PolicyTableComponent, BillsFilterComponent, BillsTableComponent, PolicyDetailsComponent,
-    BillsTableConsultComponent, BillsFilterConsultComponent],
+    BillsTableConsultComponent, BillsFilterConsultComponent, ClaimTableComponent, ClaimFilterComponent, ReceiptTableComponent, ReceiptFilterComponent],
   imports: [
     CommonModule,
     ConsultationRoutingModule,

@@ -132,7 +132,7 @@ export class MellitusDiabetesComponent implements OnInit {
     this.form.addControl('name', this.fb.control('', Validators.required));
     this.form.addControl('dateFirstDiagnostic', this.fb.control('', Validators.required));
     this.form.addControl('diabetesType', this.fb.control('', Validators.required));
-    this.form.addControl('diabetesOther', this.fb.control('', Validators.required));
+    // this.form.addControl('diabetesOther', this.fb.control('', Validators.required));
     this.form.addControl('takeOralMedication', this.fb.control('', Validators.required));
     this.form.addControl('useInsulin', this.fb.control('', Validators.required));
     this.form.addControl('bloodGlucoseChecking', this.fb.control('', Validators.required));
@@ -248,6 +248,18 @@ export class MellitusDiabetesComponent implements OnInit {
           break;
         default:
           break;
+      }
+    }
+
+    if (event.name == 'diabetesType') {
+      console.log(event);
+      if (event.valor == 'Otra') {
+        this.form.addControl('diabetesOther', this.fb.control('', Validators.required));
+      }
+      if (event.valor != 'Otra') {
+        if (this.form.get('diabetesOther')) {
+          this.form.removeControl('diabetesOther');
+        }
       }
     }
   }

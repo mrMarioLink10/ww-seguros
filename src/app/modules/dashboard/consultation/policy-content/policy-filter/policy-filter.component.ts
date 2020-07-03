@@ -101,13 +101,13 @@ export class PolicyFilterComponent implements OnInit {
   returnConsultNames() {
 
     this.policyService.getClientNames().subscribe(data => {
-      console.log('Hola');
-      console.log('Hola, esto imprime la data de los nombres de consultas: ', data);
+      // console.log('Hola');
+      // console.log('Hola, esto imprime la data de los nombres de consultas: ', data);
       // tslint:disable-next-line: prefer-for-of
       for (let x = 0; x < data.data.length; x++) {
         this.autoCompleteConsultNames.push(data.data[x]);
       }
-      console.log('Hola, esto imprime this.autoCompleteConsultNames: ', this.autoCompleteConsultNames);
+      // console.log('Hola, esto imprime this.autoCompleteConsultNames: ', this.autoCompleteConsultNames);
       this.timeAutoComplete = 1;
       this.appCompo.showOverlay = false;
     });

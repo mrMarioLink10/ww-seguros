@@ -33,6 +33,8 @@ export class PolicyDetailsComponent implements OnInit {
 
   billsFilterConsult: BillFilter;
   pendingPoliciesConsult = 0;
+  ClaimsFilter;
+  ReceiptFilter;
 
   constructor(
     private fb: FormBuilder,
@@ -58,6 +60,7 @@ export class PolicyDetailsComponent implements OnInit {
     this.policyService.getPolicyDetails(policyId).subscribe((res: any) => {
       this.policyDetail = res.data;
       console.log('DETALLE DE POLIZA: ', res);
+      console.log(res.data.insured[0].certificates);
       const tableData = res.data.insured;
       this.dataSource = new MatTableDataSource(tableData);
       this.dataSource.sort = this.sort;
@@ -78,4 +81,11 @@ export class PolicyDetailsComponent implements OnInit {
     this.pendingPoliciesConsult = event;
   }
 
+  setClaimsFilters(event) {
+    this.ClaimsFilter = event;
+  }
+
+  setReceiptFilters(event) {
+    this.ReceiptFilter = event;
+  }
 }

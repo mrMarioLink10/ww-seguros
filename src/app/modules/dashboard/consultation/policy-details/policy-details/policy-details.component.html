@@ -27,28 +27,47 @@
       <div class="sm:ml-auto sm:mt-10">
         <p class="text-blue-800 font-bold text-3xl px-5 mt-3">PÓLIZA: {{policyId}}</p>
       </div>
-    </div>
-  
-  
-  
-    <div class="mt-5">
-      <div class="w-full grid sm:grid-rows-2 background-gray px-10 py-4 border-r-blue-2" style="border-right-width: 50px">
-        <div class="txt-blue grid grid-cols-1 sm:grid-cols-4">
-          <div *ngIf="!loading">
-            <span class="font-bold">Nombre del cliente de la póliza:</span> {{policyDetail.clientName}}
+
+
+
+      <div class="mt-5">
+        <div class="w-full grid sm:grid-rows-2 background-gray px-10 py-4 border-r-blue-2" style="border-right-width: 50px">
+          <div class="txt-blue grid grid-cols-1 sm:grid-cols-4">
+            <div *ngIf="!loading">
+              <span class="font-bold">Nombre del cliente de la póliza:</span> {{policyDetail.clientName}}
+            </div>
+          <!--  <div *ngIf="!loading">
+              <span class="font-bold">Cantidad Asegurados:</span> {{policyDetail.cantidadAsegurados}}
+            </div> -->
+            <div *ngIf="!loading">
+              <span class="font-bold mr-2">Forma Pago:</span> {{policyDetail.paymentCicle }}
+            </div>
+
+            <div *ngIf="!loading">
+              <span class="font-bold">Moneda:</span> {{policyDetail.currency}}$
+            </div>
+            <div *ngIf="!loading && !policyDetail.category.includes('DISABILITY')">
+              <span class="font-bold" *ngIf="policyDetail.category.includes('VIDA')">Termino de la Póliza y la Suma Asegurada:</span>
+              <span class="font-bold" *ngIf="policyDetail.category.includes('SALUD')">Deducible:</span> {{policyDetail.deductible}}
+            </div>
           </div>
-        <!--  <div *ngIf="!loading">
-            <span class="font-bold">Cantidad Asegurados:</span> {{policyDetail.cantidadAsegurados}}
-          </div> -->
-          <div *ngIf="!loading">
-            <span class="font-bold mr-2">Forma Pago:</span> {{policyDetail.paymentCicle }}
-          </div>
-  
-          <div *ngIf="!loading">
-            <span class="font-bold">Moneda:</span> {{policyDetail.currency}}$
-          </div>
-          <div *ngIf="!loading">
-            <span class="font-bold">Deducible:</span> {{policyDetail.deductible}}
+          <div class="txt-blue mt-5 grid grid-cols-1 sm:grid-cols-4">
+
+            <div *ngIf="!loading">
+              <span class="font-bold">Producto:</span> {{policyDetail.product}}
+            </div>
+            <div *ngIf="!loading">
+              <span class="font-bold">Ini. Vigencia:</span> {{policyDetail.initialDate}}
+            </div>
+            <div *ngIf="!loading">
+              <span class="font-bold">Fin. Vigencia:</span> {{policyDetail.endDate}}
+            </div>
+            <!--  <div>
+                <span class="font-bold">Ramo:</span> {{policyDetail.branch}}
+              </div>
+              <div>
+                <span class="font-bold" >Certificados:</span> {{policyDetail.certificates}}
+              </div> -->
           </div>
         </div>
         <div class="txt-blue mt-5 grid grid-cols-1 sm:grid-cols-4">
@@ -80,45 +99,45 @@
         <div>
           <span class="font-light">Lista de Asegurados</span>
         </div>
-    
+
         <div>
           <div class="table-responsive policy-details-table">
             <table mat-table matSort [dataSource]="dataSource" class="mt-5 w-full dashboard-basic-table">
-    
+
               <ng-container matColumnDef="insuredId" style="margin-right: 15px !important">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> ID Asegurado </th>
                 <td mat-cell *matCellDef="let element" id="insuredIdCell">{{element.insuredId}}</td>
               </ng-container>
-    
+
               <ng-container matColumnDef="certificates" style="margin-right: 15px !important">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> Certificado </th>
                 <td mat-cell *matCellDef="let element"> {{element.certificates}} </td>
               </ng-container>
-    
+
               <ng-container matColumnDef="fullName" style="margin-right: 15px !important">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> Nombre y Apellido </th>
                 <td mat-cell *matCellDef="let element"> {{element.fullName}} </td>
               </ng-container>
-    
+
               <ng-container matColumnDef="validityDate" style="margin-right: 15px !important">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> Fecha Nacimiento </th>
                 <td mat-cell *matCellDef="let element"> {{element.validityDate}} </td>
               </ng-container>
-    
+
               <ng-container matColumnDef="kinship" style="margin-right: 15px !important">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> Parentesco </th>
                 <td mat-cell *matCellDef="let element"> {{element.kinship}} </td>
               </ng-container>
-    
+
               <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
               <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
             </table>
           </div>
-    
+
         </div>
-    
+
       </div>
-    
+
       <mat-paginator id="table-paginator" color="accent" class="dashboard-table-paginator" [pageSizeOptions]="[5, 10, 20]"
         showFirstLastButtons></mat-paginator>
     </mat-tab>

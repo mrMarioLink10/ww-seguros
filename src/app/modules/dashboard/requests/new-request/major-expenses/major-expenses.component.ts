@@ -1,4 +1,4 @@
-import { Component, OnInit, DoCheck, ViewChild, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, DoCheck, ViewChild, ChangeDetectorRef, Input } from '@angular/core';
 import { FieldConfig } from 'src/app/shared/components/form-components/models/field-config';
 import { FormGroup, FormBuilder, Validators, FormArray, FormControl, AbstractControl } from '@angular/forms';
 import { $sex, $res, $country, $time, $family, $allFamily, $weightTypes, $heightTypes } from '../../../../../core/form/objects';
@@ -335,11 +335,11 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
     options: [
       {
         value: 'Soltero',
-        viewValue: 'soltero'
+        viewValue: 'Soltero'
       },
       {
         value: 'Casado',
-        viewValue: 'casado'
+        viewValue: 'Casado'
       },
       {
         value: 'Únion Libre',
@@ -499,7 +499,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
   notFoundQuote = false;
 
   @ViewChild('form', { static: false }) ogForm;
-
+  step: number;
 
   searchQuote(noCotizacion) {
     if (noCotizacion !== undefined && noCotizacion !== '') {
@@ -839,7 +839,6 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
       this.isContractor = true;
       if (value === 'Si') {
         this.isContractor = false;
-        this.newRequest.get('person').get('isJuridica').setValue('');
         this.titles = FormValidationsConstant.titlesForMajorExpenses;
       } else {
         this.titles = FormValidationsConstant.titlesForMajorExpensesComplete;
@@ -869,10 +868,8 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
       this.isJuridica = false;
       console.log(value);
       if (value === 'Si') {
-        this.isJuridica = true;
-        this.titles = FormValidationsConstant.titlesForMajorExpenses;
+
       } else {
-        this.titles = FormValidationsConstant.titlesForMajorExpensesComplete;
       }
 
     });
@@ -1056,6 +1053,22 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
       form.addControl('specifyRelationship', this.fb.control('', Validators.required));
     } else {
       form.removeControl('specifyRelationship');
+    }
+  }
+
+  showWarningDot(Form: any): boolean {
+    if (!this.ID) {
+      if (!Form.valid && this.ogForm.submitted) {
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      if (Form.valid) {
+        return false;
+      } else {
+        return true;
+      }
     }
   }
 
@@ -1250,17 +1263,34 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
     this.proceduresArray.updateValueAndValidity();
   }
 
+  setStep(index: number) {
+    this.step = index;
+  }
+
+  nextStep(panel?: string) {
+    this.step++;
+  }
 
   selectChange(event) {
     const questionsForm = this.newRequest.get('questionsA') as FormGroup;
     const questionsBForm = this.newRequest.get('questionsB') as FormGroup;
     const mhiForm = this.newRequest.get('questionsB').get('medicalHealthInsurance') as FormGroup;
     const exposedPersonForm = this.newRequest.get('exposedPerson') as FormGroup;
+    const formP = this.newRequest.get('person') as FormGroup;
+    console.log(event);
+    this.isJuridica = false;
 
-
-    if (event.valor === 'si') {
+    if (event.valor === 'si' || event.valor === 'Si') {
       switch (event.name) {
+        case 'isContractor':
+          formP.removeControl('isJuridica');
+          break;
 
+        case 'isJuridica':
+          console.log('entro');
+          this.isJuridica = true;
+          this.titles = FormValidationsConstant.titlesForMajorExpenses;
+          break;
         case 'contractor':
           exposedPersonForm.addControl('contractorExposedInfo', this.fb.group({
             lastPosition: ['', Validators.required],
@@ -1307,8 +1337,16 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
         default:
           break;
       }
-    } else if (event.valor === 'no') {
+    } else if (event.valor === 'no' || event.valor === 'No') {
       switch (event.name) {
+        case 'isContractor':
+          formP.addControl('isJuridica', this.fb.control('', Validators.required));
+          break;
+        case 'isJuridica':
+          this.titles = FormValidationsConstant.titlesForMajorExpensesComplete;
+
+          break;
+
         case 'havePregnant':
           questionsForm.removeControl('pregnant');
           break;
@@ -1862,11 +1900,18 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
         this.dataMappingFromApi.iterateThroughtAllObject(data.data, this.newRequest);
         console.log(this.newRequest);
         this.AddEventOnEachDependentVariable();
+
+        const formP = this.newRequest.get('person') as FormGroup;
+
         if (this.newRequest.get('questionsB').get('familyWithDiseases') !== undefined && this.newRequest.get('questionsB').get('familyWithDiseases') !== null) {
           this.familyWithDiseasesList = this.newRequest.get('questionsB').get('familyWithDiseases') as FormArray;
         }
         else {
           this.familyWithDiseasesList = undefined;
+        }
+
+        if (formP.get('isContractor').value === 'Si') {
+          formP.removeControl('isJuridica');
         }
 
         this.contingentBeneficiaryArray = this.newRequest.get('contingentBeneficiary').get('dependentsC') as FormArray;
@@ -1881,54 +1926,9 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
         this.isFormValidToFill = true;
         this.arrayFilesTitles = data.data.files.studies;
 
-        //this.addEventChange();
-        /*let person = this.newRequest.get('person');
-        this.iterateThroughtObject(data.data.person, person);
-  /// Person
-        let personOffice = this.newRequest.get('person').get('office');
-        this.iterateThroughtObject(data.data.person.office, personOffice);
-        let personaConozcaSuClientePersona = this.newRequest.get('person').get('conozcaSuClientePersona');
-        this.iterateThroughtObject(data.data.person.conozcaSuClientePersona, personaConozcaSuClientePersona);
-  /// Contractor
-        let contractor = this.newRequest.get('contractor');
-        this.iterateThroughtObject(data.data.contractor, contractor);
-        let contractorOffice = this.newRequest.get('contractor').get('office');
-        this.iterateThroughtObject(data.data.contractor.office, contractorOffice);
-        let ContractorConozcaSuClientePersona = this.newRequest.get('contractor').get('conozcaSuClientePersona');
-        this.iterateThroughtObject(data.data.contractor.conozcaSuClientePersona, ContractorConozcaSuClientePersona);
-        let ContractorConozcaSuClientePersonaJuridica = this.newRequest.get('contractor').get('conozcaSuClientePersonaJuridica');
-        this.iterateThroughtObject(data.data.contractor.conozcaSuClientePersonaJuridica, ContractorConozcaSuClientePersonaJuridica);
-  
-  /// ExpoxedPerson
-  let exposedPerson = this.newRequest.get('exposedPerson');
-  this.iterateThroughtObject(data.data.exposedPerson, exposedPerson);
-  let contractorExposedInfo = this.newRequest.get('exposedPerson').get('contractorExposedInfo');
-  this.iterateThroughtObject(data.data.exposedPerson.contractorExposedInfo, contractorExposedInfo);
-  let headLineExposedInfo = this.newRequest.get('exposedPerson').get('headLineExposedInfo');
-  this.iterateThroughtObject(data.data.exposedPerson.headLineExposedInfo, headLineExposedInfo);
-  
-  /// Incomes
-  let incomes = this.newRequest.get('incomes');
-  this.iterateThroughtObject(data.data.incomes, incomes);
-  if (data.data.dependents !== null)
-  {
-  // Dependents
-  let dependents = this.newRequest.get('dependents');
-  this.iterateThroughtObject(data.data.dependents, dependents);
-  
-  if(data.data.dependents.allDependents !== null && data.data.dependents.allDependents.length > 0)
-  {
-  data.data.dependents.allDependents.foreach( (element) =>{
-  this.iterateThroughtObject(element, dependents)
-  });
-  }
-  if(data.data.dependents.students !== null && data.data.dependents.students.length > 0)
-  {
-  data.data.dependents.students.foreach( (element) =>{
-  this.iterateThroughtObject(element, dependents)
-  });
-  }
-  }*/
+        this.newRequest.markAllAsTouched();
+        this.newRequest.updateValueAndValidity();
+
       }
 
 

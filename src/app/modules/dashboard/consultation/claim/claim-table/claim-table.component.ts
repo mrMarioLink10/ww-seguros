@@ -5,6 +5,7 @@ import { ClaimService } from '../services/claim.service';
 import { ActivatedRoute } from '@angular/router';
 import { PolicyService } from '../../../services/consultation/policy.service';
 import { AppComponent } from '../../../../../app.component';
+import {UserService} from '../../../../../core/services/user/user.service';
 
 
 @Component({
@@ -39,13 +40,24 @@ export class ClaimTableComponent implements OnInit {
 
 
   constructor(private claimService: ClaimService, private activatedRoute: ActivatedRoute,
-              private policyService: PolicyService, private appComponent: AppComponent) {
+              private policyService: PolicyService, private appComponent: AppComponent, private userService: UserService) {
     // this.policyId = this.activatedRoute.snapshot.paramMap.get('policyId');
    }
 
+   userRole: string;
   ngOnInit() {
+    this.userRole = this.userService.getRoleCotizador();
   }
-
+  getBillDownloadLink(billId) {
+    switch (this.userRole) {
+      case 'WWS':
+        return `http://wwsdevportalbackend.azurewebsites.net/InvoiceView/ExportToPDF/ReclamosData/${billId}/?location=true`;
+      case 'WMA':
+        return `http://wwsdevportalbackend.azurewebsites.net/InvoiceView/ExportToPDF/ReclamosData/${billId}/?location=false`;
+      default:
+        return'';
+    }
+  }
   loadData() {
     // this.policyService.getPolicyDetails(this.policyId).subscribe((res: any) => {
     //   this.certifi2 = res.data.certificates;

@@ -35,7 +35,7 @@ export class BillsFilterComponent implements OnInit {
   sendFormToParent() {
 
     const formValue = this.filterForm.value;
-
+    console.log('aaaa');
     const initialDate = formValue.initialDate;
     const endDate = formValue.endDate;
 

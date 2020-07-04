@@ -38,7 +38,7 @@ export class NewAuthorizationService {
   }
 
   getIdNumbers(): Observable<any> {
-    return this.http.get(`${environment.apiUrl}/api/DatosEmpresa`);
+    return this.http.get(`${environment.apiUrl}/api/DatosEmpresa/autocomplete`);
   }
 
 }

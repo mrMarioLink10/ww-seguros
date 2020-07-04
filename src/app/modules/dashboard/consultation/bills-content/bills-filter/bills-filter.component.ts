@@ -25,6 +25,7 @@ export class BillsFilterComponent implements OnInit {
     endDate: [''],
     clientName: ['']
   });
+  billId;
 
   constructor(private fb: FormBuilder) { }
 
@@ -32,6 +33,7 @@ export class BillsFilterComponent implements OnInit {
   }
 
   sendFormToParent() {
+
     const formValue = this.filterForm.value;
 
     const initialDate = formValue.initialDate;
@@ -39,7 +41,7 @@ export class BillsFilterComponent implements OnInit {
 
     const filter: BillFilter = {
       policyId: formValue.policyId ? formValue.policyId : '',
-      billId: formValue.billId ? formValue.billId : '',
+      billId: formValue.billId ? formValue.billId :  '',
       clientName: formValue.clientName ? formValue.clientName : '',
       paymentState: formValue.paymentState ? formValue.paymentState : '',
       initialDate: initialDate ? `${initialDate._i.date}/${initialDate._i.month + 1}/${initialDate._i.year}` : '',

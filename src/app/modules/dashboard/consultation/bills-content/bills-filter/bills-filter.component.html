@@ -5,7 +5,7 @@
       <mat-form-field color="accent" appearance="outline" class="w-full bg-transparente"
         style="font-size: small !important;">
         <mat-label>No. Factura</mat-label>
-        <input formControlName="billId" matInput type="number">
+        <input formControlName="billId" matInput type="number" ng-enter="sendFormToParent()">
       </mat-form-field>
     </div>
 
@@ -44,7 +44,7 @@
       </mat-form-field>
     </div>
 
-    <div class="mr-3 xl:col-span-4">
+ <!--  <div class="mr-3 xl:col-span-4">
       <mat-form-field color="accent" appearance="outline" class="w-full" style="font-size: small !important;">
         <mat-label>Estado de Pago</mat-label>
         <mat-select formControlName="paymentState">
@@ -52,7 +52,7 @@
           <mat-option value="P">Pendiente</mat-option>
         </mat-select>
       </mat-form-field>
-    </div>
+    </div>-->
     <div class="grid grid-cols-2 xl:col-span-2">
       <button (click)="resetForm()" class="flex justify-center content-center nofocus small-search-button"
         style="color: white;">

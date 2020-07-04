@@ -5,6 +5,7 @@ export interface Bill {
   paymentState: string;
   totalBalance: number;
   expirationDate: string;
+  creationDate: string;
 }
 
 export interface BillFilter {

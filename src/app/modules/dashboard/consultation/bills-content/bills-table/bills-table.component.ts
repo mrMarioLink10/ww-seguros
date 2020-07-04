@@ -1,4 +1,4 @@
-import {Component, Input, OnInit, EventEmitter,Output, ViewChild} from '@angular/core';
+import {Component, Input, OnInit, EventEmitter,Output, ViewChild, ElementRef } from '@angular/core';
 import {Bill, BillFilter} from '../../models/bill';
 import {MatPaginator, MatTableDataSource, MatSort} from '@angular/material';
 import {BillsService} from '../../../services/consultation/bills.service';
@@ -36,7 +36,7 @@ export class BillsTableComponent implements OnInit {
   userRole: string;
   dataSource;
   data: Bill[] = [];
-  displayedColumns: string[] = ['policyId', 'billId' , 'clientName', 'expirationDate', 'paymentState', 'totalBalance', 'actions'];
+  displayedColumns: string[] = ['policyId', 'billId' , 'clientName', 'expirationDate',  'totalBalance', 'actions'];
   emitPendingBills(policies: Bill[]) {
     const filteredPolicies = policies.filter( p => p.paymentState === 'P');
     this.pendingBillsEmitter.emit(filteredPolicies.length);
@@ -57,8 +57,16 @@ export class BillsTableComponent implements OnInit {
       this.dataSource.sort = this.sort;
       this.dataSource.paginator = this.paginator;
 
+      //this.emitPendingBills(this.data);
+    });
+
+    this.billsService.getBillsInfo().subscribe((res: any) => {
+      this.data = res.data || [];
+
       this.emitPendingBills(this.data);
     });
+
+
   }
 
   canUserDownloadBills() {
@@ -90,9 +98,9 @@ export class BillsTableComponent implements OnInit {
       httpParams = httpParams.append('clientName', this.billsFilter.clientName.toString());
     }
 
-    if (this.billsFilter.paymentState && this.billsFilter.paymentState !== '') {
+    /*if (this.billsFilter.paymentState && this.billsFilter.paymentState !== '') {
       httpParams = httpParams.append('paymentState', this.billsFilter.paymentState.toString());
-    }
+    }*/
 
     if (this.billsFilter.initialDate && this.billsFilter.initialDate !== '') {
       httpParams = httpParams.append('initialDate', this.billsFilter.initialDate.toString());

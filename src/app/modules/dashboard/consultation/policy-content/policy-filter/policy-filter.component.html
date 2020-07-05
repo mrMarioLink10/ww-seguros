@@ -1,32 +1,32 @@
-<form [formGroup]="filterForm" (ngSubmit)="sendFormToParent()" class="p-3 pb-2 mt-5" style="background-color: #F2F2F2">
+<form [formGroup]="filterForm" (keydown.enter)="$event.preventDefault()"  (ngSubmit)="sendFormToParent()" class="p-3 pb-2 mt-5" style="background-color: #F2F2F2">
   <div class="filter-title">Filtro Rápido</div>
   <div class="mt-3 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 xl:grid-cols-22">
     <div class="mr-3 xl:col-span-4">
       <mat-form-field *ngIf="timeAutoComplete == 0" color="accent" appearance="outline" class="w-full bg-transparente"
         style="font-size: small !important;">
         <mat-label>Nombre</mat-label>
-        <input formControlName="clientName" matInput class="">
+        <input formControlName="clientName" matInput class=""  (keydown.enter)="sendFormToParent()">
       </mat-form-field>
-     
+
         <mat-form-field *ngIf="timeAutoComplete == 1" color="accent" appearance="outline" class="w-full bg-transparente"
           style="font-size: small !important;">
           <mat-label>Nombre</mat-label>
           <input formControlName="clientName" matInput class="" type="text" [matAutocomplete]="auto"
-            placeholder="Juan Juan">
+            placeholder="Juan Perez"  (keydown.enter)="sendFormToParent()">
           <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
             <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
               {{option}}
             </mat-option>
           </mat-autocomplete>
         </mat-form-field>
-     
+
     </div>
 
     <div class="mr-3 xl:col-span-4">
       <mat-form-field color="accent" appearance="outline" class="w-full bg-transparente"
         style="font-size: small !important;">
         <mat-label>No. Póliza</mat-label>
-        <input formControlName="policyId" matInput>
+        <input formControlName="policyId" matInput  (keydown.enter)="sendFormToParent()">
       </mat-form-field>
     </div>
 
@@ -44,7 +44,7 @@
       <p class="text-xs">Rango Vigencia</p>
       <mat-form-field color="accent" appearance="outline" class="w-full" style="font-size: small !important;">
         <mat-label>Desde</mat-label>
-        <input formControlName="initialDate" matInput [matDatepicker]="initialDate" placeholder="25/12/2019">
+        <input formControlName="initialDate" matInput [matDatepicker]="initialDate" placeholder="25/12/2019"  (keydown.enter)="sendFormToParent()">
         <mat-datepicker-toggle matSuffix [for]="initialDate"></mat-datepicker-toggle>
         <mat-datepicker #initialDate></mat-datepicker>
       </mat-form-field>
@@ -53,7 +53,7 @@
     <div class="mr-3 xl:col-span-4">
       <mat-form-field color="accent" appearance="outline" class="w-full" style="font-size: small !important;">
         <mat-label>Hasta</mat-label>
-        <input formControlName="endDate" matInput [matDatepicker]="endDate" placeholder="04/03/2020">
+        <input formControlName="endDate" matInput [matDatepicker]="endDate" placeholder="04/03/2020"  (keydown.enter)="sendFormToParent()">
         <mat-datepicker-toggle matSuffix [for]="endDate"></mat-datepicker-toggle>
         <mat-datepicker #endDate></mat-datepicker>
       </mat-form-field>

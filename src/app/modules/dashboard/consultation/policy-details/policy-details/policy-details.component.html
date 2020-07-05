@@ -143,9 +143,9 @@
     </mat-tab>
     <mat-tab label="Recibos" class="mat-tab-forms">
       <p> Hola recibos </p>
-<!-- 
+
       <app-receipt-filter (filters)="setReceiptFilters($event)"> </app-receipt-filter>
-      <app-receipt-table [filters]="ReceiptFilter"> </app-receipt-table> -->
+      <app-receipt-table [policyId]="policyId" [filters]="ReceiptFilter"> </app-receipt-table>
     </mat-tab>
   </mat-tab-group>
 

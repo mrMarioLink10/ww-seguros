@@ -312,7 +312,7 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy, DoCheck {
 				}),
 				tiempoEstadia: ['', Validators.required],
 				nombreServicio: ['', Validators.required],
-				isMedicalEqual: [''],
+				isMedicalEqual: [false],
 				// direccion: ['', Validators.required],
 				// telefono: ['', Validators.required],
 			}),

@@ -72,8 +72,8 @@ export class DialogOptionService {
 	deleteConfirm(title: string) {
 		return {
 			logo: 'warning',
-			title: `¿Esta seguro de que desea borrar esta solicitud de ${title}?`,
-			text: `Esta acción no se podra revertir`,
+			title: `Confirmación`,
+			text: `¿Esta seguro de que desea borrar esta solicitud de ${title}?`,
 			showButtons: true,
 			showCancelButton: true,
 			textPrincipalButton: 'Eliminar',

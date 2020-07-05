@@ -136,6 +136,15 @@ export class LifeComponent implements OnInit, DoCheck {
         value: 'Tarjeta Credito',
         viewValue: 'Tarjeta Credito',
       },
+      {
+        value: 'Transferencia',
+        viewValue: 'Transferencia',
+      },
+      {
+        value: 'Débito Automático',
+        viewValue: 'Débito Automático',
+      },
+
     ]
   };
 
@@ -928,12 +937,6 @@ export class LifeComponent implements OnInit, DoCheck {
       form.removeControl('disability');
       form.removeControl('seriousIllnesses');
       form.removeControl('waiverPremiumPayment');
-
-      if (age >= 50) {
-        questionnairesForm.addControl('solicitudProstatica', this.fb.group({}));
-      } else {
-        questionnairesForm.removeControl('solicitudProstatica');
-      }
 
       if (age >= 18 && age <= 70) {
         form.addControl('advancePaymentOfCapital', this.fb.control('', [Validators.required, Validators.max(300000)]));

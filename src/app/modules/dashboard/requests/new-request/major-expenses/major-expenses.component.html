@@ -1043,7 +1043,10 @@
                 </div>
               </mat-panel-description>
             </mat-expansion-panel-header>
-
+            <div class="mb-6" style="color: #676767; font-size: 14px; font-weight: 300;"
+              *ngIf="newRequest.get('contingentBeneficiary').get('dependentsC')['controls'].length === 0">
+              No existen beneficiarios contingentes, pulse el boton para crear uno.
+            </div>
             <div [formGroup]="newRequest.get('contingentBeneficiary')">
               <div formArrayName="dependentsC">
                 <div
@@ -1088,13 +1091,13 @@
                         <mat-icon style="color: #e2e2e2;" matSuffix>publish</mat-icon>
                       </mat-form-field>
                     </div>
-                    <button *ngIf="contingentBeneficiaryArray.length > 1" mat-mini-fab aria-label="Eliminar reclamacion"
+                    <button mat-mini-fab aria-label="Eliminar reclamacion"
                       (click)="formMethods.deleteOneElement(contingentBeneficiaryArray, index)" type="button"
                       class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
                       <mat-icon style="color: #18446B">remove</mat-icon>
                     </button>
-                    <br>
-                    <mat-divider></mat-divider><br>
+
+                    <hr class="mt-4 w-full mb-3 ww-divider">
                   </div>
                 </div>
                 <button mat-mini-fab aria-label="Agregar reclamacion"
@@ -1117,8 +1120,8 @@
                 beneficios es mayor a 100%,
                 por favor revisar. </label>
             </div>
-            <div class="mt-4">
-              <p>Si a mi fallecimiento alguno de mis Beneficiarios Primarios es menor de edad, el beneficio
+            <div *ngIf="newRequest.get('contingentBeneficiary').get('dependentsC')['controls'].length > 0" class="mt-4">
+              <p>Si a mi fallecimiento alguno de mis Beneficiarios Contigentes es menor de edad, el beneficio
                 correspondiente será entregado a</p><br>
               <div class='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-4'>
                 <app-input class="mr-3" name="name" label="Nombre Completo"

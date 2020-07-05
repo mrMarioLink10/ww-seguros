@@ -70,7 +70,7 @@
               src="../../../../../../assets/iconos/library_add-24px.svg" height="24px" width="24px" class="mr-1 ml-3"> -->
             <div style="max-height: 35px !important;" class="text-xs uppercase">Solicitudes</div>
           </mat-list-item>
-          <mat-list-item [routerLink]="['claims']" routerLinkActive="router-link-active"
+          <mat-list-item *ngIf="this.role === 'WWS'" [routerLink]="['claims']" routerLinkActive="router-link-active"
             style="color: white; max-height: 35px !important;" class="my-3">
             <img style="max-height: 35px !important;"
               [src]="!activeRoute.includes('/dashboard/claims') ? '../../../../../../assets/iconos/announcement-24px.svg' : '../../../../../../assets/iconos/announcement-24px-b.svg'"
@@ -79,8 +79,8 @@
               src="../../../../../../assets/iconos/announcement-24px.svg" height="24px" width="24px" class="mr-1 ml-3"> -->
             <div style="max-height: 35px !important;" class="text-xs uppercase">Reembolsos</div>
           </mat-list-item>
-          <mat-list-item [routerLink]="['authorizations']" routerLinkActive="router-link-active"
-            style="color: white; max-height: 35px !important;" class="my-3">
+          <mat-list-item *ngIf="this.role === 'WWS'" [routerLink]="['authorizations']"
+            routerLinkActive="router-link-active" style="color: white; max-height: 35px !important;" class="my-3">
             <img style="max-height: 35px !important;"
               [src]="!activeRoute.includes('/dashboard/authorizations') ? '../../../../../../assets/iconos/autorizacion2.svg' : '../../../../../../assets/iconos/autorizacion1.svg'"
               height="24px" width="24px" class="mr-1 ml-3">

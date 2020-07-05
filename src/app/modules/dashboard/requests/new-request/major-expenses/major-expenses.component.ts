@@ -680,6 +680,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
           name: [''],
           family: [''],
           id2: [''],
+          id2Attached: [''],
           idType: [''],
         })
       }),
@@ -689,6 +690,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
           name: [''],
           family: [''],
           id2: [''],
+          id2Attached: [''],
           idType: [''],
         })
       }),
@@ -1807,7 +1809,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
   // tslint:disable: max-line-length
   id2AttachedViewValue(i: number, group: string) {
     if (group === 'primaryBenefits') {
-      if (i) {
+      if (i !== null) {
         if (this.primaryBeneficaryTitles) {
           if (this.primaryBeneficaryTitles[i] && this.newRequest.get('primaryBenefits').get('dependentsC').get(i.toString()).value.id2Attached !== '') {
             return this.primaryBeneficaryTitles[i].id2AttachedUrl;
@@ -1821,7 +1823,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
         }
       }
     } else {
-      if (i) {
+      if (i !== null) {
         if (this.contigentBeneficaryTitles) {
           if (this.contigentBeneficaryTitles[i] && this.newRequest.get('contingentBeneficiary').get('dependentsC').get(i.toString()).value.id2Attached !== '') {
             return this.contigentBeneficaryTitles[i].id2AttachedUrl;

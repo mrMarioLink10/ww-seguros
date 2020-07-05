@@ -148,54 +148,66 @@ export class FormHandlerService {
 						let dialog;
 						switch (name) {
 							case 'claims-reclaim':
+								appComponent.showOverlay = true;
 								this.claimService.postClaim(json)
 									.subscribe(res => {
 										this.correctSend(res, dialog, dataClosing, route);
+										appComponent.showOverlay = false;
 									}, (err) => {
 										this.badSend(err, dialog);
 									});
 								break;
 
 							case 'claims-refund':
+								appComponent.showOverlay = true;
 								this.refundService.postClaim(json)
 									.subscribe(res => {
 										this.correctSend(res, dialog, dataClosing, route);
+										appComponent.showOverlay = false;
 									}, (err) => {
 										this.badSend(err, dialog);
 									});
 								break;
 
 							case 'new-authorization':
+								appComponent.showOverlay = true;
 								this.newAuthorizationService.postClaim(json)
 									.subscribe(res => {
 										this.correctSend(res, dialog, dataClosing, route);
+										appComponent.showOverlay = false;
 									}, (err) => {
 										this.badSend(err, dialog);
 									});
 								break;
 
 							case 'life':
+								appComponent.showOverlay = true;
 								this.lifeService.postRequest(json)
 									.subscribe(res => {
 										this.correctSend(res, dialog, dataClosing, route);
+										appComponent.showOverlay = false;
 									}, (err) => {
 										this.badSend(err, dialog);
 									});
 								break;
 
 							case 'major-expenses':
+								appComponent.showOverlay = true;
 								this.majorExpensesService.postRequest(json)
 									.subscribe(res => {
 										this.correctSend(res, dialog, dataClosing, route);
+										appComponent.showOverlay = false;
 									}, (err) => {
 										this.badSend(err, dialog);
 									});
 								break;
 
 							case 'disability':
+								appComponent.showOverlay = true;
 								this.disabilityService.postRequest(json)
 									.subscribe(res => {
 										this.correctSend(res, dialog, dataClosing, route);
+										appComponent.showOverlay = false;
 									}, (err) => {
 										this.badSend(err, dialog);
 									});

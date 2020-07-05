@@ -700,6 +700,7 @@
                         <mat-form-field class="mr-3" appearance="outline">
                           <mat-label> Adjuntar documento de identidad si es mayor de edad </mat-label>
                           <ngx-mat-file-input placeholder="Documento de Identidad"
+                            [valuePlaceholder]="id2AttachedViewValue(index, 'primaryBenefits')"
                             (change)="onFileChangeOnArray($event, 'id2Attached', index, 'primaryBenefits')">
                           </ngx-mat-file-input>
                           <mat-icon style="color: #e2e2e2;" matSuffix>publish</mat-icon>
@@ -758,6 +759,7 @@
                   <mat-form-field class="mr-3" appearance="outline">
                     <mat-label> Adjuntar documento de identidad </mat-label>
                     <ngx-mat-file-input placeholder="Documento de Identidad"
+                      [valuePlaceholder]="id2AttachedViewValue(null, 'primaryBenefits')"
                       (change)="onFileChangeOnArray($event, 'id2Attached', null, 'primaryBenefits')">
                     </ngx-mat-file-input>
                     <mat-icon style="color: #e2e2e2;" matSuffix>publish</mat-icon>
@@ -814,6 +816,7 @@
                         <mat-form-field class="mr-3" appearance="outline">
                           <mat-label> Adjuntar documento de identidad si es mayor de edad </mat-label>
                           <ngx-mat-file-input placeholder="Documento de Identidad"
+                            [valuePlaceholder]="id2AttachedViewValue(index, 'contingentBeneficiary')"
                             (change)="onFileChangeOnArray($event, 'id2Attached', index, 'contingentBeneficiary')">
                           </ngx-mat-file-input>
                           <mat-icon style="color: #e2e2e2;" matSuffix>publish</mat-icon>
@@ -872,6 +875,7 @@
                   <mat-form-field class="mr-3" appearance="outline">
                     <mat-label> Adjuntar documento de identidad </mat-label>
                     <ngx-mat-file-input placeholder="Documento de Identidad"
+                      [valuePlaceholder]="id2AttachedViewValue(null, 'contingentBeneficiary')"
                       (change)="onFileChangeOnArray($event, 'id2Attached', null, 'contingentBeneficiary')">
                     </ngx-mat-file-input>
                     <mat-icon style="color: #e2e2e2;" matSuffix>publish</mat-icon>

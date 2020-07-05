@@ -394,6 +394,10 @@ export class DisabilityComponent implements OnInit, DoCheck {
   insuranceProperty;
   existingCoveragesList: FormArray;
 
+  primaryBeneficaryTitles = [];
+  contigentBeneficaryTitles = [];
+  primaryAnotherTitle: any;
+  contigentAnotherTitle: any
 
   money_laundering: FormGroup;
   know_client: FormGroup;
@@ -1799,6 +1803,41 @@ export class DisabilityComponent implements OnInit, DoCheck {
     }
   }
 
+  // tslint:disable: max-line-length
+  id2AttachedViewValue(i: number, group: string) {
+    console.log('WEEEEY');
+    if (group === 'primaryBenefits') {
+      if (i !== null) {
+        console.log('coñomano como asi pues', this.disabilityGroup.get('main').get('main_array').get(i.toString()).value.id2Attached);
+        if (this.primaryBeneficaryTitles) {
+          if (this.primaryBeneficaryTitles[i] && this.disabilityGroup.get('main').get('main_array').get(i.toString()).value.id2Attached !== '') {
+            return this.primaryBeneficaryTitles[i].id2AttachedUrl;
+          }
+        }
+      } else {
+        if (this.primaryAnotherTitle) {
+          if (this.primaryAnotherTitle && this.disabilityGroup.get('main').value.id2Attached !== '') {
+            return this.primaryAnotherTitle;
+          }
+        }
+      }
+    } else {
+      if (i !== null) {
+        if (this.contigentBeneficaryTitles) {
+          if (this.contigentBeneficaryTitles[i] && this.disabilityGroup.get('contingent').get('contingent_array').get(i.toString()).value.id2Attached !== '') {
+            return this.contigentBeneficaryTitles[i].id2AttachedUrl;
+          }
+        }
+      } else {
+        if (this.contigentAnotherTitle) {
+          if (this.contigentAnotherTitle && this.disabilityGroup.get('contingent').value.id2Attached !== '') {
+            return this.contigentAnotherTitle;
+          }
+        }
+      }
+    }
+  }
+
   onBeneficiaryFileChangeOnArray(event, formName, i?: number, group?: string, subgroup?: string) {
     const reader = new FileReader();
 
@@ -1891,6 +1930,12 @@ export class DisabilityComponent implements OnInit, DoCheck {
         //this.disabilityGroup['controls'].num_financial_quote.setValue(data.data.num_financial_quote)
 
         this.arrayFilesTitles = data.data.files.studies;
+        this.contigentBeneficaryTitles = data.data.contingent.contingent_array;
+        this.primaryBeneficaryTitles = data.data.main.main_array;
+        this.contigentAnotherTitle = data.data.contingent.id2AttachedUrl;
+        this.primaryAnotherTitle = data.data.main.id2AttachedUrl;
+
+
         // this.filesDocumentsKnowClientArray = formF.get('documentsKnowClient') as FormArray;
         this.arrayFilesTitlesDocumentsKnowClient = data.data.files.documentsKnowClient;
 

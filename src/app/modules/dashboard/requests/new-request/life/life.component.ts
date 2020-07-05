@@ -95,6 +95,12 @@ export class LifeComponent implements OnInit, DoCheck {
   showNewQuoteRequest = false;
   todayDate = new Date();
 
+  primaryBeneficaryTitles = [];
+  contigentBeneficaryTitles = [];
+  primaryAnotherTitle: any;
+  contigentAnotherTitle: any;
+
+
   payMethod = {
     label: 'Método de pago',
     name: 'method',
@@ -958,14 +964,16 @@ export class LifeComponent implements OnInit, DoCheck {
       let totalAmount = 0;
       const formQ = this.newRequest.get('questionnaires') as FormGroup;
       const formF = this.newRequest.get('files') as FormGroup;
-      // const age = this.newRequest.get('person').value.age;
+      const formRPI = this.newRequest.get('releventPlanInformation').get('coverages') as FormGroup;
       const age = this.newRequest.get('person').get('age').value;
 
-      for (const key in value) {
-        if (value.hasOwnProperty(key)) {
-          const element = value[key];
-          if (!isNaN(parseInt(element, 10))) {
-            totalAmount += parseInt(element, 10);
+      for (const key in formRPI.getRawValue()) {
+        if (formRPI.getRawValue().hasOwnProperty(key)) {
+          if (key !== 'id') {
+            const element = formRPI.getRawValue()[key];
+            if (!isNaN(parseInt(element, 10))) {
+              totalAmount += parseInt(element, 10);
+            }
           }
         }
       }
@@ -976,7 +984,6 @@ export class LifeComponent implements OnInit, DoCheck {
         formQ.removeControl('solicitudEstadoFinancieroConfidencial');
       }
 
-      console.log('totalAmount:', totalAmount, 'age:', age);
       this.deleteFiles(formF);
       if (totalAmount >= 25000 && totalAmount <= 50000) {
         if (age >= 18 && age <= 35) {
@@ -1184,6 +1191,38 @@ export class LifeComponent implements OnInit, DoCheck {
   fileNameWatcher(type?: string) {
     if (this.filesInformation) {
       if (this.filesInformation[type + 'Url']) { return this.filesInformation[type + 'Url']; }
+    }
+  }
+
+  id2AttachedViewValue(i: number, group: string) {
+    if (group === 'primaryBenefits') {
+      if (i !== null) {
+        if (this.primaryBeneficaryTitles) {
+          if (this.primaryBeneficaryTitles[i] && this.newRequest.get('primaryBenefits').get('dependentsC').get(i.toString()).value.id2Attached !== '') {
+            return this.primaryBeneficaryTitles[i].id2AttachedUrl;
+          }
+        }
+      } else {
+        if (this.primaryAnotherTitle) {
+          if (this.primaryAnotherTitle && this.newRequest.get('primaryBenefits').get('personBenefited').value.id2Attached !== '') {
+            return this.primaryAnotherTitle.id2AttachedUrl;
+          }
+        }
+      }
+    } else {
+      if (i !== null) {
+        if (this.contigentBeneficaryTitles) {
+          if (this.contigentBeneficaryTitles[i] && this.newRequest.get('contingentBeneficiary').get('dependentsC').get(i.toString()).value.id2Attached !== '') {
+            return this.contigentBeneficaryTitles[i].id2AttachedUrl;
+          }
+        }
+      } else {
+        if (this.contigentAnotherTitle) {
+          if (this.contigentAnotherTitle && this.newRequest.get('contingentBeneficiary').get('personBenefited').value.id2Attached !== '') {
+            return this.contigentAnotherTitle.id2AttachedUrl;
+          }
+        }
+      }
     }
   }
 
@@ -2203,16 +2242,16 @@ export class LifeComponent implements OnInit, DoCheck {
         case 'doXtremeSport':
           formGI.removeControl('xtremeSports');
 
-          if (this.newRequest.get('activitiesQuestionnaires').get('solicitudBuceo')){
+          if (this.newRequest.get('activitiesQuestionnaires').get('solicitudBuceo')) {
             formAQ.removeControl('solicitudBuceo');
           }
-          if (this.newRequest.get('activitiesQuestionnaires').get('solicitudAviacion')){
+          if (this.newRequest.get('activitiesQuestionnaires').get('solicitudAviacion')) {
             formAQ.removeControl('solicitudAviacion');
           }
-          if (this.newRequest.get('activitiesQuestionnaires').get('solicitudMoto')){
+          if (this.newRequest.get('activitiesQuestionnaires').get('solicitudMoto')) {
             formAQ.removeControl('solicitudMoto');
           }
-          if (this.newRequest.get('activitiesQuestionnaires').get('solicitudMontanismo')){
+          if (this.newRequest.get('activitiesQuestionnaires').get('solicitudMontanismo')) {
             formAQ.removeControl('solicitudMontanismo');
           }
 
@@ -2568,7 +2607,10 @@ export class LifeComponent implements OnInit, DoCheck {
 
         this.insuranceProposedList = this.newRequest.get('generalInformation').get('insuranceProposed') as FormArray;
         this.arrayFilesTitles = data.data.files.studies;
-
+        this.primaryBeneficaryTitles = data.data.primaryBenefits.dependentsC;
+        this.contigentBeneficaryTitles = data.data.contingentBeneficiary.dependentsC;
+        this.primaryAnotherTitle = data.data.primaryBenefits.personBenefited;
+        this.contigentAnotherTitle = data.data.contingentBeneficiary.personBenefited;
       }
 
     });

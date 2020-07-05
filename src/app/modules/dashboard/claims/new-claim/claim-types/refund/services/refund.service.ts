@@ -39,6 +39,6 @@ export class RefundService {
   }
 
   getIdNumbers(): Observable<any> {
-    return this.http.get(`${environment.apiUrl}/api/DatosEmpresa`);
+    return this.http.get(`${environment.apiUrl}/api/DatosEmpresa/autocomplete`);
   }
 }

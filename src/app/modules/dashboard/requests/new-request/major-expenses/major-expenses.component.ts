@@ -91,7 +91,13 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
   informationList: FormArray;
   filesStudiesArray: FormArray;
   familyWithDiseasesList: FormArray;
+
   arrayFilesTitles = [];
+  primaryBeneficaryTitles = [];
+  contigentBeneficaryTitles = [];
+  primaryAnotherTitle: any;
+  contigentAnotherTitle: any;
+
   questions = questionsA;
   questionsB = questionsB;
   routeSelected = 'gastos mayores';
@@ -451,6 +457,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
     name: ['', Validators.required],
     date: [new Date(), Validators.required],
     id2: ['', Validators.required],
+    id2Attached: [''],
     nationality: ['', Validators.required],
     ocupation: ['', Validators.required],
     family: ['', Validators.required],
@@ -673,6 +680,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
           name: [''],
           family: [''],
           id2: [''],
+          id2Attached: [''],
           idType: [''],
         })
       }),
@@ -682,6 +690,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
           name: [''],
           family: [''],
           id2: [''],
+          id2Attached: [''],
           idType: [''],
         })
       }),
@@ -1797,6 +1806,39 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
     }
   }
 
+  // tslint:disable: max-line-length
+  id2AttachedViewValue(i: number, group: string) {
+    if (group === 'primaryBenefits') {
+      if (i !== null) {
+        if (this.primaryBeneficaryTitles) {
+          if (this.primaryBeneficaryTitles[i] && this.newRequest.get('primaryBenefits').get('dependentsC').get(i.toString()).value.id2Attached !== '') {
+            return this.primaryBeneficaryTitles[i].id2AttachedUrl;
+          }
+        }
+      } else {
+        if (this.primaryAnotherTitle) {
+          if (this.primaryAnotherTitle && this.newRequest.get('primaryBenefits').get('personBenefited').value.id2Attached !== '') {
+            return this.primaryAnotherTitle.id2AttachedUrl;
+          }
+        }
+      }
+    } else {
+      if (i !== null) {
+        if (this.contigentBeneficaryTitles) {
+          if (this.contigentBeneficaryTitles[i] && this.newRequest.get('contingentBeneficiary').get('dependentsC').get(i.toString()).value.id2Attached !== '') {
+            return this.contigentBeneficaryTitles[i].id2AttachedUrl;
+          }
+        }
+      } else {
+        if (this.contigentAnotherTitle) {
+          if (this.contigentAnotherTitle && this.newRequest.get('contingentBeneficiary').get('personBenefited').value.id2Attached !== '') {
+            return this.contigentAnotherTitle.id2AttachedUrl;
+          }
+        }
+      }
+    }
+  }
+
   createFormArray(type: string): FormGroup {
     switch (type) {
       case 'medicInformation':
@@ -1924,7 +1966,12 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
         this.filesStudiesArray = this.newRequest.get('files').get('studies') as FormArray;
 
         this.isFormValidToFill = true;
+
         this.arrayFilesTitles = data.data.files.studies;
+        this.primaryBeneficaryTitles = data.data.primaryBenefits.dependentsC;
+        this.contigentBeneficaryTitles = data.data.contingentBeneficiary.dependentsC;
+        this.primaryAnotherTitle = data.data.primaryBenefits.personBenefited;
+        this.contigentAnotherTitle = data.data.contingentBeneficiary.personBenefited;
 
         this.newRequest.markAllAsTouched();
         this.newRequest.updateValueAndValidity();

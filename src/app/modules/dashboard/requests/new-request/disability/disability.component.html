@@ -1690,6 +1690,7 @@
                         <mat-form-field class="mr-3" appearance="outline">
                           <mat-label> Adjuntar documento de identidad si es mayor de edad </mat-label>
                           <ngx-mat-file-input placeholder="Documento de Identidad"
+                            [valuePlaceholder]="id2AttachedViewValue(in, 'primaryBenefits')"
                             (change)="onBeneficiaryFileChangeOnArray($event, 'id2Attached', in, 'main', 'main_array')">
                           </ngx-mat-file-input>
                           <mat-icon style="color: #e2e2e2;" matSuffix>publish</mat-icon>
@@ -1753,6 +1754,7 @@
                     <mat-form-field class="mr-3" appearance="outline">
                       <mat-label> Adjuntar documento de identidad si es mayor de edad </mat-label>
                       <ngx-mat-file-input placeholder="Documento de Identidad"
+                        [valuePlaceholder]="id2AttachedViewValue(null, 'primaryBenefits')"
                         (change)="onBeneficiaryFileChangeOnArray($event, 'id2Attached', null, 'main')">
                       </ngx-mat-file-input>
                       <mat-icon style="color: #e2e2e2;" matSuffix>publish</mat-icon>
@@ -1826,6 +1828,7 @@
                         <mat-form-field class="mr-3" appearance="outline">
                           <mat-label> Adjuntar documento de identidad si es mayor de edad </mat-label>
                           <ngx-mat-file-input placeholder="Documento de Identidad"
+                            [valuePlaceholder]="id2AttachedViewValue(in, 'contingent')"
                             (change)="onBeneficiaryFileChangeOnArray($event, 'id2Attached', in, 'contingent', 'contingent_array')">
                           </ngx-mat-file-input>
                           <mat-icon style="color: #e2e2e2;" matSuffix>publish</mat-icon>
@@ -1887,6 +1890,7 @@
                     <mat-form-field class="mr-3" appearance="outline">
                       <mat-label> Adjuntar documento de identidad si es mayor de edad </mat-label>
                       <ngx-mat-file-input placeholder="Documento de Identidad"
+                        [valuePlaceholder]="id2AttachedViewValue(null, 'contingent')"
                         (change)="onBeneficiaryFileChangeOnArray($event, 'id2Attached', null, 'contingent')">
                       </ngx-mat-file-input>
                       <mat-icon style="color: #e2e2e2;" matSuffix>publish</mat-icon>

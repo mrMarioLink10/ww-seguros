@@ -1,6 +1,10 @@
 import { Component, OnInit, ViewChild, Input } from '@angular/core';
-import { MatPaginator, MatSort } from '@angular/material';
-import { ReceiptService } from '../services/receipt.service'
+import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
+import { ReceiptService } from '../services/receipt.service';
+import { HttpParams } from '@angular/common/http';
+import { AppComponent } from '../../../../../app.component';
+import {UserService} from '../../../../../core/services/user/user.service';
+
 
 @Component({
   selector: 'app-receipt-table',
@@ -12,70 +16,77 @@ export class ReceiptTableComponent implements OnInit {
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
-  claimFilter;
+  receiptfilter;
   // @Output() pendingBillsEmitter = new EventEmitter<number>();
-  @Input() set filters(claimFilter) {
-    if (claimFilter) {
-      this.claimFilter = claimFilter;
+  @Input() policyId;
+  @Input() set filters(receiptfilter) {
+    if (receiptfilter) {
+      this.receiptfilter = receiptfilter;
       this.loadData();
     } else {
-      this.claimFilter = {
-        receiptNumber: '',
-        client: '',
-        rec: '',
-        chargeDate: '',
-        paymentType: '',
-        amountCharge: ''
+      this.receiptfilter = {
+        numeroFactura: '',
+        nombre: '',
+        from: '',
+        to: '',
       };
     }
   }
 
   dataSource;
   data = [];
-  displayedColumns: string[] = ['receiptNumber', 'client' , 'rec', 'chargeDate', 'paymentType', 
-  'amountCharge'];
+  displayedColumns: string[] = ['receiptNumber', 'client' , 'rec', 'chargeDate', 'paymentType',
+  'amountCharge', 'actions'];
 
-  constructor(private receiptService: ReceiptService) { }
-
+  constructor(private receiptService: ReceiptService, private appComponent: AppComponent, private userService: UserService) { }
+  userRole;
   ngOnInit() {
+    // this.appComponent.showOverlay = true;
+    this.userRole = this.userService.getRoleCotizador();
+    this.loadData();
   }
-
+  getBillDownloadLink(billId) {
+    switch (this.userRole) {
+      case 'WWS':
+        return `http://wwsdevportalbackend.azurewebsites.net/InvoiceView/ExportToPDF/Reembolsos/${billId}/?location=true`;
+      case 'WMA':
+        return `http://wwsdevportalbackend.azurewebsites.net/InvoiceView/ExportToPDF/Reembolsos/${billId}/?location=false`;
+      default:
+        return'';
+    }
+  }
   loadData() {
-    // const httpParams = this.constructQueryParams();
-    // this.claimService.getClaims(httpParams).subscribe((res: any) => {
-    //   this.data = res.data || [];
-    //   this.dataSource = new MatTableDataSource(this.data);
-    //   this.dataSource.sort = this.sort;
-    //   this.dataSource.paginator = this.paginator;
-    // });
+    const httpParams = this.constructQueryParams();
+    this.receiptService.getReceipts(httpParams, this.policyId).subscribe((res: any) => {
+      this.data = res.data || [];
+      console.log(this.policyId);
+      console.log(res);
+      this.dataSource = new MatTableDataSource(this.data);
+      this.dataSource.sort = this.sort;
+      this.dataSource.paginator = this.paginator;
+      this.appComponent.showOverlay = false;
+    });
   }
 
-  // constructQueryParams(): HttpParams {
-  //   let httpParams = new HttpParams();
-  //   if (this.billsFilter.policyId && this.billsFilter.policyId !== '') {
-  //     httpParams = httpParams.append('policyId', this.billsFilter.policyId.toString());
-  //   }
+  constructQueryParams(): HttpParams {
+    let httpParams = new HttpParams();
+    if (this.receiptfilter.numeroFactura && this.receiptfilter.numeroFactura !== '') {
+      httpParams = httpParams.append('numeroFactura', this.receiptfilter.numeroFactura.toString());
+    }
 
-  //   if (this.billsFilter.billId && this.billsFilter.billId !== '') {
-  //     httpParams = httpParams.append('billId', this.billsFilter.billId.toString());
-  //   }
+    if (this.receiptfilter.nombre && this.receiptfilter.nombre !== '') {
+      httpParams = httpParams.append('nombre', this.receiptfilter.nombre.toString());
+    }
 
-  //   if (this.billsFilter.clientName && this.billsFilter.clientName !== '') {
-  //     httpParams = httpParams.append('clientName', this.billsFilter.clientName.toString());
-  //   }
 
-  //   if (this.billsFilter.paymentState && this.billsFilter.paymentState !== '') {
-  //     httpParams = httpParams.append('paymentState', this.billsFilter.paymentState.toString());
-  //   }
+    if (this.receiptfilter.from && this.receiptfilter.from !== '') {
+      httpParams = httpParams.append('from', this.receiptfilter.from.toString());
+    }
 
-  //   if (this.billsFilter.initialDate && this.billsFilter.initialDate !== '') {
-  //     httpParams = httpParams.append('initialDate', this.billsFilter.initialDate.toString());
-  //   }
+    if (this.receiptfilter.to && this.receiptfilter.to !== '') {
+      httpParams = httpParams.append('to', this.receiptfilter.to.toString());
+    }
 
-  //   if (this.billsFilter.endDate && this.billsFilter.endDate !== '') {
-  //     httpParams = httpParams.append('endDate', this.billsFilter.endDate.toString());
-  //   }
-
-  //   return httpParams;
-  // }
+    return httpParams;
+  }
 }

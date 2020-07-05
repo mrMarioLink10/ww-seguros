@@ -11,7 +11,7 @@ BASE_URL: any = `${environment.apiUrl}`;
 
   constructor(private httpClient: HttpClient) { }
 
-getReceipts(httpParams: HttpParams) {
-    return this.httpClient.get(`${this.BASE_URL}/api/ `, {params: httpParams});
+getReceipts(httpParams: HttpParams, polizaId) {
+    return this.httpClient.get(`${this.BASE_URL}/api/DatosEmpresa/Recibos/${polizaId}`, {params: httpParams});
   }
 }

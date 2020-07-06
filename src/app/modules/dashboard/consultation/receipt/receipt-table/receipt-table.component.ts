@@ -3,6 +3,7 @@ import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 import { ReceiptService } from '../services/receipt.service';
 import { HttpParams } from '@angular/common/http';
 import { AppComponent } from '../../../../../app.component';
+import {UserService} from '../../../../../core/services/user/user.service';
 
 
 @Component({
@@ -37,13 +38,23 @@ export class ReceiptTableComponent implements OnInit {
   displayedColumns: string[] = ['receiptNumber', 'client' , 'rec', 'chargeDate', 'paymentType',
   'amountCharge', 'actions'];
 
-  constructor(private receiptService: ReceiptService, private appComponent: AppComponent) { }
-
+  constructor(private receiptService: ReceiptService, private appComponent: AppComponent, private userService: UserService) { }
+  userRole;
   ngOnInit() {
     // this.appComponent.showOverlay = true;
+    this.userRole = this.userService.getRoleCotizador();
     this.loadData();
   }
-
+  getBillDownloadLink(billId) {
+    switch (this.userRole) {
+      case 'WWS':
+        return `http://wwsdevportalbackend.azurewebsites.net/InvoiceView/ExportToPDF/Reembolsos/${billId}/?location=true`;
+      case 'WMA':
+        return `http://wwsdevportalbackend.azurewebsites.net/InvoiceView/ExportToPDF/Reembolsos/${billId}/?location=false`;
+      default:
+        return'';
+    }
+  }
   loadData() {
     const httpParams = this.constructQueryParams();
     this.receiptService.getReceipts(httpParams, this.policyId).subscribe((res: any) => {

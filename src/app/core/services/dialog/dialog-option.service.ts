@@ -69,6 +69,17 @@ export class DialogOptionService {
 		showButtons: false,
 	};
 
+	sendInvitationLink: BaseDialog = {
+		logo: 'warning',
+		title: 'Introducir correo electrónico',
+		showButtons: true,
+		showCancelButton: true,
+		textPrincipalButton: 'Solicitar',
+		textCancelButton: 'Cancelar',
+		showInput: true,
+		email: '',
+	};
+
 	deleteConfirm(title: string) {
 		return {
 			logo: 'warning',
@@ -159,14 +170,16 @@ export class DialogOptionService {
 		};
 	}
 
+	confirmedInvitationForm(form: string) {
+		return {
+			logo: 'check',
+			title: 'Confirmación',
+			text: `El link de edición ${form} ha sido enviado de manera exitosa al cliente`,
+			showButtons: false,
+		};
+	}
+
 	getInvalidControls(invalidControls: any[]) {
-		let text = '; los campos invalidos se encuentran en las sección o campo: \n';
-
-		for (const element in invalidControls) {
-			text += `${this.invalidControlEnhancer.transform(invalidControls[element])}, \n`;
-
-		}
-
 		return {
 			logo: 'warning',
 			title: 'Campos Inválidos',

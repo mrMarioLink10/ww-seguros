@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Form, FormGroup, AbstractControl, FormControl, FormArray } from '@angular/forms';
+import { Form, FormGroup, AbstractControl, FormControl, FormArray, FormBuilder } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { BaseDialogComponent } from '../../../shared/components/base-dialog/base-dialog.component';
 import { DialogOptionService } from '../dialog/dialog-option.service';
@@ -14,6 +14,7 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../../environments/environment';
 import { AppComponent } from 'src/app/app.component';
 import { Observable, Subject } from 'rxjs';
+import { RequestsService } from 'src/app/modules/invitation/services/requests.service';
 // tslint:disable: forin
 // tslint:disable: variable-name
 
@@ -34,23 +35,25 @@ export class FormHandlerService {
 		private majorExpensesService: MajorExpensesService,
 		private disabilityService: DisabilityService,
 		private http: HttpClient,
+		private fb: FormBuilder,
+		private requestService: RequestsService
 	) { }
 
-	sendForm(form: FormGroup, name: string, type?: string, appComponent?: any, id?: number) {
+	sendForm(form: FormGroup, name: string, type?: string, appComponent?: any, id?: number, isInvitation?: boolean) {
 		console.log('Impresion de formulario down here: ', form);
-		this.dialogHandler(form, name, type, appComponent, id);
-		console.log(appComponent);
+		this.dialogHandler(form, name, type, appComponent, id, isInvitation);
 	}
 
-	dialogHandler(form: FormGroup, name: string, type: string, appComponent?: any, id?: number) {
+	dialogHandler(form: FormGroup, name: string, type: string, appComponent?: any, id?: number, isInvitation?: boolean) {
 		let Dialog;
 		let dataOpen;
 		let dataClosing;
 		let route;
+		console.log('isInvitation', isInvitation);
 
 		const ID = id;
+		console.log('ID', ID);
 
-		console.log(ID);
 
 		switch (name) {
 			case 'claims-reclaim':
@@ -93,6 +96,9 @@ export class FormHandlerService {
 				} else if (type === 'save') {
 					dataOpen = this.dialogOption.saveForm('seguro de Vida');
 					dataClosing = this.dialogOption.confirmedSavedForm('seguro de Vida');
+				} else if (type === 'invitation') {
+					dataOpen = this.dialogOption.sendInvitationLink;
+					dataClosing = this.dialogOption.confirmedInvitationForm('seguro de Vida');
 				}
 				route = 'dashboard/requests';
 				break;
@@ -104,6 +110,9 @@ export class FormHandlerService {
 				} else if (type === 'save') {
 					dataOpen = this.dialogOption.saveForm('seguro Gastos Médicos Mayores');
 					dataClosing = this.dialogOption.confirmedSavedForm('seguro Gastos Médicos Mayores');
+				} else if (type === 'invitation') {
+					dataOpen = this.dialogOption.sendInvitationLink;
+					dataClosing = this.dialogOption.confirmedInvitationForm('seguro Gastos Médicos Mayores');
 				}
 				route = 'dashboard/requests';
 				break;
@@ -115,6 +124,9 @@ export class FormHandlerService {
 				} else if (type === 'save') {
 					dataOpen = this.dialogOption.saveForm('suscripcion Disability');
 					dataClosing = this.dialogOption.confirmedSavedForm('suscripcion Disability');
+				} else if (type === 'invitation') {
+					dataOpen = this.dialogOption.sendInvitationLink;
+					dataClosing = this.dialogOption.confirmedInvitationForm('suscripcion Disability');
 				}
 				route = 'dashboard/requests';
 				break;
@@ -140,9 +152,61 @@ export class FormHandlerService {
 
 			this.sendedForm = form.getRawValue();
 			const json = JSON.stringify(this.sendedForm);
-			console.log(json);
 
 			switch (type) {
+				case 'invitation':
+					console.log(result);
+					if (result) {
+						let dialog;
+
+						form.addControl('anonimousUser', this.fb.group({
+							email: [result]
+						}));
+
+						const invitationForm = form.getRawValue();
+						const invitationJson = JSON.stringify(invitationForm);
+						console.log(invitationJson);
+
+						switch (name) {
+							case 'life':
+								appComponent.showOverlay = true;
+								this.lifeService.postRequest(invitationJson)
+									.subscribe(res => {
+										this.correctSend(res, dialog, dataClosing, route);
+										appComponent.showOverlay = false;
+									}, (err) => {
+										this.badSend(err, dialog);
+									});
+								break;
+
+							case 'major-expenses':
+								appComponent.showOverlay = true;
+								this.majorExpensesService.postRequest(invitationJson)
+									.subscribe(res => {
+										this.correctSend(res, dialog, dataClosing, route);
+										appComponent.showOverlay = false;
+									}, (err) => {
+										this.badSend(err, dialog);
+									});
+								break;
+
+							case 'disability':
+								appComponent.showOverlay = true;
+								this.disabilityService.postRequest(invitationJson)
+									.subscribe(res => {
+										this.correctSend(res, dialog, dataClosing, route);
+										appComponent.showOverlay = false;
+									}, (err) => {
+										this.badSend(err, dialog);
+									});
+								break;
+
+							default:
+								break;
+						}
+					}
+					break;
+
 				case 'save':
 					if (result === 'true') {
 						let dialog;
@@ -182,41 +246,70 @@ export class FormHandlerService {
 
 							case 'life':
 								appComponent.showOverlay = true;
-								this.lifeService.postRequest(json)
-									.subscribe(res => {
-										this.correctSend(res, dialog, dataClosing, route);
-										appComponent.showOverlay = false;
-									}, (err) => {
-										this.badSend(err, dialog);
-									});
+								if (isInvitation) {
+									this.requestService.saveRequestData('vida', ID, json)
+										.subscribe(res => {
+											this.correctSend(res, dialog, dataClosing, route, isInvitation);
+											appComponent.showOverlay = false;
+										}, (err) => {
+											this.badSend(err, dialog);
+										});
+								} else {
+									this.lifeService.postRequest(json)
+										.subscribe(res => {
+											this.correctSend(res, dialog, dataClosing, route);
+											appComponent.showOverlay = false;
+										}, (err) => {
+											this.badSend(err, dialog);
+										});
+								}
 								break;
 
 							case 'major-expenses':
 								appComponent.showOverlay = true;
-								this.majorExpensesService.postRequest(json)
-									.subscribe(res => {
-										this.correctSend(res, dialog, dataClosing, route);
-										appComponent.showOverlay = false;
-									}, (err) => {
-										this.badSend(err, dialog);
-									});
+								if (isInvitation) {
+									this.requestService.saveRequestData('salud', ID, json)
+										.subscribe(res => {
+											this.correctSend(res, dialog, dataClosing, route, isInvitation);
+											appComponent.showOverlay = false;
+										}, (err) => {
+											this.badSend(err, dialog);
+										});
+								} else {
+									this.majorExpensesService.postRequest(json)
+										.subscribe(res => {
+											this.correctSend(res, dialog, dataClosing, route);
+											appComponent.showOverlay = false;
+										}, (err) => {
+											this.badSend(err, dialog);
+										});
+								}
 								break;
 
 							case 'disability':
 								appComponent.showOverlay = true;
-								this.disabilityService.postRequest(json)
-									.subscribe(res => {
-										this.correctSend(res, dialog, dataClosing, route);
-										appComponent.showOverlay = false;
-									}, (err) => {
-										this.badSend(err, dialog);
-									});
+								if (isInvitation) {
+									this.requestService.saveRequestData('disability', ID, json)
+										.subscribe(res => {
+											this.correctSend(res, dialog, dataClosing, route, isInvitation);
+											appComponent.showOverlay = false;
+										}, (err) => {
+											this.badSend(err, dialog);
+										});
+								} else {
+									this.disabilityService.postRequest(json)
+										.subscribe(res => {
+											this.correctSend(res, dialog, dataClosing, route);
+											appComponent.showOverlay = false;
+										}, (err) => {
+											this.badSend(err, dialog);
+										});
+								}
 								break;
 
 							default:
 								break;
 						}
-						console.log(JSON.stringify(this.sendedForm));
 					}
 					break;
 
@@ -311,14 +404,31 @@ export class FormHandlerService {
 								case 'life':
 									if (ID) {
 										appComponent.showOverlay = true;
-										this.lifeService.sendRequest(ID)
-											.subscribe(res => {
-												appComponent.showOverlay = false;
-												this.correctSend(res, dialog, dataClosing, route);
-											}, (err) => {
-												appComponent.showOverlay = false;
-												this.badSend(err, dialog);
-											});
+										if (isInvitation) {
+											this.requestService.saveRequestData('vida', ID, json)
+												.subscribe(response => {
+													this.requestService.sendRequestData('vida', ID)
+														.subscribe(res => {
+															appComponent.showOverlay = false;
+															this.correctSend(res, dialog, dataClosing, route, isInvitation);
+														}, (err) => {
+															appComponent.showOverlay = false;
+															this.badSend(err, dialog);
+														});
+												}, (err) => {
+													this.badSend(err, dialog);
+												});
+
+										} else {
+											this.lifeService.sendRequest(ID)
+												.subscribe(res => {
+													appComponent.showOverlay = false;
+													this.correctSend(res, dialog, dataClosing, route);
+												}, (err) => {
+													appComponent.showOverlay = false;
+													this.badSend(err, dialog);
+												});
+										}
 									} else {
 										appComponent.showOverlay = true;
 										this.lifeService.postRequest(json)
@@ -340,14 +450,31 @@ export class FormHandlerService {
 								case 'major-expenses':
 									if (ID) {
 										appComponent.showOverlay = true;
-										this.majorExpensesService.sendRequest(ID)
-											.subscribe(res => {
-												appComponent.showOverlay = false;
-												this.correctSend(res, dialog, dataClosing, route);
-											}, (err) => {
-												appComponent.showOverlay = false;
-												this.badSend(err, dialog);
-											});
+										if (isInvitation) {
+											this.requestService.saveRequestData('salud', ID, json)
+												.subscribe(response => {
+													this.requestService.sendRequestData('salud', ID)
+														.subscribe(res => {
+															appComponent.showOverlay = false;
+															this.correctSend(res, dialog, dataClosing, route, isInvitation);
+														}, (err) => {
+															appComponent.showOverlay = false;
+															this.badSend(err, dialog);
+														});
+												}, (err) => {
+													this.badSend(err, dialog);
+												});
+
+										} else {
+											this.majorExpensesService.sendRequest(ID)
+												.subscribe(res => {
+													appComponent.showOverlay = false;
+													this.correctSend(res, dialog, dataClosing, route);
+												}, (err) => {
+													appComponent.showOverlay = false;
+													this.badSend(err, dialog);
+												});
+										}
 									} else {
 										appComponent.showOverlay = true;
 										this.majorExpensesService.postRequest(json)
@@ -369,14 +496,31 @@ export class FormHandlerService {
 								case 'disability':
 									if (ID) {
 										appComponent.showOverlay = true;
-										this.disabilityService.sendRequest(ID)
-											.subscribe(res => {
-												appComponent.showOverlay = false;
-												this.correctSend(res, dialog, dataClosing, route);
-											}, (err) => {
-												appComponent.showOverlay = false;
-												this.badSend(err, dialog);
-											});
+										if (isInvitation) {
+											this.requestService.saveRequestData('disability', ID, json)
+												.subscribe(response => {
+													this.requestService.sendRequestData('disability', ID)
+														.subscribe(res => {
+															appComponent.showOverlay = false;
+															this.correctSend(res, dialog, dataClosing, route, isInvitation);
+														}, (err) => {
+															appComponent.showOverlay = false;
+															this.badSend(err, dialog);
+														});
+												}, (err) => {
+													this.badSend(err, dialog);
+												});
+
+										} else {
+											this.disabilityService.sendRequest(ID)
+												.subscribe(res => {
+													appComponent.showOverlay = false;
+													this.correctSend(res, dialog, dataClosing, route);
+												}, (err) => {
+													appComponent.showOverlay = false;
+													this.badSend(err, dialog);
+												});
+										}
 									} else {
 										appComponent.showOverlay = true;
 										this.disabilityService.postRequest(json)
@@ -399,10 +543,7 @@ export class FormHandlerService {
 									break;
 							}
 
-							console.log(JSON.stringify(this.sendedForm));
 						} else {
-							// console.log(this.findInvalidControls(form));
-
 							const invalidControls = [];
 							for (const control in this.findInvalidControls(form)) {
 								invalidControls.push(this.getName(this.findInvalidControls(form)[control]));
@@ -422,14 +563,17 @@ export class FormHandlerService {
 		});
 	}
 
-	correctSend(response, dialog, dataClosing, route) {
+	correctSend(response, dialog, dataClosing, route, isInvitation?) {
 		console.log(response);
 		dialog = this.dialog.open(BaseDialogComponent, {
 			data: dataClosing,
 			minWidth: 385
 		});
 		this.closeDialog(dialog);
-		this.navigateToMenu(route);
+
+		if (!isInvitation) {
+			this.navigateToMenu(route);
+		}
 	}
 
 	badSend(err, dialog?) {

@@ -12,14 +12,14 @@
         <div></div>
         <div></div>
         <div class="mr-3">
-          <mat-form-field color="accent" appearance="outline" class="w-full" style="font-size: small !important;">
+          <!-- <mat-form-field color="accent" appearance="outline" class="w-full" style="font-size: small !important;">
             <mat-label>Tipo de Solicitud</mat-label>
             <mat-select [(value)]="routeSelected" (selectionChange)="selectChangeUrl($event.value)">
               <mat-option value="vida">Seguro de Vida</mat-option>
               <mat-option value="disability">Suscripción Disability</mat-option>
               <mat-option value="gastos mayores">Suscripción Seguro Gastos Médicos Mayores</mat-option>
             </mat-select>
-          </mat-form-field>
+          </mat-form-field> -->
         </div>
       </div>
     </div>
@@ -113,16 +113,16 @@
                       [group]="disabilityGroup.get('insured_data')" label="Desde" name='date_since'>
                     </datepicker-month>
                     <!-- <app-date-picker [max]="disabilityGroup.get('insured_data').value.date_until"
-                      [group]="disabilityGroup.get('insured_data')" label="Desde" name='date_since'>
-                    </app-date-picker> -->
+                        [group]="disabilityGroup.get('insured_data')" label="Desde" name='date_since'>
+                      </app-date-picker> -->
                   </div>
                   <div class="mr-3 mt-5 md:mt-0 lg:mt-0 xl:mt-0">
                     <datepicker-month [min]="disabilityGroup.get('insured_data').value.date_since" fieldId="date_until"
                       [group]="disabilityGroup.get('insured_data')" label="Hasta" name='date_until'>
                     </datepicker-month>
                     <!-- <app-date-picker [min]="disabilityGroup.get('insured_data').value.date_since"
-                      [group]="disabilityGroup.get('insured_data')" label="Hasta" name='date_until'>
-                    </app-date-picker> -->
+                        [group]="disabilityGroup.get('insured_data')" label="Hasta" name='date_until'>
+                      </app-date-picker> -->
                   </div>
                   <div class="mr-3 mt-5 md:mt-0 lg:mt-3 xl:mt-0">
                     <app-input [group]="disabilityGroup.get('insured_data')" label="Nombre de la posición"
@@ -136,31 +136,31 @@
                   </div>
 
                   <!-- <div class="grid grid-cols-2 mt-5 md:mt-10 lg:mt-3 xl:mt-0">
-
-                    <div class="-mr-12">
-                      <div class="w-3/5 sm:w-3/5 md:w-3/4 lg:w-5/6 xl:w-11/12">
-                        <div class="-mr-4 sm:-mr-4 md:mr-0 lg:mr-1 xl:-mr-2">
-                          <app-number-input [group]="disabilityGroup.get('insured_data')" label="Salario Mensual (Dólares - US$) "
-                            name="salary" placeholder="Por ej: 20000" min="1"></app-number-input>
+  
+                      <div class="-mr-12">
+                        <div class="w-3/5 sm:w-3/5 md:w-3/4 lg:w-5/6 xl:w-11/12">
+                          <div class="-mr-4 sm:-mr-4 md:mr-0 lg:mr-1 xl:-mr-2">
+                            <app-number-input [group]="disabilityGroup.get('insured_data')" label="Salario Mensual (Dólares - US$) "
+                              name="salary" placeholder="Por ej: 20000" min="1"></app-number-input>
+                          </div>
+  
                         </div>
-
-                      </div>
-                    </div> -->
+                      </div> -->
 
                   <!-- mr-3 w-1/2 -->
                   <!-- <div class="grid grid-cols-2">
-                      <div>
-
-                      </div>
-                      <div class="mr-3 -ml-10 sm:-ml-10 sm:mr-3 md:-ml-6 md:mr-3 lg:-ml-6 lg:mr-2 xl:-mx-2">
-                        <div class="xl:w-4/5">
-                          <app-select name="currency" [options]="currencyOptions"
-                            [group]="disabilityGroup.get('insured_data')"></app-select>
+                        <div>
+  
+                        </div>
+                        <div class="mr-3 -ml-10 sm:-ml-10 sm:mr-3 md:-ml-6 md:mr-3 lg:-ml-6 lg:mr-2 xl:-mx-2">
+                          <div class="xl:w-4/5">
+                            <app-select name="currency" [options]="currencyOptions"
+                              [group]="disabilityGroup.get('insured_data')"></app-select>
+                          </div>
                         </div>
                       </div>
-                    </div>
-
-                  </div> -->
+  
+                    </div> -->
 
                   <div class="mr-3 mt-5 md:mt-6 lg:mt-3 xl:mt-0">
                     <app-input [group]="disabilityGroup.get('insured_data')" label="Dirección de la Empresa"
@@ -214,38 +214,38 @@
 
 
                     <!-- <div class="mt-4 lg:mt-3 xl:mt-3">
-
-                      <div>
-                        <label class="radio-button-label"> ¿Tiene una pensión u otros ingresos? </label>
-                      </div>
-
-                      <div class="mr-3">
-                        <app-radio-button [group]="disabilityGroup.get('insured_data')" [options]="YesNo"
-                          name='pension_radio'>
-                        </app-radio-button>
-
-                        <div *ngIf="!disabilityGroup.get('insured_data').get('pension_radio').valid && !disabilityGroup.get('insured_data').get('pension_radio').touched || disabilityGroup.get('insured_data').get('pension_radio').valid && disabilityGroup.get('insured_data').get('pension_radio').touched || disabilityGroup.get('insured_data').get('pension_radio').valid && !disabilityGroup.get('insured_data').get('pension_radio').touched"
-                        class="-mt-8">
-                          <small> En caso de pensión por discapacidad, anexar reportes descriptivos </small>
-                        </div>
-                        <div *ngIf="!disabilityGroup.get('insured_data').get('pension_radio').valid && disabilityGroup.get('insured_data').get('pension_radio').touched"
-                        class="-mt-2">
-                          <small> En caso de pensión por discapacidad, anexar reportes descriptivos </small>
-                        </div>
-                      </div>
-
-                      <div class="mt-4 lg:mt-3 xl:mt-3">
+  
                         <div>
-                          <label class="radio-button-label"> ¿El asegurador y el contratante son el mismo? </label>
+                          <label class="radio-button-label"> ¿Tiene una pensión u otros ingresos? </label>
                         </div>
+  
                         <div class="mr-3">
                           <app-radio-button [group]="disabilityGroup.get('insured_data')" [options]="YesNo"
-                            name='insuredPolicyholderRadio' (selected)="selectChange($event)">
+                            name='pension_radio'>
                           </app-radio-button>
+  
+                          <div *ngIf="!disabilityGroup.get('insured_data').get('pension_radio').valid && !disabilityGroup.get('insured_data').get('pension_radio').touched || disabilityGroup.get('insured_data').get('pension_radio').valid && disabilityGroup.get('insured_data').get('pension_radio').touched || disabilityGroup.get('insured_data').get('pension_radio').valid && !disabilityGroup.get('insured_data').get('pension_radio').touched"
+                          class="-mt-8">
+                            <small> En caso de pensión por discapacidad, anexar reportes descriptivos </small>
+                          </div>
+                          <div *ngIf="!disabilityGroup.get('insured_data').get('pension_radio').valid && disabilityGroup.get('insured_data').get('pension_radio').touched"
+                          class="-mt-2">
+                            <small> En caso de pensión por discapacidad, anexar reportes descriptivos </small>
+                          </div>
                         </div>
-                      </div>
-
-                    </div> -->
+  
+                        <div class="mt-4 lg:mt-3 xl:mt-3">
+                          <div>
+                            <label class="radio-button-label"> ¿El asegurador y el contratante son el mismo? </label>
+                          </div>
+                          <div class="mr-3">
+                            <app-radio-button [group]="disabilityGroup.get('insured_data')" [options]="YesNo"
+                              name='insuredPolicyholderRadio' (selected)="selectChange($event)">
+                            </app-radio-button>
+                          </div>
+                        </div>
+  
+                      </div> -->
 
                   </div>
 
@@ -268,21 +268,21 @@
                     </div>
 
                     <!-- <div *ngIf="disabilityGroup.get('insured_data').value.pension_radio === 'si'"
-                      class="mr-3 mt-4 lg:mt-3 xl:mt-3" style="margin-top: 15px;">
-                      <app-input [group]="disabilityGroup.get('insured_data')"
-                        label="Naturaleza de la pensión o ingreso" name="reason_pension" placeholder=""></app-input>
-                    </div>
-
-                    <div *ngIf="disabilityGroup.get('insured_data').get('policyholderKnowClientRadio')" class="mt-4 lg:mt-3 xl:mt-3">
-                      <div>
-                        <label class="radio-button-label"> ¿El contratante es una persona jurídica? </label>
+                        class="mr-3 mt-4 lg:mt-3 xl:mt-3" style="margin-top: 15px;">
+                        <app-input [group]="disabilityGroup.get('insured_data')"
+                          label="Naturaleza de la pensión o ingreso" name="reason_pension" placeholder=""></app-input>
                       </div>
-                      <div class="mr-3">
-                        <app-radio-button [group]="disabilityGroup.get('insured_data')" [options]="YesNo"
-                          name='policyholderKnowClientRadio' (selected)="selectChange($event)">
-                        </app-radio-button>
-                      </div>
-                    </div> -->
+  
+                      <div *ngIf="disabilityGroup.get('insured_data').get('policyholderKnowClientRadio')" class="mt-4 lg:mt-3 xl:mt-3">
+                        <div>
+                          <label class="radio-button-label"> ¿El contratante es una persona jurídica? </label>
+                        </div>
+                        <div class="mr-3">
+                          <app-radio-button [group]="disabilityGroup.get('insured_data')" [options]="YesNo"
+                            name='policyholderKnowClientRadio' (selected)="selectChange($event)">
+                          </app-radio-button>
+                        </div>
+                      </div> -->
 
                   </div>
 
@@ -319,32 +319,32 @@
                       </div>
                     </div>
                     <!-- <div *ngIf="disabilityGroup.get('insured_data').value.pension_radio === 'si'"
-                      class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2">
-                      <div class="mr-3 mt-5 lg:mt-0 ">
-                        <app-number-input [group]="disabilityGroup.get('insured_data')"
-                          label="Monto Mensual del ingreso o pensión" name="amount_pension" placeholder="Por ej: 20000"
-                          min="1"></app-number-input>
-                      </div>
-                      <div class="mr-3 mt-5 lg:mt-0 ">
-                        <app-select name="currency_pension" [options]="currencyOptions"
-                          [group]="disabilityGroup.get('insured_data')"></app-select>
-                      </div>
-                    </div> -->
+                        class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2">
+                        <div class="mr-3 mt-5 lg:mt-0 ">
+                          <app-number-input [group]="disabilityGroup.get('insured_data')"
+                            label="Monto Mensual del ingreso o pensión" name="amount_pension" placeholder="Por ej: 20000"
+                            min="1"></app-number-input>
+                        </div>
+                        <div class="mr-3 mt-5 lg:mt-0 ">
+                          <app-select name="currency_pension" [options]="currencyOptions"
+                            [group]="disabilityGroup.get('insured_data')"></app-select>
+                        </div>
+                      </div> -->
                   </div>
 
                   <!-- Columna 4 -->
                   <!--
-                  <div class="mt-4 lg:mt-24 xl:mt-24">
-
-                    <div>
-
-                    </div>
-                    <div>
-
-                    </div>
-
-
-                  </div> -->
+                    <div class="mt-4 lg:mt-24 xl:mt-24">
+  
+                      <div>
+  
+                      </div>
+                      <div>
+  
+                      </div>
+  
+  
+                    </div> -->
 
                 </div>
 
@@ -462,13 +462,13 @@
                     </app-select>
                   </div>
                   <!-- <div>
-                  </div>
-                  <app-radio-button class="mr-3" title="Asegurado"
-                    [group]="disabilityGroup.get('insured_data').get('pep')" name="insured" [options]="YesNo">
-                  </app-radio-button>
-                  <app-radio-button class="mr-3" title="Contratante"
-                    [group]="disabilityGroup.get('insured_data').get('pep')" name="contractor" [options]="YesNo">
-                  </app-radio-button> -->
+                    </div>
+                    <app-radio-button class="mr-3" title="Asegurado"
+                      [group]="disabilityGroup.get('insured_data').get('pep')" name="insured" [options]="YesNo">
+                    </app-radio-button>
+                    <app-radio-button class="mr-3" title="Contratante"
+                      [group]="disabilityGroup.get('insured_data').get('pep')" name="contractor" [options]="YesNo">
+                    </app-radio-button> -->
                   <app-radio-button class="mr-3" title="Pagador"
                     [group]="disabilityGroup.get('insured_data').get('pep')" name="payer" [options]="YesNo">
                   </app-radio-button>
@@ -557,7 +557,7 @@
 
                 <div class="mr-3 mt-6 sm:mt-3 md:mt-6 md:pt-1 lg:pt-0 lg:mt-5 xl:pt-0 xl:mt-3">
                   <!-- <app-select [group]="disabilityGroup.get('policyholder')" name="city" [options]='cityList'>
-                  </app-select> -->
+                    </app-select> -->
                   <app-input label="Ciudad" [group]="disabilityGroup.get('policyholder')" name="city"
                     placeholder="Nueva York"> </app-input>
                 </div>
@@ -625,13 +625,13 @@
                   </app-select>
                 </div>
                 <!-- <div>
-                </div>
-                <app-radio-button class="mr-3" title="Asegurado"
-                  [group]="disabilityGroup.get('policyholder').get('pep')" name="insured" [options]="YesNo">
-                </app-radio-button>
-                <app-radio-button class="mr-3" title="Contratante"
-                  [group]="disabilityGroup.get('policyholder').get('pep')" name="contractor" [options]="YesNo">
-                </app-radio-button> -->
+                  </div>
+                  <app-radio-button class="mr-3" title="Asegurado"
+                    [group]="disabilityGroup.get('policyholder').get('pep')" name="insured" [options]="YesNo">
+                  </app-radio-button>
+                  <app-radio-button class="mr-3" title="Contratante"
+                    [group]="disabilityGroup.get('policyholder').get('pep')" name="contractor" [options]="YesNo">
+                  </app-radio-button> -->
                 <app-radio-button class="mr-3" title="Pagador" [group]="disabilityGroup.get('policyholder').get('pep')"
                   name="payer" [options]="YesNo"></app-radio-button>
               </div>
@@ -925,8 +925,8 @@
                               </div>
                               <div class="mr-3 mt-3 sm:mt-3 md:mt-0 lg:mt-0 xl:mt-0">
                                 <!-- <app-input label="¿Cuál?" name='name'
-                                  [group]="disabilityGroup.get('questions').get('questionnaire').get('analysis')">
-                                </app-input> -->
+                                    [group]="disabilityGroup.get('questions').get('questionnaire').get('analysis')">
+                                  </app-input> -->
                                 <app-select name="test" [options]="testOptions"
                                   [group]="disabilityGroup.get('questions').get('questionnaire').get('analysis_array').get(in.toString())">
                                   <!-- .get('analysis_array').get(in.toString()) -->
@@ -1135,60 +1135,60 @@
                             *ngIf="this.disabilityGroup.get('questions').get('questionnaire').get('sicknessType_radio').value == 'si'">
                             <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
                               <!-- <div class="mr-3">
-                                <app-select name="sickness" [options]="sicknessOptions" [group]="disabilityGroup.get('questions').get('questionnaire').get('sicknessType')">
-                                </app-select>
-                              </div>
-                              <div class="mr-3">
-                                <app-date-picker
-                                  [group]="disabilityGroup.get('questions').get('questionnaire').get('sicknessType')"
-                                  label="Fecha de inicio" name='date'> </app-date-picker>
-                              </div> -->
+                                  <app-select name="sickness" [options]="sicknessOptions" [group]="disabilityGroup.get('questions').get('questionnaire').get('sicknessType')">
+                                  </app-select>
+                                </div>
+                                <div class="mr-3">
+                                  <app-date-picker
+                                    [group]="disabilityGroup.get('questions').get('questionnaire').get('sicknessType')"
+                                    label="Fecha de inicio" name='date'> </app-date-picker>
+                                </div> -->
                               <!-- mt-2 sm:mt-2 md:mt-0 lg:mt-0 xl:mt-0 lg:col-span-2 -->
                               <!-- <div class="mr-3 ">
-                                <app-input
-                                  label="Padecimiento"
-                                  name='description'
-                                  [group]="disabilityGroup.get('questions').get('questionnaire').get('sicknessType')">
-                                </app-input>
-                              </div> -->
+                                  <app-input
+                                    label="Padecimiento"
+                                    name='description'
+                                    [group]="disabilityGroup.get('questions').get('questionnaire').get('sicknessType')">
+                                  </app-input>
+                                </div> -->
                               <!-- <div class="mr-3">
-                                <app-input
-                                  placeholder="Por ej: 1 día, 3 semanas, 6 meses, etc."
-                                  label="Duración"
-                                  name='duration'
-                                  [group]="disabilityGroup.get('questions').get('questionnaire').get('sicknessType')">
-                                </app-input>
-                              </div>
-                              <div class="mr-3">
-                                <app-input
-                                  placeholder="Por ej: Alguna medicina, rutina, alguna operación, etc."
-                                  label="Tratamiento"
-                                  name='therapy'
-                                  [group]="disabilityGroup.get('questions').get('questionnaire').get('sicknessType')">
-                                </app-input>
-                              </div>
-                              <div class="mr-3">
-                                <app-date-picker
-                                  label="Fecha de cura"
-                                  name='cureDate'
-                                  [group]="disabilityGroup.get('questions').get('questionnaire').get('sicknessType')">
-                                </app-date-picker>
-                              </div>
-                              <div class="mr-3">
-                                <app-input
-                                  label="Efectos secundarios"
-                                  placeholder="Por ej: La presión a veces sube, un tic nervioso, etc."
-                                  name='secundaryEffects'
-                                  [group]="disabilityGroup.get('questions').get('questionnaire').get('sicknessType')">
-                                </app-input>
-                              </div>
-                              <div class="mr-3">
-                                <app-input
-                                  label="Comentarios adicionales"
-                                  name='additionalInfo'
-                                  [group]="disabilityGroup.get('questions').get('questionnaire').get('sicknessType')">
-                                </app-input>
-                              </div> -->
+                                  <app-input
+                                    placeholder="Por ej: 1 día, 3 semanas, 6 meses, etc."
+                                    label="Duración"
+                                    name='duration'
+                                    [group]="disabilityGroup.get('questions').get('questionnaire').get('sicknessType')">
+                                  </app-input>
+                                </div>
+                                <div class="mr-3">
+                                  <app-input
+                                    placeholder="Por ej: Alguna medicina, rutina, alguna operación, etc."
+                                    label="Tratamiento"
+                                    name='therapy'
+                                    [group]="disabilityGroup.get('questions').get('questionnaire').get('sicknessType')">
+                                  </app-input>
+                                </div>
+                                <div class="mr-3">
+                                  <app-date-picker
+                                    label="Fecha de cura"
+                                    name='cureDate'
+                                    [group]="disabilityGroup.get('questions').get('questionnaire').get('sicknessType')">
+                                  </app-date-picker>
+                                </div>
+                                <div class="mr-3">
+                                  <app-input
+                                    label="Efectos secundarios"
+                                    placeholder="Por ej: La presión a veces sube, un tic nervioso, etc."
+                                    name='secundaryEffects'
+                                    [group]="disabilityGroup.get('questions').get('questionnaire').get('sicknessType')">
+                                  </app-input>
+                                </div>
+                                <div class="mr-3">
+                                  <app-input
+                                    label="Comentarios adicionales"
+                                    name='additionalInfo'
+                                    [group]="disabilityGroup.get('questions').get('questionnaire').get('sicknessType')">
+                                  </app-input>
+                                </div> -->
                             </div>
                             <!-- AQUI ISAI -->
                             <div class="radio-button-label mt-4">Seleccione cuáles enfermedades o desórdenes padece o ha
@@ -1608,15 +1608,15 @@
                     <div class="mr-3">
 
                       <!-- <mat-form-field color="accent" appearance="outline" class="w-full" style="font-size: small !important;"
-                        formGroup="disabilityGroup.get('plan')">
-                        <mat-label>Renta Disability</mat-label>
-                        <mat-select formControlName="rent">
-                          <mat-option *ngFor="let type of rentOptions.options" [value]="type.value">{{type.viewValue}}
-                          </mat-option>
-                        </mat-select>
-                        <mat-error *ngIf="disabilityGroup.get('plan').get('rent').touched && !disabilityGroup.get('plan').get('rent').valid ">Debe llenar el campo de Renta Disability
-                        </mat-error>
-                      </mat-form-field> -->
+                          formGroup="disabilityGroup.get('plan')">
+                          <mat-label>Renta Disability</mat-label>
+                          <mat-select formControlName="rent">
+                            <mat-option *ngFor="let type of rentOptions.options" [value]="type.value">{{type.viewValue}}
+                            </mat-option>
+                          </mat-select>
+                          <mat-error *ngIf="disabilityGroup.get('plan').get('rent').touched && !disabilityGroup.get('plan').get('rent').valid ">Debe llenar el campo de Renta Disability
+                          </mat-error>
+                        </mat-form-field> -->
 
                       <app-select name="rent" [options]="rentOptions" [group]="disabilityGroup.get('plan')">
                       </app-select>
@@ -1746,7 +1746,7 @@
                       *ngIf="disabilityGroup.get('main').get('specifyRelationship')" label="Especificar"
                       name='specifyRelationship'></app-input>
                     <!-- <app-input [group]="disabilityGroup.get('main')" label="Parentesco" name='relationship'
-                        placeholder="Por ej: Su Hijo"> </app-input> -->
+                          placeholder="Por ej: Su Hijo"> </app-input> -->
                     <div class="mr-3 mt-2 md:col-span-2 lg:col-span-2 lg:mt-0 xl:col-span-1 xl:mt-0">
                       <app-input [group]="disabilityGroup.get('main')" label="Cédula/Pasaporte" name='id_passport'
                         placeholder="Por ej: 402-0070012-8"> </app-input>
@@ -2152,30 +2152,30 @@
       </mat-tab>
 
       <!-- <mat-tab label="Política Antilavado">
-        <app-money-laundering [form]="money_laundering"> </app-money-laundering>
-      </mat-tab> -->
+          <app-money-laundering [form]="money_laundering"> </app-money-laundering>
+        </mat-tab> -->
       <!-- <mat-tab
-        *ngIf="this.disabilityGroup.get('insured_data').get('pep_radio_insured').value == 'si'"
-        label="Conozca a su cliente - Asegurado">
-        <app-know-your-client *ngIf="this.role === 'WMA'"
-          [form]="disabilityGroup.get('insured_data').get('knowYourClient')">
-        </app-know-your-client>
-        <app-know-your-customer *ngIf="this.role === 'WWS'"
-          [form]="disabilityGroup.get('insured_data').get('knowYourCustomer')">
-        </app-know-your-customer>
-      </mat-tab>
-      <div *ngIf="disabilityGroup.get('policyholder')">
-        <mat-tab
-          *ngIf="this.disabilityGroup.get('policyholder').get('pep_radio_holder').value == 'si'"
-          label="Conozca a su cliente - Contratante">
+          *ngIf="this.disabilityGroup.get('insured_data').get('pep_radio_insured').value == 'si'"
+          label="Conozca a su cliente - Asegurado">
           <app-know-your-client *ngIf="this.role === 'WMA'"
-            [form]="disabilityGroup.get('policyholder').get('knowYourClient')">
+            [form]="disabilityGroup.get('insured_data').get('knowYourClient')">
           </app-know-your-client>
           <app-know-your-customer *ngIf="this.role === 'WWS'"
-            [form]="disabilityGroup.get('policyholder').get('KnowYourCustomer')">
+            [form]="disabilityGroup.get('insured_data').get('knowYourCustomer')">
           </app-know-your-customer>
         </mat-tab>
-      </div> -->
+        <div *ngIf="disabilityGroup.get('policyholder')">
+          <mat-tab
+            *ngIf="this.disabilityGroup.get('policyholder').get('pep_radio_holder').value == 'si'"
+            label="Conozca a su cliente - Contratante">
+            <app-know-your-client *ngIf="this.role === 'WMA'"
+              [form]="disabilityGroup.get('policyholder').get('knowYourClient')">
+            </app-know-your-client>
+            <app-know-your-customer *ngIf="this.role === 'WWS'"
+              [form]="disabilityGroup.get('policyholder').get('KnowYourCustomer')">
+            </app-know-your-customer>
+          </mat-tab>
+        </div> -->
 
       <mat-tab *ngIf="this.disabilityGroup.get('insured_data').get('pep_radio_insured').value == 'si'"
         label="Conozca a su cliente (Persona Física) - Asegurado">
@@ -2203,13 +2203,13 @@
         </mat-tab>
       </div>
       <!-- <div *ngIf ="this.disabilityGroup.get('insured_data').get('insuredPolicyholderRadio').value == 'no'">
-      <mat-tab *ngIf="this.disabilityGroup.get('insured_data').get('policyholderKnowClientRadio').value == 'si'"
-        label="Conozca a su cliente (Persona Jurídica) - Contratante">
-        <app-know-your-client [form]="disabilityGroup.get('insured_data').get('knowYourClientSecond')">
-
-        </app-know-your-client>
-      </mat-tab>
-      </div> -->
+        <mat-tab *ngIf="this.disabilityGroup.get('insured_data').get('policyholderKnowClientRadio').value == 'si'"
+          label="Conozca a su cliente (Persona Jurídica) - Contratante">
+          <app-know-your-client [form]="disabilityGroup.get('insured_data').get('knowYourClientSecond')">
+  
+          </app-know-your-client>
+        </mat-tab>
+        </div> -->
       <div *ngIf="this.disabilityGroup.get('insured_data').get('insuredPolicyholderRadio').value == 'no'">
         <mat-tab *ngIf="this.disabilityGroup.get('insured_data').get('policyholderKnowClientRadio').value == 'si'"
           label="Conozca a su cliente (Persona Jurídica) - Contratante">
@@ -2227,18 +2227,14 @@
   </form>
   <form #form="ngForm">
     <div class="mt-8">
-      <button mat-button class="cancel-form-button" style="margin-right: 7.5px !important;"
-        (click)="formHandler.sendForm(disabilityGroup, 'disability', 'cancel')" type="submit">Cancelar</button>
+      <!-- <button mat-button class="cancel-form-button" style="margin-right: 7.5px !important;"
+        (click)="formHandler.sendForm(disabilityGroup, 'disability', 'cancel')" type="submit">Cancelar</button> -->
       <button mat-button class="save-button" style="margin-right: 7.5px !important;"
-        (click)="formHandler.sendForm(disabilityGroup, 'disability', 'save', appComponent)"
+        (click)="formHandler.sendForm(disabilityGroup, 'disability', 'save', appComponent, ID, true)"
         type="submit">Guardar</button>
-      <button mat-button class="send-button" style="margin-right: 7.5px !important;"
-        (click)="formHandler.sendForm(disabilityGroup, 'disability', 'send', appComponent)"
-        type="submit">Enviar</button>
       <button mat-button class="send-button"
-        (click)="formHandler.sendForm(disabilityGroup, 'disability', 'invitation', this.appComponent)"
-        type="submit">Enviar a
-        cliente</button>
+        (click)="formHandler.sendForm(disabilityGroup, 'disability', 'send', appComponent, ID, true)"
+        type="submit">Enviar</button>
     </div>
   </form>
 </div>

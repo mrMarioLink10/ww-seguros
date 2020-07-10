@@ -4,12 +4,12 @@
     <div class="filter-title">Info. Inicio</div>
     <div class="mt-3 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4">
       <!-- <div class="mr-3">
-        <mat-form-field color="accent" appearance="outline" class="w-full bg-transparente"
-          style="font-size: small !important;">
-          <mat-label>No. Cotización</mat-label>
-          <input matInput class="">
-        </mat-form-field>
-      </div> -->
+          <mat-form-field color="accent" appearance="outline" class="w-full bg-transparente"
+            style="font-size: small !important;">
+            <mat-label>No. Cotización</mat-label>
+            <input matInput class="">
+          </mat-form-field>
+        </div> -->
       <app-number-input class="mr-3" [group]="newRequest" label="No. de Cotización" name='noC'></app-number-input>
 
       <div class="flex">
@@ -28,14 +28,14 @@
 
 
       <div class="mr-3">
-        <mat-form-field color="accent" appearance="outline" class="w-full" style="font-size: small !important;">
+        <!-- <mat-form-field color="accent" appearance="outline" class="w-full" style="font-size: small !important;">
           <mat-label>Tipo de Solicitud</mat-label>
           <mat-select [(value)]="routeSelected" (selectionChange)="selectChangeUrl($event.value)">
             <mat-option value="vida">Seguro de Vida</mat-option>
             <mat-option value="disability">Suscripción Disability</mat-option>
             <mat-option value="gastos mayores">Suscripción Seguro Gastos Médicos Mayores</mat-option>
           </mat-select>
-        </mat-form-field>
+        </mat-form-field> -->
       </div>
 
     </div>
@@ -544,8 +544,8 @@
                     [group]="newRequest.get('releventPlanInformation')" name="nicotineEstandar">
                   </app-input>
                   <!--<app-radio-button [group]="newRequest.get('releventPlanInformation')" name="nicotineEstandar"
-                    [options]="nicotineStandar">
-                  </app-radio-button> -->
+                      [options]="nicotineStandar">
+                    </app-radio-button> -->
                 </div>
               </div>
               <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
@@ -1278,14 +1278,14 @@
                         name="date" label="Fecha">
                       </datepicker-month>
                       <!-- <div class="grid grid-cols-2 mr-3">
-                        <app-number-input class="mr-3"
-                          [group]="newRequest.get('medicalHistory').get('informations').get(question.group).get(i.toString())"
-                          name="duration" label="Duración" min="1">
-                        </app-number-input>
-                        <app-select [options]="year"
-                          [group]="newRequest.get('medicalHistory').get('informations').get(question.group).get(i.toString())">
-                        </app-select>
-                      </div> -->
+                          <app-number-input class="mr-3"
+                            [group]="newRequest.get('medicalHistory').get('informations').get(question.group).get(i.toString())"
+                            name="duration" label="Duración" min="1">
+                          </app-number-input>
+                          <app-select [options]="year"
+                            [group]="newRequest.get('medicalHistory').get('informations').get(question.group).get(i.toString())">
+                          </app-select>
+                        </div> -->
                       <app-input class="mr-3"
                         [group]="newRequest.get('medicalHistory').get('informations').get(question.group).get(i.toString())"
                         name="results" label="Resultados">
@@ -1975,14 +1975,12 @@
   </div>
   <form #form="ngForm">
     <div *ngIf="showContent" class="mt-6 mb-4">
-      <button mat-button class="cancel-form-button" style="margin-right: 7.5px !important;"
-        (click)="formHandler.sendForm(newRequest, 'life', 'cancel')" type="submit">Cancelar</button>
+      <!-- <button mat-button class="cancel-form-button" style="margin-right: 7.5px !important;"
+        (click)="formHandler.sendForm(newRequest, 'life', 'cancel')" type="submit">Cancelar</button> -->
       <button mat-button class="save-button" style="margin-right: 7.5px !important;"
-        (click)="sendForm(newRequest, 'life', 'save', undefined)" type="submit">Guardar</button>
-      <button mat-button class="send-button" style="margin-right: 7.5px !important;"
-        (click)="sendForm(newRequest, 'life', 'send', ID)" type="submit">Enviar</button>
-      <button mat-button class="send-button" (click)="sendForm(newRequest, 'life', 'invitation')" type="submit">Enviar a
-        cliente</button>
+        (click)="sendForm(newRequest, 'life', 'save', ID)" type="submit">Guardar</button>
+      <button mat-button class="send-button" (click)="sendForm(newRequest, 'life', 'send', ID)"
+        type="submit">Enviar</button>
     </div>
   </form>
 </div>

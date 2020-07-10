@@ -87,16 +87,16 @@ export class QuotesComponent implements OnInit {
     this.getQuotes();
   }
   navigateToLife(id) {
-    this.router.navigateByUrl(`/dashboard/requests/new-requests/life/cotizacion/${id}`);
+    this.router.navigateByUrl(`/dashboard/requests/new-requests/vida/cotizacion/${id}`);
   }
   navigateToSalud(id) {
-    this.router.navigateByUrl(`/dashboard/requests/new-requests/major-expenses/cotizacion/${id}`);
+    this.router.navigateByUrl(`/dashboard/requests/new-requests/salud/cotizacion/${id}`);
   }
   newQuote() {
     if (this.userService.getRoleCotizador() === 'WWS') {
-      window.open('https://cotizadores.wwseguros.com.do/?cia=wws', '_blank');
+      window.open('http://portalwwg.eastus.cloudapp.azure.com/', '_blank');
     } else if (this.userService.getRoleCotizador() === 'WMA') {
-      window.open('https://cotizadores.wwseguros.com.do/?cia=wwm', '_blank');
+      window.open('http://portalwwg.eastus.cloudapp.azure.com:3000/?cia=wwm', '_blank');
     }
   }
 

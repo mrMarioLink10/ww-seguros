@@ -2,11 +2,8 @@ import { Component, OnInit, Output, EventEmitter, Input, DoCheck, ViewChild, Cha
 import { FormGroup, FormBuilder, Validators, FormArray, FormControl } from '@angular/forms';
 import { FormArrayGeneratorService } from 'src/app/core/services/forms/form-array-generator.service';
 import { FieldConfig } from 'src/app/shared/components/form-components/models/field-config';
-import { DisabilityService } from '../disability/services/disability.service';
 import { $country, $weightTypes, $heightTypes, $time, $family } from 'src/app/core/form/objects';
 import { FormHandlerService } from 'src/app/core/services/forms/form-handler.service';
-import { DiseaseService } from '../../../shared/components/disease/shared/disease/disease.service';
-import { UserService } from '../../../../../core/services/user/user.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { DialogService } from 'src/app/core/services/dialog/dialog.service';
 import { DialogOptionService } from 'src/app/core/services/dialog/dialog-option.service';
@@ -16,6 +13,10 @@ import { BaseDialogComponent } from 'src/app/shared/components/base-dialog/base-
 import { FormDataFillingService } from 'src/app/modules/dashboard/services/shared/formDataFillingService';
 import { map, first } from 'rxjs/operators';
 import { AppComponent } from 'src/app/app.component';
+import { DisabilityService } from '../../dashboard/requests/new-request/disability/services/disability.service';
+import { DiseaseService } from '../../dashboard/shared/components/disease/shared/disease/disease.service';
+import { UserService } from 'src/app/core/services/user/user.service';
+import { RequestsService } from '../services/requests.service';
 // tslint:disable: forin
 // tslint:disable: one-line
 
@@ -535,7 +536,8 @@ export class DisabilityComponent implements OnInit, DoCheck {
     private dialogOption: DialogOptionService,
     public dialog: MatDialog,
     public appComponent: AppComponent,
-    private cd: ChangeDetectorRef
+    private cd: ChangeDetectorRef,
+    private requestService: RequestsService
   ) { }
 
   ID = null;
@@ -544,7 +546,7 @@ export class DisabilityComponent implements OnInit, DoCheck {
     //this.ID = this.disabilityService.id;
 
     this.route.params.subscribe(res => {
-      this.ID = res.id;
+      this.ID = res.key;
     });
     this.route.params.subscribe(res => {
       this.noCotizacion = res.noCotizacion;
@@ -655,7 +657,7 @@ export class DisabilityComponent implements OnInit, DoCheck {
       // money_laundering: this.fb.group({}),
       // know_client: this.fb.group({}),
 
-      num_financial_quote: ['', Validators.required],
+      num_financial_quote: [{ value: '', disabled: false }, Validators.required],
       isComplete: [false, Validators.required],
 
       // typeRequest:[''],
@@ -1779,7 +1781,7 @@ export class DisabilityComponent implements OnInit, DoCheck {
   selectChangeUrl(event) {
     switch (event) {
       case 'vida':
-        this.router.navigateByUrl('dashboard/requests/new-requests/vida');
+        this.router.navigateByUrl('dashboard/requests/new-requests/life');
         break;
 
       case 'disability':
@@ -1787,7 +1789,7 @@ export class DisabilityComponent implements OnInit, DoCheck {
         break;
 
       case 'gastos mayores':
-        this.router.navigateByUrl('dashboard/requests/new-requests/salud');
+        this.router.navigateByUrl('dashboard/requests/new-requests/major-expenses');
         break;
 
       default:
@@ -1881,17 +1883,16 @@ export class DisabilityComponent implements OnInit, DoCheck {
   }
 
   getData(id) {
-    console.log(id);
     setTimeout(() => {
       this.appComponent.showOverlay = true;
     });
+    this.requestService.getRequestData('disability', id).subscribe((data: any) => {
 
-    this.disabilityService.returnData(id).subscribe(data => {
       // console.log(data.data.asegurado.documentoIdentidad)
       console.log(data)
       if (data !== undefined && data.data !== null &&
         data.data != undefined) {
-        this.ID = data.data.id;
+        // this.ID = data.data.id;
         this.dataMappingFromApi.iterateThroughtAllObject(data.data, this.disabilityGroup);
         const formF = this.disabilityGroup.get('files') as FormGroup;
         const formCB = this.disabilityGroup.get('contingent') as FormGroup;
@@ -1944,10 +1945,10 @@ export class DisabilityComponent implements OnInit, DoCheck {
         this.disabilityGroup.markAllAsTouched();
         this.disabilityGroup.updateValueAndValidity();
       }
+
       setTimeout(() => {
         this.appComponent.showOverlay = false;
       });
-
     });
   }
 

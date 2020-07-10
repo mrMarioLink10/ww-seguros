@@ -17,12 +17,12 @@ const routes: Routes = [
       name: 'Nueva Solicitud',
     }
   },
-  { path: 'major-expenses', component: MajorExpensesComponent, canDeactivate: [CanExitGuard] },
-  { path: 'major-expenses/cotizacion/:noCotizacion', component: MajorExpensesComponent, canDeactivate: [CanExitGuard] },
-  { path: 'major-expenses/:id', component: MajorExpensesComponent, canDeactivate: [CanExitGuard] },
-  { path: 'life', component: LifeComponent, canDeactivate: [CanExitGuard] },
-  { path: 'life/cotizacion/:noCotizacion', component: LifeComponent, canDeactivate: [CanExitGuard] },
-  { path: 'life/:id', component: LifeComponent, canDeactivate: [CanExitGuard] },
+  { path: 'salud', component: MajorExpensesComponent, canDeactivate: [CanExitGuard] },
+  { path: 'salud/cotizacion/:noCotizacion', component: MajorExpensesComponent, canDeactivate: [CanExitGuard] },
+  { path: 'salud/:id', component: MajorExpensesComponent, canDeactivate: [CanExitGuard] },
+  { path: 'vida', component: LifeComponent, canDeactivate: [CanExitGuard] },
+  { path: 'vida/cotizacion/:noCotizacion', component: LifeComponent, canDeactivate: [CanExitGuard] },
+  { path: 'vida/:id', component: LifeComponent, canDeactivate: [CanExitGuard] },
   { path: 'disability', component: DisabilityComponent, canDeactivate: [CanExitGuard] },
   { path: 'disability/:id', component: DisabilityComponent, canDeactivate: [CanExitGuard] },
 ];

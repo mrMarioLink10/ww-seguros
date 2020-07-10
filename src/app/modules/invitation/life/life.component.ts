@@ -3,21 +3,22 @@ import { FormGroup, FormBuilder, FormArray, Validators, FormControl } from '@ang
 import { FormArrayGeneratorService } from 'src/app/core/services/forms/form-array-generator.service';
 import { FieldConfig } from 'src/app/shared/components/form-components/models/field-config';
 import { $sex, $country, $res, $time, $family, $weightTypes, $heightTypes } from 'src/app/core/form/objects';
-import { DiseaseService } from '../../../shared/components/disease/shared/disease/disease.service';
 import { FormHandlerService } from 'src/app/core/services/forms/form-handler.service';
-import { UserService } from '../../../../../core/services/user/user.service';
 import { Router, ActivatedRoute } from '@angular/router';
-import { LifeService } from './services/life.service';
 import { DialogService } from 'src/app/core/services/dialog/dialog.service';
 import { DialogOptionService } from 'src/app/core/services/dialog/dialog-option.service';
 import { MatDialog } from '@angular/material';
 import { Observable } from 'rxjs';
 import { BaseDialogComponent } from 'src/app/shared/components/base-dialog/base-dialog.component';
 import { map, first } from 'rxjs/operators';
-import { KnowYourCustomerComponent } from '../../../shared/components/disease/know-your-customer/know-your-customer.component';
 import { AppComponent } from 'src/app/app.component';
 import { MatProgressButtonOptions } from 'mat-progress-buttons';
 import { FormDataFillingService } from 'src/app/modules/dashboard/services/shared/formDataFillingService';
+import { DiseaseService } from '../../dashboard/shared/components/disease/shared/disease/disease.service';
+import { UserService } from 'src/app/core/services/user/user.service';
+import { LifeService } from '../../dashboard/requests/new-request/life/services/life.service';
+import { KnowYourCustomerComponent } from '../../dashboard/shared/components/disease/know-your-customer/know-your-customer.component';
+import { RequestsService } from '../services/requests.service';
 
 // tslint:disable: one-line
 // tslint:disable: max-line-length
@@ -44,7 +45,8 @@ export class LifeComponent implements OnInit, DoCheck {
     private life: LifeService,
     private know: KnowYourCustomerComponent,
     private appComponent: AppComponent,
-    private cd: ChangeDetectorRef
+    private cd: ChangeDetectorRef,
+    private requestService: RequestsService
   ) { }
   step: number;
   showContent = false;
@@ -518,17 +520,16 @@ export class LifeComponent implements OnInit, DoCheck {
          console.log(res);
        });*/
     this.route.params.subscribe(res => {
-      this.ID = res.id;
+      console.log(res);
+      this.ID = res.key;
     });
     this.route.params.subscribe(res => {
       this.noCotizacion = res.noCotizacion;
     });
 
-
-
     this.role = this.userService.getRoleCotizador();
     this.newRequest = this.fb.group({
-      noC: [{ value: this.noCotizacion }, Validators.required],
+      noC: [{ value: this.noCotizacion, disabled: true }, Validators.required],
       isComplete: [false, Validators.required],
       person: this.fb.group({
         firstName: [{ value: '', disabled: false }, [Validators.required]],
@@ -2523,7 +2524,7 @@ export class LifeComponent implements OnInit, DoCheck {
   selectChangeUrl(event) {
     switch (event) {
       case 'vida':
-        this.router.navigateByUrl('dashboard/requests/new-requests/vida');
+        this.router.navigateByUrl('dashboard/requests/new-requests/life');
         break;
 
       case 'disability':
@@ -2531,7 +2532,7 @@ export class LifeComponent implements OnInit, DoCheck {
         break;
 
       case 'gastos mayores':
-        this.router.navigateByUrl('dashboard/requests/new-requests/salud');
+        this.router.navigateByUrl('dashboard/requests/new-requests/major-expenses');
         break;
 
       default:
@@ -2544,17 +2545,16 @@ export class LifeComponent implements OnInit, DoCheck {
     console.log('json', JSON.stringify(this.newRequest.get('releventPlanInformation').value));
   }
 
-  getData(id) {
+  getData(key) {
     setTimeout(() => {
       this.appComponent.showOverlay = true;
     });
-
-    this.life.returnData(id).subscribe(data => {
+    this.requestService.getRequestData('vida', key).subscribe((data: any) => {
       // console.log(data.data.asegurado.documentoIdentidad)
       //console.log(data);
       if (data !== undefined && data.data !== null &&
         data.data != undefined) {
-        this.ID = data.data.id;
+        // this.ID = data.data.id;
         console.log(data.data);
         this.dataMappingFromApi.iterateThroughtAllObject(data.data, this.newRequest);
 
@@ -2633,7 +2633,7 @@ export class LifeComponent implements OnInit, DoCheck {
     console.log(id);
     console.log(this.matAccordion);
 
-    this.formHandler.sendForm(form, formType, sendType, this.appComponent, id);
+    this.formHandler.sendForm(form, formType, sendType, this.appComponent, id, true);
 
   }
 }

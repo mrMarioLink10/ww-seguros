@@ -20,7 +20,6 @@ export class LifeService {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' })
     };
 
-    console.log('body:', body);
     return this.http.post(`${environment.apiUrl}/api/Solicitudes/vida`, body, httpOptions);
   }
 

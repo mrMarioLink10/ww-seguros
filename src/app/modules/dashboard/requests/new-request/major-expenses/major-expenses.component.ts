@@ -878,10 +878,10 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
         this.isJuridica = false;
         console.log(value);
         if (value === 'Si') {
-  
+
         } else {
         }
-  
+
       });
     }
 

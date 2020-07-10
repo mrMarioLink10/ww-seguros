@@ -16,7 +16,7 @@ export class NewRequestComponent implements OnInit {
   selectChange(event) {
     switch (event) {
       case 'vida':
-        this.router.navigate(['life'], { relativeTo: this.route });
+        this.router.navigate(['vida'], { relativeTo: this.route });
         break;
 
       case 'disability':
@@ -24,7 +24,7 @@ export class NewRequestComponent implements OnInit {
         break;
 
       case 'gastos mayores':
-        this.router.navigate(['major-expenses'], { relativeTo: this.route });
+        this.router.navigate(['salud'], { relativeTo: this.route });
         break;
 
       default:

@@ -1588,9 +1588,9 @@ export class LifeComponent implements OnInit, DoCheck {
 
   newQuote() {
     if (this.userService.getRoleCotizador() === 'WWS') {
-      window.open('https://cotizadores.wwseguros.com.do/?cia=wws', '_blank');
+      window.open('http://portalwwg.eastus.cloudapp.azure.com:3000/vida?cia=wws', '_blank');
     } else if (this.userService.getRoleCotizador() === 'WMA') {
-      window.open('https://cotizadores.wwseguros.com.do/?cia=wwm', '_blank');
+      window.open('http://portalwwg.eastus.cloudapp.azure.com:3000/vida?cia=wwm', '_blank');
     }
   }
 

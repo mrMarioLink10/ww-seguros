@@ -12,6 +12,9 @@ import { MatDialog } from '@angular/material/dialog';
 import { AppComponent } from '../../../../../../app.component';
 import { UserService } from '../../../../../../core/services/user/user.service';
 import { ActivatedRoute } from '@angular/router';
+import { ClaimsService } from '../../../../services/claims/claims.service';
+import { HttpParams } from '@angular/common/http';
+
 // tslint:disable: no-string-literal
 // tslint:disable: max-line-length
 
@@ -51,6 +54,10 @@ export class RefundComponent implements OnInit {
 
 	dataAutoCompleteIdNumber = [];
 	dataAutoCompleteIdNumberObject = [];
+	dataAutoCompleteName = [];
+	dataAutoCompletePolicy = [];
+
+
 
 	filteredOptions: Observable<any[]>;
 
@@ -68,6 +75,27 @@ export class RefundComponent implements OnInit {
 		]
 	};
 
+	filterOptions: FieldConfig = {
+		label: 'Filtro',
+		options: [
+			{
+				value: 'nombre',
+				viewValue: 'Nombre'
+			},
+			{
+				value: 'id',
+				viewValue: 'ID'
+			},
+			{
+				value: 'poliza',
+				viewValue: 'No. de Póliza'
+			}
+		]
+	};
+
+	filesStudiesArray: FormArray;
+	arrayFilesTitles: [];
+
 	refundForm: FormGroup;
 	diagnosticList: FormArray;
 	@ViewChild('form', { static: false }) form;
@@ -82,7 +110,8 @@ export class RefundComponent implements OnInit {
 		private appComponent: AppComponent,
 		private userService: UserService,
 		private route: ActivatedRoute,
-		private cd: ChangeDetectorRef
+		private cd: ChangeDetectorRef,
+		private claimsService: ClaimsService
 
 	) { }
 
@@ -167,7 +196,6 @@ export class RefundComponent implements OnInit {
 		// 	this.appComponent.showOverlay = false;
 
 		// }, 15000);
-
 		this.route.params.subscribe(res => {
 			this.ID = res.id;
 		});
@@ -185,11 +213,12 @@ export class RefundComponent implements OnInit {
 			fecha: [new Date(), Validators.required],
 			informacion: this.fb.group({
 				noPoliza: [{ value: '', disabled: true }, [Validators.required]],
+				filterType: ['', Validators.required],
 				idNumber: ['', Validators.required],
 				nombre: [{ value: '', disabled: true }, [Validators.required]],
-				direccion: ['', Validators.required],
-				telefono: ['', Validators.required],
-				correo: ['', [Validators.required, Validators.email]],
+				direccion: ['', ],
+				telefono: ['', ],
+				correo: ['', [ Validators.email]],
 			}),
 			diagnosticos: this.fb.array([this.createDiagnostic()]),
 			haveAditionalComentary: [''],
@@ -224,13 +253,61 @@ export class RefundComponent implements OnInit {
 			this.totalAmount = total;
 		});
 
-		this.filteredOptions = this.refundForm.get('informacion').get('idNumber').valueChanges
-			.pipe(
-				startWith(''),
-				map(value => typeof value === 'string' ? value : value),
-				map(value => value ? this._filter(value) : this.dataAutoCompleteIdNumber.slice())
-			);
+		this.refundForm.get('informacion').get('filterType').valueChanges.subscribe( valueFilter => {
+
+			this.refundForm.get('informacion').get('idNumber').setValue('');
+			this.refundForm.get('informacion').get('idNumber').markAsUntouched();
+
+			if (valueFilter == 'nombre') {
+				this.filteredOptions = this.refundForm.get('informacion').get('idNumber').valueChanges
+				.pipe(
+					startWith(''),
+					map(value => typeof value === 'string' ? value : value),
+					map(value => value ? this._filter(value) : this.dataAutoCompleteName.slice())
+				);
+			}
+			if (valueFilter == 'id') {
+				this.filteredOptions = this.refundForm.get('informacion').get('idNumber').valueChanges
+				.pipe(
+					startWith(''),
+					map(value => typeof value === 'string' ? value : value),
+					map(value => value ? this._filter(value) : this.dataAutoCompleteIdNumber.slice())
+				);
+			}
+			if (valueFilter == 'poliza') {
+				this.filteredOptions = this.refundForm.get('informacion').get('idNumber').valueChanges
+				.pipe(
+					startWith(''),
+					map(value => typeof value === 'string' ? value : value),
+					map(value => value ? this._filter(value) : this.dataAutoCompletePolicy.slice())
+				);
+			}
+		});
+
+				console.log("El json de todo el formulario: ", JSON.stringify(this.refundForm.value) );
+
 	}
+	// role;
+	// idd;
+	// getRefunds(params: HttpParams = new HttpParams()) {
+	// 	let data;
+	// 	this.claimsService.getRefunds(params)
+	// 		.subscribe(res => {
+	// 			data = res;
+	// 			console.log(data);
+	// 			console.log(data.data[0].id);
+	// 			this.idd = data.data[0].id;
+	// 		});
+	// 	this.role = this.userService.getRoleCotizador();
+	// 	}
+
+	// 	seeRequest(id: number) {
+	// 		if (this.role === 'WWS') {
+	// 			window.open(`http://wwsdevportalbackend.azurewebsites.net/ReembolsosView/Index/${id}/?location=true`, '_blank');
+	// 		} else {
+	// 			window.open(`http://wwsdevportalbackend.azurewebsites.net/ReembolsosView/Index/${id}/?location=false`, '_blank');
+	// 		}
+	// 	}
 
 	showWarningDot(form: any): boolean {
 		if (!this.ID) {
@@ -271,10 +348,30 @@ export class RefundComponent implements OnInit {
 
 	}
 
-	private _filter(value: string): any[] {
-		const filterValue = value.toLowerCase();
+	private _filter(value): any[] {
+		// let n: Number;
 
-		return this.dataAutoCompleteIdNumber.filter(option => option.toLowerCase().indexOf(filterValue) === 0);
+		// n.toString
+		// let arrayValue;
+
+		if (this.refundForm.get('informacion').get('filterType').value == 'nombre') {
+			const filterValue = value.toLowerCase();
+
+			return this.dataAutoCompleteName.filter(option => option.toLowerCase().indexOf(filterValue) === 0);
+		}
+		if (this.refundForm.get('informacion').get('filterType').value == 'id') {
+			const filterValueNumber = value.toString();
+
+			return this.dataAutoCompleteIdNumber.filter(option => option.toString().indexOf(filterValueNumber) === 0);
+		}
+		if (this.refundForm.get('informacion').get('filterType').value == 'poliza') {
+			const filterValue = value.toLowerCase();
+
+			return this.dataAutoCompletePolicy.filter(option => option.toLowerCase().indexOf(filterValue) === 0);
+		}
+
+		// return arrayValue;
+
 	}
 
 	//   consoleMethod(nameOption){
@@ -291,18 +388,24 @@ export class RefundComponent implements OnInit {
 	returnAutoCompleteData() {
 
 		this.refund.getIdNumbers().subscribe(data => {
+			console.log(data.data);
 			// tslint:disable-next-line: prefer-for-of
 			for (let x = 0; x < data.data.length; x++) {
-				this.dataAutoCompleteIdNumber.push(data.data[x].asegurado.nombres_asegurado +
-					' ' + data.data[x].asegurado.apellidos_asegurado + ' - '
-					+ data.data[x].asegurado.id_asegurado);
+				// this.dataAutoCompleteIdNumber.push(data.data[x].asegurado.nombres_asegurado +
+				// 	' ' + data.data[x].asegurado.apellidos_asegurado + ' - '
+				// 	+ data.data[x].asegurado.id_asegurado);
 
 				this.dataAutoCompleteIdNumberObject.push({
-					name: data.data[x].asegurado.nombres_asegurado +
-						' ' + data.data[x].asegurado.apellidos_asegurado + ' - '
-						+ data.data[x].asegurado.id_asegurado,
+					name: data.data[x].asegurado.nombres_asegurado,
+					// id: data.data[x].asegurado.id_asegurado,
+					policy: data.data[x].asegurado.no_poliza,
 					value: data.data[x].asegurado.id_asegurado
 				});
+				this.dataAutoCompleteName.push(data.data[x].asegurado.nombres_asegurado);
+
+				this.dataAutoCompleteIdNumber.push(data.data[x].asegurado.id_asegurado);
+
+				this.dataAutoCompletePolicy.push(data.data[x].asegurado.no_poliza);
 			}
 			this.timeAutoComplete = 1;
 			this.appComponent.showOverlay = false;
@@ -331,6 +434,10 @@ export class RefundComponent implements OnInit {
 		if (this.filesInformation[index]) {
 			if (this.filesInformation[index][type + 'Url']) { return this.filesInformation[index][type + 'Url']; }
 		}
+	}
+
+	clearArchives(formName, index) {
+		this.refundForm.get('diagnosticos').get(index.toString()).get('files').get(formName).setValue('');
 	}
 
 	calculatedDate(value: any) {
@@ -372,11 +479,11 @@ export class RefundComponent implements OnInit {
 
 	createInfo(): FormGroup {
 		return this.fb.group({
-			cedula: ['', Validators.required],
+			// cedula: ['', Validators.required],
 			noCuenta: ['', Validators.required],
 			tipoCuenta: ['', Validators.required],
 			bancoEmisor: ['', Validators.required],
-			correo: ['', Validators.required]
+			// correo: ['', Validators.required]
 		});
 	}
 
@@ -384,8 +491,10 @@ export class RefundComponent implements OnInit {
 		return this.fb.group({
 			fecha: ['', Validators.required],
 			lugar: ['', Validators.required],
+			diagnostico: ['', Validators.required],
 			descripcion: ['', Validators.required],
 			monto: ['', Validators.required],
+			proveedor: ['', Validators.required],
 			files: this.fb.group({
 				invoices: [''],
 				indications: [''],
@@ -397,10 +506,13 @@ export class RefundComponent implements OnInit {
 
 	addDiagnostic() {
 		this.diagnosticList.push(this.createDiagnostic());
+		console.log("El json de todo el formulario: ", JSON.stringify(this.refundForm.value) );
+
 	}
 
 	removeDiagnostic(index) {
 		this.diagnosticList.removeAt(index);
+
 	}
 
 	canDeactivate(): Observable<boolean> | boolean {
@@ -424,10 +536,25 @@ export class RefundComponent implements OnInit {
 
 	searchIdNumber(idNumber: string) {
 
-		const idNumberObject = this.dataAutoCompleteIdNumberObject.find(nombre =>
+		let idNumberObject;
+
+		if (this.refundForm.get('informacion').get('filterType').value == 'nombre') {
+				idNumberObject = this.dataAutoCompleteIdNumberObject.find(nombre =>
 			nombre.name == idNumber);
+			 idNumber = (idNumberObject.value).toString();
+			}
+		if (this.refundForm.get('informacion').get('filterType').value == 'id') {
+			idNumber = (idNumber).toString();
+		}
+		if (this.refundForm.get('informacion').get('filterType').value == 'poliza') {
+				idNumberObject = this.dataAutoCompleteIdNumberObject.find(nombre =>
+			nombre.policy == idNumber);
+			 idNumber = (idNumberObject.value).toString();
+			}
+
+		// idNumberObject = this.dataAutoCompleteIdNumberObject.find(nombre =>
+		// 	nombre.name == idNumber);
 		// console.log(idNumberObject);
-		idNumber = (idNumberObject.value).toString();
 
 		this.appComponent.showOverlay = true;
 		this.userService.getInsurancePeople(idNumber)
@@ -479,10 +606,12 @@ export class RefundComponent implements OnInit {
 					// console.log('Hola, soy yo, ' + x)
 					this.addDiagnostic();
 				}
+				this.refundForm['controls'].diagnosticos['controls'][x]['controls'].diagnostico.setValue(data.data.diagnosticos[x].diagnostico);
 				this.refundForm['controls'].diagnosticos['controls'][x]['controls'].descripcion.setValue(data.data.diagnosticos[x].descripcion);
 				this.refundForm['controls'].diagnosticos['controls'][x]['controls'].fecha.setValue(data.data.diagnosticos[x].fecha);
 				this.refundForm['controls'].diagnosticos['controls'][x]['controls'].lugar.setValue(data.data.diagnosticos[x].lugar);
 				this.refundForm['controls'].diagnosticos['controls'][x]['controls'].monto.setValue(data.data.diagnosticos[x].monto);
+				this.refundForm['controls'].diagnosticos['controls'][x]['controls'].proveedor.setValue(data.data.diagnosticos[x].proveedor);
 				this.refundForm['controls'].diagnosticos['controls'][x]['controls'].files['controls'].indications.setValue(data.data.diagnosticos[x].files.indications);
 				this.refundForm['controls'].diagnosticos['controls'][x]['controls'].files['controls'].invoices.setValue(data.data.diagnosticos[x].files.invoices);
 				this.refundForm['controls'].diagnosticos['controls'][x]['controls'].files['controls'].medicReports.setValue(data.data.diagnosticos[x].files.medicReports);
@@ -519,6 +648,7 @@ export class RefundComponent implements OnInit {
 				console.log('No hay que crear el control');
 			}
 
+			this.refundForm['controls'].informacion['controls'].filterType.setValue(data.data.informacion.filterType);
 			this.refundForm['controls'].informacion['controls'].direccion.setValue(data.data.informacion.direccion);
 			this.refundForm['controls'].informacion['controls'].idNumber.setValue(data.data.informacion.idNumber);
 			this.refundForm['controls'].informacion['controls'].noPoliza.setValue(data.data.informacion.noPoliza);

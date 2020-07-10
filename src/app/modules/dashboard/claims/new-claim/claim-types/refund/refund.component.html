@@ -4,11 +4,72 @@
 <div class="p-3 pb-2 mb-4" style="background-color: #F2F2F2"> <!-- *ngIf="timeAutoComplete == 1" -->
   <div class="mt-3 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 xl:grid-cols-5">
     <app-date-picker class="mr-3" [group]="refundForm" name="fecha" label="Fecha"></app-date-picker>
-    <div *ngIf="timeAutoComplete == 0" class="mr-3 col-span-2">
+    <!-- <div *ngIf="timeAutoComplete == 0" class="mr-3 col-span-2">
       <app-input [group]="refundForm.get('informacion')" label="ID Number" name='idNumber' placeholder="Juan Juan - 00010002">
       </app-input>
+    </div> -->
+    <div class="mr-3">
+      <app-select name="filterType" [options]="filterOptions"
+       [group]="refundForm.get('informacion')"></app-select>
     </div>
-    <div *ngIf="timeAutoComplete == 1" class="mr-3 col-span-2">
+    <div *ngIf="this.refundForm.get('informacion').get('filterType').value == 'nombre' ">
+      <form [formGroup]="refundForm.get('informacion')">
+        <mat-form-field color="accent" appearance="outline" class="w-full bg-transparente"
+          style="font-size: small !important;">
+          <mat-label>Nombre</mat-label>
+          <input formControlName="idNumber" matInput class="" type="text" [matAutocomplete]="auto"
+            placeholder="Juan Juan">
+          <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+            <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+              {{option}}
+            </mat-option>
+          </mat-autocomplete>
+          <mat-error
+            *ngIf="refundForm.get('informacion').get('idNumber').touched && !refundForm.get('informacion').get('idNumber').valid">
+            Este campo es obligatorio
+          </mat-error>
+        </mat-form-field>
+      </form>    
+    </div>
+    <div *ngIf="this.refundForm.get('informacion').get('filterType').value == 'id' ">
+      <form [formGroup]="refundForm.get('informacion')">
+        <mat-form-field color="accent" appearance="outline" class="w-full bg-transparente"
+          style="font-size: small !important;">
+          <mat-label>ID Number</mat-label>
+          <input formControlName="idNumber" matInput class="" type="text" [matAutocomplete]="auto"
+            placeholder="00010002">
+          <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+            <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+              {{option}}
+            </mat-option>
+          </mat-autocomplete>
+          <mat-error
+            *ngIf="refundForm.get('informacion').get('idNumber').touched && !refundForm.get('informacion').get('idNumber').valid">
+            Este campo es obligatorio
+          </mat-error>
+        </mat-form-field>
+      </form>
+    </div>
+    <div *ngIf="this.refundForm.get('informacion').get('filterType').value == 'poliza' ">
+      <form [formGroup]="refundForm.get('informacion')">
+        <mat-form-field color="accent" appearance="outline" class="w-full bg-transparente"
+          style="font-size: small !important;">
+          <mat-label>Póliza</mat-label>
+          <input formControlName="idNumber" matInput class="" type="text" [matAutocomplete]="auto"
+            placeholder="SWWVT-00000">
+          <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+            <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+              {{option}}
+            </mat-option>
+          </mat-autocomplete>
+          <mat-error
+            *ngIf="refundForm.get('informacion').get('idNumber').touched && !refundForm.get('informacion').get('idNumber').valid">
+            Este campo es obligatorio
+          </mat-error>
+        </mat-form-field>
+      </form> 
+    </div>
+    <!-- <div *ngIf="timeAutoComplete == 1" class="mr-3 col-span-2">
       <form [formGroup]="refundForm.get('informacion')">
         <mat-form-field color="accent" appearance="outline" class="w-full bg-transparente"
           style="font-size: small !important;">
@@ -26,12 +87,15 @@
           </mat-error>
         </mat-form-field>
       </form>
+    </div> -->
+    <div *ngIf="this.refundForm.get('informacion').get('filterType').value == 'nombre' || this.refundForm.get('informacion').get('filterType').value == 'id' || this.refundForm.get('informacion').get('filterType').value == 'poliza' "> 
+      <button
+        style="margin-left: 15px;" *ngIf="ID === null || ID === undefined"
+        (click)="searchIdNumber(refundForm.get('informacion').value.idNumber)" type="submit"
+        class="nofocus flex justify-center small-search-button">
+        <img src="/assets/iconos/search-icon.svg">
+      </button>
     </div>
-    <button style="margin-left: 15px;" *ngIf="ID === null || ID === undefined"
-      (click)="searchIdNumber(refundForm.get('informacion').value.idNumber)" type="submit"
-      class="nofocus flex justify-center small-search-button">
-      <img src="/assets/iconos/search-icon.svg">
-    </button>
   </div>
 </div>
 <!-- <div *ngIf="timeAutoComplete == 1"> -->
@@ -96,6 +160,7 @@
           <div *ngIf="showWarningDot(refundForm.get('diagnosticos'))" class="warning-accordion-dot"></div>
         </mat-panel-description>
       </mat-expansion-panel-header>
+      
       <div *ngFor="let reclaimed of diagnosticList.controls; let i = index">
         <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5">
           <div class="mr-3">
@@ -108,12 +173,17 @@
               label="Lugar del Servicio">
             </app-input>
           </div>
-          <div class="mr-3 extern-description">
+          <!-- <div class="mr-3 extern-description">
             Descripción completa de los procedimientos o asistencia médica suministrados en cada fecha indicada
+          </div> -->
+          <div class="mr-3">
+            <app-input [group]="refundForm.get('diagnosticos').get(i.toString())" name="diagnostico"
+              label="Diagnóstico">
+            </app-input>
           </div>
           <div class="mr-3">
             <app-text-area [group]="refundForm.get('diagnosticos').get(i.toString())" name="descripcion"
-              label="Descripción">
+              label="Descripción del procedimiento">
             </app-text-area>
           </div>
           <div class="grid"
@@ -133,39 +203,56 @@
           </div>
         </div>
         <div class="mt-3 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5">
-          <mat-form-field class="mr-3" appearance="outline">
-            <mat-label>Facturas Pendientes</mat-label>
-            <ngx-mat-file-input placeholder="Basic outline placeholder"
-              [valuePlaceholder]="fileNameWatcher('invoices', i)" (change)="onFileChange($event, 'invoices', i)">
-            </ngx-mat-file-input>
-            <mat-icon style="color: #e2e2e2;" matSuffix>publish</mat-icon>
-          </mat-form-field>
-          <mat-form-field class="mr-3" appearance="outline">
-            <mat-label>Indicaciones médicas</mat-label>
-            <ngx-mat-file-input placeholder="Basic outline placeholder"
-              [valuePlaceholder]="fileNameWatcher('indications', i)" (change)="onFileChange($event, 'indications', i)">
-            </ngx-mat-file-input>
-            <mat-icon style="color: #e2e2e2;" matSuffix>publish</mat-icon>
-          </mat-form-field>
-          <mat-form-field class="mr-3" appearance="outline">
-            <mat-label>Comprobante de pagos</mat-label>
-            <ngx-mat-file-input placeholder="Basic outline placeholder"
-              [valuePlaceholder]="fileNameWatcher('medicReports', i)"
-              (change)="onFileChange($event, 'medicReports', i)">
-            </ngx-mat-file-input>
-            <mat-icon style="color: #e2e2e2;" matSuffix>publish</mat-icon>
-          </mat-form-field>
-          <mat-form-field class="mr-3" appearance="outline">
-            <mat-label>Informe médico</mat-label>
-            <ngx-mat-file-input placeholder="Basic outline placeholder"
-              [valuePlaceholder]="fileNameWatcher('paymentVouchers', i)"
-              (change)="onFileChange($event, 'paymentVouchers', i)">
-            </ngx-mat-file-input>
-            <mat-icon style="color: #e2e2e2;" matSuffix>publish</mat-icon>
-          </mat-form-field>
+         
+            <app-input class="mr-3" [group]="refundForm.get('diagnosticos').get(i.toString())" name="proveedor"
+              label="Proveedor">
+            </app-input>        
+            <mat-form-field class="mr-1" appearance="outline">
+              <mat-label>Facturas Pendientes</mat-label>
+              <ngx-mat-file-input #removableInputInvoices placeholder="Basic outline placeholder"
+                [valuePlaceholder]="fileNameWatcher('invoices', i)" (change)="onFileChange($event, 'invoices', i)">
+              </ngx-mat-file-input>
+              <mat-icon style="color: #e2e2e2;" matSuffix *ngIf="removableInputInvoices.empty">publish</mat-icon>
+              <button mat-icon-button matSuffix *ngIf="!removableInputInvoices.empty" (click)="clearArchives('invoices', i)" (click)="removableInputInvoices.clear($event)">
+                <mat-icon style="color: #e2e2e2;">clear</mat-icon>
+              </button>
+            </mat-form-field>
+      
+            <mat-form-field class="mr-1" appearance="outline">
+              <mat-label>Indicaciones médicas</mat-label>
+              <ngx-mat-file-input #removableInputIndications placeholder="Basic outline placeholder"
+                [valuePlaceholder]="fileNameWatcher('indications', i)" (change)="onFileChange($event, 'indications', i)">
+              </ngx-mat-file-input>
+              <mat-icon style="color: #e2e2e2;" matSuffix *ngIf="removableInputIndications.empty">publish</mat-icon>
+              <button mat-icon-button matSuffix *ngIf="!removableInputIndications.empty" (click)="clearArchives('indications', i)" (click)="removableInputIndications.clear($event)">
+                <mat-icon style="color: #e2e2e2;">clear</mat-icon>
+              </button>
+            </mat-form-field>
+            <mat-form-field class="mr-1" appearance="outline">
+              <mat-label>Comprobante de pagos</mat-label>
+              <ngx-mat-file-input #removableInputMedicReports placeholder="Basic outline placeholder"
+                [valuePlaceholder]="fileNameWatcher('medicReports', i)"
+                (change)="onFileChange($event, 'medicReports', i)">
+              </ngx-mat-file-input>
+              <mat-icon style="color: #e2e2e2;" matSuffix *ngIf="removableInputMedicReports.empty">publish</mat-icon>
+              <button mat-icon-button matSuffix *ngIf="!removableInputMedicReports.empty" (click)="clearArchives('medicReports', i)" (click)="removableInputMedicReports.clear($event)">
+                <mat-icon style="color: #e2e2e2;">clear</mat-icon>
+              </button>
+            </mat-form-field>
+            <mat-form-field class="mr-1" appearance="outline">
+              <mat-label>Informe médico</mat-label>
+              <ngx-mat-file-input #removableInputPaymentVouchers placeholder="Basic outline placeholder"
+                [valuePlaceholder]="fileNameWatcher('paymentVouchers', i)"
+                (change)="onFileChange($event, 'paymentVouchers', i)">
+              </ngx-mat-file-input>
+              <mat-icon style="color: #e2e2e2;" matSuffix *ngIf="removableInputPaymentVouchers.empty">publish</mat-icon>
+              <button mat-icon-button matSuffix *ngIf="!removableInputPaymentVouchers.empty" (click)="clearArchives('paymentVouchers', i)" (click)="removableInputPaymentVouchers.clear($event)">
+                <mat-icon style="color: #e2e2e2;">clear</mat-icon>
+              </button>
+            </mat-form-field> 
         </div>
         <hr class=" mb-8 w-full ww-divider">
-
+    
       </div>
       <div>
         <button mat-mini-fab aria-label="Agregar reclamacion" (click)="addDiagnostic()" type="button"
@@ -289,6 +376,7 @@
         <mat-checkbox formControlName="agreeWithDeclaration">
           Estoy de acuerdo </mat-checkbox>
       </div>
+
       <mat-action-row class="action-row">
         <button mat-button class="next-button" (click)="nextStep()" type="button">
           Siguiente

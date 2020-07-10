@@ -1396,7 +1396,7 @@
             ></app-mountaineering>
         </mat-accordion>
       </mat-tab>
-      <mat-tab *ngIf="isJuridica || isSolicitantePep || isContractorPep" label="Conozca a su cliente">
+      <mat-tab *ngIf="isJuridica || (this.newRequest.get('person').get('isJuridica') && this.newRequest.get('person').get('isJuridica').value == 'Si') || isSolicitantePep || isContractorPep" label="Conozca a su cliente">
         <mat-accordion #matAccordion="matAccordion" name="matAccordion" class="ww-mat-accordion example-headers-align"
           [togglePosition]="'before'">
           <app-know-your-client

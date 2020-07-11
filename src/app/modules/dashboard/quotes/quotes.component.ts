@@ -94,9 +94,9 @@ export class QuotesComponent implements OnInit {
   }
   newQuote() {
     if (this.userService.getRoleCotizador() === 'WWS') {
-      window.open('http://portalwwg.eastus.cloudapp.azure.com:3000/salud?cia=wws', '_blank');
+      window.open('http://portalwwg.eastus.cloudapp.azure.com:3000/?cia=wws', '_blank');
     } else if (this.userService.getRoleCotizador() === 'WMA') {
-      window.open('http://portalwwg.eastus.cloudapp.azure.com:3000/salud?cia=wwm', '_blank');
+      window.open('http://portalwwg.eastus.cloudapp.azure.com:3000/?cia=wwm', '_blank');
     }
   }
 

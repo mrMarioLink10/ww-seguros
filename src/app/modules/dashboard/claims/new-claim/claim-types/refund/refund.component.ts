@@ -93,9 +93,6 @@ export class RefundComponent implements OnInit {
 		]
 	};
 
-	filesStudiesArray: FormArray;
-	arrayFilesTitles: [];
-
 	refundForm: FormGroup;
 	diagnosticList: FormArray;
 	@ViewChild('form', { static: false }) form;

@@ -186,12 +186,12 @@ export class RequestsComponent implements OnInit {
 
   navigateToLife(id) {
     this.newRequestButtonOptions.active = true;
-    this.router.navigateByUrl(`/dashboard/requests/new-requests/life/${id}`);
+    this.router.navigateByUrl(`/dashboard/requests/new-requests/vida/${id}`);
   }
 
   navigateToSalud(id) {
     this.newRequestButtonOptions.active = true;
-    this.router.navigateByUrl(`/dashboard/requests/new-requests/major-expenses/${id}`);
+    this.router.navigateByUrl(`/dashboard/requests/new-requests/salud/${id}`);
   }
 
   navigateToDisability(id) {

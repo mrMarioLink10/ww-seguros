@@ -1,15 +1,31 @@
 <div style="max-width: 400px !important;">
   <div class="text-center h-full">
-    <div class="w-full flex justify-center mb-6">
+    <div *ngIf="data.showInput !== true" class="w-full flex justify-center mb-6">
       <div class="icon">
         <img style="padding-left: 5px;padding-top: 5px;" src="../../../../assets/iconos/dialog-icons/{{data.logo}}.png"
           alt="Icono">
       </div>
     </div>
-    <h2 mat-dialog-title class="title" style="margin-bottom: 10px !important;"> {{data.title}}</h2>
+    <h2 *ngIf="data.showInput !== true" mat-dialog-title class="title" style="margin-bottom: 10px !important;">
+      {{data.title}}</h2>
+    <h5 *ngIf="data.showInput === true" mat-dialog-title class="title"
+      style="margin-bottom: 10px !important; font-weight: bold;     font-size: 14px;"> {{data.title}}</h5>
     <div mat-dialog-content class="sub-title">
       <div>{{data.text}}</div>
     </div>
+    <div *ngIf="data.showInput === true">
+      <mat-form-field color="accent" appearance="outline" class="w-full bg-transparente"
+        style="font-size: small !important;">
+        <mat-label>Correo</mat-label>
+        <input matInput class="" type="email" [(ngModel)]="data.email" placeholder="correo@email.com">
+        <!-- <mat-error *ngIf="group.get(name).touched && !group.get(name).valid && !group.get(name).errors?.email">Este campo
+        es
+        obligatorio
+      </mat-error>
+      <mat-error *ngIf="group.get(name).errors?.email"> El formato de correo no es correcto .</mat-error> -->
+      </mat-form-field>
+    </div>
+
     <div mat-dialog-actions *ngIf="data.showButtons">
       <hr class="w-full mb-3 ww-divider">
       <div class="grid grid-cols-2 w-full">
@@ -18,8 +34,9 @@
             mat-dialog-close="cancel" [innerHtml]="data.textCancelButton"></button>
         </div>
         <div class="w-full px-1">
-          <button mat-stroked-button class="next-button w-full" mat-dialog-close="true"
-            [innerHtml]="data.textPrincipalButton" cdkFocusInitial></button>
+          <button mat-stroked-button class="next-button w-full"
+            [mat-dialog-close]="data.showInput === true? data.email : 'true'" [innerHtml]="data.textPrincipalButton"
+            cdkFocusInitial></button>
         </div>
       </div>
     </div>

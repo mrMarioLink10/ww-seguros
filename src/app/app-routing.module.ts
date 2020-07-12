@@ -16,6 +16,12 @@ const routes: Routes = [
 		loadChildren: () => import('./modules/dashboard/dashboard.module').then((m) => m.DashboardModule),
 		// canActivate: [AppAuthGuard],
 		// data: { roles: ['WWS', 'WWA'] }
+	},
+	{
+		path: 'invitation',
+		loadChildren: () => import('./modules/invitation/invitation.module').then((m) => m.InvitationModule),
+		// canActivate: [AppAuthGuard],
+		// data: { roles: ['WWS', 'WWA'] }
 	}
 ];
 

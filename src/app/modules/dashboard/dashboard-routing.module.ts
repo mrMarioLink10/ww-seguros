@@ -2,6 +2,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { DashboardLayoutComponent } from './shared/layouts/dashboard-layout/dashboard-layout.component';
 import { AppAuthGuard } from 'src/app/core/guards/app-auth.guard';
+import { WwmAccessGuard } from '../../core/guards/wwm-access.guard';
 
 const routes: Routes = [
 	{
@@ -16,11 +17,12 @@ const routes: Routes = [
 			{
 				path: 'claims',
 				// canActivate: [AppAuthGuard],
+				canActivate: [WwmAccessGuard],
 				loadChildren: () => import('./claims/claims.module').then((m) => m.ClaimsModule)
 			},
 			{
 				path: 'authorizations',
-				// canActivate: [AppAuthGuard],
+				canActivate: [WwmAccessGuard],
 				loadChildren: () => import('./authorizations/authorizations.module').then((m) => m.AuthorizationsModule)
 			},
 			// {
@@ -46,11 +48,11 @@ const routes: Routes = [
 				// canActivate: [AppAuthGuard],
 				loadChildren: () => import('./requests/requests.module').then((m) => m.RequestsModule)
 			},
-      {
-        path: 'consult',
-        // canActivate: [AppAuthGuard],
-        loadChildren: () => import('./consultation/consultation.module').then((m) => m.ConsultationModule)
-      }
+			{
+				path: 'consult',
+				// canActivate: [AppAuthGuard],
+				loadChildren: () => import('./consultation/consultation.module').then((m) => m.ConsultationModule)
+			}
 		]
 	}
 ];

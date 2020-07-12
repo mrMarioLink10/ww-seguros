@@ -65,7 +65,7 @@
         <ng-container matColumnDef="estatus" style="margin-right: 15px !important">
           <th class="padding-cell" mat-header-cell *matHeaderCellDef mat-sort-header> Estatus </th>
           <td class="padding-cell" mat-cell *matCellDef="let element"
-            [ngClass]="{'text-color-yellow': element.estatus === 0, 'text-color-red': element.estatus === 4, 'text-color-green': element.estatus === 2}">
+            [ngClass]="{'text-color-yellow': element.estatus === 0 || element.estatus === 6, 'text-color-red': element.estatus === 4, 'text-color-green': element.estatus === 2 || element.estatus === 7, 'text-color-blue-table': element.estatus === 1}">
             {{element.estatus | tableStatus}} </td>
         </ng-container>
 
@@ -81,7 +81,8 @@
             </button>
             -->
             <button mat-mini-fab aria-label="Ver mas" (click)="seeRequest(element.id, element.seguro)"
-              *ngIf="element.estatus === 2" class="dashboard-table-buttons">
+              *ngIf="element.estatus === 2 || element.estatus === 6 || element.estatus === 7"
+              class="dashboard-table-buttons">
               <img src="../../../../assets/iconos/eye.svg">
             </button>
             <button *ngIf="element.estatus === 1" (click)="directSendTargeting(element.id, element.seguro)" mat-mini-fab
@@ -89,25 +90,25 @@
               <img src="../../../../assets/iconos/send.svg">
             </button>
             <button mat-mini-fab aria-label="Editar"
-              *ngIf="element.seguro == 'Vida' && element.estatus !== 2 && element.estatus !== 4"
+              *ngIf="element.seguro == 'Vida' && (element.estatus === 1 || element.estatus === 0)"
               class="dashboard-table-buttons" (click)="navigateToLife(element.id)">
               <!--  -->
               <img src="../../../../assets/iconos/edit.svg">
             </button>
             <button mat-mini-fab aria-label="Editar"
-              *ngIf="element.seguro == 'Salud' && element.estatus !== 2 && element.estatus !== 4"
+              *ngIf="element.seguro == 'Salud' && (element.estatus === 1 || element.estatus === 0)"
               class="dashboard-table-buttons" (click)="navigateToSalud(element.id)">
               <img src="../../../../assets/iconos/edit.svg">
             </button>
 
             <button mat-mini-fab aria-label="Editar"
-              *ngIf="element.seguro == 'Disability' && element.estatus !== 2 && element.estatus !== 4"
+              *ngIf="element.seguro == 'Disability' && (element.estatus === 1 || element.estatus === 0)"
               class="dashboard-table-buttons" (click)="navigateToDisability(element.id)">
               <!-- (click)="this.life.getID(element)" -->
               <img src="../../../../assets/iconos/edit.svg">
             </button>
 
-            <button *ngIf="element.estatus!== 2 && element.estatus !== 4"
+            <button *ngIf=" element.estatus === 1 || element.estatus === 0"
               (click)="deleteTargeting(element.id, element.seguro)" mat-mini-fab aria-label="Eliminar"
               class="dashboard-table-buttons">
               <img src="../../../../assets/iconos/trash.svg">

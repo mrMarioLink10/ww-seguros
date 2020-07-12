@@ -12,7 +12,7 @@ if (environment.production) {
 
 // keycloak init options
 const initOptions = {
-  url: 'https://sso.wwseguros.com.do:8443/auth', realm: 'worldwide', clientId: 'cotizador'
+  url: 'http://wwskeycloak.eastus.cloudapp.azure.com:8080/auth', realm: 'worldwide', clientId: 'cotizador'
 };
 
 const keycloak = Keycloak(initOptions);
@@ -59,8 +59,7 @@ keycloak.init({ onLoad: 'login-required' }).then((auth) => {
   window.location.reload();
 
   console.error('Authenticated Failed');
-  // tslint:disable-next-line: max-line-length
-  // document.location.href = `${environment.keycloak.url}realms/${environment.keycloak.realm}/protocol/openid-connect/logout?redirect_uri=${environment.baseUrl}`;
+
 
 });
 

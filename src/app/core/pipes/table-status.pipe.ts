@@ -22,6 +22,12 @@ export class TableStatusPipe implements PipeTransform {
       case '4':
         return 'Eliminado';
 
+      case '6':
+        return 'Por completar cliente';
+
+      case '7':
+        return 'Enviado por el cliente';
+
       case 0:
         return 'Incompleto';
 
@@ -36,6 +42,12 @@ export class TableStatusPipe implements PipeTransform {
 
       case 4:
         return 'Eliminado';
+
+      case 6:
+        return 'Por completar cliente';
+
+      case 7:
+        return 'Enviado por el cliente';
 
       default:
         return 'Indeterminado';

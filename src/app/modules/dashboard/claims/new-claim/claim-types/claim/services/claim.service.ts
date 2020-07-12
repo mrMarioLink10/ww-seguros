@@ -11,7 +11,9 @@ import { Router } from '@angular/router';
 })
 export class ClaimService {
 
-  constructor(private http: HttpClient, private route:Router) { }
+  constructor(private http: HttpClient, private route: Router) { }
+
+  id = null;
 
   postClaim(body) {
 
@@ -23,14 +25,12 @@ export class ClaimService {
     return this.http.post(`${environment.apiUrl}/api/Reclamaciones`, body, httpOptions);
   }
 
-  returnData(id):Observable<any>{
-    return this.http.get(`${environment.apiUrl}/api/Reclamaciones/${id}`)
+  returnData(id): Observable<any> {
+    return this.http.get(`${environment.apiUrl}/api/Reclamaciones/${id}`);
+  }
+  getID(id) {
+    this.id = id;
+    this.route.navigateByUrl('/dashboard/claims/new-claim/claim');
   }
 
-  id=null;
-  getID(id){
-      this.id=id;
-      this.route.navigateByUrl('/dashboard/claims/new-claim/claim');
-  }
-  
 }

@@ -6,23 +6,23 @@
       <div class="mt-3 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4">
         <!-- <app-input class="mr-3" [group]="newRequest" label="No. de Cotización" name='NoC'></app-input> -->
         <!-- <div class="flex">
-          <button *ngIf="ID === null || ID === undefined" [disabled]="isNotValidToSearch"
-            (click)="searchIdNumber(newRequest.value.NoC)" class="nofocus flex justify-center small-search-button"
-            style="display: -webkit-box">
-            <img src="/assets/iconos/search-icon.svg">
-          </button>
-          <button (click)="newQuote()" class="nofocus flex justify-center small-search-button ml-3"
-            style="display: -webkit-box; color: white;">
-            <mat-icon style="font-weight: 900;  margin-top: 7px;">add</mat-icon>
-          </button>
-        </div> -->
+            <button *ngIf="ID === null || ID === undefined" [disabled]="isNotValidToSearch"
+              (click)="searchIdNumber(newRequest.value.NoC)" class="nofocus flex justify-center small-search-button"
+              style="display: -webkit-box">
+              <img src="/assets/iconos/search-icon.svg">
+            </button>
+            <button (click)="newQuote()" class="nofocus flex justify-center small-search-button ml-3"
+              style="display: -webkit-box; color: white;">
+              <mat-icon style="font-weight: 900;  margin-top: 7px;">add</mat-icon>
+            </button>
+          </div> -->
         <!--  <app-input class="mr-3" [group]="newRequest" label="No. de Cotización" name='NoC'></app-input> -->
 
         <app-number-input class="mr-3" [group]="newRequest" label="No. de Cotización" name='noC'></app-number-input>
 
 
         <div class="flex">
-          <button *ngIf="ID === null || ID === undefined" (click)="searchQuote(newRequest.value.noC)"
+          <!-- <button *ngIf="ID === null || ID === undefined" (click)="searchQuote(newRequest.value.noC)"
             [disabled]="isNotValidToSearch" class="nofocus flex justify-center small-search-button"
             style="display: -webkit-box">
             <img src="/assets/iconos/search-icon.svg">
@@ -30,43 +30,43 @@
           <button (click)="newQuote()" class="nofocus flex justify-center small-search-button ml-3"
             style="display: -webkit-box; color: white;">
             <mat-icon style="font-weight: 900;  margin-top: 7px;">add</mat-icon>
-          </button>
+          </button> -->
         </div>
         <div></div>
 
 
         <div class="mr-3">
-          <mat-form-field color="accent" appearance="outline" class="w-full" style="font-size: small !important;">
+          <!-- <mat-form-field color="accent" appearance="outline" class="w-full" style="font-size: small !important;">
             <mat-label>Tipo de Solicitud</mat-label>
             <mat-select [(value)]="routeSelected" (selectionChange)="selectChangeUrl($event.value)">
               <mat-option value="vida">Seguro de Vida</mat-option>
               <mat-option value="disability">Suscripción Disability</mat-option>
               <mat-option value="gastos mayores">Suscripción Seguro Gastos Médicos Mayores</mat-option>
             </mat-select>
-          </mat-form-field>
+          </mat-form-field> -->
         </div>
 
         <!--  <button *ngIf="ID === null || ID === undefined" [disabled]="isNotValidToSearch"
-          (click)="searchQuote(newRequest.value.NoC)" type="button"
-          class="nofocus flex justify-center small-search-button">
-          <img src="/assets/iconos/search-icon.svg">
-        </button>
-        <button *ngIf="notFoundQuote" (click)="newQuote()" type="button"
-          class="nofocus flex justify-center small-search-button ml-3" style="color: white;">
-          <mat-icon style="font-weight: 900;  margin-top: 7px;">add</mat-icon>
-        </button>
-        <div></div>
-        <div></div>
-        <div *ngIf="isFormValidToFill" class="mr-3">
-          <mat-form-field color="accent" appearance="outline" class="w-full" style="font-size: small !important;">
-            <mat-label>Tipo de Solicitud</mat-label>
-            <mat-select [(value)]="routeSelected" (selectionChange)="selectChangeUrl($event.value)">
-              <mat-option value="vida">Seguro de Vida</mat-option>
-              <mat-option value="disability">Suscripción Disability</mat-option>
-              <mat-option value="gastos mayores">Suscripción Seguro Gastos Médicos Mayores</mat-option>
-            </mat-select>
-          </mat-form-field>
-        </div> -->
+            (click)="searchQuote(newRequest.value.NoC)" type="button"
+            class="nofocus flex justify-center small-search-button">
+            <img src="/assets/iconos/search-icon.svg">
+          </button>
+          <button *ngIf="notFoundQuote" (click)="newQuote()" type="button"
+            class="nofocus flex justify-center small-search-button ml-3" style="color: white;">
+            <mat-icon style="font-weight: 900;  margin-top: 7px;">add</mat-icon>
+          </button>
+          <div></div>
+          <div></div>
+          <div *ngIf="isFormValidToFill" class="mr-3">
+            <mat-form-field color="accent" appearance="outline" class="w-full" style="font-size: small !important;">
+              <mat-label>Tipo de Solicitud</mat-label>
+              <mat-select [(value)]="routeSelected" (selectionChange)="selectChangeUrl($event.value)">
+                <mat-option value="vida">Seguro de Vida</mat-option>
+                <mat-option value="disability">Suscripción Disability</mat-option>
+                <mat-option value="gastos mayores">Suscripción Seguro Gastos Médicos Mayores</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div> -->
       </div>
     </div>
     <mat-tab-group *ngIf="isFormValidToFill">
@@ -76,11 +76,11 @@
             <app-select class="mr-3" [options]="requestTypeOptions" [group]="newRequest"></app-select>
             <app-input class="mr-3" [group]="newRequest" name="payment" label="Payments"></app-input>
             <!-- <app-radio-button class="mr-3" [group]="newRequest" name="payment" [options]="payments"></app-radio-button>
-            <app-select class="mr-3" [options]="plans" [group]="newRequest"></app-select> -->
+              <app-select class="mr-3" [options]="plans" [group]="newRequest"></app-select> -->
             <app-input class="mr-3" [group]="newRequest" name="plans" label="Plan"></app-input>
             <app-input class="mr-3" [group]="newRequest" name="deducibles" label="Deducibles"></app-input>
             <!--<app-radio-button class="mr-3" [group]="newRequest" name="deducibles" [options]="deducibles">
-            </app-radio-button>-->
+              </app-radio-button>-->
           </div>
         </div>
         <mat-accordion #matAccordion="matAccordion" name="matAccordion" class="ww-mat-accordion example-headers-align"
@@ -109,7 +109,7 @@
                 name="sex" [options]="sex">
               </app-radio-button>
               <!-- <app-input class="mr-3" [group]="newRequest.get('person')" label="Nacionalidad" name='nationality'>
-              </app-input> -->
+                </app-input> -->
               <app-select class="mr-3" [options]="nationality" [group]="newRequest.get('person')"></app-select>
               <app-select class="mr-3" [options]="idType" [group]="newRequest.get('person')"></app-select>
               <app-input class="mr-3" [group]="newRequest.get('person')" label="Documento de identidad" name='id2'>
@@ -296,7 +296,7 @@
               <app-radio-button class="mr-3" [group]="newRequest.get('contractor')" name="sex" [options]="sex">
               </app-radio-button>
               <!-- <app-input class="mr-3" [group]="newRequest.get('person')" label="Nacionalidad" name='nationality'>
-              </app-input> -->
+                </app-input> -->
               <app-select class="mr-3" [options]="nationality" [group]="newRequest.get('contractor')"></app-select>
               <app-select class="mr-3" [options]="idType" [group]="newRequest.get('contractor')"></app-select>
               <app-input class="mr-3" [group]="newRequest.get('contractor')" label="Documento de identidad" name='id2'>
@@ -466,8 +466,8 @@
                     </div>
 
                     <!-- <app-input class="mr-3"
-                      [group]="newRequest.get('dependents').get('allDependents').get(index.toString())"
-                      label="Nacionalidad" name='nationality'></app-input> -->
+                        [group]="newRequest.get('dependents').get('allDependents').get(index.toString())"
+                        label="Nacionalidad" name='nationality'></app-input> -->
 
 
                     <br>
@@ -559,17 +559,17 @@
 
             <div>
               <!-- <p class="formulary-labels pb-3">Según su mejor entendimiento y conocimiento, hay alguna
-                    persona nombrada en esta solicitud que haya padecido o padezca de alguna de las siguientes enfermedades:</p>
-                  <hr class="w-full mb-10 ww-divider">
-
-                  <div *ngFor="let que of questions; let idx = index">
-                    <div
-                      class="w-full xl:flex xl:justify-between lg:flex lg:justify-between md:flex md:justify-between sm:flex sm:justify-between">
-                      <div class="radio-button-label" style="max-width: 80%;">{{idx+1}}. {{que.question}}</div>
-                      <app-radio-button [group]="newRequest.get('questions')" [name]="que.name" [options]="yesOrNo"
-                        (selected)="selectChange($event)">
-                      </app-radio-button>
-                    </div> -->
+                      persona nombrada en esta solicitud que haya padecido o padezca de alguna de las siguientes enfermedades:</p>
+                    <hr class="w-full mb-10 ww-divider">
+  
+                    <div *ngFor="let que of questions; let idx = index">
+                      <div
+                        class="w-full xl:flex xl:justify-between lg:flex lg:justify-between md:flex md:justify-between sm:flex sm:justify-between">
+                        <div class="radio-button-label" style="max-width: 80%;">{{idx+1}}. {{que.question}}</div>
+                        <app-radio-button [group]="newRequest.get('questions')" [name]="que.name" [options]="yesOrNo"
+                          (selected)="selectChange($event)">
+                        </app-radio-button>
+                      </div> -->
 
             </div>
             <p class="formulary-labels pb-3">Según su mejor entendimiento y conocimiento, hay alguna persona
@@ -774,8 +774,8 @@
                 <div *ngFor="let studies of informationList.controls; let i = index"
                   class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
                   <!-- <app-input class="mr-3" [group]="newRequest.get('questionsB').get('information').get(i.toString())"
-                    name="name" label="Nombre del Paciente">
-                  </app-input> -->
+                      name="name" label="Nombre del Paciente">
+                    </app-input> -->
                   <mat-form-field class="mr-3" color="accent" appearance="outline"
                     [formGroup]="newRequest.get('questionsB').get('information').get(i.toString())">
                     <mat-label>Nombre del Paciente</mat-label>
@@ -937,8 +937,8 @@
                         [group]="newRequest.get('primaryBenefits').get('dependentsC').get(index.toString())"
                         label="Documento de Identidad" name='id2'></app-input>
                       <!-- <app-input class="mr-3"
-                        [group]="newRequest.get('primaryBenefits').get('dependentsC').get(index.toString())"
-                        label="Nacionalidad" name='nationality'></app-input> -->
+                          [group]="newRequest.get('primaryBenefits').get('dependentsC').get(index.toString())"
+                          label="Nacionalidad" name='nationality'></app-input> -->
                       <app-select class="mr-3" [options]="nationality"
                         [group]="newRequest.get('primaryBenefits').get('dependentsC').get(index.toString())">
                       </app-select>
@@ -1063,8 +1063,8 @@
                         [group]="newRequest.get('contingentBeneficiary').get('dependentsC').get(index.toString())"
                         label="Documento de Identidad" name='id2'></app-input>
                       <!-- <app-input class="mr-3"
-                        [group]="newRequest.get('contingentBeneficiary').get('dependentsC').get(index.toString())"
-                        label="Nacionalidad" name='nationality'></app-input> -->
+                          [group]="newRequest.get('contingentBeneficiary').get('dependentsC').get(index.toString())"
+                          label="Nacionalidad" name='nationality'></app-input> -->
                       <app-select class="mr-3" [options]="nationality"
                         [group]="newRequest.get('contingentBeneficiary').get('dependentsC').get(index.toString())">
                       </app-select>
@@ -1134,7 +1134,7 @@
                   *ngIf="newRequest.get('contingentBeneficiary').get('personBenefited').get('specifyRelationship')"
                   label="Especificar" name='specifyRelationship'></app-input>
                 <!-- <app-input class="mr-3" [group]="newRequest.get('contingentBeneficiary').get('personBenefited')"
-                  label="Cant." name='id2'></app-input> -->
+                    label="Cant." name='id2'></app-input> -->
                 <app-select class="mr-3" [options]="idType"
                   [group]="newRequest.get('contingentBeneficiary').get('personBenefited')">
                 </app-select>
@@ -1317,13 +1317,13 @@
         </mat-accordion>
 
         <!-- <app-know-your-customer *ngIf="isSolicitantePep"
-          [form]="newRequest.get('person').get('conozcaSuClientePersona')" [title]="TitleConozcaClienteAsegurado">
-        </app-know-your-customer>
-        <app-know-your-customer *ngIf="isContractorPep" [title]="TitleConozcaClienteContratante"
-          [form]="newRequest.get('contractor').get('conozcaSuClientePersona')">
-        </app-know-your-customer>
-        <app-know-your-client *ngIf="isJuridica"
-          [form]="newRequest.get('contractor').get('conozcaSuClientePersonaJuridica')"> </app-know-your-client> -->
+            [form]="newRequest.get('person').get('conozcaSuClientePersona')" [title]="TitleConozcaClienteAsegurado">
+          </app-know-your-customer>
+          <app-know-your-customer *ngIf="isContractorPep" [title]="TitleConozcaClienteContratante"
+            [form]="newRequest.get('contractor').get('conozcaSuClientePersona')">
+          </app-know-your-customer>
+          <app-know-your-client *ngIf="isJuridica"
+            [form]="newRequest.get('contractor').get('conozcaSuClientePersonaJuridica')"> </app-know-your-client> -->
 
       </mat-tab>
       <mat-tab label="Cuestionarios Adicionales" class="mat-tab-forms">
@@ -1396,7 +1396,7 @@
             ></app-mountaineering>
         </mat-accordion>
       </mat-tab>
-      <mat-tab *ngIf="isJuridica || (this.newRequest.get('person').get('isJuridica') && this.newRequest.get('person').get('isJuridica').value == 'Si') || isSolicitantePep || isContractorPep" label="Conozca a su cliente">
+      <mat-tab *ngIf="isJuridica || isSolicitantePep || isContractorPep" label="Conozca a su cliente">
         <mat-accordion #matAccordion="matAccordion" name="matAccordion" class="ww-mat-accordion example-headers-align"
           [togglePosition]="'before'">
           <app-know-your-client
@@ -1484,17 +1484,14 @@
   </form>
   <form #form="ngForm">
     <div class="mt-8" *ngIf="isFormValidToFill">
-      <button mat-button class="cancel-form-button" style="margin-right: 7.5px !important;"
-        (click)="formHandler.sendForm(newRequest, 'major-expenses', 'cancel')" type="submit">Cancelar</button>
+      <!-- <button mat-button class="cancel-form-button" style="margin-right: 7.5px !important;"
+        (click)="formHandler.sendForm(newRequest, 'major-expenses', 'cancel')" type="submit">Cancelar</button> -->
       <button mat-button class="save-button" style="margin-right: 7.5px !important;"
-        (click)="formHandler.sendForm(newRequest, 'major-expenses', 'save', appComponent)"
+        (click)="formHandler.sendForm(newRequest, 'major-expenses', 'save', appComponent, ID,true)"
         type="submit">Guardar</button>
-      <button mat-button class="send-button" style="margin-right: 7.5px !important;" [disabled]="newRequest.valid"
-        (click)="formHandler.sendForm(newRequest, 'major-expenses', 'send', appComponent)" type="submit">Enviar</button>
-      <button mat-button class="send-button"
-        (click)="formHandler.sendForm(newRequest, 'major-expenses', 'invitation', this.appComponent)"
-        type="submit">Enviar a
-        cliente</button>
+      <button mat-button class="send-button" [disabled]="newRequest.valid"
+        (click)="formHandler.sendForm(newRequest, 'major-expenses', 'send', appComponent, ID,true)"
+        type="submit">Enviar</button>
     </div>
   </form>
 </div>

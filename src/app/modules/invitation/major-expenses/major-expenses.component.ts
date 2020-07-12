@@ -1,27 +1,26 @@
 import { Component, OnInit, DoCheck, ViewChild, ChangeDetectorRef, Input } from '@angular/core';
 import { FieldConfig } from 'src/app/shared/components/form-components/models/field-config';
 import { FormGroup, FormBuilder, Validators, FormArray, FormControl, AbstractControl } from '@angular/forms';
-import { $sex, $res, $country, $time, $family, $allFamily, $weightTypes, $heightTypes } from '../../../../../core/form/objects';
 import { FormArrayGeneratorService } from 'src/app/core/services/forms/form-array-generator.service';
-import { questionsA, questionsB } from './questions';
-import { Requests } from '../../requests.component';
 import { Router, ActivatedRoute } from '@angular/router';
-import { UserService } from '../../../../../core/services/user/user.service';
 import { generate, Observable } from 'rxjs';
 import { FormHandlerService } from 'src/app/core/services/forms/form-handler.service';
-import { DiseaseService } from '../../../shared/components/disease/shared/disease/disease.service';
 import { DialogService } from 'src/app/core/services/dialog/dialog.service';
 import { DialogOptionService } from 'src/app/core/services/dialog/dialog-option.service';
 import { MatDialog } from '@angular/material';
 import { BaseDialogComponent } from 'src/app/shared/components/base-dialog/base-dialog.component';
 import { map, first } from 'rxjs/operators';
 import { AppComponent } from 'src/app/app.component';
-import { MajorExpensesService } from './services/major-expenses.service';
-import { QuotesService } from '../../../services/quotes/quotes.service';
-import { environment } from '../../../../../../environments/environment';
 import { FormValidationsConstant } from 'src/app/shared/ShareConstant/shareConstantFile';
 import { CurrencyPipe } from '@angular/common';
 import { FormDataFillingService } from 'src/app/modules/dashboard/services/shared/formDataFillingService';
+import { DiseaseService } from '../../dashboard/shared/components/disease/shared/disease/disease.service';
+import { UserService } from 'src/app/core/services/user/user.service';
+import { QuotesService } from '../../dashboard/services/quotes/quotes.service';
+import { MajorExpensesService } from '../../dashboard/requests/new-request/major-expenses/services/major-expenses.service';
+import { $weightTypes, $heightTypes, $sex, $res, $family, $country, $time, $allFamily } from 'src/app/core/form/objects';
+import { questionsA, questionsB } from '../../dashboard/requests/new-request/major-expenses/questions';
+import { RequestsService } from '../services/requests.service';
 @Component({
   selector: 'app-major-expenses',
   templateUrl: './major-expenses.component.html',
@@ -46,7 +45,8 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
     public dialog: MatDialog,
     public appComponent: AppComponent,
     private currencyPipe: CurrencyPipe,
-    private cd: ChangeDetectorRef
+    private cd: ChangeDetectorRef,
+    private requestService: RequestsService
   ) { }
 
   get allDependents(): FormArray {
@@ -522,7 +522,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
     this.role = this.userService.getRoleCotizador();
     this.isFormValidToFill = false;
     this.route.params.subscribe(res => {
-      this.ID = res.id;
+      this.ID = res.key;
     });
     this.route.params.subscribe(res => {
       this.noCotizacion = res.noCotizacion;
@@ -533,7 +533,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
 
     this.newRequest = this.fb.group({
 
-      noC: [{ value: this.noCotizacion, disabled: (this.noCotizacion === undefined ? false : true) }, Validators.required],
+      noC: [{ value: this.noCotizacion, disabled: (this.noCotizacion === null ? false : true) }, Validators.required],
       isComplete: [false, Validators.required],
       deducibles: [{ value: '', disabled: false }, Validators.required],
       payment: [{ value: '', disabled: false }, Validators.required],
@@ -549,7 +549,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
         date: [{ value: '', disabled: false }, Validators.required],
         sex: [{ value: '', disabled: false }, Validators.required],
         isContractor: ['', Validators.required],
-        // isJuridica: ['', Validators.required],
+        isJuridica: ['', Validators.required],
         nationality: ['', Validators.required],
         idType: ['', Validators.required],
         id2: ['', Validators.required],
@@ -872,18 +872,16 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
       }
 
     });
-    if (this.newRequest.get('person').get('isJuridica')) {
+    this.isJuridica = false;
+    this.newRequest.get('person').get('isJuridica').valueChanges.subscribe(value => {
       this.isJuridica = false;
-      this.newRequest.get('person').get('isJuridica').valueChanges.subscribe(value => {
-        this.isJuridica = false;
-        console.log(value);
-        if (value === 'Si') {
+      console.log(value);
+      if (value === 'Si') {
 
-        } else {
-        }
+      } else {
+      }
 
-      });
-    }
+    });
 
   }
   searchIdNumber(idNumber: string) {
@@ -924,9 +922,9 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
 
   newQuote() {
     if (this.userService.getRoleCotizador() === 'WWS') {
-      window.open('http://portalwwg.eastus.cloudapp.azure.com:3000/salud?cia=wws', '_blank');
+      window.open('https://cotizadores.wwseguros.com.do/?cia=wws', '_blank');
     } else if (this.userService.getRoleCotizador() === 'WMA') {
-      window.open('http://portalwwg.eastus.cloudapp.azure.com:3000/salud?cia=wwm', '_blank');
+      window.open('https://cotizadores.wwseguros.com.do/?cia=wwm', '_blank');
     }
   }
   canDeactivate(): Observable<boolean> | boolean {
@@ -1761,7 +1759,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
   selectChangeUrl(event) {
     switch (event) {
       case 'vida':
-        this.router.navigateByUrl('dashboard/requests/new-requests/vida');
+        this.router.navigateByUrl('dashboard/requests/new-requests/life');
         break;
 
       case 'disability':
@@ -1769,7 +1767,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
         break;
 
       case 'gastos mayores':
-        this.router.navigateByUrl('dashboard/requests/new-requests/salud');
+        this.router.navigateByUrl('dashboard/requests/new-requests/major-expenses');
         break;
 
       default:
@@ -1933,13 +1931,16 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
 
   }
 
-  getData(id) {
-    this.majorExpensesService.returnData(id).subscribe(data => {
+  getData(key) {
+    setTimeout(() => {
+      this.appComponent.showOverlay = true;
+    });
+    this.requestService.getRequestData('salud', key).subscribe((data: any) => {
       //console.log(data);
       // console.log( this.newRequest);
       if (data !== undefined && data.data !== null &&
         data.data !== undefined) {
-        this.ID = data.data.id;
+        // this.ID = data.data.id;
         console.log(data.data);
         this.dataMappingFromApi.iterateThroughtAllObject(data.data, this.newRequest);
         console.log(this.newRequest);
@@ -1980,6 +1981,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
 
       }
 
+      this.appComponent.showOverlay = false;
 
     });
   }

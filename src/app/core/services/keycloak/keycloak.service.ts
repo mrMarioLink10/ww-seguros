@@ -18,7 +18,7 @@ export class KeycloakService {
 
   logOut() {
     // tslint:disable-next-line: max-line-length
-    document.location.href = `${environment.keycloak.url}realms/${environment.keycloak.realm}/protocol/openid-connect/logout?redirect_uri=${environment.baseUrl}`;
+    document.location.href = `${environment.keycloak.url}/realms/${environment.keycloak.realm}/protocol/openid-connect/logout?redirect_uri=${environment.baseUrl}`;
 
   }
 }

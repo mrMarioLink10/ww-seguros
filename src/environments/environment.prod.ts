@@ -2,7 +2,7 @@ import { KeycloakConfig } from 'keycloak-angular';
 
 // Add here your keycloak setup infos
 const keycloakConfig: KeycloakConfig = {
-  url: 'https://sso.wwseguros.com.do:8443/auth/',
+  url: 'http://wwskeycloak.eastus.cloudapp.azure.com:8080/auth',
   realm: 'worldwide',
   clientId: 'cotizador',
 };

@@ -12,7 +12,7 @@ if (environment.production) {
 
 // keycloak init options
 const initOptions = {
-  url: 'http://wwskeycloak.eastus.cloudapp.azure.com:8080/auth', realm: 'worldwide', clientId: 'cotizador'
+  url: 'https://sso.wwseguros.com.do:8443/auth', realm: 'worldwide', clientId: 'cotizador'
 };
 
 const keycloak = Keycloak(initOptions);

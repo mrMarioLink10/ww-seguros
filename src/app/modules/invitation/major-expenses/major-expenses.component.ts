@@ -549,7 +549,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
         date: [{ value: '', disabled: false }, Validators.required],
         sex: [{ value: '', disabled: false }, Validators.required],
         isContractor: ['', Validators.required],
-        isJuridica: ['', Validators.required],
+        // isJuridica: ['', Validators.required],
         nationality: ['', Validators.required],
         idType: ['', Validators.required],
         id2: ['', Validators.required],
@@ -872,16 +872,18 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
       }
 
     });
-    this.isJuridica = false;
-    this.newRequest.get('person').get('isJuridica').valueChanges.subscribe(value => {
+    if (this.newRequest.get('person').get('isJuridica')) {
       this.isJuridica = false;
-      console.log(value);
-      if (value === 'Si') {
+      this.newRequest.get('person').get('isJuridica').valueChanges.subscribe(value => {
+        this.isJuridica = false;
+        console.log(value);
+        if (value === 'Si') {
 
-      } else {
-      }
+        } else {
+        }
 
-    });
+      });
+    }
 
   }
   searchIdNumber(idNumber: string) {

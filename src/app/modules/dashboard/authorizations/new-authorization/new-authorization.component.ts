@@ -90,6 +90,20 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy, DoCheck {
 		]
 	};
 
+	autorizacionOptions: FieldConfig = {
+		label: '',
+		options: [
+			{
+				value: 'si',
+				viewValue: 'Si'
+			},
+			{
+				value: 'no',
+				viewValue: 'No'
+			}
+		]
+	};
+
 	generos: FieldConfig = {
 		label: 'Sexo',
 		options: [
@@ -338,6 +352,7 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy, DoCheck {
 				isMedicalEqual: [''],
 				// direccion: ['', Validators.required],
 				// telefono: ['', Validators.required],
+				autorizacion: ['', Validators.required]
 			}),
 			files: this.fb.array([this.createFormArray()]),
 			isComplete: [false, Validators.required]
@@ -502,23 +517,46 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy, DoCheck {
 
 	returnAutoCompleteData() {
 		this.newAuthorization.getIdNumbers().subscribe(data => {
+			console.log(data);
 			// tslint:disable-next-line: prefer-for-of
 			for (let x = 0; x < data.data.length; x++) {
 				// this.dataAutoCompleteIdNumber.push(data.data[x].asegurado.nombres_asegurado +
 				// 	' ' + data.data[x].asegurado.apellidos_asegurado + ' - '
 				// 	+ data.data[x].asegurado.id_asegurado);
 
-				this.dataAutoCompleteIdNumberObject.push({
-						name: data.data[x].asegurado.nombres_asegurado,
-						// id: data.data[x].asegurado.id_asegurado,
-						policy: data.data[x].asegurado.no_poliza,
-						value: data.data[x].asegurado.id_asegurado
-					});
-				this.dataAutoCompleteName.push(data.data[x].asegurado.nombres_asegurado);
+				// this.dataAutoCompleteIdNumberObject.push({
+				// 		name: data.data[x].asegurado.nombres_asegurado,
+				// 		// id: data.data[x].asegurado.id_asegurado,
+				// 		policy: data.data[x].asegurado.no_poliza,
+				// 		value: data.data[x].asegurado.id_asegurado
+				// 	});
+				// this.dataAutoCompleteName.push(data.data[x].asegurado.nombres_asegurado);
 
-				this.dataAutoCompleteIdNumber.push(data.data[x].asegurado.id_asegurado);
+				// this.dataAutoCompleteIdNumber.push(data.data[x].asegurado.id_asegurado);
 
-				this.dataAutoCompletePolicy.push(data.data[x].asegurado.no_poliza);
+				// this.dataAutoCompletePolicy.push(data.data[x].asegurado.no_poliza);
+
+				// tslint:disable-next-line: prefer-for-of
+				for (let y = 0; y < data.data[x].polizas.length; y++) {
+					// console.log(data.data[x].polizas[y].ramo.toLocaleLowerCase());
+					// console.log(!(data.data[x].polizas[y].ramo.toLocaleLowerCase().includes('vida')));
+					// console.log('hola me llamdo'.includes('hola'));
+
+					if (!(data.data[x].polizas[y].ramo.toLocaleLowerCase().includes('vida'))) {
+						this.dataAutoCompleteIdNumberObject.push({
+							name: data.data[x].asegurado.nombres_asegurado,
+							// id: data.data[x].asegurado.id_asegurado,
+							policy: data.data[x].asegurado.no_poliza,
+							value: data.data[x].asegurado.id_asegurado
+						});
+						this.dataAutoCompleteName.push(data.data[x].asegurado.nombres_asegurado);
+
+						this.dataAutoCompleteIdNumber.push(data.data[x].asegurado.id_asegurado);
+
+						this.dataAutoCompletePolicy.push(data.data[x].asegurado.no_poliza);
+					}
+				}
+
 			}
 			this.appComponent.showOverlay = false;
 			this.timeAutoComplete = 1;
@@ -747,7 +785,7 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy, DoCheck {
 			this.authorization['controls'].informacionMedica['controls'].diagnostico.setValue(data.data.informacionMedica.diagnostico);
 			this.authorization['controls'].informacionMedica['controls'].condicion.setValue(data.data.informacionMedica.condicion);
 			this.authorization['controls'].informacionMedica['controls'].procedimiento.setValue(data.data.informacionMedica.procedimiento);
-			
+
 			// this.authorization['controls'].informacionMedica['controls'].monto.setValue(data.data.informacionMedica.monto);
 
 			this.authorization['controls'].informacionMedica['controls'].primerosSintomas['controls'].fecha.setValue(data.data.informacionMedica.primerosSintomas.fecha);
@@ -761,6 +799,9 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy, DoCheck {
 			this.authorization['controls'].informacionMedica['controls'].tiempoEstadia.setValue(data.data.informacionMedica.tiempoEstadia);
 			this.authorization['controls'].informacionMedica['controls'].nombreServicio.setValue(data.data.informacionMedica.nombreServicio);
 			this.authorization['controls'].informacionMedica['controls'].isMedicalEqual.setValue(data.data.informacionMedica.isMedicalEqual);
+
+			// this.authorization['controls'].informacionMedica['controls'].autorizacion.setValue(data.data.informacionMedica.autorizacion);
+
 			// this.authorization['controls'].files['controls'].medicReport.setValue(data.data.files.medicReport);
 			// this.documentsArray = this.authorization.get('files') as FormArray;
 

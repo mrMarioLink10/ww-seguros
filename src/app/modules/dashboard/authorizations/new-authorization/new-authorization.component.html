@@ -284,6 +284,18 @@
             </app-input> -->
           </div>
         </div>
+        <div class="mt-3 pt-8 pb-10" style="background-color: #E6E7E8;">
+          <div class="ml-5 mr-10" style="display: inline-block;">
+            <label class=""> <b>  "Autorizo a cualquier médico, hospital o profesional de cuidados de salud o compañía de seguros 
+              que tenga información sobre mi salud o cualquiera de mis dependientes a proporcionar información sobre 
+              la cirugía o tratamieto a efectuarse a Worldwide Medical Assurance. Dicha información será utilizada 
+              para determinar cobertura de la cirugía o procedimiento solicitado". </b> </label>
+          </div>
+            <div class="mt-2" style="float: right;">
+              <app-radio-button [group]="authorization.get('informacionMedica')" [options]="autorizacionOptions" name="autorizacion">
+              </app-radio-button>
+            </div>
+        </div>
         <mat-action-row class="action-row">
           <button mat-button class="next-button" (click)="nextStep()" type="button">
             Siguiente

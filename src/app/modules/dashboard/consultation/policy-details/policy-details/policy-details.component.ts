@@ -35,6 +35,7 @@ export class PolicyDetailsComponent implements OnInit {
   pendingPoliciesConsult = 0;
   ClaimsFilter;
   ReceiptFilter;
+  statusFilter;
 
   constructor(
     private fb: FormBuilder,
@@ -87,5 +88,9 @@ export class PolicyDetailsComponent implements OnInit {
 
   setReceiptFilters(event) {
     this.ReceiptFilter = event;
+  }
+
+  setStatusFilters(event) {
+    this.statusFilter = event;
   }
 }

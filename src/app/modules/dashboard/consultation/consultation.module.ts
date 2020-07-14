@@ -18,11 +18,14 @@ import { ClaimTableComponent } from './claim/claim-table/claim-table.component';
 import { ClaimFilterComponent } from './claim/claim-filter/claim-filter.component';
 import { ReceiptTableComponent } from './receipt/receipt-table/receipt-table.component';
 import { ReceiptFilterComponent } from './receipt/receipt-filter/receipt-filter.component';
+import { AccountStatusTableComponent } from './accountStatus/account-status-table/account-status-table.component';
+import { AccountStatusFilterComponent } from './accountStatus/account-status-filter/account-status-filter.component';
 
 @NgModule({
   declarations: [ConsultationComponent, ConsultHeaderComponent, PolicyFilterComponent,
     PolicyTableComponent, BillsFilterComponent, BillsTableComponent, PolicyDetailsComponent,
-    BillsTableConsultComponent, BillsFilterConsultComponent, ClaimTableComponent, ClaimFilterComponent, ReceiptTableComponent, ReceiptFilterComponent],
+    BillsTableConsultComponent, BillsFilterConsultComponent, ClaimTableComponent, ClaimFilterComponent,
+    ReceiptTableComponent, ReceiptFilterComponent, AccountStatusTableComponent, AccountStatusFilterComponent],
   imports: [
     CommonModule,
     ConsultationRoutingModule,

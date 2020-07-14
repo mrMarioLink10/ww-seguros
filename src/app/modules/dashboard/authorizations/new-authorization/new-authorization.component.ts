@@ -453,6 +453,9 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy, DoCheck {
 					this.authorization.get('informacionMedica').get('tiempoEstadia').setValue(1);
 				}
 			});
+
+			// console.log(JSON.stringify(this.authorization.value));
+
 	}
 
 	displayFn(user: any) {
@@ -517,7 +520,7 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy, DoCheck {
 
 	returnAutoCompleteData() {
 		this.newAuthorization.getIdNumbers().subscribe(data => {
-			console.log(data);
+			// console.log(data);
 			// tslint:disable-next-line: prefer-for-of
 			for (let x = 0; x < data.data.length; x++) {
 				// this.dataAutoCompleteIdNumber.push(data.data[x].asegurado.nombres_asegurado +
@@ -628,7 +631,7 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy, DoCheck {
 
 	addToList() {
 		this.documentsArray.push(this.createFormArray());
-		console.log(JSON.stringify(this.authorization.value));
+		// console.log(JSON.stringify(this.authorization.value));
 	}
 
 	removeToList(index) {

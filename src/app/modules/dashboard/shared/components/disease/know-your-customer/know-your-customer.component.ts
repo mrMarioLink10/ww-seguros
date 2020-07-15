@@ -331,7 +331,7 @@ export class KnowYourCustomerComponent implements OnInit, DoCheck {
       time_in_the_job: ['', Validators.required],
       telephone: ['', Validators.required],
       fax: ['', Validators.required],
-      email: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
 
     }));
 

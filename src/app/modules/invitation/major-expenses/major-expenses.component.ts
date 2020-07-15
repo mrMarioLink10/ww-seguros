@@ -565,7 +565,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
         tel: [''],
         cel: ['', Validators.required],
         officeTel: [''],
-        email: ['', Validators.required],
+        email: ['', [Validators.required, Validators.email]],
         office: this.fb.group({
           company: [''],
           position: [''],
@@ -599,7 +599,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
         cel: ['', Validators.required],
         officeTel: [''],
         fax: [''],
-        email: ['', Validators.required],
+        email: ['', [Validators.required, Validators.email]],
         office: this.fb.group({
           company: [''],
           position: [''],

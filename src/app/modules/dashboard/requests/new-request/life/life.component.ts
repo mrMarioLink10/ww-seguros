@@ -1546,6 +1546,7 @@ export class LifeComponent implements OnInit, DoCheck {
             dialogRef.close();
           }, 4000);
           this.newRequest.get('person').get('firstName').setValue(response.data.nombre);
+          this.newRequest.get('person').get('lastName').setValue(response.data.apellidos);
           this.newRequest.get('person').get('date').setValue(response.data.fecha_nacimiento);
           this.newRequest.get('relevantPaymentInformation').get('method').setValue(response.data.formaPago);
           this.newRequest.get('releventPlanInformation').get('coverages').get('basicLife').setValue(response.data.suma_asegurada);

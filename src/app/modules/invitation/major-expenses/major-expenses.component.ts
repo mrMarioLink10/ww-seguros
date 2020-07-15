@@ -519,7 +519,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
         console.log(res);
       });
 
-    this.role = this.userService.getRoleCotizador();
+    // this.role = this.userService.getRoleCotizador();
     this.isFormValidToFill = false;
     this.route.params.subscribe(res => {
       this.ID = res.key;
@@ -1941,6 +1941,19 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
       if (data !== undefined && data.data !== null &&
         data.data !== undefined) {
         // this.ID = data.data.id;
+
+        switch (data.data.countryCode) {
+          case 'RD':
+            this.role = 'WWS';
+            break;
+          case 'PM':
+            this.role = 'WMA';
+            break;
+          default:
+            this.role = 'WMA';
+            break;
+        }
+
         console.log(data.data);
         this.dataMappingFromApi.iterateThroughtAllObject(data.data, this.newRequest);
         console.log(this.newRequest);

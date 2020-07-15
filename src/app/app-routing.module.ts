@@ -14,7 +14,7 @@ const routes: Routes = [
 	{
 		path: 'app',
 		loadChildren: () => import('./modules/dashboard/dashboard.module').then((m) => m.DashboardModule),
-		// canActivate: [AppAuthGuard],
+		canLoad: [AppAuthGuard],
 		// data: { roles: ['WWS', 'WWA'] }
 	},
 	{

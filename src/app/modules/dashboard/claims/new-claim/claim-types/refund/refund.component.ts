@@ -93,9 +93,6 @@ export class RefundComponent implements OnInit {
 		]
 	};
 
-	filesStudiesArray: FormArray;
-	arrayFilesTitles: [];
-
 	refundForm: FormGroup;
 	diagnosticList: FormArray;
 	@ViewChild('form', { static: false }) form;
@@ -596,6 +593,7 @@ export class RefundComponent implements OnInit {
 		this.refund.returnData(id).subscribe(data => {
 			console.log(data);
 			this.refundForm.get('informacion').get('idNumber').disable();
+			this.refundForm.get('informacion').get('filterType').disable();
 			this.showContent = true;
 
 

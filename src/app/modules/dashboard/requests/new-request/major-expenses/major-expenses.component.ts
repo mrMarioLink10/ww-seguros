@@ -1897,6 +1897,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
         this.newRequest.get('deducibles').setValue(data.data.deducible);
         this.newRequest.get('person').get('date').setValue(data.data.fecha_nacimiento);
         this.newRequest.get('person').get('firstName').setValue(data.data.nombre);
+        this.newRequest.get('person').get('lastName').setValue(data.data.apellidos);
 
         switch (data.data.sexo) {
           case 'M':

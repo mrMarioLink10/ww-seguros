@@ -1,0 +1,76 @@
+<div class="table-responsive bills-table">
+    <table mat-table matSort [dataSource]="dataSource" class="mt-5 w-full dashboard-basic-table">
+
+      <!-- Type Column -->
+      <ng-container matColumnDef="type" style="margin-right: 15px !important">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Tipo Doc. </th>
+        <td mat-cell *matCellDef="let element"> {{element.tipo_documento}} </td>
+      </ng-container>
+
+      <!-- No. Document Column -->
+      <ng-container matColumnDef="numeroDocument" style="margin-right: 15px !important">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> No. Documento </th>
+        <td mat-cell *matCellDef="let element"  id="billIdCell"> {{element.numero_documento}} </td>
+      </ng-container>
+
+      <!-- Doc. Date Column -->
+      <ng-container matColumnDef="docDate" style="margin-right: 15px !important">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Fecha Doc. </th>
+        <td mat-cell *matCellDef="let element"> {{element.fecha_documento.substring(0, 10)}} </td>
+      </ng-container>
+
+      <!-- Concept Column -->
+      <ng-container matColumnDef="concepto" style="margin-right: 15px !important">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Concepto </th> 
+        <td mat-cell *matCellDef="let element"> {{element.concepto_documento}} </td>
+      </ng-container>
+
+      <!-- Initial Date Receipt Column -->
+      <ng-container matColumnDef="initialDate" style="margin-right: 15px !important">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Fec. Inic. Fact. </th>
+        <td mat-cell *matCellDef="let element" > {{element.fecha_inivig_fact.substring(0, 10)}} </td>
+      </ng-container>
+
+      <!-- Final Date Receipt Column -->
+      <ng-container matColumnDef="finalDate">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Fec. Fin. Fact. </th>
+        <td mat-cell *matCellDef="let element"> {{element.fecha_finvig_fact.substring(0, 10)}} </td>
+      </ng-container>
+
+      <!-- Debit Column -->
+      <ng-container matColumnDef="debit">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Débito </th>
+        <td mat-cell *matCellDef="let element"> {{element.monto_debito}} </td>
+      </ng-container>
+
+      <!-- Credit Column -->
+      <ng-container matColumnDef="credit">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Crédito </th>
+        <td mat-cell *matCellDef="let element"> {{element.monto_credito}} </td>
+      </ng-container>
+
+      <!-- Balance sheet Column -->
+      <ng-container matColumnDef="balance">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Balance </th>
+        <td mat-cell *matCellDef="let element"> {{element.balance}} </td>
+      </ng-container>
+
+      <!-- ACTIONS Column -->
+      <!-- <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef> Acciones </th>
+        <td mat-cell *matCellDef="let element">
+          <a [href]="getBillDownloadLink(element.rec_ingreso)"
+             target="_blank" class="bg-blue-700 hover:bg-blue-600 text-white font-bold py-1 px-4 rounded-full">
+            Descargar
+          </a>
+        </td>
+      </ng-container> -->
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+
+    <mat-paginator id="table-paginator" color="accent" class="dashboard-table-paginator" [pageSizeOptions]="[5, 10, 20]"
+                   showFirstLastButtons></mat-paginator>
+
+  </div>

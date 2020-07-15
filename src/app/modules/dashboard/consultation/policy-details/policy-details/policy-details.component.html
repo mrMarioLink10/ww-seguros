@@ -145,6 +145,10 @@
 
       <app-receipt-filter (filters)="setReceiptFilters($event)"> </app-receipt-filter>
       <app-receipt-table [policyId]="policyId" [filters]="ReceiptFilter"> </app-receipt-table>
+    </mat-tab> 
+    <mat-tab label="Estado de Cuentas" class="mat-tab-forms">
+      <app-account-status-filter (filters)="setStatusFilters($event)"> </app-account-status-filter> 
+      <app-account-status-table [policyId]="policyId" [filters]="statusFilter"> </app-account-status-table> 
     </mat-tab>
   </mat-tab-group>
 

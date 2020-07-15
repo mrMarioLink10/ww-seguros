@@ -9,9 +9,70 @@
         <app-date-picker [group]="authorization" label="Fecha" name="fecha">
         </app-date-picker>
       </div>
-      <app-input  *ngIf="timeAutoComplete == 0" class="mr-3 col-span-2 ml-5 md:ml-0" [group]="authorization.get('informacionAsegurado')" label="ID Number"
-        name='idNumber' placeholder=""></app-input>
-      <div *ngIf="timeAutoComplete == 1" class="mr-3 col-span-2 ml-5 md:ml-0">
+      <!-- <app-input  *ngIf="timeAutoComplete == 0" class="mr-3 col-span-2 ml-5 md:ml-0" [group]="authorization.get('informacionAsegurado')" label="ID Number"
+        name='idNumber' placeholder=""></app-input> -->
+        <div class="mr-3">
+          <app-select name="filterType" [options]="filterOptions"
+           [group]="authorization.get('informacionAsegurado')"></app-select>
+        </div>
+        <div *ngIf="this.authorization.get('informacionAsegurado').get('filterType').value == 'nombre' ">
+          <form [formGroup]="authorization.get('informacionAsegurado')">
+            <mat-form-field color="accent" appearance="outline" class="w-full bg-transparente"
+              style="font-size: small !important;">
+              <mat-label>Nombre</mat-label>
+              <input formControlName="idNumber" matInput class="" type="text" [matAutocomplete]="auto"
+                placeholder="Juan Juan">
+              <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+                <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                  {{option}}
+                </mat-option>
+              </mat-autocomplete>
+              <mat-error
+                *ngIf="authorization.get('informacionAsegurado').get('idNumber').touched && !authorization.get('informacionAsegurado').get('idNumber').valid">
+                Este campo es obligatorio
+              </mat-error>
+            </mat-form-field>
+          </form>    
+        </div>
+        <div *ngIf="this.authorization.get('informacionAsegurado').get('filterType').value == 'id' ">
+          <form [formGroup]="authorization.get('informacionAsegurado')">
+            <mat-form-field color="accent" appearance="outline" class="w-full bg-transparente"
+              style="font-size: small !important;">
+              <mat-label>ID Number</mat-label>
+              <input formControlName="idNumber" matInput class="" type="number" [matAutocomplete]="auto"
+                placeholder="00010002">
+              <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+                <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                  {{option}}
+                </mat-option>
+              </mat-autocomplete>
+              <mat-error
+                *ngIf="authorization.get('informacionAsegurado').get('idNumber').touched && !authorization.get('informacionAsegurado').get('idNumber').valid">
+                Este campo es obligatorio
+              </mat-error>
+            </mat-form-field>
+          </form>
+        </div>
+        <div *ngIf="this.authorization.get('informacionAsegurado').get('filterType').value == 'poliza' ">
+          <form [formGroup]="authorization.get('informacionAsegurado')">
+            <mat-form-field color="accent" appearance="outline" class="w-full bg-transparente"
+              style="font-size: small !important;">
+              <mat-label>Póliza</mat-label>
+              <input formControlName="idNumber" matInput class="" type="text" [matAutocomplete]="auto"
+                placeholder="SWWVT-00000">
+              <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+                <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                  {{option}}
+                </mat-option>
+              </mat-autocomplete>
+              <mat-error
+                *ngIf="authorization.get('informacionAsegurado').get('idNumber').touched && !authorization.get('informacionAsegurado').get('idNumber').valid">
+                Este campo es obligatorio
+              </mat-error>
+            </mat-form-field>
+          </form> 
+        </div>
+      <!-- <div *ngIf="timeAutoComplete == 1" class="mr-3 col-span-2 ml-5 md:ml-0">
         <form [formGroup]="authorization.get('informacionAsegurado')">
           <mat-form-field color="accent" appearance="outline" class="w-full bg-transparente"
             style="font-size: small !important;">
@@ -29,12 +90,14 @@
             </mat-error>
           </mat-form-field>
         </form>
+      </div> -->
+      <div *ngIf="this.authorization.get('informacionAsegurado').get('filterType').value == 'nombre' || this.authorization.get('informacionAsegurado').get('filterType').value == 'id' || this.authorization.get('informacionAsegurado').get('filterType').value == 'poliza' ">
+        <button style="margin-left: 15px;" *ngIf="ID === null || ID === undefined"
+          (click)="searchIdNumber(authorization.get('informacionAsegurado').value.idNumber)" type="submit"
+          class="nofocus flex justify-center small-search-button">
+          <img src="/assets/iconos/search-icon.svg">
+        </button>
       </div>
-      <button style="margin-left: 15px;" *ngIf="ID === null || ID === undefined"
-        (click)="searchIdNumber(authorization.get('informacionAsegurado').value.idNumber)" type="submit"
-        class="nofocus flex justify-center small-search-button">
-        <img src="/assets/iconos/search-icon.svg">
-      </button>
     </div>
   </div>
 
@@ -200,9 +263,15 @@
           <!--  CUARTA COLUMNA -->
           <div class="mr-12">
 
-            <app-input [group]="authorization.get('informacionMedica')" label="Procedimiento a realizar"
-              name='procedimiento' placeholder="Operación ...">
-            </app-input>
+            <div class="grid grid-cols-2">
+              <app-input class="-mr-4" [group]="authorization.get('informacionMedica')" label="Procedimiento a realizar"
+                name='procedimiento' placeholder="Operación ...">
+              </app-input>
+              <app-number-input class="ml-6" [group]="authorization.get('informacionMedica')" label="Monto del Procedimiento"
+                name='monto' placeholder="50000" min='1'>
+              </app-number-input>
+            </div>
+            
             <div class="my-4">
               <label> <strong> Centro del servicio: </strong> </label>
             </div>
@@ -214,6 +283,18 @@
             <app-input [group]="authorization.get('informacionMedica')" label="Teléfono" name='telefono' placeholder="">
             </app-input> -->
           </div>
+        </div>
+        <div class="mt-3 pt-8 pb-10" style="background-color: #E6E7E8;">
+          <div class="ml-5 mr-10" style="display: inline-block;">
+            <label class=""> <b>  "Autorizo a cualquier médico, hospital o profesional de cuidados de salud o compañía de seguros 
+              que tenga información sobre mi salud o cualquiera de mis dependientes a proporcionar información sobre 
+              la cirugía o tratamieto a efectuarse a Worldwide Medical Assurance. Dicha información será utilizada 
+              para determinar cobertura de la cirugía o procedimiento solicitado". </b> </label>
+          </div>
+            <div class="mt-2" style="float: right;">
+              <app-radio-button [group]="authorization.get('informacionMedica')" [options]="autorizacionOptions" name="autorizacion">
+              </app-radio-button>
+            </div>
         </div>
         <mat-action-row class="action-row">
           <button mat-button class="next-button" (click)="nextStep()" type="button">
@@ -233,29 +314,66 @@
             <div *ngIf="showWarningDot(authorization.get('files'))" class="warning-accordion-dot"></div>
           </mat-panel-description>
         </mat-expansion-panel-header>
-        <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
-          <!-- <input id="file" type="file" class="form-control"> -->
-          <mat-form-field class="mr-3" appearance="outline">
-            <mat-label>Informe médico</mat-label>
-            <ngx-mat-file-input placeholder="Basic outline placeholder"
-              [valuePlaceholder]="fileNameWatcher('medicReport')" (change)="onFileChange($event, 'medicReport')">
-            </ngx-mat-file-input>
-            <mat-icon style="color: #e2e2e2;" matSuffix>publish</mat-icon>
-          </mat-form-field>
-          <mat-form-field class="mr-3" appearance="outline">
-            <mat-label>Estudios</mat-label>
-            <ngx-mat-file-input placeholder="Estudios" [valuePlaceholder]="fileNameWatcher('studies')"
-              (change)="onFileChange($event, 'studies')">
-            </ngx-mat-file-input>
-            <mat-icon style="color: #e2e2e2;" matSuffix>publish</mat-icon>
-          </mat-form-field>
-          <mat-form-field class="mr-3" appearance="outline">
-            <mat-label>Indicacion</mat-label>
-            <ngx-mat-file-input placeholder="Indicacion" [valuePlaceholder]="fileNameWatcher('indications')"
-              (change)="onFileChange($event, 'indication')">
-            </ngx-mat-file-input>
-            <mat-icon style="color: #e2e2e2;" matSuffix>publish</mat-icon>
-          </mat-form-field>
+        <div *ngFor="let documents of documentsArray.controls; let in = index;">
+          <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
+            <!-- <input id="file" type="file" class="form-control"> -->
+            <mat-form-field class="mr-3" appearance="outline">
+              <mat-label>Informe médico</mat-label>
+              <ngx-mat-file-input #removableMedicReport placeholder="Basic outline placeholder"
+                [valuePlaceholder]="fileNameWatcher('medicReport', in)" (change)="onFileChange($event, 'medicReport', in)">
+              </ngx-mat-file-input>
+              <mat-icon *ngIf="removableMedicReport.empty" style="color: #e2e2e2;" matSuffix>publish</mat-icon>
+              <button mat-icon-button matSuffix *ngIf="!removableMedicReport.empty" (click)="clearArchives('medicReport', in)" (click)="removableMedicReport.clear($event)">
+                <mat-icon style="color: #e2e2e2;">clear</mat-icon>
+              </button>
+            </mat-form-field>
+            <mat-form-field class="mr-3" appearance="outline">
+              <mat-label>Presupuestos</mat-label>
+              <ngx-mat-file-input #removableBudget placeholder="Basic outline placeholder"
+                [valuePlaceholder]="fileNameWatcher('budget', in)" (change)="onFileChange($event, 'budget', in)">
+              </ngx-mat-file-input>
+              <mat-icon *ngIf="removableBudget.empty" style="color: #e2e2e2;" matSuffix>publish</mat-icon>
+              <button mat-icon-button matSuffix *ngIf="!removableBudget.empty" (click)="clearArchives('budget', in)" (click)="removableBudget.clear($event)">
+                <mat-icon style="color: #e2e2e2;">clear</mat-icon>
+              </button>
+            </mat-form-field>
+            <mat-form-field class="mr-3" appearance="outline">
+              <mat-label>Estudios</mat-label>
+              <ngx-mat-file-input #removableStudies placeholder="Estudios" [valuePlaceholder]="fileNameWatcher('studies', in)"
+                (change)="onFileChange($event, 'studies', in)">
+              </ngx-mat-file-input>
+              <mat-icon *ngIf="removableStudies.empty" style="color: #e2e2e2;" matSuffix>publish</mat-icon>
+              <button mat-icon-button matSuffix *ngIf="!removableStudies.empty" (click)="clearArchives('studies', in)" (click)="removableStudies.clear($event)">
+                <mat-icon style="color: #e2e2e2;">clear</mat-icon>
+              </button>
+            </mat-form-field>
+            <div class="grid"
+            [ngClass]="{'grid-cols-1': documentsArray.length === 1, 'grid-cols-5': documentsArray.length > 1}">
+              <mat-form-field [ngClass]="{'': documentsArray.length === 1, 'col-span-4 mr-3': documentsArray.length > 1}" class="mr-3" appearance="outline">
+                <mat-label>Indicacion</mat-label>
+                <ngx-mat-file-input #removableIndication placeholder="Indicacion" [valuePlaceholder]="fileNameWatcher('indications', in)"
+                  (change)="onFileChange($event, 'indications', in)">
+                </ngx-mat-file-input>
+                <mat-icon *ngIf="removableIndication.empty" style="color: #e2e2e2;" matSuffix>publish</mat-icon>
+                <button mat-icon-button matSuffix *ngIf="!removableIndication.empty" (click)="clearArchives('indications', in)" (click)="removableIndication.clear($event)">
+                  <mat-icon style="color: #e2e2e2;">clear</mat-icon>
+                </button>
+              </mat-form-field>
+              <div *ngIf="documentsArray.length > 1"
+                [ngClass]="{'': documentsArray.length === 1, 'col-span-1': documentsArray.length > 1} "> 
+                <button mat-mini-fab aria-label=" Eliminar documentos" (click)="removeToList(in)" type="button"
+                  class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
+                  <mat-icon style="color: #18446B">remove</mat-icon>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div> 
+          <button mat-mini-fab aria-label=" Agregar documentos" (click)="addToList()" type="button"
+            class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
+            <mat-icon style="color: #18446B">add</mat-icon>
+          </button>
         </div>
         <mat-action-row class="action-row">
           <button mat-button class="next-button" (click)="nextStep()" type="button">

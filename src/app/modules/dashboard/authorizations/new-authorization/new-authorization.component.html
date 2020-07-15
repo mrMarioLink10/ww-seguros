@@ -39,7 +39,7 @@
             <mat-form-field color="accent" appearance="outline" class="w-full bg-transparente"
               style="font-size: small !important;">
               <mat-label>ID Number</mat-label>
-              <input formControlName="idNumber" matInput class="" type="text" [matAutocomplete]="auto"
+              <input formControlName="idNumber" matInput class="" type="number" [matAutocomplete]="auto"
                 placeholder="00010002">
               <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
                 <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
@@ -352,10 +352,10 @@
               <mat-form-field [ngClass]="{'': documentsArray.length === 1, 'col-span-4 mr-3': documentsArray.length > 1}" class="mr-3" appearance="outline">
                 <mat-label>Indicacion</mat-label>
                 <ngx-mat-file-input #removableIndication placeholder="Indicacion" [valuePlaceholder]="fileNameWatcher('indications', in)"
-                  (change)="onFileChange($event, 'indication', in)">
+                  (change)="onFileChange($event, 'indications', in)">
                 </ngx-mat-file-input>
                 <mat-icon *ngIf="removableIndication.empty" style="color: #e2e2e2;" matSuffix>publish</mat-icon>
-                <button mat-icon-button matSuffix *ngIf="!removableIndication.empty" (click)="clearArchives('indication', in)" (click)="removableIndication.clear($event)">
+                <button mat-icon-button matSuffix *ngIf="!removableIndication.empty" (click)="clearArchives('indications', in)" (click)="removableIndication.clear($event)">
                   <mat-icon style="color: #e2e2e2;">clear</mat-icon>
                 </button>
               </mat-form-field>

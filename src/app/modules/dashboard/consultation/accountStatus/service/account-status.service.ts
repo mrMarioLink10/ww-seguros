@@ -11,7 +11,7 @@ export class AccountStatusService {
 
   constructor(private httpClient: HttpClient) { }
 
-// getStatus(httpParams: HttpParams, polizaId) {
-//     return this.httpClient.get(`${this.BASE_URL}/api/DatosEmpresa/Recibos/${polizaId}`, {params: httpParams});
-//   }
+getStatus(httpParams: HttpParams, polizaId) {
+    return this.httpClient.get(`${this.BASE_URL}/api/DatosEmpresa/EstadoCuenta/${polizaId}`, {params: httpParams});
+  }
 }

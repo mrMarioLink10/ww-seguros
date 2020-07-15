@@ -23,17 +23,17 @@ export class AccountStatusTableComponent implements OnInit {
       this.loadData();
     } else {
       this.statusFilter = {
-        numeroFactura: '',
-        nombre: '',
-        from: '',
-        to: '',
+        numeroDocument: '',
+        concepto: '',
+        initialDate: '',
+        endDate: '',
       };
     }
   }
 
   dataSource;
   data = [];
-  displayedColumns: string[] = ['type', 'noDocument' , 'docDate', 'concept', 'initialDate',
+  displayedColumns: string[] = ['type', 'numeroDocument' , 'docDate', 'concepto', 'initialDate',
   'finalDate', 'debit', 'credit', 'balance'];
 
   constructor(private appComponent: AppComponent, private status: AccountStatusService) { }
@@ -44,34 +44,34 @@ export class AccountStatusTableComponent implements OnInit {
 
   loadData() {
     const httpParams = this.constructQueryParams();
-    // this.status.getReceipts(httpParams, this.policyId).subscribe((res: any) => {
-    //   this.data = res.data || [];
-    //   console.log(this.policyId);
-    //   console.log(res);
-    //   this.dataSource = new MatTableDataSource(this.data);
-    //   this.dataSource.sort = this.sort;
-    //   this.dataSource.paginator = this.paginator;
-    //   this.appComponent.showOverlay = false;
-    // });
+    this.status.getStatus(httpParams, this.policyId).subscribe((res: any) => {
+      this.data = res.data || [];
+      console.log(this.policyId);
+      console.log(res);
+      this.dataSource = new MatTableDataSource(this.data);
+      this.dataSource.sort = this.sort;
+      this.dataSource.paginator = this.paginator;
+      this.appComponent.showOverlay = false;
+    });
   }
 
   constructQueryParams(): HttpParams {
     let httpParams = new HttpParams();
-    if (this.statusFilter.numeroFactura && this.statusFilter.numeroFactura !== '') {
-      httpParams = httpParams.append('numeroFactura', this.statusFilter.numeroFactura.toString());
+    if (this.statusFilter.numeroDocument && this.statusFilter.numeroDocument !== '') {
+      httpParams = httpParams.append('numeroDocument', this.statusFilter.numeroDocument.toString());
     }
 
-    if (this.statusFilter.nombre && this.statusFilter.nombre !== '') {
-      httpParams = httpParams.append('nombre', this.statusFilter.nombre.toString());
+    if (this.statusFilter.concepto && this.statusFilter.concepto !== '') {
+      httpParams = httpParams.append('concepto', this.statusFilter.concepto.toString());
     }
 
 
-    if (this.statusFilter.from && this.statusFilter.from !== '') {
-      httpParams = httpParams.append('from', this.statusFilter.from.toString());
+    if (this.statusFilter.initialDate && this.statusFilter.initialDate !== '') {
+      httpParams = httpParams.append('initialDate', this.statusFilter.initialDate.toString());
     }
 
-    if (this.statusFilter.to && this.statusFilter.to !== '') {
-      httpParams = httpParams.append('to', this.statusFilter.to.toString());
+    if (this.statusFilter.endDate && this.statusFilter.endDate !== '') {
+      httpParams = httpParams.append('endDate', this.statusFilter.endDate.toString());
     }
 
     return httpParams;

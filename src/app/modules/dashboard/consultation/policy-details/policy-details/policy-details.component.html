@@ -147,9 +147,8 @@
       <app-receipt-table [policyId]="policyId" [filters]="ReceiptFilter"> </app-receipt-table>
     </mat-tab> 
     <mat-tab label="Estado de Cuentas" class="mat-tab-forms">
-      <p> Hola estados cuentas</p>
-      <!-- <app-account-status-filter (filters)="setStatusFilters($event)"> </app-account-status-filter>  -->
-      <!-- <app-account-status-table [policyId]="policyId" [filters]="statusFilter"> </app-account-status-table>  -->
+      <app-account-status-filter (filters)="setStatusFilters($event)"> </app-account-status-filter> 
+      <app-account-status-table [policyId]="policyId" [filters]="statusFilter"> </app-account-status-table> 
     </mat-tab>
   </mat-tab-group>
 

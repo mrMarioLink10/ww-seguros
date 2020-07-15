@@ -593,6 +593,7 @@ export class RefundComponent implements OnInit {
 		this.refund.returnData(id).subscribe(data => {
 			console.log(data);
 			this.refundForm.get('informacion').get('idNumber').disable();
+			this.refundForm.get('informacion').get('filterType').disable();
 			this.showContent = true;
 
 

@@ -5,14 +5,14 @@
         <mat-form-field color="accent" appearance="outline" class="w-full bg-transparente"
           style="font-size: small !important;">
           <mat-label>No. Documento</mat-label>
-          <input formControlName="noDocument" matInput type="number">
+          <input formControlName="numeroDocument" matInput type="number">
         </mat-form-field>
       </div>
       <div class="mr-3 xl:col-span-4 ">
         <mat-form-field color="accent" appearance="outline" class="w-full bg-transparente"
           style="font-size: small !important;">
           <mat-label>Concepto</mat-label>
-          <input formControlName="concept" matInput>
+          <input formControlName="concepto" matInput>
         </mat-form-field>
       </div>
 
@@ -20,18 +20,18 @@
         <p class="text-xs">Fecha</p>
         <mat-form-field color="accent" appearance="outline" class="w-full" style="font-size: small !important;">
           <mat-label>Desde</mat-label>
-          <input formControlName="from" matInput [matDatepicker]="from" placeholder="25/12/2019">
-          <mat-datepicker-toggle matSuffix [for]="from"></mat-datepicker-toggle>
-          <mat-datepicker #from></mat-datepicker>
+          <input formControlName="initialDate" matInput [matDatepicker]="initialDate" placeholder="25/12/2019">
+          <mat-datepicker-toggle matSuffix [for]="initialDate"></mat-datepicker-toggle>
+          <mat-datepicker #initialDate></mat-datepicker>
         </mat-form-field>
       </div>
   
       <div class="mr-3 xl:col-span-4">
         <mat-form-field color="accent" appearance="outline" class="w-full" style="font-size: small !important;">
           <mat-label>Hasta</mat-label>
-          <input formControlName="to" matInput [matDatepicker]="to" placeholder="04/03/2020">
-          <mat-datepicker-toggle matSuffix [for]="to"></mat-datepicker-toggle>
-          <mat-datepicker #to></mat-datepicker>
+          <input formControlName="endDate" matInput [matDatepicker]="endDate" placeholder="04/03/2020">
+          <mat-datepicker-toggle matSuffix [for]="endDate"></mat-datepicker-toggle>
+          <mat-datepicker #endDate></mat-datepicker>
         </mat-form-field>
       </div>
   

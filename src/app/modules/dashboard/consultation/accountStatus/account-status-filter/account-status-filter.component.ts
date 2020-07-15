@@ -20,10 +20,10 @@ export class AccountStatusFilterComponent implements OnInit {
   @Output() filters = new EventEmitter<any>();
 
   filterForm = this.fb.group({
-    noDocument: [''],
-    concept: [''],
-    from: [''],
-    to: [''],
+    numeroDocument: [''],
+    concepto: [''],
+    initialDate: [''],
+    endDate: [''],
 
   });
 
@@ -35,14 +35,14 @@ export class AccountStatusFilterComponent implements OnInit {
   sendFormToParent() {
     const formValue = this.filterForm.value;
 
-    const from = formValue.from;
-    const to = formValue.to;
+    const initialDate = formValue.initialDate;
+    const endDate = formValue.endDate;
 
     const filter = {
-      numeroFactura: formValue.noDocument ? formValue.noDocument : '',
-      nombre: formValue.concept ? formValue.concept : '',
-      from: from ? `${from._i.date}/${from._i.month + 1}/${from._i.year}` : '',
-      to: to ? `${to._i.date}/${to._i.month + 1}/${to._i.year}` : ''
+      numeroDocument: formValue.numeroDocument ? formValue.numeroDocument : '',
+      concepto: formValue.concepto ? formValue.concepto : '',
+      initialDate: initialDate ? `${initialDate._i.date}/${initialDate._i.month + 1}/${initialDate._i.year}` : '',
+      endDate: endDate ? `${endDate._i.date}/${endDate._i.month + 1}/${endDate._i.year}` : ''
     };
 
     this.filters.emit(filter);

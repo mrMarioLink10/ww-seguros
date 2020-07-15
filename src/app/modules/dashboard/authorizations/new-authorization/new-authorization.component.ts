@@ -514,51 +514,66 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy, DoCheck {
 			medicReport: [''],
 			budget: [''],
 			studies: [''],
-			indication: [''],
+			indications: [''],
 		});
 	}
 
 	returnAutoCompleteData() {
 		this.newAuthorization.getIdNumbers().subscribe(data => {
-			// console.log(data);
+			console.log(data);
 			// tslint:disable-next-line: prefer-for-of
 			for (let x = 0; x < data.data.length; x++) {
 				// this.dataAutoCompleteIdNumber.push(data.data[x].asegurado.nombres_asegurado +
 				// 	' ' + data.data[x].asegurado.apellidos_asegurado + ' - '
 				// 	+ data.data[x].asegurado.id_asegurado);
 
-				// this.dataAutoCompleteIdNumberObject.push({
-				// 		name: data.data[x].asegurado.nombres_asegurado,
-				// 		// id: data.data[x].asegurado.id_asegurado,
-				// 		policy: data.data[x].asegurado.no_poliza,
-				// 		value: data.data[x].asegurado.id_asegurado
-				// 	});
-				// this.dataAutoCompleteName.push(data.data[x].asegurado.nombres_asegurado);
+				this.dataAutoCompleteIdNumberObject.push({
+						name: data.data[x].asegurado.nombres_asegurado,
+						// id: data.data[x].asegurado.id_asegurado,
+						policy: data.data[x].asegurado.no_poliza,
+						value: data.data[x].asegurado.id_asegurado
+					});
+				this.dataAutoCompleteName.push(data.data[x].asegurado.nombres_asegurado);
 
-				// this.dataAutoCompleteIdNumber.push(data.data[x].asegurado.id_asegurado);
+				this.dataAutoCompleteIdNumber.push(data.data[x].asegurado.id_asegurado);
 
-				// this.dataAutoCompletePolicy.push(data.data[x].asegurado.no_poliza);
+				this.dataAutoCompletePolicy.push(data.data[x].asegurado.no_poliza);
+
+				// 		console.log(this.dataAutoCompleteName);
+				// 		console.log(this.dataAutoCompleteIdNumber);
+				// 		console.log(this.dataAutoCompletePolicy);
 
 				// tslint:disable-next-line: prefer-for-of
-				for (let y = 0; y < data.data[x].polizas.length; y++) {
-					// console.log(data.data[x].polizas[y].ramo.toLocaleLowerCase());
-					// console.log(!(data.data[x].polizas[y].ramo.toLocaleLowerCase().includes('vida')));
-					// console.log('hola me llamdo'.includes('hola'));
+				// for (let y = 0; y < data.data[x].polizas.length; y++) {
+				// 	// console.log(data.data[x].polizas[y].ramo.toLocaleLowerCase());
+				// 	// console.log(data.data[x].polizas.length);
+				// 	// console.log(data.data[x].polizas[y]);
+				// 	// console.log((data.data[x].polizas[y].ramo.toLocaleLowerCase().includes('vida')));
+				// 	// console.log('hola me llamdo'.includes('hola'));
 
-					if (!(data.data[x].polizas[y].ramo.toLocaleLowerCase().includes('vida'))) {
-						this.dataAutoCompleteIdNumberObject.push({
-							name: data.data[x].asegurado.nombres_asegurado,
-							// id: data.data[x].asegurado.id_asegurado,
-							policy: data.data[x].asegurado.no_poliza,
-							value: data.data[x].asegurado.id_asegurado
-						});
-						this.dataAutoCompleteName.push(data.data[x].asegurado.nombres_asegurado);
+				// 	if (!(data.data[x].polizas[y].ramo.toLocaleLowerCase().includes('vida'))) {
+				// 		// console.log('si incluye vida');
+				// 		this.dataAutoCompleteIdNumberObject.push({
+				// 			name: data.data[x].asegurado.nombres_asegurado,
+				// 			// id: data.data[x].asegurado.id_asegurado,
+				// 			policy: data.data[x].asegurado.no_poliza,
+				// 			value: data.data[x].asegurado.id_asegurado
+				// 		});
+				// 		this.dataAutoCompleteName.push(data.data[x].asegurado.nombres_asegurado);
 
-						this.dataAutoCompleteIdNumber.push(data.data[x].asegurado.id_asegurado);
+				// 		this.dataAutoCompleteIdNumber.push(data.data[x].asegurado.id_asegurado);
 
-						this.dataAutoCompletePolicy.push(data.data[x].asegurado.no_poliza);
-					}
-				}
+				// 		this.dataAutoCompletePolicy.push(data.data[x].asegurado.no_poliza);
+				// 		console.log(this.dataAutoCompleteName);
+				// 		console.log(this.dataAutoCompleteIdNumber);
+				// 		console.log(this.dataAutoCompletePolicy);
+
+				// 	}
+
+				// 	// if ((data.data[x].polizas[y].ramo.toLocaleLowerCase().includes('vida')) == false) {
+				// 	// 	console.log('NO incluye vida');
+				// 	// 	}
+				// }
 
 			}
 			this.appComponent.showOverlay = false;
@@ -631,7 +646,7 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy, DoCheck {
 
 	addToList() {
 		this.documentsArray.push(this.createFormArray());
-		// console.log(JSON.stringify(this.authorization.value));
+		console.log(JSON.stringify(this.authorization.value));
 	}
 
 	removeToList(index) {
@@ -759,6 +774,7 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy, DoCheck {
 			console.log(data);
 			this.showContent = true;
 			this.authorization.get('informacionAsegurado').get('idNumber').disable();
+			this.authorization.get('informacionAsegurado').get('filterType').disable();
 
 			switch (data.data.informacionAsegurado.sexo) {
 				case 'M':
@@ -788,9 +804,7 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy, DoCheck {
 			this.authorization['controls'].informacionMedica['controls'].diagnostico.setValue(data.data.informacionMedica.diagnostico);
 			this.authorization['controls'].informacionMedica['controls'].condicion.setValue(data.data.informacionMedica.condicion);
 			this.authorization['controls'].informacionMedica['controls'].procedimiento.setValue(data.data.informacionMedica.procedimiento);
-
-			// this.authorization['controls'].informacionMedica['controls'].monto.setValue(data.data.informacionMedica.monto);
-
+			this.authorization['controls'].informacionMedica['controls'].monto.setValue(data.data.informacionMedica.monto)
 			this.authorization['controls'].informacionMedica['controls'].primerosSintomas['controls'].fecha.setValue(data.data.informacionMedica.primerosSintomas.fecha);
 			this.authorization['controls'].informacionMedica['controls'].primerosSintomas['controls'].nombreMedico.setValue(data.data.informacionMedica.primerosSintomas.nombreMedico);
 			this.authorization['controls'].informacionMedica['controls'].primerosSintomas['controls'].direccion.setValue(data.data.informacionMedica.primerosSintomas.direccion);
@@ -802,40 +816,47 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy, DoCheck {
 			this.authorization['controls'].informacionMedica['controls'].tiempoEstadia.setValue(data.data.informacionMedica.tiempoEstadia);
 			this.authorization['controls'].informacionMedica['controls'].nombreServicio.setValue(data.data.informacionMedica.nombreServicio);
 			this.authorization['controls'].informacionMedica['controls'].isMedicalEqual.setValue(data.data.informacionMedica.isMedicalEqual);
-
-			// this.authorization['controls'].informacionMedica['controls'].autorizacion.setValue(data.data.informacionMedica.autorizacion);
+			this.authorization['controls'].informacionMedica['controls'].autorizacion.setValue(data.data.informacionMedica.autorizacion);
 
 			// this.authorization['controls'].files['controls'].medicReport.setValue(data.data.files.medicReport);
-			// this.documentsArray = this.authorization.get('files') as FormArray;
+			this.documentsArray = this.authorization.get('files') as FormArray;
 
-			// if (data.data.files) {
-			// 	this.filesInformation = data.data.files;
-			// 	console.log(this.filesInformation);
+			if (data.data.files) {
+				this.filesInformation = data.data.files;
+				console.log(this.filesInformation);
 
-			// 	// tslint:disable-next-line: prefer-for-of
-			// 	for (let x = 0; x < data.data.files.length; x++){
-			// 		if (data.data.files[x].medicReport) {
-			// 			this.authorization.get('files').get(x.toString()).patchValue({
-			// 				medicReport: data.data.files[x].medicReport
-			// 			});
-			// 		}
-			// 		if (data.data.files[x].budget) {
-			// 			this.authorization.get('files').get(x.toString()).patchValue({
-			// 				budget: data.data.files[x].budget
-			// 			});
-			// 		}
-			// 		if (data.data.files[x].studies) {
-			// 			this.authorization.get('files').get(x.toString()).patchValue({
-			// 				studies: data.data.files[x].studies
-			// 			});
-			// 		}
-			// 		if (data.data.files[x].indication) {
-			// 			this.authorization.get('files').get(x.toString()).patchValue({
-			// 				indication: data.data.files[x].indication
-			// 			});
-			// 		}
-			// 	}
-			// }
+				// tslint:disable-next-line: prefer-for-of
+				for (let x = 0; x < data.data.files.length; x++) {
+
+					const formID7 = this.authorization.get('files').get(x.toString()) as FormGroup;
+					formID7.addControl('id', this.fb.control(data.data.files[x].id,
+					Validators.required));
+
+					if (x >= 1) {
+						this.addToList();
+					}
+					if (data.data.files[x].medicReport) {
+						this.authorization.get('files').get(x.toString()).patchValue({
+							medicReport: data.data.files[x].medicReport
+						});
+					}
+					if (data.data.files[x].budget) {
+						this.authorization.get('files').get(x.toString()).patchValue({
+							budget: data.data.files[x].budget
+						});
+					}
+					if (data.data.files[x].studies) {
+						this.authorization.get('files').get(x.toString()).patchValue({
+							studies: data.data.files[x].studies
+						});
+					}
+					if (data.data.files[x].indications) {
+						this.authorization.get('files').get(x.toString()).patchValue({
+							indications: data.data.files[x].indications
+						});
+					}
+				}
+			}
 
 			// this.authorization['controls'].files['controls'].studies.setValue(data.data.files.studies);
 			// this.authorization['controls'].files['controls'].indication.setValue(data.data.files.indication);
@@ -886,10 +907,11 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy, DoCheck {
 
 			this.authorization.markAllAsTouched();
 			this.authorization.updateValueAndValidity();
+			this.appComponent.showOverlay = false;
 		});
 		this.newAuthorization.id = null;
 		console.log('this.newAuthorization.id es igual a ' + this.newAuthorization.id);
-		this.appComponent.showOverlay = false;
+		
 
 	}
 

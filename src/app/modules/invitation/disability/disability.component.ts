@@ -558,7 +558,7 @@ export class DisabilityComponent implements OnInit, DoCheck {
       console.log('ID esta vacio');
     }
 
-    this.role = this.userService.getRoleCotizador();
+    // this.role = this.userService.getRoleCotizador();
 
     this.sicknessQuestions = [
       {
@@ -657,7 +657,7 @@ export class DisabilityComponent implements OnInit, DoCheck {
       // money_laundering: this.fb.group({}),
       // know_client: this.fb.group({}),
 
-      num_financial_quote: [{ value: '', disabled: false }, Validators.required],
+      num_financial_quote: [{ value: '', disabled: true }, Validators.required],
       isComplete: [false, Validators.required],
 
       // typeRequest:[''],
@@ -1891,8 +1891,21 @@ export class DisabilityComponent implements OnInit, DoCheck {
       // console.log(data.data.asegurado.documentoIdentidad)
       console.log(data)
       if (data !== undefined && data.data !== null &&
-        data.data != undefined) {
+        data.data !== undefined) {
         // this.ID = data.data.id;
+
+        switch (data.data.countryCode) {
+          case 'RD':
+            this.role = 'WWS';
+            break;
+          case 'PM':
+            this.role = 'WMA';
+            break;
+          default:
+            this.role = 'WMA';
+            break;
+        }
+
         this.dataMappingFromApi.iterateThroughtAllObject(data.data, this.disabilityGroup);
         const formF = this.disabilityGroup.get('files') as FormGroup;
         const formCB = this.disabilityGroup.get('contingent') as FormGroup;

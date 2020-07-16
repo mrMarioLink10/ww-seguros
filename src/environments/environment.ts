@@ -11,7 +11,8 @@ export const environment = {
   production: false,
   baseUrl: 'http://localhost:4200/',
   keycloak: keycloakConfig,
-  apiUrl: 'https://wwsdevportalbackend.azurewebsites.net'
+  apiUrl: 'https://wwsdevportalbackend.azurewebsites.net',
+  keycloakConfig
 };
 
 

@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule, DoBootstrap, ApplicationRef } from '@angular/core';
+import { NgModule, DoBootstrap, ApplicationRef, APP_INITIALIZER } from '@angular/core';
 import { KeycloakAngularModule, KeycloakService } from 'keycloak-angular';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -19,7 +19,8 @@ import { MatTableModule } from '@angular/material/table';
 import { FormsModule } from '@angular/forms';
 import { MatProgressButtonsModule } from 'mat-progress-buttons';
 import { MaterialFileInputModule } from 'ngx-material-file-input';
-import {CurrencyPipe} from '@angular/common'
+import { CurrencyPipe } from '@angular/common';
+import { initializer } from 'src/app-init';
 
 const keycloakService = new KeycloakService();
 
@@ -36,13 +37,22 @@ const keycloakService = new KeycloakService();
 		MatSortModule,
 		FormsModule,
 		MatProgressButtonsModule,
-		MaterialFileInputModule
+		MaterialFileInputModule,
+		KeycloakAngularModule
 	],
-	providers: [ CurrencyPipe,
-		{ provide: MatPaginatorIntl, useClass: MatPaginatorIntlCro },
+	providers: [
+		CurrencyPipe,
 		InvalidControlEnhancerPipe,
+		{ provide: MatPaginatorIntl, useClass: MatPaginatorIntlCro },
 		{
-			provide: KeycloakService, useValue: keycloakService
+			provide: KeycloakService,
+			useValue: keycloakService,
+		},
+		{
+			provide: APP_INITIALIZER,
+			useFactory: initializer,
+			multi: true,
+			deps: [KeycloakService],
 		},
 		{
 			provide: HTTP_INTERCEPTORS,
@@ -50,7 +60,9 @@ const keycloakService = new KeycloakService();
 			multi: true
 		},
 	],
-
 	bootstrap: [AppComponent]
 })
-export class AppModule { }
+
+export class AppModule {
+
+}

@@ -7,15 +7,15 @@ import { DisabilityModule } from './disability/disability.module';
 
 const routes: Routes = [
   {
-    path: 'vida',
+    path: 'Vida',
     loadChildren: () => import('./life/life.module').then((m) => m.LifeModule)
   },
   {
-    path: 'salud',
+    path: 'Salud',
     loadChildren: () => import('./major-expenses/major-expenses.module').then((m) => m.MajorExpensesModule)
   },
   {
-    path: 'disability',
+    path: 'Disability',
     loadChildren: () => import('./disability/disability.module').then((m) => m.DisabilityModule)
   },
 ];

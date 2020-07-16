@@ -527,7 +527,7 @@ export class LifeComponent implements OnInit, DoCheck {
       this.noCotizacion = res.noCotizacion;
     });
 
-    this.role = this.userService.getRoleCotizador();
+    // this.role = this.userService.getRoleCotizador();
     this.newRequest = this.fb.group({
       noC: [{ value: this.noCotizacion, disabled: true }, Validators.required],
       isComplete: [false, Validators.required],
@@ -2555,11 +2555,22 @@ export class LifeComponent implements OnInit, DoCheck {
       if (data !== undefined && data.data !== null &&
         data.data != undefined) {
         // this.ID = data.data.id;
-        console.log(data.data);
+        // console.log(data.data);
+        switch (data.data.countryCode) {
+          case 'RD':
+            this.role = 'WWS';
+            break;
+          case 'PM':
+            this.role = 'WMA';
+            break;
+          default:
+            this.role = 'WMA';
+            break;
+        }
         this.dataMappingFromApi.iterateThroughtAllObject(data.data, this.newRequest);
 
         console.log(this.newRequest);
-        console.log(data.data);
+        console.log('DATA DEL GETDATA()', data.data);
 
         this.primaryBenefitsArray = this.newRequest.get('primaryBenefits').get('dependentsC') as FormArray;
         this.contingentBeneficiaryArray = this.newRequest.get('contingentBeneficiary').get('dependentsC') as FormArray;

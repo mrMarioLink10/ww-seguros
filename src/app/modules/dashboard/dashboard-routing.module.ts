@@ -16,9 +16,8 @@ const routes: Routes = [
 		children: [
 			{
 				path: 'claims',
-				// canActivate: [AppAuthGuard],
-				canActivate: [WwmAccessGuard],
-				loadChildren: () => import('./claims/claims.module').then((m) => m.ClaimsModule)
+				loadChildren: () => import('./claims/claims.module').then((m) => m.ClaimsModule),
+				canLoad: [WwmAccessGuard, AppAuthGuard],
 			},
 			{
 				path: 'authorizations',
@@ -31,13 +30,13 @@ const routes: Routes = [
 			// },
 			{
 				path: 'information',
-				// canActivate: [AppAuthGuard],
-				loadChildren: () => import('./information/information.module').then((m) => m.InformationModule)
+				loadChildren: () => import('./information/information.module').then((m) => m.InformationModule),
+				canLoad: [AppAuthGuard],
 			},
 			{
 				path: 'quotes',
-				// canActivate: [AppAuthGuard],
-				loadChildren: () => import('./quotes/quotes.module').then((m) => m.QuotesModule)
+				loadChildren: () => import('./quotes/quotes.module').then((m) => m.QuotesModule),
+				canLoad: [AppAuthGuard],
 			},
 			// {
 			//   path: 'request-management',
@@ -45,13 +44,13 @@ const routes: Routes = [
 			// },
 			{
 				path: 'requests',
-				// canActivate: [AppAuthGuard],
-				loadChildren: () => import('./requests/requests.module').then((m) => m.RequestsModule)
+				loadChildren: () => import('./requests/requests.module').then((m) => m.RequestsModule),
+				canLoad: [AppAuthGuard],
 			},
 			{
 				path: 'consult',
-				// canActivate: [AppAuthGuard],
-				loadChildren: () => import('./consultation/consultation.module').then((m) => m.ConsultationModule)
+				loadChildren: () => import('./consultation/consultation.module').then((m) => m.ConsultationModule),
+				canLoad: [AppAuthGuard],
 			}
 		]
 	}

@@ -10,56 +10,58 @@ if (environment.production) {
   enableProdMode();
 }
 
+platformBrowserDynamic().bootstrapModule(AppModule)
+  .catch(err => console.error(err));
+
 // keycloak init options
 const initOptions = {
   url: 'https://sso.wwseguros.com.do:8443/auth', realm: 'worldwide', clientId: 'cotizador'
 };
 
-const keycloak = Keycloak(initOptions);
+// const keycloak = Keycloak(initOptions);
 
-keycloak.init({ onLoad: 'login-required' }).then((auth) => {
+// keycloak.init({ onLoad: 'login-required' }).then((auth) => {
 
-  if (!auth) {
-    window.location.reload();
-  } else {
-    console.log('Authenticated');
-    console.log(keycloak);
-    console.log(Math.round(keycloak.tokenParsed.exp + keycloak.timeSkew - new Date().getTime() / 1000) + ' seconds');
+//   if (!auth) {
+//     window.location.reload();
+//   } else {
+//     console.log('Authenticated');
+//     console.log(keycloak);
+//     console.log(Math.round(keycloak.tokenParsed.exp + keycloak.timeSkew - new Date().getTime() / 1000) + ' seconds');
 
-  }
+//   }
 
-  // bootstrap after authentication is successful.
-  platformBrowserDynamic().bootstrapModule(AppModule)
-    .catch(err => console.error(err));
+//   platformBrowserDynamic().bootstrapModule(AppModule)
+//     .catch(err => console.error(err));
 
-  localStorage.setItem('ang-token', keycloak.token);
-  localStorage.setItem('ang-refresh-token', keycloak.refreshToken);
-  localStorage.setItem('user-information', JSON.stringify(keycloak.tokenParsed));
+//   localStorage.setItem('ang-token', keycloak.token);
+//   localStorage.setItem('ang-refresh-token', keycloak.refreshToken);
+//   localStorage.setItem('user-information', JSON.stringify(keycloak.tokenParsed));
 
-  setInterval(() => {
+//   setInterval(() => {
 
-    keycloak.updateToken(300).then((refreshed) => {
-      if (refreshed) {
-        console.log('No te mentire, se ve muy fresco el pana token, se vence en: '
-          + Math.round(keycloak.tokenParsed.exp + keycloak.timeSkew - new Date().getTime() / 1000) + ' segundos');
-        localStorage.setItem('ang-token', keycloak.token);
+//     keycloak.updateToken(300).then((refreshed) => {
+//       if (refreshed) {
+//         console.log('No te mentire, se ve muy fresco el pana token, se vence en: '
+//           + Math.round(keycloak.tokenParsed.exp + keycloak.timeSkew - new Date().getTime() / 1000) + ' segundos');
+//         localStorage.setItem('ang-token', keycloak.token);
 
-      } else {
-        console.warn('Token no refrescado, token no refrescado, donde estan sus padres? Se vence en: '
-          + Math.round(keycloak.tokenParsed.exp + keycloak.timeSkew - new Date().getTime() / 1000) + ' segundos');
-      }
-    }).catch(() => {
-      console.error('Failed to refresh token');
-    });
+//       } else {
+//         console.warn('Token no refrescado, token no refrescado, donde estan sus padres? Se vence en: '
+//           + Math.round(keycloak.tokenParsed.exp + keycloak.timeSkew - new Date().getTime() / 1000) + ' segundos');
+//       }
+//     }).catch(() => {
+//       console.error('Failed to refresh token');
+//     });
 
-  }, 180000);
+//   }, 180000);
 
-}).catch((err) => {
-  console.log(err);
-  window.location.reload();
+// }).catch((err) => {
+//   console.log(err);
+//   window.location.reload();
 
-  console.error('Authenticated Failed');
+//   console.error('Authenticated Failed');
 
 
-});
+// });
 

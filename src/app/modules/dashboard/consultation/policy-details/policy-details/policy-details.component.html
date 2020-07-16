@@ -81,7 +81,11 @@
     </div>
   </div>
 
-  <mat-tab-group mat-stretch-tabs class="mt-5">
+  <div *ngIf="spinnerValue == true" class="mt-40" style="display: flex; align-items: center; justify-content: center;">
+    <mat-spinner color="accent"></mat-spinner>
+  </div>
+
+  <mat-tab-group *ngIf="spinnerValue == false" mat-stretch-tabs class="mt-5">
     <mat-tab label="Datos Póliza" class="mat-tab-forms"> 
     
       <div class="mt-5">
@@ -130,7 +134,7 @@
       <mat-paginator id="table-paginator" color="accent" class="dashboard-table-paginator" [pageSizeOptions]="[5, 10, 20]"
         showFirstLastButtons></mat-paginator>
     </mat-tab>
-    <mat-tab label="Reclamos" class="mat-tab-forms">
+    <mat-tab label="Reclamos" class="mat-tab-forms" *ngIf="claimsCondition == true">
 
       <app-claim-filter (filters)="setClaimsFilters($event)"> </app-claim-filter>
       <app-claim-table [policyId]="policyId" [filters]="ClaimsFilter"> </app-claim-table>

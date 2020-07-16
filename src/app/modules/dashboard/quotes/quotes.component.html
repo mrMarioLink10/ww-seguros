@@ -79,6 +79,18 @@
               (click)="navigateToSalud(element.noCotizacion)" class="dashboard-table-buttons">
               <img src="../../../../assets/iconos/check.svg">
             </button>
+
+            <button mat-mini-fab aria-label="Enviar"
+            *ngIf="element.tipoSeguro === 'vida' || element.tipoSeguro === 'Vida'" class="dashboard-table-buttons"
+            (click)="navigateToLifePdf(element.noCotizacion)">
+            <img src="../../../../assets/iconos/eye.svg">
+          </button>
+          <button mat-mini-fab aria-label="Enviar"
+            *ngIf="element.tipoSeguro === 'salud' || element.tipoSeguro === 'Salud'"
+            (click)="navigateToSaludPdf(element.noCotizacion)" class="dashboard-table-buttons">
+            <img src="../../../../assets/iconos/eye.svg">
+          </button>
+
           </td>
         </ng-container>
 

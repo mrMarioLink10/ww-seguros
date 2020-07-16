@@ -69,6 +69,7 @@ export class QuotesComponent implements OnInit {
 
   getQuotes(params: HttpParams = new HttpParams()) {
     let data;
+    console.log(params);
     setTimeout(() => {
       this.appComponent.showOverlay = true;
     });

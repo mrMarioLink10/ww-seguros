@@ -527,53 +527,53 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy, DoCheck {
 				// 	' ' + data.data[x].asegurado.apellidos_asegurado + ' - '
 				// 	+ data.data[x].asegurado.id_asegurado);
 
-				this.dataAutoCompleteIdNumberObject.push({
-						name: data.data[x].asegurado.nombres_asegurado,
-						// id: data.data[x].asegurado.id_asegurado,
-						policy: data.data[x].asegurado.no_poliza,
-						value: data.data[x].asegurado.id_asegurado
-					});
-				this.dataAutoCompleteName.push(data.data[x].asegurado.nombres_asegurado);
+				// this.dataAutoCompleteIdNumberObject.push({
+				// 		name: data.data[x].asegurado.nombres_asegurado,
+				// 		// id: data.data[x].asegurado.id_asegurado,
+				// 		policy: data.data[x].asegurado.no_poliza,
+				// 		value: data.data[x].asegurado.id_asegurado
+				// 	});
+				// this.dataAutoCompleteName.push(data.data[x].asegurado.nombres_asegurado);
 
-				this.dataAutoCompleteIdNumber.push(data.data[x].asegurado.id_asegurado);
+				// this.dataAutoCompleteIdNumber.push(data.data[x].asegurado.id_asegurado);
 
-				this.dataAutoCompletePolicy.push(data.data[x].asegurado.no_poliza);
+				// this.dataAutoCompletePolicy.push(data.data[x].asegurado.no_poliza);
 
 				// 		console.log(this.dataAutoCompleteName);
 				// 		console.log(this.dataAutoCompleteIdNumber);
 				// 		console.log(this.dataAutoCompletePolicy);
 
 				// tslint:disable-next-line: prefer-for-of
-				// for (let y = 0; y < data.data[x].polizas.length; y++) {
-				// 	// console.log(data.data[x].polizas[y].ramo.toLocaleLowerCase());
-				// 	// console.log(data.data[x].polizas.length);
-				// 	// console.log(data.data[x].polizas[y]);
-				// 	// console.log((data.data[x].polizas[y].ramo.toLocaleLowerCase().includes('vida')));
-				// 	// console.log('hola me llamdo'.includes('hola'));
+				for (let y = 0; y < data.data[x].polizas.length; y++) {
+					// console.log(data.data[x].polizas[y].ramo.toLocaleLowerCase());
+					// console.log(data.data[x].polizas.length);
+					// console.log(data.data[x].polizas[y]);
+					// console.log((data.data[x].polizas[y].ramo.toLocaleLowerCase().includes('vida')));
+					// console.log('hola me llamdo'.includes('hola'));
 
-				// 	if (!(data.data[x].polizas[y].ramo.toLocaleLowerCase().includes('vida'))) {
-				// 		// console.log('si incluye vida');
-				// 		this.dataAutoCompleteIdNumberObject.push({
-				// 			name: data.data[x].asegurado.nombres_asegurado,
-				// 			// id: data.data[x].asegurado.id_asegurado,
-				// 			policy: data.data[x].asegurado.no_poliza,
-				// 			value: data.data[x].asegurado.id_asegurado
-				// 		});
-				// 		this.dataAutoCompleteName.push(data.data[x].asegurado.nombres_asegurado);
+					if (!(data.data[x].polizas[y].ramo.toLocaleLowerCase().includes('vida'))) {
+						// console.log('si incluye vida');
+						this.dataAutoCompleteIdNumberObject.push({
+							name: data.data[x].asegurado.nombres_asegurado,
+							// id: data.data[x].asegurado.id_asegurado,
+							policy: data.data[x].asegurado.no_poliza,
+							value: data.data[x].asegurado.id_asegurado
+						});
+						this.dataAutoCompleteName.push(data.data[x].asegurado.nombres_asegurado);
 
-				// 		this.dataAutoCompleteIdNumber.push(data.data[x].asegurado.id_asegurado);
+						this.dataAutoCompleteIdNumber.push(data.data[x].asegurado.id_asegurado);
 
-				// 		this.dataAutoCompletePolicy.push(data.data[x].asegurado.no_poliza);
-				// 		console.log(this.dataAutoCompleteName);
-				// 		console.log(this.dataAutoCompleteIdNumber);
-				// 		console.log(this.dataAutoCompletePolicy);
+						this.dataAutoCompletePolicy.push(data.data[x].asegurado.no_poliza);
+						// console.log(this.dataAutoCompleteName);
+						// console.log(this.dataAutoCompleteIdNumber);
+						// console.log(this.dataAutoCompletePolicy);
 
-				// 	}
+					}
 
-				// 	// if ((data.data[x].polizas[y].ramo.toLocaleLowerCase().includes('vida')) == false) {
-				// 	// 	console.log('NO incluye vida');
-				// 	// 	}
-				// }
+					// if ((data.data[x].polizas[y].ramo.toLocaleLowerCase().includes('vida')) == false) {
+					// 	console.log('NO incluye vida');
+					// 	}
+				}
 
 			}
 			this.appComponent.showOverlay = false;

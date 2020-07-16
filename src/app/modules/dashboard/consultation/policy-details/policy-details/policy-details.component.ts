@@ -37,6 +37,9 @@ export class PolicyDetailsComponent implements OnInit {
   ReceiptFilter;
   statusFilter;
 
+  claimsCondition = false;
+  spinnerValue = true;
+
   constructor(
     private fb: FormBuilder,
     private activatedRoute: ActivatedRoute,
@@ -49,6 +52,7 @@ export class PolicyDetailsComponent implements OnInit {
   ngOnInit() {
     if (this.policyId) {
       this.searchPolicy(this.policyId);
+      this.claimsConditionValue();
     }
   }
 
@@ -72,6 +76,31 @@ export class PolicyDetailsComponent implements OnInit {
       this.appComponent.showOverlay = false;
     });
 
+  }
+
+  claimsConditionValue() {
+    this.policyService.getIdNumbers().subscribe(res =>{
+      console.log(res.data);
+      // tslint:disable-next-line: prefer-for-of
+      for (let x = 0; x < res.data.length; x++) {
+        // tslint:disable-next-line: prefer-for-of
+        for (let y = 0; y < res.data[x].polizas.length; y++) {
+          if (res.data[x].polizas[y].no_poliza == this.policyId) {
+            console.log('Si son iguales');
+            if (res.data[x].polizas[y].ramo.toLowerCase().includes('salud')) {
+              this.claimsCondition = true;
+              console.log(res.data[x].polizas[y].ramo);
+              // this.appComponent.showOverlay = false;
+            }
+          }
+          else {
+            console.log('No son iguales');
+          }
+          console.log(res.data[x].polizas[y]);
+        }
+      }
+      this.spinnerValue = false;
+    });
   }
 
   setBillsFiltersConsult(event) {

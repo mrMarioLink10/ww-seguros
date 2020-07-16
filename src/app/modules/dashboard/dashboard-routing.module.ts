@@ -17,10 +17,12 @@ const routes: Routes = [
 			{
 				path: 'claims',
 				loadChildren: () => import('./claims/claims.module').then((m) => m.ClaimsModule),
-				canLoad: [WwmAccessGuard, AppAuthGuard],
+				canLoad: [AppAuthGuard],
+				canActivate: [WwmAccessGuard]
 			},
 			{
 				path: 'authorizations',
+				canLoad: [AppAuthGuard],
 				canActivate: [WwmAccessGuard],
 				loadChildren: () => import('./authorizations/authorizations.module').then((m) => m.AuthorizationsModule)
 			},

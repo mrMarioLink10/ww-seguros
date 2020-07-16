@@ -30,12 +30,12 @@ export class KnowYourCustomerComponent implements OnInit, DoCheck {
     options: [
 
       {
-        value: 'FEMENINO',
-        viewValue: 'FEMENINO'
+        value: 'femenino',
+        viewValue: 'Femenino'
       },
       {
-        value: 'MASCULINO',
-        viewValue: 'MASCULINO'
+        value: 'masculino',
+        viewValue: 'Masculino'
       }
 
     ]

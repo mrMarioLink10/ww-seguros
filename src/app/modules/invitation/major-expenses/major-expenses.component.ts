@@ -827,7 +827,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
     });
 
     this.newRequest.get('person').get('age').valueChanges.subscribe(value => {
-      if (value >= 50 && this.newRequest.get('person').get('sex').value === 'MASCULINO') {
+      if (value >= 50 && this.newRequest.get('person').get('sex').value === 'Masculino') {
         this.questionnairesGastosMayores.addControl('solicitudProstatica', this.fb.group({}));
       } else {
         this.questionnairesGastosMayores.removeControl('solicitudProstatica');
@@ -835,7 +835,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
     });
 
     this.newRequest.get('person').get('sex').valueChanges.subscribe(value => {
-      if (value === 'MASCULINO' && this.newRequest.get('person').get('age').value >= 50) {
+      if (value === 'Masculino' && this.newRequest.get('person').get('age').value >= 50) {
         this.questionnairesGastosMayores.addControl('solicitudProstatica', this.fb.group({}));
       } else {
         this.questionnairesGastosMayores.removeControl('solicitudProstatica');
@@ -1001,7 +1001,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
   }
 
   canPersonOptionShow(questionName: string) {
-    const isWomen = this.newRequest.get('person').value.sex === 'FEMENINO';
+    const isWomen = this.newRequest.get('person').value.sex === 'Femenino';
 
     if (questionName === 'havePregnant' && isWomen === true) {
       return true;
@@ -1015,7 +1015,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
   }
 
   canDependentOptionShow(questionName: string, id: number) {
-    const isWomen = this.newRequest.get('dependents').get('allDependents').value[id].sex === 'FEMENINO';
+    const isWomen = this.newRequest.get('dependents').get('allDependents').value[id].sex === 'Femenino';
     if (questionName === 'havePregnant' && isWomen === true) {
       return true;
     } else if (questionName === 'haveReproductiveOrganDisorders' && isWomen === true) {
@@ -1036,14 +1036,14 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
         if (this.newRequest.get('dependents').get('allDependents').value.hasOwnProperty(idx)) {
           const element = this.newRequest.get('dependents').get('allDependents').value[idx];
           console.log(element.sex);
-          if (element.sex === 'FEMENINO') {
+          if (element.sex === 'Femenino') {
             womenCount += 1;
           }
         }
       }
 
       console.log(this.newRequest.value.person.sex);
-      if (this.newRequest.get('person').get('sex').value === 'FEMENINO') {
+      if (this.newRequest.get('person').get('sex').value === 'Femenino') {
         womenCount += 1;
       }
 
@@ -1060,7 +1060,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
   relationWatcher(event, realForm) {
     console.log('event: ', event.valor, 'form: ', realForm);
     const form = realForm as FormGroup;
-    if (event.valor === 'OTROS') {
+    if (event.valor === 'otros') {
       form.addControl('specifyRelationship', this.fb.control('', Validators.required));
     } else {
       form.removeControl('specifyRelationship');
@@ -1120,7 +1120,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
             // questionnaire.addControl('solicitudProstatica', this.fb.group({}));
 
             const form = this.newRequest.get('dependents').get('allDependents').get(index.toString()) as FormGroup;
-            if (age >= 50 && form.get('sex').value === 'MASCULINO') {
+            if (age >= 50 && form.get('sex').value === 'Masculino') {
               form.addControl('solicitudProstatica', this.fb.group({}));
             } else {
               form.removeControl('solicitudProstatica');
@@ -1128,7 +1128,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
           });
           this.newRequest.get('dependents').get('allDependents').get(index.toString()).get('sex').valueChanges.subscribe(value => {
             const form = this.newRequest.get('dependents').get('allDependents').get(index.toString()) as FormGroup;
-            if (form.get('age').value >= 50 && value === 'MASCULINO') {
+            if (form.get('age').value >= 50 && value === 'Masculino') {
               form.addControl('solicitudProstatica', this.fb.group({}));
             } else {
               form.removeControl('solicitudProstatica');
@@ -1900,11 +1900,11 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
 
         switch (data.data.sexo) {
           case 'M':
-            this.newRequest.get('person').get('sex').setValue('MASCULINO');
+            this.newRequest.get('person').get('sex').setValue('Masculino');
             break;
 
           case 'F':
-            this.newRequest.get('person').get('sex').setValue('FEMENINO');
+            this.newRequest.get('person').get('sex').setValue('Femenino');
             break;
 
           default:

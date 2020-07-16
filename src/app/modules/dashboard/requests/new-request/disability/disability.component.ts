@@ -52,12 +52,12 @@ export class DisabilityComponent implements OnInit, DoCheck {
     label: '',
     options: [
       {
-        value: 'MASCULINO',
-        viewValue: 'MASCULINO'
+        value: 'masculino',
+        viewValue: 'Masculino'
       },
       {
-        value: 'FEMENINO',
-        viewValue: 'FEMENINO'
+        value: 'femenino',
+        viewValue: 'Femenino'
       }
     ]
   };
@@ -935,7 +935,7 @@ export class DisabilityComponent implements OnInit, DoCheck {
     // console.log(this.rentArray);
 
     // tslint:disable-next-line: align
-    if (this.age >= 50 && this.disabilityGroup.get('insured_data').get('gender').value == 'MASCULINO') {
+    if (this.age >= 50 && this.disabilityGroup.get('insured_data').get('gender').value == 'masculino') {
       // if (this.xx != 0) {
       //   this.xx = 0;
       // }
@@ -956,7 +956,7 @@ export class DisabilityComponent implements OnInit, DoCheck {
         // }
       }
     }
-    else if (this.age < 50 || this.disabilityGroup.get('insured_data').get('gender').value == 'FEMENINO') {
+    else if (this.age < 50 || this.disabilityGroup.get('insured_data').get('gender').value == 'femenino') {
       // if (this.xx == 0) {
       //   this.x++;
       // }
@@ -1862,7 +1862,7 @@ export class DisabilityComponent implements OnInit, DoCheck {
   relationWatcher(event, realForm) {
     console.log('event: ', event.valor, 'form: ', realForm);
     const form = realForm as FormGroup;
-    if (event.valor === 'OTROS') {
+    if (event.valor === 'otros') {
       form.addControl('specifyRelationship', this.fb.control('', Validators.required));
     } else {
       form.removeControl('specifyRelationship');

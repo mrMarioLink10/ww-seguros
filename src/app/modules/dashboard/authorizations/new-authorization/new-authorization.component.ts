@@ -59,22 +59,22 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy, DoCheck {
 	documentsArray: FormArray;
 
 	filterOptions: FieldConfig = {
-		label: 'Filtro',
-		options: [
-			{
-				value: 'nombre',
-				viewValue: 'Nombre'
-			},
-			{
-				value: 'id',
-				viewValue: 'ID'
-			},
-			{
-				value: 'poliza',
-				viewValue: 'No. de Póliza'
-			}
-		]
-	};
+			label: 'Filtro',
+			options: [
+				{
+					value: 'nombre',
+					viewValue: 'Nombre'
+				},
+				{
+					value: 'id',
+					viewValue: 'ID'
+				},
+				{
+					value: 'poliza',
+					viewValue: 'No. de Póliza'
+				}
+			]
+		};
 
 	seguros: FieldConfig = {
 		label: '¿Tiene otro seguro de salud?',
@@ -108,12 +108,12 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy, DoCheck {
 		label: 'Sexo',
 		options: [
 			{
-				value: 'FEMENINO',
-				viewValue: 'FEMENINO'
+				value: 'femenino',
+				viewValue: 'Femenino'
 			},
 			{
-				value: 'MASCULINO',
-				viewValue: 'MASCULINO'
+				value: 'masculino',
+				viewValue: 'Masculino'
 			}
 		]
 	};
@@ -342,7 +342,7 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy, DoCheck {
 					telefono: ['', Validators.required],
 				}),
 				admision: this.fb.group({
-					fecha: ['', Validators.required],
+					fecha: ['',  Validators.required],
 					nombreMedico: [''],
 					direccion: [''],
 					telefono: [''],
@@ -408,53 +408,53 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy, DoCheck {
 		// 		map(value => typeof value === 'string' ? value : value),
 		// 		map(value => value ? this._filter(value) : this.dataAutoCompleteIdNumber.slice())
 		// 	);
-		this.authorization.get('informacionAsegurado').get('filterType').valueChanges.subscribe(valueFilter => {
+		this.authorization.get('informacionAsegurado').get('filterType').valueChanges.subscribe( valueFilter => {
 
-			this.authorization.get('informacionAsegurado').get('idNumber').setValue('');
-			this.authorization.get('informacionAsegurado').get('idNumber').markAsUntouched();
+				this.authorization.get('informacionAsegurado').get('idNumber').setValue('');
+				this.authorization.get('informacionAsegurado').get('idNumber').markAsUntouched();
 
-			if (valueFilter == 'nombre') {
-				this.filteredOptions = this.authorization.get('informacionAsegurado').get('idNumber').valueChanges
+				if (valueFilter == 'nombre') {
+					this.filteredOptions = this.authorization.get('informacionAsegurado').get('idNumber').valueChanges
 					.pipe(
 						startWith(''),
 						map(value => typeof value === 'string' ? value : value),
 						map(value => value ? this._filter(value) : this.dataAutoCompleteName.slice())
 					);
-			}
-			if (valueFilter == 'id') {
-				this.filteredOptions = this.authorization.get('informacionAsegurado').get('idNumber').valueChanges
+				}
+				if (valueFilter == 'id') {
+					this.filteredOptions = this.authorization.get('informacionAsegurado').get('idNumber').valueChanges
 					.pipe(
 						startWith(''),
 						map(value => typeof value === 'string' ? value : value),
 						map(value => value ? this._filter(value) : this.dataAutoCompleteIdNumber.slice())
 					);
-			}
-			if (valueFilter == 'poliza') {
-				this.filteredOptions = this.authorization.get('informacionAsegurado').get('idNumber').valueChanges
+				}
+				if (valueFilter == 'poliza') {
+					this.filteredOptions = this.authorization.get('informacionAsegurado').get('idNumber').valueChanges
 					.pipe(
 						startWith(''),
 						map(value => typeof value === 'string' ? value : value),
 						map(value => value ? this._filter(value) : this.dataAutoCompletePolicy.slice())
 					);
-			}
-		});
+				}
+			});
 
 		this.authorization.get('informacionMedica').get('condicion').valueChanges.subscribe(value => {
-			if (value == 'hospitalizacion') {
-				if (this.authorization.get('informacionMedica').get('tiempoEstadia').disabled) {
-					this.authorization.get('informacionMedica').get('tiempoEstadia').enable();
-					this.authorization.get('informacionMedica').get('tiempoEstadia').setValue('');
-					this.authorization.get('informacionMedica').get('tiempoEstadia').markAsUntouched();
+				if (value == 'hospitalizacion') {
+					if (this.authorization.get('informacionMedica').get('tiempoEstadia').disabled) {
+						this.authorization.get('informacionMedica').get('tiempoEstadia').enable();
+						this.authorization.get('informacionMedica').get('tiempoEstadia').setValue('');
+						this.authorization.get('informacionMedica').get('tiempoEstadia').markAsUntouched();
+					}
 				}
-			}
-			// tslint:disable-next-line: one-line
-			else if (value == 'ambulatorio') {
-				this.authorization.get('informacionMedica').get('tiempoEstadia').disable();
-				this.authorization.get('informacionMedica').get('tiempoEstadia').setValue(1);
-			}
-		});
+				// tslint:disable-next-line: one-line
+				else if (value == 'ambulatorio') {
+					this.authorization.get('informacionMedica').get('tiempoEstadia').disable();
+					this.authorization.get('informacionMedica').get('tiempoEstadia').setValue(1);
+				}
+			});
 
-		// console.log(JSON.stringify(this.authorization.value));
+			// console.log(JSON.stringify(this.authorization.value));
 
 	}
 
@@ -528,11 +528,11 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy, DoCheck {
 				// 	+ data.data[x].asegurado.id_asegurado);
 
 				this.dataAutoCompleteIdNumberObject.push({
-					name: data.data[x].asegurado.nombres_asegurado,
-					// id: data.data[x].asegurado.id_asegurado,
-					policy: data.data[x].asegurado.no_poliza,
-					value: data.data[x].asegurado.id_asegurado
-				});
+						name: data.data[x].asegurado.nombres_asegurado,
+						// id: data.data[x].asegurado.id_asegurado,
+						policy: data.data[x].asegurado.no_poliza,
+						value: data.data[x].asegurado.id_asegurado
+					});
 				this.dataAutoCompleteName.push(data.data[x].asegurado.nombres_asegurado);
 
 				this.dataAutoCompleteIdNumber.push(data.data[x].asegurado.id_asegurado);
@@ -618,7 +618,7 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy, DoCheck {
 	}
 
 	fileNameWatcher(type?: string, i?) {
-		if (this.filesInformation) {
+		if(this.filesInformation) {
 			if (this.filesInformation[i]) {
 				if (this.filesInformation[i][type + 'Url']) { return this.filesInformation[i][type + 'Url']; }
 			}
@@ -663,18 +663,18 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy, DoCheck {
 		let idNumberObject;
 
 		if (this.authorization.get('informacionAsegurado').get('filterType').value == 'nombre') {
-			idNumberObject = this.dataAutoCompleteIdNumberObject.find(nombre =>
-				nombre.name == idNumber);
-			idNumber = (idNumberObject.value).toString();
-		}
+				idNumberObject = this.dataAutoCompleteIdNumberObject.find(nombre =>
+			nombre.name == idNumber);
+			 idNumber = (idNumberObject.value).toString();
+			}
 		if (this.authorization.get('informacionAsegurado').get('filterType').value == 'id') {
 			idNumber = (idNumber).toString();
 		}
 		if (this.authorization.get('informacionAsegurado').get('filterType').value == 'poliza') {
-			idNumberObject = this.dataAutoCompleteIdNumberObject.find(nombre =>
-				nombre.policy == idNumber);
-			idNumber = (idNumberObject.value).toString();
-		}
+				idNumberObject = this.dataAutoCompleteIdNumberObject.find(nombre =>
+			nombre.policy == idNumber);
+			 idNumber = (idNumberObject.value).toString();
+			}
 
 		// const idNumberObject = this.dataAutoCompleteIdNumberObject.find(nombre =>
 		// 	nombre.name == idNumber);
@@ -704,11 +704,11 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy, DoCheck {
 
 					switch (response.data.asegurado.sexo) {
 						case 'M':
-							this.authorization.get('informacionAsegurado').get('sexo').setValue('MASCULINO');
+							this.authorization.get('informacionAsegurado').get('sexo').setValue('masculino');
 							break;
 
 						case 'F':
-							this.authorization.get('informacionAsegurado').get('sexo').setValue('FEMENINO');
+							this.authorization.get('informacionAsegurado').get('sexo').setValue('femenino');
 							break;
 						default:
 							break;
@@ -778,11 +778,11 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy, DoCheck {
 
 			switch (data.data.informacionAsegurado.sexo) {
 				case 'M':
-					this.authorization.get('informacionAsegurado').get('sexo').setValue('MASCULINO');
+					this.authorization.get('informacionAsegurado').get('sexo').setValue('masculino');
 					break;
 
 				case 'F':
-					this.authorization.get('informacionAsegurado').get('sexo').setValue('FEMENINO');
+					this.authorization.get('informacionAsegurado').get('sexo').setValue('femenino');
 					break;
 				default:
 					break;
@@ -830,7 +830,7 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy, DoCheck {
 
 					const formID7 = this.authorization.get('files').get(x.toString()) as FormGroup;
 					formID7.addControl('id', this.fb.control(data.data.files[x].id,
-						Validators.required));
+					Validators.required));
 
 					if (x >= 1) {
 						this.addToList();
@@ -911,7 +911,7 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy, DoCheck {
 		});
 		this.newAuthorization.id = null;
 		console.log('this.newAuthorization.id es igual a ' + this.newAuthorization.id);
-
+		
 
 	}
 

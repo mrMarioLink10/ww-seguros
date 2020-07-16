@@ -108,20 +108,20 @@ export class LifeComponent implements OnInit, DoCheck {
     name: 'method',
     options: [
       {
-        value: 'Anual',
-        viewValue: 'Anual',
+        value: 'ANUAL',
+        viewValue: 'ANUAL',
       },
       {
-        value: 'Semestral',
-        viewValue: 'Semestral',
+        value: 'SEMESTRAL',
+        viewValue: 'SEMESTRAL',
       },
       {
-        value: 'Trimestral',
-        viewValue: 'Trimestral',
+        value: 'TRIMESTRAL',
+        viewValue: 'TRIMESTRAL',
       },
       {
-        value: 'Mensual',
-        viewValue: 'Mensual',
+        value: 'MENSUAL',
+        viewValue: 'MENSUAL',
       }
     ]
   };
@@ -131,20 +131,20 @@ export class LifeComponent implements OnInit, DoCheck {
     name: 'form',
     options: [
       {
-        value: 'Cheque',
-        viewValue: 'Cheque',
+        value: 'CHEQUE',
+        viewValue: 'CHEQUE',
       },
       {
-        value: 'Tarjeta Credito',
-        viewValue: 'Tarjeta Credito',
+        value: 'TARJETA DE CREDITO',
+        viewValue: 'TARJETA DE CREDITO',
       },
       {
-        value: 'Transferencia',
-        viewValue: 'Transferencia',
+        value: 'TRANSFERENCIA',
+        viewValue: 'TRANSFERENCIA',
       },
       {
-        value: 'Débito Automático',
-        viewValue: 'Débito Automático',
+        value: 'DÉBITO AUTOMÁTICO',
+        viewValue: 'DÉBITO AUTOMÁTICO',
       },
 
     ]
@@ -180,11 +180,11 @@ export class LifeComponent implements OnInit, DoCheck {
     label: 'Estándar Nicotina',
     options: [
       {
-        value: 'si',
+        value: 'SI',
         viewValue: 'Si'
       },
       {
-        value: 'no',
+        value: 'NO',
         viewValue: 'No'
       }
     ]
@@ -222,20 +222,20 @@ export class LifeComponent implements OnInit, DoCheck {
   annualIncomeValues = {
     options: [
       {
-        value: 'Menos de 10 mil US$',
-        viewValue: 'Menos de 10 mil US$'
+        value: 'MENOS DE 10 MIL US$',
+        viewValue: 'MENOS DE 10 MIL US$'
       },
       {
-        value: '10 mil a 30 mil US$',
-        viewValue: '10 mil a 30 mil US$'
+        value: '10 MIL A 30 MIL US$',
+        viewValue: '10 MIL A 30 MIL US$'
       },
       {
-        value: '30 mil a 50 mil US$',
-        viewValue: '30 mil a 50 mil US$'
+        value: '30 MIL A 50 MIL US$',
+        viewValue: '30 MIL A 50 MIL US$'
       },
       {
-        value: 'Más de 50 mil US$',
-        viewValue: 'Más de 50 mil US$'
+        value: 'MÁS DE 50 MIL US$',
+        viewValue: 'MÁS DE 50 MIL US$'
       },
     ]
   };
@@ -243,20 +243,20 @@ export class LifeComponent implements OnInit, DoCheck {
   connectionType = {
     options: [
       {
-        value: 'familia',
-        viewValue: 'Familia'
+        value: 'FAMILIA',
+        viewValue: 'FAMILIA'
       },
       {
-        value: 'amigo',
-        viewValue: 'Amigo'
+        value: 'AMIGO',
+        viewValue: 'AMIGO'
       },
       {
-        value: 'cliente',
-        viewValue: 'Cliente'
+        value: 'CLIENTE',
+        viewValue: 'CLIENTE'
       },
       {
-        value: 'acabado de conocer',
-        viewValue: '¿Lo acaba de conocer?'
+        value: '¿LO ACABA DE CONOCER?',
+        viewValue: '¿LO ACABA DE CONOCER?'
       },
 
     ]
@@ -266,12 +266,12 @@ export class LifeComponent implements OnInit, DoCheck {
     label: '¿Cuánto lo conoce?',
     options: [
       {
-        value: 'mucho',
-        viewValue: 'Mucho'
+        value: 'MUCHO',
+        viewValue: 'MUCHO'
       },
       {
-        value: 'poco',
-        viewValue: 'Poco'
+        value: 'POCO',
+        viewValue: 'POCO'
       },
     ]
   };
@@ -312,12 +312,12 @@ export class LifeComponent implements OnInit, DoCheck {
     label: 'Tipo de Moneda',
     options: [
       {
-        value: 'Dolares',
-        viewValue: 'Dolares'
+        value: 'DOLARES',
+        viewValue: 'DOLARES'
       },
       {
-        value: 'Pesos Dominicanos',
-        viewValue: 'Pesos Dominicanos'
+        value: 'PESOS DOMINICANOS',
+        viewValue: 'PESOS DOMINICANOS'
       },
     ],
   };
@@ -327,11 +327,11 @@ export class LifeComponent implements OnInit, DoCheck {
     label: 'Tipo de Moneda',
     options: [
       {
-        value: 'usd',
+        value: 'USD',
         viewValue: 'US$'
       },
       {
-        value: 'dop',
+        value: 'DOP',
         viewValue: 'DOP$'
       },
     ],
@@ -342,11 +342,11 @@ export class LifeComponent implements OnInit, DoCheck {
     label: 'Tipo de Moneda',
     options: [
       {
-        value: 'usd',
+        value: 'USD',
         viewValue: 'US$'
       },
       {
-        value: 'dop',
+        value: 'DOP',
         viewValue: 'DOP$'
       },
     ],
@@ -357,11 +357,11 @@ export class LifeComponent implements OnInit, DoCheck {
     label: 'Tipo de Moneda',
     options: [
       {
-        value: 'usd',
+        value: 'USD',
         viewValue: 'US$'
       },
       {
-        value: 'dop',
+        value: 'DOP',
         viewValue: 'DOP$'
       },
     ],
@@ -372,11 +372,11 @@ export class LifeComponent implements OnInit, DoCheck {
     label: 'Tipo de Moneda',
     options: [
       {
-        value: 'usd',
+        value: 'USD',
         viewValue: 'US$'
       },
       {
-        value: 'dop',
+        value: 'DOP',
         viewValue: 'DOP$'
       },
     ],
@@ -386,12 +386,12 @@ export class LifeComponent implements OnInit, DoCheck {
     label: 'Cambio de peso',
     options: [
       {
-        value: 'aumento',
-        viewValue: 'Aumento'
+        value: 'AUMENTO',
+        viewValue: 'AUMENTO'
       },
       {
-        value: 'perdida',
-        viewValue: 'Pérdida'
+        value: 'PÉRDIDA',
+        viewValue: 'PÉRDIDA'
       }
     ],
   };
@@ -399,16 +399,16 @@ export class LifeComponent implements OnInit, DoCheck {
   status = {
     options: [
       {
-        value: 'soltero',
-        viewValue: 'Soltero'
+        value: 'SOLTERO',
+        viewValue: 'SOLTERO'
       },
       {
-        value: 'casado',
-        viewValue: 'Casado'
+        value: 'CASADO',
+        viewValue: 'CASADO'
       },
       {
-        value: 'union Libre',
-        viewValue: 'Unión Libre'
+        value: 'UNIÓN LIBRE',
+        viewValue: 'UNIÓN LIBRE'
       }
     ],
     name: 'status',
@@ -420,12 +420,12 @@ export class LifeComponent implements OnInit, DoCheck {
       label: 'Tipo de documento de identidad',
       options: [
         {
-          value: 'Cedula',
-          viewValue: 'Cédula',
+          value: 'CÉDULA',
+          viewValue: 'CÉDULA',
         },
         {
-          value: 'Pasaporte',
-          viewValue: 'Pasaporte',
+          value: 'PASAPORTE',
+          viewValue: 'PASAPORTE',
         }
       ],
       name: 'id2Type',
@@ -434,28 +434,28 @@ export class LifeComponent implements OnInit, DoCheck {
   smokingTypes = {
     options: [
       {
-        value: 'cigarrillos',
-        viewValue: 'Cigarrillos'
+        value: 'CIGARILLOS',
+        viewValue: 'CIGARILLOS'
       },
       {
-        value: 'pipa',
-        viewValue: 'Pipa'
+        value: 'PIPA',
+        viewValue: 'PIPA'
       },
       {
-        value: 'parche o chicle de Nicotina',
-        viewValue: 'Parche o chicle de Nicotina'
+        value: 'PARCHE O CHICLE DE NICOTINA',
+        viewValue: 'PARCHE O CHICLE DE NICOTINA'
       },
       {
-        value: 'tabaco',
-        viewValue: 'Tabaco'
+        value: 'TABACO',
+        viewValue: 'TABACO'
       },
       {
-        value: 'mastica tabaco',
-        viewValue: 'Mastica tabaco'
+        value: 'MASTICA TABACO',
+        viewValue: 'MASTICA TABACO'
       },
       {
-        value: 'otro',
-        viewValue: 'Otro'
+        value: 'OTRO',
+        viewValue: 'OTRO'
       }
     ],
     name: 'haveSmoked'
@@ -1241,7 +1241,7 @@ export class LifeComponent implements OnInit, DoCheck {
   relationWatcher(event, realForm) {
     console.log('event: ', event.valor, 'form: ', realForm);
     const form = realForm as FormGroup;
-    if (event.valor === 'otros') {
+    if (event.valor === 'OTROS') {
       form.addControl('specifyRelationship', this.fb.control('', Validators.required));
     } else {
       form.removeControl('specifyRelationship');
@@ -1557,11 +1557,11 @@ export class LifeComponent implements OnInit, DoCheck {
           this.newRequest.get('releventPlanInformation').get('timeAmount').setValue(response.data.periodo_cobertura);
           switch (response.data.sexo) {
             case 'M':
-              this.newRequest.get('person').get('sex').setValue('Masculino');
+              this.newRequest.get('person').get('sex').setValue('MASCULINO');
               break;
 
             case 'F':
-              this.newRequest.get('person').get('sex').setValue('Femenino');
+              this.newRequest.get('person').get('sex').setValue('FEMENINO');
               break;
 
             default:

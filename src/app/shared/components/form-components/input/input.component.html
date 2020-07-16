@@ -1,7 +1,8 @@
 <mat-form-field color="accent" appearance="outline" class="w-full bg-transparente" style="font-size: small !important;"
   [formGroup]="group">
   <mat-label>{{label}}</mat-label>
-  <input [formControlName]="name" matInput class="" [type]="type" [min]="min" [max]="max" [placeholder]="placeholder">
+  <input [formControlName]="name" matInput class="" [type]="type" [min]="min" [max]="max" [placeholder]="placeholder"
+    #input (input)="input.value=$event.target.value.toUpperCase()">
   <mat-error *ngIf="group.get(name).touched && !group.get(name).valid && !group.get(name).errors?.email">Este campo es
     obligatorio
   </mat-error>

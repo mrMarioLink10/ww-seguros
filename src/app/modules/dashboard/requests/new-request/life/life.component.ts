@@ -106,20 +106,20 @@ export class LifeComponent implements OnInit, DoCheck {
     name: 'method',
     options: [
       {
-        value: 'Anual',
-        viewValue: 'Anual',
+        value: 'ANUAL',
+        viewValue: 'ANUAL',
       },
       {
-        value: 'Semestral',
-        viewValue: 'Semestral',
+        value: 'SEMESTRAL',
+        viewValue: 'SEMESTRAL',
       },
       {
-        value: 'Trimestral',
-        viewValue: 'Trimestral',
+        value: 'TRIMESTRAL',
+        viewValue: 'TRIMESTRAL',
       },
       {
-        value: 'Mensual',
-        viewValue: 'Mensual',
+        value: 'MENSUAL',
+        viewValue: 'MENSUAL',
       }
     ]
   };
@@ -129,20 +129,20 @@ export class LifeComponent implements OnInit, DoCheck {
     name: 'form',
     options: [
       {
-        value: 'Cheque',
-        viewValue: 'Cheque',
+        value: 'CHEQUE',
+        viewValue: 'CHEQUE',
       },
       {
-        value: 'Tarjeta Credito',
-        viewValue: 'Tarjeta Credito',
+        value: 'TARJETA DE CREDITO',
+        viewValue: 'TARJETA DE CREDITO',
       },
       {
-        value: 'Transferencia',
-        viewValue: 'Transferencia',
+        value: 'TRANSFERENCIA',
+        viewValue: 'TRANSFERENCIA',
       },
       {
-        value: 'Débito Automático',
-        viewValue: 'Débito Automático',
+        value: 'DÉBITO AUTOMÁTICO',
+        viewValue: 'DÉBITO AUTOMÁTICO',
       },
 
     ]
@@ -178,11 +178,11 @@ export class LifeComponent implements OnInit, DoCheck {
     label: 'Estándar Nicotina',
     options: [
       {
-        value: 'si',
+        value: 'SI',
         viewValue: 'Si'
       },
       {
-        value: 'no',
+        value: 'NO',
         viewValue: 'No'
       }
     ]
@@ -220,20 +220,20 @@ export class LifeComponent implements OnInit, DoCheck {
   annualIncomeValues = {
     options: [
       {
-        value: 'Menos de 10 mil US$',
-        viewValue: 'Menos de 10 mil US$'
+        value: 'MENOS DE 10 MIL US$',
+        viewValue: 'MENOS DE 10 MIL US$'
       },
       {
-        value: '10 mil a 30 mil US$',
-        viewValue: '10 mil a 30 mil US$'
+        value: '10 MIL A 30 MIL US$',
+        viewValue: '10 MIL A 30 MIL US$'
       },
       {
-        value: '30 mil a 50 mil US$',
-        viewValue: '30 mil a 50 mil US$'
+        value: '30 MIL A 50 MIL US$',
+        viewValue: '30 MIL A 50 MIL US$'
       },
       {
-        value: 'Más de 50 mil US$',
-        viewValue: 'Más de 50 mil US$'
+        value: 'MÁS DE 50 MIL US$',
+        viewValue: 'MÁS DE 50 MIL US$'
       },
     ]
   };
@@ -241,20 +241,20 @@ export class LifeComponent implements OnInit, DoCheck {
   connectionType = {
     options: [
       {
-        value: 'familia',
-        viewValue: 'Familia'
+        value: 'FAMILIA',
+        viewValue: 'FAMILIA'
       },
       {
-        value: 'amigo',
-        viewValue: 'Amigo'
+        value: 'AMIGO',
+        viewValue: 'AMIGO'
       },
       {
-        value: 'cliente',
-        viewValue: 'Cliente'
+        value: 'CLIENTE',
+        viewValue: 'CLIENTE'
       },
       {
-        value: 'acabado de conocer',
-        viewValue: '¿Lo acaba de conocer?'
+        value: '¿LO ACABA DE CONOCER?',
+        viewValue: '¿LO ACABA DE CONOCER?'
       },
 
     ]

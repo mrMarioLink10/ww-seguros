@@ -818,8 +818,8 @@ export class DisabilityComponent implements OnInit, DoCheck {
 
     if (this.disabilityGroup.get('questions').get('inches')) { inches = this.disabilityGroup.get('questions').get('inches').value; }
 
-    if (weightUnit === 'libras') { weight = weight / 2.205; }
-    if (heightUnit === 'pie') {
+    if (weightUnit === 'LIBRAS') { weight = weight / 2.205; }
+    if (heightUnit === 'PIE') {
       height = (((height * 12) + inches) * 2.54) / 100;
     }
     const bmi = weight / ((height / 100) * (height * 100));
@@ -832,7 +832,7 @@ export class DisabilityComponent implements OnInit, DoCheck {
 
   onHeightUnitChange(evento) {
     const form = this.disabilityGroup.get('questions') as FormGroup;
-    if (evento.valor === 'pie') {
+    if (evento.valor === 'PIE') {
       form.addControl('inches', this.fb.control('', Validators.required));
     } else {
       form.removeControl('inches');

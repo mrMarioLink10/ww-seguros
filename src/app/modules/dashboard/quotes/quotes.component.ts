@@ -69,6 +69,7 @@ export class QuotesComponent implements OnInit {
 
   getQuotes(params: HttpParams = new HttpParams()) {
     let data;
+    console.log(params);
     setTimeout(() => {
       this.appComponent.showOverlay = true;
     });
@@ -91,6 +92,15 @@ export class QuotesComponent implements OnInit {
   }
   navigateToSalud(id) {
     this.router.navigateByUrl(`/dashboard/requests/new-requests/salud/cotizacion/${id}`);
+  }
+
+  navigateToSaludPdf(id) {
+    window.open(`http://portalwwg.eastus.cloudapp.azure.com:3031/salud/cotizacion-${id}.pdf`, '_blank');
+
+}
+  navigateToLifePdf(id) {
+      window.open(`http://portalwwg.eastus.cloudapp.azure.com:3031/tmp/cotizacion-${id}.pdf`, '_blank');
+
   }
   newQuote() {
     if (this.userService.getRoleCotizador() === 'WWS') {

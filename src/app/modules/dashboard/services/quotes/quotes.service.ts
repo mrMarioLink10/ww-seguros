@@ -13,7 +13,7 @@ export class QuotesService {
   constructor(private http: HttpClient, private route: Router) { }
 
   getQuotes(params: HttpParams) {
-    return (this.http.get(`${environment.apiUrl}/api/Cotizaciones`));
+    return (this.http.get(`${environment.apiUrl}/api/Cotizaciones`, {params:  params}));
   }
   returnDataSalud(id): Observable<any> {
     return this.http.get(`${environment.apiUrl}/api/Cotizaciones/${id}/salud`);

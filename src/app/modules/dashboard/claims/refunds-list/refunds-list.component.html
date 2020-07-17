@@ -42,19 +42,19 @@
         <td class="padding-cell" mat-cell *matCellDef="let element"
           style="max-width: 140px !important; min-width: 137px !important; width: 137px !important;">
           <button mat-mini-fab aria-label="Ver mas" (click)="seeRequest(element.id)" *ngIf="element.status === 2"
-            class="dashboard-table-buttons">
+            class="dashboard-table-buttons" title="Ver mas">
             <img src="../../../../assets/iconos/eye.svg">
           </button>
           <button *ngIf="element.status === 1" (click)="directSendRefund(element.id)" mat-mini-fab aria-label="Enviar"
-            class="dashboard-table-buttons">
+            class="dashboard-table-buttons"  title="Enviar">
             <img src="../../../../assets/iconos/send.svg">
           </button>
           <button *ngIf="element.status !== 2" (click)="this.refund.getID(element.id)" mat-mini-fab aria-label="Editar"
-            class="dashboard-table-buttons">
+            class="dashboard-table-buttons"  title="Editar">
             <img src="../../../../assets/iconos/edit.svg">
           </button>
           <button *ngIf="element.status !== 2" (click)="deleteRefund(element.id)" mat-mini-fab aria-label="Eliminar"
-            class="dashboard-table-buttons">
+            class="dashboard-table-buttons" title="Eliminar">
             <img src="../../../../assets/iconos/trash.svg">
           </button>
         </td>

@@ -43,7 +43,8 @@ export class RefundsListComponent implements OnInit {
 	) { }
 
 	getRefunds(params: HttpParams = new HttpParams()) {
-		let data;
+    let data;
+    console.log(params);
 		setTimeout(() => {
 			this.appComponent.showOverlay = true;
 		});
@@ -51,7 +52,8 @@ export class RefundsListComponent implements OnInit {
 			.subscribe(res => {
 				this.appComponent.showOverlay = false;
 				data = res;
-				this.refunds = data.data;
+        this.refunds = data.data;
+        console.log(data.data);
 				this.dataSource = new MatTableDataSource(this.refunds);
 				this.dataSource.sort = this.sort;
 				this.dataSource.paginator = this.paginator;

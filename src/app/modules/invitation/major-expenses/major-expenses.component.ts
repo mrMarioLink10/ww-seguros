@@ -768,8 +768,8 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
 
     if (form.get('inches')) { inches = form.get('inches').value; }
 
-    if (weightUnit === 'libras') { weight = weight / 2.205; }
-    if (heightUnit === 'pie') {
+    if (weightUnit === 'LIBRAS') { weight = weight / 2.205; }
+    if (heightUnit === 'PIE') {
       height = (((height * 12) + inches) * 2.54) / 100;
     }
     const bmi = weight / ((height / 100) * (height * 100));
@@ -1204,8 +1204,8 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
   }
   getBmiValue(height: any, weight: any, typeWeight: any, typeHeight: any) {
     if (height !== '' && weight !== '') {
-      if (typeWeight === 'libras') { weight = weight / 2.205; }
-      if (typeHeight === 'pie') {
+      if (typeWeight === 'LIBRAS') { weight = weight / 2.205; }
+      if (typeHeight === 'PIE') {
         height = height / 3.281;
       }
       const bmi = weight / ((height / 100) * (height / 100));
@@ -1781,8 +1781,8 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
     const weightUnit = this.newRequest.get('person').get('weightUnit').value;
     const heightUnit = this.newRequest.get('person').get('heightUnit').value;
     if (weight !== '' && height !== '') {
-      if (weightUnit === 'libras') { weight = weight / 2.205; }
-      if (heightUnit === 'pie') {
+      if (weightUnit === 'LIBRAS') { weight = weight / 2.205; }
+      if (heightUnit === 'PIE') {
         height = height / 3.281; //(((height * 12) + inches) * 2.54);
       }
 
@@ -1901,11 +1901,11 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
 
         switch (data.data.sexo) {
           case 'M':
-            this.newRequest.get('person').get('sex').setValue('Masculino');
+            this.newRequest.get('person').get('sex').setValue('MASCULINO');
             break;
 
           case 'F':
-            this.newRequest.get('person').get('sex').setValue('Femenino');
+            this.newRequest.get('person').get('sex').setValue('FEMENINO');
             break;
 
           default:
@@ -1971,7 +1971,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
           this.familyWithDiseasesList = undefined;
         }
 
-        if (formP.get('isContractor').value === 'Si') {
+        if (formP.get('isContractor').value === 'SI') {
           formP.removeControl('isJuridica');
         }
 

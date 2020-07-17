@@ -132,7 +132,7 @@
                     [group]="newRequest.get('person')" label="Pie" name='height'>
                   </app-number-input>
                   <app-number-input (keyup)="getBmiUpdated(newRequest.get('person'))" class="mr-2"
-                    [group]="newRequest.get('person')" name='inches' label="Pulgadas">
+                    [group]="newRequest.get('person')" name='inches' max="12" label="Pulgadas">
                   </app-number-input>
                 </div>
                 <app-number-input (keyup)="getBmiUpdated(newRequest.get('person'))"
@@ -451,7 +451,7 @@
                         <app-number-input
                           (keyup)="getBmiUpdated(newRequest.get('dependents').get('allDependents').get(index.toString()))"
                           class="mr-2" [group]="newRequest.get('dependents').get('allDependents').get(index.toString())"
-                          name='inches' label="Pulgadas">
+                          name='inches' max=12 label="Pulgadas">
                         </app-number-input>
                       </div>
                       <app-number-input

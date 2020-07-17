@@ -371,13 +371,13 @@
                     </div>
                   </div>
 
-                  <div *ngIf="disabilityGroup.get('insured_data').value.pension_radio === 'si'"
+                  <div *ngIf="disabilityGroup.get('insured_data').value.pension_radio === 'SI'"
                     class="mr-3 mt-4 lg:mt-3 xl:mt-3" style="margin-top: 15px;">
                     <app-input [group]="disabilityGroup.get('insured_data')" label="Naturaleza de la pensión o ingreso"
                       name="reason_pension" placeholder=""></app-input>
                   </div>
 
-                  <div *ngIf="disabilityGroup.get('insured_data').value.pension_radio === 'si'"
+                  <div *ngIf="disabilityGroup.get('insured_data').value.pension_radio === 'SI'"
                     class=" grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2">
                     <!--  -->
                     <div class="mr-3 mt-4 ">
@@ -412,7 +412,7 @@
                         name='policyholderKnowClientRadio' (selected)="selectChange($event)">
                       </app-radio-button>
                     </div>
-                    <div *ngIf="disabilityGroup.get('insured_data').get('policyholderKnowClientRadio').value == 'si'">
+                    <div *ngIf="disabilityGroup.get('insured_data').get('policyholderKnowClientRadio').value == 'SI'">
                       <div class="radio-button-label" style="font-size: 12px !important; max-width: 63vw;">Adjuntar
                         documentos (Opcional)
                       </div>
@@ -450,7 +450,7 @@
                   </div>
                 </div>
 
-                <div *ngIf="disabilityGroup.get('insured_data').get('pep_radio_insured').value == 'si'"
+                <div *ngIf="disabilityGroup.get('insured_data').get('pep_radio_insured').value == 'SI'"
                   class="mt-4 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
                   <app-input class="mr-3" [group]="disabilityGroup.get('insured_data').get('pep')"
                     label="Cargo actual o anterior" name='lastPosition'></app-input>
@@ -613,7 +613,7 @@
                 </div>
 
               </div>
-              <div *ngIf="disabilityGroup.get('policyholder').get('pep_radio_holder').value =='si'"
+              <div *ngIf="disabilityGroup.get('policyholder').get('pep_radio_holder').value =='SI'"
                 class="mt-4 ml-3 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
                 <app-input class="mr-3" [group]="disabilityGroup.get('policyholder').get('pep')"
                   label="Cargo actual o anterior" name='lastPosition'></app-input>
@@ -666,12 +666,12 @@
                   </div>
                   <!-- <div > -->
                   <div class="mr-3 mt-3 sm:mt-2 md:mt-8 lg:mt-1 xl:mt-0"
-                    *ngIf="this.disabilityGroup.get('questions').get('smoker_radio').value == 'si'">
+                    *ngIf="this.disabilityGroup.get('questions').get('smoker_radio').value == 'SI'">
                     <app-number-input label="Consumo diario de tabaco (Paquetes)" name="quantity"
                       [group]="disabilityGroup.get('questions').get('smoke')" placeholder="Por ej: 2" min="1">
                     </app-number-input>
                   </div>
-                  <div *ngIf="this.disabilityGroup.get('questions').get('smoker_radio').value == 'si'"
+                  <div *ngIf="this.disabilityGroup.get('questions').get('smoker_radio').value == 'SI'"
                     class="grid grid-cols-1 md:grid-cols-2">
                     <div class="mt-3 sm:mt-2 md:mt-8 lg:mt-1 xl:mt-0 mr-3">
                       <app-number-input label="Duración" name="duration"
@@ -696,7 +696,7 @@
                   </div>
                   <!-- <div class="mr-3"> -->
                   <div class="mr-3 mt-3 sm:mt-2 md:mt-10 lg:mt-2 xl:mt-0"
-                    *ngIf="this.disabilityGroup.get('questions').get('alcohol_radio').value == 'si'">
+                    *ngIf="this.disabilityGroup.get('questions').get('alcohol_radio').value == 'SI'">
                     <app-number-input label="Consumo semanal de alcohol (Copas)" name="quantity"
                       [group]="disabilityGroup.get('questions').get('alcohol')" placeholder="Por ej: 4" min="1">
                     </app-number-input>
@@ -714,7 +714,7 @@
                     <app-select class="md:mr-3 mt-3 sm:mt-2 md:mt-5 lg:mt-0" [options]="heightUnit"
                       (selected)="onHeightUnitChange($event)" [group]="disabilityGroup.get('questions')">
                     </app-select>
-                    <div *ngIf="disabilityGroup.get('questions').get('heightUnit').value === 'pie'" class="mr-3 "
+                    <div *ngIf="disabilityGroup.get('questions').get('heightUnit').value === 'PIE'" class="mr-3 "
                       class="grid grid-cols-1 md:grid-cols-2">
                       <app-number-input (keyup)="getBmi()" class="md:mr-2 mt-3 sm:mt-2 md:mt-5 lg:mt-0"
                         [group]="disabilityGroup.get('questions')" label="Pie" name='height'>
@@ -724,7 +724,7 @@
                       </app-number-input>
                     </div>
                     <app-number-input (keyup)="getBmi()"
-                      *ngIf="this.disabilityGroup.get('questions').get('heightUnit').value !== 'pie'"
+                      *ngIf="this.disabilityGroup.get('questions').get('heightUnit').value !== 'PIE'"
                       class="md:mr-3 mt-3 sm:mt-2 md:mt-5 lg:mt-0" [group]="disabilityGroup.get('questions')"
                       label="Altura" name='height'>
                     </app-number-input>
@@ -754,7 +754,7 @@
                           name="health_radio" [options]="YesNo" (selected)="selectChange($event)"> </app-radio-button>
                       </div>
                       <div class="mt-16"
-                        *ngIf="this.disabilityGroup.get('questions').get('questionnaire').get('health_radio').value == 'si'">
+                        *ngIf="this.disabilityGroup.get('questions').get('questionnaire').get('health_radio').value == 'SI'">
                         <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
                           <div class="mr-3">
                             <app-date-picker [max]="todayDate"
@@ -796,7 +796,7 @@
                           </app-radio-button>
                         </div>
                         <div class="mt-16"
-                          *ngIf="disabilityGroup.get('questions').get('questionnaire').get('therapy_radio').value == 'si'">
+                          *ngIf="disabilityGroup.get('questions').get('questionnaire').get('therapy_radio').value == 'SI'">
                           <div *ngFor=" let elements of therapyArray.controls; let in = index">
                             <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
                               <div class="mr-3">
@@ -855,7 +855,7 @@
                           </app-radio-button>
                         </div>
                         <div class="mt-16"
-                          *ngIf="this.disabilityGroup.get('questions').get('questionnaire').get('sick_pay_radio').value == 'si'">
+                          *ngIf="this.disabilityGroup.get('questions').get('questionnaire').get('sick_pay_radio').value == 'SI'">
                           <div *ngFor=" let elements of sickPayArray.controls; let in = index">
                             <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
                               <div class="mr-3">
@@ -915,7 +915,7 @@
                           </app-radio-button>
                         </div>
                         <div class="mt-16"
-                          *ngIf="this.disabilityGroup.get('questions').get('questionnaire').get('analysis_radio').value == 'si'">
+                          *ngIf="this.disabilityGroup.get('questions').get('questionnaire').get('analysis_radio').value == 'SI'">
                           <div *ngFor=" let elements of testArray.controls; let in = index">
                             <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
                               <div class="mr-3">
@@ -933,7 +933,7 @@
                                 </app-select>
                               </div>
                               <div class="mr-3 mt-3 sm:mt-3 md:mt-3 lg:mt-0 xl:mt-0"
-                                *ngIf="disabilityGroup.get('questions').get('questionnaire').get('analysis_array').get(in.toString()).get('test').value == 'Otros'">
+                                *ngIf="disabilityGroup.get('questions').get('questionnaire').get('analysis_array').get(in.toString()).get('test').value == 'OTROS'">
                                 <app-input label="Indicar estudio" name='specifyStudy'
                                   [group]="disabilityGroup.get('questions').get('questionnaire').get('analysis_array').get(in.toString())">
                                 </app-input>
@@ -971,7 +971,7 @@
                           </app-radio-button>
                         </div>
                         <div class="mt-16"
-                          *ngIf="this.disabilityGroup.get('questions').get('questionnaire').get('other_analysis_radio').value == 'si'">
+                          *ngIf="this.disabilityGroup.get('questions').get('questionnaire').get('other_analysis_radio').value == 'SI'">
                           <div *ngFor=" let elements of otherAnalysisArray.controls; let in = index">
                             <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
                               <div class="mr-3">
@@ -1027,7 +1027,7 @@
                             </app-radio-button>
                           </div>
                           <div class="mt-16"
-                            *ngIf="this.disabilityGroup.get('questions').get('questionnaire').get('inpatientCare_radio').value == 'si'">
+                            *ngIf="this.disabilityGroup.get('questions').get('questionnaire').get('inpatientCare_radio').value == 'SI'">
                             <div *ngFor=" let elements of inpatientCareArray.controls; let in = index">
                               <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
                                 <div class="mr-3">
@@ -1075,7 +1075,7 @@
                           </div>
                         </div>
                         <div class="mt-16"
-                          *ngIf="this.disabilityGroup.get('questions').get('questionnaire').get('hospitalization_radio').value == 'si'">
+                          *ngIf="this.disabilityGroup.get('questions').get('questionnaire').get('hospitalization_radio').value == 'SI'">
                           <div *ngFor=" let elements of hospitalizationArray.controls; let in = index">
                             <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
                               <div class="mr-3">
@@ -1132,7 +1132,7 @@
                             </app-radio-button>
                           </div>
                           <div class="mt-16 mb-12 sm:mb-0 md:mb-12 lg:mb-0 lx:mb-0"
-                            *ngIf="this.disabilityGroup.get('questions').get('questionnaire').get('sicknessType_radio').value == 'si'">
+                            *ngIf="this.disabilityGroup.get('questions').get('questionnaire').get('sicknessType_radio').value == 'SI'">
                             <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
                               <!-- <div class="mr-3">
                                 <app-select name="sickness" [options]="sicknessOptions" [group]="disabilityGroup.get('questions').get('questionnaire').get('sicknessType')">
@@ -1228,7 +1228,7 @@
                         </div>
                       </div>
                       <div class="mt-8"
-                        *ngIf="this.disabilityGroup.get('questions').get('questionnaire').get('bloodSick_radio').value == 'si'">
+                        *ngIf="this.disabilityGroup.get('questions').get('questionnaire').get('bloodSick_radio').value == 'SI'">
                         <div *ngFor=" let elements of bloodSickArray.controls; let in = index">
                           <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
                             <div class="mr-3">
@@ -1286,7 +1286,7 @@
                             [options]="YesNo" (selected)="selectChange($event)"> </app-radio-button>
                         </div>
                         <div class="mt-8"
-                          *ngIf="this.disabilityGroup.get('questions').get('questionnaire').get('VIH_radio').value == 'si'">
+                          *ngIf="this.disabilityGroup.get('questions').get('questionnaire').get('VIH_radio').value == 'SI'">
                           <div *ngFor=" let elements of VIHArray.controls; let in = index">
                             <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
                               <div class="mr-3">
@@ -1334,7 +1334,7 @@
                           </app-radio-button>
                         </div>
                         <div class="mt-16"
-                          *ngIf="this.disabilityGroup.get('questions').get('questionnaire').get('specialTherapy_radio').value == 'si'">
+                          *ngIf="this.disabilityGroup.get('questions').get('questionnaire').get('specialTherapy_radio').value == 'SI'">
                           <div *ngFor=" let elements of specialTherapyArray.controls; let in = index">
                             <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
                               <div class="mr-3">
@@ -1388,7 +1388,7 @@
                           </app-radio-button>
                         </div>
                         <div class="mt-16"
-                          *ngIf="this.disabilityGroup.get('questions').get('questionnaire').get('accident_radio').value == 'si'">
+                          *ngIf="this.disabilityGroup.get('questions').get('questionnaire').get('accident_radio').value == 'SI'">
                           <div *ngFor=" let elements of accidentArray.controls; let in = index">
                             <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
                               <div class="mr-3">
@@ -1440,7 +1440,7 @@
                             name="deny_radio" [options]="YesNo" (selected)="selectChange($event)"> </app-radio-button>
                         </div>
                         <div class="mt-8"
-                          *ngIf="this.disabilityGroup.get('questions').get('questionnaire').get('deny_radio').value == 'si'">
+                          *ngIf="this.disabilityGroup.get('questions').get('questionnaire').get('deny_radio').value == 'SI'">
                           <div *ngFor=" let elements of denyArray.controls; let in = index">
                             <div>
                               <div class="mr-3">
@@ -1484,7 +1484,7 @@
                           </app-radio-button>
                         </div>
                         <div
-                          *ngIf="this.disabilityGroup.get('questions').get('questionnaire').get('insurance_radio').value == 'si'">
+                          *ngIf="this.disabilityGroup.get('questions').get('questionnaire').get('insurance_radio').value == 'SI'">
                           <div *ngFor=" let elements of insuranceArray.controls; let in = index">
                             <div
                               class="mt-16 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
@@ -1534,7 +1534,7 @@
                                 </div>
                               </div>
                               <div class="mr-3 mt-5 sm:mt-3 md:mt-5 lg:col-span-2 lg:mt-4 xl:col-span-1 xl:mt-3"
-                                *ngIf="disabilityGroup.get('questions').get('questionnaire').get('insurance_array').get(in.toString()).get('claim_radio').value == 'si'">
+                                *ngIf="disabilityGroup.get('questions').get('questionnaire').get('insurance_array').get(in.toString()).get('claim_radio').value == 'SI'">
                                 <app-input
                                   [group]="disabilityGroup.get('questions').get('questionnaire').get('insurance_array').get(in.toString()).get('claim')"
                                   label="Especificar" name='explanation'> </app-input>
@@ -1914,7 +1914,7 @@
                     [options]="YesNo" (selected)="selectChange($event)">
                   </app-radio-button>
                 </div>
-                <div *ngIf="disabilityGroup.get('contingent').value.hasAnotherCoverage === 'si'">
+                <div *ngIf="disabilityGroup.get('contingent').value.hasAnotherCoverage === 'SI'">
                   <div *ngFor="let studies of existingCoveragesList.controls; let i = index"
                     class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
                     <div class="mr-3">
@@ -1971,7 +1971,7 @@
                       [options]="YesNo" (selected)="selectChange($event)">
                     </app-radio-button>
                   </div>
-                  <div *ngIf="disabilityGroup.get('contingent').value.changeAnotherCoverage === 'si'">
+                  <div *ngIf="disabilityGroup.get('contingent').value.changeAnotherCoverage === 'SI'">
                     <div *ngFor="let studies of changingCoveragesList.controls; let i = index"
                       class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
                       <div class="mr-3">
@@ -2177,7 +2177,7 @@
         </mat-tab>
       </div> -->
 
-      <mat-tab *ngIf="this.disabilityGroup.get('insured_data').get('pep_radio_insured').value == 'si'"
+      <mat-tab *ngIf="this.disabilityGroup.get('insured_data').get('pep_radio_insured').value == 'SI'"
         label="Conozca a su cliente (Persona Física) - Asegurado">
         <mat-accordion #matAccordion="matAccordion" name="matAccordion" class="ww-mat-accordion example-headers-align"
           [togglePosition]="'before'">
@@ -2190,7 +2190,7 @@
       </mat-tab>
       <div *ngIf="disabilityGroup.get('policyholder')">
         <mat-tab
-          *ngIf="this.disabilityGroup.get('policyholder').get('pep_radio_holder').value == 'si' && disabilityGroup.get('policyholder').get('KnowYourCustomer')"
+          *ngIf="this.disabilityGroup.get('policyholder').get('pep_radio_holder').value == 'SI' && disabilityGroup.get('policyholder').get('KnowYourCustomer')"
           label="Conozca a su cliente (Persona Física) - Contratante">
           <mat-accordion #matAccordion="matAccordion" name="matAccordion" class="ww-mat-accordion example-headers-align"
             [togglePosition]="'before'">
@@ -2210,8 +2210,8 @@
         </app-know-your-client>
       </mat-tab>
       </div> -->
-      <div *ngIf="this.disabilityGroup.get('insured_data').get('insuredPolicyholderRadio').value == 'no'">
-        <mat-tab *ngIf="this.disabilityGroup.get('insured_data').get('policyholderKnowClientRadio').value == 'si'"
+      <div *ngIf="this.disabilityGroup.get('insured_data').get('insuredPolicyholderRadio').value == 'NO'">
+        <mat-tab *ngIf="this.disabilityGroup.get('insured_data').get('policyholderKnowClientRadio').value == 'SI'"
           label="Conozca a su cliente (Persona Jurídica) - Contratante">
           <mat-accordion #matAccordion="matAccordion" name="matAccordion" class="ww-mat-accordion example-headers-align"
             [togglePosition]="'before'">

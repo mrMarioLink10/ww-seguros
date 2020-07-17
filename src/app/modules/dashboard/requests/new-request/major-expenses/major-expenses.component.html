@@ -126,7 +126,7 @@
                 <app-select class="mr-3" [options]="heightUnit"
                   (selected)="onHeightUnitChange($event, newRequest.get('person'))" [group]="newRequest.get('person')">
                 </app-select>
-                <div *ngIf="this.newRequest.get('person').get('heightUnit').value === 'pie'" class="mr-3"
+                <div *ngIf="this.newRequest.get('person').get('heightUnit').value === 'PIE'" class="mr-3"
                   class="grid grid-cols-2">
                   <app-number-input (keyup)="getBmiUpdated(newRequest.get('person'))" class="mr-2"
                     [group]="newRequest.get('person')" label="Pie" name='height'>
@@ -136,7 +136,7 @@
                   </app-number-input>
                 </div>
                 <app-number-input (keyup)="getBmiUpdated(newRequest.get('person'))"
-                  *ngIf="this.newRequest.get('person').get('heightUnit').value !== 'pie'" class="mr-3"
+                  *ngIf="this.newRequest.get('person').get('heightUnit').value !== 'PIE'" class="mr-3"
                   [group]="newRequest.get('person')" label="Altura" name='height'>
                 </app-number-input>
                 <app-input [group]="newRequest.get('person')" label="BMI" name='bmi'>
@@ -160,7 +160,7 @@
               <app-radio-button class="mr-3" (selected)="selectChange($event)" [group]="newRequest.get('person')"
                 name="isContractor" [options]="isContractorData">
               </app-radio-button>
-              <app-radio-button *ngIf="newRequest.get('person').get('isContractor').value === 'No'"
+              <app-radio-button *ngIf="newRequest.get('person').get('isContractor').value === 'NO'"
                 (selected)="selectChange($event)" class="mr-3" [group]="newRequest.get('person')" name="isJuridica"
                 [options]="isJuridicaData">
               </app-radio-button>
@@ -441,7 +441,7 @@
                         [group]="newRequest.get('dependents').get('allDependents').get(index.toString())">
                       </app-select>
                       <div
-                        *ngIf="this.newRequest.get('dependents').get('allDependents').get(index.toString()).get('heightUnit').value === 'pie'"
+                        *ngIf="this.newRequest.get('dependents').get('allDependents').get(index.toString()).get('heightUnit').value === 'PIE'"
                         class="mr-3" class="grid grid-cols-2">
                         <app-number-input
                           (keyup)="getBmiUpdated(newRequest.get('dependents').get('allDependents').get(index.toString()))"
@@ -456,7 +456,7 @@
                       </div>
                       <app-number-input
                         (keyup)="getBmiUpdated(newRequest.get('dependents').get('allDependents').get(index.toString()))"
-                        *ngIf="this.newRequest.get('dependents').get('allDependents').get(index.toString()).get('heightUnit').value !== 'pie'"
+                        *ngIf="this.newRequest.get('dependents').get('allDependents').get(index.toString()).get('heightUnit').value !== 'PIE'"
                         class="mr-3" [group]="newRequest.get('dependents').get('allDependents').get(index.toString())"
                         label="Altura" name='height'>
                       </app-number-input>
@@ -590,7 +590,7 @@
                   </div>
 
                   <button class="select-persons flex mt-2"
-                    *ngIf="newRequest.get('sectionAHelper').value[question.name] === 'si'" [matMenuTriggerFor]="menu">
+                    *ngIf="newRequest.get('sectionAHelper').value[question.name] === 'SI'" [matMenuTriggerFor]="menu">
                     <div class="self-center pr-2">Seleccionar personas</div>
                     <mat-icon style="color: #18446B">arrow_drop_down
                     </mat-icon>
@@ -831,7 +831,7 @@
                   </button>
                 </div>
               </div>
-              <div *ngIf="newRequest.get('questionsB').value[question.name] === 'si'">
+              <div *ngIf="newRequest.get('questionsB').value[question.name] === 'SI'">
                 <div *ngIf="question.name === 'hasFamilyWithHeartKidneyDisease' && familyWithDiseasesList !== null">
                   <div *ngFor="let studies of familyWithDiseasesList.controls; let i = index"
                     class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
@@ -891,7 +891,7 @@
                     </app-radio-button>
                   </div>
                   <div
-                    *ngIf="newRequest.get('questionsB').get('medicalHealthInsurance') && newRequest.get('questionsB').get('medicalHealthInsurance').value.didReclamation === 'si'">
+                    *ngIf="newRequest.get('questionsB').get('medicalHealthInsurance') && newRequest.get('questionsB').get('medicalHealthInsurance').value.didReclamation === 'SI'">
                     <div class="radio-button-label mb-2" style="font-size: 12px !important;">Especifique la
                       reclamación
                     </div>
@@ -1396,7 +1396,9 @@
             ></app-mountaineering>
         </mat-accordion>
       </mat-tab>
-      <mat-tab *ngIf="isJuridica || (this.newRequest.get('person').get('isJuridica') && this.newRequest.get('person').get('isJuridica').value == 'Si') || isSolicitantePep || isContractorPep" label="Conozca a su cliente">
+      <mat-tab
+        *ngIf="isJuridica || (this.newRequest.get('person').get('isJuridica') && this.newRequest.get('person').get('isJuridica').value == 'SI') || isSolicitantePep || isContractorPep"
+        label="Conozca a su cliente">
         <mat-accordion #matAccordion="matAccordion" name="matAccordion" class="ww-mat-accordion example-headers-align"
           [togglePosition]="'before'">
           <app-know-your-client

@@ -84,14 +84,14 @@
                 <app-select class="mr-3" [options]="heightUnit" (selected)="onHeightUnitChange($event)"
                   [group]="newRequest.get('person')">
                 </app-select>
-                <div *ngIf="this.newRequest.get('person').get('heightUnit').value === 'pie'" class="mr-3"
+                <div *ngIf="this.newRequest.get('person').get('heightUnit').value === 'PIE'" class="mr-3"
                   class="grid grid-cols-2">
                   <app-number-input class="mr-2" [group]="newRequest.get('person')" label="Pie" name='height'>
                   </app-number-input>
                   <app-number-input class="mr-2" [group]="newRequest.get('person')" name='inches' label="Pulgadas">
                   </app-number-input>
                 </div>
-                <app-number-input *ngIf="this.newRequest.get('person').get('heightUnit').value !== 'pie'" class="mr-3"
+                <app-number-input *ngIf="this.newRequest.get('person').get('heightUnit').value !== 'PIE'" class="mr-3"
                   [group]="newRequest.get('person')" label="Altura" name='height'>
                 </app-number-input>
                 <app-input [group]="newRequest.get('person')" label="BMI" name='bmi'>
@@ -455,7 +455,7 @@
                     [options]="diseaseService.yesOrNoOriginal" (selected)="selectChange($event)">
                   </app-radio-button>
                 </div>
-                <div *ngIf="newRequest.get('exposedPerson').value.isExposed=== 'si'"
+                <div *ngIf="newRequest.get('exposedPerson').value.isExposed=== 'SI'"
                   class="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-5 xl:grid-cols-5">
                   <app-input class="mr-3" [group]="newRequest.get('exposedPerson').get('insured')"
                     label="Cargo actual o anterior" name='lastPosition'></app-input>
@@ -466,7 +466,7 @@
                   </div>
                 </div>
 
-                <div *ngIf="newRequest.get('person').value.sameAsPayer === 'no'">
+                <div *ngIf="newRequest.get('person').value.sameAsPayer === 'NO'">
                   <hr class="w-full ww-divider">
                   <div
                     class="w-full mt-8 xl:flex xl:justify-between lg:flex lg:justify-between md:flex md:justify-between sm:flex sm:justify-between">
@@ -478,7 +478,7 @@
                       [options]="diseaseService.yesOrNoOriginal" (selected)="selectChange($event)">
                     </app-radio-button>
                   </div>
-                  <div *ngIf="newRequest.get('exposedPerson').value.isPayerExposed === 'si'"
+                  <div *ngIf="newRequest.get('exposedPerson').value.isPayerExposed === 'SI'"
                     class="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-5 xl:grid-cols-5">
                     <app-input class="mr-3" [group]="newRequest.get('exposedPerson').get('payer')"
                       label="Cargo actual o anterior" name='lastPosition'></app-input>
@@ -489,7 +489,7 @@
                     </div>
                   </div>
                 </div>
-                <div *ngIf="newRequest.get('person').value.sameAsContractor === 'no'">
+                <div *ngIf="newRequest.get('person').value.sameAsContractor === 'NO'">
                   <hr class="w-full ww-divider">
                   <div
                     class="w-full mt-8 xl:flex xl:justify-between lg:flex lg:justify-between md:flex md:justify-between sm:flex sm:justify-between">
@@ -501,7 +501,7 @@
                       [options]="diseaseService.yesOrNoOriginal" (selected)="selectChange($event)">
                     </app-radio-button>
                   </div>
-                  <div *ngIf="newRequest.get('exposedPerson').value.isContractorExposed === 'si'"
+                  <div *ngIf="newRequest.get('exposedPerson').value.isContractorExposed === 'SI'"
                     class="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-5 xl:grid-cols-5">
                     <app-input class="mr-3" [group]="newRequest.get('exposedPerson').get('contractor')"
                       label="Cargo actual o anterior" name='lastPosition'></app-input>
@@ -943,7 +943,7 @@
                   [options]="diseaseService.yesOrNoOriginal" (selected)="selectChange($event)">
                 </app-radio-button>
               </div>
-              <div *ngIf="newRequest.get('contingentBeneficiary').value.hasAnotherCoverage === 'si'">
+              <div *ngIf="newRequest.get('contingentBeneficiary').value.hasAnotherCoverage === 'SI'">
                 <div *ngFor="let studies of existingCoveragesList.controls; let i = index"
                   class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
                   <div class="mr-3">
@@ -1002,7 +1002,7 @@
                     [options]="diseaseService.yesOrNoOriginal" (selected)="selectChange($event)">
                   </app-radio-button>
                 </div>
-                <div *ngIf="newRequest.get('contingentBeneficiary').value.changeAnotherCoverage === 'si'">
+                <div *ngIf="newRequest.get('contingentBeneficiary').value.changeAnotherCoverage === 'SI'">
                   <div *ngFor="let studies of changingCoveragesList.controls; let i = index"
                     class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
                     <div class="mr-3">
@@ -1068,7 +1068,7 @@
                   </app-radio-button>
                 </div>
 
-                <div *ngIf="newRequest.get('generalInformation').value[question.name] === 'si'">
+                <div *ngIf="newRequest.get('generalInformation').value[question.name] === 'SI'">
                   <div *ngIf="question.name === 'haveSmoked'">
                     <app-radio-button class="mt-4" [group]="newRequest.get('generalInformation')"
                       [name]="question.group" [options]="smokingTypes">
@@ -1245,7 +1245,7 @@
                     [options]="diseaseService.yesOrNoOriginal" (selected)="selectChange($event)">
                   </app-radio-button>
                 </div>
-                <div *ngIf="newRequest.get('medicalHistory').value[question.name] === 'si'">
+                <div *ngIf="newRequest.get('medicalHistory').value[question.name] === 'SI'">
                   <div *ngIf="question.name === 'haveHadWeightChanges'">
                     <app-radio-button
                       [group]="newRequest.get('medicalHistory').get('informations').get('weightChanges')" name="type"
@@ -1349,7 +1349,7 @@
                       </app-radio-button>
                     </div>
                     <div
-                      *ngIf="newRequest.get('medicalHistory').get('informations').get('womenInformation').value.haveDisorder === 'si'">
+                      *ngIf="newRequest.get('medicalHistory').get('informations').get('womenInformation').value.haveDisorder === 'SI'">
                       <div *ngFor="let medic of womenDisordersList.controls; let i = index"
                         class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4 lg:mb-8">
                         <app-input class="mr-3"
@@ -1410,7 +1410,7 @@
                       </app-radio-button>
                     </div>
                     <div
-                      *ngIf="newRequest.get('medicalHistory').get('informations').get('womenInformation').value.isPregnant === 'si'">
+                      *ngIf="newRequest.get('medicalHistory').get('informations').get('womenInformation').value.isPregnant === 'SI'">
                       <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4 mb-8">
                         <div class="grid grid-cols-2 mr-3">
                           <app-number-input class="mr-3"
@@ -1552,19 +1552,24 @@
                   [options]="connectionType" (selected)="selectChange($event)">
                 </app-radio-button>
                 <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
-                  <app-input *ngIf="newRequest.get('agentReport').value.connectionType === 'familia'"
+                  <!-- <app-input *ngIf="newRequest.get('agentReport').value.connectionType === 'FAMILIA'"
                     [group]="newRequest.get('agentReport').get('connectionTypeInfo')" name="relationship"
                     label="Parentesco">
-                  </app-input>
-                  <app-input *ngIf="newRequest.get('agentReport').value.connectionType === 'acabado de conocer'"
+                  </app-input> -->
+                  <app-select class="mr-3" [options]="familyRelationship"
+                    *ngIf="newRequest.get('agentReport').value.connectionType === 'FAMILIA'"
+                    [group]="newRequest.get('agentReport').get('connectionTypeInfo')" name="relationship">
+                  </app-select>
+
+                  <app-input *ngIf="newRequest.get('agentReport').value.connectionType === '¿LO ACABA DE CONOCER?'"
                     [group]="newRequest.get('agentReport').get('connectionTypeInfo')" name="how" label="¿Cómo?">
                   </app-input>
-                  <app-radio-button *ngIf="newRequest.get('agentReport').value.connectionType === 'amigo'" class="mr-3"
+                  <app-radio-button *ngIf="newRequest.get('agentReport').value.connectionType === 'AMIGO'" class="mr-3"
                     [group]="newRequest.get('agentReport').get('connectionTypeInfo')" name="friendship"
                     [options]="timeFriendship">
                   </app-radio-button>
                   <div class="grid grid-cols-2"
-                    *ngIf="newRequest.get('agentReport').value.connectionType === 'cliente' || newRequest.get('agentReport').value.connectionType === 'amigo'">
+                    *ngIf="newRequest.get('agentReport').value.connectionType === 'CLIENTE' || newRequest.get('agentReport').value.connectionType === 'AMIGO'">
                     <app-number-input class="mr-3" [group]="newRequest.get('agentReport').get('connectionTypeInfo')"
                       label="Tiempo" name="amount" min="1">
                     </app-number-input>
@@ -1588,7 +1593,7 @@
                     [options]="diseaseService.yesOrNoOriginal" (selected)="selectChange($event)">
                   </app-radio-button>
                 </div>
-                <div *ngIf="newRequest.get('agentReport').value.isMarried === 'si'"
+                <div *ngIf="newRequest.get('agentReport').value.isMarried === 'SI'"
                   class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
                   <app-input [group]="newRequest.get('agentReport').get('marriedInformation')" name="spouseName"
                     label="Nombre del cónyuge" class="mr-3">
@@ -1607,7 +1612,7 @@
                     [options]="diseaseService.yesOrNoOriginal" (selected)="selectChange($event)">
                   </app-radio-button>
                 </div>
-                <div *ngIf="newRequest.get('agentReport').value.isLessThan21 === 'si'">
+                <div *ngIf="newRequest.get('agentReport').value.isLessThan21 === 'SI'">
                   <div *ngFor="let studies of familyRelationshipInsurances.controls; let i = index">
                     <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-5 xl:grid-cols-5">
                       <app-select class="mr-3" [options]="family"

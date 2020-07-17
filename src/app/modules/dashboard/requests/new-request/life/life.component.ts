@@ -1094,7 +1094,7 @@ export class LifeComponent implements OnInit, DoCheck {
 
     const heightUnitBmiSubscriber = this.newRequest.get('person').get('heightUnit').valueChanges.subscribe(value => {
       this.getBmi();
-      if (value === 'pie') {
+      if (value === 'PIE') {
         setTimeout(() => {
           const inchesBmiSubscriber = this.newRequest.get('person').get('inches').valueChanges.subscribe(response => {
             this.getBmi();
@@ -1245,7 +1245,7 @@ export class LifeComponent implements OnInit, DoCheck {
   relationWatcher(event, realForm) {
     console.log('event: ', event.valor, 'form: ', realForm);
     const form = realForm as FormGroup;
-    if (event.valor === 'otros') {
+    if (event.valor === 'OTROS') {
       form.addControl('specifyRelationship', this.fb.control('', Validators.required));
     } else {
       form.removeControl('specifyRelationship');
@@ -1429,7 +1429,7 @@ export class LifeComponent implements OnInit, DoCheck {
 
   onHeightUnitChange(evento) {
     const form = this.newRequest.get('person') as FormGroup;
-    if (evento.valor === 'pie') {
+    if (evento.valor === 'PIE') {
       form.addControl('inches', this.fb.control('', Validators.required));
     } else {
       form.removeControl('inches');

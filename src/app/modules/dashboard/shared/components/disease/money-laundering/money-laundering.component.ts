@@ -26,11 +26,11 @@ export class MoneyLaunderingComponent implements OnInit {
 		label: '',
 		options: [
 			{
-				value: 'si',
+				value: 'SI',
 				viewValue: 'Si'
 			},
 			{
-				value: 'no',
+				value: 'NO',
 				viewValue: 'No'
 			}
 		]
@@ -40,15 +40,15 @@ export class MoneyLaunderingComponent implements OnInit {
 		label: '',
 		options: [
 			{
-				value: 'si',
+				value: 'SI',
 				viewValue: 'Si'
 			},
 			{
-				value: 'no',
+				value: 'NO',
 				viewValue: 'No'
 			},
 			{
-				value: 'na',
+				value: 'NA',
 				viewValue: 'NA'
 			}
 		]
@@ -72,13 +72,13 @@ export class MoneyLaunderingComponent implements OnInit {
 
 		const form = this.form as FormGroup;
 
-		if (event.valor === 'si') {
+		if (event.valor === 'SI') {
 
 			form.addControl('specify_investigation', this.fb.control('', Validators.required));
 			console.log(JSON.stringify(this.form.value));
 
 		}
-		else if (event.valor === 'no') {
+		else if (event.valor === 'NO') {
 
 			form.removeControl('specify_investigation');
 

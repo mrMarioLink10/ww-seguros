@@ -704,11 +704,11 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy, DoCheck {
 
 					switch (response.data.asegurado.sexo) {
 						case 'M':
-							this.authorization.get('informacionAsegurado').get('sexo').setValue('masculino');
+							this.authorization.get('informacionAsegurado').get('sexo').setValue('MASCULINO');
 							break;
 
 						case 'F':
-							this.authorization.get('informacionAsegurado').get('sexo').setValue('femenino');
+							this.authorization.get('informacionAsegurado').get('sexo').setValue('FEMENINO');
 							break;
 						default:
 							break;
@@ -778,11 +778,11 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy, DoCheck {
 
 			switch (data.data.informacionAsegurado.sexo) {
 				case 'M':
-					this.authorization.get('informacionAsegurado').get('sexo').setValue('masculino');
+					this.authorization.get('informacionAsegurado').get('sexo').setValue('MASCULINO');
 					break;
 
 				case 'F':
-					this.authorization.get('informacionAsegurado').get('sexo').setValue('femenino');
+					this.authorization.get('informacionAsegurado').get('sexo').setValue('FEMENINO');
 					break;
 				default:
 					break;

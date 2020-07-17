@@ -136,11 +136,11 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
     label: '',
     options: [
       {
-        value: 'si',
+        value: 'SI',
         viewValue: 'Si'
       },
       {
-        value: 'no',
+        value: 'NO',
         viewValue: 'No'
       }
     ]
@@ -152,8 +152,8 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
       options: [
 
         {
-          value: 'Poliza Nueva',
-          viewValue: 'Póliza Nueva',
+          value: 'PÓLIZA NUEVA',
+          viewValue: 'PÓLIZA NUEVA',
         }
       ],
       name: 'requestType',
@@ -163,11 +163,11 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
       label: '¿Es el contratante Persona Juridica?',
       options: [
         {
-          value: 'Si',
+          value: 'SI',
           viewValue: 'Sí',
         },
         {
-          value: 'No',
+          value: 'NO',
           viewValue: 'No',
         }
       ],
@@ -178,11 +178,11 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
       label: '¿Es el contratante?',
       options: [
         {
-          value: 'Si',
+          value: 'SI',
           viewValue: 'Sí',
         },
         {
-          value: 'No',
+          value: 'NO',
           viewValue: 'No',
         }
       ],
@@ -193,12 +193,12 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
       label: 'Tipo de documento de identidad',
       options: [
         {
-          value: 'Cedula',
-          viewValue: 'Cédula',
+          value: 'CÉDULA',
+          viewValue: 'CÉDULA',
         },
         {
-          value: 'Pasaporte',
-          viewValue: 'Pasaporte',
+          value: 'PASAPORTE',
+          viewValue: 'PASAPORTE',
         }
       ],
       name: 'idType',
@@ -209,11 +209,11 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
       label: 'Se encuentra vigente en la actualidad',
       options: [
         {
-          value: 'si',
+          value: 'SI',
           viewValue: 'Si'
         },
         {
-          value: 'no',
+          value: 'NO',
           viewValue: 'No'
         }
       ],
@@ -224,11 +224,11 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
       label: '¿Tuvo alguna reclamación?',
       options: [
         {
-          value: 'si',
+          value: 'SI',
           viewValue: 'Si'
         },
         {
-          value: 'no',
+          value: 'NO',
           viewValue: 'No'
         }
       ],
@@ -237,16 +237,16 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
     label: 'Frecuencia de Pago',
     options: [
       {
-        value: 'Anual',
-        viewValue: 'Anual'
+        value: 'ANUAL',
+        viewValue: 'ANUAL'
       },
       {
-        value: 'Semestral',
-        viewValue: 'Semestral'
+        value: 'SEMESTRAL',
+        viewValue: 'SEMESTRAL'
       },
       {
-        value: 'Trimestral',
-        viewValue: 'Trimestral'
+        value: 'TRIMESTRAL',
+        viewValue: 'TRIMESTRAL'
       },
     ]
   };
@@ -266,7 +266,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
         viewValue: 'RD$5,000'
       },
       {
-        value: 'otro',
+        value: 'OTRO',
         viewValue: 'Otro'
       },
     ]
@@ -275,36 +275,36 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
     label: 'Planes',
     options: [
       {
-        value: 'Signature Special',
-        viewValue: 'Signature Special',
+        value: 'SIGNATURE SPECIAL',
+        viewValue: 'SIGNATURE SPECIAL',
       },
       {
-        value: 'Excellence Special',
-        viewValue: 'Excellence Special',
+        value: 'EXCELLENCE SPECIAL',
+        viewValue: 'EXCELLENCE SPECIAL',
       },
       {
-        value: 'Distinction Premium',
-        viewValue: 'Distinction Premium',
+        value: 'DISTINCTION PREMIUM',
+        viewValue: 'DISTINCTION PREMIUM',
       },
       {
-        value: 'Signature',
-        viewValue: 'Signature',
+        value: 'SIGNATURE',
+        viewValue: 'SIGNATURE',
       },
       {
-        value: 'Excellence',
-        viewValue: 'Excellence',
+        value: 'EXCELLENCE',
+        viewValue: 'EXCELLENCE',
       },
       {
-        value: 'Distinction',
-        viewValue: 'Distinction',
+        value: 'DISTINCTION',
+        viewValue: 'DISTINCTION',
       },
       {
-        value: 'Plan Estudiantil',
-        viewValue: 'Plan Estudiantil',
+        value: 'PLAN ESTUDIANTIL',
+        viewValue: 'PLAN ESTUDIANTIL',
       },
       {
-        value: 'Otro',
-        viewValue: 'Otro',
+        value: 'OTRO',
+        viewValue: 'OTRO',
       }
     ],
     name: 'plans',
@@ -340,16 +340,16 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
     label: 'Estado Civil',
     options: [
       {
-        value: 'Soltero',
-        viewValue: 'Soltero'
+        value: 'SOLTERO',
+        viewValue: 'SOLTERO'
       },
       {
-        value: 'Casado',
-        viewValue: 'Casado'
+        value: 'CASADO',
+        viewValue: 'CASADO'
       },
       {
-        value: 'Únion Libre',
-        viewValue: 'Union Libre'
+        value: 'UNIÓN LIBRE',
+        viewValue: 'UNIÓN LIBRE'
       }
     ],
     name: 'status'
@@ -362,20 +362,20 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
   mony = {
     options: [
       {
-        value: 'Menos de 10 mil US$',
-        viewValue: 'Menos de 10 mil US$'
+        value: 'MENOS DE 10 MIL US$',
+        viewValue: 'MENOS DE 10 MIL US$'
       },
       {
-        value: '10 mil a 30 mil US$',
-        viewValue: '10 mil a 30 mil US$'
+        value: '10 MIL A 30 MIL US$',
+        viewValue: '10 MIL A 30 MIL US$'
       },
       {
-        value: '30 mil a 50 mil US$',
-        viewValue: '30 mil a 50 mil US$'
+        value: '30 MIL A 50 MIL US$',
+        viewValue: '30 MIL A 50 MIL US$'
       },
       {
-        value: 'Más de 50 mil US$',
-        viewValue: 'Más de 50 mil US$'
+        value: 'MÁS DE 50 MIL US$',
+        viewValue: 'MÁS DE 50 MIL US$'
       },
     ]
   };
@@ -782,7 +782,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
 
   onHeightUnitChange(evento, form) {
     const realForm = form as FormGroup;
-    if (evento.valor === 'pie') {
+    if (evento.valor === 'PIE') {
       realForm.addControl('inches', this.fb.control('', Validators.required));
     } else {
       realForm.removeControl('inches');
@@ -827,7 +827,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
     });
 
     this.newRequest.get('person').get('age').valueChanges.subscribe(value => {
-      if (value >= 50 && this.newRequest.get('person').get('sex').value === 'Masculino') {
+      if (value >= 50 && this.newRequest.get('person').get('sex').value === 'MASCULINO') {
         this.questionnairesGastosMayores.addControl('solicitudProstatica', this.fb.group({}));
       } else {
         this.questionnairesGastosMayores.removeControl('solicitudProstatica');
@@ -835,7 +835,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
     });
 
     this.newRequest.get('person').get('sex').valueChanges.subscribe(value => {
-      if (value === 'Masculino' && this.newRequest.get('person').get('age').value >= 50) {
+      if (value === 'MASCULINO' && this.newRequest.get('person').get('age').value >= 50) {
         this.questionnairesGastosMayores.addControl('solicitudProstatica', this.fb.group({}));
       } else {
         this.questionnairesGastosMayores.removeControl('solicitudProstatica');
@@ -846,7 +846,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
     this.newRequest.get('person').get('isContractor').valueChanges.subscribe(value => {
 
       this.isContractor = true;
-      if (value === 'Si') {
+      if (value === 'SI') {
         this.isContractor = false;
         this.titles = FormValidationsConstant.titlesForMajorExpenses;
       } else {
@@ -857,7 +857,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
     this.newRequest.get('exposedPerson').get('contractor').valueChanges.subscribe(value => {
 
       this.isContractorPep = false;
-      if (value === 'si') {
+      if (value === 'SI') {
         this.isContractorPep = true;
       }
 
@@ -867,7 +867,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
     this.newRequest.get('exposedPerson').get('headLine').valueChanges.subscribe(value => {
 
       this.isSolicitantePep = false;
-      if (value === 'si') {
+      if (value === 'SI') {
         this.isSolicitantePep = true;
       }
 
@@ -877,7 +877,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
       this.newRequest.get('person').get('isJuridica').valueChanges.subscribe(value => {
         this.isJuridica = false;
         console.log(value);
-        if (value === 'Si') {
+        if (value === 'SI') {
 
         } else {
         }
@@ -924,9 +924,9 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
 
   newQuote() {
     if (this.userService.getRoleCotizador() === 'WWS') {
-      window.open('https://cotizadores.wwseguros.com.do/?cia=wws', '_blank');
+      window.open('http://portalwwg.eastus.cloudapp.azure.com:3000/salud?cia=wws', '_blank');
     } else if (this.userService.getRoleCotizador() === 'WMA') {
-      window.open('https://cotizadores.wwseguros.com.do/?cia=wwm', '_blank');
+      window.open('http://portalwwg.eastus.cloudapp.azure.com:3000/salud?cia=wwm', '_blank');
     }
   }
   canDeactivate(): Observable<boolean> | boolean {
@@ -1001,7 +1001,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
   }
 
   canPersonOptionShow(questionName: string) {
-    const isWomen = this.newRequest.get('person').value.sex === 'Femenino';
+    const isWomen = this.newRequest.get('person').value.sex === 'FEMENINO';
 
     if (questionName === 'havePregnant' && isWomen === true) {
       return true;
@@ -1015,7 +1015,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
   }
 
   canDependentOptionShow(questionName: string, id: number) {
-    const isWomen = this.newRequest.get('dependents').get('allDependents').value[id].sex === 'Femenino';
+    const isWomen = this.newRequest.get('dependents').get('allDependents').value[id].sex === 'FEMENINO';
     if (questionName === 'havePregnant' && isWomen === true) {
       return true;
     } else if (questionName === 'haveReproductiveOrganDisorders' && isWomen === true) {
@@ -1043,7 +1043,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
       }
 
       console.log(this.newRequest.value.person.sex);
-      if (this.newRequest.get('person').get('sex').value === 'Femenino') {
+      if (this.newRequest.get('person').get('sex').value === 'FEMENINO') {
         womenCount += 1;
       }
 
@@ -1060,7 +1060,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
   relationWatcher(event, realForm) {
     console.log('event: ', event.valor, 'form: ', realForm);
     const form = realForm as FormGroup;
-    if (event.valor === 'otros') {
+    if (event.valor === 'OTROS') {
       form.addControl('specifyRelationship', this.fb.control('', Validators.required));
     } else {
       form.removeControl('specifyRelationship');
@@ -1120,7 +1120,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
             // questionnaire.addControl('solicitudProstatica', this.fb.group({}));
 
             const form = this.newRequest.get('dependents').get('allDependents').get(index.toString()) as FormGroup;
-            if (age >= 50 && form.get('sex').value === 'Masculino') {
+            if (age >= 50 && form.get('sex').value === 'MASCULINO') {
               form.addControl('solicitudProstatica', this.fb.group({}));
             } else {
               form.removeControl('solicitudProstatica');
@@ -1128,7 +1128,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
           });
           this.newRequest.get('dependents').get('allDependents').get(index.toString()).get('sex').valueChanges.subscribe(value => {
             const form = this.newRequest.get('dependents').get('allDependents').get(index.toString()) as FormGroup;
-            if (form.get('age').value >= 50 && value === 'Masculino') {
+            if (form.get('age').value >= 50 && value === 'MASCULINO') {
               form.addControl('solicitudProstatica', this.fb.group({}));
             } else {
               form.removeControl('solicitudProstatica');
@@ -1291,7 +1291,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
     console.log(event);
     this.isJuridica = false;
 
-    if (event.valor === 'si' || event.valor === 'Si') {
+    if (event.valor === 'SI' || event.valor === 'SI') {
       switch (event.name) {
         case 'isContractor':
           formP.removeControl('isJuridica');
@@ -1348,7 +1348,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
         default:
           break;
       }
-    } else if (event.valor === 'no' || event.valor === 'No') {
+    } else if (event.valor === 'NO' || event.valor === 'NO') {
       switch (event.name) {
         case 'isContractor':
           formP.addControl('isJuridica', this.fb.control('', Validators.required));
@@ -1496,7 +1496,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
   valueChange($event, question, typeOrIndex) {
     console.log('tipo/index: ', typeOrIndex, 'event:', $event, 'question: ', question);
     if (typeOrIndex === 'solicitante') {
-      if ($event.checked === true || $event.valor === 'si') {
+      if ($event.checked === true || $event.valor === 'SI') {
         switch (question) {
           case 'havePregnant':
             this.questionsA.addControl('pregnant', this.fb.group({
@@ -1559,7 +1559,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
           default:
             break;
         }
-      } else if ($event.checked === false || $event.valor === 'no') {
+      } else if ($event.checked === false || $event.valor === 'NO') {
         switch (question) {
           case 'havePregnant':
             this.questionsA.removeControl('pregnant');
@@ -1617,7 +1617,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
       const questionnaire = dependents.at(typeOrIndex) as FormGroup;
       // const questionnaire = dependent.get('questionnairesGastosMayores') as FormGroup;
 
-      if ($event.checked === true || $event.valor === 'si') {
+      if ($event.checked === true || $event.valor === 'SI') {
         console.log('true');
         switch (question) {
           case 'haveEndocrineDisorders':
@@ -1682,7 +1682,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
           default:
             break;
         }
-      } else if ($event.checked === false || $event.valor === 'no') {
+      } else if ($event.checked === false || $event.valor === 'NO') {
         console.log('false');
 
         switch (question) {
@@ -1761,7 +1761,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
   selectChangeUrl(event) {
     switch (event) {
       case 'vida':
-        this.router.navigateByUrl('dashboard/requests/new-requests/life');
+        this.router.navigateByUrl('dashboard/requests/new-requests/vida');
         break;
 
       case 'disability':
@@ -1769,7 +1769,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
         break;
 
       case 'gastos mayores':
-        this.router.navigateByUrl('dashboard/requests/new-requests/major-expenses');
+        this.router.navigateByUrl('dashboard/requests/new-requests/salud');
         break;
 
       default:
@@ -1897,6 +1897,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
         this.newRequest.get('deducibles').setValue(data.data.deducible);
         this.newRequest.get('person').get('date').setValue(data.data.fecha_nacimiento);
         this.newRequest.get('person').get('firstName').setValue(data.data.nombre);
+        this.newRequest.get('person').get('lastName').setValue(data.data.apellidos);
 
         switch (data.data.sexo) {
           case 'M':

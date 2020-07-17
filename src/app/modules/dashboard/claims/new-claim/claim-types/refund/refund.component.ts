@@ -42,12 +42,12 @@ export class RefundComponent implements OnInit {
 		label: 'Especifique forma de pago',
 		options: [
 			{
-				value: 'transferencia',
-				viewValue: 'Transferencia'
+				value: 'TRANSFERENCIA',
+				viewValue: 'TRANSFERENCIA'
 			},
 			{
-				value: 'cheque',
-				viewValue: 'Cheque'
+				value: 'CHEQUE',
+				viewValue: 'CHEQUE'
 			}
 		]
 	};
@@ -65,12 +65,12 @@ export class RefundComponent implements OnInit {
 		label: 'Tipo de Cuenta',
 		options: [
 			{
-				value: 'ahorros',
-				viewValue: 'Ahorros'
+				value: 'AHORROS',
+				viewValue: 'AHORROS'
 			},
 			{
-				value: 'corriente',
-				viewValue: 'Corriente'
+				value: 'CORRIENTE',
+				viewValue: 'CORRIENTE'
 			}
 		]
 	};
@@ -79,15 +79,15 @@ export class RefundComponent implements OnInit {
 		label: 'Filtro',
 		options: [
 			{
-				value: 'nombre',
+				value: 'NOMBRE',
 				viewValue: 'Nombre'
 			},
 			{
-				value: 'id',
+				value: 'ID',
 				viewValue: 'ID'
 			},
 			{
-				value: 'poliza',
+				value: 'POLIZA',
 				viewValue: 'No. de Póliza'
 			}
 		]
@@ -213,9 +213,9 @@ export class RefundComponent implements OnInit {
 				filterType: ['', Validators.required],
 				idNumber: ['', Validators.required],
 				nombre: [{ value: '', disabled: true }, [Validators.required]],
-				direccion: ['', ],
-				telefono: ['', ],
-				correo: ['', [ Validators.email]],
+				direccion: ['',],
+				telefono: ['',],
+				correo: ['', [Validators.email]],
 			}),
 			diagnosticos: this.fb.array([this.createDiagnostic()]),
 			haveAditionalComentary: [''],
@@ -250,38 +250,38 @@ export class RefundComponent implements OnInit {
 			this.totalAmount = total;
 		});
 
-		this.refundForm.get('informacion').get('filterType').valueChanges.subscribe( valueFilter => {
+		this.refundForm.get('informacion').get('filterType').valueChanges.subscribe(valueFilter => {
 
 			this.refundForm.get('informacion').get('idNumber').setValue('');
 			this.refundForm.get('informacion').get('idNumber').markAsUntouched();
 
-			if (valueFilter == 'nombre') {
+			if (valueFilter == 'NOMBRE') {
 				this.filteredOptions = this.refundForm.get('informacion').get('idNumber').valueChanges
-				.pipe(
-					startWith(''),
-					map(value => typeof value === 'string' ? value : value),
-					map(value => value ? this._filter(value) : this.dataAutoCompleteName.slice())
-				);
+					.pipe(
+						startWith(''),
+						map(value => typeof value === 'string' ? value : value),
+						map(value => value ? this._filter(value) : this.dataAutoCompleteName.slice())
+					);
 			}
-			if (valueFilter == 'id') {
+			if (valueFilter == 'ID') {
 				this.filteredOptions = this.refundForm.get('informacion').get('idNumber').valueChanges
-				.pipe(
-					startWith(''),
-					map(value => typeof value === 'string' ? value : value),
-					map(value => value ? this._filter(value) : this.dataAutoCompleteIdNumber.slice())
-				);
+					.pipe(
+						startWith(''),
+						map(value => typeof value === 'string' ? value : value),
+						map(value => value ? this._filter(value) : this.dataAutoCompleteIdNumber.slice())
+					);
 			}
-			if (valueFilter == 'poliza') {
+			if (valueFilter == 'POLIZA') {
 				this.filteredOptions = this.refundForm.get('informacion').get('idNumber').valueChanges
-				.pipe(
-					startWith(''),
-					map(value => typeof value === 'string' ? value : value),
-					map(value => value ? this._filter(value) : this.dataAutoCompletePolicy.slice())
-				);
+					.pipe(
+						startWith(''),
+						map(value => typeof value === 'string' ? value : value),
+						map(value => value ? this._filter(value) : this.dataAutoCompletePolicy.slice())
+					);
 			}
 		});
 
-				console.log("El json de todo el formulario: ", JSON.stringify(this.refundForm.value) );
+		console.log("El json de todo el formulario: ", JSON.stringify(this.refundForm.value));
 
 	}
 	// role;
@@ -351,17 +351,17 @@ export class RefundComponent implements OnInit {
 		// n.toString
 		// let arrayValue;
 
-		if (this.refundForm.get('informacion').get('filterType').value == 'nombre') {
+		if (this.refundForm.get('informacion').get('filterType').value == 'NOMBRE') {
 			const filterValue = value.toLowerCase();
 
 			return this.dataAutoCompleteName.filter(option => option.toLowerCase().indexOf(filterValue) === 0);
 		}
-		if (this.refundForm.get('informacion').get('filterType').value == 'id') {
+		if (this.refundForm.get('informacion').get('filterType').value == 'ID') {
 			const filterValueNumber = value.toString();
 
 			return this.dataAutoCompleteIdNumber.filter(option => option.toString().indexOf(filterValueNumber) === 0);
 		}
-		if (this.refundForm.get('informacion').get('filterType').value == 'poliza') {
+		if (this.refundForm.get('informacion').get('filterType').value == 'POLIZA') {
 			const filterValue = value.toLowerCase();
 
 			return this.dataAutoCompletePolicy.filter(option => option.toLowerCase().indexOf(filterValue) === 0);
@@ -460,9 +460,9 @@ export class RefundComponent implements OnInit {
 	}
 
 	changePayment(event) {
-		if (event.value === 'cheque') {
+		if (event.value === 'CHEQUE') {
 			this.refundForm.removeControl('infoTransferencia');
-		} else if (event.value === 'transferencia') {
+		} else if (event.value === 'TRANSFERENCIA') {
 			this.refundForm.addControl(
 				'infoTransferencia',
 				this.fb.group({
@@ -503,7 +503,7 @@ export class RefundComponent implements OnInit {
 
 	addDiagnostic() {
 		this.diagnosticList.push(this.createDiagnostic());
-		console.log("El json de todo el formulario: ", JSON.stringify(this.refundForm.value) );
+		console.log("El json de todo el formulario: ", JSON.stringify(this.refundForm.value));
 
 	}
 
@@ -535,19 +535,19 @@ export class RefundComponent implements OnInit {
 
 		let idNumberObject;
 
-		if (this.refundForm.get('informacion').get('filterType').value == 'nombre') {
-				idNumberObject = this.dataAutoCompleteIdNumberObject.find(nombre =>
-			nombre.name == idNumber);
-			 idNumber = (idNumberObject.value).toString();
-			}
-		if (this.refundForm.get('informacion').get('filterType').value == 'id') {
+		if (this.refundForm.get('informacion').get('filterType').value == 'NOMBRE') {
+			idNumberObject = this.dataAutoCompleteIdNumberObject.find(nombre =>
+				nombre.name == idNumber);
+			idNumber = (idNumberObject.value).toString();
+		}
+		if (this.refundForm.get('informacion').get('filterType').value == 'ID') {
 			idNumber = (idNumber).toString();
 		}
-		if (this.refundForm.get('informacion').get('filterType').value == 'poliza') {
-				idNumberObject = this.dataAutoCompleteIdNumberObject.find(nombre =>
-			nombre.policy == idNumber);
-			 idNumber = (idNumberObject.value).toString();
-			}
+		if (this.refundForm.get('informacion').get('filterType').value == 'POLIZA') {
+			idNumberObject = this.dataAutoCompleteIdNumberObject.find(nombre =>
+				nombre.policy == idNumber);
+			idNumber = (idNumberObject.value).toString();
+		}
 
 		// idNumberObject = this.dataAutoCompleteIdNumberObject.find(nombre =>
 		// 	nombre.name == idNumber);

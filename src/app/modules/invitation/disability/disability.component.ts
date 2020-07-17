@@ -53,12 +53,12 @@ export class DisabilityComponent implements OnInit, DoCheck {
     label: '',
     options: [
       {
-        value: 'masculino',
-        viewValue: 'Masculino'
+        value: 'MASCULINO',
+        viewValue: 'MASCULINO'
       },
       {
-        value: 'femenino',
-        viewValue: 'Femenino'
+        value: 'FEMENINO',
+        viewValue: 'FEMENINO'
       }
     ]
   };
@@ -67,12 +67,12 @@ export class DisabilityComponent implements OnInit, DoCheck {
     label: '',
     options: [
       {
-        value: 'permanente',
-        viewValue: 'Permanente'
+        value: 'PERMANENTE',
+        viewValue: 'PERMANENTE'
       },
       {
-        value: 'temporal',
-        viewValue: 'Temporal'
+        value: 'TEMPORAL',
+        viewValue: 'TEMPORAL'
       }
     ]
   };
@@ -107,11 +107,11 @@ export class DisabilityComponent implements OnInit, DoCheck {
     label: '',
     options: [
       {
-        value: 'si',
+        value: 'SI',
         viewValue: 'Si'
       },
       {
-        value: 'no',
+        value: 'NO',
         viewValue: 'No'
       }
     ]
@@ -133,20 +133,20 @@ export class DisabilityComponent implements OnInit, DoCheck {
     label: 'Estado Civil',
     options: [
       {
-        value: 'casado',
-        viewValue: 'Casado'
+        value: 'CASADO',
+        viewValue: 'CASADO'
       },
       {
-        value: 'soltero',
-        viewValue: 'Soltero'
+        value: 'SOLTERO',
+        viewValue: 'SOLTERO'
       },
       {
-        value: 'union Libre',
-        viewValue: 'Unión Libre'
+        value: 'UNIÓN LIBRE',
+        viewValue: 'UNIÓN LIBRE'
       },
       {
-        value: 'divorciado',
-        viewValue: 'Divorciado'
+        value: 'DIVORCIADO',
+        viewValue: 'DIVORCIADO'
       }
     ]
   };
@@ -192,20 +192,20 @@ export class DisabilityComponent implements OnInit, DoCheck {
     label: '',
     options: [
       {
-        value: '30 días',
-        viewValue: '30 días'
+        value: '30 DÍAS',
+        viewValue: '30 DÍAS'
       },
       {
-        value: '60 días',
-        viewValue: '60 días'
+        value: '60 DÍAS',
+        viewValue: '60 DÍAS'
       },
       {
-        value: '90 días',
-        viewValue: '90 días'
+        value: '90 DÍAS',
+        viewValue: '90 DÍAS'
       },
       {
-        value: '120 días',
-        viewValue: '120 días'
+        value: '120 DÍAS',
+        viewValue: '120 DÍAS'
       }
     ]
   };
@@ -218,33 +218,33 @@ export class DisabilityComponent implements OnInit, DoCheck {
   };
 
   rentArray: any[] = [
-    { value: 'us$ 1,000', viewValue: 'US$ 1,000' },
-    { value: 'us$ 2,000', viewValue: 'US$ 2,000' },
-    { value: 'us$ 3,000', viewValue: 'US$ 3,000' },
-    { value: 'us$ 4,000', viewValue: 'US$ 4,000' },
-    { value: 'us$ 5,000', viewValue: 'US$ 5,000' },
-    { value: 'us$ 6,000', viewValue: 'US$ 6,000' },
-    { value: 'us$ 7,000', viewValue: 'US$ 7,000' },
-    { value: 'us$ 8,000', viewValue: 'US$ 8,000' },
-    { value: 'us$ 9,000', viewValue: 'US$ 9,000' },
-    { value: 'us$ 10,000', viewValue: 'US$ 10,000' },
-    { value: 'us$ 11,000', viewValue: 'US$ 11,000' },
-    { value: 'us$ 12,000', viewValue: 'US$ 12,000' }
+    { value: 'US$ 1,000', viewValue: 'US$ 1,000' },
+    { value: 'US$ 2,000', viewValue: 'US$ 2,000' },
+    { value: 'US$ 3,000', viewValue: 'US$ 3,000' },
+    { value: 'US$ 4,000', viewValue: 'US$ 4,000' },
+    { value: 'US$ 5,000', viewValue: 'US$ 5,000' },
+    { value: 'US$ 6,000', viewValue: 'US$ 6,000' },
+    { value: 'US$ 7,000', viewValue: 'US$ 7,000' },
+    { value: 'US$ 8,000', viewValue: 'US$ 8,000' },
+    { value: 'US$ 9,000', viewValue: 'US$ 9,000' },
+    { value: 'US$ 10,000', viewValue: 'US$ 10,000' },
+    { value: 'US$ 11,000', viewValue: 'US$ 11,000' },
+    { value: 'US$ 12,000', viewValue: 'US$ 12,000' }
   ];
 
   trashArray = [
-    { value: 'us$ 1,000', viewValue: 'US$ 1,000' },
-    { value: 'us$ 2,000', viewValue: 'US$ 2,000' },
-    { value: 'us$ 3,000', viewValue: 'US$ 3,000' },
-    { value: 'us$ 4,000', viewValue: 'US$ 4,000' },
-    { value: 'us$ 5,000', viewValue: 'US$ 5,000' },
-    { value: 'us$ 6,000', viewValue: 'US$ 6,000' },
-    { value: 'us$ 7,000', viewValue: 'US$ 7,000' },
-    { value: 'us$ 8,000', viewValue: 'US$ 8,000' },
-    { value: 'us$ 9,000', viewValue: 'US$ 9,000' },
-    { value: 'us$ 10,000', viewValue: 'US$ 10,000' },
-    { value: 'us$ 11,000', viewValue: 'US$ 11,000' },
-    { value: 'us$ 12,000', viewValue: 'US$ 12,000' }
+    { value: 'US$ 1,000', viewValue: 'US$ 1,000' },
+    { value: 'US$ 2,000', viewValue: 'US$ 2,000' },
+    { value: 'US$ 3,000', viewValue: 'US$ 3,000' },
+    { value: 'US$ 4,000', viewValue: 'US$ 4,000' },
+    { value: 'US$ 5,000', viewValue: 'US$ 5,000' },
+    { value: 'US$ 6,000', viewValue: 'US$ 6,000' },
+    { value: 'US$ 7,000', viewValue: 'US$ 7,000' },
+    { value: 'US$ 8,000', viewValue: 'US$ 8,000' },
+    { value: 'US$ 9,000', viewValue: 'US$ 9,000' },
+    { value: 'US$ 10,000', viewValue: 'US$ 10,000' },
+    { value: 'US$ 11,000', viewValue: 'US$ 11,000' },
+    { value: 'US$ 12,000', viewValue: 'US$ 12,000' }
   ];
 
   rentOptions: FieldConfig = {
@@ -264,48 +264,48 @@ export class DisabilityComponent implements OnInit, DoCheck {
     label: 'Enfermedades/Desordenes',
     options: [
       {
-        value: 'depresión',
-        viewValue: 'Depresión'
+        value: 'DEPRESIÓN',
+        viewValue: 'DEPRESIÓN'
       },
       {
-        value: 'hipertensión arterial',
-        viewValue: 'Hipertensión arterial'
+        value: 'HIPERTENSIÓN ARTERIAL',
+        viewValue: 'HIPERTENSIÓN ARTERIAL'
       },
       {
-        value: 'desórdenes cardiovasculares',
-        viewValue: 'Desórdenes cardiovasculares'
+        value: 'DESÓRDENES CARDIOVASCULARES',
+        viewValue: 'DESÓRDENES CARDIOVASCULARES'
       },
       {
-        value: 'desórdenes de hígado',
-        viewValue: 'Desórdenes de hígado'
+        value: 'DESÓRDENES DE HÍGADO',
+        viewValue: 'DESÓRDENES DE HÍGADO'
       },
       {
-        value: 'desórdenes digestivos',
-        viewValue: 'Desórdenes digestivos'
+        value: 'DESÓRDENES DIGESTIVOS',
+        viewValue: 'DESÓRDENES DIGESTIVOS'
       },
       {
-        value: 'desórdenes renales',
-        viewValue: 'Desórdenes renales'
+        value: 'DESÓRDENES RENALES',
+        viewValue: 'DESÓRDENES RENALES'
       },
       {
-        value: 'desórdenes reumáticos',
-        viewValue: 'Desórdenes reumáticos'
+        value: 'DESÓRDENES REUMÁTICOS',
+        viewValue: 'DESÓRDENES REUMÁTICOS'
       },
       {
-        value: 'desórdenes respiratorios o pulmonares',
-        viewValue: 'Desórdenes respiratorios o pulmonares'
+        value: 'DESÓRDENES RESPIRATORIOS O PULMONARES',
+        viewValue: 'DESÓRDENES RESPIRATORIOS O PULMONARES'
       },
       {
-        value: 'desórdenes ginecológicos',
-        viewValue: 'Desórdenes ginecológicos'
+        value: 'DESÓRDENES GINECOLÓGICOS',
+        viewValue: 'DESÓRDENES GINECOLÓGICOS'
       },
       {
-        value: 'desórdenes urológicos o metabólicos (diabetes, hipercolesterolemia)',
-        viewValue: 'Desórdenes urológicos o metabólicos (Diabetes, Hipercolesterolemia)'
+        value: 'DESÓRDENES UROLÓGICOS O METABÓLICOS (DIABETES, HIPERCOLESTEROLEMIA)',
+        viewValue: 'DESÓRDENES UROLÓGICOS O METABÓLICOS (DIABETES, HIPERCOLESTEROLEMIA)'
       },
       {
-        value: 'desórdenes osteoarticulares (Discal, vertebral y paravertebral, lumbado, clática)',
-        viewValue: 'Desórdenes osteoarticulares (discal, vertebral y paravertebral, lumbado, clática)'
+        value: 'DESÓRDENES OSTEOARTICULARES (DISCAL, VERTEBRAL Y PARAVERTEBRAL, LUMBADO, CLÁTICA)',
+        viewValue: 'DESÓRDENES OSTEOARTICULARES (DISCAL, VERTEBRAL Y PARAVERTEBRAL, LUMBADO, CLÁTICA)'
       }
     ]
   };
@@ -314,20 +314,20 @@ export class DisabilityComponent implements OnInit, DoCheck {
     label: '',
     options: [
       {
-        value: 'declinado',
-        viewValue: 'Declinado'
+        value: 'DECLINADO',
+        viewValue: 'DECLINADO'
       },
       {
-        value: 'aplazado',
-        viewValue: 'Aplazado'
+        value: 'APLAZADO',
+        viewValue: 'APLAZADO'
       },
       {
-        value: 'recargado',
-        viewValue: 'Recargado'
+        value: 'RECARGADO',
+        viewValue: 'RECARGADO'
       },
       {
-        value: 'limitado',
-        viewValue: 'Limitado'
+        value: 'LIMITADO',
+        viewValue: 'LIMITADO'
       },
     ]
   };
@@ -336,12 +336,12 @@ export class DisabilityComponent implements OnInit, DoCheck {
     label: 'Tipo de Póliza',
     options: [
       {
-        value: 'salud',
-        viewValue: 'Salud'
+        value: 'SALUD',
+        viewValue: 'SALUD'
       },
       {
-        value: 'vida',
-        viewValue: 'Vida'
+        value: 'VIDA',
+        viewValue: 'VIDA'
       }
     ]
   };
@@ -350,12 +350,12 @@ export class DisabilityComponent implements OnInit, DoCheck {
     label: 'Tiempo',
     options: [
       {
-        value: 'mes(es)',
-        viewValue: 'Mes(es)'
+        value: 'MES(ES)',
+        viewValue: 'MES(ES)'
       },
       {
-        value: 'año(s)',
-        viewValue: 'Año(s)'
+        value: 'AÑO(S)',
+        viewValue: 'AÑO(S)'
       }
     ]
   };
@@ -937,7 +937,7 @@ export class DisabilityComponent implements OnInit, DoCheck {
     // console.log(this.rentArray);
 
     // tslint:disable-next-line: align
-    if (this.age >= 50 && this.disabilityGroup.get('insured_data').get('gender').value == 'masculino') {
+    if (this.age >= 50 && this.disabilityGroup.get('insured_data').get('gender').value == 'MASCULINO') {
       // if (this.xx != 0) {
       //   this.xx = 0;
       // }
@@ -958,7 +958,7 @@ export class DisabilityComponent implements OnInit, DoCheck {
         // }
       }
     }
-    else if (this.age < 50 || this.disabilityGroup.get('insured_data').get('gender').value == 'femenino') {
+    else if (this.age < 50 || this.disabilityGroup.get('insured_data').get('gender').value == 'FEMENINO') {
       // if (this.xx == 0) {
       //   this.x++;
       // }
@@ -980,84 +980,84 @@ export class DisabilityComponent implements OnInit, DoCheck {
       // }
     }
 
-    if (this.disabilityGroup.get('questions').get('questionnaire').get('therapy_radio').value == 'no' &&
+    if (this.disabilityGroup.get('questions').get('questionnaire').get('therapy_radio').value == 'NO' &&
       this.disabilityGroup.get('questions').get('questionnaire').get('therapy_array')) {
 
       const formQDoCheck = this.disabilityGroup.get('questions').get('questionnaire') as FormGroup;
       formQDoCheck.removeControl('therapy_array');
     }
 
-    if (this.disabilityGroup.get('questions').get('questionnaire').get('sick_pay_radio').value == 'no' &&
+    if (this.disabilityGroup.get('questions').get('questionnaire').get('sick_pay_radio').value == 'NO' &&
       this.disabilityGroup.get('questions').get('questionnaire').get('sick_pay_array')) {
 
       const formQDoCheck = this.disabilityGroup.get('questions').get('questionnaire') as FormGroup;
       formQDoCheck.removeControl('sick_pay_array');
     }
 
-    if (this.disabilityGroup.get('questions').get('questionnaire').get('analysis_radio').value == 'no' &&
+    if (this.disabilityGroup.get('questions').get('questionnaire').get('analysis_radio').value == 'NO' &&
       this.disabilityGroup.get('questions').get('questionnaire').get('analysis_array')) {
 
       const formQDoCheck = this.disabilityGroup.get('questions').get('questionnaire') as FormGroup;
       formQDoCheck.removeControl('analysis_array');
     }
 
-    if (this.disabilityGroup.get('questions').get('questionnaire').get('other_analysis_radio').value == 'no' &&
+    if (this.disabilityGroup.get('questions').get('questionnaire').get('other_analysis_radio').value == 'NO' &&
       this.disabilityGroup.get('questions').get('questionnaire').get('other_analysis_array')) {
 
       const formQDoCheck = this.disabilityGroup.get('questions').get('questionnaire') as FormGroup;
       formQDoCheck.removeControl('other_analysis_array');
     }
 
-    if (this.disabilityGroup.get('questions').get('questionnaire').get('inpatientCare_radio').value == 'no' &&
+    if (this.disabilityGroup.get('questions').get('questionnaire').get('inpatientCare_radio').value == 'NO' &&
       this.disabilityGroup.get('questions').get('questionnaire').get('inpatientCare_array')) {
 
       const formQDoCheck = this.disabilityGroup.get('questions').get('questionnaire') as FormGroup;
       formQDoCheck.removeControl('inpatientCare_array');
     }
 
-    if (this.disabilityGroup.get('questions').get('questionnaire').get('hospitalization_radio').value == 'no' &&
+    if (this.disabilityGroup.get('questions').get('questionnaire').get('hospitalization_radio').value == 'NO' &&
       this.disabilityGroup.get('questions').get('questionnaire').get('hospitalization_array')) {
 
       const formQDoCheck = this.disabilityGroup.get('questions').get('questionnaire') as FormGroup;
       formQDoCheck.removeControl('hospitalization_array');
     }
 
-    if (this.disabilityGroup.get('questions').get('questionnaire').get('bloodSick_radio').value == 'no' &&
+    if (this.disabilityGroup.get('questions').get('questionnaire').get('bloodSick_radio').value == 'NO' &&
       this.disabilityGroup.get('questions').get('questionnaire').get('bloodSick_array')) {
 
       const formQDoCheck = this.disabilityGroup.get('questions').get('questionnaire') as FormGroup;
       formQDoCheck.removeControl('bloodSick_array');
     }
 
-    if (this.disabilityGroup.get('questions').get('questionnaire').get('VIH_radio').value == 'no' &&
+    if (this.disabilityGroup.get('questions').get('questionnaire').get('VIH_radio').value == 'NO' &&
       this.disabilityGroup.get('questions').get('questionnaire').get('VIH_array')) {
 
       const formQDoCheck = this.disabilityGroup.get('questions').get('questionnaire') as FormGroup;
       formQDoCheck.removeControl('VIH_array');
     }
 
-    if (this.disabilityGroup.get('questions').get('questionnaire').get('specialTherapy_radio').value == 'no' &&
+    if (this.disabilityGroup.get('questions').get('questionnaire').get('specialTherapy_radio').value == 'NO' &&
       this.disabilityGroup.get('questions').get('questionnaire').get('specialTherapy_array')) {
 
       const formQDoCheck = this.disabilityGroup.get('questions').get('questionnaire') as FormGroup;
       formQDoCheck.removeControl('specialTherapy_array');
     }
 
-    if (this.disabilityGroup.get('questions').get('questionnaire').get('accident_radio').value == 'no' &&
+    if (this.disabilityGroup.get('questions').get('questionnaire').get('accident_radio').value == 'NO' &&
       this.disabilityGroup.get('questions').get('questionnaire').get('accident_array')) {
 
       const formQDoCheck = this.disabilityGroup.get('questions').get('questionnaire') as FormGroup;
       formQDoCheck.removeControl('accident_array');
     }
 
-    if (this.disabilityGroup.get('questions').get('questionnaire').get('deny_radio').value == 'no' &&
+    if (this.disabilityGroup.get('questions').get('questionnaire').get('deny_radio').value == 'NO' &&
       this.disabilityGroup.get('questions').get('questionnaire').get('deny_array')) {
 
       const formQDoCheck = this.disabilityGroup.get('questions').get('questionnaire') as FormGroup;
       formQDoCheck.removeControl('deny_array');
     }
 
-    if (this.disabilityGroup.get('questions').get('questionnaire').get('insurance_radio').value == 'no' &&
+    if (this.disabilityGroup.get('questions').get('questionnaire').get('insurance_radio').value == 'NO' &&
       this.disabilityGroup.get('questions').get('questionnaire').get('insurance_array')) {
 
       const formQDoCheck = this.disabilityGroup.get('questions').get('questionnaire') as FormGroup;
@@ -1069,7 +1069,7 @@ export class DisabilityComponent implements OnInit, DoCheck {
       for (let x = 0; x < this.insuranceArray.controls.length; x++) {
 
         if ((this.disabilityGroup.get('questions').get('questionnaire').get('insurance_array'
-        ).get(x.toString()).get('claim_radio').value == 'no' ||
+        ).get(x.toString()).get('claim_radio').value == 'NO' ||
           this.disabilityGroup.get('questions').get('questionnaire').get('insurance_array'
           ).get(x.toString()).get('claim_radio').value == '' ||
           this.disabilityGroup.get('questions').get('questionnaire').get('insurance_array'
@@ -1086,17 +1086,17 @@ export class DisabilityComponent implements OnInit, DoCheck {
       }
     }
 
-    if (this.disabilityGroup.get('contingent').get('hasAnotherCoverage').value == 'no' &&
+    if (this.disabilityGroup.get('contingent').get('hasAnotherCoverage').value == 'NO' &&
       this.disabilityGroup.get('contingent').get('anotherCoverages')) {
 
       const formCBDoCheck = this.disabilityGroup.get('contingent') as FormGroup;
       formCBDoCheck.removeControl('anotherCoverages');
     }
 
-    if (this.disabilityGroup.get('contingent').get('hasAnotherCoverage').value == 'si') {
+    if (this.disabilityGroup.get('contingent').get('hasAnotherCoverage').value == 'SI') {
 
       if (this.disabilityGroup.get('contingent').get('changeAnotherCoverage')) {
-        if ((this.disabilityGroup.get('contingent').get('changeAnotherCoverage').value == 'no'
+        if ((this.disabilityGroup.get('contingent').get('changeAnotherCoverage').value == 'NO'
           || this.disabilityGroup.get('contingent').get('changeAnotherCoverage').value == ''
           || this.disabilityGroup.get('contingent').get('changeAnotherCoverage').value == null
           || this.disabilityGroup.get('contingent').get('changeAnotherCoverage').value == undefined) &&
@@ -1137,7 +1137,7 @@ export class DisabilityComponent implements OnInit, DoCheck {
           ('analysis_array').get(x.toString()) as FormGroup;
 
         if (this.disabilityGroup.get('questions').get('questionnaire').get
-          ('analysis_array').get(x.toString()).get('test').value == 'Otros') {
+          ('analysis_array').get(x.toString()).get('test').value == 'OTROS') {
 
           if (!(this.disabilityGroup.get('questions').get('questionnaire').get
             ('analysis_array').get(x.toString()).get('specifyStudy'))) {
@@ -1145,7 +1145,7 @@ export class DisabilityComponent implements OnInit, DoCheck {
           }
         }
         if (this.disabilityGroup.get('questions').get('questionnaire').get
-          ('analysis_array').get(x.toString()).get('test').value != 'Otros') {
+          ('analysis_array').get(x.toString()).get('test').value != 'OTROS') {
 
           if (this.disabilityGroup.get('questions').get('questionnaire').get
             ('analysis_array').get(x.toString()).get('specifyStudy')) {
@@ -1208,7 +1208,7 @@ export class DisabilityComponent implements OnInit, DoCheck {
 
     console.log(event);
 
-    if (event.valor === 'si') {
+    if (event.valor === 'SI') {
       // console.log(JSON.stringify(this.disabilityGroup.value));
 
       switch (event.name) {
@@ -1433,7 +1433,7 @@ export class DisabilityComponent implements OnInit, DoCheck {
           break;
 
       }
-    } else if (event.valor === 'no') {
+    } else if (event.valor === 'NO') {
       switch (event.name) {
         case 'smoker_radio':
           form.removeControl('smoke');
@@ -1935,7 +1935,7 @@ export class DisabilityComponent implements OnInit, DoCheck {
           this.filesDocumentsKnowClientArray = this.disabilityGroup.get('files').get('documentsKnowClient') as FormArray;
         }
 
-        if (formCB.get('hasAnotherCoverage').value !== 'si') {
+        if (formCB.get('hasAnotherCoverage').value !== 'SI') {
           formCB.removeControl('anotherCoverages');
           this.existingCoveragesList = undefined;
           formCB.get('changeAnotherCoverage').reset();

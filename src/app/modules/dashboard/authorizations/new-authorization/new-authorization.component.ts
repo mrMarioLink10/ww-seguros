@@ -62,15 +62,15 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy, DoCheck {
 			label: 'Filtro',
 			options: [
 				{
-					value: 'nombre',
+					value: 'NOMBRE',
 					viewValue: 'Nombre'
 				},
 				{
-					value: 'id',
+					value: 'ID',
 					viewValue: 'ID'
 				},
 				{
-					value: 'poliza',
+					value: 'POLIZA',
 					viewValue: 'No. de Póliza'
 				}
 			]
@@ -80,11 +80,11 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy, DoCheck {
 		label: '¿Tiene otro seguro de salud?',
 		options: [
 			{
-				value: 'si',
+				value: 'SI',
 				viewValue: 'Si'
 			},
 			{
-				value: 'no',
+				value: 'NO',
 				viewValue: 'No'
 			}
 		]
@@ -94,11 +94,11 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy, DoCheck {
 		label: '',
 		options: [
 			{
-				value: 'si',
+				value: 'SI',
 				viewValue: 'Si'
 			},
 			{
-				value: 'no',
+				value: 'NO',
 				viewValue: 'No'
 			}
 		]
@@ -108,12 +108,12 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy, DoCheck {
 		label: 'Sexo',
 		options: [
 			{
-				value: 'femenino',
-				viewValue: 'Femenino'
+				value: 'FEMENINO',
+				viewValue: 'FEMENINO'
 			},
 			{
-				value: 'masculino',
-				viewValue: 'Masculino'
+				value: 'MASCULINO',
+				viewValue: 'MASCULINO'
 			}
 		]
 	};
@@ -122,12 +122,12 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy, DoCheck {
 		label: 'La condición se trata de: ',
 		options: [
 			{
-				value: 'hospitalizacion',
-				viewValue: 'Hospitalización'
+				value: 'HOSPITALIZACIÓN',
+				viewValue: 'HOSPITALIZACIÓN'
 			},
 			{
-				value: 'ambulatorio',
-				viewValue: 'Ambulatorio'
+				value: 'AMBULATORIO',
+				viewValue: 'AMBULATORIO'
 			}
 		]
 	};
@@ -150,7 +150,7 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy, DoCheck {
 		const form = this.authorization.get('informacionAsegurado') as FormGroup;
 		console.log(event);
 
-		if (event.valor === 'si') {
+		if (event.valor === 'SI') {
 			switch (event.name) {
 				case 'otroSeguro':
 					form.addControl('seguro', this.fb.group({
@@ -163,7 +163,7 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy, DoCheck {
 				default:
 					break;
 			}
-		} else if (event.valor === 'no') {
+		} else if (event.valor === 'NO') {
 			switch (event.name) {
 				case 'otroSeguro':
 					form.removeControl('seguro');
@@ -413,7 +413,7 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy, DoCheck {
 				this.authorization.get('informacionAsegurado').get('idNumber').setValue('');
 				this.authorization.get('informacionAsegurado').get('idNumber').markAsUntouched();
 
-				if (valueFilter == 'nombre') {
+				if (valueFilter == 'NOMBRE') {
 					this.filteredOptions = this.authorization.get('informacionAsegurado').get('idNumber').valueChanges
 					.pipe(
 						startWith(''),
@@ -421,7 +421,7 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy, DoCheck {
 						map(value => value ? this._filter(value) : this.dataAutoCompleteName.slice())
 					);
 				}
-				if (valueFilter == 'id') {
+				if (valueFilter == 'ID') {
 					this.filteredOptions = this.authorization.get('informacionAsegurado').get('idNumber').valueChanges
 					.pipe(
 						startWith(''),
@@ -429,7 +429,7 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy, DoCheck {
 						map(value => value ? this._filter(value) : this.dataAutoCompleteIdNumber.slice())
 					);
 				}
-				if (valueFilter == 'poliza') {
+				if (valueFilter == 'POLIZA') {
 					this.filteredOptions = this.authorization.get('informacionAsegurado').get('idNumber').valueChanges
 					.pipe(
 						startWith(''),
@@ -440,7 +440,7 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy, DoCheck {
 			});
 
 		this.authorization.get('informacionMedica').get('condicion').valueChanges.subscribe(value => {
-				if (value == 'hospitalizacion') {
+				if (value == 'HOSPITALIZACIÓN') {
 					if (this.authorization.get('informacionMedica').get('tiempoEstadia').disabled) {
 						this.authorization.get('informacionMedica').get('tiempoEstadia').enable();
 						this.authorization.get('informacionMedica').get('tiempoEstadia').setValue('');
@@ -448,7 +448,7 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy, DoCheck {
 					}
 				}
 				// tslint:disable-next-line: one-line
-				else if (value == 'ambulatorio') {
+				else if (value == 'AMBULATORIO') {
 					this.authorization.get('informacionMedica').get('tiempoEstadia').disable();
 					this.authorization.get('informacionMedica').get('tiempoEstadia').setValue(1);
 				}
@@ -491,17 +491,17 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy, DoCheck {
 
 	private _filter(value: string): any[] {
 
-		if (this.authorization.get('informacionAsegurado').get('filterType').value == 'nombre') {
+		if (this.authorization.get('informacionAsegurado').get('filterType').value == 'NOMBRE') {
 			const filterValue = value.toLowerCase();
 
 			return this.dataAutoCompleteName.filter(option => option.toLowerCase().indexOf(filterValue) === 0);
 		}
-		if (this.authorization.get('informacionAsegurado').get('filterType').value == 'id') {
+		if (this.authorization.get('informacionAsegurado').get('filterType').value == 'ID') {
 			const filterValueNumber = value.toString();
 
 			return this.dataAutoCompleteIdNumber.filter(option => option.toString().indexOf(filterValueNumber) === 0);
 		}
-		if (this.authorization.get('informacionAsegurado').get('filterType').value == 'poliza') {
+		if (this.authorization.get('informacionAsegurado').get('filterType').value == 'POLIZA') {
 			const filterValue = value.toLowerCase();
 
 			return this.dataAutoCompletePolicy.filter(option => option.toLowerCase().indexOf(filterValue) === 0);
@@ -662,15 +662,15 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy, DoCheck {
 
 		let idNumberObject;
 
-		if (this.authorization.get('informacionAsegurado').get('filterType').value == 'nombre') {
+		if (this.authorization.get('informacionAsegurado').get('filterType').value == 'NOMBRE') {
 				idNumberObject = this.dataAutoCompleteIdNumberObject.find(nombre =>
 			nombre.name == idNumber);
 			 idNumber = (idNumberObject.value).toString();
 			}
-		if (this.authorization.get('informacionAsegurado').get('filterType').value == 'id') {
+		if (this.authorization.get('informacionAsegurado').get('filterType').value == 'ID') {
 			idNumber = (idNumber).toString();
 		}
-		if (this.authorization.get('informacionAsegurado').get('filterType').value == 'poliza') {
+		if (this.authorization.get('informacionAsegurado').get('filterType').value == 'POLIZA') {
 				idNumberObject = this.dataAutoCompleteIdNumberObject.find(nombre =>
 			nombre.policy == idNumber);
 			 idNumber = (idNumberObject.value).toString();
@@ -861,7 +861,7 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy, DoCheck {
 			// this.authorization['controls'].files['controls'].studies.setValue(data.data.files.studies);
 			// this.authorization['controls'].files['controls'].indication.setValue(data.data.files.indication);
 
-			if (data.data.informacionAsegurado.otroSeguro === 'si') {
+			if (data.data.informacionAsegurado.otroSeguro === 'SI') {
 				const form = this.authorization.get('informacionAsegurado') as FormGroup;
 				form.addControl('seguro', this.fb.group({
 					nombre: ['', Validators.required],
@@ -875,7 +875,7 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy, DoCheck {
 				this.authorization['controls'].informacionAsegurado['controls'].seguro['controls'].suma.setValue(data.data.informacionAsegurado.seguro.suma);
 
 				// console.log(JSON.stringify(this.authorization.value));
-			} else if (data.data.informacionAsegurado.otroSeguro === 'no') {
+			} else if (data.data.informacionAsegurado.otroSeguro === 'NO') {
 				console.log('No hay que crear el control');
 			}
 

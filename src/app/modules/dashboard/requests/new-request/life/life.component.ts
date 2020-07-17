@@ -264,12 +264,12 @@ export class LifeComponent implements OnInit, DoCheck {
     label: '¿Cuánto lo conoce?',
     options: [
       {
-        value: 'mucho',
-        viewValue: 'Mucho'
+        value: 'MUCHO',
+        viewValue: 'MUCHO'
       },
       {
-        value: 'poco',
-        viewValue: 'Poco'
+        value: 'POCO',
+        viewValue: 'POCO'
       },
     ]
   };
@@ -310,12 +310,12 @@ export class LifeComponent implements OnInit, DoCheck {
     label: 'Tipo de Moneda',
     options: [
       {
-        value: 'Dolares',
-        viewValue: 'Dolares'
+        value: 'DOLARES',
+        viewValue: 'DOLARES'
       },
       {
-        value: 'Pesos Dominicanos',
-        viewValue: 'Pesos Dominicanos'
+        value: 'PESOS DOMINICANOS',
+        viewValue: 'PESOS DOMINICANOS'
       },
     ],
   };
@@ -325,11 +325,11 @@ export class LifeComponent implements OnInit, DoCheck {
     label: 'Tipo de Moneda',
     options: [
       {
-        value: 'usd',
+        value: 'USD',
         viewValue: 'US$'
       },
       {
-        value: 'dop',
+        value: 'DOP',
         viewValue: 'DOP$'
       },
     ],
@@ -340,11 +340,11 @@ export class LifeComponent implements OnInit, DoCheck {
     label: 'Tipo de Moneda',
     options: [
       {
-        value: 'usd',
+        value: 'USD',
         viewValue: 'US$'
       },
       {
-        value: 'dop',
+        value: 'DOP',
         viewValue: 'DOP$'
       },
     ],
@@ -355,11 +355,11 @@ export class LifeComponent implements OnInit, DoCheck {
     label: 'Tipo de Moneda',
     options: [
       {
-        value: 'usd',
+        value: 'USD',
         viewValue: 'US$'
       },
       {
-        value: 'dop',
+        value: 'DOP',
         viewValue: 'DOP$'
       },
     ],
@@ -370,11 +370,11 @@ export class LifeComponent implements OnInit, DoCheck {
     label: 'Tipo de Moneda',
     options: [
       {
-        value: 'usd',
+        value: 'USD',
         viewValue: 'US$'
       },
       {
-        value: 'dop',
+        value: 'DOP',
         viewValue: 'DOP$'
       },
     ],
@@ -384,12 +384,12 @@ export class LifeComponent implements OnInit, DoCheck {
     label: 'Cambio de peso',
     options: [
       {
-        value: 'aumento',
-        viewValue: 'Aumento'
+        value: 'AUMENTO',
+        viewValue: 'AUMENTO'
       },
       {
-        value: 'perdida',
-        viewValue: 'Pérdida'
+        value: 'PÉRDIDA',
+        viewValue: 'PÉRDIDA'
       }
     ],
   };
@@ -397,16 +397,16 @@ export class LifeComponent implements OnInit, DoCheck {
   status = {
     options: [
       {
-        value: 'soltero',
-        viewValue: 'Soltero'
+        value: 'SOLTERO',
+        viewValue: 'SOLTERO'
       },
       {
-        value: 'casado',
-        viewValue: 'Casado'
+        value: 'CASADO',
+        viewValue: 'CASADO'
       },
       {
-        value: 'union Libre',
-        viewValue: 'Unión Libre'
+        value: 'UNIÓN LIBRE',
+        viewValue: 'UNIÓN LIBRE'
       }
     ],
     name: 'status',
@@ -418,12 +418,12 @@ export class LifeComponent implements OnInit, DoCheck {
       label: 'Tipo de documento de identidad',
       options: [
         {
-          value: 'Cedula',
-          viewValue: 'Cédula',
+          value: 'CÉDULA',
+          viewValue: 'CÉDULA',
         },
         {
-          value: 'Pasaporte',
-          viewValue: 'Pasaporte',
+          value: 'PASAPORTE',
+          viewValue: 'PASAPORTE',
         }
       ],
       name: 'id2Type',
@@ -432,28 +432,28 @@ export class LifeComponent implements OnInit, DoCheck {
   smokingTypes = {
     options: [
       {
-        value: 'cigarrillos',
-        viewValue: 'Cigarrillos'
+        value: 'CIGARILLOS',
+        viewValue: 'CIGARILLOS'
       },
       {
-        value: 'pipa',
-        viewValue: 'Pipa'
+        value: 'PIPA',
+        viewValue: 'PIPA'
       },
       {
-        value: 'parche o chicle de Nicotina',
-        viewValue: 'Parche o chicle de Nicotina'
+        value: 'PARCHE O CHICLE DE NICOTINA',
+        viewValue: 'PARCHE O CHICLE DE NICOTINA'
       },
       {
-        value: 'tabaco',
-        viewValue: 'Tabaco'
+        value: 'TABACO',
+        viewValue: 'TABACO'
       },
       {
-        value: 'mastica tabaco',
-        viewValue: 'Mastica tabaco'
+        value: 'MÁSTICA TABACO',
+        viewValue: 'MÁSTICA TABACO'
       },
       {
-        value: 'otro',
-        viewValue: 'Otro'
+        value: 'OTRO',
+        viewValue: 'OTRO'
       }
     ],
     name: 'haveSmoked'
@@ -473,6 +473,11 @@ export class LifeComponent implements OnInit, DoCheck {
   };
 
   family = $family;
+  familyRelationship = {
+    label: 'Parentesco',
+    name: 'relationship',
+    options: $family.options
+  };
   // tslint:disable-next-line: max-line-length
   titles = ['Información del Propuesto Asegurado',
     'Perfil Financiero',
@@ -1125,26 +1130,26 @@ export class LifeComponent implements OnInit, DoCheck {
 
     switch (this.role) {
       case 'WWS':
-        if (form.get('countryOfResidence').value !== 'República Dominicana' && form.get('countryOfBirth').value !== 'República Dominicana') {
+        if (form.get('countryOfResidence').value !== 'RÉPUBLICA DOMINICANA' && form.get('countryOfBirth').value !== 'RÉPUBLICA DOMINICANA') {
           if (!targetForm.get('money-laundering')) {
             targetForm.addControl('solucionAntiLavadoDinero', this.fb.group({}));
           }
         } else {
           switch (target) {
             case 'person':
-              if (this.newRequest.get('exposedPerson').get('isExposed').value !== 'si') {
+              if (this.newRequest.get('exposedPerson').get('isExposed').value !== 'SI') {
                 targetForm.removeControl('solucionAntiLavadoDinero');
               }
               break;
 
             case 'contractor':
-              if (this.newRequest.get('exposedPerson').get('isContractorExposed').value !== 'si' && this.newRequest.get('person').get('contractorIsLegalEntity').value !== 'si') {
+              if (this.newRequest.get('exposedPerson').get('isContractorExposed').value !== 'SI' && this.newRequest.get('person').get('contractorIsLegalEntity').value !== 'SI') {
                 targetForm.removeControl('solucionAntiLavadoDinero');
               }
               break;
 
             case 'payer':
-              if (this.newRequest.get('exposedPerson').get('isPayerExposed').value !== 'si' && this.newRequest.get('person').get('payerIsLegalEntity').value !== 'si') {
+              if (this.newRequest.get('exposedPerson').get('isPayerExposed').value !== 'SI' && this.newRequest.get('person').get('payerIsLegalEntity').value !== 'SI') {
                 targetForm.removeControl('solucionAntiLavadoDinero');
               }
               break;
@@ -1156,26 +1161,26 @@ export class LifeComponent implements OnInit, DoCheck {
         break;
 
       case 'WMA':
-        if (form.get('countryOfResidence').value !== 'Panamá' && form.get('countryOfBirth').value !== 'Panamá') {
+        if (form.get('countryOfResidence').value !== 'PANAMÁ' && form.get('countryOfBirth').value !== 'PANAMÁ') {
           if (!targetForm.get('money-laundering')) {
             targetForm.addControl('solucionAntiLavadoDinero', this.fb.group({}));
           }
         } else {
           switch (target) {
             case 'person':
-              if (this.newRequest.get('exposedPerson').get('isExposed').value !== 'si') {
+              if (this.newRequest.get('exposedPerson').get('isExposed').value !== 'SI') {
                 targetForm.removeControl('solucionAntiLavadoDinero');
               }
               break;
 
             case 'contractor':
-              if (this.newRequest.get('exposedPerson').get('isContractorExposed').value !== 'si' && this.newRequest.get('person').get('contractorIsLegalEntity').value !== 'si') {
+              if (this.newRequest.get('exposedPerson').get('isContractorExposed').value !== 'SI' && this.newRequest.get('person').get('contractorIsLegalEntity').value !== 'SI') {
                 targetForm.removeControl('solucionAntiLavadoDinero');
               }
               break;
 
             case 'payer':
-              if (this.newRequest.get('exposedPerson').get('isPayerExposed').value !== 'si' && this.newRequest.get('person').get('payerIsLegalEntity').value !== 'si') {
+              if (this.newRequest.get('exposedPerson').get('isPayerExposed').value !== 'SI' && this.newRequest.get('person').get('payerIsLegalEntity').value !== 'SI') {
                 targetForm.removeControl('solucionAntiLavadoDinero');
               }
               break;
@@ -1466,16 +1471,16 @@ export class LifeComponent implements OnInit, DoCheck {
 
   ngDoCheck(): void {
     //   this.maxWidth = window.matchMedia('(max-width: 11270px)');
-    if (this.newRequest.get('contingentBeneficiary').get('hasAnotherCoverage').value == 'no' &&
+    if (this.newRequest.get('contingentBeneficiary').get('hasAnotherCoverage').value == 'NO' &&
       this.newRequest.get('contingentBeneficiary').get('anotherCoverages')) {
 
       const formQDoCheck = this.newRequest.get('contingentBeneficiary') as FormGroup;
       formQDoCheck.removeControl('anotherCoverages');
     }
 
-    if (this.newRequest.get('contingentBeneficiary').get('hasAnotherCoverage').value == 'si') {
+    if (this.newRequest.get('contingentBeneficiary').get('hasAnotherCoverage').value == 'SI') {
 
-      if ((this.newRequest.get('contingentBeneficiary').get('changeAnotherCoverage').value == 'no'
+      if ((this.newRequest.get('contingentBeneficiary').get('changeAnotherCoverage').value == 'NO'
         || this.newRequest.get('contingentBeneficiary').get('changeAnotherCoverage').value == ''
         || this.newRequest.get('contingentBeneficiary').get('changeAnotherCoverage').value == null
         || this.newRequest.get('contingentBeneficiary').get('changeAnotherCoverage').value == undefined) &&
@@ -1486,7 +1491,7 @@ export class LifeComponent implements OnInit, DoCheck {
       }
     }
 
-    if (this.newRequest.get('generalInformation').get('anyoneProposed').value == 'no' &&
+    if (this.newRequest.get('generalInformation').get('anyoneProposed').value == 'NO' &&
       this.newRequest.get('generalInformation').get('insuranceProposed')) {
 
       const formGIDoCheck = this.newRequest.get('generalInformation') as FormGroup;
@@ -1496,7 +1501,7 @@ export class LifeComponent implements OnInit, DoCheck {
     for (let x = 0; x < this.medicQuestions.length; x++) {
 
       if (this.medicQuestions[x].name != 'haveHadWeightChanges' && this.medicQuestions[x].name != 'isWomen'
-        && this.newRequest.get('medicalHistory').get(this.medicQuestions[x].name).value == 'no' &&
+        && this.newRequest.get('medicalHistory').get(this.medicQuestions[x].name).value == 'NO' &&
         this.newRequest.get('medicalHistory').get('informations').get(this.medicQuestions[x].group)) {
 
         const formHMIDoCheck = this.newRequest.get('medicalHistory').get('informations') as FormGroup;
@@ -1508,7 +1513,7 @@ export class LifeComponent implements OnInit, DoCheck {
     }
 
     if (this.newRequest.get('medicalHistory').get('informations').get('womenInformation')) {
-      if ((this.newRequest.get('medicalHistory').get('informations').get('womenInformation').value.haveDisorder == 'no'
+      if ((this.newRequest.get('medicalHistory').get('informations').get('womenInformation').value.haveDisorder == 'NO'
         || this.newRequest.get('medicalHistory').get('informations').get('womenInformation').value.haveDisorder == ''
         || this.newRequest.get('medicalHistory').get('informations').get('womenInformation').value.haveDisorder == null
         || this.newRequest.get('medicalHistory').get('informations').get('womenInformation').value.haveDisorder == undefined)
@@ -1520,7 +1525,7 @@ export class LifeComponent implements OnInit, DoCheck {
       }
     }
 
-    if (this.newRequest.get('agentReport').get('isLessThan21').value == 'no' &&
+    if (this.newRequest.get('agentReport').get('isLessThan21').value == 'NO' &&
       this.newRequest.get('agentReport').get('familyInsurances')) {
 
       const formARDoCheck = this.newRequest.get('agentReport') as FormGroup;
@@ -1557,11 +1562,11 @@ export class LifeComponent implements OnInit, DoCheck {
           this.newRequest.get('releventPlanInformation').get('timeAmount').setValue(response.data.periodo_cobertura);
           switch (response.data.sexo) {
             case 'M':
-              this.newRequest.get('person').get('sex').setValue('Masculino');
+              this.newRequest.get('person').get('sex').setValue('MASCULINO');
               break;
 
             case 'F':
-              this.newRequest.get('person').get('sex').setValue('Femenino');
+              this.newRequest.get('person').get('sex').setValue('FEMENINO');
               break;
 
             default:
@@ -1652,14 +1657,14 @@ export class LifeComponent implements OnInit, DoCheck {
 
       switch (event.valor) {
 
-        case 'familia':
+        case 'FAMILIA':
           formAR.removeControl('connectionTypeInfo');
           formAR.addControl('connectionTypeInfo', this.fb.group({
             relationship: ['', Validators.required],
           }));
           break;
 
-        case 'amigo':
+        case 'AMIGO':
           formAR.removeControl('connectionTypeInfo');
           formAR.addControl('connectionTypeInfo', this.fb.group({
             friendship: ['', Validators.required],
@@ -1668,7 +1673,7 @@ export class LifeComponent implements OnInit, DoCheck {
           }));
           break;
 
-        case 'cliente':
+        case 'CLIENTE':
           formAR.removeControl('connectionTypeInfo');
           formAR.addControl('connectionTypeInfo', this.fb.group({
             amount: ['', [Validators.required, Validators.min(1)]],
@@ -1676,7 +1681,7 @@ export class LifeComponent implements OnInit, DoCheck {
           }));
           break;
 
-        case 'acabado de conocer':
+        case '¿LO ACABA DE CONOCER?':
           formAR.removeControl('connectionTypeInfo');
           formAR.addControl('connectionTypeInfo', this.fb.group({
             how: ['', Validators.required],
@@ -1688,7 +1693,7 @@ export class LifeComponent implements OnInit, DoCheck {
       }
     }
 
-    if (event.valor === 'si') {
+    if (event.valor === 'SI') {
       //console.log(`aqui estoy yo '${event.name}'`);
       switch (event.name) {
         case 'diving':
@@ -1979,7 +1984,7 @@ export class LifeComponent implements OnInit, DoCheck {
         default:
           break;
       }
-    } else if (event.valor === 'no') {
+    } else if (event.valor === 'NO') {
       switch (event.name) {
         case 'diving':
           formAQ.removeControl('solicitudBuceo');
@@ -1999,7 +2004,7 @@ export class LifeComponent implements OnInit, DoCheck {
 
         case 'isExposed':
           formEP.removeControl('insured');
-          if ((formP.get('countryOfResidence').value === 'República Dominicana' || formP.get('countryOfResidence').value === '') || formP.get('countryOfBirth').value === 'República Dominicana' || formP.get('countryOfResidence').value === '') {
+          if ((formP.get('countryOfResidence').value === 'RÉPUBLICA DOMINICANA' || formP.get('countryOfResidence').value === '') || formP.get('countryOfBirth').value === 'RÉPUBLICA DOMINICANA' || formP.get('countryOfResidence').value === '') {
             formQ.removeControl('solucionAntiLavadoDinero');
           }
           break;
@@ -2009,11 +2014,11 @@ export class LifeComponent implements OnInit, DoCheck {
 
           if (formPA) {
             if (this.role === 'WWS') {
-              if (((formPA.get('countryOfResidence').value === 'República Dominicana' || formPA.get('countryOfResidence').value === '') || (formPA.get('countryOfBirth').value === 'República Dominicana' || formPA.get('countryOfBirth').value === ''))) {
+              if (((formPA.get('countryOfResidence').value === 'RÉPUBLICA DOMINICANA' || formPA.get('countryOfResidence').value === '') || (formPA.get('countryOfBirth').value === 'RÉPUBLICA DOMINICANA' || formPA.get('countryOfBirth').value === ''))) {
                 formPQ.removeControl('solucionAntiLavadoDinero');
               }
             } else {
-              if (((formPA.get('countryOfResidence').value === 'Panamá' || formPA.get('countryOfResidence').value === '') || (formPA.get('countryOfBirth').value === 'Panamá' || formPA.get('countryOfBirth').value === ''))) {
+              if (((formPA.get('countryOfResidence').value === 'PANAMÁ' || formPA.get('countryOfResidence').value === '') || (formPA.get('countryOfBirth').value === 'PANAMÁ' || formPA.get('countryOfBirth').value === ''))) {
                 formPQ.removeControl('solucionAntiLavadoDinero');
               }
             }
@@ -2025,13 +2030,13 @@ export class LifeComponent implements OnInit, DoCheck {
           formEP.removeControl('contractor');
           if (this.role === 'WWS') {
             if (formC) {
-              if (((formC.get('countryOfResidence').value === 'República Dominicana' || formC.get('countryOfResidence').value === '') || (formC.get('countryOfBirth').value === 'República Dominicana' || formC.get('countryOfBirth').value === ''))) {
+              if (((formC.get('countryOfResidence').value === 'RÉPUBLICA DOMINICANA' || formC.get('countryOfResidence').value === '') || (formC.get('countryOfBirth').value === 'RÉPUBLICA DOMINICANA' || formC.get('countryOfBirth').value === ''))) {
                 formCQ.removeControl('solucionAntiLavadoDinero');
               }
             }
           } else {
             if (formC) {
-              if (((formC.get('countryOfResidence').value === 'Panamá' || formC.get('countryOfResidence').value === '') || (formC.get('countryOfBirth').value === 'Panamá' || formC.get('countryOfBirth').value === ''))) {
+              if (((formC.get('countryOfResidence').value === 'PANAMÁ' || formC.get('countryOfResidence').value === '') || (formC.get('countryOfBirth').value === 'PANAMÁ' || formC.get('countryOfBirth').value === ''))) {
                 formCQ.removeControl('solucionAntiLavadoDinero');
               }
             }
@@ -2142,7 +2147,7 @@ export class LifeComponent implements OnInit, DoCheck {
           }
 
           formP.removeControl('contractorLegalEntity');
-          if (formEP.get('isContractorExposed').value !== 'si') {
+          if (formEP.get('isContractorExposed').value !== 'SI') {
             formCQ.removeControl('solucionAntiLavadoDinero');
           }
           break;
@@ -2181,7 +2186,7 @@ export class LifeComponent implements OnInit, DoCheck {
           }
 
           formP.removeControl('payerLegalEntity');
-          if (formEP.get('isPayerExposed').value !== 'si') {
+          if (formEP.get('isPayerExposed').value !== 'SI') {
             formPQ.removeControl('solucionAntiLavadoDinero');
           }
           break;
@@ -2575,12 +2580,12 @@ export class LifeComponent implements OnInit, DoCheck {
         const formHMI = this.newRequest.get('medicalHistory').get('informations') as FormGroup;
         const formWI = this.newRequest.get('medicalHistory').get('informations').get('womenInformation') as FormGroup;
 
-        if (formP.get('sameAsContractor').value === 'si') {
+        if (formP.get('sameAsContractor').value === 'SI') {
           formP.removeControl('contractorIsLegalEntity');
           this.newRequest.removeControl('contractor');
         }
 
-        if (formP.get('sameAsPayer').value === 'si') {
+        if (formP.get('sameAsPayer').value === 'SI') {
           formP.removeControl('payerIsLegalEntity');
           this.newRequest.removeControl('payer');
         }

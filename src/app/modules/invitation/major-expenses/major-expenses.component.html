@@ -76,11 +76,11 @@
             <app-select class="mr-3" [options]="requestTypeOptions" [group]="newRequest"></app-select>
             <app-input class="mr-3" [group]="newRequest" name="payment" label="Payments"></app-input>
             <!-- <app-radio-button class="mr-3" [group]="newRequest" name="payment" [options]="payments"></app-radio-button>
-              <app-select class="mr-3" [options]="plans" [group]="newRequest"></app-select> -->
+            <app-select class="mr-3" [options]="plans" [group]="newRequest"></app-select> -->
             <app-input class="mr-3" [group]="newRequest" name="plans" label="Plan"></app-input>
             <app-input class="mr-3" [group]="newRequest" name="deducibles" label="Deducibles"></app-input>
             <!--<app-radio-button class="mr-3" [group]="newRequest" name="deducibles" [options]="deducibles">
-              </app-radio-button>-->
+            </app-radio-button>-->
           </div>
         </div>
         <mat-accordion #matAccordion="matAccordion" name="matAccordion" class="ww-mat-accordion example-headers-align"
@@ -109,7 +109,7 @@
                 name="sex" [options]="sex">
               </app-radio-button>
               <!-- <app-input class="mr-3" [group]="newRequest.get('person')" label="Nacionalidad" name='nationality'>
-                </app-input> -->
+              </app-input> -->
               <app-select class="mr-3" [options]="nationality" [group]="newRequest.get('person')"></app-select>
               <app-select class="mr-3" [options]="idType" [group]="newRequest.get('person')"></app-select>
               <app-input class="mr-3" [group]="newRequest.get('person')" label="Documento de identidad" name='id2'>
@@ -126,7 +126,7 @@
                 <app-select class="mr-3" [options]="heightUnit"
                   (selected)="onHeightUnitChange($event, newRequest.get('person'))" [group]="newRequest.get('person')">
                 </app-select>
-                <div *ngIf="this.newRequest.get('person').get('heightUnit').value === 'pie'" class="mr-3"
+                <div *ngIf="this.newRequest.get('person').get('heightUnit').value === 'PIE'" class="mr-3"
                   class="grid grid-cols-2">
                   <app-number-input (keyup)="getBmiUpdated(newRequest.get('person'))" class="mr-2"
                     [group]="newRequest.get('person')" label="Pie" name='height'>
@@ -136,7 +136,7 @@
                   </app-number-input>
                 </div>
                 <app-number-input (keyup)="getBmiUpdated(newRequest.get('person'))"
-                  *ngIf="this.newRequest.get('person').get('heightUnit').value !== 'pie'" class="mr-3"
+                  *ngIf="this.newRequest.get('person').get('heightUnit').value !== 'PIE'" class="mr-3"
                   [group]="newRequest.get('person')" label="Altura" name='height'>
                 </app-number-input>
                 <app-input [group]="newRequest.get('person')" label="BMI" name='bmi'>
@@ -160,7 +160,7 @@
               <app-radio-button class="mr-3" (selected)="selectChange($event)" [group]="newRequest.get('person')"
                 name="isContractor" [options]="isContractorData">
               </app-radio-button>
-              <app-radio-button *ngIf="newRequest.get('person').get('isContractor').value === 'No'"
+              <app-radio-button *ngIf="newRequest.get('person').get('isContractor').value === 'NO'"
                 (selected)="selectChange($event)" class="mr-3" [group]="newRequest.get('person')" name="isJuridica"
                 [options]="isJuridicaData">
               </app-radio-button>
@@ -296,7 +296,7 @@
               <app-radio-button class="mr-3" [group]="newRequest.get('contractor')" name="sex" [options]="sex">
               </app-radio-button>
               <!-- <app-input class="mr-3" [group]="newRequest.get('person')" label="Nacionalidad" name='nationality'>
-                </app-input> -->
+              </app-input> -->
               <app-select class="mr-3" [options]="nationality" [group]="newRequest.get('contractor')"></app-select>
               <app-select class="mr-3" [options]="idType" [group]="newRequest.get('contractor')"></app-select>
               <app-input class="mr-3" [group]="newRequest.get('contractor')" label="Documento de identidad" name='id2'>
@@ -441,7 +441,7 @@
                         [group]="newRequest.get('dependents').get('allDependents').get(index.toString())">
                       </app-select>
                       <div
-                        *ngIf="this.newRequest.get('dependents').get('allDependents').get(index.toString()).get('heightUnit').value === 'pie'"
+                        *ngIf="this.newRequest.get('dependents').get('allDependents').get(index.toString()).get('heightUnit').value === 'PIE'"
                         class="mr-3" class="grid grid-cols-2">
                         <app-number-input
                           (keyup)="getBmiUpdated(newRequest.get('dependents').get('allDependents').get(index.toString()))"
@@ -456,7 +456,7 @@
                       </div>
                       <app-number-input
                         (keyup)="getBmiUpdated(newRequest.get('dependents').get('allDependents').get(index.toString()))"
-                        *ngIf="this.newRequest.get('dependents').get('allDependents').get(index.toString()).get('heightUnit').value !== 'pie'"
+                        *ngIf="this.newRequest.get('dependents').get('allDependents').get(index.toString()).get('heightUnit').value !== 'PIE'"
                         class="mr-3" [group]="newRequest.get('dependents').get('allDependents').get(index.toString())"
                         label="Altura" name='height'>
                       </app-number-input>
@@ -466,8 +466,8 @@
                     </div>
 
                     <!-- <app-input class="mr-3"
-                        [group]="newRequest.get('dependents').get('allDependents').get(index.toString())"
-                        label="Nacionalidad" name='nationality'></app-input> -->
+                      [group]="newRequest.get('dependents').get('allDependents').get(index.toString())"
+                      label="Nacionalidad" name='nationality'></app-input> -->
 
 
                     <br>
@@ -559,17 +559,17 @@
 
             <div>
               <!-- <p class="formulary-labels pb-3">Según su mejor entendimiento y conocimiento, hay alguna
-                      persona nombrada en esta solicitud que haya padecido o padezca de alguna de las siguientes enfermedades:</p>
-                    <hr class="w-full mb-10 ww-divider">
-  
-                    <div *ngFor="let que of questions; let idx = index">
-                      <div
-                        class="w-full xl:flex xl:justify-between lg:flex lg:justify-between md:flex md:justify-between sm:flex sm:justify-between">
-                        <div class="radio-button-label" style="max-width: 80%;">{{idx+1}}. {{que.question}}</div>
-                        <app-radio-button [group]="newRequest.get('questions')" [name]="que.name" [options]="yesOrNo"
-                          (selected)="selectChange($event)">
-                        </app-radio-button>
-                      </div> -->
+                    persona nombrada en esta solicitud que haya padecido o padezca de alguna de las siguientes enfermedades:</p>
+                  <hr class="w-full mb-10 ww-divider">
+
+                  <div *ngFor="let que of questions; let idx = index">
+                    <div
+                      class="w-full xl:flex xl:justify-between lg:flex lg:justify-between md:flex md:justify-between sm:flex sm:justify-between">
+                      <div class="radio-button-label" style="max-width: 80%;">{{idx+1}}. {{que.question}}</div>
+                      <app-radio-button [group]="newRequest.get('questions')" [name]="que.name" [options]="yesOrNo"
+                        (selected)="selectChange($event)">
+                      </app-radio-button>
+                    </div> -->
 
             </div>
             <p class="formulary-labels pb-3">Según su mejor entendimiento y conocimiento, hay alguna persona
@@ -590,7 +590,7 @@
                   </div>
 
                   <button class="select-persons flex mt-2"
-                    *ngIf="newRequest.get('sectionAHelper').value[question.name] === 'si'" [matMenuTriggerFor]="menu">
+                    *ngIf="newRequest.get('sectionAHelper').value[question.name] === 'SI'" [matMenuTriggerFor]="menu">
                     <div class="self-center pr-2">Seleccionar personas</div>
                     <mat-icon style="color: #18446B">arrow_drop_down
                     </mat-icon>
@@ -774,8 +774,8 @@
                 <div *ngFor="let studies of informationList.controls; let i = index"
                   class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
                   <!-- <app-input class="mr-3" [group]="newRequest.get('questionsB').get('information').get(i.toString())"
-                      name="name" label="Nombre del Paciente">
-                    </app-input> -->
+                    name="name" label="Nombre del Paciente">
+                  </app-input> -->
                   <mat-form-field class="mr-3" color="accent" appearance="outline"
                     [formGroup]="newRequest.get('questionsB').get('information').get(i.toString())">
                     <mat-label>Nombre del Paciente</mat-label>
@@ -831,7 +831,7 @@
                   </button>
                 </div>
               </div>
-              <div *ngIf="newRequest.get('questionsB').value[question.name] === 'si'">
+              <div *ngIf="newRequest.get('questionsB').value[question.name] === 'SI'">
                 <div *ngIf="question.name === 'hasFamilyWithHeartKidneyDisease' && familyWithDiseasesList !== null">
                   <div *ngFor="let studies of familyWithDiseasesList.controls; let i = index"
                     class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
@@ -891,7 +891,7 @@
                     </app-radio-button>
                   </div>
                   <div
-                    *ngIf="newRequest.get('questionsB').get('medicalHealthInsurance') && newRequest.get('questionsB').get('medicalHealthInsurance').value.didReclamation === 'si'">
+                    *ngIf="newRequest.get('questionsB').get('medicalHealthInsurance') && newRequest.get('questionsB').get('medicalHealthInsurance').value.didReclamation === 'SI'">
                     <div class="radio-button-label mb-2" style="font-size: 12px !important;">Especifique la
                       reclamación
                     </div>
@@ -937,8 +937,8 @@
                         [group]="newRequest.get('primaryBenefits').get('dependentsC').get(index.toString())"
                         label="Documento de Identidad" name='id2'></app-input>
                       <!-- <app-input class="mr-3"
-                          [group]="newRequest.get('primaryBenefits').get('dependentsC').get(index.toString())"
-                          label="Nacionalidad" name='nationality'></app-input> -->
+                        [group]="newRequest.get('primaryBenefits').get('dependentsC').get(index.toString())"
+                        label="Nacionalidad" name='nationality'></app-input> -->
                       <app-select class="mr-3" [options]="nationality"
                         [group]="newRequest.get('primaryBenefits').get('dependentsC').get(index.toString())">
                       </app-select>
@@ -1063,8 +1063,8 @@
                         [group]="newRequest.get('contingentBeneficiary').get('dependentsC').get(index.toString())"
                         label="Documento de Identidad" name='id2'></app-input>
                       <!-- <app-input class="mr-3"
-                          [group]="newRequest.get('contingentBeneficiary').get('dependentsC').get(index.toString())"
-                          label="Nacionalidad" name='nationality'></app-input> -->
+                        [group]="newRequest.get('contingentBeneficiary').get('dependentsC').get(index.toString())"
+                        label="Nacionalidad" name='nationality'></app-input> -->
                       <app-select class="mr-3" [options]="nationality"
                         [group]="newRequest.get('contingentBeneficiary').get('dependentsC').get(index.toString())">
                       </app-select>
@@ -1134,7 +1134,7 @@
                   *ngIf="newRequest.get('contingentBeneficiary').get('personBenefited').get('specifyRelationship')"
                   label="Especificar" name='specifyRelationship'></app-input>
                 <!-- <app-input class="mr-3" [group]="newRequest.get('contingentBeneficiary').get('personBenefited')"
-                    label="Cant." name='id2'></app-input> -->
+                  label="Cant." name='id2'></app-input> -->
                 <app-select class="mr-3" [options]="idType"
                   [group]="newRequest.get('contingentBeneficiary').get('personBenefited')">
                 </app-select>
@@ -1317,13 +1317,13 @@
         </mat-accordion>
 
         <!-- <app-know-your-customer *ngIf="isSolicitantePep"
-            [form]="newRequest.get('person').get('conozcaSuClientePersona')" [title]="TitleConozcaClienteAsegurado">
-          </app-know-your-customer>
-          <app-know-your-customer *ngIf="isContractorPep" [title]="TitleConozcaClienteContratante"
-            [form]="newRequest.get('contractor').get('conozcaSuClientePersona')">
-          </app-know-your-customer>
-          <app-know-your-client *ngIf="isJuridica"
-            [form]="newRequest.get('contractor').get('conozcaSuClientePersonaJuridica')"> </app-know-your-client> -->
+          [form]="newRequest.get('person').get('conozcaSuClientePersona')" [title]="TitleConozcaClienteAsegurado">
+        </app-know-your-customer>
+        <app-know-your-customer *ngIf="isContractorPep" [title]="TitleConozcaClienteContratante"
+          [form]="newRequest.get('contractor').get('conozcaSuClientePersona')">
+        </app-know-your-customer>
+        <app-know-your-client *ngIf="isJuridica"
+          [form]="newRequest.get('contractor').get('conozcaSuClientePersonaJuridica')"> </app-know-your-client> -->
 
       </mat-tab>
       <mat-tab label="Cuestionarios Adicionales" class="mat-tab-forms">
@@ -1396,7 +1396,9 @@
             ></app-mountaineering>
         </mat-accordion>
       </mat-tab>
-      <mat-tab *ngIf="isJuridica || (this.newRequest.get('person').get('isJuridica') && this.newRequest.get('person').get('isJuridica').value == 'Si') || isSolicitantePep || isContractorPep" label="Conozca a su cliente">
+      <mat-tab
+        *ngIf="isJuridica || (this.newRequest.get('person').get('isJuridica') && this.newRequest.get('person').get('isJuridica').value == 'SI') || isSolicitantePep || isContractorPep"
+        label="Conozca a su cliente">
         <mat-accordion #matAccordion="matAccordion" name="matAccordion" class="ww-mat-accordion example-headers-align"
           [togglePosition]="'before'">
           <app-know-your-client

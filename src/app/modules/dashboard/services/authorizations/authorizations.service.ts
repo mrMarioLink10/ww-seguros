@@ -11,6 +11,7 @@ export class AuthorizationsService {
   constructor(private _http: HttpClient) { }
 
   getAuthoriations(params: HttpParams) {
+
     return (this._http.get(this.BASE_URL, {params}));
   }
 }

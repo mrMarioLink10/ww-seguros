@@ -1947,6 +1947,7 @@ export class DisabilityComponent implements OnInit, DoCheck {
       setTimeout(() => {
         this.appComponent.showOverlay = false;
       });
+      console.log(JSON.stringify(this.disabilityGroup.value));
 
     });
   }

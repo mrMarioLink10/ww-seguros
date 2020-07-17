@@ -70,23 +70,23 @@
               <img src="../../../../assets/iconos/eye.svg">
             </button> -->
             <button mat-mini-fab aria-label="Enviar"  title="Crear Solicitud"
-              *ngIf="element.tipoSeguro === 'vida' || element.tipoSeguro === 'Vida'" class="dashboard-table-buttons"
+              *ngIf="element.tipoSeguro === 'VIDA' || element.tipoSeguro === 'VIDA'" class="dashboard-table-buttons"
               (click)="navigateToLife(element.noCotizacion)"  title="Enviar">
               <img src="../../../../assets/iconos/check.svg">
             </button>
             <button mat-mini-fab aria-label="Enviar"  title="Crear Solicitud"
-              *ngIf="element.tipoSeguro === 'salud' || element.tipoSeguro === 'Salud'"
+              *ngIf="element.tipoSeguro === 'SALUD' || element.tipoSeguro === 'SALUD'"
               (click)="navigateToSalud(element.noCotizacion)" class="dashboard-table-buttons">
               <img src="../../../../assets/iconos/check.svg">
             </button>
 
             <button mat-mini-fab aria-label="Enviar"  title="Ver Cotización"
-            *ngIf="element.tipoSeguro === 'vida' || element.tipoSeguro === 'Vida'" class="dashboard-table-buttons"
+            *ngIf="element.tipoSeguro === 'VIDA' || element.tipoSeguro === 'VIDA'" class="dashboard-table-buttons"
             (click)="navigateToLifePdf(element.noCotizacion)">
             <img src="../../../../assets/iconos/eye.svg">
           </button>
           <button mat-mini-fab aria-label="Enviar"
-            *ngIf="element.tipoSeguro === 'salud' || element.tipoSeguro === 'Salud'" title="Ver Cotización"
+            *ngIf="element.tipoSeguro === 'SALUD' || element.tipoSeguro === 'SALUD'" title="Ver Cotización"
             (click)="navigateToSaludPdf(element.noCotizacion)" class="dashboard-table-buttons">
             <img src="../../../../assets/iconos/eye.svg">
           </button>

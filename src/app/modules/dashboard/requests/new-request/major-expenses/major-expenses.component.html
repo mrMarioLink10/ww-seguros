@@ -218,12 +218,11 @@
               </p>
             </div>
             <div>
-              <h4 class='pb-3 pt-3'>¿Es Usted una Persona Políticamente Expuesta?</h4>
-              <hr *ngIf="isContractor && !isJuridica" class=" w-full mb-6 ww-divider">
+              <hr *ngIf="newRequest.get('exposedPerson').get('contractor')" class=" w-full mb-6 ww-divider">
             </div>
             <div
               class="w-full xl:flex xl:justify-between lg:flex lg:justify-between md:flex md:justify-between sm:flex sm:justify-between"
-              *ngIf="isContractor && !isJuridica">
+              *ngIf="newRequest.get('exposedPerson').get('contractor')">
               <div class="radio-button-label">Contratante</div>
               <app-radio-button [group]="newRequest.get('exposedPerson')" name="contractor"
                 (selected)="selectChange($event)" [options]="diseaseService.yesOrNoOriginal">

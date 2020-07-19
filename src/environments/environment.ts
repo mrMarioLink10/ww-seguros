@@ -9,6 +9,7 @@ const keycloakConfig: KeycloakConfig = {
 
 export const environment = {
   production: false,
+  mailForHelp: "test@gmail.com",
   baseUrl: 'http://localhost:4200/',
   keycloak: keycloakConfig,
   apiUrl: 'https://wwsdevportalbackend.azurewebsites.net',

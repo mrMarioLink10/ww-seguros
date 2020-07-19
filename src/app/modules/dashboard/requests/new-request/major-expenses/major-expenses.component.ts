@@ -628,7 +628,6 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
         })*/
       }),
       exposedPerson: this.fb.group({
-        contractor: ['', Validators.required],
         headLine: ['', Validators.required],
 
       }),
@@ -768,8 +767,8 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
 
     if (form.get('inches')) { inches = form.get('inches').value; }
 
-    if (weightUnit === 'libras') { weight = weight / 2.205; }
-    if (heightUnit === 'pie') {
+    if (weightUnit === 'LIBRAS') { weight = weight / 2.205; }
+    if (heightUnit === 'PIE') {
       height = (((height * 12) + inches) * 2.54) / 100;
     }
     const bmi = weight / ((height / 100) * (height * 100));
@@ -783,7 +782,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
   onHeightUnitChange(evento, form) {
     const realForm = form as FormGroup;
     if (evento.valor === 'PIE') {
-      realForm.addControl('inches', this.fb.control('', Validators.required));
+      realForm.addControl('inches', this.fb.control('', [Validators.required, Validators.min(1), Validators.max(12)]));
     } else {
       realForm.removeControl('inches');
     }
@@ -854,14 +853,14 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
       }
     });
     this.isContractorPep = false;
-    this.newRequest.get('exposedPerson').get('contractor').valueChanges.subscribe(value => {
+    // this.newRequest.get('exposedPerson').get('contractor').valueChanges.subscribe(value => {
 
-      this.isContractorPep = false;
-      if (value === 'SI') {
-        this.isContractorPep = true;
-      }
+    //   this.isContractorPep = false;
+    //   if (value === 'SI') {
+    //     this.isContractorPep = true;
+    //   }
 
-    });
+    // });
 
     this.isSolicitantePep = false;
     this.newRequest.get('exposedPerson').get('headLine').valueChanges.subscribe(value => {
@@ -1204,8 +1203,8 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
   }
   getBmiValue(height: any, weight: any, typeWeight: any, typeHeight: any) {
     if (height !== '' && weight !== '') {
-      if (typeWeight === 'libras') { weight = weight / 2.205; }
-      if (typeHeight === 'pie') {
+      if (typeWeight === 'LIBRAS') { weight = weight / 2.205; }
+      if (typeHeight === 'PIE') {
         height = height / 3.281;
       }
       const bmi = weight / ((height / 100) * (height / 100));
@@ -1288,6 +1287,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
     const mhiForm = this.newRequest.get('questionsB').get('medicalHealthInsurance') as FormGroup;
     const exposedPersonForm = this.newRequest.get('exposedPerson') as FormGroup;
     const formP = this.newRequest.get('person') as FormGroup;
+    const formEP = this.newRequest.get('exposedPerson') as FormGroup;
     console.log(event);
     this.isJuridica = false;
 
@@ -1295,6 +1295,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
       switch (event.name) {
         case 'isContractor':
           formP.removeControl('isJuridica');
+          formEP.removeControl('contractor');
           break;
 
         case 'isJuridica':
@@ -1352,6 +1353,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
       switch (event.name) {
         case 'isContractor':
           formP.addControl('isJuridica', this.fb.control('', Validators.required));
+          formEP.addControl('contractor', this.fb.control('', Validators.required));
           break;
         case 'isJuridica':
           this.titles = FormValidationsConstant.titlesForMajorExpensesComplete;
@@ -1781,8 +1783,8 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
     const weightUnit = this.newRequest.get('person').get('weightUnit').value;
     const heightUnit = this.newRequest.get('person').get('heightUnit').value;
     if (weight !== '' && height !== '') {
-      if (weightUnit === 'libras') { weight = weight / 2.205; }
-      if (heightUnit === 'pie') {
+      if (weightUnit === 'LIBRAS') { weight = weight / 2.205; }
+      if (heightUnit === 'PIE') {
         height = height / 3.281; //(((height * 12) + inches) * 2.54);
       }
 
@@ -1901,11 +1903,11 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
 
         switch (data.data.sexo) {
           case 'M':
-            this.newRequest.get('person').get('sex').setValue('Masculino');
+            this.newRequest.get('person').get('sex').setValue('MASCULINO');
             break;
 
           case 'F':
-            this.newRequest.get('person').get('sex').setValue('Femenino');
+            this.newRequest.get('person').get('sex').setValue('FEMENINO');
             break;
 
           default:
@@ -1947,6 +1949,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
         this.AddEventOnEachDependentVariable();
 
         const formP = this.newRequest.get('person') as FormGroup;
+        const formEP = this.newRequest.get('exposedPerson') as FormGroup;
 
         if (this.newRequest.get('questionsB').get('familyWithDiseases') !== undefined && this.newRequest.get('questionsB').get('familyWithDiseases') !== null) {
           this.familyWithDiseasesList = this.newRequest.get('questionsB').get('familyWithDiseases') as FormArray;
@@ -1957,6 +1960,19 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
 
         if (formP.get('isContractor').value === 'SI') {
           formP.removeControl('isJuridica');
+        }
+
+        if (formP.get('isContractor').value !== 'NO') {
+          formEP.removeControl('contractorExposedInfo');
+          formEP.removeControl('contractor');
+        }
+
+        if (formEP.get('headLine').value !== 'SI') {
+          formEP.removeControl('headLineExposedInfo');
+        }
+
+        if (formEP.get('contractor').value !== 'SI') {
+          formEP.removeControl('contractorExposedInfo');
         }
 
         this.contingentBeneficiaryArray = this.newRequest.get('contingentBeneficiary').get('dependentsC') as FormArray;

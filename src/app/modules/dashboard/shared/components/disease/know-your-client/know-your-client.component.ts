@@ -31,11 +31,11 @@ export class KnowYourClientComponent implements OnInit {
 		label: '',
 		options: [
 			{
-				value: 'si',
+				value: 'SI',
 				viewValue: 'Si'
 			},
 			{
-				value: 'no',
+				value: 'NO',
 				viewValue: 'No'
 			}
 		]
@@ -45,20 +45,20 @@ export class KnowYourClientComponent implements OnInit {
 		label: 'Ingresos anuales actividad principal',
 		options: [
 			{
-				value: 'menos de 250000',
-				viewValue: '< de US$250 mil'
+				value: 'MENOS DE 250000',
+				viewValue: '< DE US$250 MIL'
 			},
 			{
-				value: '250000 a 1000000',
-				viewValue: 'US$250 mil a US$1 millón'
+				value: '250000 A 1000000',
+				viewValue: 'US$250 MIL A US$1 MILLÓN'
 			},
 			{
-				value: '1000000 a 10000000',
-				viewValue: 'US$1 millón a  US$10 millones'
+				value: '1000000 A 10000000',
+				viewValue: 'US$1 MILLÓN A  US$10 MILLONES'
 			},
 			{
-				value: 'mas de 10000000',
-				viewValue: '> de US$10 millones'
+				value: 'MAS DE 10000000',
+				viewValue: '> DE US$10 MILLONES'
 			}
 		]
 	};
@@ -67,20 +67,20 @@ export class KnowYourClientComponent implements OnInit {
 		label: 'Ingresos anuales por otras actividades',
 		options: [
 			{
-				value: 'menos de 250000',
-				viewValue: '< de US$250 mil'
+				value: 'MENOS DE 250000',
+				viewValue: '< DE US$250 MIL'
 			},
 			{
-				value: '250000 a 1000000',
-				viewValue: 'US$250 mil a US$1 millón'
+				value: '250000 A 1000000',
+				viewValue: 'US$250 MIL A US$1 MILLÓN'
 			},
 			{
-				value: '1000000 a 10000000',
-				viewValue: 'US$1 millón a  US$10 millones'
+				value: '1000000 A 10000000',
+				viewValue: 'US$1 MILLÓN A  US$10 MILLONES'
 			},
 			{
-				value: 'mas de 10000000',
-				viewValue: '> de US$10 millones'
+				value: 'MAS DE 10000000',
+				viewValue: '> DE US$10 MILLONES'
 			}
 		]
 	};
@@ -144,7 +144,7 @@ export class KnowYourClientComponent implements OnInit {
 
 		const form = this.form.get('exposed') as FormGroup;
 
-		if (event.valor === 'si') {
+		if (event.valor === 'SI') {
 
 			form.addControl('areatext', this.fb.group({
 				specify_investigated_representative: ['', Validators.required],
@@ -153,7 +153,7 @@ export class KnowYourClientComponent implements OnInit {
 			console.log(this.documents)
 
 		}
-		else if (event.valor === 'no') {
+		else if (event.valor === 'NO') {
 
 			form.removeControl('areatext');
 
@@ -185,12 +185,12 @@ export class KnowYourClientComponent implements OnInit {
 
 		const form = this.form.get('exposed').get('branch_office') as FormGroup;
 
-		if (event.valor === 'si') {
+		if (event.valor === 'SI') {
 
 			form.addControl('allBranch_office', this.fb.array([this.createFormArray()]));
 			this.branchOfficeFormArray = this.form.get('exposed').get('branch_office').get('allBranch_office') as FormArray;
 		}
-		else if (event.valor === 'no') {
+		else if (event.valor === 'NO') {
 
 			form.removeControl('allBranch_office');
 			// this.branchOfficeFormArray = undefined;

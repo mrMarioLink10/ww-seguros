@@ -59,22 +59,22 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy, DoCheck {
 	documentsArray: FormArray;
 
 	filterOptions: FieldConfig = {
-			label: 'Filtro',
-			options: [
-				{
-					value: 'NOMBRE',
-					viewValue: 'Nombre'
-				},
-				{
-					value: 'ID',
-					viewValue: 'ID'
-				},
-				{
-					value: 'POLIZA',
-					viewValue: 'No. de Póliza'
-				}
-			]
-		};
+		label: 'Filtro',
+		options: [
+			{
+				value: 'NOMBRE',
+				viewValue: 'Nombre'
+			},
+			{
+				value: 'ID',
+				viewValue: 'ID'
+			},
+			{
+				value: 'POLIZA',
+				viewValue: 'No. de Póliza'
+			}
+		]
+	};
 
 	seguros: FieldConfig = {
 		label: '¿Tiene otro seguro de salud?',
@@ -323,7 +323,7 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy, DoCheck {
 				filterType: ['', Validators.required],
 				idNumber: ['', Validators.required],
 				sexo: [{ value: '', disabled: true }, [Validators.required]],
-				correo: [''],
+				correo: ['', Validators.email],
 				direccion: [''],
 				telefonoResidencia: [''],
 				telefonoCelular: [''],
@@ -342,7 +342,7 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy, DoCheck {
 					telefono: ['', Validators.required],
 				}),
 				admision: this.fb.group({
-					fecha: ['',  Validators.required],
+					fecha: ['', Validators.required],
 					nombreMedico: [''],
 					direccion: [''],
 					telefono: [''],
@@ -408,58 +408,66 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy, DoCheck {
 		// 		map(value => typeof value === 'string' ? value : value),
 		// 		map(value => value ? this._filter(value) : this.dataAutoCompleteIdNumber.slice())
 		// 	);
-		this.authorization.get('informacionAsegurado').get('filterType').valueChanges.subscribe( valueFilter => {
+		this.authorization.get('informacionAsegurado').get('filterType').valueChanges.subscribe(valueFilter => {
 
-				this.authorization.get('informacionAsegurado').get('idNumber').setValue('');
-				this.authorization.get('informacionAsegurado').get('idNumber').markAsUntouched();
+			this.authorization.get('informacionAsegurado').get('idNumber').setValue('');
+			this.authorization.get('informacionAsegurado').get('idNumber').markAsUntouched();
 
-				if (valueFilter == 'NOMBRE') {
-					this.filteredOptions = this.authorization.get('informacionAsegurado').get('idNumber').valueChanges
+			if (valueFilter == 'NOMBRE') {
+				this.filteredOptions = this.authorization.get('informacionAsegurado').get('idNumber').valueChanges
 					.pipe(
 						startWith(''),
 						map(value => typeof value === 'string' ? value : value),
 						map(value => value ? this._filter(value) : this.dataAutoCompleteName.slice())
 					);
-				}
-				if (valueFilter == 'ID') {
-					this.filteredOptions = this.authorization.get('informacionAsegurado').get('idNumber').valueChanges
+			}
+			if (valueFilter == 'ID') {
+				this.filteredOptions = this.authorization.get('informacionAsegurado').get('idNumber').valueChanges
 					.pipe(
 						startWith(''),
 						map(value => typeof value === 'string' ? value : value),
 						map(value => value ? this._filter(value) : this.dataAutoCompleteIdNumber.slice())
 					);
-				}
-				if (valueFilter == 'POLIZA') {
-					this.filteredOptions = this.authorization.get('informacionAsegurado').get('idNumber').valueChanges
+			}
+			if (valueFilter == 'POLIZA') {
+				this.filteredOptions = this.authorization.get('informacionAsegurado').get('idNumber').valueChanges
 					.pipe(
 						startWith(''),
 						map(value => typeof value === 'string' ? value : value),
 						map(value => value ? this._filter(value) : this.dataAutoCompletePolicy.slice())
 					);
-				}
-			});
+			}
+		});
 
 		this.authorization.get('informacionMedica').get('condicion').valueChanges.subscribe(value => {
-				if (value == 'HOSPITALIZACIÓN') {
-					if (this.authorization.get('informacionMedica').get('tiempoEstadia').disabled) {
-						this.authorization.get('informacionMedica').get('tiempoEstadia').enable();
-						this.authorization.get('informacionMedica').get('tiempoEstadia').setValue('');
-						this.authorization.get('informacionMedica').get('tiempoEstadia').markAsUntouched();
-					}
+			if (value === 'HOSPITALIZACIÓN') {
+				if (this.authorization.get('informacionMedica').get('tiempoEstadia').disabled) {
+					this.authorization.get('informacionMedica').get('tiempoEstadia').enable();
+					this.authorization.get('informacionMedica').get('tiempoEstadia').setValue('');
+					this.authorization.get('informacionMedica').get('tiempoEstadia').markAsUntouched();
 				}
-				// tslint:disable-next-line: one-line
-				else if (value == 'AMBULATORIO') {
-					this.authorization.get('informacionMedica').get('tiempoEstadia').disable();
+			}
+			// tslint:disable-next-line: one-line
+			else if (value === 'AMBULATORIO') {
+				// this.authorization.get('informacionMedica').get('tiempoEstadia').disable();
+				if (this.authorization.get('informacionMedica').get('tiempoEstadia').value > 1) {
 					this.authorization.get('informacionMedica').get('tiempoEstadia').setValue(1);
 				}
-			});
+			}
+		});
 
-			// console.log(JSON.stringify(this.authorization.value));
+		// console.log(JSON.stringify(this.authorization.value));
 
 	}
 
 	displayFn(user: any) {
 		return user ? user : '';
+	}
+
+	maxBasedOnCondition() {
+		if (this.authorization.get('informacionMedica').get('condicion').value === 'AMBULATORIO') {
+			return '1';
+		}
 	}
 
 	setStep(index: number) {
@@ -511,10 +519,10 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy, DoCheck {
 
 	createFormArray() {
 		return this.fb.group({
-			medicReport: [''],
-			budget: [''],
-			studies: [''],
-			indications: [''],
+			medicReport: ['', Validators.required],
+			budget: ['', Validators.required],
+			studies: ['', Validators.required],
+			indications: ['', Validators.required],
 		});
 	}
 
@@ -618,7 +626,7 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy, DoCheck {
 	}
 
 	fileNameWatcher(type?: string, i?) {
-		if(this.filesInformation) {
+		if (this.filesInformation) {
 			if (this.filesInformation[i]) {
 				if (this.filesInformation[i][type + 'Url']) { return this.filesInformation[i][type + 'Url']; }
 			}
@@ -663,18 +671,18 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy, DoCheck {
 		let idNumberObject;
 
 		if (this.authorization.get('informacionAsegurado').get('filterType').value == 'NOMBRE') {
-				idNumberObject = this.dataAutoCompleteIdNumberObject.find(nombre =>
-			nombre.name == idNumber);
-			 idNumber = (idNumberObject.value).toString();
-			}
+			idNumberObject = this.dataAutoCompleteIdNumberObject.find(nombre =>
+				nombre.name == idNumber);
+			idNumber = (idNumberObject.value).toString();
+		}
 		if (this.authorization.get('informacionAsegurado').get('filterType').value == 'ID') {
 			idNumber = (idNumber).toString();
 		}
 		if (this.authorization.get('informacionAsegurado').get('filterType').value == 'POLIZA') {
-				idNumberObject = this.dataAutoCompleteIdNumberObject.find(nombre =>
-			nombre.policy == idNumber);
-			 idNumber = (idNumberObject.value).toString();
-			}
+			idNumberObject = this.dataAutoCompleteIdNumberObject.find(nombre =>
+				nombre.policy == idNumber);
+			idNumber = (idNumberObject.value).toString();
+		}
 
 		// const idNumberObject = this.dataAutoCompleteIdNumberObject.find(nombre =>
 		// 	nombre.name == idNumber);
@@ -830,7 +838,7 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy, DoCheck {
 
 					const formID7 = this.authorization.get('files').get(x.toString()) as FormGroup;
 					formID7.addControl('id', this.fb.control(data.data.files[x].id,
-					Validators.required));
+						Validators.required));
 
 					if (x >= 1) {
 						this.addToList();
@@ -911,7 +919,7 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy, DoCheck {
 		});
 		this.newAuthorization.id = null;
 		console.log('this.newAuthorization.id es igual a ' + this.newAuthorization.id);
-		
+
 
 	}
 

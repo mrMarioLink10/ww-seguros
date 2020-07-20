@@ -1130,7 +1130,7 @@ export class LifeComponent implements OnInit, DoCheck {
 
     switch (this.role) {
       case 'WWS':
-        if (form.get('countryOfResidence').value !== 'RÉPUBLICA DOMINICANA' && form.get('countryOfBirth').value !== 'RÉPUBLICA DOMINICANA') {
+        if (form.get('countryOfResidence').value !== 'REPÚBLICA DOMINICANA' && form.get('countryOfBirth').value !== 'REPÚBLICA DOMINICANA') {
           if (!targetForm.get('money-laundering')) {
             targetForm.addControl('solucionAntiLavadoDinero', this.fb.group({}));
           }
@@ -2004,7 +2004,7 @@ export class LifeComponent implements OnInit, DoCheck {
 
         case 'isExposed':
           formEP.removeControl('insured');
-          if ((formP.get('countryOfResidence').value === 'RÉPUBLICA DOMINICANA' || formP.get('countryOfResidence').value === '') || formP.get('countryOfBirth').value === 'RÉPUBLICA DOMINICANA' || formP.get('countryOfResidence').value === '') {
+          if ((formP.get('countryOfResidence').value === 'REPÚBLICA DOMINICANA' || formP.get('countryOfResidence').value === '') || formP.get('countryOfBirth').value === 'REPÚBLICA DOMINICANA' || formP.get('countryOfResidence').value === '') {
             formQ.removeControl('solucionAntiLavadoDinero');
           }
           break;
@@ -2014,7 +2014,7 @@ export class LifeComponent implements OnInit, DoCheck {
 
           if (formPA) {
             if (this.role === 'WWS') {
-              if (((formPA.get('countryOfResidence').value === 'RÉPUBLICA DOMINICANA' || formPA.get('countryOfResidence').value === '') || (formPA.get('countryOfBirth').value === 'RÉPUBLICA DOMINICANA' || formPA.get('countryOfBirth').value === ''))) {
+              if (((formPA.get('countryOfResidence').value === 'REPÚBLICA DOMINICANA' || formPA.get('countryOfResidence').value === '') || (formPA.get('countryOfBirth').value === 'REPÚBLICA DOMINICANA' || formPA.get('countryOfBirth').value === ''))) {
                 formPQ.removeControl('solucionAntiLavadoDinero');
               }
             } else {
@@ -2030,7 +2030,7 @@ export class LifeComponent implements OnInit, DoCheck {
           formEP.removeControl('contractor');
           if (this.role === 'WWS') {
             if (formC) {
-              if (((formC.get('countryOfResidence').value === 'RÉPUBLICA DOMINICANA' || formC.get('countryOfResidence').value === '') || (formC.get('countryOfBirth').value === 'RÉPUBLICA DOMINICANA' || formC.get('countryOfBirth').value === ''))) {
+              if (((formC.get('countryOfResidence').value === 'REPÚBLICA DOMINICANA' || formC.get('countryOfResidence').value === '') || (formC.get('countryOfBirth').value === 'REPÚBLICA DOMINICANA' || formC.get('countryOfBirth').value === ''))) {
                 formCQ.removeControl('solucionAntiLavadoDinero');
               }
             }

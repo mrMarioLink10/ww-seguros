@@ -88,7 +88,8 @@
                   class="grid grid-cols-2">
                   <app-number-input class="mr-2" [group]="newRequest.get('person')" label="Pie" name='height'>
                   </app-number-input>
-                  <app-number-input class="mr-2" [group]="newRequest.get('person')" name='inches' label="Pulgadas">
+                  <app-number-input class="mr-2" [group]="newRequest.get('person')" name='inches' max="12"
+                    label="Pulgadas">
                   </app-number-input>
                 </div>
                 <app-number-input *ngIf="this.newRequest.get('person').get('heightUnit').value !== 'PIE'" class="mr-3"

@@ -1417,8 +1417,8 @@ export class LifeComponent implements OnInit, DoCheck {
 
     if (this.newRequest.get('person').get('inches')) { inches = this.newRequest.get('person').get('inches').value; }
 
-    if (weightUnit === 'libras') { weight = weight / 2.205; }
-    if (heightUnit === 'pie') {
+    if (weightUnit === 'LIBRAS') { weight = weight / 2.205; }
+    if (heightUnit === 'PIE') {
       height = (((height * 12) + inches) * 2.54) / 100;
     }
     const bmi = weight / ((height / 100) * (height * 100));
@@ -1563,11 +1563,11 @@ export class LifeComponent implements OnInit, DoCheck {
           this.newRequest.get('releventPlanInformation').get('timeAmount').setValue(response.data.periodo_cobertura);
           switch (response.data.sexo) {
             case 'M':
-              this.newRequest.get('person').get('sex').setValue('Masculino');
+              this.newRequest.get('person').get('sex').setValue('MASCULINO');
               break;
 
             case 'F':
-              this.newRequest.get('person').get('sex').setValue('Femenino');
+              this.newRequest.get('person').get('sex').setValue('FEMENINO');
               break;
 
             default:

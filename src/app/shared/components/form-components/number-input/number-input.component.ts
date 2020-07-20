@@ -20,4 +20,11 @@ export class NumberInputComponent implements OnInit {
   ngOnInit() {
   }
 
+  maxFunction(input, $event, control) {
+    if (control.value > this.max) {
+      // tslint:disable-next-line: radix
+      control.setValue(parseInt(this.max.toString()));
+    }
+  }
 }
+

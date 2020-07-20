@@ -1415,8 +1415,8 @@ export class LifeComponent implements OnInit, DoCheck {
 
     if (this.newRequest.get('person').get('inches')) { inches = this.newRequest.get('person').get('inches').value; }
 
-    if (weightUnit === 'libras') { weight = weight / 2.205; }
-    if (heightUnit === 'pie') {
+    if (weightUnit === 'LIBRAS') { weight = weight / 2.205; }
+    if (heightUnit === 'PIE') {
       height = (((height * 12) + inches) * 2.54) / 100;
     }
     const bmi = weight / ((height / 100) * (height * 100));

@@ -720,7 +720,7 @@
                         [group]="disabilityGroup.get('questions')" label="Pie" name='height'>
                       </app-number-input>
                       <app-number-input (keyup)="getBmi()" class="md:mr-2 mt-3 sm:mt-2 md:mt-5 lg:mt-0"
-                        [group]="disabilityGroup.get('questions')" name='inches' label="Pulgadas">
+                        [group]="disabilityGroup.get('questions')" name='inches' max="12" label="Pulgadas">
                       </app-number-input>
                     </div>
                     <app-number-input (keyup)="getBmi()"

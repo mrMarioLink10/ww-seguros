@@ -693,7 +693,7 @@
                         </app-select>
                         <app-input class="mr-3"
                           [group]="newRequest.get('primaryBenefits').get('dependentsC').get(index.toString())"
-                          *ngIf="newRequest.get('primaryBenefits').get('dependentsC').get(index.toString()).get('specifyRelationship')"
+                          *ngIf="newRequest.get('primaryBenefits').get('dependentsC').get(index.toString()).get('family').value == 'OTROS'"
                           label="Especificar" name='specifyRelationship'></app-input>
                         <app-number-input class="mr-3" min="1" max="100"
                           [group]="newRequest.get('primaryBenefits').get('dependentsC').get(index.toString())"
@@ -753,7 +753,7 @@
                     (selected)="relationWatcher($event, newRequest.get('primaryBenefits').get('personBenefited'))">
                   </app-select>
                   <app-input class="mr-3" [group]="newRequest.get('primaryBenefits').get('personBenefited')"
-                    *ngIf="newRequest.get('primaryBenefits').get('personBenefited').get('specifyRelationship')"
+                    *ngIf="newRequest.get('primaryBenefits').get('personBenefited').get('family').value == 'OTROS'"
                     label="Especificar" name='specifyRelationship'></app-input>
                   <app-input class="mr-3" [group]="newRequest.get('primaryBenefits').get('personBenefited')"
                     label="Cédula/Pasaporte" name='id2'></app-input>
@@ -813,7 +813,7 @@
                         </app-select>
                         <app-input class="mr-3"
                           [group]="newRequest.get('contingentBeneficiary').get('dependentsC').get(index.toString())"
-                          *ngIf="newRequest.get('contingentBeneficiary').get('dependentsC').get(index.toString()).get('specifyRelationship')"
+                          *ngIf="newRequest.get('contingentBeneficiary').get('dependentsC').get(index.toString()).get('family').value == 'OTROS'"
                           label="Especificar" name='specifyRelationship'></app-input>
                         <app-number-input class="mr-3" min="1" max="100"
                           [group]="newRequest.get('contingentBeneficiary').get('dependentsC').get(index.toString())"
@@ -868,7 +868,7 @@
                     (selected)="relationWatcher($event, newRequest.get('contingentBeneficiary').get('personBenefited'))">
                   </app-select>
                   <app-input class="mr-3" [group]="newRequest.get('contingentBeneficiary').get('personBenefited')"
-                    *ngIf="newRequest.get('contingentBeneficiary').get('personBenefited').get('specifyRelationship')"
+                    *ngIf="newRequest.get('contingentBeneficiary').get('personBenefited').get('family').value == 'OTROS'"
                     label="Especificar" name='specifyRelationship'></app-input>
                   <app-input class="mr-3" [group]="newRequest.get('contingentBeneficiary').get('personBenefited')"
                     label="Cédula/Pasaporte" name='id2'></app-input>

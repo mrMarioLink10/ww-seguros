@@ -82,7 +82,10 @@ export class DashboardLayoutComponent implements OnInit, OnDestroy {
       return event.url;
     }
   }
-
+  sendEmail()
+  {
+      window.location.href = `mailto:${environment.mailForHelp}`;
+  }
   navigateBack() {
     this.location.back();
   }

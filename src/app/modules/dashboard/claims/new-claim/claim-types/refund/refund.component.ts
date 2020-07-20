@@ -626,7 +626,7 @@ export class RefundComponent implements OnInit {
 			this.refundForm['controls'].comentary.setValue(data.data.comentary);
 			this.refundForm['controls'].fecha.setValue(data.data.fecha);
 			this.refundForm['controls'].forma.setValue(data.data.forma);
-			if (data.data.agreeWithDeclaration === 'true') {
+			if (data.data.agreeWithDeclaration === 'TRUE') {
 				this.refundForm['controls'].agreeWithDeclaration.setValue(true);
 			}
 			this.refundForm['controls'].areDiagnosticDatesValid.setValue(data.data.areDiagnosticDatesValid);
@@ -671,6 +671,7 @@ export class RefundComponent implements OnInit {
 			this.refundForm.markAllAsTouched();
 			this.refundForm.updateValueAndValidity();
 			// this.cd.markForCheck();
+			console.log("El json de todo el formulario: ", JSON.stringify(this.refundForm.value));
 
 		});
 		this.refund.id = null;

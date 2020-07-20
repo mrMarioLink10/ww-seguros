@@ -12,11 +12,11 @@ export class DisabilityService {
   currencyArray = [
 
     {
-      value: 'Dolares',
+      value: 'DOLARES',
       viewValue: 'Dolares'
     },
     {
-      value: 'Pesos Dominicanos',
+      value: 'PESOS DOMINICANOS',
       viewValue: 'Pesos Dominicanos'
     }
 
@@ -24,102 +24,102 @@ export class DisabilityService {
 
   lifeArray = [
     {
-      value: 'us$ 10,000',
+      value: 'US$ 10,000',
       viewValue: 'US$ 10,000'
     },
 
     {
-      value: 'us$ 20,000',
+      value: 'US$ 20,000',
       viewValue: 'US$ 20,000'
     },
 
     {
-      value: 'us$ 30,000',
+      value: 'US$ 30,000',
       viewValue: 'US$ 30,000'
     },
 
     {
-      value: 'us$ 40,000',
+      value: 'US$ 40,000',
       viewValue: 'US$ 40,000'
     },
 
     {
-      value: 'us$ 50,000',
+      value: 'US$ 50,000',
       viewValue: 'US$ 50,000'
     },
 
     {
-      value: 'us$ 60,000',
+      value: 'US$ 60,000',
       viewValue: 'US$ 60,000'
     },
 
     {
-      value: 'us$ 70,000',
+      value: 'US$ 70,000',
       viewValue: 'US$ 70,000'
     },
 
     {
-      value: 'us$ 80,000',
+      value: 'US$ 80,000',
       viewValue: 'US$ 80,000'
     },
 
     {
-      value: 'us$ 90,000',
+      value: 'US$ 90,000',
       viewValue: 'US$ 90,000'
     },
 
     {
-      value: 'us$ 100,000',
+      value: 'US$ 100,000',
       viewValue: 'US$ 100,000'
     },
 
     {
-      value: 'us$ 110,000',
+      value: 'US$ 110,000',
       viewValue: 'US$ 110,000'
     },
 
     {
-      value: 'us$ 120,000',
+      value: 'US$ 120,000',
       viewValue: 'US$ 120,000'
     },
 
     {
-      value: 'us$ 130,000',
+      value: 'US$ 130,000',
       viewValue: 'US$ 130,000'
     },
 
     {
-      value: 'us$ 140,000',
+      value: 'US$ 140,000',
       viewValue: 'US$ 140,000'
     },
 
     {
-      value: 'us$ 150,000',
+      value: 'US$ 150,000',
       viewValue: 'US$ 150,000'
     },
 
     {
-      value: 'us$ 160,000',
+      value: 'US$ 160,000',
       viewValue: 'US$ 160,000'
     },
 
     {
-      value: 'us$ 170,000',
+      value: 'US$ 170,000',
       viewValue: 'US$ 170,000'
     },
 
     {
-      value: 'us$ 180,000',
+      value: 'US$ 180,000',
       viewValue: 'US$ 180,000'
     },
 
     {
-      value: 'us$ 190,000',
+      value: 'US$ 190,000',
       viewValue: 'US$ 190,000'
     },
 
     {
-      value: 'us$ 200,000',
+      value: 'US$ 200,000',
       viewValue: 'US$ 200,000'
     },
   ];
@@ -188,35 +188,35 @@ export class DisabilityService {
 
   testArray = [
     {
-      value: 'hemograma',
+      value: 'HEMOGRAMA',
       viewValue: 'Hemograma'
     },
     {
-      value: 'electrocardiograma',
+      value: 'ELECTROCARDIOGRAMA',
       viewValue: 'Electrocardiograma'
     },
     {
-      value: 'rayos X',
+      value: 'RAYOS X',
       viewValue: 'Rayos X'
     },
     {
-      value: 'endoscopia',
+      value: 'ENDOSCOPIA',
       viewValue: 'Endoscopia'
     },
     {
-      value: 'ultrasonido',
+      value: 'ULTRASONIDO',
       viewValue: 'Ultrasonido'
     },
     {
-      value: 'scan',
+      value: 'SCAN',
       viewValue: 'Scan'
     },
     {
-      value: 'resonancia magnética',
+      value: 'RESONANCIA MAGNÉTICA',
       viewValue: 'Resonancia magnética'
     },
     {
-      value: 'Otros',
+      value: 'OTROS',
       viewValue: 'Otros'
     }
   ];

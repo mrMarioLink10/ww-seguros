@@ -1862,7 +1862,7 @@ export class DisabilityComponent implements OnInit, DoCheck {
   relationWatcher(event, realForm) {
     console.log('event: ', event.valor, 'form: ', realForm);
     const form = realForm as FormGroup;
-    if (event.valor === 'otros') {
+    if (event.valor === 'OTROS') {
       form.addControl('specifyRelationship', this.fb.control('', Validators.required));
     } else {
       form.removeControl('specifyRelationship');

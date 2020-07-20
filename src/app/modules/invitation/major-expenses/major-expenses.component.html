@@ -150,11 +150,11 @@
               <app-input class="mr-3" [group]="newRequest.get('person')" label="Dirección de Residencia"
                 name='direction'>
               </app-input>
-              <app-number-input class="mr-3" [group]="newRequest.get('person')" label="Tel. Residencia" name='tel'>
+              <app-number-input isPhone="true" class="mr-3" [group]="newRequest.get('person')" label="Tel. Residencia" name='tel'>
               </app-number-input>
-              <app-number-input class="mr-3" [group]="newRequest.get('person')" label="Tel. Celular" name='cel'>
+              <app-number-input isPhone="true" class="mr-3" [group]="newRequest.get('person')" label="Tel. Celular" name='cel'>
               </app-number-input>
-              <app-number-input class="mr-3" [group]="newRequest.get('person')" label="Tel. Oficina" name='officeTel'>
+              <app-number-input isPhone="true" class="mr-3" [group]="newRequest.get('person')" label="Tel. Oficina" name='officeTel'>
               </app-number-input>
               <app-input class="mr-3" [group]="newRequest.get('person')" label="Correo" name='email'></app-input>
               <app-radio-button class="mr-3" (selected)="selectChange($event)" [group]="newRequest.get('person')"
@@ -317,11 +317,11 @@
               <app-input class="mr-3" [group]="newRequest.get('contractor')" label="Dirección de Residencia"
                 name='direction'>
               </app-input>
-              <app-number-input class="mr-3" [group]="newRequest.get('contractor')" label="Tel. Residencia" name='tel'>
+              <app-number-input isPhone="true" class="mr-3" [group]="newRequest.get('contractor')" label="Tel. Residencia" name='tel'>
               </app-number-input>
-              <app-number-input class="mr-3" [group]="newRequest.get('contractor')" label="Tel. Celular" name='cel'>
+              <app-number-input isPhone="true" class="mr-3" [group]="newRequest.get('contractor')" label="Tel. Celular" name='cel'>
               </app-number-input>
-              <app-number-input class="mr-3" [group]="newRequest.get('contractor')" label="Tel. Oficina"
+              <app-number-input isPhone="true" class="mr-3" [group]="newRequest.get('contractor')" label="Tel. Oficina"
                 name='officeTel'>
               </app-number-input>
               <app-input class="mr-3" [group]="newRequest.get('contractor')" label="Fax" name='fax'></app-input>
@@ -513,7 +513,7 @@
                       label="Nombre" name='name'></app-input>
                     <app-input class="mr-3" [group]="newRequest.get('dependents').get('students').get(i.toString())"
                       label="Universidad" name='univercity'></app-input>
-                    <app-number-input class="mr-3"
+                    <app-number-input isPhone="true" class="mr-3"
                       [group]="newRequest.get('dependents').get('students').get(i.toString())"
                       label="Telefono de la Universidad" name='univercityPhone'></app-number-input>
                     <div>

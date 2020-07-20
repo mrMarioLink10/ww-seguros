@@ -142,15 +142,15 @@
           </div>
           <div class="mr-3">
             <app-number-input [group]="authorization.get('informacionAsegurado')" label="Teléfono residencia"
-              name='telefonoResidencia' placeholder=""></app-number-input>
+              name='telefonoResidencia' isPhone="true" placeholder=""></app-number-input>
           </div>
           <div class="mr-3">
             <app-number-input [group]="authorization.get('informacionAsegurado')" label="Teléfono celular"
-              name='telefonoCelular' placeholder=""></app-number-input>
+              name='telefonoCelular' isPhone="true" placeholder=""></app-number-input>
           </div>
           <div class="mr-3">
             <app-number-input [group]="authorization.get('informacionAsegurado')" label="Teléfono oficina"
-              name='telefonoOficina' placeholder=""></app-number-input>
+              name='telefonoOficina' isPhone="true" placeholder=""></app-number-input>
           </div>
         </div>
 
@@ -238,7 +238,7 @@
             </app-input>
 
             <app-number-input [group]="authorization.get('informacionMedica').get('primerosSintomas')" label="Teléfono"
-              name='telefono' placeholder=""></app-number-input>
+              name='telefono' isPhone="true" placeholder=""></app-number-input>
           </div>
 
           <!--  TERCERA COLUMNA -->
@@ -257,7 +257,7 @@
             </app-input>
 
             <app-number-input [group]="authorization.get('informacionMedica').get('admision')" label="Teléfono"
-              name='telefono' placeholder=""></app-number-input>
+              name='telefono' isPhone="true" placeholder=""></app-number-input>
             <div class="my-4" [formGroup]="authorization.get('informacionMedica')">
               <mat-checkbox formControlName="isMedicalEqual">
                 ¿Medico tratante es que refiere? </mat-checkbox>

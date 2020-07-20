@@ -7,6 +7,7 @@ import { NewAuthorizationComponent } from './new-authorization/new-authorization
 import { GlobalSharedModule } from '../../../shared/global-shared.module';
 import { SharedModule } from '../shared/shared.module';
 import { ReactiveFormsModule } from '@angular/forms';
+import { NgxMaskModule } from 'ngx-mask';
 
 
 @NgModule({
@@ -17,7 +18,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     GlobalSharedModule,
     SharedModule,
     ReactiveFormsModule,
-
+    NgxMaskModule
   ]
 })
 export class AuthorizationsModule { }

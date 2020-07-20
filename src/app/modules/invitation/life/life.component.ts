@@ -846,7 +846,7 @@ export class LifeComponent implements OnInit, DoCheck {
         label: '5. ¿Ha tenido resultado positivos por haber sido expuesto a la infección del VIH o ha sido diagnosticado con el complejo relacionado con el SIDA por causa de infección VIH u otra enfermedad o condición derivada de dicha infección?',
         name: 'haveTestedPositiveForHiv',
         array: 'testedPositiveForHIVList',
-        group: 'testedPositiveForHIV'
+        group: 'testedPositiveForHiv'
       },
       {
         label: '6. ¿Existe un historial de muertes por enfermedad coronaria arterial, embolia, cáncer o enfermedades de los riñones, ya sea de un padre o hermano natural antes de la edad de 60 años, o un diagnóstico de diabetes mellitus antes de la edad de 50 años?',
@@ -1966,8 +1966,8 @@ export class LifeComponent implements OnInit, DoCheck {
           break;
 
         case 'haveTestedPositiveForHiv':
-          formHMI.addControl('testedPositiveForHIV', this.fb.array([this.createFormArray('medicalInfo')]));
-          this.testedPositiveForHIVList = formHMI.get('testedPositiveForHIV') as FormArray;
+          formHMI.addControl('testedPositiveForHiv', this.fb.array([this.createFormArray('medicalInfo')]));
+          this.testedPositiveForHIVList = formHMI.get('testedPositiveForHiv') as FormArray;
           break;
 
         case 'haveDiabetesDiagnosis':
@@ -2376,7 +2376,7 @@ export class LifeComponent implements OnInit, DoCheck {
           break;
 
         case 'haveTestedPositiveForHiv':
-          formHMI.removeControl('testedPositiveForHIV');
+          formHMI.removeControl('testedPositiveForHiv');
           this.testedPositiveForHIVList = undefined;
           break;
 
@@ -2623,7 +2623,7 @@ export class LifeComponent implements OnInit, DoCheck {
         this.notCarriedOutList = formHMI.get('notCarriedOut') as FormArray;
         this.takenInLast12MonthsList = formHMI.get('takenInLast12Months') as FormArray;
         this.planToObtainMedicalTreatmentList = formHMI.get('planToObtainMedicalTreatment') as FormArray;
-        this.testedPositiveForHIVList = formHMI.get('testedPositiveForHIV') as FormArray;
+        this.testedPositiveForHIVList = formHMI.get('testedPositiveForHiv') as FormArray;
         this.diabetesDiagnosisList = formHMI.get('diabetesDiagnosis') as FormArray;
         this.doctorList = formHMI.get('doctors') as FormArray;
         this.filesStudiesArray = formF.get('studies') as FormArray;

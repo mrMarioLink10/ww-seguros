@@ -619,7 +619,7 @@
               </div>
               <!-- SI FUMABA -->
               <div
-                *ngIf="newRequest.get('questionsA').value.haveNicotine === true && question.name === 'haveNicotine' && newRequest.get('questionsA').get('nicotine')">
+                *ngIf="(newRequest.get('questionsA').value.haveNicotine === true || newRequest.get('questionsA').value.haveNicotine === 'TRUE') && question.name === 'haveNicotine' && newRequest.get('questionsA').get('nicotine')">
                 <label class="my-2 text-xs">Especifique cantidad por día y cuánto tiempo tiene o estuvo
                   fumando</label>
                 <div class='grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2'>
@@ -640,7 +640,7 @@
               </div>
               <div *ngFor="let dpd of allDependents.controls; index as ixd">
                 <div
-                  *ngIf="newRequest.get('dependents').get('allDependents').get(ixd.toString()).value.haveNicotine === true && question.name === 'haveNicotine' && newRequest.get('dependents').get('allDependents').get(ixd.toString()).get('nicotine')">
+                  *ngIf="(newRequest.get('dependents').get('allDependents').get(ixd.toString()).value.haveNicotine === true || newRequest.get('dependents').get('allDependents').get(ixd.toString()).value.haveNicotine === 'TRUE') && question.name === 'haveNicotine' && newRequest.get('dependents').get('allDependents').get(ixd.toString()).get('nicotine')">
                   <label class="my-2 text-xs">Especifique cantidad por día y cuánto tiempo tiene o estuvo
                     fumando / D{{ixd+1}} - {{dpd.value.name}}
                     {{dpd.value.lastName}}</label>
@@ -689,7 +689,7 @@
               </div>
               <!-- SI PRACTICA DEPORTE DE ALTO RIESGO -->
               <div
-                *ngIf="newRequest.get('questionsA').value.haveHighRiskSport === true && question.name === 'haveHighRiskSport' && newRequest.get('questionsA').get('highRiskSport')">
+                *ngIf="(newRequest.get('questionsA').value.haveHighRiskSport === true || newRequest.get('questionsA').value.haveHighRiskSport === 'TRUE') && question.name === 'haveHighRiskSport' && newRequest.get('questionsA').get('highRiskSport')">
                 <label class="my-4 text-xs">Escoja cuales actividades realiza</label>
                 <div *ngFor="let sportQuestion of sportsQuestions">
                   <hr class=" w-full mb-6 ww-divider">

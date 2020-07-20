@@ -50,6 +50,45 @@ export class RefundComponent implements OnInit {
 				viewValue: 'CHEQUE'
 			}
 		]
+  };
+
+  tipoReclamo: FieldConfig = {
+		label: 'Tipo Reclamo',
+		options: [
+			{
+				value: 'Local',
+				viewValue: 'Local'
+			},
+			{
+				value: 'Internacional',
+				viewValue: 'Internacional'
+			}
+		]
+  };
+
+  tipoReclamoLocal: FieldConfig = {
+		label: 'Moneda',
+		options: [
+			{
+				value: 'Pesos',
+				viewValue: 'Pesos'
+			},
+			{
+				value: 'Dolares',
+				viewValue: 'Dólares'
+			}
+		]
+  };
+
+
+  tipoReclamoInternacional: FieldConfig = {
+		label: 'Moneda',
+		options: [
+			{
+				value: 'Dolares',
+				viewValue: 'Dolares'
+			}
+		]
 	};
 
 	dataAutoCompleteIdNumber = [];
@@ -208,6 +247,8 @@ export class RefundComponent implements OnInit {
 
 		this.refundForm = this.fb.group({
 			fecha: [new Date(), Validators.required],
+			tipoReclamo: ['', Validators.required],
+			tipoReclamoMoneda: ['', Validators.required],
 			informacion: this.fb.group({
 				noPoliza: [{ value: '', disabled: true }, [Validators.required]],
 				filterType: ['', Validators.required],

@@ -11,6 +11,8 @@ import { ModulesModule } from '../../modules.module';
 import { GlobalSharedModule } from 'src/app/shared/global-shared.module';
 import { ClaimsListComponent } from './claims-list/claims-list.component';
 import { RefundsListComponent } from './refunds-list/refunds-list.component';
+import { RefundTableComponent } from './refund-table/refund-table.component';
+import { RefundFilterComponent } from './refund-filter/refund-filter.component';
 
 @NgModule({
   declarations: [
@@ -20,6 +22,8 @@ import { RefundsListComponent } from './refunds-list/refunds-list.component';
     RefundComponent,
     ClaimsListComponent,
     RefundsListComponent,
+    RefundTableComponent,
+    RefundFilterComponent,
   ],
   imports: [
     CommonModule,

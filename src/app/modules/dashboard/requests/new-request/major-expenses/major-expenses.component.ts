@@ -793,7 +793,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
   onHeightUnitChange(evento, form) {
     const realForm = form as FormGroup;
     if (evento.valor === 'PIE') {
-      realForm.addControl('inches', this.fb.control('', [Validators.required, Validators.min(1), Validators.max(12)]));
+      realForm.addControl('inches', this.fb.control('', [Validators.required, Validators.min(0), Validators.max(11)]));
     } else {
       realForm.removeControl('inches');
     }

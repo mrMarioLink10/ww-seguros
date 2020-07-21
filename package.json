@@ -35,6 +35,7 @@
     "keycloak-js": "^9.0.3",
     "mat-progress-buttons": "^8.0.7",
     "moment": "^2.26.0",
+    "ngx-mask": "^8.2.0",
     "ngx-material-file-input": "^2.0.1",
     "path": "^0.12.7",
     "rxjs": "~6.4.0",

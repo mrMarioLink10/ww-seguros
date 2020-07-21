@@ -12,12 +12,14 @@ export class NumberInputComponent implements OnInit {
   @Input() min: number;
   @Input() max: number;
   @Input() isMoney?: string;
+  @Input() isPhone?: string;
   @Input() maxInfo?: string;
   @Input() placeholder: string;
   @Input() group: FormGroup;
   constructor() { }
 
   ngOnInit() {
+    console.log()
   }
 
   maxFunction(input, $event, control) {

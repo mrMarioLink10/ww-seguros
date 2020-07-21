@@ -57,6 +57,7 @@ export class DashboardLayoutComponent implements OnInit, OnDestroy {
     private dialogOption: DialogOptionService,
     private location: Location
   ) {
+    this.role = this.userService.getRoleCotizador();
     this.mobileQuery = media.matchMedia('(max-width: 600px)');
     this.mobileQueryListener = () => changeDetectorRef.detectChanges();
     // tslint:disable-next-line: deprecation
@@ -84,7 +85,13 @@ export class DashboardLayoutComponent implements OnInit, OnDestroy {
   }
   sendEmail()
   {
+    if (this.role === 'WWS') {
       window.location.href = `mailto:${environment.mailForHelp}`;
+    }
+    else
+    {
+      window.location.href = `mailto:${environment.mailForHelpPM}`;
+    }
   }
   navigateBack() {
     this.location.back();

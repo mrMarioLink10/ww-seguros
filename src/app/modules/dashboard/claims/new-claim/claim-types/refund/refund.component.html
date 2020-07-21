@@ -127,7 +127,7 @@
           </app-radio-button>
 
         </div>
-        <div class="mr-3" *ngIf="refundForm.get('tipoReclamo') && refundForm.get('tipoReclamo').value === 'Local'">
+    <!--    <div class="mr-3" *ngIf="refundForm.get('tipoReclamo') && refundForm.get('tipoReclamo').value === 'Local'">
           <app-radio-button class="mr-3 " [group]="refundForm" name="tipoReclamoMoneda" [options]="tipoReclamoLocal">
           </app-radio-button>
 
@@ -136,7 +136,7 @@
           <app-radio-button class="mr-3 " [group]="refundForm" name="tipoReclamoMoneda" [options]="tipoReclamoInternacional">
           </app-radio-button>
 
-        </div>
+        </div> -->
         <div class="mr-3">
           <app-input [group]="refundForm.get('informacion')" label="No. Póliza" name='noPoliza' placeholder="246810">
           </app-input>

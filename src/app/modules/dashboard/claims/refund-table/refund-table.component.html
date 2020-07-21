@@ -6,36 +6,36 @@
           <td class="padding-cell" mat-cell *matCellDef="let element"
             style="color: #007DB7 !important; font-weight: 500 !important;"> {{element.noPoliza}} </td>
         </ng-container>
-  
+
         <ng-container matColumnDef="nombre" style="margin-right: 15px !important">
           <th class="padding-cell" mat-header-cell *matHeaderCellDef mat-sort-header> Nombre Asegurado</th>
           <td class="padding-cell" mat-cell *matCellDef="let element"> {{element.nombre | titlecase}} </td>
         </ng-container>
-  
-        <ng-container matColumnDef="idNumber" style="margin-right: 15px !important">
+
+       <!-- <ng-container matColumnDef="idNumber" style="margin-right: 15px !important">
           <th class="padding-cell" mat-header-cell *matHeaderCellDef mat-sort-header> idNumber </th>
           <td class="padding-cell" mat-cell *matCellDef="let element"> {{element.idNumber}} </td>
-        </ng-container>
-  
+        </ng-container> -->
+
         <ng-container matColumnDef="totalAmount" style="margin-right: 15px !important">
           <th class="padding-cell" mat-header-cell *matHeaderCellDef mat-sort-header> Monto </th>
           <td class="padding-cell" mat-cell *matCellDef="let element">
             {{element.totalAmount | currency}}
           </td>
         </ng-container>
-  
+
         <ng-container matColumnDef="forma" style="margin-right: 15px !important">
           <th class="padding-cell" mat-header-cell *matHeaderCellDef mat-sort-header> Forma </th>
           <td class="padding-cell" mat-cell *matCellDef="let element"> {{element.forma | titlecase}} </td>
         </ng-container>
-  
+
         <ng-container matColumnDef="estatus" style="margin-right: 15px !important">
           <th class="padding-cell" mat-header-cell *matHeaderCellDef mat-sort-header> Estatus </th>
           <td class="padding-cell" mat-cell *matCellDef="let element"
             [ngClass]="{'text-color-yellow': element.status === 0, 'text-color-red': element.status === 4, 'text-color-green': element.status === 2}">
             {{element.status | tableStatus}} </td>
         </ng-container>
-  
+
         <ng-container matColumnDef="acciones" style="text-align: end !important; margin-right: 15px !important; ">
           <th class="padding-cell" mat-header-cell *matHeaderCellDef mat-sort-header
             style="max-width: 110px !important; min-width: 68px !important; width: 68px !important;"> Acciones </th>
@@ -59,7 +59,7 @@
             </button>
           </td>
         </ng-container>
-  
+
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
       </table>
@@ -67,4 +67,3 @@
     <mat-paginator color="accent" class="dashboard-table-paginator" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons>
     </mat-paginator>
   </div>
-  

@@ -1970,9 +1970,10 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
         if (formEP.get('headLine').value !== 'SI') {
           formEP.removeControl('headLineExposedInfo');
         }
-
-        if (formEP.get('contractor').value !== 'SI') {
-          formEP.removeControl('contractorExposedInfo');
+        if (formEP.get('contractor')) {
+          if (formEP.get('contractor').value !== 'SI') {
+            formEP.removeControl('contractorExposedInfo');
+          }
         }
 
         this.contingentBeneficiaryArray = this.newRequest.get('contingentBeneficiary').get('dependentsC') as FormArray;

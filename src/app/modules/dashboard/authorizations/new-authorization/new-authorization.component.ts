@@ -131,7 +131,7 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy, DoCheck {
 			}
 		]
 	};
-  tipoReclamo: FieldConfig = {
+	tipoReclamo: FieldConfig = {
 		label: 'Tipo',
 		options: [
 			{
@@ -143,9 +143,9 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy, DoCheck {
 				viewValue: 'Internacional'
 			}
 		]
-  };
+	};
 
-  tipoReclamoLocal: FieldConfig = {
+	tipoReclamoLocal: FieldConfig = {
 		label: 'Moneda',
 		options: [
 			{
@@ -157,10 +157,10 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy, DoCheck {
 				viewValue: 'Dólares'
 			}
 		]
-  };
+	};
 
 
-  tipoReclamoInternacional: FieldConfig = {
+	tipoReclamoInternacional: FieldConfig = {
 		label: 'Moneda',
 		options: [
 			{
@@ -209,139 +209,16 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy, DoCheck {
 					break;
 			}
 		}
-
-		// if (event.valor === 'ambulatorio') {
-		// 	this.authorization.get('informacionMedica').get('tiempoEstadia').setValue(1);
-		// }
 	}
 	ngOnInit() {
 
 		this.appComponent.showOverlay = true;
 		this.returnAutoCompleteData();
 
-		// setTimeout(() => {
-		// 	this.appComponent.showOverlay = true;
-		// });
-		// setTimeout(() => {
-
-		// 	this.route.params.subscribe(res => {
-		// 		this.ID = res.id;
-		// 	});
-
-		// 	// this.ID = this.newAuthorization.id;
-		// 	if (this.ID != null) {
-		// 		console.log('El ID es ' + this.ID);
-		// 		this.getData(this.ID);
-		// 	} else if (this.ID == null) {
-		// 		console.log('ID esta vacio');
-		// 	}
-
-		// 	console.log(this.filesInformation);
-
-		// 	this.authorization = this.fb.group({
-		// 		fecha: [new Date(), Validators.required],
-		// 		informacionAsegurado: this.fb.group({
-		// 			nombres: [{ value: '', disabled: true }, [Validators.required]],
-		// 			apellidos: [{ value: '', disabled: true }, [Validators.required]],
-		// 			noPoliza: [{ value: '', disabled: true }, [Validators.required]],
-		// 			idNumber: ['', Validators.required],
-		// 			sexo: [{ value: '', disabled: true }, [Validators.required]],
-		// 			correo: ['', Validators.required],
-		// 			direccion: ['', Validators.required],
-		// 			telefonoResidencia: [''],
-		// 			telefonoCelular: ['', Validators.required],
-		// 			telefonoOficina: [''],
-		// 			otroSeguro: ['', Validators.required],
-		// 		}),
-		// 		informacionMedica: this.fb.group({
-		// 			diagnostico: ['', Validators.required],
-		// 			condicion: ['', Validators.required],
-		// 			procedimiento: ['', Validators.required],
-		// 			primerosSintomas: this.fb.group({
-		// 				fecha: ['', Validators.required],
-		// 				nombreMedico: ['', Validators.required],
-		// 				direccion: [''],
-		// 				telefono: ['', Validators.required],
-		// 			}),
-		// 			admision: this.fb.group({
-		// 				fecha: ['', Validators.required],
-		// 				nombreMedico: ['', Validators.required],
-		// 				direccion: [''],
-		// 				telefono: ['', Validators.required],
-		// 			}),
-		// 			tiempoEstadia: ['', Validators.required],
-		// 			nombreServicio: ['', Validators.required],
-		// 			isMedicalEqual: [''],
-		// 			// direccion: ['', Validators.required],
-		// 			// telefono: ['', Validators.required],
-		// 		}),
-		// 		files: this.fb.group({
-		// 			medicReport: [''],
-		// 			studies: [''],
-		// 			indication: [''],
-		// 		}),
-		// 		isComplete: [false, Validators.required]
-
-		// 	});
-
-		// 	this.isMedicalEqualSB = this.authorization.get('informacionMedica').get('isMedicalEqual').valueChanges.subscribe(response => {
-		// 		switch (response) {
-		// 			case true:
-		// 				this.authorization.get('informacionMedica').get('admision').get('nombreMedico').setValue(this.authorization.get('informacionMedica').get('primerosSintomas').get('nombreMedico').value);
-		// 				this.authorization.get('informacionMedica').get('admision').get('telefono').setValue(this.authorization.get('informacionMedica').get('primerosSintomas').get('telefono').value);
-		// 				this.authorization.get('informacionMedica').get('admision').get('direccion').setValue(this.authorization.get('informacionMedica').get('primerosSintomas').get('direccion').value);
-
-		// 				this.nombreMedicoSB = this.authorization.get('informacionMedica').get('primerosSintomas').get('nombreMedico').valueChanges.subscribe(value => {
-		// 					this.authorization.get('informacionMedica').get('admision').get('nombreMedico').setValue(value);
-		// 				});
-
-		// 				this.telefonoSB = this.authorization.get('informacionMedica').get('primerosSintomas').get('telefono').valueChanges.subscribe(value => {
-		// 					this.authorization.get('informacionMedica').get('admision').get('telefono').setValue(value);
-		// 				});
-
-		// 				this.direccionSB = this.authorization.get('informacionMedica').get('primerosSintomas').get('direccion').valueChanges.subscribe(value => {
-		// 					this.authorization.get('informacionMedica').get('admision').get('direccion').setValue(value);
-		// 				});
-
-		// 				this.authorization.get('informacionMedica').get('admision').get('nombreMedico').disable();
-		// 				this.authorization.get('informacionMedica').get('admision').get('telefono').disable();
-		// 				this.authorization.get('informacionMedica').get('admision').get('direccion').disable();
-		// 				break;
-
-		// 			case false:
-		// 				this.nombreMedicoSB.unsubscribe();
-		// 				this.telefonoSB.unsubscribe();
-		// 				this.direccionSB.unsubscribe();
-
-		// 				this.authorization.get('informacionMedica').get('admision').get('nombreMedico').enable();
-		// 				this.authorization.get('informacionMedica').get('admision').get('telefono').enable();
-		// 				this.authorization.get('informacionMedica').get('admision').get('direccion').enable();
-
-		// 				break;
-
-		// 			default:
-		// 				break;
-		// 		}
-		// 	});
-
-		// 	// tslint:disable-next-line: align
-		// 	this.filteredOptions = this.authorization.get('informacionAsegurado').get('idNumber').valueChanges
-		// 		.pipe(
-		// 			startWith(''),
-		// 			map(value => typeof value === 'string' ? value : value),
-		// 			map(value => value ? this._filter(value) : this.dataAutoCompleteIdNumber.slice())
-		// 		);
-
-		// 	this.appComponent.showOverlay = false;
-
-		// 	this.timeAutoComplete = 1;
-		// }, 15000);
-
 		this.route.params.subscribe(res => {
 			this.ID = res.id;
 		});
 
-		// this.ID = this.newAuthorization.id;
 		if (this.ID != null) {
 			console.log('El ID es ' + this.ID);
 			this.getData(this.ID);

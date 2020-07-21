@@ -707,7 +707,7 @@
               </div>
               <div *ngFor="let dpd of allDependents.controls; index as ixd">
                 <div
-                  *ngIf="newRequest.get('dependents').get('allDependents').get(ixd.toString()).value.haveHighRiskSport === true && question.name === 'haveHighRiskSport' && newRequest.get('dependents').get('allDependents').get(ixd.toString()).get('highRiskSport')">
+                  *ngIf="(newRequest.get('dependents').get('allDependents').get(ixd.toString()).value.haveHighRiskSport === true || newRequest.get('dependents').get('allDependents').get(ixd.toString()).value.haveHighRiskSport === 'TRUE') && question.name === 'haveHighRiskSport' && newRequest.get('dependents').get('allDependents').get(ixd.toString()).get('highRiskSport')">
                   <label class="my-4 text-xs">Escoja cuales actividades realiza / D{{ixd+1}} - {{dpd.value.name}}
                     {{dpd.value.lastName}}</label>
                   <div *ngFor="let sportQuestion of sportsQuestions">
@@ -950,7 +950,7 @@
                       </app-select>
                       <app-input class="mr-3"
                         [group]="newRequest.get('primaryBenefits').get('dependentsC').get(index.toString())"
-                        *ngIf="newRequest.get('primaryBenefits').get('dependentsC').get(index.toString()).get('specifyRelationship')"
+                        *ngIf="newRequest.get('primaryBenefits').get('dependentsC').get(index.toString()).get('family').value == 'OTROS'"
                         label="Especificar" name='specifyRelationship'></app-input>
                       <app-number-input class="mr-3"
                         [group]="newRequest.get('primaryBenefits').get('dependentsC').get(index.toString())"
@@ -1007,7 +1007,7 @@
                   (selected)="relationWatcher($event, newRequest.get('primaryBenefits').get('personBenefited'))">
                 </app-select>
                 <app-input class="mr-3" [group]="newRequest.get('primaryBenefits').get('personBenefited')"
-                  *ngIf="newRequest.get('primaryBenefits').get('personBenefited').get('specifyRelationship')"
+                  *ngIf="newRequest.get('primaryBenefits').get('personBenefited').get('family').value == 'OTROS'"
                   label="Especificar" name='specifyRelationship'></app-input>
                 <app-select class="mr-3" [options]="idType"
                   [group]="newRequest.get('primaryBenefits').get('personBenefited')">
@@ -1076,7 +1076,7 @@
                       </app-select>
                       <app-input class="mr-3"
                         [group]="newRequest.get('contingentBeneficiary').get('dependentsC').get(index.toString())"
-                        *ngIf="newRequest.get('contingentBeneficiary').get('dependentsC').get(index.toString()).get('specifyRelationship')"
+                        *ngIf="newRequest.get('contingentBeneficiary').get('dependentsC').get(index.toString()).get('family').value == 'OTROS'"
                         label="Especificar" name='specifyRelationship'></app-input>
                       <app-number-input class="mr-3"
                         [group]="newRequest.get('contingentBeneficiary').get('dependentsC').get(index.toString())"
@@ -1130,7 +1130,7 @@
                   (selected)="relationWatcher($event, newRequest.get('contingentBeneficiary').get('personBenefited'))">
                 </app-select>
                 <app-input class="mr-3" [group]="newRequest.get('contingentBeneficiary').get('personBenefited')"
-                  *ngIf="newRequest.get('contingentBeneficiary').get('personBenefited').get('specifyRelationship')"
+                  *ngIf="newRequest.get('contingentBeneficiary').get('personBenefited').get('family').value == 'OTROS'"
                   label="Especificar" name='specifyRelationship'></app-input>
                 <!-- <app-input class="mr-3" [group]="newRequest.get('contingentBeneficiary').get('personBenefited')"
                   label="Cant." name='id2'></app-input> -->

@@ -31,6 +31,8 @@ export interface Claims {
 
 export class ClaimsComponent implements OnInit {
 
+	refundFilter;
+
 	statusTypes = [
 		{ value: 0, view: 'Incompleto' },
 		{ value: 1, view: 'Completo' },
@@ -72,7 +74,12 @@ export class ClaimsComponent implements OnInit {
 
 	testForm: FormGroup;
 
-	constructor(private route: Router, private fb: FormBuilder, private _claimsService: ClaimsService, private _claimsList: ClaimsListComponent, private _refundsList: RefundsListComponent) { }
+	constructor(private route: Router, private fb: FormBuilder, private _claimsService: ClaimsService,
+		           private _claimsList: ClaimsListComponent, private _refundsList: RefundsListComponent) { }
+
+	setRefundFilter(event) {
+		this.refundFilter = event;
+	  }
 
 	filterData(params: HttpParams = new HttpParams) {
 		this._claimsList.getClaims(params);

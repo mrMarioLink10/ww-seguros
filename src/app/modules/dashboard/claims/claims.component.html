@@ -2,7 +2,8 @@
   <div class="uppercase dashboard-page-title pt-12">Reembolsos</div>
   <div class="mt-6 w-full">
     <!-- <app-filter [status]="statusTypes"></app-filter> -->
-    <app-filter (childEvent)="filterData($event)" [fills]="fills"></app-filter>
+    <!-- <app-filter (childEvent)="filterData($event)" [fills]="fills"></app-filter> -->
+    <app-refund-filter (filters)="setRefundFilter($event)"> </app-refund-filter> 
   </div>
   <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 mt-10">
     <div class="dashboard-page-subtitle flex
@@ -17,13 +18,13 @@
       <mat-bar-button [options]="newClaimButtonOptions" (btnClick)="newClaim()"></mat-bar-button>
     </div>
   </div>
-
   <!-- <mat-tab-group>
     <mat-tab class="mat-tab-forms" label="Reclamos" style="min-width: auto !important;">
       <app-claims-list></app-claims-list>
     </mat-tab>
     <mat-tab class="mat-tab-forms" label="Reembolsos" style="min-width: auto !important;"> -->
-  <app-refunds-list></app-refunds-list>
+  <!-- <app-refunds-list></app-refunds-list> -->
+  <app-refund-table [filters]="refundFilter"> </app-refund-table> 
   <!-- </mat-tab>
   </mat-tab-group> -->
 

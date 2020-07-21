@@ -118,11 +118,14 @@
                   placeholder='Provincia/Distrito/Corregimiento/Urbanización/Calle/Casa o Apto./Edificio.'
                   name='direction'></app-input>
               </div>
-              <app-number-input class="mr-3" [group]="newRequest.get('person')" label="Tel. Residencia" name='tel'>
+              <app-number-input isPhone="true" class="mr-3" [group]="newRequest.get('person')" label="Tel. Residencia"
+                name='tel'>
               </app-number-input>
-              <app-number-input class="mr-3" [group]="newRequest.get('person')" label="Tel. Celular" name='cel'>
+              <app-number-input isPhone="true" class="mr-3" [group]="newRequest.get('person')" label="Tel. Celular"
+                name='cel'>
               </app-number-input>
-              <app-number-input class="mr-3" [group]="newRequest.get('person')" label="Tel. Oficina" name='officeTel'>
+              <app-number-input isPhone="true" class="mr-3" [group]="newRequest.get('person')" label="Tel. Oficina"
+                name='officeTel'>
               </app-number-input>
               <app-radio-button class="mr-3" (selected)="selectChange($event)" [group]="newRequest.get('person')"
                 name="sameAsContractor" title="¿Es el contratante el mismo propuesto asegurado?"
@@ -273,14 +276,14 @@
                     placeholderM='Provincia/Distrito/Corregimiento/Urbanización/Calle/Casa o Apto./Edificio.'
                     name='direction'></app-input>
                 </div>
-                <app-number-input class="mr-3 pt-21" [group]="newRequest.get('contractor')" label="Tel. Residencia"
-                  name='tel'>
+                <app-number-input isPhone="true" class="mr-3 pt-21" [group]="newRequest.get('contractor')"
+                  label="Tel. Residencia" name='tel'>
                 </app-number-input>
-                <app-number-input class="mr-3 pt-21" [group]="newRequest.get('contractor')" label="Tel. Celular"
-                  name='cel'>
+                <app-number-input isPhone="true" class="mr-3 pt-21" [group]="newRequest.get('contractor')"
+                  label="Tel. Celular" name='cel'>
                 </app-number-input>
-                <app-number-input class="mr-3 pt-21" [group]="newRequest.get('contractor')" label="Tel. Oficina"
-                  name='officeTel'>
+                <app-number-input isPhone="true" class="mr-3 pt-21" [group]="newRequest.get('contractor')"
+                  label="Tel. Oficina" name='officeTel'>
                 </app-number-input>
                 <app-input class="mr-3 pt-21" [group]="newRequest.get('contractor')" label="Fax" name='fax'></app-input>
                 <app-input class="mr-3 pt-21" [group]="newRequest.get('contractor')" label="Correo" name='email'>
@@ -380,13 +383,14 @@
                     placeholderM='Provincia/Distrito/Corregimiento/Urbanización/Calle/Casa o Apto./Edificio.'
                     name='direction'></app-input>
                 </div>
-                <app-number-input class="mr-3 pt-21" [group]="newRequest.get('payer')" label="Tel. Residencia"
-                  name='tel'>
+                <app-number-input isPhone="true" class="mr-3 pt-21" [group]="newRequest.get('payer')"
+                  label="Tel. Residencia" name='tel'>
                 </app-number-input>
-                <app-number-input class="mr-3 pt-21" [group]="newRequest.get('payer')" label="Tel. Celular" name='cel'>
+                <app-number-input isPhone="true" class="mr-3 pt-21" [group]="newRequest.get('payer')"
+                  label="Tel. Celular" name='cel'>
                 </app-number-input>
-                <app-number-input class="mr-3 pt-21" [group]="newRequest.get('payer')" label="Tel. Oficina"
-                  name='officeTel'>
+                <app-number-input isPhone="true" class="mr-3 pt-21" [group]="newRequest.get('payer')"
+                  label="Tel. Oficina" name='officeTel'>
                 </app-number-input>
                 <app-input class="mr-3 pt-21" [group]="newRequest.get('payer')" label="Fax" name='fax'></app-input>
                 <app-input class="mr-3 pt-21" [group]="newRequest.get('payer')" label="Correo" name='email'></app-input>

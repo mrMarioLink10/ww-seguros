@@ -131,7 +131,44 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy, DoCheck {
 			}
 		]
 	};
+  tipoReclamo: FieldConfig = {
+		label: 'Tipo',
+		options: [
+			{
+				value: 'Local',
+				viewValue: 'Local'
+			},
+			{
+				value: 'Internacional',
+				viewValue: 'Internacional'
+			}
+		]
+  };
 
+  tipoReclamoLocal: FieldConfig = {
+		label: 'Moneda',
+		options: [
+			{
+				value: 'Pesos',
+				viewValue: 'Pesos'
+			},
+			{
+				value: 'Dolares',
+				viewValue: 'Dólares'
+			}
+		]
+  };
+
+
+  tipoReclamoInternacional: FieldConfig = {
+		label: 'Moneda',
+		options: [
+			{
+				value: 'Dolares',
+				viewValue: 'Dólares'
+			}
+		]
+	};
 	authorization: FormGroup;
 
 	ID = null;
@@ -316,6 +353,8 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy, DoCheck {
 
 		this.authorization = this.fb.group({
 			fecha: [new Date(), Validators.required],
+			tipoReclamo: ['', Validators.required],
+			tipoReclamoMoneda: ['', Validators.required],
 			informacionAsegurado: this.fb.group({
 				nombres: [{ value: '', disabled: true }, [Validators.required]],
 				apellidos: [{ value: '', disabled: true }, [Validators.required]],

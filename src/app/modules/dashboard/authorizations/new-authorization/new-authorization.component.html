@@ -120,6 +120,21 @@
           </mat-panel-description>
         </mat-expansion-panel-header>
         <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
+          <div class="mr-3">
+            <app-radio-button class="mr-3 " [group]="authorization" name="tipoReclamo" [options]="tipoReclamo">
+            </app-radio-button>
+
+          </div>
+          <div class="mr-3" *ngIf="authorization.get('tipoReclamo') && authorization.get('tipoReclamo').value === 'Local'">
+            <app-radio-button class="mr-3 " [group]="authorization" name="tipoReclamoMoneda" [options]="tipoReclamoLocal">
+            </app-radio-button>
+
+          </div>
+          <div class="mr-3"  *ngIf="authorization.get('tipoReclamo') && authorization.get('tipoReclamo').value === 'Internacional'">
+            <app-radio-button class="mr-3 " [group]="authorization" name="tipoReclamoMoneda" [options]="tipoReclamoInternacional">
+            </app-radio-button>
+
+          </div>
           <app-input class="mr-3" [group]="authorization.get('informacionAsegurado')" label="Nombres" name='nombres'>
           </app-input>
           <app-input class="mr-3" [group]="authorization.get('informacionAsegurado')" label="Apellidos"
@@ -142,15 +157,15 @@
           </div>
           <div class="mr-3">
             <app-number-input [group]="authorization.get('informacionAsegurado')" label="Teléfono residencia"
-              name='telefonoResidencia' placeholder=""></app-number-input>
+              name='telefonoResidencia' isPhone="true" placeholder=""></app-number-input>
           </div>
           <div class="mr-3">
             <app-number-input [group]="authorization.get('informacionAsegurado')" label="Teléfono celular"
-              name='telefonoCelular' placeholder=""></app-number-input>
+              name='telefonoCelular' isPhone="true" placeholder=""></app-number-input>
           </div>
           <div class="mr-3">
             <app-number-input [group]="authorization.get('informacionAsegurado')" label="Teléfono oficina"
-              name='telefonoOficina' placeholder=""></app-number-input>
+              name='telefonoOficina' isPhone="true" placeholder=""></app-number-input>
           </div>
         </div>
 
@@ -238,7 +253,7 @@
             </app-input>
 
             <app-number-input [group]="authorization.get('informacionMedica').get('primerosSintomas')" label="Teléfono"
-              name='telefono' placeholder=""></app-number-input>
+              name='telefono' isPhone="true" placeholder=""></app-number-input>
           </div>
 
           <!--  TERCERA COLUMNA -->
@@ -257,7 +272,7 @@
             </app-input>
 
             <app-number-input [group]="authorization.get('informacionMedica').get('admision')" label="Teléfono"
-              name='telefono' placeholder=""></app-number-input>
+              name='telefono' isPhone="true" placeholder=""></app-number-input>
             <div class="my-4" [formGroup]="authorization.get('informacionMedica')">
               <mat-checkbox formControlName="isMedicalEqual">
                 ¿Medico tratante es que refiere? </mat-checkbox>

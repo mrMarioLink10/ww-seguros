@@ -21,6 +21,7 @@ import { MatProgressButtonsModule } from 'mat-progress-buttons';
 import { MaterialFileInputModule } from 'ngx-material-file-input';
 import { CurrencyPipe } from '@angular/common';
 import { initializer } from 'src/app-init';
+import { NgxMaskModule } from 'ngx-mask';
 
 const keycloakService = new KeycloakService();
 
@@ -38,7 +39,8 @@ const keycloakService = new KeycloakService();
 		FormsModule,
 		MatProgressButtonsModule,
 		MaterialFileInputModule,
-		KeycloakAngularModule
+		KeycloakAngularModule,
+		NgxMaskModule.forRoot(),
 	],
 	providers: [
 		CurrencyPipe,

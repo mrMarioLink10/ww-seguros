@@ -123,6 +123,21 @@
       </mat-expansion-panel-header>
       <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         <div class="mr-3">
+          <app-radio-button class="mr-3 " [group]="refundForm" name="tipoReclamo" [options]="tipoReclamo">
+          </app-radio-button>
+
+        </div>
+        <div class="mr-3" *ngIf="refundForm.get('tipoReclamo') && refundForm.get('tipoReclamo').value === 'Local'">
+          <app-radio-button class="mr-3 " [group]="refundForm" name="tipoReclamoMoneda" [options]="tipoReclamoLocal">
+          </app-radio-button>
+
+        </div>
+        <div class="mr-3"  *ngIf="refundForm.get('tipoReclamo') && refundForm.get('tipoReclamo').value === 'Internacional'">
+          <app-radio-button class="mr-3 " [group]="refundForm" name="tipoReclamoMoneda" [options]="tipoReclamoInternacional">
+          </app-radio-button>
+
+        </div>
+        <div class="mr-3">
           <app-input [group]="refundForm.get('informacion')" label="No. Póliza" name='noPoliza' placeholder="246810">
           </app-input>
         </div>
@@ -137,8 +152,8 @@
           </app-input>
         </div>
         <div class="mr-3">
-          <app-number-input [group]="refundForm.get('informacion')" label="No. de Telefono" name='telefono'
-            placeholder="8096546191">
+          <app-number-input [group]="refundForm.get('informacion')" label="No. de Telefono" isPhone="true"
+            name='telefono' placeholder="8096546191">
           </app-number-input>
         </div>
         <app-input class="mr-3" [group]="refundForm.get('informacion')" label="Correo Electrónico" name='correo'

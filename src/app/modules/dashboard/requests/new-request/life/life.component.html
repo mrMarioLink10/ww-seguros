@@ -944,40 +944,38 @@
                   tiene alguna cobertura existente, o alguna solicitud pendiente para seguro de vida o anualidad con
                   esta
                   compañía o cualquier otra?</div>
-                <app-radio-button [group]="newRequest.get('contingentBeneficiary')" name="hasAnotherCoverage"
+                <app-radio-button [group]="newRequest.get('generalInformation')" name="hasAnotherCoverage"
                   [options]="diseaseService.yesOrNoOriginal" (selected)="selectChange($event)">
                 </app-radio-button>
               </div>
-              <div *ngIf="newRequest.get('contingentBeneficiary').value.hasAnotherCoverage === 'SI'">
+              <div *ngIf="newRequest.get('generalInformation').value.hasAnotherCoverage === 'SI'">
                 <div *ngFor="let studies of existingCoveragesList.controls; let i = index"
                   class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
                   <div class="mr-3">
-                    <app-input
-                      [group]="newRequest.get('contingentBeneficiary').get('anotherCoverages').get(i.toString())"
+                    <app-input [group]="newRequest.get('generalInformation').get('anotherCoverages').get(i.toString())"
                       name="name" label="Nombre de la Compañia">
                     </app-input>
                   </div>
                   <div class="mr-3">
                     <app-number-input
-                      [group]="newRequest.get('contingentBeneficiary').get('anotherCoverages').get(i.toString())"
+                      [group]="newRequest.get('generalInformation').get('anotherCoverages').get(i.toString())"
                       name="amount" label="Monto del Seguro">
                     </app-number-input>
                   </div>
                   <div class="mr-3">
-                    <app-input
-                      [group]="newRequest.get('contingentBeneficiary').get('anotherCoverages').get(i.toString())"
+                    <app-input [group]="newRequest.get('generalInformation').get('anotherCoverages').get(i.toString())"
                       name="policeNo" label="No. de Póliza">
                     </app-input>
                   </div>
                   <div class="mr-3">
                     <app-number-input
-                      [group]="newRequest.get('contingentBeneficiary').get('anotherCoverages').get(i.toString())"
+                      [group]="newRequest.get('generalInformation').get('anotherCoverages').get(i.toString())"
                       name="adbQuantity" label="Cantidad ADB" min="0">
                     </app-number-input>
                   </div>
                   <div class="mr-3">
                     <app-date-picker
-                      [group]="newRequest.get('contingentBeneficiary').get('anotherCoverages').get(i.toString())"
+                      [group]="newRequest.get('generalInformation').get('anotherCoverages').get(i.toString())"
                       name="date" label="Fecha de Solicitud" [max]="todayDate">
                     </app-date-picker>
                   </div>
@@ -1003,40 +1001,40 @@
                   <div class="radio-button-label" style="font-size: 12px !important; max-width: 60vw;">1.b. ¿Tiene la
                     persona propuesta
                     para seguro la intención de remplazar, descontinuar o cambiar alguna de estas coberturas?</div>
-                  <app-radio-button [group]="newRequest.get('contingentBeneficiary')" name="changeAnotherCoverage"
+                  <app-radio-button [group]="newRequest.get('generalInformation')" name="changeAnotherCoverage"
                     [options]="diseaseService.yesOrNoOriginal" (selected)="selectChange($event)">
                   </app-radio-button>
                 </div>
-                <div *ngIf="newRequest.get('contingentBeneficiary').value.changeAnotherCoverage === 'SI'">
+                <div *ngIf="newRequest.get('generalInformation').value.changeAnotherCoverage === 'SI'">
                   <div *ngFor="let studies of changingCoveragesList.controls; let i = index"
                     class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
                     <div class="mr-3">
                       <app-input
-                        [group]="newRequest.get('contingentBeneficiary').get('changingCoverages').get(i.toString())"
+                        [group]="newRequest.get('generalInformation').get('changingCoverages').get(i.toString())"
                         name="name" label="Nombre de la Compañia">
                       </app-input>
                     </div>
                     <div class="mr-3">
                       <app-number-input
-                        [group]="newRequest.get('contingentBeneficiary').get('changingCoverages').get(i.toString())"
+                        [group]="newRequest.get('generalInformation').get('changingCoverages').get(i.toString())"
                         name="amount" label="Monto del Seguro">
                       </app-number-input>
                     </div>
                     <div class="mr-3">
                       <app-input
-                        [group]="newRequest.get('contingentBeneficiary').get('changingCoverages').get(i.toString())"
+                        [group]="newRequest.get('generalInformation').get('changingCoverages').get(i.toString())"
                         name="policeNo" label="No. de Póliza">
                       </app-input>
                     </div>
                     <div class="mr-3">
                       <app-number-input
-                        [group]="newRequest.get('contingentBeneficiary').get('changingCoverages').get(i.toString())"
+                        [group]="newRequest.get('generalInformation').get('changingCoverages').get(i.toString())"
                         name="adbQuantity" label="Cantidad ADB" min="0">
                       </app-number-input>
                     </div>
                     <div class="mr-3">
                       <app-date-picker [max]="todayDate"
-                        [group]="newRequest.get('contingentBeneficiary').get('changingCoverages').get(i.toString())"
+                        [group]="newRequest.get('generalInformation').get('changingCoverages').get(i.toString())"
                         name="date" label="Fecha de Solicitud">
                       </app-date-picker>
                     </div>

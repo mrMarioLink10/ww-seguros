@@ -152,7 +152,7 @@ export class FormHandlerService {
 
 			this.sendedForm = form.getRawValue();
 			const json = JSON.stringify(this.sendedForm);
-
+			console.log(json);
 			switch (type) {
 				case 'invitation':
 					console.log(result);

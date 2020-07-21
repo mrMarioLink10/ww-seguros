@@ -19,13 +19,16 @@ export class NumberInputComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    console.log()
   }
 
-  maxFunction(input, $event, control) {
-    if (control.value > this.max) {
-      // tslint:disable-next-line: radix
-      control.setValue(parseInt(this.max.toString()));
+  maxFunction(control) {
+    if (control.errors) {
+      if (control.errors.max) {
+        if (control.value > control.errors.max.max) {
+          // tslint:disable-next-line: radix
+          control.setValue(parseInt(control.errors.max.max.toString()));
+        }
+      }
     }
   }
 }

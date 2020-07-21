@@ -217,6 +217,16 @@ export class LifeComponent implements OnInit, DoCheck {
     quantity: ['', [Validators.required, Validators.min(1), Validators.max(100)]]
   };
 
+  contigentBenefits = {
+    name: [''],
+    id2: [''],
+    id2Attached: [''],
+    nationality: [''],
+    ocupation: [''],
+    family: [''],
+    quantity: ['', [Validators.min(1), Validators.max(100)]]
+  };
+
   annualIncomeValues = {
     options: [
       {
@@ -602,7 +612,7 @@ export class LifeComponent implements OnInit, DoCheck {
         })
       }),
       contingentBeneficiary: this.fb.group({
-        dependentsC: this.fb.array([this.formMethods.createItem(this.primaryBenefits)]),
+        dependentsC: this.fb.array([this.formMethods.createItem(this.contigentBenefits)]),
         personBenefited: this.fb.group({
           name: [''],
           family: [''],

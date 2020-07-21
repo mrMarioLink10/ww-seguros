@@ -833,7 +833,7 @@ export class DisabilityComponent implements OnInit, DoCheck {
   onHeightUnitChange(evento) {
     const form = this.disabilityGroup.get('questions') as FormGroup;
     if (evento.valor === 'PIE') {
-      form.addControl('inches', this.fb.control('', Validators.required));
+      form.addControl('inches', this.fb.control('', [Validators.required, Validators.min(0), Validators.max(11)]));
     } else {
       form.removeControl('inches');
     }

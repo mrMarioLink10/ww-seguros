@@ -11,7 +11,7 @@ export const environment = {
   production: true,
   mailForHelp: "ayuda_wws@wws.com.do",
   mailForHelpPM: "ayuda_wwma@wwmedicalassurance.com",
-  baseUrl: 'https://wwsdevfrontend.azurewebsites.net/',
+  baseUrl: 'https://portal.wwseguros.com.do/',
   keycloak: keycloakConfig,
   apiUrl: 'https://wwsdevportalbackend.azurewebsites.net',
   keycloakConfig

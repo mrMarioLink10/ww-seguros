@@ -15,9 +15,8 @@ import { BillFilter } from '../../models/bill';
 })
 export class PolicyDetailsComponent implements OnInit {
 
-
-  policyId;
   oldPolicyId;
+  policyId;
 
   form = this.fb.group({
     policyId: ['', Validators.required]
@@ -65,24 +64,33 @@ export class PolicyDetailsComponent implements OnInit {
       this.appComponent.showOverlay = true;
     });
     this.policyService.getPolicyDetails(policyId).subscribe((res: any) => {
-
       this.policyDetail = res.data;
       console.log('DETALLE DE POLIZA: ', res);
-      console.log(res.data.insured[0].certificates);
-      const tableData = res.data.insured;
-      this.dataSource = new MatTableDataSource(tableData);
-      this.dataSource.sort = this.sort;
-      console.log(this.dataSource.sort);
-      console.log(this.sort);
-      this.dataSource.paginator = this.paginator;
-      this.loading = false;
-      this.appComponent.showOverlay = false;
+      if (res.data) {
+        console.log(res.data.insured[0].certificates);
+        const tableData = res.data.insured;
+        this.dataSource = new MatTableDataSource(tableData);
+        this.dataSource.sort = this.sort;
+        console.log(this.dataSource.sort);
+        console.log(this.sort);
+        this.dataSource.paginator = this.paginator;
+        this.loading = false;
+        this.appComponent.showOverlay = false;
+        console.log(this.policyDetail.ramo);
+        if (this.policyDetail.ramo.toLowerCase().includes('salud')) {
+          this.claimsCondition = true;
+        }
+      }
+      else {
+        this.searchPolicy(this.oldPolicyId);
+      }
     });
 
   }
 
   claimsConditionValue() {
-    this.policyService.getIdNumbers().subscribe(res =>{
+    this.spinnerValue = false;
+    /*this.policyService.getIdNumbers().subscribe(res =>{
       console.log(res.data);
       // tslint:disable-next-line: prefer-for-of
       for (let x = 0; x < res.data.length; x++) {
@@ -103,7 +111,7 @@ export class PolicyDetailsComponent implements OnInit {
         }
       }
       this.spinnerValue = false;
-    });
+    });*/
   }
 
   setBillsFiltersConsult(event) {

@@ -414,13 +414,13 @@ export class DisabilityComponent implements OnInit, DoCheck {
   };
 
   contingentGroup = {
-    full_name: ['', Validators.required],
-    id2: ['', Validators.required],
+    full_name: [''],
+    id2: [''],
     id2Attached: [''],
-    nationality: ['', Validators.required],
-    ocupation: ['', Validators.required],
-    family: ['', Validators.required],
-    percentage: ['', [Validators.required, Validators.min(1), Validators.max(100)]]
+    nationality: [''],
+    ocupation: [''],
+    family: [''],
+    percentage: ['', [Validators.min(1), Validators.max(100)]]
   };
 
   testGroup = {
@@ -833,7 +833,7 @@ export class DisabilityComponent implements OnInit, DoCheck {
   onHeightUnitChange(evento) {
     const form = this.disabilityGroup.get('questions') as FormGroup;
     if (evento.valor === 'PIE') {
-      form.addControl('inches', this.fb.control('', Validators.required));
+      form.addControl('inches', this.fb.control('', [Validators.required, Validators.min(0), Validators.max(11)]));
     } else {
       form.removeControl('inches');
     }

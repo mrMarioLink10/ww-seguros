@@ -219,6 +219,16 @@ export class LifeComponent implements OnInit, DoCheck {
     quantity: ['', [Validators.required, Validators.min(1), Validators.max(100)]]
   };
 
+  contigentBenefits = {
+    name: [''],
+    id2: [''],
+    id2Attached: [''],
+    nationality: [''],
+    ocupation: [''],
+    family: [''],
+    quantity: ['', [Validators.min(1), Validators.max(100)]]
+  };
+
   annualIncomeValues = {
     options: [
       {
@@ -604,14 +614,13 @@ export class LifeComponent implements OnInit, DoCheck {
         })
       }),
       contingentBeneficiary: this.fb.group({
-        dependentsC: this.fb.array([this.formMethods.createItem(this.primaryBenefits)]),
+        dependentsC: this.fb.array([this.formMethods.createItem(this.contigentBenefits)]),
         personBenefited: this.fb.group({
           name: [''],
           family: [''],
           id2: [''],
           id2Attached: ['']
         }),
-        hasAnotherCoverage: ['', Validators.required],
       }),
       bankTransfer: this.fb.group({
         bankEntity: [''],
@@ -619,6 +628,7 @@ export class LifeComponent implements OnInit, DoCheck {
         contact: ['']
       }),
       generalInformation: this.fb.group({
+        hasAnotherCoverage: ['', Validators.required],
         haveSmoked: ['', Validators.required],
         consumeAlcohol: ['', Validators.required],
         thinkTravel: ['', Validators.required],
@@ -1432,7 +1442,7 @@ export class LifeComponent implements OnInit, DoCheck {
   onHeightUnitChange(evento) {
     const form = this.newRequest.get('person') as FormGroup;
     if (evento.valor === 'PIE') {
-      form.addControl('inches', this.fb.control('', Validators.required));
+      form.addControl('inches', this.fb.control('', [Validators.required, Validators.min(0), Validators.max(11)]));
     } else {
       form.removeControl('inches');
     }
@@ -1473,22 +1483,22 @@ export class LifeComponent implements OnInit, DoCheck {
 
   ngDoCheck(): void {
     //   this.maxWidth = window.matchMedia('(max-width: 11270px)');
-    if (this.newRequest.get('contingentBeneficiary').get('hasAnotherCoverage').value == 'NO' &&
-      this.newRequest.get('contingentBeneficiary').get('anotherCoverages')) {
+    if (this.newRequest.get('generalInformation').get('hasAnotherCoverage').value == 'NO' &&
+      this.newRequest.get('generalInformation').get('anotherCoverages')) {
 
-      const formQDoCheck = this.newRequest.get('contingentBeneficiary') as FormGroup;
+      const formQDoCheck = this.newRequest.get('generalInformation') as FormGroup;
       formQDoCheck.removeControl('anotherCoverages');
     }
 
-    if (this.newRequest.get('contingentBeneficiary').get('hasAnotherCoverage').value == 'SI') {
+    if (this.newRequest.get('generalInformation').get('hasAnotherCoverage').value == 'SI') {
 
-      if ((this.newRequest.get('contingentBeneficiary').get('changeAnotherCoverage').value == 'NO'
-        || this.newRequest.get('contingentBeneficiary').get('changeAnotherCoverage').value == ''
-        || this.newRequest.get('contingentBeneficiary').get('changeAnotherCoverage').value == null
-        || this.newRequest.get('contingentBeneficiary').get('changeAnotherCoverage').value == undefined) &&
-        this.newRequest.get('contingentBeneficiary').get('changingCoverages')) {
+      if ((this.newRequest.get('generalInformation').get('changeAnotherCoverage').value == 'NO'
+        || this.newRequest.get('generalInformation').get('changeAnotherCoverage').value == ''
+        || this.newRequest.get('generalInformation').get('changeAnotherCoverage').value == null
+        || this.newRequest.get('generalInformation').get('changeAnotherCoverage').value == undefined) &&
+        this.newRequest.get('generalInformation').get('changingCoverages')) {
 
-        const formCBDoCheck = this.newRequest.get('contingentBeneficiary') as FormGroup;
+        const formCBDoCheck = this.newRequest.get('generalInformation') as FormGroup;
         formCBDoCheck.removeControl('changingCoverages');
       }
     }
@@ -1791,14 +1801,14 @@ export class LifeComponent implements OnInit, DoCheck {
           break;
 
         case 'hasAnotherCoverage':
-          formCB.addControl('anotherCoverages', this.fb.array([this.createFormArray('coverages')]));
-          formCB.addControl('changeAnotherCoverage', this.fb.control('', Validators.required));
-          this.existingCoveragesList = formCB.get('anotherCoverages') as FormArray;
+          formGI.addControl('anotherCoverages', this.fb.array([this.createFormArray('coverages')]));
+          formGI.addControl('changeAnotherCoverage', this.fb.control('', Validators.required));
+          this.existingCoveragesList = formGI.get('anotherCoverages') as FormArray;
           break;
 
         case 'changeAnotherCoverage':
-          formCB.addControl('changingCoverages', this.fb.array([this.createFormArray('coverages')]));
-          this.changingCoveragesList = formCB.get('changingCoverages') as FormArray;
+          formGI.addControl('changingCoverages', this.fb.array([this.createFormArray('coverages')]));
+          this.changingCoveragesList = formGI.get('changingCoverages') as FormArray;
           break;
 
         case 'haveSmoked':
@@ -2203,19 +2213,19 @@ export class LifeComponent implements OnInit, DoCheck {
           break;
 
         case 'hasAnotherCoverage':
-          formCB.removeControl('anotherCoverages');
-          formCB.removeControl('changeAnotherCoverage');
+          formGI.removeControl('anotherCoverages');
+          formGI.removeControl('changeAnotherCoverage');
 
           this.existingCoveragesList = undefined;
           if (formCB.get('changeAnotherCoverage')) {
-            formCB.get('changeAnotherCoverage').reset();
+            formGI.get('changeAnotherCoverage').reset();
           }
-          formCB.removeControl('changingCoverages');
+          formGI.removeControl('changingCoverages');
           this.changingCoveragesList = undefined;
           break;
 
         case 'changeAnotherCoverage':
-          formCB.removeControl('changingCoverages');
+          formGI.removeControl('changingCoverages');
           this.changingCoveragesList = undefined;
           break;
 
@@ -2602,8 +2612,8 @@ export class LifeComponent implements OnInit, DoCheck {
         }
 
         this.familyRelationshipInsurances = formAR.get('familyInsurances') as FormArray;
-        this.existingCoveragesList = formCB.get('anotherCoverages') as FormArray;
-        this.changingCoveragesList = formCB.get('changingCoverages') as FormArray;
+        this.existingCoveragesList = formGI.get('anotherCoverages') as FormArray;
+        this.changingCoveragesList = formGI.get('changingCoverages') as FormArray;
         this.womenDisordersList = formWI.get('disorders') as FormArray;
         this.heartPainList = formHMI.get('heartPain') as FormArray;
         this.lostDriveLicenseList = formGI.get('lostDriveLicense') as FormArray;

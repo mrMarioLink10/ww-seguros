@@ -132,7 +132,7 @@
                     [group]="newRequest.get('person')" label="Pie" name='height'>
                   </app-number-input>
                   <app-number-input (keyup)="getBmiUpdated(newRequest.get('person'))" class="mr-2"
-                    [group]="newRequest.get('person')" name='inches' max="12" label="Pulgadas">
+                    [group]="newRequest.get('person')" name='inches' max="11" label="Pulgadas">
                   </app-number-input>
                 </div>
                 <app-number-input (keyup)="getBmiUpdated(newRequest.get('person'))"
@@ -150,11 +150,14 @@
               <app-input class="mr-3" [group]="newRequest.get('person')" label="Dirección de Residencia"
                 name='direction'>
               </app-input>
-              <app-number-input isPhone="true" class="mr-3" [group]="newRequest.get('person')" label="Tel. Residencia" name='tel'>
+              <app-number-input isPhone="true" class="mr-3" [group]="newRequest.get('person')" label="Tel. Residencia"
+                name='tel'>
               </app-number-input>
-              <app-number-input isPhone="true" class="mr-3" [group]="newRequest.get('person')" label="Tel. Celular" name='cel'>
+              <app-number-input isPhone="true" class="mr-3" [group]="newRequest.get('person')" label="Tel. Celular"
+                name='cel'>
               </app-number-input>
-              <app-number-input isPhone="true" class="mr-3" [group]="newRequest.get('person')" label="Tel. Oficina" name='officeTel'>
+              <app-number-input isPhone="true" class="mr-3" [group]="newRequest.get('person')" label="Tel. Oficina"
+                name='officeTel'>
               </app-number-input>
               <app-input class="mr-3" [group]="newRequest.get('person')" label="Correo" name='email'></app-input>
               <app-radio-button class="mr-3" (selected)="selectChange($event)" [group]="newRequest.get('person')"
@@ -341,9 +344,11 @@
               <app-input class="mr-3" [group]="newRequest.get('contractor')" label="Dirección de Residencia"
                 name='direction'>
               </app-input>
-              <app-number-input isPhone="true" class="mr-3" [group]="newRequest.get('contractor')" label="Tel. Residencia" name='tel'>
+              <app-number-input isPhone="true" class="mr-3" [group]="newRequest.get('contractor')"
+                label="Tel. Residencia" name='tel'>
               </app-number-input>
-              <app-number-input isPhone="true" class="mr-3" [group]="newRequest.get('contractor')" label="Tel. Celular" name='cel'>
+              <app-number-input isPhone="true" class="mr-3" [group]="newRequest.get('contractor')" label="Tel. Celular"
+                name='cel'>
               </app-number-input>
               <app-number-input isPhone="true" class="mr-3" [group]="newRequest.get('contractor')" label="Tel. Oficina"
                 name='officeTel'>
@@ -475,7 +480,7 @@
                         <app-number-input
                           (keyup)="getBmiUpdated(newRequest.get('dependents').get('allDependents').get(index.toString()))"
                           class="mr-2" [group]="newRequest.get('dependents').get('allDependents').get(index.toString())"
-                          name='inches' max="12" label="Pulgadas">
+                          name='inches' max="11" label="Pulgadas">
                         </app-number-input>
                       </div>
                       <app-number-input
@@ -1125,7 +1130,7 @@
                   </div>
                 </div>
                 <button mat-mini-fab aria-label="Agregar reclamacion"
-                  (click)="add(contingentBeneficiaryArray,primaryBenefits)" type="button"
+                  (click)="add(contingentBeneficiaryArray,contigentBenefits)" type="button"
                   class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
                   <mat-icon style="color: #18446B">add</mat-icon>
                 </button>

@@ -462,8 +462,19 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
     ocupation: ['', Validators.required],
     family: ['', Validators.required],
     quantity: ['', [Validators.required, Validators.min(1), Validators.max(100)]]
-
   };
+
+  contigentBenefits = {
+    name: [''],
+    date: [new Date()],
+    id2: [''],
+    id2Attached: [''],
+    nationality: [''],
+    ocupation: [''],
+    family: [''],
+    quantity: ['', [Validators.min(1), Validators.max(100)]]
+  };
+
   allFamily = $allFamily;
   TitleConozcaClienteAsegurado = 'Conoca Su Cliente (Asegurado)';
   TitleConozcaClienteContratante = 'Conoca Su Cliente (Contratante)';
@@ -686,7 +697,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
         })
       }),
       contingentBeneficiary: this.fb.group({
-        dependentsC: this.fb.array([this.formMethods.createItem(this.primaryBenefits)]),
+        dependentsC: this.fb.array([this.formMethods.createItem(this.contigentBenefits)]),
         personBenefited: this.fb.group({
           name: [''],
           family: [''],
@@ -784,7 +795,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
   onHeightUnitChange(evento, form) {
     const realForm = form as FormGroup;
     if (evento.valor === 'PIE') {
-      realForm.addControl('inches', this.fb.control('', [Validators.required, Validators.min(1), Validators.max(12)]));
+      realForm.addControl('inches', this.fb.control('', [Validators.required, Validators.min(0), Validators.max(11)]));
     } else {
       realForm.removeControl('inches');
     }
@@ -1973,9 +1984,10 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
         if (formEP.get('headLine').value !== 'SI') {
           formEP.removeControl('headLineExposedInfo');
         }
-
-        if (formEP.get('contractor').value !== 'SI') {
-          formEP.removeControl('contractorExposedInfo');
+        if (formEP.get('contractor')) {
+          if (formEP.get('contractor').value !== 'SI') {
+            formEP.removeControl('contractorExposedInfo');
+          }
         }
 
         this.contingentBeneficiaryArray = this.newRequest.get('contingentBeneficiary').get('dependentsC') as FormArray;

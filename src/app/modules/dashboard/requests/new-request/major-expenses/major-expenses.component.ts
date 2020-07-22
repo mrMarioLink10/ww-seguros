@@ -601,7 +601,9 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
         age: [{ value: '', disabled: false }, Validators.required],
         weight: ['', Validators.required],
         height: ['', Validators.required],
-        bmi: [{ value: '', disabled: false }, Validators.required],
+        weightUnit: ['', Validators.required],
+        heightUnit: ['', Validators.required],
+        bmi: [{ value: '', disabled: true }, Validators.required],
         status: ['', Validators.required],
         country: ['', Validators.required],
         city: ['', Validators.required],
@@ -1886,6 +1888,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
 
   addToList(list: any, type: string) {
     list.push(this.createFormArray(type));
+          // console.log(JSON.stringify(this.newRequest.value));
   }
 
   SaveForm(newRequestReq: FormGroup) {

@@ -36,7 +36,10 @@
           <th class="padding-cell" mat-header-cell *matHeaderCellDef mat-sort-header> Apellidos </th>
           <td class="padding-cell" mat-cell *matCellDef="let element"> {{element.apellidos | titlecase}}</td>
         </ng-container>
-
+        <ng-container matColumnDef="tipoReclamo" style="margin-right: 15px !important">
+          <th class="padding-cell" mat-header-cell *matHeaderCellDef mat-sort-header> Tipo</th>
+          <td class="padding-cell" mat-cell *matCellDef="let element"> {{element.tipoReclamo | titlecase}} </td>
+        </ng-container>
         <ng-container matColumnDef="procedimiento" style="margin-right: 15px !important">
           <th class="padding-cell" mat-header-cell *matHeaderCellDef mat-sort-header> Procedimiento </th>
           <td class="padding-cell" mat-cell *matCellDef="let element"> {{element.procedimiento}} </td>

@@ -95,8 +95,8 @@
                 <app-number-input *ngIf="this.newRequest.get('person').get('heightUnit').value !== 'PIE'" class="mr-3"
                   [group]="newRequest.get('person')" label="Altura" name='height'>
                 </app-number-input>
-                <app-input [group]="newRequest.get('person')" label="BMI" name='bmi'>
-                </app-input>
+                <!-- <app-input [group]="newRequest.get('person')" label="BMI" name='bmi'>
+                </app-input> -->
               </div>
               <app-select class="mr-3" id="status" [options]="status" [group]="newRequest.get('person')">
               </app-select>

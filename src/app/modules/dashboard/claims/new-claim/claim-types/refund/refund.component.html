@@ -125,7 +125,6 @@
         <div class="mr-3">
           <app-radio-button class="mr-3 " [group]="refundForm" name="tipoReclamo" [options]="tipoReclamo">
           </app-radio-button>
-
         </div>
     <!--    <div class="mr-3" *ngIf="refundForm.get('tipoReclamo') && refundForm.get('tipoReclamo').value === 'Local'">
           <app-radio-button class="mr-3 " [group]="refundForm" name="tipoReclamoMoneda" [options]="tipoReclamoLocal">
@@ -178,7 +177,7 @@
       </mat-expansion-panel-header>
 
       <div *ngFor="let reclaimed of diagnosticList.controls; let i = index">
-        <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5">
+        <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
           <div class="mr-3">
             <app-date-picker [max]="todayDate" [group]="refundForm.get('diagnosticos').get(i.toString())" name="fecha"
               label="Fecha del Servicio">
@@ -202,7 +201,15 @@
               label="Descripción del procedimiento">
             </app-text-area>
           </div>
-          <div class="grid"
+          <div class="mr-3" *ngIf="refundForm.get('tipoReclamo') && refundForm.get('tipoReclamo').value === 'LOCAL'">
+            <app-radio-button class="mr-3 " [group]="refundForm.get('diagnosticos').get(i.toString())" name="tipoReclamoMoneda" [options]="tipoReclamoLocal">
+            </app-radio-button>
+          </div>
+          <div class="mr-3"  *ngIf="refundForm.get('tipoReclamo') && refundForm.get('tipoReclamo').value === 'INTERNACIONAL'">
+            <app-radio-button class="mr-3 " [group]="refundForm.get('diagnosticos').get(i.toString())" name="tipoReclamoMoneda" [options]="tipoReclamoInternacional">
+            </app-radio-button>
+          </div>
+          <div class="grid mr-3"
             [ngClass]="{'grid-cols-1': diagnosticList.length === 1, 'grid-cols-5': diagnosticList.length > 1}">
             <div class="" [ngClass]="{'': diagnosticList.length === 1, 'col-span-4 mr-3': diagnosticList.length > 1}">
               <app-number-input [group]=" refundForm.get('diagnosticos').get(i.toString())" name="monto"
@@ -284,10 +291,14 @@
         <div></div>
         <div></div>
         <div></div>
-        <div></div>
         <mat-form-field color="accent" appearance="outline" class="w-full bg-transparente mr-3"
           style="font-size: small !important;">
-          <mat-label>Monto Total</mat-label>
+          <mat-label>Monto Total (Pesos)</mat-label>
+          <input matInput class="" type="number" ([ngModel])="totalAmountPesos" [value]="totalAmountPesos" disabled>
+        </mat-form-field>
+        <mat-form-field color="accent" appearance="outline" class="w-full bg-transparente mr-3"
+          style="font-size: small !important;">
+          <mat-label>Monto Total (Dólares)</mat-label>
           <input matInput class="" type="number" ([ngModel])="totalAmount" [value]="totalAmount" disabled>
         </mat-form-field>
       </div>

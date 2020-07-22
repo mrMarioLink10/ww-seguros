@@ -3,6 +3,7 @@ import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 import { AppComponent } from '../../../../../app.component';
 import { AccountStatusService } from '../service/account-status.service';
 import { HttpParams } from '@angular/common/http';
+import {UserService} from '../../../../../core/services/user/user.service';
 
 @Component({
   selector: 'app-account-status-table',
@@ -34,11 +35,12 @@ export class AccountStatusTableComponent implements OnInit {
   dataSource;
   data = [];
   displayedColumns: string[] = ['type', 'numeroDocument' , 'docDate', 'concepto', 'initialDate',
-  'finalDate', 'debit', 'credit', 'balance'];
+  'finalDate', 'debit', 'credit', 'balance', 'actions'];
 
-  constructor(private appComponent: AppComponent, private status: AccountStatusService) { }
-
+  constructor(private appComponent: AppComponent, private status: AccountStatusService, private userService: UserService) { }
+  userRole = "";
   ngOnInit() {
+    this.userRole = this.userService.getRoleCotizador();
     this.loadData();
   }
 
@@ -54,7 +56,17 @@ export class AccountStatusTableComponent implements OnInit {
       this.appComponent.showOverlay = false;
     });
   }
-
+  getDownloadLink(id)
+  {
+    switch (this.userRole) {
+      case 'WWS':
+        return `http://wwsdevportalbackend.azurewebsites.net/InvoiceView/ExportToPDF/EstadoDeCuentas/${id}/?location=true`;
+      case 'WMA':
+        return `http://wwsdevportalbackend.azurewebsites.net/InvoiceView/ExportToPDF/EstadoDeCuentas/${id}/?location=false`;
+      default:
+        return'';
+    }
+  }
   constructQueryParams(): HttpParams {
     let httpParams = new HttpParams();
     if (this.statusFilter.numeroDocument && this.statusFilter.numeroDocument !== '') {

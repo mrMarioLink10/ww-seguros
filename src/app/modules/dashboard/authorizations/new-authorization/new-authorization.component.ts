@@ -135,11 +135,11 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy, DoCheck {
 		label: 'Tipo',
 		options: [
 			{
-				value: 'Local',
+				value: 'LOCAL',
 				viewValue: 'Local'
 			},
 			{
-				value: 'Internacional',
+				value: 'INTERNACIONAL',
 				viewValue: 'Internacional'
 			}
 		]
@@ -149,11 +149,11 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy, DoCheck {
 		label: 'Moneda',
 		options: [
 			{
-				value: 'Pesos',
+				value: 'PESOS',
 				viewValue: 'Pesos'
 			},
 			{
-				value: 'Dolares',
+				value: 'DOLARES',
 				viewValue: 'Dólares'
 			}
 		]
@@ -164,7 +164,7 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy, DoCheck {
 		label: 'Moneda',
 		options: [
 			{
-				value: 'Dolares',
+				value: 'DOLARES',
 				viewValue: 'Dólares'
 			}
 		]
@@ -713,6 +713,8 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy, DoCheck {
 			}
 
 			this.authorization['controls'].fecha.setValue(data.data.fecha);
+			this.authorization['controls'].tipoReclamo.setValue(data.data.tipoReclamo);
+			this.authorization['controls'].tipoReclamoMoneda.setValue(data.data.tipoReclamoMoneda);
 			this.authorization['controls'].informacionAsegurado['controls'].nombres.setValue(data.data.informacionAsegurado.nombres);
 			this.authorization['controls'].informacionAsegurado['controls'].apellidos.setValue(data.data.informacionAsegurado.apellidos);
 			this.authorization['controls'].informacionAsegurado['controls'].noPoliza.setValue(data.data.informacionAsegurado.noPoliza);

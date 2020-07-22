@@ -74,12 +74,17 @@ export class PolicyDetailsComponent implements OnInit {
       this.dataSource.paginator = this.paginator;
       this.loading = false;
       this.appComponent.showOverlay = false;
+      console.log(this.policyDetail.ramo);
+      if (this.policyDetail.ramo.toLowerCase().includes('salud')) {
+        this.claimsCondition = true;
+      }
     });
 
   }
 
   claimsConditionValue() {
-    this.policyService.getIdNumbers().subscribe(res =>{
+    this.spinnerValue = false;
+    /*this.policyService.getIdNumbers().subscribe(res =>{
       console.log(res.data);
       // tslint:disable-next-line: prefer-for-of
       for (let x = 0; x < res.data.length; x++) {
@@ -100,7 +105,7 @@ export class PolicyDetailsComponent implements OnInit {
         }
       }
       this.spinnerValue = false;
-    });
+    });*/
   }
 
   setBillsFiltersConsult(event) {

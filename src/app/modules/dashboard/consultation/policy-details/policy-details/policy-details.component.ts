@@ -68,20 +68,15 @@ export class PolicyDetailsComponent implements OnInit {
 
       this.policyDetail = res.data;
       console.log('DETALLE DE POLIZA: ', res);
-      if (res.data) {
-        console.log(res.data.insured[0].certificates);
-        const tableData = res.data.insured;
-        this.dataSource = new MatTableDataSource(tableData);
-        this.dataSource.sort = this.sort;
-        console.log(this.dataSource.sort);
-        console.log(this.sort);
-        this.dataSource.paginator = this.paginator;
-        this.loading = false;
-        this.appComponent.showOverlay = false;
-      }
-      else {
-        this.searchPolicy(this.oldPolicyId);
-      }
+      console.log(res.data.insured[0].certificates);
+      const tableData = res.data.insured;
+      this.dataSource = new MatTableDataSource(tableData);
+      this.dataSource.sort = this.sort;
+      console.log(this.dataSource.sort);
+      console.log(this.sort);
+      this.dataSource.paginator = this.paginator;
+      this.loading = false;
+      this.appComponent.showOverlay = false;
     });
 
   }

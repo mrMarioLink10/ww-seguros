@@ -2600,6 +2600,10 @@ export class LifeComponent implements OnInit, DoCheck {
           this.newRequest.removeControl('payer');
         }
 
+        if (formP.get('heightUnit').value !== 'PIE') {
+          formP.removeControl('inches');
+        }
+
         this.familyRelationshipInsurances = formAR.get('familyInsurances') as FormArray;
         this.existingCoveragesList = formGI.get('anotherCoverages') as FormArray;
         this.changingCoveragesList = formGI.get('changingCoverages') as FormArray;

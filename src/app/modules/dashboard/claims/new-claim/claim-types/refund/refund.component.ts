@@ -86,7 +86,7 @@ export class RefundComponent implements OnInit {
 		label: 'Moneda',
 		options: [
 			{
-				value: 'Dolares',
+				value: 'DOLARES',
 				viewValue: 'Dolares'
 			}
 		]

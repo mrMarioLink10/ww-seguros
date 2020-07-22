@@ -32,6 +32,7 @@ export class RefundComponent implements OnInit {
 	];
 
 	totalAmount: number;
+	totalAmountPesos: number;
 	todayDate = new Date();
 	validDatesCounter = 0;
 	filesInformation = [];
@@ -56,11 +57,11 @@ export class RefundComponent implements OnInit {
 		label: 'Tipo Reclamo',
 		options: [
 			{
-				value: 'Local',
+				value: 'LOCAL',
 				viewValue: 'Local'
 			},
 			{
-				value: 'Internacional',
+				value: 'INTERNACIONAL',
 				viewValue: 'Internacional'
 			}
 		]
@@ -70,11 +71,11 @@ export class RefundComponent implements OnInit {
 		label: 'Moneda',
 		options: [
 			{
-				value: 'Pesos',
+				value: 'PESOS',
 				viewValue: 'Pesos'
 			},
 			{
-				value: 'Dolares',
+				value: 'DOLARES',
 				viewValue: 'Dólares'
 			}
 		]
@@ -248,7 +249,6 @@ export class RefundComponent implements OnInit {
 		this.refundForm = this.fb.group({
 			fecha: [new Date(), Validators.required],
 			tipoReclamo: ['', Validators.required],
-			tipoReclamoMoneda: ['', Validators.required],
 			informacion: this.fb.group({
 				noPoliza: [{ value: '', disabled: true }, [Validators.required]],
 				filterType: ['', Validators.required],
@@ -263,6 +263,7 @@ export class RefundComponent implements OnInit {
 			comentary: [''],
 			forma: ['', Validators.required],
 			totalAmount: ['', Validators.required],
+			totalAmountPesos: ['', Validators.required],
 			agreeWithDeclaration: ['', [Validators.requiredTrue]],
 			isComplete: [false, Validators.required],
 			areDiagnosticDatesValid: [true, Validators.required],
@@ -273,10 +274,23 @@ export class RefundComponent implements OnInit {
 		this.refundForm.get('diagnosticos').valueChanges.subscribe(value => {
 			this.validDatesCounter = 0;
 			let total = 0;
+			let totalPesos = 0;
 
 			for (const element in value) {
 				if (value.hasOwnProperty(element)) {
-					total += this.refundForm.get('diagnosticos').get(element.toString()).value.monto;
+					if (this.refundForm.get('diagnosticos').get(element.toString()).get('tipoReclamoMoneda')) {
+						if (this.refundForm.get('diagnosticos').get(element.toString()).get(
+							'tipoReclamoMoneda').value != null) {
+							if (this.refundForm.get('diagnosticos').get(element.toString()).get(
+								'tipoReclamoMoneda').value == 'DOLARES') {
+								total += this.refundForm.get('diagnosticos').get(element.toString()).value.monto;
+							}
+							if (this.refundForm.get('diagnosticos').get(element.toString()).get(
+								'tipoReclamoMoneda').value == 'PESOS') {
+								totalPesos += this.refundForm.get('diagnosticos').get(element.toString()).value.monto;
+							}
+						}
+					}
 
 					if (this.calculatedDate(this.refundForm.get('diagnosticos').get(element.toString()).value.fecha) >= 6) {
 						this.receiveDateValidator(false);
@@ -289,6 +303,8 @@ export class RefundComponent implements OnInit {
 			}
 			this.refundForm.get('totalAmount').setValue(total);
 			this.totalAmount = total;
+			this.refundForm.get('totalAmountPesos').setValue(total);
+			this.totalAmountPesos = totalPesos;
 		});
 
 		this.refundForm.get('informacion').get('filterType').valueChanges.subscribe(valueFilter => {
@@ -530,6 +546,7 @@ export class RefundComponent implements OnInit {
 			fecha: ['', Validators.required],
 			lugar: ['', Validators.required],
 			diagnostico: ['', Validators.required],
+			tipoReclamoMoneda: ['', Validators.required],
 			descripcion: ['', Validators.required],
 			monto: ['', Validators.required],
 			proveedor: ['', Validators.required],
@@ -637,7 +654,7 @@ export class RefundComponent implements OnInit {
 			this.refundForm.get('informacion').get('filterType').disable();
 			this.showContent = true;
 
-
+			this.refundForm['controls'].tipoReclamo.setValue(data.data.tipoReclamo);
 			for (let x = 0; x < data.data.diagnosticos.length; x++) {
 				// console.log('hola, soy id numero ' + data.data.diagnosticos[x].id);
 				// console.log("Hola, soy la descripcion de la posicion " + x + ", y mi valor es " + data.data.diagnosticos[x].descripcion)
@@ -649,7 +666,8 @@ export class RefundComponent implements OnInit {
 				this.refundForm['controls'].diagnosticos['controls'][x]['controls'].descripcion.setValue(data.data.diagnosticos[x].descripcion);
 				this.refundForm['controls'].diagnosticos['controls'][x]['controls'].fecha.setValue(data.data.diagnosticos[x].fecha);
 				this.refundForm['controls'].diagnosticos['controls'][x]['controls'].lugar.setValue(data.data.diagnosticos[x].lugar);
-				this.refundForm['controls'].diagnosticos['controls'][x]['controls'].monto.setValue(data.data.diagnosticos[x].monto);
+				this.refundForm['controls'].diagnosticos['controls'][x]['controls'].tipoReclamoMoneda.setValue(data.data.diagnosticos[x].tipoReclamoMoneda);
+				this.refundForm['controls'].diagnosticos['controls'][x]['controls'].monto.setValue(Number.parseFloat(data.data.diagnosticos[x].monto));
 				this.refundForm['controls'].diagnosticos['controls'][x]['controls'].proveedor.setValue(data.data.diagnosticos[x].proveedor);
 				this.refundForm['controls'].diagnosticos['controls'][x]['controls'].files['controls'].indications.setValue(data.data.diagnosticos[x].files.indications);
 				this.refundForm['controls'].diagnosticos['controls'][x]['controls'].files['controls'].invoices.setValue(data.data.diagnosticos[x].files.invoices);

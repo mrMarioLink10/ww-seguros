@@ -139,8 +139,8 @@
                   *ngIf="this.newRequest.get('person').get('heightUnit').value !== 'PIE'" class="mr-3"
                   [group]="newRequest.get('person')" label="Altura" name='height'>
                 </app-number-input>
-                <app-input [group]="newRequest.get('person')" label="BMI" name='bmi'>
-                </app-input>
+                <!-- <app-input [group]="newRequest.get('person')" label="BMI" name='bmi'>
+                </app-input> -->
               </div>
               <app-select class="mr-3" [options]="status" [group]="newRequest.get('person')"></app-select>
               <app-select class="mr-3" [options]="countryOfResidence" [group]="newRequest.get('person')"></app-select>
@@ -304,14 +304,38 @@
               <app-input class="mr-3" [group]="newRequest.get('contractor')" label="Documento de identidad" name='id2'>
               </app-input>
               <app-input class="mr-3" [group]="newRequest.get('contractor')" label="Edad" name='age'></app-input>
-              <div class="grid grid-cols-3 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3">
+              <!-- <div class="grid grid-cols-3 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3">
                 <app-input class="mr-1" [group]="newRequest.get('contractor')" label="Peso / Kg" name='weight'>
                 </app-input>
                 <app-input class="mr-1" [group]="newRequest.get('contractor')" label="Altura / Cm" name='height'>
                 </app-input>
                 <app-input disabled="true" class="mr-3" [group]="newRequest.get('contractor')" label="BMI" name='bmi'>
                 </app-input>
-              </div>
+              </div> -->
+                <app-select class="mr-3" (selected)="onWeightUnitChange(newRequest.get('contractor'))"
+                  [options]="weightUnit" [group]="newRequest.get('contractor')">
+                </app-select>
+                <app-number-input (keyup)="getBmiUpdated(newRequest.get('contractor'))" class="mr-3"
+                  [group]="newRequest.get('contractor')" label="Peso" name='weight'>
+                </app-number-input>
+                <app-select class="mr-3" [options]="heightUnit"
+                  (selected)="onHeightUnitChange($event, newRequest.get('contractor'))" [group]="newRequest.get('contractor')">
+                </app-select>
+                <div *ngIf="this.newRequest.get('contractor').get('heightUnit').value === 'PIE'" class="mr-3"
+                  class="grid grid-cols-2">
+                  <app-number-input (keyup)="getBmiUpdated(newRequest.get('contractor'))" class="mr-2"
+                    [group]="newRequest.get('contractor')" label="Pie" name='height'>
+                  </app-number-input>
+                  <app-number-input (keyup)="getBmiUpdated(newRequest.get('contractor'))" class="mr-2"
+                    [group]="newRequest.get('contractor')" name='inches' max="12" label="Pulgadas">
+                  </app-number-input>
+                </div>
+                <app-number-input (keyup)="getBmiUpdated(newRequest.get('contractor'))"
+                  *ngIf="this.newRequest.get('contractor').get('heightUnit').value !== 'PIE'" class="mr-3"
+                  [group]="newRequest.get('contractor')" label="Altura" name='height'>
+                </app-number-input>
+                <!-- <app-input class="mr-3" [group]="newRequest.get('contractor')" label="BMI" name='bmi'>
+                </app-input> -->
               <app-select class="mr-3" [options]="status" [group]="newRequest.get('contractor')"></app-select>
               <app-select class="mr-3" [options]="country" [group]="newRequest.get('contractor')"></app-select>
               <app-input class="mr-3" [group]="newRequest.get('contractor')" label="Ciudad/Provincia" name='city'>
@@ -464,9 +488,9 @@
                         class="mr-3" [group]="newRequest.get('dependents').get('allDependents').get(index.toString())"
                         label="Altura" name='height'>
                       </app-number-input>
-                      <app-input [group]="newRequest.get('dependents').get('allDependents').get(index.toString())"
+                      <!-- <app-input [group]="newRequest.get('dependents').get('allDependents').get(index.toString())"
                         label="BMI" name='bmi'>
-                      </app-input>
+                      </app-input> -->
                     </div>
 
                     <!-- <app-input class="mr-3"

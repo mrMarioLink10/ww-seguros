@@ -35,7 +35,7 @@ export class AccountStatusTableComponent implements OnInit {
   dataSource;
   data = [];
   displayedColumns: string[] = ['type', 'numeroDocument' , 'docDate', 'concepto', 'initialDate',
-  'finalDate', 'debit', 'credit', 'balance', 'actions'];
+  'finalDate', 'debit', 'credit', 'balance'];
 
   constructor(private appComponent: AppComponent, private status: AccountStatusService, private userService: UserService) { }
   userRole = "";

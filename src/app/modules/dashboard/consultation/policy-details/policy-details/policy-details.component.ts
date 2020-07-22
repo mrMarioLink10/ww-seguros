@@ -17,6 +17,7 @@ export class PolicyDetailsComponent implements OnInit {
 
 
   policyId;
+  oldPolicyId;
 
   form = this.fb.group({
     policyId: ['', Validators.required]
@@ -57,23 +58,30 @@ export class PolicyDetailsComponent implements OnInit {
   }
 
   searchPolicy(policyId: string) {
+    this.oldPolicyId = this.policyId;
     this.policyId = policyId;
     this.loading = true;
     setTimeout(() => {
       this.appComponent.showOverlay = true;
     });
     this.policyService.getPolicyDetails(policyId).subscribe((res: any) => {
+
       this.policyDetail = res.data;
       console.log('DETALLE DE POLIZA: ', res);
-      console.log(res.data.insured[0].certificates);
-      const tableData = res.data.insured;
-      this.dataSource = new MatTableDataSource(tableData);
-      this.dataSource.sort = this.sort;
-      console.log(this.dataSource.sort);
-      console.log(this.sort);
-      this.dataSource.paginator = this.paginator;
-      this.loading = false;
-      this.appComponent.showOverlay = false;
+      if (res.data) {
+        console.log(res.data.insured[0].certificates);
+        const tableData = res.data.insured;
+        this.dataSource = new MatTableDataSource(tableData);
+        this.dataSource.sort = this.sort;
+        console.log(this.dataSource.sort);
+        console.log(this.sort);
+        this.dataSource.paginator = this.paginator;
+        this.loading = false;
+        this.appComponent.showOverlay = false;
+      }
+      else {
+        this.searchPolicy(this.oldPolicyId);
+      }
     });
 
   }

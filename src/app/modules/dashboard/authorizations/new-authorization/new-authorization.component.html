@@ -354,7 +354,7 @@
               </ngx-mat-file-input>
               <mat-icon *ngIf="removableMedicReport.empty" style="color: #e2e2e2;" matSuffix>publish</mat-icon>
               <button mat-icon-button matSuffix *ngIf="!removableMedicReport.empty"
-                (click)="clearArchives('medicReport', in)" (click)="removableMedicReport.clear($event)">
+                (click)="this.requestService.clearArchives(authorization.get('files').get(in.toString()).get('medicReport'))" (click)="removableMedicReport.clear($event)">
                 <mat-icon style="color: #e2e2e2;">clear</mat-icon>
               </button>
             </mat-form-field>
@@ -364,7 +364,7 @@
                 [valuePlaceholder]="fileNameWatcher('budget', in)" (change)="onFileChange($event, 'budget', in)">
               </ngx-mat-file-input>
               <mat-icon *ngIf="removableBudget.empty" style="color: #e2e2e2;" matSuffix>publish</mat-icon>
-              <button mat-icon-button matSuffix *ngIf="!removableBudget.empty" (click)="clearArchives('budget', in)"
+              <button mat-icon-button matSuffix *ngIf="!removableBudget.empty" (click)="this.requestService.clearArchives(authorization.get('files').get(in.toString()).get('budget'))"
                 (click)="removableBudget.clear($event)">
                 <mat-icon style="color: #e2e2e2;">clear</mat-icon>
               </button>
@@ -375,7 +375,7 @@
                 [valuePlaceholder]="fileNameWatcher('studies', in)" (change)="onFileChange($event, 'studies', in)">
               </ngx-mat-file-input>
               <mat-icon *ngIf="removableStudies.empty" style="color: #e2e2e2;" matSuffix>publish</mat-icon>
-              <button mat-icon-button matSuffix *ngIf="!removableStudies.empty" (click)="clearArchives('studies', in)"
+              <button mat-icon-button matSuffix *ngIf="!removableStudies.empty" (click)="this.requestService.clearArchives(authorization.get('files').get(in.toString()).get('studies'))"
                 (click)="removableStudies.clear($event)">
                 <mat-icon style="color: #e2e2e2;">clear</mat-icon>
               </button>
@@ -392,7 +392,7 @@
                 </ngx-mat-file-input>
                 <mat-icon *ngIf="removableIndication.empty" style="color: #e2e2e2;" matSuffix>publish</mat-icon>
                 <button mat-icon-button matSuffix *ngIf="!removableIndication.empty"
-                  (click)="clearArchives('indications', in)" (click)="removableIndication.clear($event)">
+                  (click)="this.requestService.clearArchives(authorization.get('files').get(in.toString()).get('indications'))" (click)="removableIndication.clear($event)">
                   <mat-icon style="color: #e2e2e2;">clear</mat-icon>
                 </button>
               </mat-form-field>

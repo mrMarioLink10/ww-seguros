@@ -13,6 +13,7 @@ import { map, first, switchMap, startWith } from 'rxjs/operators';
 import { UserService } from '../../../../core/services/user/user.service';
 import { AppComponent } from '../../../../app.component';
 import { ParamMap, ActivatedRoute, Router } from '@angular/router';
+import { RequestsService } from 'src/app/modules/dashboard/services/requests/requests.service';
 // tslint:disable: no-string-literal
 // tslint:disable: max-line-length
 
@@ -34,7 +35,8 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy, DoCheck {
 		private appComponent: AppComponent,
 		private route: ActivatedRoute,
 		private router: Router,
-		private cd: ChangeDetectorRef
+		private cd: ChangeDetectorRef,
+		public requestService: RequestsService
 	) {
 	}
 
@@ -578,8 +580,10 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy, DoCheck {
 	}
 
 	clearArchives(formName, index) {
-		this.authorization.get('files').get(index.toString()).get(formName).setValue('');
+		// this.authorization.get('files').get(index.toString()).get(formName).reset();
+		// this.authorization.get('files').get(index.toString()).get(formName).setValue('');
 		// this.authorization.get('diagnosticos').get(index.toString()).get('files').get(formName).setValue('');
+		formName.setValue('');
 	}
 
 	searchIdNumber(idNumber: string) {

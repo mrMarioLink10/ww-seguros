@@ -13,4 +13,8 @@ export class RequestsService {
   getRequests(params: HttpParams) {
     return (this._http.get(this.BASE_URL, {params}));
   }
+
+  clearArchives(formName) {
+		formName.setValue('');
+	}
 }

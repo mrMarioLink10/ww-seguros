@@ -46,7 +46,7 @@ export class LifeComponent implements OnInit, DoCheck {
     private know: KnowYourCustomerComponent,
     private appComponent: AppComponent,
     private cd: ChangeDetectorRef,
-    private requestService: RequestsService
+    public requestService: RequestsService
   ) { }
   step: number;
   showContent = false;

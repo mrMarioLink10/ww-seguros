@@ -46,7 +46,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
     public appComponent: AppComponent,
     private currencyPipe: CurrencyPipe,
     private cd: ChangeDetectorRef,
-    private requestService: RequestsService
+    public requestService: RequestsService
   ) { }
 
   get allDependents(): FormArray {

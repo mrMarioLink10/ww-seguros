@@ -18,6 +18,7 @@ import { KnowYourCustomerComponent } from '../../../shared/components/disease/kn
 import { AppComponent } from 'src/app/app.component';
 import { MatProgressButtonOptions } from 'mat-progress-buttons';
 import { FormDataFillingService } from 'src/app/modules/dashboard/services/shared/formDataFillingService';
+import { RequestsService } from 'src/app/modules/dashboard/services/requests/requests.service';
 
 // tslint:disable: one-line
 // tslint:disable: max-line-length
@@ -44,7 +45,8 @@ export class LifeComponent implements OnInit, DoCheck {
     private life: LifeService,
     private know: KnowYourCustomerComponent,
     private appComponent: AppComponent,
-    private cd: ChangeDetectorRef
+    private cd: ChangeDetectorRef,
+    public requestService: RequestsService
   ) { }
   step: number;
   showContent = false;
@@ -978,12 +980,27 @@ export class LifeComponent implements OnInit, DoCheck {
       this.getBmi();
     });
 
+
     const coveragesAmountSubscriber = this.newRequest.get('releventPlanInformation').get('coverages').valueChanges.subscribe(value => {
       let totalAmount = 0;
       const formQ = this.newRequest.get('questionnaires') as FormGroup;
       const formF = this.newRequest.get('files') as FormGroup;
       const formRPI = this.newRequest.get('releventPlanInformation').get('coverages') as FormGroup;
       const age = this.newRequest.get('person').get('age').value;
+
+      // this.addFilesA(formF);
+
+      // this.addFilesB(formF);
+
+      // this.addFilesC(formF);
+
+      // this.addFilesE(formF);
+
+      // this.addFilesD(formF);
+
+      // this.addFilesABCDE(formF);
+
+      //   this.addFilesF(formF);
 
       for (const key in formRPI.getRawValue()) {
         if (formRPI.getRawValue().hasOwnProperty(key)) {

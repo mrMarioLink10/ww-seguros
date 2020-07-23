@@ -537,7 +537,7 @@ export class DisabilityComponent implements OnInit, DoCheck {
     public dialog: MatDialog,
     public appComponent: AppComponent,
     private cd: ChangeDetectorRef,
-    private requestService: RequestsService
+    public requestService: RequestsService
   ) { }
 
   ID = null;

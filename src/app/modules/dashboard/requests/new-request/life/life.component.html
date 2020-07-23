@@ -704,11 +704,15 @@
                           label="Cant. en %" name='quantity'></app-number-input>
                         <mat-form-field class="mr-3" appearance="outline">
                           <mat-label> Adjuntar documento de identidad si es mayor de edad </mat-label>
-                          <ngx-mat-file-input placeholder="Documento de Identidad"
+                          <ngx-mat-file-input #removableInputPrimaryBenefits placeholder="Documento de Identidad"
                             [valuePlaceholder]="id2AttachedViewValue(index, 'primaryBenefits')"
                             (change)="onFileChangeOnArray($event, 'id2Attached', index, 'primaryBenefits')">
                           </ngx-mat-file-input>
-                          <mat-icon style="color: #e2e2e2;" matSuffix>publish</mat-icon>
+                          <mat-icon style="color: #e2e2e2;" matSuffix *ngIf="removableInputPrimaryBenefits.empty">publish</mat-icon>
+                          <button mat-icon-button matSuffix *ngIf="!removableInputPrimaryBenefits.empty"
+                            (click)="this.requestService.clearArchives(newRequest.get('primaryBenefits').get('dependentsC').get(index.toString()).get('id2Attached'))" (click)="removableInputPrimaryBenefits.clear($event)">
+                            <mat-icon style="color: #e2e2e2;">clear</mat-icon>
+                          </button>
                         </mat-form-field>
                         <!-- [valuePlaceholder]="fileNameWatcher('id2Attached')" -->
                       </div>
@@ -763,11 +767,15 @@
                     label="Cédula/Pasaporte" name='id2'></app-input>
                   <mat-form-field class="mr-3" appearance="outline">
                     <mat-label> Adjuntar documento de identidad </mat-label>
-                    <ngx-mat-file-input placeholder="Documento de Identidad"
+                    <ngx-mat-file-input #removableInputPersonBenefited placeholder="Documento de Identidad"
                       [valuePlaceholder]="id2AttachedViewValue(null, 'primaryBenefits')"
                       (change)="onFileChangeOnArray($event, 'id2Attached', null, 'primaryBenefits')">
                     </ngx-mat-file-input>
-                    <mat-icon style="color: #e2e2e2;" matSuffix>publish</mat-icon>
+                    <mat-icon style="color: #e2e2e2;" matSuffix *ngIf="removableInputPersonBenefited.empty">publish</mat-icon>
+                    <button mat-icon-button matSuffix *ngIf="!removableInputPersonBenefited.empty"
+                      (click)="this.requestService.clearArchives(newRequest.get('primaryBenefits').get('personBenefited').get('id2Attached'))" (click)="removableInputPersonBenefited.clear($event)">
+                      <mat-icon style="color: #e2e2e2;">clear</mat-icon>
+                    </button>
                   </mat-form-field>
                 </div>
               </div>
@@ -824,11 +832,15 @@
                           label="Cant. en %" name='quantity'></app-number-input>
                         <mat-form-field class="mr-3" appearance="outline">
                           <mat-label> Adjuntar documento de identidad si es mayor de edad </mat-label>
-                          <ngx-mat-file-input placeholder="Documento de Identidad"
+                          <ngx-mat-file-input #removableInputContingentBeneficiary placeholder="Documento de Identidad"
                             [valuePlaceholder]="id2AttachedViewValue(index, 'contingentBeneficiary')"
                             (change)="onFileChangeOnArray($event, 'id2Attached', index, 'contingentBeneficiary')">
                           </ngx-mat-file-input>
-                          <mat-icon style="color: #e2e2e2;" matSuffix>publish</mat-icon>
+                          <mat-icon *ngIf="removableInputContingentBeneficiary.empty" style="color: #e2e2e2;" matSuffix>publish</mat-icon>
+                          <button mat-icon-button matSuffix *ngIf="!removableInputContingentBeneficiary.empty"
+                            (click)="this.requestService.clearArchives(newRequest.get('contingentBeneficiary').get('dependentsC').get(index.toString()).get('id2Attached'))" (click)="removableInputContingentBeneficiary.clear($event)">
+                            <mat-icon style="color: #e2e2e2;">clear</mat-icon>
+                          </button>
                         </mat-form-field>
                       </div>
                       <button mat-mini-fab aria-label="Eliminar reclamacion"
@@ -878,11 +890,15 @@
                     label="Cédula/Pasaporte" name='id2'></app-input>
                   <mat-form-field class="mr-3" appearance="outline">
                     <mat-label> Adjuntar documento de identidad </mat-label>
-                    <ngx-mat-file-input placeholder="Documento de Identidad"
+                    <ngx-mat-file-input #removableInputBeneficiaryPersonBenefited placeholder="Documento de Identidad"
                       [valuePlaceholder]="id2AttachedViewValue(null, 'contingentBeneficiary')"
                       (change)="onFileChangeOnArray($event, 'id2Attached', null, 'contingentBeneficiary')">
                     </ngx-mat-file-input>
-                    <mat-icon style="color: #e2e2e2;" matSuffix>publish</mat-icon>
+                    <mat-icon style="color: #e2e2e2;" matSuffix *ngIf="removableInputBeneficiaryPersonBenefited.empty">publish</mat-icon>
+                    <button mat-icon-button matSuffix *ngIf="!removableInputBeneficiaryPersonBenefited.empty"
+                      (click)="this.requestService.clearArchives(newRequest.get('contingentBeneficiary').get('personBenefited').get('id2Attached'))" (click)="removableInputBeneficiaryPersonBenefited.clear($event)">
+                      <mat-icon style="color: #e2e2e2;">clear</mat-icon>
+                    </button>
                   </mat-form-field>
                 </div>
               </div>
@@ -1729,10 +1745,14 @@
                 <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
                   <mat-form-field class="mr-3" appearance="outline">
                     <mat-label> Estudio </mat-label>
-                    <ngx-mat-file-input [valuePlaceholder]="arrayStudiesWatcher(i)"
+                    <ngx-mat-file-input #removableInputStudies [valuePlaceholder]="arrayStudiesWatcher(i)"
                       (change)="onStudiesChange($event, i)">
                     </ngx-mat-file-input>
-                    <mat-icon style="color: #e2e2e2;" matSuffix>publish</mat-icon>
+                    <mat-icon style="color: #e2e2e2;" matSuffix *ngIf="removableInputStudies.empty">publish</mat-icon>
+                    <button mat-icon-button matSuffix *ngIf="!removableInputStudies.empty"
+                      (click)="this.requestService.clearArchives(newRequest.get('files').get('studies').get(i.toString()).get('study'))" (click)="removableInputStudies.clear($event)">
+                      <mat-icon style="color: #e2e2e2;">clear</mat-icon>
+                    </button>
                   </mat-form-field>
                   <div [ngClass]="{'': filesStudiesArray.length === 1, 'col-span-1': filesStudiesArray.length > 1} ">
                     <button mat-mini-fab aria-label=" Eliminar estudio"
@@ -1753,117 +1773,189 @@
                 <mat-form-field class="mr-3" appearance="outline"
                   *ngIf="this.newRequest.get('files').get('healthDeclaration')">
                   <mat-label> Declaración de salud </mat-label>
-                  <ngx-mat-file-input [valuePlaceholder]="fileNameWatcher('healthDeclaration')"
+                  <ngx-mat-file-input #removableInputHealthDeclaration [valuePlaceholder]="fileNameWatcher('healthDeclaration')"
                     (change)="onFileChange($event, 'healthDeclaration')"></ngx-mat-file-input>
-                  <mat-icon style="color: #e2e2e2;" matSuffix>publish</mat-icon>
+                  <mat-icon style="color: #e2e2e2;" matSuffix *ngIf="removableInputHealthDeclaration.empty">publish</mat-icon>
+                  <button mat-icon-button matSuffix *ngIf="!removableInputHealthDeclaration.empty"
+                    (click)="this.requestService.clearArchives(newRequest.get('files').get('healthDeclaration'))" (click)="removableInputHealthDeclaration.clear($event)">
+                    <mat-icon style="color: #e2e2e2;">clear</mat-icon>
+                  </button>
                 </mat-form-field>
                 <mat-form-field class="mr-3" appearance="outline" *ngIf="this.newRequest.get('files').get('id2')">
                   <mat-label> Cédula de identidad o pasaporte vigente </mat-label>
-                  <ngx-mat-file-input [valuePlaceholder]="fileNameWatcher('id2')"
+                  <ngx-mat-file-input #removableInputId2 [valuePlaceholder]="fileNameWatcher('id2')"
                     (change)="onFileChange($event, 'id2')"></ngx-mat-file-input>
-                  <mat-icon style="color: #e2e2e2;" matSuffix>publish</mat-icon>
+                  <mat-icon style="color: #e2e2e2;" matSuffix *ngIf="removableInputId2.empty">publish</mat-icon>
+                  <button mat-icon-button matSuffix *ngIf="!removableInputId2.empty"
+                    (click)="this.requestService.clearArchives(newRequest.get('files').get('id2'))" (click)="removableInputId2.clear($event)">
+                    <mat-icon style="color: #e2e2e2;">clear</mat-icon>
+                  </button>
                 </mat-form-field>
                 <mat-form-field class="mr-3" appearance="outline" *ngIf="this.newRequest.get('files').get('medicExam')">
                   <mat-label> Examen médico </mat-label>
-                  <ngx-mat-file-input [valuePlaceholder]="fileNameWatcher('medicExam')"
+                  <ngx-mat-file-input #removableInputMedicExam [valuePlaceholder]="fileNameWatcher('medicExam')"
                     (change)="onFileChange($event, 'medicExam')"></ngx-mat-file-input>
-                  <mat-icon style="color: #e2e2e2;" matSuffix>publish</mat-icon>
+                  <mat-icon style="color: #e2e2e2;" matSuffix *ngIf="removableInputMedicExam.empty">publish</mat-icon>
+                  <button mat-icon-button matSuffix *ngIf="!removableInputMedicExam.empty"
+                    (click)="this.requestService.clearArchives(newRequest.get('files').get('medicExam'))" (click)="removableInputMedicExam.clear($event)">
+                    <mat-icon style="color: #e2e2e2;">clear</mat-icon>
+                  </button>
                 </mat-form-field>
                 <mat-form-field class="mr-3" appearance="outline" *ngIf="this.newRequest.get('files').get('glycemia')">
                   <mat-label> Glicemia </mat-label>
-                  <ngx-mat-file-input [valuePlaceholder]="fileNameWatcher('glycemia')"
+                  <ngx-mat-file-input #removableInputGlycemia [valuePlaceholder]="fileNameWatcher('glycemia')"
                     (change)="onFileChange($event, 'glycemia')"></ngx-mat-file-input>
-                  <mat-icon style="color: #e2e2e2;" matSuffix>publish</mat-icon>
+                  <mat-icon style="color: #e2e2e2;" matSuffix *ngIf="removableInputGlycemia.empty">publish</mat-icon>
+                  <button mat-icon-button matSuffix *ngIf="!removableInputGlycemia.empty"
+                    (click)="this.requestService.clearArchives(newRequest.get('files').get('glycemia'))" (click)="removableInputGlycemia.clear($event)">
+                    <mat-icon style="color: #e2e2e2;">clear</mat-icon>
+                  </button>
                 </mat-form-field>
                 <mat-form-field class="mr-3" appearance="outline" *ngIf="this.newRequest.get('files').get('hbA1C')">
                   <mat-label> hbA1C </mat-label>
-                  <ngx-mat-file-input [valuePlaceholder]="fileNameWatcher('hbA1C')"
+                  <ngx-mat-file-input #removableInputHbA1C [valuePlaceholder]="fileNameWatcher('hbA1C')"
                     (change)="onFileChange($event, 'hbA1C')"></ngx-mat-file-input>
-                  <mat-icon style="color: #e2e2e2;" matSuffix>publish</mat-icon>
+                  <mat-icon style="color: #e2e2e2;" matSuffix *ngIf="removableInputHbA1C.empty">publish</mat-icon>
+                  <button mat-icon-button matSuffix *ngIf="!removableInputHbA1C.empty"
+                    (click)="this.requestService.clearArchives(newRequest.get('files').get('hbA1C'))" (click)="removableInputHbA1C.clear($event)">
+                    <mat-icon style="color: #e2e2e2;">clear</mat-icon>
+                  </button>
                 </mat-form-field>
                 <mat-form-field class="mr-3" appearance="outline"
                   *ngIf="this.newRequest.get('files').get('totalCholestor')">
                   <mat-label> Cólesterol total </mat-label>
-                  <ngx-mat-file-input [valuePlaceholder]="fileNameWatcher('totalCholestor')"
+                  <ngx-mat-file-input #removableInputTotalCholestor [valuePlaceholder]="fileNameWatcher('totalCholestor')"
                     (change)="onFileChange($event, 'totalCholestor')"></ngx-mat-file-input>
-                  <mat-icon style="color: #e2e2e2;" matSuffix>publish</mat-icon>
+                  <mat-icon style="color: #e2e2e2;" matSuffix *ngIf="removableInputTotalCholestor.empty">publish</mat-icon>
+                  <button mat-icon-button matSuffix *ngIf="!removableInputTotalCholestor.empty"
+                    (click)="this.requestService.clearArchives(newRequest.get('files').get('totalCholestor'))" (click)="removableInputTotalCholestor.clear($event)">
+                    <mat-icon style="color: #e2e2e2;">clear</mat-icon>
+                  </button>
                 </mat-form-field>
                 <mat-form-field class="mr-3" appearance="outline" *ngIf="this.newRequest.get('files').get('HDL')">
                   <mat-label> HDL </mat-label>
-                  <ngx-mat-file-input [valuePlaceholder]="fileNameWatcher('HDL')"
+                  <ngx-mat-file-input #removableInputHDL [valuePlaceholder]="fileNameWatcher('HDL')"
                     (change)="onFileChange($event, 'HDL')"></ngx-mat-file-input>
-                  <mat-icon style="color: #e2e2e2;" matSuffix>publish</mat-icon>
+                  <mat-icon style="color: #e2e2e2;" matSuffix *ngIf="removableInputHDL.empty">publish</mat-icon>
+                  <button mat-icon-button matSuffix *ngIf="!removableInputHDL.empty"
+                    (click)="this.requestService.clearArchives(newRequest.get('files').get('HDL'))" (click)="removableInputHDL.clear($event)">
+                    <mat-icon style="color: #e2e2e2;">clear</mat-icon>
+                  </button>
                 </mat-form-field>
                 <mat-form-field class="mr-3" appearance="outline"
                   *ngIf="this.newRequest.get('files').get('triglycerides')">
                   <mat-label> Triglicéridos </mat-label>
-                  <ngx-mat-file-input [valuePlaceholder]="fileNameWatcher('triglycerides')"
+                  <ngx-mat-file-input #removableInputTriglycerides [valuePlaceholder]="fileNameWatcher('triglycerides')"
                     (change)="onFileChange($event, 'triglycerides')"></ngx-mat-file-input>
-                  <mat-icon style="color: #e2e2e2;" matSuffix>publish</mat-icon>
+                  <mat-icon style="color: #e2e2e2;" matSuffix *ngIf="removableInputTriglycerides.empty">publish</mat-icon>
+                  <button mat-icon-button matSuffix *ngIf="!removableInputTriglycerides.empty"
+                    (click)="this.requestService.clearArchives(newRequest.get('files').get('triglycerides'))" (click)="removableInputTriglycerides.clear($event)">
+                    <mat-icon style="color: #e2e2e2;">clear</mat-icon>
+                  </button>
                 </mat-form-field>
                 <mat-form-field class="mr-3" appearance="outline"
                   *ngIf="this.newRequest.get('files').get('creatinine')">
                   <mat-label> Creatinina </mat-label>
-                  <ngx-mat-file-input [valuePlaceholder]="fileNameWatcher('creatinine')"
+                  <ngx-mat-file-input #removableInputCreatinine [valuePlaceholder]="fileNameWatcher('creatinine')"
                     (change)="onFileChange($event, 'creatinine')"></ngx-mat-file-input>
-                  <mat-icon style="color: #e2e2e2;" matSuffix>publish</mat-icon>
+                  <mat-icon style="color: #e2e2e2;" matSuffix *ngIf="removableInputCreatinine.empty">publish</mat-icon>
+                  <button mat-icon-button matSuffix *ngIf="!removableInputCreatinine.empty"
+                    (click)="this.requestService.clearArchives(newRequest.get('files').get('creatinine'))" (click)="removableInputCreatinine.clear($event)">
+                    <mat-icon style="color: #e2e2e2;">clear</mat-icon>
+                  </button>
                 </mat-form-field>
                 <mat-form-field class="mr-3" appearance="outline" *ngIf="this.newRequest.get('files').get('AST')">
                   <mat-label> AST </mat-label>
-                  <ngx-mat-file-input [valuePlaceholder]="fileNameWatcher('AST')"
+                  <ngx-mat-file-input #removableInputAST [valuePlaceholder]="fileNameWatcher('AST')"
                     (change)="onFileChange($event, 'AST')"></ngx-mat-file-input>
-                  <mat-icon style="color: #e2e2e2;" matSuffix>publish</mat-icon>
+                  <mat-icon style="color: #e2e2e2;" matSuffix *ngIf="removableInputAST.empty">publish</mat-icon>
+                  <button mat-icon-button matSuffix *ngIf="!removableInputAST.empty"
+                    (click)="this.requestService.clearArchives(newRequest.get('files').get('AST'))" (click)="removableInputAST.clear($event)">
+                    <mat-icon style="color: #e2e2e2;">clear</mat-icon>
+                  </button>
                 </mat-form-field>
                 <mat-form-field class="mr-3" appearance="outline" *ngIf="this.newRequest.get('files').get('ALT')">
                   <mat-label> ALT </mat-label>
-                  <ngx-mat-file-input [valuePlaceholder]="fileNameWatcher('ALT')"
+                  <ngx-mat-file-input #removableInputALT [valuePlaceholder]="fileNameWatcher('ALT')"
                     (change)="onFileChange($event, 'ALT')"></ngx-mat-file-input>
-                  <mat-icon style="color: #e2e2e2;" matSuffix>publish</mat-icon>
+                  <mat-icon style="color: #e2e2e2;" matSuffix *ngIf="removableInputALT.empty">publish</mat-icon>
+                  <button mat-icon-button matSuffix *ngIf="!removableInputALT.empty"
+                    (click)="this.requestService.clearArchives(newRequest.get('files').get('ALT'))" (click)="removableInputALT.clear($event)">
+                    <mat-icon style="color: #e2e2e2;">clear</mat-icon>
+                  </button>
                 </mat-form-field>
                 <mat-form-field class="mr-3" appearance="outline" *ngIf="this.newRequest.get('files').get('GGT')">
                   <mat-label> GGT </mat-label>
-                  <ngx-mat-file-input [valuePlaceholder]="fileNameWatcher('GGT')"
+                  <ngx-mat-file-input #removableInputGGT [valuePlaceholder]="fileNameWatcher('GGT')"
                     (change)="onFileChange($event, 'GGT')"></ngx-mat-file-input>
-                  <mat-icon style="color: #e2e2e2;" matSuffix>publish</mat-icon>
+                  <mat-icon style="color: #e2e2e2;" matSuffix *ngIf="removableInputGGT.empty">publish</mat-icon>
+                  <button mat-icon-button matSuffix *ngIf="!removableInputGGT.empty"
+                    (click)="this.requestService.clearArchives(newRequest.get('files').get('GGT'))" (click)="removableInputGGT.clear($event)">
+                    <mat-icon style="color: #e2e2e2;">clear</mat-icon>
+                  </button>
                 </mat-form-field>
                 <mat-form-field class="mr-3" appearance="outline" *ngIf="this.newRequest.get('files').get('HIV')">
                   <mat-label> HIV </mat-label>
-                  <ngx-mat-file-input [valuePlaceholder]="fileNameWatcher('HIV')"
+                  <ngx-mat-file-input #removableInputHIV [valuePlaceholder]="fileNameWatcher('HIV')"
                     (change)="onFileChange($event, 'HIV')"></ngx-mat-file-input>
-                  <mat-icon style="color: #e2e2e2;" matSuffix>publish</mat-icon>
+                  <mat-icon style="color: #e2e2e2;" matSuffix *ngIf="removableInputHIV.empty">publish</mat-icon>
+                  <button mat-icon-button matSuffix *ngIf="!removableInputHIV.empty"
+                    (click)="this.requestService.clearArchives(newRequest.get('files').get('HIV'))" (click)="removableInputHIV.clear($event)">
+                    <mat-icon style="color: #e2e2e2;">clear</mat-icon>
+                  </button>
                 </mat-form-field>
                 <mat-form-field class="mr-3" appearance="outline" *ngIf="this.newRequest.get('files').get('cocaine')">
                   <mat-label> Cocaína </mat-label>
-                  <ngx-mat-file-input [valuePlaceholder]="fileNameWatcher('cocaine')"
+                  <ngx-mat-file-input #removableInputCocaine [valuePlaceholder]="fileNameWatcher('cocaine')"
                     (change)="onFileChange($event, 'cocaine')"></ngx-mat-file-input>
-                  <mat-icon style="color: #e2e2e2;" matSuffix>publish</mat-icon>
+                  <mat-icon style="color: #e2e2e2;" matSuffix *ngIf="removableInputCocaine.empty">publish</mat-icon>
+                  <button mat-icon-button matSuffix *ngIf="!removableInputCocaine.empty"
+                    (click)="this.requestService.clearArchives(newRequest.get('files').get('cocaine'))" (click)="removableInputCocaine.clear($event)">
+                    <mat-icon style="color: #e2e2e2;">clear</mat-icon>
+                  </button>
                 </mat-form-field>
                 <mat-form-field class="mr-3" appearance="outline" *ngIf="this.newRequest.get('files').get('nicotine')">
                   <mat-label> Nicotina </mat-label>
-                  <ngx-mat-file-input [valuePlaceholder]="fileNameWatcher('nicotine')"
+                  <ngx-mat-file-input #removableInputNicotine [valuePlaceholder]="fileNameWatcher('nicotine')"
                     (change)="onFileChange($event, 'nicotine')"></ngx-mat-file-input>
-                  <mat-icon style="color: #e2e2e2;" matSuffix>publish</mat-icon>
+                  <mat-icon style="color: #e2e2e2;" matSuffix *ngIf="removableInputNicotine.empty">publish</mat-icon>
+                  <button mat-icon-button matSuffix *ngIf="!removableInputNicotine.empty"
+                    (click)="this.requestService.clearArchives(newRequest.get('files').get('nicotine'))" (click)="removableInputNicotine.clear($event)">
+                    <mat-icon style="color: #e2e2e2;">clear</mat-icon>
+                  </button>
                 </mat-form-field>
                 <mat-form-field class="mr-3" appearance="outline"
                   *ngIf="this.newRequest.get('files').get('urineAnalysis')">
                   <mat-label> Analísis químico y microscópico de orina </mat-label>
-                  <ngx-mat-file-input [valuePlaceholder]="fileNameWatcher('urineAnalysis')"
+                  <ngx-mat-file-input #removableInputUrineAnalysis [valuePlaceholder]="fileNameWatcher('urineAnalysis')"
                     (change)="onFileChange($event, 'urineAnalysis')"></ngx-mat-file-input>
-                  <mat-icon style="color: #e2e2e2;" matSuffix>publish</mat-icon>
+                  <mat-icon style="color: #e2e2e2;" matSuffix *ngIf="removableInputUrineAnalysis.empty">publish</mat-icon>
+                  <button mat-icon-button matSuffix *ngIf="!removableInputUrineAnalysis.empty"
+                    (click)="this.requestService.clearArchives(newRequest.get('files').get('urineAnalysis'))" (click)="removableInputUrineAnalysis.clear($event)">
+                    <mat-icon style="color: #e2e2e2;">clear</mat-icon>
+                  </button>
                 </mat-form-field>
                 <mat-form-field class="mr-3" appearance="outline"
                   *ngIf="this.newRequest.get('files').get('restingElectrocardiogram')">
                   <mat-label> Electrocardiograma en reposo </mat-label>
-                  <ngx-mat-file-input [valuePlaceholder]="fileNameWatcher('restingElectrocardiogram')"
+                  <ngx-mat-file-input #removableInputRestingElectrocardiogram [valuePlaceholder]="fileNameWatcher('restingElectrocardiogram')"
                     (change)="onFileChange($event, 'restingElectrocardiogram')"></ngx-mat-file-input>
-                  <mat-icon style="color: #e2e2e2;" matSuffix>publish</mat-icon>
+                  <mat-icon style="color: #e2e2e2;" matSuffix *ngIf="removableInputRestingElectrocardiogram.empty">publish</mat-icon>
+                  <button mat-icon-button matSuffix *ngIf="!removableInputRestingElectrocardiogram.empty"
+                    (click)="this.requestService.clearArchives(newRequest.get('files').get('restingElectrocardiogram'))" (click)="removableInputRestingElectrocardiogram.clear($event)">
+                    <mat-icon style="color: #e2e2e2;">clear</mat-icon>
+                  </button>
                 </mat-form-field>
                 <mat-form-field class="mr-3" appearance="outline"
                   *ngIf="this.newRequest.get('files').get('stressElectrocardiogram')">
                   <mat-label> Electrocardiograma de esfuerzo </mat-label>
-                  <ngx-mat-file-input [valuePlaceholder]="fileNameWatcher('stressElectrocardiogram')"
+                  <ngx-mat-file-input #removableInputstressElectrocardiogram [valuePlaceholder]="fileNameWatcher('stressElectrocardiogram')"
                     (change)="onFileChange($event, 'stressElectrocardiogram')"></ngx-mat-file-input>
-                  <mat-icon style="color: #e2e2e2;" matSuffix>publish</mat-icon>
+                  <mat-icon style="color: #e2e2e2;" matSuffix *ngIf="removableInputstressElectrocardiogram.empty">publish</mat-icon>
+                  <button mat-icon-button matSuffix *ngIf="!removableInputstressElectrocardiogram.empty"
+                    (click)="this.requestService.clearArchives(newRequest.get('files').get('stressElectrocardiogram'))" (click)="removableInputstressElectrocardiogram.clear($event)">
+                    <mat-icon style="color: #e2e2e2;">clear</mat-icon>
+                  </button>
                 </mat-form-field>
               </div>
             </div>

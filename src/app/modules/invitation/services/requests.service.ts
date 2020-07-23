@@ -27,4 +27,7 @@ export class RequestsService {
     return (this.http.post(`${this.BASE_URL}/SolicitudesUsuariosAnonimos/${type}/confirm/${id}`, id));
   }
 
+  clearArchives(formName) {
+		formName.setValue('');
+	}
 }

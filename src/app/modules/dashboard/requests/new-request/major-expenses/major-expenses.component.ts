@@ -22,6 +22,8 @@ import { environment } from '../../../../../../environments/environment';
 import { FormValidationsConstant } from 'src/app/shared/ShareConstant/shareConstantFile';
 import { CurrencyPipe } from '@angular/common';
 import { FormDataFillingService } from 'src/app/modules/dashboard/services/shared/formDataFillingService';
+import { RequestsService } from 'src/app/modules/dashboard/services/requests/requests.service';
+
 @Component({
   selector: 'app-major-expenses',
   templateUrl: './major-expenses.component.html',
@@ -46,7 +48,8 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
     public dialog: MatDialog,
     public appComponent: AppComponent,
     private currencyPipe: CurrencyPipe,
-    private cd: ChangeDetectorRef
+    private cd: ChangeDetectorRef,
+    public requestService: RequestsService
   ) { }
 
   get allDependents(): FormArray {

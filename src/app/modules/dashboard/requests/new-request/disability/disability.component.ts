@@ -16,6 +16,7 @@ import { BaseDialogComponent } from 'src/app/shared/components/base-dialog/base-
 import { FormDataFillingService } from 'src/app/modules/dashboard/services/shared/formDataFillingService';
 import { map, first } from 'rxjs/operators';
 import { AppComponent } from 'src/app/app.component';
+import { RequestsService } from 'src/app/modules/dashboard/services/requests/requests.service';
 // tslint:disable: forin
 // tslint:disable: one-line
 
@@ -535,7 +536,8 @@ export class DisabilityComponent implements OnInit, DoCheck {
     private dialogOption: DialogOptionService,
     public dialog: MatDialog,
     public appComponent: AppComponent,
-    private cd: ChangeDetectorRef
+    private cd: ChangeDetectorRef, 
+    public requestService: RequestsService
   ) { }
 
   ID = null;

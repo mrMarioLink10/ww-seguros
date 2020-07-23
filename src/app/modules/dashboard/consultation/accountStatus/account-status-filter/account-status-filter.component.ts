@@ -1,9 +1,11 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, Input,EventEmitter } from '@angular/core';
 import { DateAdapter, MAT_DATE_LOCALE, MAT_DATE_FORMATS } from '@angular/material';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import {MY_FORMATS} from '../../models/date-format';
 import { FormBuilder } from '@angular/forms';
 import { AppComponent } from 'src/app/app.component';
+import {UserService} from '../../../../../core/services/user/user.service';
+import { environment } from 'src/environments/environment';
 
 
 @Component({
@@ -18,7 +20,7 @@ import { AppComponent } from 'src/app/app.component';
 export class AccountStatusFilterComponent implements OnInit {
 
   @Output() filters = new EventEmitter<any>();
-
+  @Input() polizaId = "";
   filterForm = this.fb.group({
     numeroDocument: [''],
     concepto: [''],
@@ -26,10 +28,12 @@ export class AccountStatusFilterComponent implements OnInit {
     endDate: [''],
 
   });
+  BASE_URL: any = `${environment.fileUrl}`;
 
-  constructor(private fb: FormBuilder, private appComponent: AppComponent) { }
-
+  constructor(private fb: FormBuilder, private appComponent: AppComponent, private userService: UserService) { }
+  userRole = "";
   ngOnInit() {
+    this.userRole = this.userService.getRoleCotizador();
   }
 
   sendFormToParent() {
@@ -57,6 +61,18 @@ export class AccountStatusFilterComponent implements OnInit {
   loader() {
     this.appComponent.showOverlay = true;
     // console.log(this.filterForm.get('from').value);
+  }
+
+  download() {
+    console.log(this.polizaId);
+    switch (this.userRole) {
+    case 'WWS':
+      window.open( `${this.BASE_URL}/InvoiceView/ExportToPDF/EstadoDeCuentas/${this.polizaId}/?location=true`, "_blank");;
+    case 'WMA':
+      window.open(  `${this.BASE_URL}/InvoiceView/ExportToPDF/EstadoDeCuentas/${this.polizaId}/?location=false`, "_blank");;
+    default:
+      return'';
+  }
   }
 
 }

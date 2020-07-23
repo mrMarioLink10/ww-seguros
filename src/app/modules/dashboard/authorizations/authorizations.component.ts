@@ -9,6 +9,7 @@ import { NewAuthorizationService } from '../../../modules/dashboard/authorizatio
 import { FormHandlerService } from '../../../core/services/forms/form-handler.service';
 import { AppComponent } from '../../../app.component';
 import { UserService } from '../../../core/services/user/user.service';
+import { environment } from 'src/environments/environment';
 
 
 
@@ -29,6 +30,7 @@ export interface Claims {
 })
 export class AuthorizationsComponent implements OnInit {
 
+  BASE_URL: any = `${environment.fileUrl}`;
 	statusTypes = [
 		{ value: 0, view: 'Incompleto' },
 		{ value: 1, view: 'Completo' },
@@ -114,9 +116,9 @@ export class AuthorizationsComponent implements OnInit {
 
 	seeRequest(id: number) {
 		if (this.role === 'WWS') {
-			window.open(`http://wwsdevportalbackend.azurewebsites.net/PrecertificadoView/Index/${id}/?location=true`, '_blank');
+			window.open(`${this.BASE_URL}/PrecertificadoView/Index/${id}/?location=true`, '_blank');
 		} else {
-			window.open(`http://wwsdevportalbackend.azurewebsites.net/PrecertificadoView/Index/${id}/?location=false`, '_blank');
+			window.open(`${this.BASE_URL}/PrecertificadoView/Index/${id}/?location=false`, '_blank');
 		}
 	}
 

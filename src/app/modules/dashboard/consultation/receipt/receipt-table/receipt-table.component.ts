@@ -4,6 +4,7 @@ import { ReceiptService } from '../services/receipt.service';
 import { HttpParams } from '@angular/common/http';
 import { AppComponent } from '../../../../../app.component';
 import {UserService} from '../../../../../core/services/user/user.service';
+import { environment } from 'src/environments/environment';
 
 
 @Component({
@@ -32,7 +33,7 @@ export class ReceiptTableComponent implements OnInit {
       };
     }
   }
-
+  BASE_URL: any = `${environment.fileUrl}`;
   dataSource;
   data = [];
   displayedColumns: string[] = ['receiptNumber', 'client' , 'rec', 'chargeDate', 'paymentType',
@@ -48,9 +49,9 @@ export class ReceiptTableComponent implements OnInit {
   getBillDownloadLink(billId) {
     switch (this.userRole) {
       case 'WWS':
-        return `http://wwsdevportalbackend.azurewebsites.net/InvoiceView/ExportToPDF/Reembolsos/${billId}/?location=true`;
+        return `${this.BASE_URL}/InvoiceView/ExportToPDF/Reembolsos/${billId}/?location=true`;
       case 'WMA':
-        return `http://wwsdevportalbackend.azurewebsites.net/InvoiceView/ExportToPDF/Reembolsos/${billId}/?location=false`;
+        return `${this.BASE_URL}/InvoiceView/ExportToPDF/Reembolsos/${billId}/?location=false`;
       default:
         return'';
     }

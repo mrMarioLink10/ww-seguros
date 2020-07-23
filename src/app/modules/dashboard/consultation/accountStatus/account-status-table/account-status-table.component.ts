@@ -4,6 +4,7 @@ import { AppComponent } from '../../../../../app.component';
 import { AccountStatusService } from '../service/account-status.service';
 import { HttpParams } from '@angular/common/http';
 import {UserService} from '../../../../../core/services/user/user.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-account-status-table',
@@ -31,6 +32,7 @@ export class AccountStatusTableComponent implements OnInit {
       };
     }
   }
+  BASE_URL: any = `${environment.fileUrl}`;
 
   dataSource;
   data = [];
@@ -60,9 +62,9 @@ export class AccountStatusTableComponent implements OnInit {
   {
     switch (this.userRole) {
       case 'WWS':
-        return `http://wwsdevportalbackend.azurewebsites.net/InvoiceView/ExportToPDF/EstadoDeCuentas/${id}/?location=true`;
+        return `${this.BASE_URL}/InvoiceView/ExportToPDF/EstadoDeCuentas/${id}/?location=true`;
       case 'WMA':
-        return `http://wwsdevportalbackend.azurewebsites.net/InvoiceView/ExportToPDF/EstadoDeCuentas/${id}/?location=false`;
+        return `${this.BASE_URL}/InvoiceView/ExportToPDF/EstadoDeCuentas/${id}/?location=false`;
       default:
         return'';
     }

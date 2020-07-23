@@ -126,7 +126,7 @@
           <app-radio-button class="mr-3 " [group]="refundForm" name="tipoReclamo" [options]="tipoReclamo">
           </app-radio-button>
         </div>
-    <!--    <div class="mr-3" *ngIf="refundForm.get('tipoReclamo') && refundForm.get('tipoReclamo').value === 'Local'">
+        <!--    <div class="mr-3" *ngIf="refundForm.get('tipoReclamo') && refundForm.get('tipoReclamo').value === 'Local'">
           <app-radio-button class="mr-3 " [group]="refundForm" name="tipoReclamoMoneda" [options]="tipoReclamoLocal">
           </app-radio-button>
 
@@ -202,11 +202,14 @@
             </app-text-area>
           </div>
           <div class="mr-3" *ngIf="refundForm.get('tipoReclamo') && refundForm.get('tipoReclamo').value === 'LOCAL'">
-            <app-radio-button class="mr-3 " [group]="refundForm.get('diagnosticos').get(i.toString())" name="tipoReclamoMoneda" [options]="tipoReclamoLocal">
+            <app-radio-button class="mr-3 " [group]="refundForm.get('diagnosticos').get(i.toString())"
+              name="tipoReclamoMoneda" [options]="tipoReclamoLocal">
             </app-radio-button>
           </div>
-          <div class="mr-3"  *ngIf="refundForm.get('tipoReclamo') && refundForm.get('tipoReclamo').value === 'INTERNACIONAL'">
-            <app-radio-button class="mr-3 " [group]="refundForm.get('diagnosticos').get(i.toString())" name="tipoReclamoMoneda" [options]="tipoReclamoInternacional">
+          <div class="mr-3"
+            *ngIf="refundForm.get('tipoReclamo') && refundForm.get('tipoReclamo').value === 'INTERNACIONAL'">
+            <app-radio-button class="mr-3 " [group]="refundForm.get('diagnosticos').get(i.toString())"
+              name="tipoReclamoMoneda" [options]="tipoReclamoInternacional">
             </app-radio-button>
           </div>
           <div class="grid mr-3"
@@ -237,7 +240,8 @@
             </ngx-mat-file-input>
             <mat-icon style="color: #e2e2e2;" matSuffix *ngIf="removableInputInvoices.empty">publish</mat-icon>
             <button mat-icon-button matSuffix *ngIf="!removableInputInvoices.empty"
-              (click)="this.requestService.clearArchives(this.refundForm.get('diagnosticos').get(i.toString()).get('files').get('invoices'))" (click)="removableInputInvoices.clear($event)">
+              (click)="this.requestService.clearArchives(this.refundForm.get('diagnosticos').get(i.toString()).get('files').get('invoices'))"
+              (click)="removableInputInvoices.clear($event)">
               <mat-icon style="color: #e2e2e2;">clear</mat-icon>
             </button>
           </mat-form-field>
@@ -249,31 +253,40 @@
             </ngx-mat-file-input>
             <mat-icon style="color: #e2e2e2;" matSuffix *ngIf="removableInputIndications.empty">publish</mat-icon>
             <button mat-icon-button matSuffix *ngIf="!removableInputIndications.empty"
-              (click)="this.requestService.clearArchives(this.refundForm.get('diagnosticos').get(i.toString()).get('files').get('indications'))" (click)="removableInputIndications.clear($event)">
+              (click)="this.requestService.clearArchives(this.refundForm.get('diagnosticos').get(i.toString()).get('files').get('indications'))"
+              (click)="removableInputIndications.clear($event)">
               <mat-icon style="color: #e2e2e2;">clear</mat-icon>
             </button>
           </mat-form-field>
-          <mat-form-field class="mr-1" appearance="outline">
-            <mat-label>Comprobante de pagos</mat-label>
+          <mat-form-field class="mr-1" [ngClass]="{'file-input': !removableInputMedicReports.empty}"
+            appearance="outline">
+            <mat-label>Informe médico</mat-label>
             <ngx-mat-file-input #removableInputMedicReports placeholder="Basic outline placeholder"
               [valuePlaceholder]="fileNameWatcher('medicReports', i)"
               (change)="onFileChange($event, 'medicReports', i)">
             </ngx-mat-file-input>
             <mat-icon style="color: #e2e2e2;" matSuffix *ngIf="removableInputMedicReports.empty">publish</mat-icon>
             <button mat-icon-button matSuffix *ngIf="!removableInputMedicReports.empty"
-              (click)="this.requestService.clearArchives(this.refundForm.get('diagnosticos').get(i.toString()).get('files').get('medicReports'))" (click)="removableInputMedicReports.clear($event)">
+              (click)="this.requestService.clearArchives(this.refundForm.get('diagnosticos').get(i.toString()).get('files').get('medicReports'))"
+              (click)="removableInputMedicReports.clear($event)">
               <mat-icon style="color: #e2e2e2;">clear</mat-icon>
+            </button>
+            <button mat-icon-button matSuffix *ngIf="!removableInputMedicReports.empty"
+              (click)="this.requestService.downloadArchives($event, refundForm.get('diagnosticos').get(i.toString()).get('files').get('medicReports').value)"
+              (click)="$event.preventDefault()">
+              <mat-icon style="color: #e2e2e2;">get_app</mat-icon>
             </button>
           </mat-form-field>
           <mat-form-field class="mr-1" appearance="outline">
-            <mat-label>Informe médico</mat-label>
+            <mat-label>Comprobante de pagos</mat-label>
             <ngx-mat-file-input #removableInputPaymentVouchers placeholder="Basic outline placeholder"
               [valuePlaceholder]="fileNameWatcher('paymentVouchers', i)"
               (change)="onFileChange($event, 'paymentVouchers', i)">
             </ngx-mat-file-input>
             <mat-icon style="color: #e2e2e2;" matSuffix *ngIf="removableInputPaymentVouchers.empty">publish</mat-icon>
             <button mat-icon-button matSuffix *ngIf="!removableInputPaymentVouchers.empty"
-              (click)="this.requestService.clearArchives(this.refundForm.get('diagnosticos').get(i.toString()).get('files').get('paymentVouchers'))" (click)="removableInputPaymentVouchers.clear($event)">
+              (click)="this.requestService.clearArchives(this.refundForm.get('diagnosticos').get(i.toString()).get('files').get('paymentVouchers'))"
+              (click)="removableInputPaymentVouchers.clear($event)">
               <mat-icon style="color: #e2e2e2;">clear</mat-icon>
             </button>
           </mat-form-field>

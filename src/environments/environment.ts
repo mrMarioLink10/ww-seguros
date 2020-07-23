@@ -11,7 +11,7 @@ export const environment = {
   production: false,
   mailForHelp: "ayuda_wws@wws.com.do",
   mailForHelpPM: "ayuda_wwma@wwmedicalassurance.com",
-  baseUrl: 'http://localhost:4200/',
+  baseUrl: 'https://wwsdevfrontend-desadevfrontend.azurewebsites.net/',
   keycloak: keycloakConfig,
   apiUrl: 'https://wwsdevportalbackend-desadevportalbackend.azurewebsites.net',
   keycloakConfig

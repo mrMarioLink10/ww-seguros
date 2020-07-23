@@ -51,9 +51,9 @@ export class RefundComponent implements OnInit {
 				viewValue: 'CHEQUE'
 			}
 		]
-  };
+	};
 
-  tipoReclamo: FieldConfig = {
+	tipoReclamo: FieldConfig = {
 		label: 'Tipo Reclamo',
 		options: [
 			{
@@ -65,9 +65,9 @@ export class RefundComponent implements OnInit {
 				viewValue: 'Internacional'
 			}
 		]
-  };
+	};
 
-  tipoReclamoLocal: FieldConfig = {
+	tipoReclamoLocal: FieldConfig = {
 		label: 'Moneda',
 		options: [
 			{
@@ -79,10 +79,10 @@ export class RefundComponent implements OnInit {
 				viewValue: 'Dólares'
 			}
 		]
-  };
+	};
 
 
-  tipoReclamoInternacional: FieldConfig = {
+	tipoReclamoInternacional: FieldConfig = {
 		label: 'Moneda',
 		options: [
 			{
@@ -338,7 +338,7 @@ export class RefundComponent implements OnInit {
 			}
 		});
 
-		console.log("El json de todo el formulario: ", JSON.stringify(this.refundForm.value));
+		console.log('El json de todo el formulario: ', JSON.stringify(this.refundForm.value));
 
 	}
 	// role;
@@ -561,7 +561,7 @@ export class RefundComponent implements OnInit {
 
 	addDiagnostic() {
 		this.diagnosticList.push(this.createDiagnostic());
-		console.log("El json de todo el formulario: ", JSON.stringify(this.refundForm.value));
+		console.log('El json de todo el formulario: ', JSON.stringify(this.refundForm.value));
 
 	}
 
@@ -730,7 +730,7 @@ export class RefundComponent implements OnInit {
 			this.refundForm.markAllAsTouched();
 			this.refundForm.updateValueAndValidity();
 			// this.cd.markForCheck();
-			console.log("El json de todo el formulario: ", JSON.stringify(this.refundForm.value));
+			console.log('El json de todo el formulario: ', JSON.stringify(this.refundForm.value));
 
 		});
 		this.refund.id = null;

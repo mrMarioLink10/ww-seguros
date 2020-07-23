@@ -14,6 +14,8 @@ import { UserService } from '../../../../../../core/services/user/user.service';
 import { ActivatedRoute } from '@angular/router';
 import { ClaimsService } from '../../../../services/claims/claims.service';
 import { HttpParams } from '@angular/common/http';
+import { RequestsService } from 'src/app/modules/dashboard/services/requests/requests.service';
+
 
 // tslint:disable: no-string-literal
 // tslint:disable: max-line-length
@@ -148,7 +150,8 @@ export class RefundComponent implements OnInit {
 		private userService: UserService,
 		private route: ActivatedRoute,
 		private cd: ChangeDetectorRef,
-		private claimsService: ClaimsService
+		private claimsService: ClaimsService,
+		public requestService: RequestsService
 
 	) { }
 

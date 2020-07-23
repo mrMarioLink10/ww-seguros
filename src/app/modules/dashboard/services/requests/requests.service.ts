@@ -44,4 +44,8 @@ export class RequestsService {
     downloadLink.download = fileName;
     downloadLink.click();
   }
+
+  clearArchives(formName) {
+		formName.setValue('');
+	}
 }

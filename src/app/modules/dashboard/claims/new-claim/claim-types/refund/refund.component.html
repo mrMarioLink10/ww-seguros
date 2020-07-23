@@ -240,7 +240,8 @@
             </ngx-mat-file-input>
             <mat-icon style="color: #e2e2e2;" matSuffix *ngIf="removableInputInvoices.empty">publish</mat-icon>
             <button mat-icon-button matSuffix *ngIf="!removableInputInvoices.empty"
-              (click)="clearArchives('invoices', i)" (click)="removableInputInvoices.clear($event)">
+              (click)="this.requestService.clearArchives(this.refundForm.get('diagnosticos').get(i.toString()).get('files').get('invoices'))"
+              (click)="removableInputInvoices.clear($event)">
               <mat-icon style="color: #e2e2e2;">clear</mat-icon>
             </button>
           </mat-form-field>
@@ -252,7 +253,8 @@
             </ngx-mat-file-input>
             <mat-icon style="color: #e2e2e2;" matSuffix *ngIf="removableInputIndications.empty">publish</mat-icon>
             <button mat-icon-button matSuffix *ngIf="!removableInputIndications.empty"
-              (click)="clearArchives('indications', i)" (click)="removableInputIndications.clear($event)">
+              (click)="this.requestService.clearArchives(this.refundForm.get('diagnosticos').get(i.toString()).get('files').get('indications'))"
+              (click)="removableInputIndications.clear($event)">
               <mat-icon style="color: #e2e2e2;">clear</mat-icon>
             </button>
           </mat-form-field>
@@ -265,13 +267,14 @@
             </ngx-mat-file-input>
             <mat-icon style="color: #e2e2e2;" matSuffix *ngIf="removableInputMedicReports.empty">publish</mat-icon>
             <button mat-icon-button matSuffix *ngIf="!removableInputMedicReports.empty"
-              (click)="downloadArchives($event, refundForm.get('diagnosticos').get(i.toString()).get('files').get('medicReports').value)"
-              (click)="$event.preventDefault()">
-              <mat-icon style="color: #e2e2e2;">get_app</mat-icon>
+              (click)="this.requestService.clearArchives(this.refundForm.get('diagnosticos').get(i.toString()).get('files').get('medicReports'))"
+              (click)="removableInputMedicReports.clear($event)">
+              <mat-icon style="color: #e2e2e2;">clear</mat-icon>
             </button>
             <button mat-icon-button matSuffix *ngIf="!removableInputMedicReports.empty"
-              (click)="clearArchives('medicReports', i)" (click)="removableInputMedicReports.clear($event)">
-              <mat-icon style="color: #e2e2e2;">clear</mat-icon>
+              (click)="this.requestService.downloadArchives($event, refundForm.get('diagnosticos').get(i.toString()).get('files').get('medicReports').value)"
+              (click)="$event.preventDefault()">
+              <mat-icon style="color: #e2e2e2;">get_app</mat-icon>
             </button>
           </mat-form-field>
           <mat-form-field class="mr-1" appearance="outline">
@@ -282,7 +285,8 @@
             </ngx-mat-file-input>
             <mat-icon style="color: #e2e2e2;" matSuffix *ngIf="removableInputPaymentVouchers.empty">publish</mat-icon>
             <button mat-icon-button matSuffix *ngIf="!removableInputPaymentVouchers.empty"
-              (click)="clearArchives('paymentVouchers', i)" (click)="removableInputPaymentVouchers.clear($event)">
+              (click)="this.requestService.clearArchives(this.refundForm.get('diagnosticos').get(i.toString()).get('files').get('paymentVouchers'))"
+              (click)="removableInputPaymentVouchers.clear($event)">
               <mat-icon style="color: #e2e2e2;">clear</mat-icon>
             </button>
           </mat-form-field>

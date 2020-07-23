@@ -1,4 +1,5 @@
 export interface PolicyDetail {
+  ramo: string;
   paymentCicle: string;
   currency: string;
   deductible: string;

@@ -56,15 +56,17 @@
       </ng-container>
 
       <!-- ACTIONS Column -->
-      <ng-container matColumnDef="actions">
+     <!--
+       <ng-container matColumnDef="actions">
         <th mat-header-cell *matHeaderCellDef> Acciones </th>
         <td mat-cell *matCellDef="let element">
-          <a [href]="getDownloadLink(element.codigo_cliente)"
+          <a [href]="getDownloadLink(element.poliza)"
              target="_blank" class="bg-blue-700 hover:bg-blue-600 text-white font-bold py-1 px-4 rounded-full">
             Descargar
           </a>
         </td>
       </ng-container>
+    -->
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>

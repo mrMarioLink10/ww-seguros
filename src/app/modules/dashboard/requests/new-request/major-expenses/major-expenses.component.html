@@ -986,11 +986,15 @@
                         label="Cantidad en %" name='quantity' min="1" max="100"></app-number-input>
                       <mat-form-field class="mr-3" appearance="outline">
                         <mat-label> Adjuntar documento de identidad si es mayor de edad </mat-label>
-                        <ngx-mat-file-input placeholder="Documento de Identidad"
+                        <ngx-mat-file-input #removableInputPrimaryBenefits placeholder="Documento de Identidad"
                           [valuePlaceholder]="id2AttachedViewValue(index, 'primaryBenefits')"
                           (change)="onBeneficiaryFileChangeOnArray($event, 'id2Attached', index, 'primaryBenefits')">
                         </ngx-mat-file-input>
-                        <mat-icon style="color: #e2e2e2;" matSuffix>publish</mat-icon>
+                        <mat-icon style="color: #e2e2e2;" matSuffix *ngIf="removableInputPrimaryBenefits.empty">publish</mat-icon>
+                        <button mat-icon-button matSuffix *ngIf="!removableInputPrimaryBenefits.empty"
+                          (click)="this.requestService.clearArchives(newRequest.get('primaryBenefits').get('dependentsC').get(index.toString()).get('id2Attached'))" (click)="removableInputPrimaryBenefits.clear($event)">
+                          <mat-icon style="color: #e2e2e2;">clear</mat-icon>
+                        </button>
                       </mat-form-field>
                     </div>
                     <div class="pb-5">
@@ -1042,14 +1046,18 @@
                   [group]="newRequest.get('primaryBenefits').get('personBenefited')">
                 </app-select>
                 <app-input class="mr-3" [group]="newRequest.get('primaryBenefits').get('personBenefited')"
-                  label="Documento de Identidad" name='id2'></app-input>
+                  label="Documento de Identidad" name='id2'></app-input>                     
                 <mat-form-field class="mr-3" appearance="outline">
                   <mat-label> Adjuntar documento de identidad </mat-label>
-                  <ngx-mat-file-input placeholder="Documento de Identidad"
+                  <ngx-mat-file-input #removableInputPrimaryBenefitsPersonBenefited placeholder="Documento de Identidad"
                     [valuePlaceholder]="id2AttachedViewValue(null, 'primaryBenefits')"
                     (change)="onBeneficiaryFileChangeOnArray($event, 'id2Attached', null, 'primaryBenefits')">
                   </ngx-mat-file-input>
-                  <mat-icon style="color: #e2e2e2;" matSuffix>publish</mat-icon>
+                  <mat-icon style="color: #e2e2e2;" matSuffix *ngIf="removableInputPrimaryBenefitsPersonBenefited.empty">publish</mat-icon>
+                  <button mat-icon-button matSuffix *ngIf="!removableInputPrimaryBenefitsPersonBenefited.empty"
+                    (click)="this.requestService.clearArchives(newRequest.get('primaryBenefits').get('personBenefited').get('id2Attached'))" (click)="removableInputPrimaryBenefitsPersonBenefited.clear($event)">
+                    <mat-icon style="color: #e2e2e2;">clear</mat-icon>
+                  </button>
                 </mat-form-field>
               </div>
             </div>
@@ -1112,11 +1120,15 @@
                         label="Cantidad en %" name='quantity' min="1" max="100"></app-number-input>
                       <mat-form-field class="mr-3" appearance="outline">
                         <mat-label> Adjuntar documento de identidad si es mayor de edad </mat-label>
-                        <ngx-mat-file-input placeholder="Documento de Identidad"
+                        <ngx-mat-file-input #removableInputContingentBeneficiary placeholder="Documento de Identidad"
                           [valuePlaceholder]="id2AttachedViewValue(index, 'contingentBeneficiary')"
                           (change)="onBeneficiaryFileChangeOnArray($event, 'id2Attached', index, 'contingentBeneficiary')">
                         </ngx-mat-file-input>
-                        <mat-icon style="color: #e2e2e2;" matSuffix>publish</mat-icon>
+                        <mat-icon style="color: #e2e2e2;" matSuffix *ngIf="removableInputContingentBeneficiary.empty">publish</mat-icon>
+                        <button mat-icon-button matSuffix *ngIf="!removableInputContingentBeneficiary.empty"
+                          (click)="this.requestService.clearArchives(newRequest.get('contingentBeneficiary').get('dependentsC').get(index.toString()).get('id2Attached'))" (click)="removableInputContingentBeneficiary.clear($event)">
+                          <mat-icon style="color: #e2e2e2;">clear</mat-icon>
+                        </button>
                       </mat-form-field>
                     </div>
                     <button mat-mini-fab aria-label="Eliminar reclamacion"
@@ -1170,11 +1182,15 @@
                   label="Documento de Identidad" name='id2'></app-input>
                 <mat-form-field class="mr-3" appearance="outline">
                   <mat-label> Adjuntar documento de identidad </mat-label>
-                  <ngx-mat-file-input placeholder="Documento de Identidad"
+                  <ngx-mat-file-input #removableInputContingentBeneficiaryPersonBenefited placeholder="Documento de Identidad"
                     [valuePlaceholder]="id2AttachedViewValue(null, 'contingentBeneficiary')"
                     (change)="onBeneficiaryFileChangeOnArray($event, 'id2Attached', null, 'contingentBeneficiary')">
                   </ngx-mat-file-input>
-                  <mat-icon style="color: #e2e2e2;" matSuffix>publish</mat-icon>
+                  <mat-icon style="color: #e2e2e2;" matSuffix *ngIf="removableInputContingentBeneficiaryPersonBenefited.empty">publish</mat-icon>
+                  <button mat-icon-button matSuffix *ngIf="!removableInputContingentBeneficiaryPersonBenefited.empty"
+                    (click)="this.requestService.clearArchives(newRequest.get('contingentBeneficiary').get('personBenefited').get('id2Attached'))" (click)="removableInputContingentBeneficiaryPersonBenefited.clear($event)">
+                    <mat-icon style="color: #e2e2e2;">clear</mat-icon>
+                  </button>
                 </mat-form-field>
               </div>
             </div>
@@ -1202,9 +1218,13 @@
               <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
                 <mat-form-field class="mr-3" appearance="outline">
                   <mat-label> Estudio </mat-label>
-                  <ngx-mat-file-input [valuePlaceholder]="arrayStudiesWatcher(i)" (change)="onStudiesChange($event, i)">
+                  <ngx-mat-file-input #removableInputFilesStudies [valuePlaceholder]="arrayStudiesWatcher(i)" (change)="onStudiesChange($event, i)">
                   </ngx-mat-file-input>
-                  <mat-icon style="color: #e2e2e2;" matSuffix>publish</mat-icon>
+                  <mat-icon style="color: #e2e2e2;" matSuffix *ngIf="removableInputFilesStudies.empty">publish</mat-icon>
+                  <button mat-icon-button matSuffix *ngIf="!removableInputFilesStudies.empty"
+                    (click)="this.requestService.clearArchives(newRequest.get('files').get('studies').get(i.toString()).get('study'))" (click)="removableInputFilesStudies.clear($event)">
+                    <mat-icon style="color: #e2e2e2;">clear</mat-icon>
+                  </button>
                 </mat-form-field>
                 <div [ngClass]="{'': filesStudiesArray.length === 1, 'col-span-1': filesStudiesArray.length > 1} ">
                   <button mat-mini-fab aria-label=" Eliminar estudio"

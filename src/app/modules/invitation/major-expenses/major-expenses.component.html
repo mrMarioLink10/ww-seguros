@@ -132,7 +132,7 @@
                     [group]="newRequest.get('person')" label="Pie" name='height'>
                   </app-number-input>
                   <app-number-input (keyup)="getBmiUpdated(newRequest.get('person'))" class="mr-2"
-                    [group]="newRequest.get('person')" name='inches' max="11" label="Pulgadas">
+                    [group]="newRequest.get('person')" name='inches' max="12" label="Pulgadas">
                   </app-number-input>
                 </div>
                 <app-number-input (keyup)="getBmiUpdated(newRequest.get('person'))"
@@ -221,12 +221,11 @@
               </p>
             </div>
             <div>
-              <h4 class='pb-3 pt-3'>¿Es Usted una Persona Políticamente Expuesta?</h4>
-              <hr *ngIf="isContractor && !isJuridica" class=" w-full mb-6 ww-divider">
+              <hr *ngIf="newRequest.get('exposedPerson').get('contractor')" class=" w-full mb-6 ww-divider">
             </div>
             <div
               class="w-full xl:flex xl:justify-between lg:flex lg:justify-between md:flex md:justify-between sm:flex sm:justify-between"
-              *ngIf="isContractor && !isJuridica">
+              *ngIf="newRequest.get('exposedPerson').get('contractor')">
               <div class="radio-button-label">Contratante</div>
               <app-radio-button [group]="newRequest.get('exposedPerson')" name="contractor"
                 (selected)="selectChange($event)" [options]="diseaseService.yesOrNoOriginal">
@@ -314,28 +313,29 @@
                 </app-input>
               </div> -->
               <app-select class="mr-3" (selected)="onWeightUnitChange(newRequest.get('contractor'))"
-                  [options]="weightUnit" [group]="newRequest.get('contractor')">
-                </app-select>
-                <app-number-input (keyup)="getBmiUpdated(newRequest.get('contractor'))" class="mr-3"
-                  [group]="newRequest.get('contractor')" label="Peso" name='weight'>
+                [options]="weightUnit" [group]="newRequest.get('contractor')">
+              </app-select>
+              <app-number-input (keyup)="getBmiUpdated(newRequest.get('contractor'))" class="mr-3"
+                [group]="newRequest.get('contractor')" label="Peso" name='weight'>
+              </app-number-input>
+              <app-select class="mr-3" [options]="heightUnit"
+                (selected)="onHeightUnitChange($event, newRequest.get('contractor'))"
+                [group]="newRequest.get('contractor')">
+              </app-select>
+              <div *ngIf="this.newRequest.get('contractor').get('heightUnit').value === 'PIE'" class="mr-3"
+                class="grid grid-cols-2">
+                <app-number-input (keyup)="getBmiUpdated(newRequest.get('contractor'))" class="mr-2"
+                  [group]="newRequest.get('contractor')" label="Pie" name='height'>
                 </app-number-input>
-                <app-select class="mr-3" [options]="heightUnit"
-                  (selected)="onHeightUnitChange($event, newRequest.get('contractor'))" [group]="newRequest.get('contractor')">
-                </app-select>
-                <div *ngIf="this.newRequest.get('contractor').get('heightUnit').value === 'PIE'" class="mr-3"
-                  class="grid grid-cols-2">
-                  <app-number-input (keyup)="getBmiUpdated(newRequest.get('contractor'))" class="mr-2"
-                    [group]="newRequest.get('contractor')" label="Pie" name='height'>
-                  </app-number-input>
-                  <app-number-input (keyup)="getBmiUpdated(newRequest.get('contractor'))" class="mr-2"
-                    [group]="newRequest.get('contractor')" name='inches' max="12" label="Pulgadas">
-                  </app-number-input>
-                </div>
-                <app-number-input (keyup)="getBmiUpdated(newRequest.get('contractor'))"
-                  *ngIf="this.newRequest.get('contractor').get('heightUnit').value !== 'PIE'" class="mr-3"
-                  [group]="newRequest.get('contractor')" label="Altura" name='height'>
+                <app-number-input (keyup)="getBmiUpdated(newRequest.get('contractor'))" class="mr-2"
+                  [group]="newRequest.get('contractor')" name='inches' max="12" label="Pulgadas">
                 </app-number-input>
-                <!-- <app-input class="mr-3" [group]="newRequest.get('contractor')" label="BMI" name='bmi'>
+              </div>
+              <app-number-input (keyup)="getBmiUpdated(newRequest.get('contractor'))"
+                *ngIf="this.newRequest.get('contractor').get('heightUnit').value !== 'PIE'" class="mr-3"
+                [group]="newRequest.get('contractor')" label="Altura" name='height'>
+              </app-number-input>
+              <!-- <app-input class="mr-3" [group]="newRequest.get('contractor')" label="BMI" name='bmi'>
                 </app-input> -->
               <app-select class="mr-3" [options]="status" [group]="newRequest.get('contractor')"></app-select>
               <app-select class="mr-3" [options]="country" [group]="newRequest.get('contractor')"></app-select>
@@ -480,7 +480,7 @@
                         <app-number-input
                           (keyup)="getBmiUpdated(newRequest.get('dependents').get('allDependents').get(index.toString()))"
                           class="mr-2" [group]="newRequest.get('dependents').get('allDependents').get(index.toString())"
-                          name='inches' max="11" label="Pulgadas">
+                          name='inches' max=12 label="Pulgadas">
                         </app-number-input>
                       </div>
                       <app-number-input
@@ -716,7 +716,7 @@
                   </div>
                 </div>
               </div>
-              <!-- SI PRACTICA DEPORTE DE ALTO RIESGO  -->
+              <!-- SI PRACTICA DEPORTE DE ALTO RIESGO -->
               <div
                 *ngIf="(newRequest.get('questionsA').value.haveHighRiskSport === true || newRequest.get('questionsA').value.haveHighRiskSport === 'TRUE') && question.name === 'haveHighRiskSport' && newRequest.get('questionsA').get('highRiskSport')">
                 <label class="my-4 text-xs">Escoja cuales actividades realiza</label>
@@ -985,18 +985,34 @@
                       <app-number-input class="mr-3"
                         [group]="newRequest.get('primaryBenefits').get('dependentsC').get(index.toString())"
                         label="Cantidad en %" name='quantity' min="1" max="100"></app-number-input>
-                        <mat-form-field class="mr-3" appearance="outline">
-                          <mat-label> Adjuntar documento de identidad si es mayor de edad </mat-label>
-                          <ngx-mat-file-input #removableInputPrimaryBenefits placeholder="Documento de Identidad"
-                            [valuePlaceholder]="id2AttachedViewValue(index, 'primaryBenefits')"
-                            (change)="onBeneficiaryFileChangeOnArray($event, 'id2Attached', index, 'primaryBenefits')">
-                          </ngx-mat-file-input>
-                          <mat-icon style="color: #e2e2e2;" matSuffix *ngIf="removableInputPrimaryBenefits.empty">publish</mat-icon>
-                          <button mat-icon-button matSuffix *ngIf="!removableInputPrimaryBenefits.empty"
-                            (click)="this.requestService.clearArchives(newRequest.get('primaryBenefits').get('dependentsC').get(index.toString()).get('id2Attached'))" (click)="removableInputPrimaryBenefits.clear($event)">
-                            <mat-icon style="color: #e2e2e2;">clear</mat-icon>
-                          </button>
-                        </mat-form-field>
+                      <mat-form-field class="mr-3"
+                        [ngClass]="{'file-input': newRequest.get('primaryBenefits').get('dependentsC').get(index.toString()).get('id2Attached').value !== ''}"
+                        appearance="outline">
+                        <mat-label> Adjuntar documento de identidad si es mayor de edad </mat-label>
+                        <ngx-mat-file-input #removableInputPrimaryBenefits placeholder="Documento de Identidad"
+                          [valuePlaceholder]="id2AttachedViewValue(index, 'primaryBenefits')"
+                          (change)="onBeneficiaryFileChangeOnArray($event, 'id2Attached', index, 'primaryBenefits')">
+                        </ngx-mat-file-input>
+                        <mat-icon style="color: #e2e2e2;" matSuffix
+                          *ngIf="newRequest.get('primaryBenefits').get('dependentsC').get(index.toString()).get('id2Attached').value === ''">
+                          publish
+                        </mat-icon>
+                        <button mat-icon-button matSuffix
+                          *ngIf="newRequest.get('primaryBenefits').get('dependentsC').get(index.toString()).get('id2Attached').value !== ''"
+                          (click)="this.requestService.clearArchives(newRequest.get('primaryBenefits').get('dependentsC').get(index.toString()).get('id2Attached'))"
+                          (click)="removableInputPrimaryBenefits.clear($event)">
+                          <mat-icon style="color: #e2e2e2;">clear</mat-icon>
+                        </button><button mat-icon-button matSuffix
+                          *ngIf="newRequest.get('primaryBenefits').get('dependentsC').get(index.toString()).get('id2Attached').value !== ''"
+                          (click)="this.requestService.downloadArchives($event, newRequest.get('primaryBenefits').get('dependentsC').get(index.toString()).get('id2Attached').value)">
+                          <mat-icon style="color: #e2e2e2;">get_app</mat-icon>
+                        </button>
+                        <mat-error
+                          *ngIf="newRequest.get('primaryBenefits').get('dependentsC').get(index.toString()).get('id2Attached').touched && !newRequest.get('primaryBenefits').get('dependentsC').get(index.toString()).get('id2Attached').valid">
+                          Este campo es
+                          obligatorio
+                        </mat-error>
+                      </mat-form-field>
                     </div>
                     <div class="pb-5">
                       <button *ngIf="newRequest.get('primaryBenefits').get('dependentsC')['controls'].length > 1"
@@ -1048,18 +1064,33 @@
                 </app-select>
                 <app-input class="mr-3" [group]="newRequest.get('primaryBenefits').get('personBenefited')"
                   label="Documento de Identidad" name='id2'></app-input>
-                  <mat-form-field class="mr-3" appearance="outline">
-                    <mat-label> Adjuntar documento de identidad </mat-label>
-                    <ngx-mat-file-input #removableInputPrimaryBenefitsPersonBenefited placeholder="Documento de Identidad"
-                      [valuePlaceholder]="id2AttachedViewValue(null, 'primaryBenefits')"
-                      (change)="onBeneficiaryFileChangeOnArray($event, 'id2Attached', null, 'primaryBenefits')">
-                    </ngx-mat-file-input>
-                    <mat-icon style="color: #e2e2e2;" matSuffix *ngIf="removableInputPrimaryBenefitsPersonBenefited.empty">publish</mat-icon>
-                    <button mat-icon-button matSuffix *ngIf="!removableInputPrimaryBenefitsPersonBenefited.empty"
-                      (click)="this.requestService.clearArchives(newRequest.get('primaryBenefits').get('personBenefited').get('id2Attached'))" (click)="removableInputPrimaryBenefitsPersonBenefited.clear($event)">
-                      <mat-icon style="color: #e2e2e2;">clear</mat-icon>
-                    </button>
-                  </mat-form-field>
+                <mat-form-field class="mr-3"
+                  [ngClass]="{'file-input': newRequest.get('primaryBenefits').get('personBenefited').get('id2Attached').value !== ''}"
+                  appearance="outline">
+                  <mat-label> Adjuntar documento de identidad </mat-label>
+                  <ngx-mat-file-input #removableInputPrimaryBenefitsPersonBenefited placeholder="Documento de Identidad"
+                    [valuePlaceholder]="id2AttachedViewValue(null, 'primaryBenefits')"
+                    (change)="onBeneficiaryFileChangeOnArray($event, 'id2Attached', null, 'primaryBenefits')">
+                  </ngx-mat-file-input>
+                  <mat-icon style="color: #e2e2e2;" matSuffix
+                    *ngIf="newRequest.get('primaryBenefits').get('personBenefited').get('id2Attached').value === ''">
+                    publish</mat-icon>
+                  <button mat-icon-button matSuffix
+                    *ngIf="newRequest.get('primaryBenefits').get('personBenefited').get('id2Attached').value !== ''"
+                    (click)="this.requestService.clearArchives(newRequest.get('primaryBenefits').get('personBenefited').get('id2Attached'))"
+                    (click)="removableInputPrimaryBenefitsPersonBenefited.clear($event)">
+                    <mat-icon style="color: #e2e2e2;">clear</mat-icon>
+                  </button><button mat-icon-button matSuffix
+                    *ngIf="newRequest.get('primaryBenefits').get('personBenefited').get('id2Attached').value !== ''"
+                    (click)="this.requestService.downloadArchives($event, newRequest.get('primaryBenefits').get('personBenefited').get('id2Attached').value)">
+                    <mat-icon style="color: #e2e2e2;">get_app</mat-icon>
+                  </button>
+                  <mat-error
+                    *ngIf="newRequest.get('primaryBenefits').get('personBenefited').get('id2Attached').touched && !newRequest.get('primaryBenefits').get('personBenefited').get('id2Attached').valid">
+                    Este campo es
+                    obligatorio
+                  </mat-error>
+                </mat-form-field>
               </div>
             </div>
 
@@ -1119,18 +1150,32 @@
                       <app-number-input class="mr-3"
                         [group]="newRequest.get('contingentBeneficiary').get('dependentsC').get(index.toString())"
                         label="Cantidad en %" name='quantity' min="1" max="100"></app-number-input>
-                        <mat-form-field class="mr-3" appearance="outline">
-                          <mat-label> Adjuntar documento de identidad si es mayor de edad </mat-label>
-                          <ngx-mat-file-input #removableInputContingentBeneficiary placeholder="Documento de Identidad"
-                            [valuePlaceholder]="id2AttachedViewValue(index, 'contingentBeneficiary')"
-                            (change)="onBeneficiaryFileChangeOnArray($event, 'id2Attached', index, 'contingentBeneficiary')">
-                          </ngx-mat-file-input>
-                          <mat-icon style="color: #e2e2e2;" matSuffix *ngIf="removableInputContingentBeneficiary.empty">publish</mat-icon>
-                          <button mat-icon-button matSuffix *ngIf="!removableInputContingentBeneficiary.empty"
-                            (click)="this.requestService.clearArchives(newRequest.get('contingentBeneficiary').get('dependentsC').get(index.toString()).get('id2Attached'))" (click)="removableInputContingentBeneficiary.clear($event)">
-                            <mat-icon style="color: #e2e2e2;">clear</mat-icon>
-                          </button>
-                        </mat-form-field>
+                      <mat-form-field class="mr-3" appearance="outline"
+                        [ngClass]="{'file-input': newRequest.get('contingentBeneficiary').get('dependentsC').get(index.toString()).get('id2Attached').value !== ''}">
+                        <mat-label> Adjuntar documento de identidad si es mayor de edad </mat-label>
+                        <ngx-mat-file-input #removableInputContingentBeneficiary placeholder="Documento de Identidad"
+                          [valuePlaceholder]="id2AttachedViewValue(index, 'contingentBeneficiary')"
+                          (change)="onBeneficiaryFileChangeOnArray($event, 'id2Attached', index, 'contingentBeneficiary')">
+                        </ngx-mat-file-input>
+                        <mat-icon style="color: #e2e2e2;" matSuffix
+                          *ngIf="newRequest.get('contingentBeneficiary').get('dependentsC').get(index.toString()).get('id2Attached').value === ''">
+                          publish</mat-icon>
+                        <button mat-icon-button matSuffix
+                          *ngIf="newRequest.get('contingentBeneficiary').get('dependentsC').get(index.toString()).get('id2Attached').value !== ''"
+                          (click)="this.requestService.clearArchives(newRequest.get('contingentBeneficiary').get('dependentsC').get(index.toString()).get('id2Attached'))"
+                          (click)="removableInputContingentBeneficiary.clear($event)">
+                          <mat-icon style="color: #e2e2e2;">clear</mat-icon>
+                        </button><button mat-icon-button matSuffix
+                          *ngIf="newRequest.get('contingentBeneficiary').get('dependentsC').get(index.toString()).get('id2Attached').value !== ''"
+                          (click)="this.requestService.downloadArchives($event, newRequest.get('contingentBeneficiary').get('dependentsC').get(index.toString()).get('id2Attached').value)">
+                          <mat-icon style="color: #e2e2e2;">get_app</mat-icon>
+                        </button>
+                        <mat-error
+                          *ngIf="newRequest.get('contingentBeneficiary').get('dependentsC').get(index.toString()).get('id2Attached').touched && !newRequest.get('contingentBeneficiary').get('dependentsC').get(index.toString()).get('id2Attached').valid">
+                          Este campo es
+                          obligatorio
+                        </mat-error>
+                      </mat-form-field>
                     </div>
                     <button mat-mini-fab aria-label="Eliminar reclamacion"
                       (click)="formMethods.deleteOneElement(contingentBeneficiaryArray, index)" type="button"
@@ -1181,18 +1226,33 @@
                 </app-select>
                 <app-input class="mr-3" [group]="newRequest.get('contingentBeneficiary').get('personBenefited')"
                   label="Documento de Identidad" name='id2'></app-input>
-                  <mat-form-field class="mr-3" appearance="outline">
-                    <mat-label> Adjuntar documento de identidad </mat-label>
-                    <ngx-mat-file-input #removableInputContingentBeneficiaryPersonBenefited placeholder="Documento de Identidad"
-                      [valuePlaceholder]="id2AttachedViewValue(null, 'contingentBeneficiary')"
-                      (change)="onBeneficiaryFileChangeOnArray($event, 'id2Attached', null, 'contingentBeneficiary')">
-                    </ngx-mat-file-input>
-                    <mat-icon style="color: #e2e2e2;" matSuffix *ngIf="removableInputContingentBeneficiaryPersonBenefited.empty">publish</mat-icon>
-                    <button mat-icon-button matSuffix *ngIf="!removableInputContingentBeneficiaryPersonBenefited.empty"
-                      (click)="this.requestService.clearArchives(newRequest.get('contingentBeneficiary').get('personBenefited').get('id2Attached'))" (click)="removableInputContingentBeneficiaryPersonBenefited.clear($event)">
-                      <mat-icon style="color: #e2e2e2;">clear</mat-icon>
-                    </button>
-                  </mat-form-field>
+                <mat-form-field class="mr-3" appearance="outline"
+                  [ngClass]="{'file-input': newRequest.get('contingentBeneficiary').get('personBenefited').get('id2Attached').value !== ''}">
+                  <mat-label> Adjuntar documento de identidad </mat-label>
+                  <ngx-mat-file-input #removableInputContingentBeneficiaryPersonBenefited
+                    placeholder="Documento de Identidad"
+                    [valuePlaceholder]="id2AttachedViewValue(null, 'contingentBeneficiary')"
+                    (change)="onBeneficiaryFileChangeOnArray($event, 'id2Attached', null, 'contingentBeneficiary')">
+                  </ngx-mat-file-input>
+                  <mat-icon style="color: #e2e2e2;" matSuffix
+                    *ngIf="newRequest.get('contingentBeneficiary').get('personBenefited').get('id2Attached').value === ''">
+                    publish</mat-icon>
+                  <button mat-icon-button matSuffix
+                    *ngIf="newRequest.get('contingentBeneficiary').get('personBenefited').get('id2Attached').value !== ''"
+                    (click)="this.requestService.clearArchives(newRequest.get('contingentBeneficiary').get('personBenefited').get('id2Attached'))"
+                    (click)="removableInputContingentBeneficiaryPersonBenefited.clear($event)">
+                    <mat-icon style="color: #e2e2e2;">clear</mat-icon>
+                  </button><button mat-icon-button matSuffix
+                    *ngIf="newRequest.get('contingentBeneficiary').get('personBenefited').get('id2Attached').value !== ''"
+                    (click)="this.requestService.downloadArchives($event, newRequest.get('contingentBeneficiary').get('personBenefited').get('id2Attached').value)">
+                    <mat-icon style="color: #e2e2e2;">get_app</mat-icon>
+                  </button>
+                  <mat-error
+                    *ngIf="newRequest.get('contingentBeneficiary').get('personBenefited').get('id2Attached').touched && !newRequest.get('contingentBeneficiary').get('personBenefited').get('id2Attached').valid">
+                    Este campo es
+                    obligatorio
+                  </mat-error>
+                </mat-form-field>
               </div>
             </div>
 
@@ -1217,15 +1277,30 @@
             </div>
             <div *ngFor="let studies of filesStudiesArray.controls; let i = index">
               <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
-                <mat-form-field class="mr-3" appearance="outline">
+                <mat-form-field class="mr-3" appearance="outline"
+                  [ngClass]="{'file-input': newRequest.get('files').get('studies').get(i.toString()).get('study').value !== ''}">
                   <mat-label> Estudio </mat-label>
-                  <ngx-mat-file-input #removableInputFilesStudies [valuePlaceholder]="arrayStudiesWatcher(i)" (change)="onStudiesChange($event, i)">
+                  <ngx-mat-file-input #removableInputFilesStudies [valuePlaceholder]="arrayStudiesWatcher(i)"
+                    (change)="onStudiesChange($event, i)">
                   </ngx-mat-file-input>
-                  <mat-icon style="color: #e2e2e2;" matSuffix *ngIf="removableInputFilesStudies.empty">publish</mat-icon>
-                  <button mat-icon-button matSuffix *ngIf="!removableInputFilesStudies.empty"
-                    (click)="this.requestService.clearArchives(newRequest.get('files').get('studies').get(i.toString()).get('study'))" (click)="removableInputFilesStudies.clear($event)">
+                  <mat-icon style="color: #e2e2e2;" matSuffix
+                    *ngIf="newRequest.get('files').get('studies').get(i.toString()).get('study').value === ''">publish
+                  </mat-icon>
+                  <button mat-icon-button matSuffix
+                    *ngIf="newRequest.get('files').get('studies').get(i.toString()).get('study').value !== ''"
+                    (click)="this.requestService.clearArchives(newRequest.get('files').get('studies').get(i.toString()).get('study'))"
+                    (click)="removableInputFilesStudies.clear($event)">
                     <mat-icon style="color: #e2e2e2;">clear</mat-icon>
+                  </button><button mat-icon-button matSuffix
+                    *ngIf="newRequest.get('files').get('studies').get(i.toString()).get('study').value !== ''"
+                    (click)="this.requestService.downloadArchives($event, newRequest.get('files').get('studies').get(i.toString()).get('study').value)">
+                    <mat-icon style="color: #e2e2e2;">get_app</mat-icon>
                   </button>
+                  <mat-error
+                    *ngIf="newRequest.get('files').get('studies').get(i.toString()).get('study').touched && !newRequest.get('files').get('studies').get(i.toString()).get('study').valid">
+                    Este campo es
+                    obligatorio
+                  </mat-error>
                 </mat-form-field>
                 <div [ngClass]="{'': filesStudiesArray.length === 1, 'col-span-1': filesStudiesArray.length > 1} ">
                   <button mat-mini-fab aria-label=" Eliminar estudio"

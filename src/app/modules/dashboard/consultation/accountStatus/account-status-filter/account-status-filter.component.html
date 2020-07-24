@@ -25,7 +25,7 @@
           <mat-datepicker #initialDate></mat-datepicker>
         </mat-form-field>
       </div>
-  
+
       <div class="mr-3 xl:col-span-4">
         <mat-form-field color="accent" appearance="outline" class="w-full" style="font-size: small !important;">
           <mat-label>Hasta</mat-label>
@@ -34,8 +34,8 @@
           <mat-datepicker #endDate></mat-datepicker>
         </mat-form-field>
       </div>
-  
-      <div class="grid grid-cols-2 xl:col-span-2 ">
+
+      <div class="grid grid-cols-3 xl:col-span-3 ">
         <button (click)="resetForm()" class="flex justify-center content-center nofocus small-search-button"
           style="color: white;">
           <mat-icon style="padding-top: 7px;">delete</mat-icon>
@@ -43,16 +43,18 @@
         <button (click)="loader()" type="submit" class="flex justify-center content-center nofocus small-search-button">
           <img src="/assets/iconos/search-icon.svg">
         </button>
+        <button (click)="download()" type="button" class="flex justify-center content-center nofocus small-search-button" title="Descargar">
+          <img src="/assets/iconos/cloud_download-white-18dp.svg">
+        </button>
       </div>
     </div>
     <!-- <div class="flex flex-row-reverse -mt-3">
       <button mat-mini-fab color="accent" aria-label="Buscar" (click)="resetForm()" >
         <mat-icon>delete</mat-icon>
       </button>
-  
+
       <button mat-mini-fab color="primary" aria-label="Buscar" type="submit" style="margin-right: 5px;">
         <mat-icon>search</mat-icon>
       </button>
     </div> -->
   </form>
-  

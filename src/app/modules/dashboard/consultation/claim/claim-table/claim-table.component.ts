@@ -6,6 +6,7 @@ import { ActivatedRoute } from '@angular/router';
 import { PolicyService } from '../../../services/consultation/policy.service';
 import { AppComponent } from '../../../../../app.component';
 import {UserService} from '../../../../../core/services/user/user.service';
+import { environment } from 'src/environments/environment';
 
 
 @Component({
@@ -48,12 +49,13 @@ export class ClaimTableComponent implements OnInit {
   ngOnInit() {
     this.userRole = this.userService.getRoleCotizador();
   }
+  BASE_URL: any = `${environment.fileUrl}`;
   getBillDownloadLink(billId) {
     switch (this.userRole) {
       case 'WWS':
-        return `http://wwsdevportalbackend.azurewebsites.net/InvoiceView/ExportToPDF/ReclamosData/${billId}/?location=true`;
+        return `${this.BASE_URL}/InvoiceView/ExportToPDF/ReclamosData/${billId}/?location=true`;
       case 'WMA':
-        return `http://wwsdevportalbackend.azurewebsites.net/InvoiceView/ExportToPDF/ReclamosData/${billId}/?location=false`;
+        return `${this.BASE_URL}/InvoiceView/ExportToPDF/ReclamosData/${billId}/?location=false`;
       default:
         return'';
     }

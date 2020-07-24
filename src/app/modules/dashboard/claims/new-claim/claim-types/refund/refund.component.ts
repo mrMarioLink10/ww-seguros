@@ -53,9 +53,9 @@ export class RefundComponent implements OnInit {
 				viewValue: 'CHEQUE'
 			}
 		]
-  };
+	};
 
-  tipoReclamo: FieldConfig = {
+	tipoReclamo: FieldConfig = {
 		label: 'Tipo Reclamo',
 		options: [
 			{
@@ -67,9 +67,9 @@ export class RefundComponent implements OnInit {
 				viewValue: 'Internacional'
 			}
 		]
-  };
+	};
 
-  tipoReclamoLocal: FieldConfig = {
+	tipoReclamoLocal: FieldConfig = {
 		label: 'Moneda',
 		options: [
 			{
@@ -81,10 +81,10 @@ export class RefundComponent implements OnInit {
 				viewValue: 'Dólares'
 			}
 		]
-  };
+	};
 
 
-  tipoReclamoInternacional: FieldConfig = {
+	tipoReclamoInternacional: FieldConfig = {
 		label: 'Moneda',
 		options: [
 			{
@@ -356,7 +356,7 @@ export class RefundComponent implements OnInit {
 			}
 		});
 
-		console.log("El json de todo el formulario: ", JSON.stringify(this.refundForm.value));
+		console.log('El json de todo el formulario: ', JSON.stringify(this.refundForm.value));
 
 	}
 	// role;
@@ -373,13 +373,7 @@ export class RefundComponent implements OnInit {
 	// 	this.role = this.userService.getRoleCotizador();
 	// 	}
 
-	// 	seeRequest(id: number) {
-	// 		if (this.role === 'WWS') {
-	// 			window.open(`http://wwsdevportalbackend.azurewebsites.net/ReembolsosView/Index/${id}/?location=true`, '_blank');
-	// 		} else {
-	// 			window.open(`http://wwsdevportalbackend.azurewebsites.net/ReembolsosView/Index/${id}/?location=false`, '_blank');
-	// 		}
-	// 	}
+
 
 	showWarningDot(form: any): boolean {
 		if (!this.ID) {
@@ -534,7 +528,9 @@ export class RefundComponent implements OnInit {
 
 	fileNameWatcher(type?: string, index?: number) {
 		if (this.filesInformation[index]) {
-			if (this.filesInformation[index][type + 'Url']) { return this.filesInformation[index][type + 'Url']; }
+			if (this.filesInformation[index][type + 'Url'] && this.refundForm.get('diagnosticos').get(index.toString()).get('files').get(type).value !== '') {
+				return this.filesInformation[index][type + 'Url'];
+			}
 		}
 	}
 
@@ -609,7 +605,7 @@ export class RefundComponent implements OnInit {
 
 	addDiagnostic() {
 		this.diagnosticList.push(this.createDiagnostic());
-		console.log("El json de todo el formulario: ", JSON.stringify(this.refundForm.value));
+		console.log('El json de todo el formulario: ', JSON.stringify(this.refundForm.value));
 
 	}
 
@@ -778,7 +774,7 @@ export class RefundComponent implements OnInit {
 			this.refundForm.markAllAsTouched();
 			this.refundForm.updateValueAndValidity();
 			// this.cd.markForCheck();
-			console.log("El json de todo el formulario: ", JSON.stringify(this.refundForm.value));
+			console.log('El json de todo el formulario: ', JSON.stringify(this.refundForm.value));
 
 		});
 		this.refund.id = null;
@@ -788,10 +784,12 @@ export class RefundComponent implements OnInit {
 
 	}
 
+	log(thing: any) {
+		console.log('thing:', thing);
+	}
 
 	sendForm(form: FormGroup, formType: string, sendType: string, id?: number) {
 		console.log(id);
-
 		this.formHandler.sendForm(form, formType, sendType, this.appComponent, id);
 
 	}

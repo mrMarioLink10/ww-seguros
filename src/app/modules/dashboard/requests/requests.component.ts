@@ -9,6 +9,7 @@ import { DisabilityService } from './new-request/disability/services/disability.
 import { FormHandlerService } from '../../../core/services/forms/form-handler.service';
 import { AppComponent } from '../../../app.component';
 import { UserService } from '../../../core/services/user/user.service';
+import { environment } from 'src/environments/environment';
 
 export interface Requests {
   no: number;
@@ -111,12 +112,12 @@ export class RequestsComponent implements OnInit {
     this.newRequestButtonOptions.active = true;
     this.router.navigateByUrl('/dashboard/requests/new-requests');
   }
-
+  BASE_URL: any = `${environment.fileUrl}`;
   seeRequest(id: number, type: string) {
     if (this.role === 'WWS') {
-      window.open(`http://wwsdevportalbackend.azurewebsites.net/solicitudesView/${type}/${id}/?location=true`, '_blank');
+      window.open(`${this.BASE_URL}/solicitudesView/${type}/${id}/?location=true`, '_blank');
     } else {
-      window.open(`http://wwsdevportalbackend.azurewebsites.net/solicitudesView/${type}/${id}/?location=false`, '_blank');
+      window.open(`${this.BASE_URL}/solicitudesView/${type}/${id}/?location=false`, '_blank');
     }
   }
 

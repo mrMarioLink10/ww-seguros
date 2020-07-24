@@ -598,6 +598,11 @@ export class LifeComponent implements OnInit, DoCheck {
         coverages: this.fb.group({
           basicLife: [{ value: '', disabled: true }, Validators.required],
           survival: [{ value: '', disabled: true }, Validators.required],
+          accidentalDeathDismemberment: [{ value: '', disabled: true }, Validators.required],
+          disability: [{ value: '', disabled: true }, Validators.required],
+          seriousIllnesses: [{ value: '', disabled: true }, Validators.required],
+          waiverPremiumPayment: [{ value: '', disabled: true }, Validators.required],
+          advancePaymentOfCapital: [{ value: '', disabled: true }, Validators.required],
         })
       }),
       relevantPaymentInformation: this.fb.group({
@@ -1565,6 +1570,15 @@ export class LifeComponent implements OnInit, DoCheck {
           this.newRequest.get('person').get('firstName').setValue(response.data.nombre);
           this.newRequest.get('person').get('date').setValue(response.data.fecha_nacimiento);
           this.newRequest.get('relevantPaymentInformation').get('method').setValue(response.data.formaPago);
+
+
+
+          this.newRequest.get('releventPlanInformation').get('coverages').get('accidentalDeathDismemberment').setValue(response.data.desmembramientos);
+          this.newRequest.get('releventPlanInformation').get('coverages').get('disability').setValue(response.data.invalidez);
+          this.newRequest.get('releventPlanInformation').get('coverages').get('seriousIllnesses').setValue(response.data.enfermedades_graves);
+          this.newRequest.get('releventPlanInformation').get('coverages').get('waiverPremiumPayment').setValue(response.data.exoneracion);
+          this.newRequest.get('releventPlanInformation').get('coverages').get('advancePaymentOfCapital').setValue(response.data.pago_anticipado);
+
           this.newRequest.get('releventPlanInformation').get('coverages').get('basicLife').setValue(response.data.suma_asegurada);
           this.newRequest.get('releventPlanInformation').get('coverages').get('survival').setValue(response.data.suma_asegurada_supervivencia);
           this.newRequest.get('releventPlanInformation').get('type').setValue(response.data.plan);

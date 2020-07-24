@@ -30,7 +30,7 @@
       <app-select class="mr-3" [options]="diabetesType" [group]="form" (selected)="selectChange($event)"></app-select>
 
     </div>
-    <div class="mr-3" *ngIf="form.get('diabetesType').value === 'Otra'">
+    <div class="mr-3" *ngIf="form.get('diabetesType').value === 'OTRA'">
       <app-input [group]="form" name="diabetesOther" label="Otro Tipo de diabetes" >
       </app-input>
     </div>
@@ -47,7 +47,7 @@
         (selected)="selectChange($event)">
       </app-radio-button>
     </div>
-    <div *ngIf="form.value[question.name] === 'si'">
+    <div *ngIf="form.value[question.name] === 'SI'">
       <div *ngIf="question.name === 'takeOralMedication'">
         <div *ngFor="let studies of oralMedicationList.controls; let i = index"
           class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
@@ -261,7 +261,7 @@
         (selected)="selectChange($event)">
       </app-radio-button>
     </div>
-    <div *ngIf="form.value[question.name] === 'si'">
+    <div *ngIf="form.value[question.name] === 'SI'">
       <div class="radio-button-label mb-2" style="font-size: 12px !important;">Proporcione toda la información al
         respecto
       </div>

@@ -24,13 +24,13 @@ export class RenalUrinaryComponent implements OnInit {
     options: [
 
       {
-        value: 'si',
+        value: 'SI',
         viewValue: 'Si'
 
       },
 
       {
-        value: 'no',
+        value: 'NO',
         viewValue: 'No'
       }
     ]
@@ -48,7 +48,7 @@ export class RenalUrinaryComponent implements OnInit {
     const formM = this.form.get('data').get('medicine') as FormGroup;
     const formD = this.form.get('data') as FormGroup;
 
-    if (event.valor === 'si') {
+    if (event.valor === 'SI') {
       switch (event.name) {
         case 'medical_consultation_radio':
           formD.addControl('medical_consultation', this.fb.group({
@@ -70,7 +70,7 @@ export class RenalUrinaryComponent implements OnInit {
           console.log(JSON.stringify(this.form.value));
           break;
       }
-    } else if (event.valor === 'no') {
+    } else if (event.valor === 'NO') {
       switch (event.name) {
         case 'analysis_radio':
           form.removeControl('analysis_array');

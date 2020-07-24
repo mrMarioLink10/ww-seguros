@@ -19,11 +19,11 @@ export class ProstaticComponent implements OnInit {
     label: 'Tipo de tratamiento',
     options: [
       {
-        value: 'medico',
+        value: 'MEDICO',
         viewValue: 'Médico'
       },
       {
-        value: 'quirurgico',
+        value: 'QUIRURGICO',
         viewValue: 'Quirúrgico'
       }
     ]
@@ -80,7 +80,7 @@ export class ProstaticComponent implements OnInit {
   }
   selectChange(event) {
     console.log(event);
-    if (event.valor === 'si') {
+    if (event.valor === 'SI') {
       switch (event.name) {
         case 'hasProstateEvaluation':
           this.form.addControl('prostateEvaluations', this.fb.group({
@@ -105,7 +105,7 @@ export class ProstaticComponent implements OnInit {
         default:
           break;
       }
-    } else if (event.valor === 'no') {
+    } else if (event.valor === 'NO') {
       switch (event.name) {
         case 'hasProstateEvaluation':
           this.form.removeControl('prostateEvaluations');

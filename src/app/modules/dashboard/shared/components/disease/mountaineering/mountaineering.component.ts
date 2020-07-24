@@ -22,11 +22,11 @@ export class MountaineeringComponent implements OnInit, DoCheck {
     label: '',
     options: [
       {
-        value: 'si',
+        value: 'SI',
         viewValue: 'Si'
       },
       {
-        value: 'no',
+        value: 'NO',
         viewValue: 'No'
       }
     ]
@@ -97,14 +97,14 @@ export class MountaineeringComponent implements OnInit, DoCheck {
 
     const formZ = this.form.get('climb_zone') as FormGroup;
     // console.log(this.dataText);
-    if (this.c === 0 && (this.form.get('climb_zone').get('africa').value === 'si'
-      || this.form.get('climb_zone').get('alpes').value === 'si'
-      || this.form.get('climb_zone').get('himalaya').value === 'si'
-      || this.form.get('climb_zone').get('andes').value === 'si'
-      || this.form.get('climb_zone').get('mcKinley').value === 'si'
-      || this.form.get('climb_zone').get('alaska').value === 'si'
-      || this.form.get('climb_zone').get('mountain_range').value === 'si'
-      || this.form.get('climb_zone').get('others').value === 'si')) {
+    if (this.c === 0 && (this.form.get('climb_zone').get('africa').value === 'SI'
+      || this.form.get('climb_zone').get('alpes').value === 'SI'
+      || this.form.get('climb_zone').get('himalaya').value === 'SI'
+      || this.form.get('climb_zone').get('andes').value === 'SI'
+      || this.form.get('climb_zone').get('mcKinley').value === 'SI'
+      || this.form.get('climb_zone').get('alaska').value === 'SI'
+      || this.form.get('climb_zone').get('mountain_range').value === 'SI'
+      || this.form.get('climb_zone').get('others').value === 'SI')) {
 
       if (!this.form.get('climb_zone').get('area_text')) {
         formZ.addControl('area_text', this.fb.group({
@@ -183,7 +183,7 @@ export class MountaineeringComponent implements OnInit, DoCheck {
     const formG = this.form.get('expeditions').get('cave') as FormGroup;
     const formS = this.form.get('category') as FormGroup;
 
-    if (event.valor === 'si') {
+    if (event.valor === 'SI') {
 
       switch (event.name) {
 
@@ -263,7 +263,7 @@ export class MountaineeringComponent implements OnInit, DoCheck {
     }
 
     // tslint:disable-next-line: one-line
-    else if (event.valor === 'no') {
+    else if (event.valor === 'NO') {
 
       switch (event.name) {
 

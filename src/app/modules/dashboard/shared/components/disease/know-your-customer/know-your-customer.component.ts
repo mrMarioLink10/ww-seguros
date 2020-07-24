@@ -233,10 +233,10 @@ export class KnowYourCustomerComponent implements OnInit, DoCheck {
   ngDoCheck(): void {
 
 
-    if (this.form.get('policy').get('total_policy_radio').value == 'SI' &&
+    if (this.form.get('policy').get('total_policy_radio').value == 'si' &&
       !this.form.get('questions')) {
       const varPolicy = {
-        valor: 'SI',
+        valor: 'si',
         name: 'total_policy_radio'
       };
       // tslint:disable-next-line: align
@@ -245,10 +245,10 @@ export class KnowYourCustomerComponent implements OnInit, DoCheck {
 
     }
     if (this.form.get('questions')) {
-      if (this.form.get('questions').get('transaction').get('investigation_radio').value == 'SI' &&
+      if (this.form.get('questions').get('transaction').get('investigation_radio').value == 'si' &&
         !this.form.get('questions').get('transaction').get('investigation')) {
         const varInvestigation = {
-          valor: 'SI',
+          valor: 'si',
           name: 'investigation_radio'
         };
         this.selectChange(varInvestigation);

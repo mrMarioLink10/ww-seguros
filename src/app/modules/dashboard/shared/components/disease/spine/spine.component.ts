@@ -27,10 +27,10 @@ export class SpineComponent implements OnInit {
     name: 'segment',
     label: 'Segmento Afectado',
     options: [
-      { viewValue: 'Cervical', value: 'cervical' },
-      { viewValue: 'Torácico', value: 'toracico' },
-      { viewValue: 'Lumbar', value: 'lumbar' },
-      { viewValue: 'Sacro', value: 'sacro' },
+      { viewValue: 'Cervical', value: 'CERVICAL' },
+      { viewValue: 'Torácico', value: 'TORACICO' },
+      { viewValue: 'Lumbar', value: 'LUMBAR' },
+      { viewValue: 'Sacro', value: 'SACRO' },
 
     ]
   };
@@ -39,10 +39,10 @@ export class SpineComponent implements OnInit {
     name: 'type',
     label: 'Tipo de Estudio',
     options: [
-      { viewValue: 'Radiografía', value: 'radiografia' },
-      { viewValue: 'Tomografía', value: 'tomografia' },
-      { viewValue: 'Resonancia Magnética', value: 'resonancia magnetica' },
-      { viewValue: 'Otro', value: 'otro' },
+      { viewValue: 'Radiografía', value: 'RADIOGRAFIA' },
+      { viewValue: 'Tomografía', value: 'TOMOGRAFIA' },
+      { viewValue: 'Resonancia Magnética', value: 'RESONANCIA MAGNETICA' },
+      { viewValue: 'Otro', value: 'OTRO' },
 
     ]
   };
@@ -51,11 +51,11 @@ export class SpineComponent implements OnInit {
     label: '¿Ha tenido episodios en los últimos 2 años?',
     options: [
       {
-        value: 'si',
+        value: 'SI',
         viewValue: 'Si'
       },
       {
-        value: 'no',
+        value: 'NO',
         viewValue: 'No'
       }
     ]
@@ -65,11 +65,11 @@ export class SpineComponent implements OnInit {
     label: '',
     options: [
       {
-        value: 'si',
+        value: 'SI',
         viewValue: 'Si'
       },
       {
-        value: 'no',
+        value: 'NO',
         viewValue: 'No'
       }
     ]
@@ -223,7 +223,7 @@ export class SpineComponent implements OnInit {
 
   selectChange(event) {
 
-    if (event.valor === 'si') {
+    if (event.valor === 'SI') {
       switch (event.name) {
         case 'useSurgery':
           this.form.addControl('surgeries', this.fb.array([this.createFormArray('surgeries')]));
@@ -243,7 +243,7 @@ export class SpineComponent implements OnInit {
         default:
           break;
       }
-    } else if (event.valor === 'no') {
+    } else if (event.valor === 'NO') {
       switch (event.name) {
         case 'useSurgery':
           this.form.removeControl('surgeries');

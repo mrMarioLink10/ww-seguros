@@ -27,27 +27,27 @@ export class MellitusDiabetesComponent implements OnInit {
     label: 'Tipo de diabetes',
     options: [
       {
-        value: 'Diabetes mellitus Tipo 1',
+        value: 'DIABETES MELLITUS TIPO 1',
         viewValue: 'Diabetes mellitus Tipo 1'
       },
       {
-        value: 'Diabetes mellitus Tipo 2 ',
+        value: 'DIABETES MELLITUS TIPO 2 ',
         viewValue: 'Diabetes mellitus Tipo 2 '
       },
       {
-        value: 'Intolerancia a la glucosa',
+        value: 'INTOLERANCIA A LA GLUCOSA',
         viewValue: 'Intolerancia a la glucosa'
       },
       {
-        value: 'Diabetes gestacional',
+        value: 'DIABETES GESTACIONAL',
         viewValue: 'Diabetes gestacional'
       },
       {
-        value: 'Diabetes secundaria',
+        value: 'DIABETES SECUNDARIA',
         viewValue: 'Diabetes secundaria'
       },
       {
-        value: 'Otra',
+        value: 'OTRA',
         viewValue: 'Otra'
       }
     ],
@@ -163,7 +163,7 @@ export class MellitusDiabetesComponent implements OnInit {
 
   selectChange(event) {
     console.log(event);
-    if (event.valor === 'si') {
+    if (event.valor === 'SI') {
       switch (event.name) {
         case 'haveProteinuriaAlbuminuria':
           this.form.addControl('proteinuriaAlbuminuria', this.informationGroup());
@@ -206,7 +206,7 @@ export class MellitusDiabetesComponent implements OnInit {
         default:
           break;
       }
-    } else if (event.valor === 'no') {
+    } else if (event.valor === 'NO') {
       switch (event.name) {
         case 'haveProteinuriaAlbuminuria':
           this.form.removeControl('proteinuriaAlbuminuria');
@@ -253,10 +253,10 @@ export class MellitusDiabetesComponent implements OnInit {
 
     if (event.name == 'diabetesType') {
       console.log(event);
-      if (event.valor == 'Otra') {
+      if (event.valor == 'OTRA') {
         this.form.addControl('diabetesOther', this.fb.control('', Validators.required));
       }
-      if (event.valor != 'Otra') {
+      if (event.valor != 'OTRA') {
         if (this.form.get('diabetesOther')) {
           this.form.removeControl('diabetesOther');
         }

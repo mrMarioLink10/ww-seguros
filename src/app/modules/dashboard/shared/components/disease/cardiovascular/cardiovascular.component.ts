@@ -20,10 +20,10 @@ export class CardiovascularComponent implements OnInit, DoCheck {
 		name: 'disease',
 		label: 'Nombre enfermedad',
 		options: [
-			{ viewValue: 'Diabetes', value: 'diabetes' },
-			{ viewValue: 'Enfisema derrames cerebrales', value: 'enfisema derrames cerebrales' },
-			{ viewValue: 'Cáncer', value: 'cancer' },
-			{ viewValue: 'Enfermedad renal o vascular', value: 'enfermedad renal o vascular' },
+			{ viewValue: 'Diabetes', value: 'DIABETES' },
+			{ viewValue: 'Enfisema derrames cerebrales', value: 'ENFISEMA DERRAMES CEREBRALES' },
+			{ viewValue: 'Cáncer', value: 'CANCER' },
+			{ viewValue: 'Enfermedad renal o vascular', value: 'ENFERMEDAD RENAL o VASCULAR' },
 
 		]
 	};
@@ -32,10 +32,10 @@ export class CardiovascularComponent implements OnInit, DoCheck {
 		name: 'estudio',
 		label: 'Estudio',
 		options: [
-			{ viewValue: 'Electrocardiograma', value: 'electrocardiograma' },
-			{ viewValue: 'Ecocardiograma', value: 'ecocardiograma' },
-			{ viewValue: 'Prueba de esfuerzo', value: 'prueba de esfuerzo' },
-			{ viewValue: 'Otros', value: 'otros' },
+			{ viewValue: 'Electrocardiograma', value: 'ELECTROCARDIOGRAMA' },
+			{ viewValue: 'Ecocardiograma', value: 'ECOCARDIOGRAMA' },
+			{ viewValue: 'Prueba de esfuerzo', value: 'PRUEBA DE ESFUERZO' },
+			{ viewValue: 'Otros', value: 'OTROS' },
 		]
 	};
 
@@ -43,11 +43,11 @@ export class CardiovascularComponent implements OnInit, DoCheck {
 		label: '',
 		options: [
 			{
-				value: 'si',
+				value: 'SI',
 				viewValue: 'Si'
 			},
 			{
-				value: 'no',
+				value: 'NO',
 				viewValue: 'No'
 			}
 		]
@@ -73,7 +73,7 @@ export class CardiovascularComponent implements OnInit, DoCheck {
 
 	selectChange(event) {
 		console.log(event);
-		if (event.valor === 'si') {
+		if (event.valor === 'SI') {
 			switch (event.name) {
 				case 'haveChestPain':
 					this.form.addControl('chestPain', this.diseaseInfoGroup());
@@ -146,7 +146,7 @@ export class CardiovascularComponent implements OnInit, DoCheck {
 				default:
 					break;
 			}
-		} else if (event.valor === 'no') {
+		} else if (event.valor === 'NO') {
 			switch (event.name) {
 				case 'haveChestPain':
 					this.form.removeControl('chestPain');
@@ -323,7 +323,8 @@ export class CardiovascularComponent implements OnInit, DoCheck {
 			console.log('HolAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA hypertensionStudies');
 		}
 
-		if (this.form.get('haveLiquidAnomaly').value == 'si') {
+		if (this.form.get('haveLiquidAnomaly').value == 'si'  &&
+		!this.form.get('liquidAnomaly')) {
 			const varAnomaly = {
 				valor: 'si',
 				name: 'haveLiquidAnomaly'

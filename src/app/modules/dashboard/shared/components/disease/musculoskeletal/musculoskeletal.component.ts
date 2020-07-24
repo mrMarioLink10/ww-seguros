@@ -21,13 +21,13 @@ export class MusculoskeletalComponent implements OnInit {
     options: [
 
       {
-        value: 'si',
+        value: 'SI',
         viewValue: 'Si'
 
       },
 
       {
-        value: 'no',
+        value: 'NO',
         viewValue: 'No'
       }
     ]
@@ -58,7 +58,7 @@ export class MusculoskeletalComponent implements OnInit {
     const formNFA = this.form.get('data') as FormGroup;
 
 
-    if (event.valor === 'si') {
+    if (event.valor === 'SI') {
       switch (event.name) {
         case 'episode_radio':
           formE.addControl('episode_array', this.fb.array([this.createFormArray('episode_array')]));
@@ -85,7 +85,7 @@ export class MusculoskeletalComponent implements OnInit {
           }));
           break;
       }
-    } else if (event.valor === 'no') {
+    } else if (event.valor === 'NO') {
 
       switch (event.name) {
         case 'episode_radio':

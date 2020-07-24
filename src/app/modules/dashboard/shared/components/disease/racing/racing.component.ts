@@ -64,11 +64,11 @@ export class RacingComponent implements OnInit {
     label: '',
     options: [
       {
-        value: 'profesional',
+        value: 'PROFESIONAL',
         viewValue: 'Profesional Moto'
       },
       {
-        value: 'aficionado',
+        value: 'AFICIONADO',
         viewValue: 'Aficionado'
       }
     ]
@@ -79,11 +79,11 @@ export class RacingComponent implements OnInit {
     label: '',
     options: [
       {
-        value: 'si',
+        value: 'SI',
         viewValue: 'Si'
       },
       {
-        value: 'no',
+        value: 'NO',
         viewValue: 'No'
       }
     ]
@@ -552,7 +552,7 @@ export class RacingComponent implements OnInit {
 
     const formA = this.form.get('accidents') as FormGroup;
 
-    if (event.valor === 'si') {
+    if (event.valor === 'SI') {
 
       formA.addControl('outcome', this.fb.group({
 
@@ -563,7 +563,7 @@ export class RacingComponent implements OnInit {
       }));
 
       console.log(JSON.stringify(this.form.value));
-    } else if (event.valor === 'no') {
+    } else if (event.valor === 'NO') {
 
       formA.removeControl('outcome');
     }

@@ -110,11 +110,11 @@ export class FinancialStatusComponent implements OnInit {
     label: 'Moneda',
     options: [
       {
-        value: 'Dolares',
+        value: 'DOLARES',
         viewValue: 'Dolares'
       },
       {
-        value: 'Pesos Dominicanos',
+        value: 'PESOS DOMINICANOS',
         viewValue: 'Pesos Dominicanos'
       }
     ]

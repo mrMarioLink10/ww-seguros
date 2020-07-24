@@ -97,7 +97,7 @@ export class HypertensionComponent implements OnInit, DoCheck {
   ngDoCheck(): void {
 
     if (this.form.get('diseaseInfo').get('changedMedicationInLast12Months').value == 'si' &&
-      this.x == 0) {
+      this.x == 0 && !this.form.get('diseaseInfo').get('changedMedications')) {
       this.x++;
       // tslint:disable-next-line: align
       const var12Months = {

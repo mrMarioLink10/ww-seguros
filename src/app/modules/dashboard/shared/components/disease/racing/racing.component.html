@@ -82,7 +82,7 @@
           <!-- Campos-->
           <div class="mt-8 md:mb-5 lg:mb-3 xl:mb-0">
             <div
-              *ngIf="this.form.get('past_months').get(option.name).value == true || this.form.get('past_months').get(option.name).value == 'true'"
+              *ngIf="this.form.get('past_months').get(option.name).value == true || this.form.get('past_months').get(option.name).value == 'true' || this.form.get('past_months').get(option.name).value == 'TRUE'"
               class="grid grid-cols-1 md:grid-cols-2">
               <div class="mr-3">
                 <app-number-input [group]="form.get('past_months').get(option.group)" label="Número" name='number'
@@ -145,7 +145,7 @@
           <!-- Campos-->
           <div class="mt-8 md:mb-5 lg:mb-3 xl:mb-0">
             <div
-              *ngIf="this.form.get('future_months').get(option.name).value == true || this.form.get('future_months').get(option.name).value == 'true'"
+              *ngIf="this.form.get('future_months').get(option.name).value == true || this.form.get('future_months').get(option.name).value == 'true' || this.form.get('future_months').get(option.name).value == 'TRUE'"
               class="grid grid-cols-1 md:grid-cols-2">
               <div class="mr-3">
                 <app-number-input [group]="form.get('future_months').get(option.group)" label="Número" name='number'

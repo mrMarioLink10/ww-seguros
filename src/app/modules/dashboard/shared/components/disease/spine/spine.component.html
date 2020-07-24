@@ -181,7 +181,7 @@
         (selected)="selectChange($event)">
       </app-radio-button>
     </div>
-    <div *ngIf="form.value[question.name] === 'si'">
+    <div *ngIf="form.value[question.name] === 'SI'">
       <div *ngIf="question.name === 'useSurgery'">
         <div *ngFor="let studies of surgeryList.controls; let i = index"
           class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">

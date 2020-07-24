@@ -44,7 +44,7 @@
         <app-radio-button [group]="form" [name]="question.name" [options]="yesOrNo" (selected)="selectChange($event)">
         </app-radio-button>
       </div>
-      <app-diseases-info *ngIf="form.value[question.name] === 'si'" [form]="form" [group]="question.group">
+      <app-diseases-info *ngIf="form.value[question.name] === 'SI'" [form]="form" [group]="question.group">
       </app-diseases-info>
       <hr class="w-full mb-6 ww-divider">
     </div>
@@ -162,7 +162,7 @@
         <app-radio-button [group]="form" name="haveSmokingHabits" [options]="yesOrNo" (selected)="selectChange($event)">
         </app-radio-button>
       </div>
-      <div *ngIf="form.get('haveSmokingHabits').value === 'si'"
+      <div *ngIf="form.get('haveSmokingHabits').value === 'SI'"
         class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
         <div class="mr-3">
           <app-input [group]="form.get('smokingHabits')" name="cantidad" label="Cantidad por día" type="number" min="1">
@@ -270,7 +270,7 @@
           (selected)="selectChange($event)">
         </app-radio-button>
       </div>
-      <div *ngIf="form.get('haveChangedTreatment').value === 'si'">
+      <div *ngIf="form.get('haveChangedTreatment').value === 'SI'">
         <div class="radio-button-label mb-2" style="font-size: 12px !important;">¿Por qué razón?</div>
         <div class="mr-3">
           <app-text-area [group]="form.get('changedTreatment')" name="razon" label="Texto"></app-text-area>

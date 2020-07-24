@@ -274,7 +274,7 @@ export class RefundComponent implements OnInit {
 				nombre: [{ value: '', disabled: true }, [Validators.required]],
 				direccion: ['',],
 				telefono: ['',],
-				correo: ['', [Validators.email]],
+				correo: ['', [Validators.required , Validators.email]],
 			}),
 			diagnosticos: this.fb.array([this.createDiagnostic()]),
 			haveAditionalComentary: [''],
@@ -321,7 +321,7 @@ export class RefundComponent implements OnInit {
 			}
 			this.refundForm.get('totalAmount').setValue(total);
 			this.totalAmount = total;
-			this.refundForm.get('totalAmountPesos').setValue(total);
+			this.refundForm.get('totalAmountPesos').setValue(totalPesos);
 			this.totalAmountPesos = totalPesos;
 		});
 
@@ -595,10 +595,10 @@ export class RefundComponent implements OnInit {
 			monto: ['', Validators.required],
 			proveedor: ['', Validators.required],
 			files: this.fb.group({
-				invoices: [''],
-				indications: [''],
-				medicReports: [''],
-				paymentVouchers: [''],
+				invoices: ['', Validators.required],
+				indications: ['', Validators.required],
+				medicReports: ['', Validators.required],
+				paymentVouchers: ['', Validators.required],
 			})
 		});
 	}

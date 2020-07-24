@@ -272,10 +272,10 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy, DoCheck {
 				filterType: ['', Validators.required],
 				idNumber: ['', Validators.required],
 				sexo: [{ value: '', disabled: true }, [Validators.required]],
-				correo: ['', Validators.email],
+				correo: ['', [Validators.email, Validators.required]],
 				direccion: [''],
 				telefonoResidencia: [''],
-				telefonoCelular: [''],
+				telefonoCelular: ['', Validators.required],
 				telefonoOficina: [''],
 				otroSeguro: ['', Validators.required],
 			}),
@@ -283,7 +283,7 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy, DoCheck {
 				diagnostico: ['', Validators.required],
 				condicion: ['', Validators.required],
 				procedimiento: ['', Validators.required],
-				monto: ['', [Validators.required, Validators.min(1)]],
+				// monto: ['', [Validators.required, Validators.min(1)]],
 				primerosSintomas: this.fb.group({
 					fecha: ['', Validators.required],
 					nombreMedico: ['', Validators.required],
@@ -405,6 +405,17 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy, DoCheck {
 			}
 		});
 
+		// this.authorization.get('tipoReclamo').valueChanges.subscribe(value => {
+		// 	if (value == 'LOCAL') {
+		// 		this.authorization.get('informacionAsegurado').get('direccion').setValidators(Validators.required);
+		// 		this.authorization.get('informacionAsegurado').get('direccion').updateValueAndValidity();
+		// 	}
+		// 	else if (value == 'INTERNACIONAL') {
+		// 		this.authorization.get('informacionAsegurado').get('direccion').clearValidators();
+		// 		this.authorization.get('informacionAsegurado').get('direccion').updateValueAndValidity();
+		// 	}
+		// 	console.log('Hola, reclamo');
+		// });
 		// console.log(JSON.stringify(this.authorization.value));
 
 	}
@@ -803,7 +814,7 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy, DoCheck {
 			this.authorization['controls'].informacionMedica['controls'].diagnostico.setValue(data.data.informacionMedica.diagnostico);
 			this.authorization['controls'].informacionMedica['controls'].condicion.setValue(data.data.informacionMedica.condicion);
 			this.authorization['controls'].informacionMedica['controls'].procedimiento.setValue(data.data.informacionMedica.procedimiento);
-			this.authorization['controls'].informacionMedica['controls'].monto.setValue(data.data.informacionMedica.monto)
+			// this.authorization['controls'].informacionMedica['controls'].monto.setValue(data.data.informacionMedica.monto)
 			this.authorization['controls'].informacionMedica['controls'].primerosSintomas['controls'].fecha.setValue(data.data.informacionMedica.primerosSintomas.fecha);
 			this.authorization['controls'].informacionMedica['controls'].primerosSintomas['controls'].nombreMedico.setValue(data.data.informacionMedica.primerosSintomas.nombreMedico);
 			this.authorization['controls'].informacionMedica['controls'].primerosSintomas['controls'].direccion.setValue(data.data.informacionMedica.primerosSintomas.direccion);

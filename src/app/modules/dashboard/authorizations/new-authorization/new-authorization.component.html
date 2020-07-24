@@ -125,16 +125,16 @@
             </app-radio-button>
 
           </div>
-          <!--<div class="mr-3" *ngIf="authorization.get('tipoReclamo') && authorization.get('tipoReclamo').value === 'Local'">
+          <div class="mr-3" *ngIf="authorization.get('tipoReclamo') && authorization.get('tipoReclamo').value === 'LOCAL'">
             <app-radio-button class="mr-3 " [group]="authorization" name="tipoReclamoMoneda" [options]="tipoReclamoLocal">
             </app-radio-button>
 
           </div>
-          <div class="mr-3"  *ngIf="authorization.get('tipoReclamo') && authorization.get('tipoReclamo').value === 'Internacional'">
+          <div class="mr-3"  *ngIf="authorization.get('tipoReclamo') && authorization.get('tipoReclamo').value === 'INTERNACIONAL'">
             <app-radio-button class="mr-3 " [group]="authorization" name="tipoReclamoMoneda" [options]="tipoReclamoInternacional">
             </app-radio-button>
 
-          </div> -->
+          </div>
           <app-input class="mr-3" [group]="authorization.get('informacionAsegurado')" label="Nombres" name='nombres'>
           </app-input>
           <app-input class="mr-3" [group]="authorization.get('informacionAsegurado')" label="Apellidos"
@@ -227,9 +227,9 @@
             <app-input [group]="authorization.get('informacionMedica')" label="Diagnóstico principal" name='diagnostico'
               placeholder="Dolor de cabeza">
             </app-input>
-            <app-input [group]="authorization.get('informacionMedica')" label="Procedimiento a realizar"
+            <!-- <app-input [group]="authorization.get('informacionMedica')" label="Procedimiento a realizar"
               name='procedimiento' placeholder="Operación ...">
-            </app-input>
+            </app-input> -->
             <div class="-mr-10" style="max-width: 180px;">
               <app-radio-button (selected)="selectChange($event)" [group]="authorization.get('informacionMedica')"
                 [options]="condiciones" name="condicion">
@@ -304,7 +304,7 @@
           <!--  CUARTA COLUMNA -->
           <div class="mr-12">
 
-            <div class="grid grid-cols-2">
+            <!-- <div class="grid grid-cols-2">
               <div class=""
                 *ngIf="authorization.get('tipoReclamo') && authorization.get('tipoReclamo').value === 'LOCAL'">
                 <app-radio-button class="mr-3 " [group]="authorization" name="tipoReclamoMoneda"
@@ -320,7 +320,10 @@
               <app-number-input class="" [group]="authorization.get('informacionMedica')"
                 label="Monto del Procedimiento" name='monto' placeholder="50000" min='1'>
               </app-number-input>
-            </div>
+            </div> -->
+            <app-input [group]="authorization.get('informacionMedica')" label="Procedimiento a realizar"
+            name='procedimiento' placeholder="Operación ...">
+          </app-input>
 
             <div class="my-4">
               <label> <strong> Centro del servicio: </strong> </label>

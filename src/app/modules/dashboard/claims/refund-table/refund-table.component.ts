@@ -6,6 +6,7 @@ import { ClaimsService } from '../../services/claims/claims.service';
 import { UserService } from '../../../../core/services/user/user.service';
 import { FormHandlerService } from 'src/app/core/services/forms/form-handler.service';
 import { RefundService } from './../new-claim/claim-types/refund/services/refund.service';
+import { environment } from 'src/environments/environment';
 
 
 @Component({
@@ -17,7 +18,7 @@ export class RefundTableComponent implements OnInit {
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
-
+  BASE_URL: any = `${environment.fileUrl}`;
   refundFilter;
   // @Output() pendingBillsEmitter = new EventEmitter<number>();
   // @Input() policyId;
@@ -91,9 +92,9 @@ export class RefundTableComponent implements OnInit {
 
   seeRequest(id: number) {
 		if (this.role === 'WWS') {
-			window.open(`http://wwsdevportalbackend.azurewebsites.net/ReembolsosView/Index/${id}/?location=true`, '_blank');
+			window.open(`${this.BASE_URL}/ReembolsosView/Index/${id}/?location=true`, '_blank');
 		} else {
-			window.open(`http://wwsdevportalbackend.azurewebsites.net/ReembolsosView/Index/${id}/?location=false`, '_blank');
+			window.open(`${this.BASE_URL}/ReembolsosView/Index/${id}/?location=false`, '_blank');
 		}
 	}
 

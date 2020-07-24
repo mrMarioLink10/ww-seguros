@@ -9,6 +9,7 @@ import { RefundService } from './../new-claim/claim-types/refund/services/refund
 import { FormHandlerService } from 'src/app/core/services/forms/form-handler.service';
 import { AppComponent } from 'src/app/app.component';
 import { UserService } from '../../../../core/services/user/user.service';
+import { environment } from 'src/environments/environment';
 
 
 @Component({
@@ -20,7 +21,7 @@ import { UserService } from '../../../../core/services/user/user.service';
 export class RefundsListComponent implements OnInit {
 
 	displayedColumns: string[] = ['noPoliza', 'nombre', 'idNumber', 'totalAmount', 'forma', 'estatus', 'acciones'];
-
+  BASE_URL: any = `${environment.fileUrl}`;
 	dataSource;
 	@Input() refunds: any[];
 
@@ -70,9 +71,9 @@ export class RefundsListComponent implements OnInit {
 
 	seeRequest(id: number) {
 		if (this.role === 'WWS') {
-			window.open(`http://wwsdevportalbackend.azurewebsites.net/ReembolsosView/Index/${id}/?location=true`, '_blank');
+			window.open(`${this.BASE_URL}/ReembolsosView/Index/${id}/?location=true`, '_blank');
 		} else {
-			window.open(`http://wwsdevportalbackend.azurewebsites.net/ReembolsosView/Index/${id}/?location=false`, '_blank');
+			window.open(`${this.BASE_URL}/ReembolsosView/Index/${id}/?location=false`, '_blank');
 		}
 	}
 

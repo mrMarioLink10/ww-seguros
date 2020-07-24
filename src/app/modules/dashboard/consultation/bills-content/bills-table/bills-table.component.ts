@@ -4,6 +4,7 @@ import {MatPaginator, MatTableDataSource, MatSort} from '@angular/material';
 import {BillsService} from '../../../services/consultation/bills.service';
 import {UserService} from '../../../../../core/services/user/user.service';
 import {HttpParams} from '@angular/common/http';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-bills-table',
@@ -76,14 +77,14 @@ export class BillsTableComponent implements OnInit {
   getBillDownloadLink(billId) {
     switch (this.userRole) {
       case 'WWS':
-        return `http://wwsdevportalbackend.azurewebsites.net/InvoiceView/ExportRDToPDF/${billId}`;
+        return `${this.BASE_URL}/InvoiceView/ExportRDToPDF/${billId}`;
       case 'WMA':
-        return `http://wwsdevportalbackend.azurewebsites.net/InvoiceView/ExportPMToPDF/${billId}`;
+        return `${this.BASE_URL}/InvoiceView/ExportPMToPDF/${billId}`;
       default:
         return'';
     }
   }
-
+  BASE_URL: any = `${environment.fileUrl}`;
   constructQueryParams(): HttpParams {
     let httpParams = new HttpParams();
     if (this.billsFilter.policyId && this.billsFilter.policyId !== '') {

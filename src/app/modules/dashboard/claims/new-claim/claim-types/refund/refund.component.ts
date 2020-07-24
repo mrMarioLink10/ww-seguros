@@ -358,13 +358,7 @@ export class RefundComponent implements OnInit {
 	// 	this.role = this.userService.getRoleCotizador();
 	// 	}
 
-	// 	seeRequest(id: number) {
-	// 		if (this.role === 'WWS') {
-	// 			window.open(`http://wwsdevportalbackend.azurewebsites.net/ReembolsosView/Index/${id}/?location=true`, '_blank');
-	// 		} else {
-	// 			window.open(`http://wwsdevportalbackend.azurewebsites.net/ReembolsosView/Index/${id}/?location=false`, '_blank');
-	// 		}
-	// 	}
+
 
 	showWarningDot(form: any): boolean {
 		if (!this.ID) {

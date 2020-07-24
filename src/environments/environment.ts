@@ -9,6 +9,7 @@ const keycloakConfig: KeycloakConfig = {
 
 export const environment = {
   production: false,
+  fileUrl: 'http://wwsdevportalbackend-desadevportalbackend.azurewebsites.net',
   mailForHelp: "ayuda_wws@wws.com.do",
   mailForHelpPM: "ayuda_wwma@wwmedicalassurance.com",
   baseUrl: 'https://wwsdevfrontend-desadevfrontend.azurewebsites.net/',

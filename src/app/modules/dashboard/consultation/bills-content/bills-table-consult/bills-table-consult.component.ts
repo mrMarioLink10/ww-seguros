@@ -4,6 +4,7 @@ import {MatPaginator, MatTableDataSource, MatSort} from '@angular/material';
 import {BillsService} from '../../../services/consultation/bills.service';
 import {UserService} from '../../../../../core/services/user/user.service';
 import {HttpParams} from '@angular/common/http';
+import { environment } from 'src/environments/environment';
 
 
 @Component({
@@ -15,7 +16,7 @@ export class BillsTableConsultComponent implements OnInit {
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
-
+  BASE_URL: any = `${environment.fileUrl}`;
   billsFilter: BillFilter;
   @Output() pendingBillsEmitter = new EventEmitter<number>();
   @Input() set filters(billsFilter: BillFilter) {
@@ -71,9 +72,9 @@ export class BillsTableConsultComponent implements OnInit {
   getBillDownloadLink(billId) {
     switch (this.userRole) {
       case 'WWS':
-        return `http://wwsdevportalbackend.azurewebsites.net/InvoiceView/ExportRDToPDF/${billId}`;
+        return `${this.BASE_URL}/InvoiceView/ExportRDToPDF/${billId}`;
       case 'WMA':
-        return `http://wwsdevportalbackend.azurewebsites.net/InvoiceView/ExportPMToPDF/${billId}`;
+        return `${this.BASE_URL}/InvoiceView/ExportPMToPDF/${billId}`;
       default:
         return'';
     }

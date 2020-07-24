@@ -50,12 +50,12 @@ export class ClaimTableComponent implements OnInit {
     this.userRole = this.userService.getRoleCotizador();
   }
   BASE_URL: any = `${environment.fileUrl}`;
-  getBillDownloadLink(billId) {
+  getBillDownloadLink(billId, poliza) {
     switch (this.userRole) {
       case 'WWS':
-        return `${this.BASE_URL}/InvoiceView/ExportToPDF/ReclamosData/${billId}/?location=true`;
+        return `${this.BASE_URL}/InvoiceView/ExportToPDF/ReclamosData/${billId}/${poliza}/?location=true`;
       case 'WMA':
-        return `${this.BASE_URL}/InvoiceView/ExportToPDF/ReclamosData/${billId}/?location=false`;
+        return `${this.BASE_URL}/InvoiceView/ExportToPDF/ReclamosData/${billId}/${poliza}/?location=false`;
       default:
         return'';
     }

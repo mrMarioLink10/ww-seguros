@@ -30,11 +30,11 @@ export class KnowYourCustomerComponent implements OnInit, DoCheck {
     options: [
 
       {
-        value: 'femenino',
+        value: 'FEMENINO',
         viewValue: 'Femenino'
       },
       {
-        value: 'masculino',
+        value: 'MASCULINO',
         viewValue: 'Masculino'
       }
 
@@ -48,11 +48,11 @@ export class KnowYourCustomerComponent implements OnInit, DoCheck {
     options: [
 
       {
-        value: 'si',
+        value: 'SI',
         viewValue: 'Si'
       },
       {
-        value: 'no',
+        value: 'NO',
         viewValue: 'No'
       }
 
@@ -233,10 +233,10 @@ export class KnowYourCustomerComponent implements OnInit, DoCheck {
   ngDoCheck(): void {
 
 
-    if (this.form.get('policy').get('total_policy_radio').value == 'si' &&
+    if (this.form.get('policy').get('total_policy_radio').value == 'SI' &&
       !this.form.get('questions')) {
       const varPolicy = {
-        valor: 'si',
+        valor: 'SI',
         name: 'total_policy_radio'
       };
       // tslint:disable-next-line: align
@@ -245,10 +245,10 @@ export class KnowYourCustomerComponent implements OnInit, DoCheck {
 
     }
     if (this.form.get('questions')) {
-      if (this.form.get('questions').get('transaction').get('investigation_radio').value == 'si' &&
+      if (this.form.get('questions').get('transaction').get('investigation_radio').value == 'SI' &&
         !this.form.get('questions').get('transaction').get('investigation')) {
         const varInvestigation = {
-          valor: 'si',
+          valor: 'SI',
           name: 'investigation_radio'
         };
         this.selectChange(varInvestigation);
@@ -371,7 +371,7 @@ export class KnowYourCustomerComponent implements OnInit, DoCheck {
     let formI;
 
     // tslint:disable-next-line: align
-    if (event.valor === 'si') {
+    if (event.valor === 'SI') {
 
       switch (event.name) {
 
@@ -450,7 +450,7 @@ export class KnowYourCustomerComponent implements OnInit, DoCheck {
           break;
       }
     }
-    else if (event.valor === 'no') {
+    else if (event.valor === 'NO') {
 
       switch (event.name) {
 

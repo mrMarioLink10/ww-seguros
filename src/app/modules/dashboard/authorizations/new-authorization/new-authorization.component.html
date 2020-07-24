@@ -248,12 +248,27 @@
             <div class="my-4">
               <label> <strong> Médico tratante: </strong> </label>
             </div>
-            <app-input [group]="authorization.get('informacionMedica').get('primerosSintomas')" label="Nombre"
+            
+            <app-select name="nombreMedico" (selected)="selectionDoctor($event, authorization.get('informacionMedica').get('primerosSintomas'))" [options]="doctorFieldNames" [group]="authorization.get('informacionMedica').get('primerosSintomas')">
+            </app-select>
+
+            <!-- <app-select name="direccion" [options]="doctorFieldMedicCenter" [group]="authorization.get('informacionMedica').get('primerosSintomas')">
+            </app-select>
+
+            <app-select name="telefono" [options]="doctorFieldNumbers" [group]="authorization.get('informacionMedica').get('primerosSintomas')">
+            </app-select> -->
+
+            <!-- <app-input [group]="authorization.get('informacionMedica').get('primerosSintomas')" label="Nombre"
               name="nombreMedico">
-            </app-input>
-            <app-input [group]="authorization.get('informacionMedica').get('primerosSintomas')" label="Dirección"
+            </app-input> -->
+            
+            <!-- <app-input [group]="authorization.get('informacionMedica').get('primerosSintomas')" label="Dirección"
               name="direccion">
-            </app-input>
+            </app-input> -->
+
+            <app-text-area [group]="authorization.get('informacionMedica').get('primerosSintomas')" name="direccion"
+            label="Dirección">
+            </app-text-area>
 
             <app-number-input [group]="authorization.get('informacionMedica').get('primerosSintomas')" label="Teléfono"
               name='telefono' isPhone="true" placeholder=""></app-number-input>
@@ -267,13 +282,17 @@
             <div class="my-4">
               <label> <strong> Médico que lo refiere: </strong> </label>
             </div>
-            <app-input [group]="authorization.get('informacionMedica').get('admision')" label="Nombre"
+            <!-- <app-input [group]="authorization.get('informacionMedica').get('admision')" label="Nombre"
               name="nombreMedico">
-            </app-input>
-            <app-input [group]="authorization.get('informacionMedica').get('admision')" label="Dirección"
+            </app-input> -->
+            <app-select name="nombreMedico" (selected)="selectionDoctor($event, authorization.get('informacionMedica').get('admision'))" [options]="doctorFieldNames" [group]="authorization.get('informacionMedica').get('admision')">
+            </app-select>
+            <!-- <app-input [group]="authorization.get('informacionMedica').get('admision')" label="Dirección"
               name="direccion">
-            </app-input>
-
+            </app-input> -->
+            <app-text-area [group]="authorization.get('informacionMedica').get('admision')" name="direccion"
+            label="Dirección">
+            </app-text-area>
             <app-number-input [group]="authorization.get('informacionMedica').get('admision')" label="Teléfono"
               name='telefono' isPhone="true" placeholder=""></app-number-input>
             <div class="my-4" [formGroup]="authorization.get('informacionMedica')">
@@ -302,8 +321,10 @@
             <div class="my-4">
               <label> <strong> Centro del servicio: </strong> </label>
             </div>
-            <app-input [group]="authorization.get('informacionMedica')" label="Nombre" name="nombreServicio">
-            </app-input>
+            <!-- <app-input [group]="authorization.get('informacionMedica')" label="Nombre" name="nombreServicio">
+            </app-input> -->
+                  <app-select name="nombreServicio" [options]="serviceCenters" [group]="authorization.get('informacionMedica')">
+                  </app-select>
             <!-- <app-input [group]="authorization.get('informacionMedica')" label="Dirección" name="direccion">
             </app-input>
 

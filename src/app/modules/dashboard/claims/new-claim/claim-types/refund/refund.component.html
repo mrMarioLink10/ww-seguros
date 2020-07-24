@@ -201,6 +201,10 @@
               label="Descripción del procedimiento">
             </app-text-area>
           </div>
+          <div class="mr-3 md:col-span-2">
+            <app-select  name="proveedor" [options]="proveedoresField" [group]="refundForm.get('diagnosticos').get(i.toString())">
+            </app-select>
+          </div>
           <div class="mr-3" *ngIf="refundForm.get('tipoReclamo') && refundForm.get('tipoReclamo').value === 'LOCAL'">
             <app-radio-button class="mr-3 " [group]="refundForm.get('diagnosticos').get(i.toString())" name="tipoReclamoMoneda" [options]="tipoReclamoLocal">
             </app-radio-button>
@@ -226,10 +230,9 @@
           </div>
         </div>
         <div class="mt-3 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5">
-
-          <app-input class="mr-3" [group]="refundForm.get('diagnosticos').get(i.toString())" name="proveedor"
+          <!-- <app-input class="mr-3" [group]="refundForm.get('diagnosticos').get(i.toString())" name="proveedor"
             label="Proveedor">
-          </app-input>
+          </app-input> -->
           <mat-form-field class="mr-1" appearance="outline">
             <mat-label>Facturas Pendientes</mat-label>
             <ngx-mat-file-input #removableInputInvoices placeholder="Basic outline placeholder"
@@ -354,10 +357,11 @@
           <app-radio-button [group]="refundForm.get('infoTransferencia')" name="tipoCuenta" [options]="cuentaTipos">
           </app-radio-button>
         </div>
-        <div class="mr-3">
-          <app-input [group]="refundForm.get('infoTransferencia')" label="Banco Emisor" name='bancoEmisor'
+        <div class="mr-3 sm:col-span-2">
+          <!-- <app-input [group]="refundForm.get('infoTransferencia')" label="Banco Emisor" name='bancoEmisor'
             placeholder="BHD Leon">
-          </app-input>
+          </app-input> -->
+          <app-select name="bancoEmisor" [options]="banksField" [group]="refundForm.get('infoTransferencia')"></app-select>
         </div>
 
 

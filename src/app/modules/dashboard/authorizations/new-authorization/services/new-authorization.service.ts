@@ -41,4 +41,11 @@ export class NewAuthorizationService {
     return this.http.get(`${environment.apiUrl}/api/DatosEmpresa/autocomplete`);
   }
 
+  getServiceCenters(): Observable<any> {
+    return this.http.get(`${environment.apiUrl}/api/DatosEmpresa/GetCentrosEspecializados`);
+  }
+
+  getDoctors(): Observable<any> {
+    return this.http.get(`${environment.apiUrl}/api/DatosEmpresa/GetMedicos`);
+  }
 }

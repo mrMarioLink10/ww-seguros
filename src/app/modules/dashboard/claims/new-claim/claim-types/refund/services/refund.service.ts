@@ -41,4 +41,12 @@ export class RefundService {
   getIdNumbers(): Observable<any> {
     return this.http.get(`${environment.apiUrl}/api/DatosEmpresa/autocomplete`);
   }
+
+  getProveedores(): Observable<any> {
+    return this.http.get(`${environment.apiUrl}/api/DatosEmpresa/GetOtrosProveedores`);
+  }
+
+  getBanks(): Observable<any> {
+    return this.http.get(`${environment.apiUrl}/api/DatosEmpresa/GetBancos`);
+  }
 }

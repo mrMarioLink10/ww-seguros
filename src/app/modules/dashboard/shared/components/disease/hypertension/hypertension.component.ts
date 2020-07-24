@@ -277,7 +277,7 @@ export class HypertensionComponent implements OnInit, DoCheck {
   }
 
   selectChange(event) {
-    if (event.valor === 'si') {
+    if (event.valor === 'SI') {
       switch (event.name) {
         case 'changedMedicationInLast12Months':
           this.getDIAsFormGroup().addControl('changedMedications', this.fb.array([this.createFormArray('medication')]));
@@ -330,7 +330,7 @@ export class HypertensionComponent implements OnInit, DoCheck {
         default:
           break;
       }
-    } else if (event.valor === 'no') {
+    } else if (event.valor === 'NO') {
       switch (event.name) {
 
         case 'changedMedicationInLast12Months':

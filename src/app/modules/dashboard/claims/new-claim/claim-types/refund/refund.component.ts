@@ -135,6 +135,20 @@ export class RefundComponent implements OnInit {
 		]
 	};
 
+	proveedores = [];
+
+	proveedoresField = {
+		label: 'Proveedor',
+		options: this.proveedores
+	};
+
+	banks = [];
+
+	banksField = {
+		label: 'Banco Emisor',
+		options: this.banks
+	};
+
 	refundForm: FormGroup;
 	diagnosticList: FormArray;
 	@ViewChild('form', { static: false }) form;
@@ -162,7 +176,8 @@ export class RefundComponent implements OnInit {
 	ngOnInit() {
 
 		this.appComponent.showOverlay = true;
-
+		this.returnProveedores();
+		this.returnBanks();
 		this.returnAutoCompleteData();
 		// setTimeout(() => {
 		// 	this.appComponent.showOverlay = true;
@@ -441,6 +456,36 @@ export class RefundComponent implements OnInit {
 	// 	// tslint:disable-next-line: radix
 	// 	(typeof Number.parseInt((nameOption).slice((nameOption).indexOf(' - ') + 3)) ) );
 	//   }
+
+	returnProveedores() {
+		this.refund.getProveedores().subscribe(data => {
+			console.log(data.data);
+
+
+			// tslint:disable-next-line: prefer-for-of
+			for (let x = 0; x < data.data.length; x++) {
+				this.proveedores.push({
+					value: data.data[x].nombre,
+					viewValue: data.data[x].nombre,
+				});
+			}
+		});
+	}
+
+	returnBanks() {
+		this.refund.getBanks().subscribe(data => {
+			console.log(data);
+
+
+			// tslint:disable-next-line: prefer-for-of
+			for (let x = 0; x < data.data.length; x++) {
+				this.banks.push({
+					value: data.data[x].descripcion,
+					viewValue: data.data[x].descripcion,
+				});
+			}
+		});
+	}
 
 	returnAutoCompleteData() {
 

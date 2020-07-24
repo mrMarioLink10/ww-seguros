@@ -64,7 +64,7 @@ export class ArthritisComponent implements OnInit {
 
   selectChange(event) {
     console.log(event);
-    if (event.valor === 'si') {
+    if (event.valor === 'SI') {
       switch (event.name) {
         case 'stillHaveSymptons':
           this.form.addControl('symptoms', this.fb.group({
@@ -80,7 +80,7 @@ export class ArthritisComponent implements OnInit {
         default:
           break;
       }
-    } else if (event.valor === 'no') {
+    } else if (event.valor === 'NO') {
       switch (event.name) {
         case 'stillHaveSymptons':
           this.form.removeControl('symptoms');

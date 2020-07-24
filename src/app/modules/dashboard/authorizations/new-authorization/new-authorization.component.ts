@@ -171,6 +171,35 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy, DoCheck {
 			}
 		]
 	};
+
+	serviceOptions = [];
+
+	serviceCenters: FieldConfig = {
+		label: 'Nombre',
+		options: this.serviceOptions
+	};
+
+	doctorNames = [];
+
+	doctorFieldNames = {
+		label: 'Nombre',
+		options: this.doctorNames
+	};
+
+	// doctorMedicCenter = [];
+
+	// doctorFieldMedicCenter: FieldConfig = {
+	// 	label: 'Dirección',
+	// 	options: this.doctorMedicCenter
+	// };
+
+	// doctorNumbers = [];
+
+	// doctorFieldNumbers: FieldConfig = {
+	// 	label: 'Teléfono',
+	// 	options: this.doctorNumbers
+	// };
+
 	authorization: FormGroup;
 
 	ID = null;
@@ -215,6 +244,8 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy, DoCheck {
 	ngOnInit() {
 
 		this.appComponent.showOverlay = true;
+		this.returnDoctors();
+		this.returnServiceCenters();
 		this.returnAutoCompleteData();
 
 		this.route.params.subscribe(res => {
@@ -256,14 +287,14 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy, DoCheck {
 				primerosSintomas: this.fb.group({
 					fecha: ['', Validators.required],
 					nombreMedico: ['', Validators.required],
-					direccion: [''],
-					telefono: ['', Validators.required],
+					direccion: [{ value: '', disabled: true }],
+					telefono: [{ value: '', disabled: true }, Validators.required],
 				}),
 				admision: this.fb.group({
 					fecha: ['', Validators.required],
 					nombreMedico: [''],
-					direccion: [''],
-					telefono: [''],
+					direccion: [{ value: '', disabled: true }],
+					telefono: [{ value: '', disabled: true }],
 				}),
 				tiempoEstadia: ['', Validators.required],
 				nombreServicio: ['', Validators.required],
@@ -299,8 +330,8 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy, DoCheck {
 					});
 
 					this.authorization.get('informacionMedica').get('admision').get('nombreMedico').disable();
-					this.authorization.get('informacionMedica').get('admision').get('telefono').disable();
-					this.authorization.get('informacionMedica').get('admision').get('direccion').disable();
+					// this.authorization.get('informacionMedica').get('admision').get('telefono').disable();
+					// this.authorization.get('informacionMedica').get('admision').get('direccion').disable();
 					break;
 
 				case false:
@@ -309,8 +340,8 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy, DoCheck {
 					this.direccionSB.unsubscribe();
 
 					this.authorization.get('informacionMedica').get('admision').get('nombreMedico').enable();
-					this.authorization.get('informacionMedica').get('admision').get('telefono').enable();
-					this.authorization.get('informacionMedica').get('admision').get('direccion').enable();
+					// this.authorization.get('informacionMedica').get('admision').get('telefono').enable();
+					// this.authorization.get('informacionMedica').get('admision').get('direccion').enable();
 
 					break;
 
@@ -507,6 +538,34 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy, DoCheck {
 		});
 	}
 
+	returnServiceCenters() {
+		this.newAuthorization.getServiceCenters().subscribe(data => {
+			console.log(data);
+			// tslint:disable-next-line: prefer-for-of
+			for (let x = 0; x < data.data.length; x++) {
+				this.serviceOptions.push({
+					value: data.data[x].nombre,
+					viewValue: data.data[x].nombre
+				});
+			}
+		});
+	}
+
+	returnDoctors() {
+		this.newAuthorization.getDoctors().subscribe(data => {
+			console.log(data);
+			// tslint:disable-next-line: prefer-for-of
+			for (let x = 0; x < data.data.length; x++) {
+				this.doctorNames.push({
+					value: data.data[x].nombre + ' - ' + data.data[x].especialidad,
+					viewValue: data.data[x].nombre + ' - ' + data.data[x].especialidad,
+					address: data.data[x].centro_medico,
+					number: data.data[x].telefono
+				});
+			}
+		});
+	}
+
 	ngDoCheck() {
 
 		if (this.ID != null) {
@@ -584,6 +643,14 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy, DoCheck {
 		// this.authorization.get('files').get(index.toString()).get(formName).setValue('');
 		// this.authorization.get('diagnosticos').get(index.toString()).get('files').get(formName).setValue('');
 		formName.setValue('');
+	}
+
+	selectionDoctor(event, group) {
+		let Doctor;
+
+		Doctor = this.doctorNames.find(nombre => nombre.value == event.valor);
+		group.get('direccion').setValue(Doctor.address);
+		group.get('telefono').setValue(Doctor.number);
 	}
 
 	searchIdNumber(idNumber: string) {

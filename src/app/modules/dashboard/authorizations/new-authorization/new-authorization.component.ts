@@ -546,7 +546,9 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy, DoCheck {
 	fileNameWatcher(type?: string, i?) {
 		if (this.filesInformation) {
 			if (this.filesInformation[i]) {
-				if (this.filesInformation[i][type + 'Url']) { return this.filesInformation[i][type + 'Url']; }
+				if (this.filesInformation[i][type + 'Url'] && this.authorization.get('files').get(i.toString()).get(type).value !== '') {
+					return this.filesInformation[i][type + 'Url'];
+				}
 			}
 		}
 	}

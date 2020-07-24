@@ -228,8 +228,8 @@
               placeholder="Dolor de cabeza">
             </app-input>
             <app-input [group]="authorization.get('informacionMedica')" label="Procedimiento a realizar"
-                name='procedimiento' placeholder="Operación ...">
-              </app-input>
+              name='procedimiento' placeholder="Operación ...">
+            </app-input>
             <div class="-mr-10" style="max-width: 180px;">
               <app-radio-button (selected)="selectChange($event)" [group]="authorization.get('informacionMedica')"
                 [options]="condiciones" name="condicion">
@@ -286,12 +286,16 @@
           <div class="mr-12">
 
             <div class="grid grid-cols-2">
-              <div class="" *ngIf="authorization.get('tipoReclamo') && authorization.get('tipoReclamo').value === 'LOCAL'">
-                <app-radio-button class="mr-3 " [group]="authorization" name="tipoReclamoMoneda" [options]="tipoReclamoLocal">
+              <div class=""
+                *ngIf="authorization.get('tipoReclamo') && authorization.get('tipoReclamo').value === 'LOCAL'">
+                <app-radio-button class="mr-3 " [group]="authorization" name="tipoReclamoMoneda"
+                  [options]="tipoReclamoLocal">
                 </app-radio-button>
               </div>
-              <div class=""  *ngIf="authorization.get('tipoReclamo') && authorization.get('tipoReclamo').value === 'INTERNACIONAL'">
-                <app-radio-button class="mr-3 " [group]="authorization" name="tipoReclamoMoneda" [options]="tipoReclamoInternacional">
+              <div class=""
+                *ngIf="authorization.get('tipoReclamo') && authorization.get('tipoReclamo').value === 'INTERNACIONAL'">
+                <app-radio-button class="mr-3 " [group]="authorization" name="tipoReclamoMoneda"
+                  [options]="tipoReclamoInternacional">
                 </app-radio-button>
               </div>
               <app-number-input class="" [group]="authorization.get('informacionMedica')"
@@ -346,55 +350,106 @@
         <div *ngFor="let documents of documentsArray.controls; let in = index;">
           <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
             <!-- <input id="file" type="file" class="form-control"> -->
-            <mat-form-field class="mr-3" appearance="outline">
+            <mat-form-field class="mr-3" appearance="outline"
+              [ngClass]="{'file-input': authorization.get('files').get(in.toString()).get('medicReport').value !== ''}">
               <mat-label>Informe médico</mat-label>
               <ngx-mat-file-input #removableMedicReport placeholder="Basic outline placeholder"
                 [valuePlaceholder]="fileNameWatcher('medicReport', in)"
                 (change)="onFileChange($event, 'medicReport', in)">
               </ngx-mat-file-input>
-              <mat-icon *ngIf="removableMedicReport.empty" style="color: #e2e2e2;" matSuffix>publish</mat-icon>
-              <button mat-icon-button matSuffix *ngIf="!removableMedicReport.empty"
-                (click)="this.requestService.clearArchives(authorization.get('files').get(in.toString()).get('medicReport'))" (click)="removableMedicReport.clear($event)">
+              <mat-icon *ngIf="authorization.get('files').get(in.toString()).get('medicReport').value === ''"
+                style="color: #e2e2e2;" matSuffix>publish</mat-icon>
+              <button mat-icon-button matSuffix
+                *ngIf="authorization.get('files').get(in.toString()).get('medicReport').value !== ''"
+                (click)="this.requestService.clearArchives(authorization.get('files').get(in.toString()).get('medicReport'))"
+                (click)="removableMedicReport.clear($event)">
                 <mat-icon style="color: #e2e2e2;">clear</mat-icon>
+              </button><button mat-icon-button matSuffix
+                *ngIf="authorization.get('files').get(in.toString()).get('medicReport').value !== ''"
+                (click)="this.requestService.downloadArchives($event, authorization.get('files').get(in.toString()).get('medicReport').value)">
+                <mat-icon style="color: #e2e2e2;">get_app</mat-icon>
               </button>
+              <mat-error
+                *ngIf="authorization.get('files').get(in.toString()).get('medicReport').touched && !authorization.get('files').get(in.toString()).get('medicReport').valid">
+                Este campo es
+                obligatorio
+              </mat-error>
             </mat-form-field>
-            <mat-form-field class="mr-3" appearance="outline">
+            <mat-form-field class="mr-3" appearance="outline"
+              [ngClass]="{'file-input': authorization.get('files').get(in.toString()).get('budget').value !== ''}">
               <mat-label>Presupuestos</mat-label>
               <ngx-mat-file-input #removableBudget placeholder="Basic outline placeholder"
                 [valuePlaceholder]="fileNameWatcher('budget', in)" (change)="onFileChange($event, 'budget', in)">
               </ngx-mat-file-input>
-              <mat-icon *ngIf="removableBudget.empty" style="color: #e2e2e2;" matSuffix>publish</mat-icon>
-              <button mat-icon-button matSuffix *ngIf="!removableBudget.empty" (click)="this.requestService.clearArchives(authorization.get('files').get(in.toString()).get('budget'))"
+              <mat-icon *ngIf="authorization.get('files').get(in.toString()).get('budget').value === ''"
+                style="color: #e2e2e2;" matSuffix>publish</mat-icon>
+              <button mat-icon-button matSuffix
+                *ngIf="authorization.get('files').get(in.toString()).get('budget').value !== ''"
+                (click)="this.requestService.clearArchives(authorization.get('files').get(in.toString()).get('budget'))"
                 (click)="removableBudget.clear($event)">
                 <mat-icon style="color: #e2e2e2;">clear</mat-icon>
+              </button><button mat-icon-button matSuffix
+                *ngIf="authorization.get('files').get(in.toString()).get('budget').value !== ''"
+                (click)="this.requestService.downloadArchives($event, authorization.get('files').get(in.toString()).get('budget').value)">
+                <mat-icon style="color: #e2e2e2;">get_app</mat-icon>
               </button>
+              <mat-error
+                *ngIf="authorization.get('files').get(in.toString()).get('budget').touched && !authorization.get('files').get(in.toString()).get('budget').valid">
+                Este campo es
+                obligatorio
+              </mat-error>
             </mat-form-field>
-            <mat-form-field class="mr-3" appearance="outline">
+            <mat-form-field class="mr-3" appearance="outline"
+              [ngClass]="{'file-input': authorization.get('files').get(in.toString()).get('studies').value !== ''}">
               <mat-label>Estudios</mat-label>
               <ngx-mat-file-input #removableStudies placeholder="Estudios"
                 [valuePlaceholder]="fileNameWatcher('studies', in)" (change)="onFileChange($event, 'studies', in)">
               </ngx-mat-file-input>
-              <mat-icon *ngIf="removableStudies.empty" style="color: #e2e2e2;" matSuffix>publish</mat-icon>
-              <button mat-icon-button matSuffix *ngIf="!removableStudies.empty" (click)="this.requestService.clearArchives(authorization.get('files').get(in.toString()).get('studies'))"
+              <mat-icon *ngIf="authorization.get('files').get(in.toString()).get('studies').value === ''"
+                style="color: #e2e2e2;" matSuffix>publish</mat-icon>
+              <button mat-icon-button matSuffix
+                *ngIf="authorization.get('files').get(in.toString()).get('studies').value !== ''"
+                (click)="this.requestService.clearArchives(authorization.get('files').get(in.toString()).get('studies'))"
                 (click)="removableStudies.clear($event)">
                 <mat-icon style="color: #e2e2e2;">clear</mat-icon>
+              </button><button mat-icon-button matSuffix
+                *ngIf="authorization.get('files').get(in.toString()).get('studies').value !== ''"
+                (click)="this.requestService.downloadArchives($event, authorization.get('files').get(in.toString()).get('studies').value)">
+                <mat-icon style="color: #e2e2e2;">get_app</mat-icon>
               </button>
+              <mat-error
+                *ngIf="authorization.get('files').get(in.toString()).get('studies').touched && !authorization.get('files').get(in.toString()).get('studies').valid">
+                Este campo es
+                obligatorio
+              </mat-error>
             </mat-form-field>
             <div class="grid"
               [ngClass]="{'grid-cols-1': documentsArray.length === 1, 'grid-cols-5': documentsArray.length > 1}">
               <mat-form-field
-                [ngClass]="{'': documentsArray.length === 1, 'col-span-4 mr-3': documentsArray.length > 1}" class="mr-3"
-                appearance="outline">
+                [ngClass]="{'': documentsArray.length === 1, 'col-span-4 mr-3': documentsArray.length > 1, 'file-input': authorization.get('files').get(in.toString()).get('indications').value !== ''}"
+                class="mr-3" appearance="outline">
                 <mat-label>Indicacion</mat-label>
                 <ngx-mat-file-input #removableIndication placeholder="Indicacion"
                   [valuePlaceholder]="fileNameWatcher('indications', in)"
                   (change)="onFileChange($event, 'indications', in)">
                 </ngx-mat-file-input>
-                <mat-icon *ngIf="removableIndication.empty" style="color: #e2e2e2;" matSuffix>publish</mat-icon>
-                <button mat-icon-button matSuffix *ngIf="!removableIndication.empty"
-                  (click)="this.requestService.clearArchives(authorization.get('files').get(in.toString()).get('indications'))" (click)="removableIndication.clear($event)">
+                <mat-icon *ngIf="authorization.get('files').get(in.toString()).get('indications').value == ''"
+                  style="color: #e2e2e2;" matSuffix>publish</mat-icon>
+                <button mat-icon-button matSuffix
+                  *ngIf="authorization.get('files').get(in.toString()).get('indications').value !== ''"
+                  (click)="this.requestService.clearArchives(authorization.get('files').get(in.toString()).get('indications'))"
+                  (click)="removableIndication.clear($event)">
                   <mat-icon style="color: #e2e2e2;">clear</mat-icon>
+                </button><button mat-icon-button matSuffix
+                  *ngIf="authorization.get('files').get(in.toString()).get('indications').value !== ''"
+                  (click)="this.requestService.downloadArchives($event, authorization.get('files').get(in.toString()).get('indications').value)">
+                  <mat-icon style="color: #e2e2e2;">get_app</mat-icon>
                 </button>
+                <mat-error
+                  *ngIf="authorization.get('files').get(in.toString()).get('indications').touched && !authorization.get('files').get(in.toString()).get('indications').valid">
+                  Este campo es
+                  obligatorio
+                </mat-error>
               </mat-form-field>
               <div *ngIf="documentsArray.length > 1"
                 [ngClass]="{'': documentsArray.length === 1, 'col-span-1': documentsArray.length > 1} ">

@@ -489,7 +489,9 @@ export class RefundComponent implements OnInit {
 
 	fileNameWatcher(type?: string, index?: number) {
 		if (this.filesInformation[index]) {
-			if (this.filesInformation[index][type + 'Url']) { return this.filesInformation[index][type + 'Url']; }
+			if (this.filesInformation[index][type + 'Url'] && this.refundForm.get('diagnosticos').get(index.toString()).get('files').get(type).value !== '') {
+				return this.filesInformation[index][type + 'Url'];
+			}
 		}
 	}
 
@@ -743,10 +745,12 @@ export class RefundComponent implements OnInit {
 
 	}
 
+	log(thing: any) {
+		console.log('thing:', thing);
+	}
 
 	sendForm(form: FormGroup, formType: string, sendType: string, id?: number) {
 		console.log(id);
-
 		this.formHandler.sendForm(form, formType, sendType, this.appComponent, id);
 
 	}

@@ -954,7 +954,7 @@ export class LifeComponent implements OnInit, DoCheck {
       const age = Math.floor(timeDiff / (1000 * 3600 * 24) / 365.25);
       this.newRequest.get('person').get('age').setValue(age);
 
-      form.removeControl('advancePaymentOfCapital');
+      /*form.removeControl('advancePaymentOfCapital');
       form.removeControl('accidentalDeathDismemberment');
       form.removeControl('disability');
       form.removeControl('seriousIllnesses');
@@ -977,7 +977,7 @@ export class LifeComponent implements OnInit, DoCheck {
         form.addControl('waiverPremiumPayment', this.fb.control('', [Validators.required]));
       } else if (age >= 18 && age <= 55) {
         form.addControl('waiverPremiumPayment', this.fb.control('', [Validators.required]));
-      }
+      }*/
 
     });
 

@@ -81,7 +81,7 @@
             </button>
             -->
             <button mat-mini-fab aria-label="Ver mas" (click)="seeRequest(element.id, element.seguro)"
-              *ngIf="element.estatus === 2 || element.estatus === 6 || element.estatus === 7"
+              *ngIf="element.estatus === 2 "
               class="dashboard-table-buttons" title="Ver Mas">
               <img src="../../../../assets/iconos/eye.svg">
             </button>
@@ -90,19 +90,19 @@
               <img src="../../../../assets/iconos/send.svg">
             </button>
             <button mat-mini-fab aria-label="Editar"
-              *ngIf="element.seguro == 'Vida' && (element.estatus === 1 || element.estatus === 0)"
+              *ngIf="element.seguro == 'Vida' && (element.estatus === 1 || element.estatus === 0 || element.estatus === 6 || element.estatus === 7)"
               class="dashboard-table-buttons" (click)="navigateToLife(element.id)" title="Editar">
               <!--  -->
               <img src="../../../../assets/iconos/edit.svg">
             </button>
             <button mat-mini-fab aria-label="Editar"  title="Editar"
-              *ngIf="element.seguro == 'Salud' && (element.estatus === 1 || element.estatus === 0)"
+              *ngIf="element.seguro == 'Salud' && (element.estatus === 1 || element.estatus === 0 || element.estatus === 6 || element.estatus === 7)"
               class="dashboard-table-buttons" (click)="navigateToSalud(element.id)">
               <img src="../../../../assets/iconos/edit.svg">
             </button>
 
             <button mat-mini-fab aria-label="Editar"  title="Editar"
-              *ngIf="element.seguro == 'Disability' && (element.estatus === 1 || element.estatus === 0)"
+              *ngIf="element.seguro == 'Disability' && (element.estatus === 1 || element.estatus === 0 || element.estatus === 6 || element.estatus === 7)"
               class="dashboard-table-buttons" (click)="navigateToDisability(element.id)">
               <!-- (click)="this.life.getID(element)" -->
               <img src="../../../../assets/iconos/edit.svg">

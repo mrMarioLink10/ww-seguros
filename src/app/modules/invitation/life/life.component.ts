@@ -2611,23 +2611,133 @@ export class LifeComponent implements OnInit, DoCheck {
         const formGI = this.newRequest.get('generalInformation') as FormGroup;
         const formF = this.newRequest.get('files') as FormGroup;
         const formP = this.newRequest.get('person') as FormGroup;
+        const formEP = this.newRequest.get('exposedPerson') as FormGroup;
         const formAR = this.newRequest.get('agentReport') as FormGroup;
+        const formARCTI = this.newRequest.get('agentReport').get('connectionTypeInfo') as FormGroup;
         const formHMI = this.newRequest.get('medicalHistory').get('informations') as FormGroup;
+        const formMH = this.newRequest.get('medicalHistory') as FormGroup;
         const formWI = this.newRequest.get('medicalHistory').get('informations').get('womenInformation') as FormGroup;
 
         if (formP.get('sameAsContractor').value === 'SI') {
           formP.removeControl('contractorIsLegalEntity');
+          formEP.removeControl('isContractorExposed');
+          formEP.removeControl('contractor');
           this.newRequest.removeControl('contractor');
         }
 
         if (formP.get('sameAsPayer').value === 'SI') {
           formP.removeControl('payerIsLegalEntity');
+          formEP.removeControl('isPayerExposed');
+          formEP.removeControl('payer');
           this.newRequest.removeControl('payer');
+        }
+
+        if (formEP.get('isExposed').value !== 'SI') {
+          formEP.removeControl('insured');
         }
 
         if (formP.get('heightUnit').value !== 'PIE') {
           formP.removeControl('inches');
         }
+
+        if (formGI.get('doXtremeSport').value !== 'SI') {
+          formGI.removeControl('xtremeSports');
+        }
+
+        if (formGI.get('hasAnotherCoverage').value !== 'SI') {
+          formGI.removeControl('changeAnotherCoverage');
+          formGI.removeControl('changingCoverages');
+        }
+
+        if (formGI.get('changeAnotherCoverage')) {
+          if (formGI.get('changeAnotherCoverage').value !== 'SI') {
+            formGI.removeControl('changingCoverages');
+          }
+        }
+
+        if (formGI.get('thinkTravel').value !== 'SI') {
+          formGI.removeControl('travelInformation');
+        }
+
+        if (formGI.get('haveBeenArrestedBecauseNarcotics').value !== 'SI') {
+          formGI.removeControl('arrestedInformation');
+        }
+
+        if (formGI.get('consumeAlcohol').value !== 'SI') {
+          formGI.removeControl('alcohol');
+        }
+
+        if (formGI.get('haveSmoked').value !== 'SI') {
+          formGI.removeControl('smoked');
+        }
+
+        if (formGI.get('haveAlcoholTreatment').value !== 'SI') {
+          formGI.removeControl('alcoholTreatment');
+        }
+
+        if (formGI.get('infoDiseaseCoverage').value !== 'SI') {
+          formGI.removeControl('diseaseCoverageInformation');
+        }
+
+        if (formMH.get('haveHadWeightChanges').value !== 'SI') {
+          formHMI.removeControl('weightChanges');
+        }
+
+        if (formMH.get('isWomen').value !== 'SI') {
+          formHMI.removeControl('womenInformation');
+        }
+
+        if (formAR.get('isMarried').value !== 'SI') {
+          formAR.removeControl('marriedInformation');
+        }
+
+        // if (formAR.get('infoDiseaseCoverage').value !== 'SI') {
+        //   formAR.removeControl('connectionTypeInfo');
+        // }
+
+        const stay = [];
+        switch (formAR.get('connectionType').value) {
+          case 'FAMILIA':
+            stay.push('relationship');
+            break;
+
+          case 'AMIGO':
+            stay.push('friendship', 'amount', 'time');
+            break;
+
+          case 'CLIENTE':
+            stay.push('amount', 'time');
+            break;
+
+          case '¿LO ACABA DE CONOCER?':
+            stay.push('how');
+            break;
+
+          default:
+            break;
+        }
+
+        console.log('stay', stay);
+        console.log('formAR.get(connectionTypeInfo).value 1', Object.getOwnPropertyNames(formAR.get('connectionTypeInfo').value));
+
+
+        const stableCTIObject = Object.getOwnPropertyNames(formAR.get('connectionTypeInfo').value);
+        // tslint:disable: forin
+        for (const idx in stay) {
+          const stayElement = stay[idx];
+          for (const key in stableCTIObject) {
+            const existingName = stableCTIObject[key];
+            if (stayElement !== existingName && existingName !== 'id') {
+              formARCTI.removeControl(existingName);
+            }
+          }
+        }
+
+        console.log('formAR.get(connectionTypeInfo).value 2', formAR.get('connectionTypeInfo').value);
+
+        formP.removeControl('isExposed');
+        formP.removeControl('city');
+        formP.removeControl('currency');
 
         this.familyRelationshipInsurances = formAR.get('familyInsurances') as FormArray;
         this.existingCoveragesList = formGI.get('anotherCoverages') as FormArray;
@@ -2663,6 +2773,9 @@ export class LifeComponent implements OnInit, DoCheck {
         this.contigentBeneficaryTitles = data.data.contingentBeneficiary.dependentsC;
         this.primaryAnotherTitle = data.data.primaryBenefits.personBenefited;
         this.contigentAnotherTitle = data.data.contingentBeneficiary.personBenefited;
+
+        this.newRequest.markAllAsTouched();
+        this.newRequest.updateValueAndValidity();
       }
 
       this.appComponent.showOverlay = false;

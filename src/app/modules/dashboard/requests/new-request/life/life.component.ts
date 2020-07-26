@@ -598,6 +598,11 @@ export class LifeComponent implements OnInit, DoCheck {
         coverages: this.fb.group({
           basicLife: [{ value: '', disabled: true }, Validators.required],
           survival: [{ value: '', disabled: true }, Validators.required],
+          accidentalDeathDismemberment: [{ value: '', disabled: true }, Validators.required],
+          disability: [{ value: '', disabled: true }, Validators.required],
+          seriousIllnesses: [{ value: '', disabled: true }, Validators.required],
+          waiverPremiumPayment: [{ value: '', disabled: true }, Validators.required],
+          advancePaymentOfCapital: [{ value: '', disabled: true }, Validators.required],
         })
       }),
       relevantPaymentInformation: this.fb.group({
@@ -949,7 +954,7 @@ export class LifeComponent implements OnInit, DoCheck {
       const age = Math.floor(timeDiff / (1000 * 3600 * 24) / 365.25);
       this.newRequest.get('person').get('age').setValue(age);
 
-      form.removeControl('advancePaymentOfCapital');
+      /*form.removeControl('advancePaymentOfCapital');
       form.removeControl('accidentalDeathDismemberment');
       form.removeControl('disability');
       form.removeControl('seriousIllnesses');
@@ -972,7 +977,7 @@ export class LifeComponent implements OnInit, DoCheck {
         form.addControl('waiverPremiumPayment', this.fb.control('', [Validators.required]));
       } else if (age >= 18 && age <= 55) {
         form.addControl('waiverPremiumPayment', this.fb.control('', [Validators.required]));
-      }
+      }*/
 
     });
 
@@ -1583,6 +1588,20 @@ export class LifeComponent implements OnInit, DoCheck {
           this.newRequest.get('relevantPaymentInformation').get('method').setValue(response.data.formaPago);
           this.newRequest.get('releventPlanInformation').get('coverages').get('basicLife').setValue(response.data.suma_asegurada);
           this.newRequest.get('releventPlanInformation').get('coverages').get('survival').setValue(response.data.suma_asegurada_supervivencia);
+
+          this.newRequest.get('releventPlanInformation').get('coverages').get('accidentalDeathDismemberment').setValue(response.data.desmembramientos);
+          this.newRequest.get('releventPlanInformation').get('coverages').get('disability').setValue(response.data.invalidez);
+          this.newRequest.get('releventPlanInformation').get('coverages').get('seriousIllnesses').setValue(response.data.enfermedades_graves);
+          this.newRequest.get('releventPlanInformation').get('coverages').get('waiverPremiumPayment').setValue(response.data.exoneracion);
+          this.newRequest.get('releventPlanInformation').get('coverages').get('advancePaymentOfCapital').setValue(response.data.pago_anticipado);
+
+          this.newRequest.get('releventPlanInformation').get('coverages').get('basicLife').setValue(response.data.suma_asegurada);
+          this.newRequest.get('releventPlanInformation').get('coverages').get('basicLife').setValue(response.data.suma_asegurada);
+          this.newRequest.get('releventPlanInformation').get('coverages').get('basicLife').setValue(response.data.suma_asegurada);
+          this.newRequest.get('releventPlanInformation').get('coverages').get('basicLife').setValue(response.data.suma_asegurada);
+          this.newRequest.get('releventPlanInformation').get('coverages').get('basicLife').setValue(response.data.suma_asegurada);
+
+
           this.newRequest.get('releventPlanInformation').get('type').setValue(response.data.plan);
           this.newRequest.get('releventPlanInformation').get('bonus').setValue(response.data.prima);
           this.newRequest.get('releventPlanInformation').get('nicotineEstandar').setValue(response.data.nicotineStandar);
@@ -2603,23 +2622,133 @@ export class LifeComponent implements OnInit, DoCheck {
         const formGI = this.newRequest.get('generalInformation') as FormGroup;
         const formF = this.newRequest.get('files') as FormGroup;
         const formP = this.newRequest.get('person') as FormGroup;
+        const formEP = this.newRequest.get('exposedPerson') as FormGroup;
         const formAR = this.newRequest.get('agentReport') as FormGroup;
+        const formARCTI = this.newRequest.get('agentReport').get('connectionTypeInfo') as FormGroup;
         const formHMI = this.newRequest.get('medicalHistory').get('informations') as FormGroup;
+        const formMH = this.newRequest.get('medicalHistory') as FormGroup;
         const formWI = this.newRequest.get('medicalHistory').get('informations').get('womenInformation') as FormGroup;
 
         if (formP.get('sameAsContractor').value === 'SI') {
           formP.removeControl('contractorIsLegalEntity');
+          formEP.removeControl('isContractorExposed');
+          formEP.removeControl('contractor');
           this.newRequest.removeControl('contractor');
         }
 
         if (formP.get('sameAsPayer').value === 'SI') {
           formP.removeControl('payerIsLegalEntity');
+          formEP.removeControl('isPayerExposed');
+          formEP.removeControl('payer');
           this.newRequest.removeControl('payer');
+        }
+
+        if (formEP.get('isExposed').value !== 'SI') {
+          formEP.removeControl('insured');
         }
 
         if (formP.get('heightUnit').value !== 'PIE') {
           formP.removeControl('inches');
         }
+
+        if (formGI.get('doXtremeSport').value !== 'SI') {
+          formGI.removeControl('xtremeSports');
+        }
+
+        if (formGI.get('hasAnotherCoverage').value !== 'SI') {
+          formGI.removeControl('changeAnotherCoverage');
+          formGI.removeControl('changingCoverages');
+        }
+
+        if (formGI.get('changeAnotherCoverage')) {
+          if (formGI.get('changeAnotherCoverage').value !== 'SI') {
+            formGI.removeControl('changingCoverages');
+          }
+        }
+
+        if (formGI.get('thinkTravel').value !== 'SI') {
+          formGI.removeControl('travelInformation');
+        }
+
+        if (formGI.get('haveBeenArrestedBecauseNarcotics').value !== 'SI') {
+          formGI.removeControl('arrestedInformation');
+        }
+
+        if (formGI.get('consumeAlcohol').value !== 'SI') {
+          formGI.removeControl('alcohol');
+        }
+
+        if (formGI.get('haveSmoked').value !== 'SI') {
+          formGI.removeControl('smoked');
+        }
+
+        if (formGI.get('haveAlcoholTreatment').value !== 'SI') {
+          formGI.removeControl('alcoholTreatment');
+        }
+
+        if (formGI.get('infoDiseaseCoverage').value !== 'SI') {
+          formGI.removeControl('diseaseCoverageInformation');
+        }
+
+        if (formMH.get('haveHadWeightChanges').value !== 'SI') {
+          formHMI.removeControl('weightChanges');
+        }
+
+        if (formMH.get('isWomen').value !== 'SI') {
+          formHMI.removeControl('womenInformation');
+        }
+
+        if (formAR.get('isMarried').value !== 'SI') {
+          formAR.removeControl('marriedInformation');
+        }
+
+        // if (formAR.get('infoDiseaseCoverage').value !== 'SI') {
+        //   formAR.removeControl('connectionTypeInfo');
+        // }
+
+        const stay = [];
+        switch (formAR.get('connectionType').value) {
+          case 'FAMILIA':
+            stay.push('relationship');
+            break;
+
+          case 'AMIGO':
+            stay.push('friendship', 'amount', 'time');
+            break;
+
+          case 'CLIENTE':
+            stay.push('amount', 'time');
+            break;
+
+          case '¿LO ACABA DE CONOCER?':
+            stay.push('how');
+            break;
+
+          default:
+            break;
+        }
+
+        console.log('stay', stay);
+        console.log('formAR.get(connectionTypeInfo).value 1', Object.getOwnPropertyNames(formAR.get('connectionTypeInfo').value));
+
+
+        const stableCTIObject = Object.getOwnPropertyNames(formAR.get('connectionTypeInfo').value);
+        // tslint:disable: forin
+        for (const idx in stay) {
+          const stayElement = stay[idx];
+          for (const key in stableCTIObject) {
+            const existingName = stableCTIObject[key];
+            if (stayElement !== existingName && existingName !== 'id') {
+              formARCTI.removeControl(existingName);
+            }
+          }
+        }
+
+        console.log('formAR.get(connectionTypeInfo).value 2', formAR.get('connectionTypeInfo').value);
+
+        formP.removeControl('isExposed');
+        formP.removeControl('city');
+        formP.removeControl('currency');
 
         this.familyRelationshipInsurances = formAR.get('familyInsurances') as FormArray;
         this.existingCoveragesList = formGI.get('anotherCoverages') as FormArray;
@@ -2655,6 +2784,9 @@ export class LifeComponent implements OnInit, DoCheck {
         this.contigentBeneficaryTitles = data.data.contingentBeneficiary.dependentsC;
         this.primaryAnotherTitle = data.data.primaryBenefits.personBenefited;
         this.contigentAnotherTitle = data.data.contingentBeneficiary.personBenefited;
+
+        this.newRequest.markAllAsTouched();
+        this.newRequest.updateValueAndValidity();
       }
 
       this.appComponent.showOverlay = false;

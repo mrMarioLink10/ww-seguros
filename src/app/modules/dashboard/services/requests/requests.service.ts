@@ -46,6 +46,6 @@ export class RequestsService {
   }
 
   clearArchives(formName) {
-		formName.setValue('');
-	}
+    formName.setValue('');
+  }
 }

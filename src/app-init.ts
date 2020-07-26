@@ -42,6 +42,7 @@ export function initializer(keycloak: KeycloakService): () => Promise<any> {
                 }, 180000);
 
             } catch (error) {
+                window.location.reload();
                 reject(error);
             }
         });

@@ -6,10 +6,12 @@ import { FormGroup, FormBuilder, Validators, FormArray, FormControl } from '@ang
 })
 export class FormDataFillingService {
 
+  excludedKeys = [
+    'id2Attached', 'id2AttachedUrl', 'specifyRelationship'
+  ];
 
   constructor(
     private fb: FormBuilder
-
   ) { }
 
   has(object: any, key: any) {
@@ -26,7 +28,11 @@ export class FormDataFillingService {
 
         if (valueToSet !== undefined) {
           if (!this.has(formDataGroup.controls, key)) {
-            formDataGroup.addControl(key, this.fb.control(valueToSet, Validators.required));
+            if (this.controlIsNotRequired(key)) {
+              formDataGroup.addControl(key, this.fb.control(valueToSet));
+            } else {
+              formDataGroup.addControl(key, this.fb.control(valueToSet, Validators.required));
+            }
           } else {
 
             const valueFormControl = formDataGroup.controls[key] as FormControl;
@@ -75,5 +81,15 @@ export class FormDataFillingService {
       }
 
     });
+  }
+
+  controlIsNotRequired(key) {
+    for (const idx in this.excludedKeys) {
+      if (Object.prototype.hasOwnProperty.call(this.excludedKeys, idx)) {
+        if (key === this.excludedKeys[idx]) {
+          return true;
+        }
+      }
+    }
   }
 }

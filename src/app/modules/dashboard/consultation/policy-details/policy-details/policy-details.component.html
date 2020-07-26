@@ -17,7 +17,7 @@
           </div>
 
           <div>
-            <button mat-mini-fab color="primary" aria-label="Buscar" type="submit" [disabled]="!form.valid">
+            <button mat-mini-fab color="primary" (click)="setRecharge()" aria-label="Buscar" type="submit" [disabled]="!form.valid" >
               <mat-icon>search</mat-icon>
             </button>
           </div>

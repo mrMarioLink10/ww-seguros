@@ -405,17 +405,34 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy, DoCheck {
 			}
 		});
 
-		// this.authorization.get('tipoReclamo').valueChanges.subscribe(value => {
-		// 	if (value == 'LOCAL') {
-		// 		this.authorization.get('informacionAsegurado').get('direccion').setValidators(Validators.required);
-		// 		this.authorization.get('informacionAsegurado').get('direccion').updateValueAndValidity();
-		// 	}
-		// 	else if (value == 'INTERNACIONAL') {
-		// 		this.authorization.get('informacionAsegurado').get('direccion').clearValidators();
-		// 		this.authorization.get('informacionAsegurado').get('direccion').updateValueAndValidity();
-		// 	}
-		// 	console.log('Hola, reclamo');
-		// });
+		this.authorization.get('tipoReclamo').valueChanges.subscribe(value => {
+			if (value == 'LOCAL') {
+				for (let x = 0; x < this.documentsArray.length; x++) {
+					this.authorization.get('files').get(x.toString()).get('indications').setValidators(Validators.required);
+					this.authorization.get('files').get(x.toString()).get('indications').updateValueAndValidity();
+					this.authorization.get('files').get(x.toString()).get('indications').markAsUntouched();
+
+					// if (!this.authorization.get('files').get(x.toString()).get('indications').valid) {
+					// 	console.log('No es valido indications de la posicion ' + x);
+					// }
+				}
+				// this.authorization.get('informacionAsegurado').get('direccion').setValidators(Validators.required);
+				// this.authorization.get('informacionAsegurado').get('direccion').updateValueAndValidity();
+				// this.authorization.get('informacionAsegurado').get('direccion').markAsUntouched();
+
+			}
+			else if (value == 'INTERNACIONAL') {
+				for (let x = 0; x < this.documentsArray.length; x++) {
+					this.authorization.get('files').get(x.toString()).get('indications').clearValidators();
+					this.authorization.get('files').get(x.toString()).get('indications').updateValueAndValidity();
+					this.authorization.get('files').get(x.toString()).get('indications').markAsUntouched();
+				}
+				// this.authorization.get('informacionAsegurado').get('direccion').clearValidators();
+				// this.authorization.get('informacionAsegurado').get('direccion').updateValueAndValidity();
+				// this.authorization.get('informacionAsegurado').get('direccion').markAsUntouched();
+			}
+			// console.log('Hola, reclamo');
+		});
 		// console.log(JSON.stringify(this.authorization.value));
 
 	}
@@ -482,7 +499,7 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy, DoCheck {
 			medicReport: ['', Validators.required],
 			budget: ['', Validators.required],
 			studies: ['', Validators.required],
-			indications: ['', Validators.required],
+			indications: ['']
 		});
 	}
 

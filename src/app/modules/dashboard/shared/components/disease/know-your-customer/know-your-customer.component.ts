@@ -64,19 +64,19 @@ export class KnowYourCustomerComponent implements OnInit, DoCheck {
     label: 'Ingresos anuales actividad principal',
     options: [
       {
-        value: 'menos de 10000',
+        value: 'MENOS DE 10000',
         viewValue: '< de US$10 mil'
       },
       {
-        value: '10000 a 30000',
+        value: '10000 A 30000',
         viewValue: 'US$10 mil a US$30 mil'
       },
       {
-        value: '30000 a 50000',
+        value: '30000 A 50000',
         viewValue: 'US$30 mil a US$50 mil'
       },
       {
-        value: 'mas de 50000',
+        value: 'MAS DE 50000',
         viewValue: '> de US$50 mil'
       }
     ]
@@ -86,19 +86,19 @@ export class KnowYourCustomerComponent implements OnInit, DoCheck {
     label: 'Ingresos anuales por otras actividades',
     options: [
       {
-        value: 'menos de 10000',
+        value: 'MENOS DE 10000',
         viewValue: '< de US$10 mil'
       },
       {
-        value: '10000 a 30000',
+        value: '10000 A 30000',
         viewValue: 'US$10 mil a US$30 mil'
       },
       {
-        value: '30000 a 50000',
+        value: '30000 A 50000',
         viewValue: 'US$30 mil a US$50 mil'
       },
       {
-        value: 'mas de 50000',
+        value: 'MAS DE 50000',
         viewValue: '> de US$50 mil'
       }
     ]
@@ -149,7 +149,29 @@ export class KnowYourCustomerComponent implements OnInit, DoCheck {
     name: ['', Validators.required],
     relationship: ['', Validators.required],
     telephone: ['', Validators.required]
-  }
+  };
+
+  status: FieldConfig = {
+    label: 'Estado Civil',
+    options: [
+      {
+        value: 'CASADO',
+        viewValue: 'CASADO'
+      },
+      {
+        value: 'SOLTERO',
+        viewValue: 'SOLTERO'
+      },
+      {
+        value: 'UNIÓN LIBRE',
+        viewValue: 'UNIÓN LIBRE'
+      },
+      {
+        value: 'DIVORCIADO',
+        viewValue: 'DIVORCIADO'
+      }
+    ]
+  };
 
   constructor(private fb: FormBuilder, public formMethods: FormArrayGeneratorService, private life: LifeService) { }
 
@@ -306,7 +328,7 @@ export class KnowYourCustomerComponent implements OnInit, DoCheck {
     this.form.addControl('general_data', this.fb.group({
 
       first_name: ['', Validators.required],
-      middle_name: ['', Validators.required],
+      middle_name: [''],
       last_names: ['', Validators.required],
       birthdate: [new Date(), Validators.required],
       gender: ['', Validators.required],

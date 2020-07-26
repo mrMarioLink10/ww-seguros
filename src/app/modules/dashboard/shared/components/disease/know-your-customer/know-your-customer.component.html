@@ -62,8 +62,10 @@
     </div>
 
     <div class="mr-3 mt-10 sm:mt-6 md:mt-5 lg:mt-3 xl:mt-2">
-      <app-input [group]="form.get('general_data')" label="Estado Civil" name='marital_status'
-        placeholder="Por ej: Casad@"></app-input>
+      <!-- <app-input [group]="form.get('general_data')" label="Estado Civil" name='marital_status'
+        placeholder="Por ej: Casad@"></app-input> -->
+        <app-select [group]="form.get('general_data')" name="marital_status" [options]='status'>
+        </app-select>
     </div>
 
     <div class="mr-3 mt-10 sm:mt-6 md:mt-5 lg:mt-3 xl:mt-2">
@@ -87,12 +89,12 @@
     </div>
 
     <div class="mr-3 mt-10 sm:mt-6 md:mt-5 lg:mt-3 xl:mt-2">
-      <app-number-input [group]="form.get('general_data')" label="Teléfono Residencial" name='telephone'
+      <app-number-input isPhone="true" [group]="form.get('general_data')" label="Teléfono Residencial" name='telephone'
         placeholder="Por ej: 809-001-0002"></app-number-input>
     </div>
 
     <div class="mr-3 mt-10 sm:mt-6 md:mt-5 lg:mt-3 xl:mt-2">
-      <app-number-input [group]="form.get('general_data')" label="Celular" name='cellphone'
+      <app-number-input isPhone="true" [group]="form.get('general_data')" label="Celular" name='cellphone'
         placeholder="Por ej: 829-101-2002"></app-number-input>
     </div>
 
@@ -140,7 +142,7 @@
     </div>
 
     <div class="mr-3 mt-10 sm:mt-6 md:mt-5 lg:mt-5 xl:mt-2">
-      <app-number-input [group]="form.get('professional_data')" label="Teléfono" name='telephone'
+      <app-number-input isPhone="true" [group]="form.get('professional_data')" label="Teléfono" name='telephone'
         placeholder="Por ej: 829-003-0120"></app-number-input>
     </div>
 
@@ -337,7 +339,7 @@
 
             <div class="mr-3 mt-8 sm:mt-5 md:mt-4 lg:mt-0">
 
-              <app-number-input [group]="form.get('questions').get('bank').get('bank_array').get(in.toString())"
+              <app-number-input isPhone="true" [group]="form.get('questions').get('bank').get('bank_array').get(in.toString())"
                 label="Teléfono contacto" name="telephone" placeholder="Ej.: 849-123-4567"></app-number-input>
 
             </div>
@@ -402,7 +404,7 @@
 
             <div class="mr-3 mt-8 sm:mt-5 md:mt-4 lg:mt-0">
 
-              <app-number-input
+              <app-number-input isPhone="true"
                 [group]="form.get('questions').get('commercial').get('commercial_array').get(in.toString())"
                 label="Teléfono contacto" name="telephone" placeholder="Ej.: 829-321-7654"></app-number-input>
 
@@ -468,7 +470,7 @@
 
             <div class="mr-3 mt-8 sm:mt-5 md:mt-4 lg:mt-0">
 
-              <app-number-input [group]="form.get('questions').get('personal').get('personal_array').get(in.toString())"
+              <app-number-input isPhone="true" [group]="form.get('questions').get('personal').get('personal_array').get(in.toString())"
                 label="Teléfono contacto" name="telephone" placeholder="Ej.: 829-321-7654"></app-number-input>
 
             </div>

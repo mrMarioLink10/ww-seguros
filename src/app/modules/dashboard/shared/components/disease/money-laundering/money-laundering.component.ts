@@ -58,11 +58,11 @@ export class MoneyLaunderingComponent implements OnInit {
 		label: '',
 		options: [
 			{
-				value: 'copia_manual',
+				value: 'COPIA_MANUAL',
 				viewValue: 'Copia de Manual de Procedimiento Interno para la Prevención y Control de Lavado de Dinero o Financiamiento de Terrorismo'
 			},
 			{
-				value: 'copia_formularios',
+				value: 'COPIA_FORMULARIOS',
 				viewValue: 'Copia de los Formularios de Control (CSC/ALD)'
 			}
 		]

@@ -54,7 +54,7 @@
 
     <div class="mr-3 mt-8 sm:mt-5 md:mt-8 lg:mt-2 xl:mt-5">
 
-      <app-number-input [group]="form.get('general_data')" label="Teléfono (s)" name='telephone' min="1" placeholder="">
+      <app-number-input isPhone="true" [group]="form.get('general_data')" label="Teléfono (s)" name='telephone' min="1" placeholder="">
       </app-number-input>
 
     </div>
@@ -121,14 +121,14 @@
 
     <div class="mr-3 mt-5 sm:mt-3 md:mt-5 lg:mt-2 xl:mt-2">
 
-      <app-number-input [group]="form.get('representative_data')" label="Teléfono Residencial" name='home_telephone'
+      <app-number-input isPhone="true" [group]="form.get('representative_data')" label="Teléfono Residencial" name='home_telephone'
         placeholder=""></app-number-input>
 
     </div>
 
     <div class="mr-3 mt-5 sm:mt-3 md:mt-5 lg:mt-2 xl:mt-2">
 
-      <app-number-input [group]="form.get('representative_data')" label="Celular" name='cellphone' placeholder="">
+      <app-number-input isPhone="true" [group]="form.get('representative_data')" label="Celular" name='cellphone' placeholder="">
       </app-number-input>
 
     </div>
@@ -411,7 +411,7 @@
 
             <div class="mr-3 ">
 
-              <app-number-input
+              <app-number-input isPhone="true"
                 [group]="form.get('exposed').get('branch_office').get('allBranch_office').get(index.toString())"
                 label="Teléfonos" name='telephone_branch_office' placeholder=""></app-number-input>
 

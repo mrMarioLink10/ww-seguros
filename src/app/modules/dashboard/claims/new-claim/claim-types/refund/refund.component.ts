@@ -83,14 +83,14 @@ export class RefundComponent implements OnInit {
 		]
 	};
 
-  tipoMoneda: FieldConfig = {
+	tipoMoneda: FieldConfig = {
 		label: 'Moneda',
 		options: [
 			{
 				value: 'DOLARES',
 				viewValue: 'Dolares'
-      },
-      {
+			},
+			{
 				value: 'PESOS',
 				viewValue: 'Pesos'
 			}
@@ -529,7 +529,7 @@ export class RefundComponent implements OnInit {
 			reader.readAsDataURL(file);
 
 			reader.onload = () => {
-				this.refundForm.get('diagnosticos').get(index.toString()).get('files').get('invoices').get(idx.toString()).patchValue({
+				this.refundForm.get('diagnosticos').get(index.toString()).get('files').get(formName).get(idx.toString()).patchValue({
 					[formName]: reader.result
 				});
 
@@ -582,8 +582,8 @@ export class RefundComponent implements OnInit {
 				this.fb.group({
 					noCuenta: ['', Validators.required],
 					tipoCuenta: ['', Validators.required],
-          bancoEmisor: ['', Validators.required],
-          tipoMoneda: ['', Validators.required]
+					bancoEmisor: ['', Validators.required],
+					tipoMoneda: ['', Validators.required]
 				})
 			);
 		}
@@ -595,7 +595,7 @@ export class RefundComponent implements OnInit {
 			noCuenta: ['', Validators.required],
 			tipoCuenta: ['', Validators.required],
 			bancoEmisor: ['', Validators.required],
-      tipoMoneda: ['', Validators.required],
+			tipoMoneda: ['', Validators.required],
 			// correo: ['', Validators.required]
 		});
 	}

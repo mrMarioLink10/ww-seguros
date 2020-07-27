@@ -17,6 +17,7 @@ import { AppComponent } from 'src/app/app.component';
 export class RefundFilterComponent implements OnInit {
 
   @Output() filters = new EventEmitter<any>();
+  todayDate = new Date();
 
   filterForm = this.fb.group({
     nroPoliza: [''],

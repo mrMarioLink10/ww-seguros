@@ -567,6 +567,10 @@
           <app-radio-button [group]="refundForm.get('infoTransferencia')" name="tipoCuenta" [options]="cuentaTipos">
           </app-radio-button>
         </div>
+        <div class="mr-3">
+          <app-radio-button [group]="refundForm.get('infoTransferencia')" name="tipoMoneda" [options]="tipoMoneda">
+          </app-radio-button>
+        </div>
         <div class="mr-3 sm:col-span-2">
           <!-- <app-input [group]="refundForm.get('infoTransferencia')" label="Banco Emisor" name='bancoEmisor'
             placeholder="BHD Leon">

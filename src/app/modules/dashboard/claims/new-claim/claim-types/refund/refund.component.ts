@@ -83,6 +83,19 @@ export class RefundComponent implements OnInit {
 		]
 	};
 
+  tipoMoneda: FieldConfig = {
+		label: 'Moneda',
+		options: [
+			{
+				value: 'DOLARES',
+				viewValue: 'Dolares'
+      },
+      {
+				value: 'PESOS',
+				viewValue: 'Pesos'
+			}
+		]
+	};
 
 	tipoReclamoInternacional: FieldConfig = {
 		label: 'Moneda',
@@ -569,7 +582,8 @@ export class RefundComponent implements OnInit {
 				this.fb.group({
 					noCuenta: ['', Validators.required],
 					tipoCuenta: ['', Validators.required],
-					bancoEmisor: ['', Validators.required],
+          bancoEmisor: ['', Validators.required],
+          tipoMoneda: ['', Validators.required]
 				})
 			);
 		}
@@ -581,6 +595,7 @@ export class RefundComponent implements OnInit {
 			noCuenta: ['', Validators.required],
 			tipoCuenta: ['', Validators.required],
 			bancoEmisor: ['', Validators.required],
+      tipoMoneda: ['', Validators.required],
 			// correo: ['', Validators.required]
 		});
 	}

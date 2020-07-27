@@ -913,7 +913,7 @@ export class LifeComponent implements OnInit, DoCheck {
         label: 'o. ¿Se le aconsejó alguna prueba diagnóstica, hospitalización o cirugía que no se ha llevado a cabo?',
         name: 'haveNotCarriedOut',
         array: 'notCarriedOutList',
-        group: 'notCarriedOut'
+        group: 'notCarriedOut2'
       },
       {
         label: '3. ¿Ha tomado el Propuesto Asegurado en los últimos 12 meses algún medicamento prescrito, o ha recibido tratamiento que haya excedido 14 días?',
@@ -2088,7 +2088,7 @@ export class LifeComponent implements OnInit, DoCheck {
           break;
 
         case 'haveNotCarriedOut':
-          formHMI.addControl('notCarriedOut', this.fb.control('', Validators.required));
+          formHMI.addControl('notCarriedOut2', this.fb.control('', Validators.required));
           break;
 
         case 'haveTakenInLast12Months':
@@ -2511,7 +2511,7 @@ export class LifeComponent implements OnInit, DoCheck {
           break;
 
         case 'haveNotCarriedOut':
-          formHMI.removeControl('notCarriedOut');
+          formHMI.removeControl('notCarriedOut2');
           break;
 
         case 'haveTakenInLast12Months':
@@ -2902,7 +2902,7 @@ export class LifeComponent implements OnInit, DoCheck {
         this.medicalProceduresList = formHMI.get('medicalProcedures') as FormArray;
         this.beenAPatientList = formHMI.get('beenAPatient') as FormArray;
         this.hadSpecializedTestsList = formHMI.get('hadSpecializedTests') as FormArray;
-        this.notCarriedOutList = formHMI.get('notCarriedOut') as FormArray;
+        this.notCarriedOutList = formHMI.get('notCarriedOut2') as FormArray;
         this.takenInLast12MonthsList = formHMI.get('takenInLast12Months') as FormArray;
         this.planToObtainMedicalTreatmentList = formHMI.get('planToObtainMedicalTreatment') as FormArray;
         this.testedPositiveForHIVList = formHMI.get('testedPositiveForHiv') as FormArray;

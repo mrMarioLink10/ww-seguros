@@ -539,7 +539,7 @@ export class RefundComponent implements OnInit {
 		}
 	}
 
-	fileNameWatcher(type?: string, index?: number) {
+	fileNameWatcher(type?: string, index?: number, index2?: number) {
 		if (this.filesInformation[index]) {
 			if (this.filesInformation[index][type + 'Url'] && this.refundForm.get('diagnosticos').get(index.toString()).get('files').get(type).value !== '') {
 				return this.filesInformation[index][type + 'Url'];

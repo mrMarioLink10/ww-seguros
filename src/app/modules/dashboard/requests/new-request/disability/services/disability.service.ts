@@ -189,35 +189,35 @@ export class DisabilityService {
   testArray = [
     {
       value: 'HEMOGRAMA',
-      viewValue: 'Hemograma'
+      viewValue: 'HEMOGRAMA'
     },
     {
       value: 'ELECTROCARDIOGRAMA',
-      viewValue: 'Electrocardiograma'
+      viewValue: 'ELECTROCARDIOGRAMA'
     },
     {
       value: 'RAYOS X',
-      viewValue: 'Rayos X'
+      viewValue: 'RAYOS X'
     },
     {
       value: 'ENDOSCOPIA',
-      viewValue: 'Endoscopia'
+      viewValue: 'ENDOSCOPIA'
     },
     {
       value: 'ULTRASONIDO',
-      viewValue: 'Ultrasonido'
+      viewValue: 'ULTRASONIDO'
     },
     {
       value: 'SCAN',
-      viewValue: 'Scan'
+      viewValue: 'SCAN'
     },
     {
       value: 'RESONANCIA MAGNÉTICA',
-      viewValue: 'Resonancia magnética'
+      viewValue: 'RESONANCIA MAGNÉTICA'
     },
     {
       value: 'OTROS',
-      viewValue: 'Otros'
+      viewValue: 'OTROS'
     }
   ];
 

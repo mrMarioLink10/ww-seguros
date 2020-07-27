@@ -63,10 +63,12 @@ export class LifeComponent implements OnInit, DoCheck {
   lostDriveLicenseList: FormArray;
   routeSelected = 'vida';
   heartPainList: FormArray;
+  hypertensionList: FormArray;
   respiratoryDisorderList: FormArray;
   mentalNervousDisorderList: FormArray;
   stomachDisorderList: FormArray;
   endocrineDisorderList: FormArray;
+  diabetesList: FormArray;
   spineDisorderList: FormArray;
   unexplainedDiseaseList: FormArray;
   renalDisorderList: FormArray;
@@ -186,6 +188,20 @@ export class LifeComponent implements OnInit, DoCheck {
       {
         value: 'NO',
         viewValue: 'No'
+      }
+    ]
+  };
+
+  isActualSmoker: FieldConfig = {
+    label: '¿Es fumador o ex-fumador?',
+    options: [
+      {
+        value: 'FUMADOR',
+        viewValue: 'FUMADOR'
+      },
+      {
+        value: 'EX-FUMADOR',
+        viewValue: 'EX-FUMADOR'
       }
     ]
   };
@@ -471,6 +487,45 @@ export class LifeComponent implements OnInit, DoCheck {
     name: 'haveSmoked'
   };
 
+  whichStudyArray = {
+    label: '¿Cuál?',
+    options: [
+      {
+        value: 'HEMOGRAMA',
+        viewValue: 'HEMOGRAMA'
+      },
+      {
+        value: 'ELECTROCARDIOGRAMA',
+        viewValue: 'ELECTROCARDIOGRAMA'
+      },
+      {
+        value: 'RAYOS X',
+        viewValue: 'RAYOS X'
+      },
+      {
+        value: 'ENDOSCOPIA',
+        viewValue: 'ENDOSCOPIA'
+      },
+      {
+        value: 'ULTRASONIDO',
+        viewValue: 'ULTRASONIDO'
+      },
+      {
+        value: 'SCAN',
+        viewValue: 'SCAN'
+      },
+      {
+        value: 'RESONANCIA MAGNÉTICA',
+        viewValue: 'RESONANCIA MAGNÉTICA'
+      },
+      {
+        value: 'OTROS',
+        viewValue: 'OTROS'
+      }
+    ],
+    name: 'whichStudy'
+  };
+
   sex = $sex;
   dependentFormGroup = {
     name: [''],
@@ -547,6 +602,7 @@ export class LifeComponent implements OnInit, DoCheck {
     this.newRequest = this.fb.group({
       noC: [{ value: this.noCotizacion }, Validators.required],
       isComplete: [false, Validators.required],
+      comentary: [''],
       person: this.fb.group({
         firstName: [{ value: '', disabled: false }, [Validators.required]],
         secondName: [''],
@@ -648,10 +704,12 @@ export class LifeComponent implements OnInit, DoCheck {
       }),
       medicalHistory: this.fb.group({
         haveHeartPain: ['', Validators.required],
+        haveHypertension: ['', Validators.required],
         haveRespiratoryDisorder: ['', Validators.required],
         haveMentalNervousDisorder: ['', Validators.required],
         haveStomachDisorder: ['', Validators.required],
         haveEndocrineDisorder: ['', Validators.required],
+        haveDiabetes: ['', Validators.required],
         haveSpineDisorder: ['', Validators.required],
         haveRenalDisorder: ['', Validators.required],
         haveUnexplainedDisease: ['', Validators.required],
@@ -756,10 +814,16 @@ export class LifeComponent implements OnInit, DoCheck {
 
     this.medicQuestions = [
       {
-        label: 'a. ¿Dolor en el pecho, palpitaciones, hipertensión arterial, fiebre reumática, soplo cardiaco, ataque cardiaco, aneurismas u otra enfermedad del corazón o los vasos sanguíneos?',
+        label: 'a. ¿Dolor en el pecho, palpitaciones, fiebre reumática, soplo cardiaco, ataque cardiaco, aneurismas u otra enfermedad del corazón o los vasos sanguíneos?',
         name: 'haveHeartPain',
         array: 'heartPainList',
         group: 'heartPain'
+      },
+      {
+        label: 'a. ¿Hipertensión arterial?',
+        name: 'haveHypertension',
+        array: 'hypertensionList',
+        group: 'hypertension'
       },
       {
         label: 'b. ¿Ahogos, ronquera, tos persistente, esputos de sangre, bronquitis, pleuresía, asma, enfisema, tuberculosis o trastornos respiratorios crónicos?',
@@ -780,10 +844,16 @@ export class LifeComponent implements OnInit, DoCheck {
         group: 'stomachDisorder'
       },
       {
-        label: 'e. ¿Diabetes, tiroides u otro trastorno endocrino?',
+        label: 'e. ¿Tiroides u otro trastorno endocrino?',
         name: 'haveEndocrineDisorder',
         array: 'endocrineDisorderList',
         group: 'endocrineDisorder'
+      },
+      {
+        label: 'e. ¿Diabetes?',
+        name: 'haveDiabetes',
+        array: 'diabetesList',
+        group: 'diabetes'
       },
       {
         label: 'f. ¿Neuritis, ciática, reumatismo, artritis, gota o desorden de los músculos o huesos, incluso de la columna vertebral, ¿la espalda y las articulaciones?',
@@ -1696,13 +1766,10 @@ export class LifeComponent implements OnInit, DoCheck {
     const formGI = this.newRequest.get('generalInformation') as FormGroup;
     const formHMI = this.newRequest.get('medicalHistory').get('informations') as FormGroup;
     const formWI = this.newRequest.get('medicalHistory').get('informations').get('womenInformation') as FormGroup;
-    console.log(event);
+    console.log('SELECT CHANGE EVENT: ', event);
+
     if (event.name === 'connectionType') {
-      console.log(formAR);
-      console.log(event.valor);
-
       switch (event.valor) {
-
         case 'FAMILIA':
           formAR.removeControl('connectionTypeInfo');
           formAR.addControl('connectionTypeInfo', this.fb.group({
@@ -1732,6 +1799,21 @@ export class LifeComponent implements OnInit, DoCheck {
           formAR.addControl('connectionTypeInfo', this.fb.group({
             how: ['', Validators.required],
           }));
+          break;
+
+        default:
+          break;
+      }
+    }
+
+    if (event.name === 'smoked') {
+      switch (event.valor) {
+        case 'EX-FUMADOR':
+          formGI.addControl('lastTimeSmoked', this.fb.control('', Validators.required));
+          break;
+
+        case 'FUMADOR':
+          formGI.removeControl('lastTimeSmoked');
           break;
 
         default:
@@ -1848,6 +1930,7 @@ export class LifeComponent implements OnInit, DoCheck {
 
         case 'haveSmoked':
           formGI.addControl('smoked', this.fb.control('', Validators.required));
+          formGI.addControl('isActualSmoker', this.fb.control('', Validators.required));
           break;
 
         case 'consumeAlcohol':
@@ -1922,10 +2005,14 @@ export class LifeComponent implements OnInit, DoCheck {
 
 
         case 'haveHeartPain':
-          formQ.addControl('solicitudHipertensionArterial', this.fb.group({}));
-
           formHMI.addControl('heartPain', this.fb.array([this.createFormArray('medicalInfo')]));
           this.heartPainList = formHMI.get('heartPain') as FormArray;
+          break;
+
+        case 'haveHypertension':
+          formQ.addControl('solicitudHipertensionArterial', this.fb.group({}));
+          formHMI.addControl('hypertension', this.fb.array([this.createFormArray('medicalInfo')]));
+          this.hypertensionList = formHMI.get('hypertension') as FormArray;
           break;
 
         case 'haveRespiratoryDisorder':
@@ -1944,10 +2031,15 @@ export class LifeComponent implements OnInit, DoCheck {
           break;
 
         case 'haveEndocrineDisorder':
-          formQ.addControl('solicitudDiabetes', this.fb.group({}));
-
           formHMI.addControl('endocrineDisorder', this.fb.array([this.createFormArray('medicalInfo')]));
           this.endocrineDisorderList = formHMI.get('endocrineDisorder') as FormArray;
+          break;
+
+        case 'haveDiabetes':
+          formQ.addControl('solicitudDiabetes', this.fb.group({}));
+
+          formHMI.addControl('diabetes', this.fb.array([this.createFormArray('medicalInfo')]));
+          this.diabetesList = formHMI.get('diabetes') as FormArray;
           break;
 
         case 'haveSpineDisorder':
@@ -1991,13 +2083,12 @@ export class LifeComponent implements OnInit, DoCheck {
           break;
 
         case 'haveHadSpecializedTests':
-          formHMI.addControl('hadSpecializedTests', this.fb.array([this.createFormArray('medicalInfo')]));
+          formHMI.addControl('hadSpecializedTests', this.fb.array([this.createFormArray('specializedTests')]));
           this.hadSpecializedTestsList = formHMI.get('hadSpecializedTests') as FormArray;
           break;
 
         case 'haveNotCarriedOut':
-          formHMI.addControl('notCarriedOut', this.fb.array([this.createFormArray('medicalInfo')]));
-          this.notCarriedOutList = formHMI.get('notCarriedOut') as FormArray;
+          formHMI.addControl('notCarriedOut', this.fb.control('', Validators.required));
           break;
 
         case 'haveTakenInLast12Months':
@@ -2266,6 +2357,11 @@ export class LifeComponent implements OnInit, DoCheck {
 
         case 'haveSmoked':
           formGI.removeControl('smoked');
+          formGI.removeControl('isActualSmoker');
+          break;
+
+        case 'isActualSmoker':
+          formGI.removeControl('lastTimeSmoked');
           break;
 
         case 'consumeAlcohol':
@@ -2336,11 +2432,16 @@ export class LifeComponent implements OnInit, DoCheck {
           break;
 
         case 'haveHeartPain':
-          formQ.removeControl('solicitudHipertensionArterial');
-
           formHMI.removeControl('heartPain');
           this.heartPainList = undefined;
           break;
+
+        case 'haveHypertension':
+          formQ.removeControl('solicitudHipertensionArterial');
+          formHMI.removeControl('hypertension');
+          this.hypertensionList = undefined;
+          break;
+
         case 'haveRespiratoryDisorder':
           formHMI.removeControl('respiratoryDisorder');
           this.respiratoryDisorderList = undefined;
@@ -2354,12 +2455,16 @@ export class LifeComponent implements OnInit, DoCheck {
           this.stomachDisorderList = undefined;
           break;
         case 'haveEndocrineDisorder':
-          formQ.removeControl('solicitudDiabetes');
-
-
           formHMI.removeControl('endocrineDisorder');
           this.endocrineDisorderList = undefined;
           break;
+
+        case 'haveDiabetes':
+          formQ.removeControl('solicitudDiabetes');
+          formHMI.removeControl('diabetes');
+          this.diabetesList = undefined;
+          break;
+
         case 'haveSpineDisorder':
           formHMI.removeControl('spineDisorder');
           this.spineDisorderList = undefined;
@@ -2407,7 +2512,6 @@ export class LifeComponent implements OnInit, DoCheck {
 
         case 'haveNotCarriedOut':
           formHMI.removeControl('notCarriedOut');
-          this.notCarriedOutList = undefined;
           break;
 
         case 'haveTakenInLast12Months':
@@ -2455,6 +2559,16 @@ export class LifeComponent implements OnInit, DoCheck {
     dependentsFormArray = this.formMethods.addElement(dependentsFormArray, increment, group).formArray;
   }
 
+  whichStudyWatcher(form: FormGroup, event) {
+    console.log(form, event.valor);
+
+    if (event.valor === 'OTROS') {
+      form.addControl('specifyStudy', this.fb.control('', Validators.required));
+    } else {
+      form.removeControl('specifyStudy');
+    }
+  }
+
   createFormArray(type: string): FormGroup {
     switch (type) {
       case 'coverages':
@@ -2486,10 +2600,19 @@ export class LifeComponent implements OnInit, DoCheck {
         });
         break;
 
+      case 'specializedTests':
+        return this.fb.group({
+          date: ['', Validators.required],
+          whichStudy: ['', Validators.required],
+          results: ['', Validators.required],
+        });
+
       case 'doctorInfo':
         return this.fb.group({
           name: ['', Validators.required],
           address: ['', Validators.required],
+          differentMedic: [''],
+          ailment: ['', Validators.required],
         });
         break;
 
@@ -2680,6 +2803,14 @@ export class LifeComponent implements OnInit, DoCheck {
 
         if (formGI.get('haveSmoked').value !== 'SI') {
           formGI.removeControl('smoked');
+          formGI.removeControl('isActualSmoker');
+          formGI.removeControl('lastTimeSmoked');
+        }
+
+        if (formGI.get('isActualSmoker')) {
+          if (formGI.get('isActualSmoker').value !== 'EX-FUMADOR') {
+            formGI.removeControl('lastTimeSmoked');
+          }
         }
 
         if (formGI.get('haveAlcoholTreatment').value !== 'SI') {
@@ -2755,11 +2886,13 @@ export class LifeComponent implements OnInit, DoCheck {
         this.changingCoveragesList = formGI.get('changingCoverages') as FormArray;
         this.womenDisordersList = formWI.get('disorders') as FormArray;
         this.heartPainList = formHMI.get('heartPain') as FormArray;
+        this.hypertensionList = formHMI.get('hypertension') as FormArray;
         this.lostDriveLicenseList = formGI.get('lostDriveLicense') as FormArray;
         this.respiratoryDisorderList = formHMI.get('respiratoryDisorder') as FormArray;
         this.mentalNervousDisorderList = formHMI.get('mentalNervousDisorder') as FormArray;
         this.stomachDisorderList = formHMI.get('stomachDisorder') as FormArray;
         this.endocrineDisorderList = formHMI.get('endocrineDisorder') as FormArray;
+        this.diabetesList = formHMI.get('diabetes') as FormArray;
         this.spineDisorderList = formHMI.get('spineDisorder') as FormArray;
         this.unexplainedDiseaseList = formHMI.get('unexplainedDisease') as FormArray;
         this.renalDisorderList = formHMI.get('renalDisorder') as FormArray;

@@ -1,5 +1,5 @@
 <mat-form-field [formGroup]="group" appearance="outline" class="w-full">
   <mat-label>{{label}}</mat-label>
   <textarea [formControlName]="name" matInput #input (input)="input.value=$event.target.value.toUpperCase()"></textarea>
-  <mat-error *ngIf="group.get(name).touched && !group.get(name).valid">Debe llenar el campo de {{label}}</mat-error>
+  <mat-error *ngIf="group.get(name).touched && !group.get(name).valid">Este campo es obligatorio.</mat-error>
 </mat-form-field>

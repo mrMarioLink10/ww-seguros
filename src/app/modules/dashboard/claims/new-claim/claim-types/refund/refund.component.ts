@@ -274,7 +274,7 @@ export class RefundComponent implements OnInit {
 				nombre: [{ value: '', disabled: true }, [Validators.required]],
 				direccion: ['',],
 				telefono: ['',],
-				correo: ['', [Validators.required , Validators.email]],
+				correo: ['', [Validators.required, Validators.email]],
 			}),
 			diagnosticos: this.fb.array([this.createDiagnostic()]),
 			haveAditionalComentary: [''],
@@ -508,7 +508,7 @@ export class RefundComponent implements OnInit {
 		});
 	}
 
-	onFileChange(event, formName, index) {
+	onFileChange(event, formName, index, idx) {
 		const reader = new FileReader();
 
 		if (event.target.files && event.target.files.length) {
@@ -516,7 +516,7 @@ export class RefundComponent implements OnInit {
 			reader.readAsDataURL(file);
 
 			reader.onload = () => {
-				this.refundForm.get('diagnosticos').get(index.toString()).get('files').patchValue({
+				this.refundForm.get('diagnosticos').get(index.toString()).get('files').get('invoices').get(idx.toString()).patchValue({
 					[formName]: reader.result
 				});
 
@@ -595,10 +595,10 @@ export class RefundComponent implements OnInit {
 			monto: ['', Validators.required],
 			proveedor: ['', Validators.required],
 			files: this.fb.group({
-				invoices: ['', Validators.required],
-				indications: ['', Validators.required],
-				medicReports: ['', Validators.required],
-				paymentVouchers: ['', Validators.required],
+				invoices: this.fb.array([this.createFormArray('invoices')]),
+				indications: this.fb.array([this.createFormArray('indications')]),
+				medicReports: this.fb.array([this.createFormArray('medicReports')]),
+				paymentVouchers: this.fb.array([this.createFormArray('paymentVouchers')]),
 			})
 		});
 	}
@@ -606,6 +606,48 @@ export class RefundComponent implements OnInit {
 	addDiagnostic() {
 		this.diagnosticList.push(this.createDiagnostic());
 		console.log('El json de todo el formulario: ', JSON.stringify(this.refundForm.value));
+
+	}
+
+	createFormArray(type: string): any {
+		switch (type) {
+			case 'invoices':
+				return this.fb.group({
+					invoices: ['', Validators.required],
+				});
+
+			case 'indications':
+				return this.fb.group({
+					indications: ['', Validators.required],
+				});
+
+			case 'medicReports':
+				return this.fb.group({
+					medicReports: ['', Validators.required],
+				});
+
+			case 'paymentVouchers':
+				return this.fb.group({
+					paymentVouchers: ['', Validators.required],
+				});
+
+			default:
+				break;
+		}
+	}
+
+	addToList(list: any, type: string) {
+		console.log('list: ', list);
+		console.log('ADD LIST');
+		list.push(this.createFormArray(type));
+	}
+
+	removeToList(index, list: any) {
+		list.removeAt(index);
+	}
+
+	returnAsFormArray(formArray: any) {
+		return formArray as FormArray;
 
 	}
 
@@ -713,12 +755,12 @@ export class RefundComponent implements OnInit {
 				this.refundForm['controls'].diagnosticos['controls'][x]['controls'].tipoReclamoMoneda.setValue(data.data.diagnosticos[x].tipoReclamoMoneda);
 				this.refundForm['controls'].diagnosticos['controls'][x]['controls'].monto.setValue(Number.parseFloat(data.data.diagnosticos[x].monto));
 				this.refundForm['controls'].diagnosticos['controls'][x]['controls'].proveedor.setValue(data.data.diagnosticos[x].proveedor);
-				this.refundForm['controls'].diagnosticos['controls'][x]['controls'].files['controls'].indications.setValue(data.data.diagnosticos[x].files.indications);
-				this.refundForm['controls'].diagnosticos['controls'][x]['controls'].files['controls'].invoices.setValue(data.data.diagnosticos[x].files.invoices);
-				this.refundForm['controls'].diagnosticos['controls'][x]['controls'].files['controls'].medicReports.setValue(data.data.diagnosticos[x].files.medicReports);
-				this.refundForm['controls'].diagnosticos['controls'][x]['controls'].files['controls'].paymentVouchers.setValue(data.data.diagnosticos[x].files.paymentVouchers);
-				this.filesInformation.push(data.data.diagnosticos[x].files);
-				console.log(data.data.diagnosticos[x].files);
+				// this.refundForm['controls'].diagnosticos['controls'][x]['controls'].files['controls'].indications.setValue(data.data.diagnosticos[x].files.indications);
+				// this.refundForm['controls'].diagnosticos['controls'][x]['controls'].files['controls'].invoices.setValue(data.data.diagnosticos[x].files.invoices);
+				// this.refundForm['controls'].diagnosticos['controls'][x]['controls'].files['controls'].medicReports.setValue(data.data.diagnosticos[x].files.medicReports);
+				// this.refundForm['controls'].diagnosticos['controls'][x]['controls'].files['controls'].paymentVouchers.setValue(data.data.diagnosticos[x].files.paymentVouchers);
+				// this.filesInformation.push(data.data.diagnosticos[x].files);
+				// console.log(data.data.diagnosticos[x].files);
 
 				const formID4 = this.refundForm.get('diagnosticos').get([x]) as FormGroup;
 				formID4.addControl('id', this.fb.control(data.data.diagnosticos[x].id, Validators.required));

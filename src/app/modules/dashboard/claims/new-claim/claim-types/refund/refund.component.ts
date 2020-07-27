@@ -288,7 +288,7 @@ export class RefundComponent implements OnInit {
 				nombre: [{ value: '', disabled: true }, [Validators.required]],
 				direccion: ['',],
 				telefono: ['',],
-				correo: ['', [Validators.required, Validators.email]],
+				correo: ['', [/*Validators.required,*/ Validators.email]],
 			}),
 			diagnosticos: this.fb.array([this.createDiagnostic()]),
 			haveAditionalComentary: [''],
@@ -506,12 +506,12 @@ export class RefundComponent implements OnInit {
 				// 	+ data.data[x].asegurado.id_asegurado);
 
 				this.dataAutoCompleteIdNumberObject.push({
-					name: data.data[x].asegurado.nombres_asegurado,
+					name: data.data[x].asegurado.nombres_asegurado + " " +data.data[x].asegurado.apellidos_asegurado,
 					// id: data.data[x].asegurado.id_asegurado,
 					policy: data.data[x].asegurado.no_poliza,
 					value: data.data[x].asegurado.id_asegurado
 				});
-				this.dataAutoCompleteName.push(data.data[x].asegurado.nombres_asegurado);
+				this.dataAutoCompleteName.push(data.data[x].asegurado.nombres_asegurado+ " " +data.data[x].asegurado.apellidos_asegurado);
 
 				this.dataAutoCompleteIdNumber.push(data.data[x].asegurado.id_asegurado);
 

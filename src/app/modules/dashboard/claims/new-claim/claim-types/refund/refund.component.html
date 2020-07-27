@@ -242,7 +242,7 @@
                 [ngClass]="{'file-input': refundForm.get('diagnosticos').get(i.toString()).get('files').get('invoices').get(ix.toString()).get('invoices').value !== '', 'col-span-4': refundForm.get('diagnosticos').get(i.toString()).get('files').get('invoices')['controls'].length > 1, 'file-error': refundForm.get('diagnosticos').get(i.toString()).get('files').get('invoices').get(ix.toString()).get('invoices').touched && !refundForm.get('diagnosticos').get(i.toString()).get('files').get('invoices').get(ix.toString()).get('invoices').valid}">
                 <mat-label>Facturas Pendientes</mat-label>
                 <ngx-mat-file-input #removableInputInvoices placeholder="Basic outline placeholder"
-                  [valuePlaceholder]="fileNameWatcher('invoices', i)"
+                  [valuePlaceholder]="fileNameWatcher('invoices', i, ix)"
                   (change)="onFileChange($event, 'invoices', i, ix)">
                 </ngx-mat-file-input>
                 <mat-icon style="color: #e2e2e2;" matSuffix
@@ -285,7 +285,7 @@
                 [ngClass]="{'file-input': refundForm.get('diagnosticos').get(i.toString()).get('files').get('indications').get(ix.toString()).get('indications').value !== '', 'col-span-4': refundForm.get('diagnosticos').get(i.toString()).get('files').get('indications')['controls'].length > 1, 'file-error': refundForm.get('diagnosticos').get(i.toString()).get('files').get('indications').get(ix.toString()).get('indications').touched && !refundForm.get('diagnosticos').get(i.toString()).get('files').get('indications').get(ix.toString()).get('indications').valid}">
                 <mat-label>Indicaciones médicas</mat-label>
                 <ngx-mat-file-input #removableInputIndications placeholder="Basic outline placeholder"
-                  [valuePlaceholder]="fileNameWatcher('indications', i)"
+                  [valuePlaceholder]="fileNameWatcher('indications', i, ix)"
                   (change)="onFileChange($event, 'indications', i, ix)">
                 </ngx-mat-file-input>
                 <mat-icon style="color: #e2e2e2;" matSuffix
@@ -328,7 +328,7 @@
                 [ngClass]="{'file-input': refundForm.get('diagnosticos').get(i.toString()).get('files').get('medicReports').get(ix.toString()).get('medicReports').value !== '', 'col-span-4': refundForm.get('diagnosticos').get(i.toString()).get('files').get('medicReports')['controls'].length > 1, 'file-error': refundForm.get('diagnosticos').get(i.toString()).get('files').get('medicReports').get(ix.toString()).get('medicReports').touched && !refundForm.get('diagnosticos').get(i.toString()).get('files').get('medicReports').get(ix.toString()).get('medicReports').valid}">
                 <mat-label>Informe médico</mat-label>
                 <ngx-mat-file-input #removableInputMedicReports placeholder="Basic outline placeholder"
-                  [valuePlaceholder]="fileNameWatcher('medicReports', i)"
+                  [valuePlaceholder]="fileNameWatcher('medicReports', i, ix)"
                   (change)="onFileChange($event, 'medicReports', i, ix)">
                 </ngx-mat-file-input>
                 <mat-icon style="color: #e2e2e2;" matSuffix
@@ -371,7 +371,7 @@
                 [ngClass]="{'file-input': refundForm.get('diagnosticos').get(i.toString()).get('files').get('paymentVouchers').get(ix.toString()).get('paymentVouchers').value !== '', 'col-span-4': refundForm.get('diagnosticos').get(i.toString()).get('files').get('paymentVouchers')['controls'].length > 1, 'file-error': refundForm.get('diagnosticos').get(i.toString()).get('files').get('paymentVouchers').get(ix.toString()).get('paymentVouchers').touched && !refundForm.get('diagnosticos').get(i.toString()).get('files').get('paymentVouchers').get(ix.toString()).get('paymentVouchers').valid}">
                 <mat-label>Comprobante de pagos</mat-label>
                 <ngx-mat-file-input #removableInputPaymentVouchers placeholder="Basic outline placeholder"
-                  [valuePlaceholder]="fileNameWatcher('paymentVouchers', i)"
+                  [valuePlaceholder]="fileNameWatcher('paymentVouchers', i, ix)"
                   (change)="onFileChange($event, 'paymentVouchers', i, ix)">
                 </ngx-mat-file-input>
                 <mat-icon style="color: #e2e2e2;" matSuffix
@@ -405,91 +405,6 @@
               <mat-icon style="color: #18446B">add</mat-icon>
             </button>
           </div>
-
-
-          <!-- <mat-form-field class="mr-1" appearance="outline"
-            [ngClass]="{'file-input': this.refundForm.get('diagnosticos').get(i.toString()).get('files').get('indications').value !== ''}">
-            <mat-label>Indicaciones médicas</mat-label>
-            <ngx-mat-file-input #removableInputIndications placeholder="Basic outline placeholder"
-              [valuePlaceholder]="fileNameWatcher('indications', i)" (change)="onFileChange($event, 'indications', i)">
-            </ngx-mat-file-input>
-            <mat-icon style="color: #e2e2e2;" matSuffix
-              *ngIf="this.refundForm.get('diagnosticos').get(i.toString()).get('files').get('indications').value === ''">
-              publish</mat-icon>
-            <button mat-icon-button matSuffix
-              *ngIf="this.refundForm.get('diagnosticos').get(i.toString()).get('files').get('indications').value !== ''"
-              (click)="this.requestService.clearArchives(this.refundForm.get('diagnosticos').get(i.toString()).get('files').get('indications'))"
-              (click)="removableInputIndications.clear($event)">
-              <mat-icon style="color: #e2e2e2;">clear</mat-icon>
-            </button><button mat-icon-button matSuffix
-              *ngIf="this.refundForm.get('diagnosticos').get(i.toString()).get('files').get('indications').value !== ''"
-              (click)="this.requestService.downloadArchives($event, this.refundForm.get('diagnosticos').get(i.toString()).get('files').get('indications').value)"
-              (click)="$event.preventDefault()">
-              <mat-icon style="color: #e2e2e2;">get_app</mat-icon>
-            </button>
-            <mat-error
-              *ngIf="this.refundForm.get('diagnosticos').get(i.toString()).get('files').get('indications').touched && !this.refundForm.get('diagnosticos').get(i.toString()).get('files').get('indications').valid">
-              Este campo es
-              obligatorio
-            </mat-error>
-          </mat-form-field> -->
-          <!-- <mat-form-field class="mr-1"
-            [ngClass]="{'file-input': refundForm.get('diagnosticos').get(i.toString()).get('files').get('medicReports').value !== ''}"
-            appearance="outline">
-            <mat-label>Informe médico</mat-label>
-            <ngx-mat-file-input #removableInputMedicReports placeholder="Basic outline placeholder"
-              [valuePlaceholder]="fileNameWatcher('medicReports', i)"
-              (change)="onFileChange($event, 'medicReports', i)">
-            </ngx-mat-file-input>
-            <mat-icon style="color: #e2e2e2;" matSuffix
-              *ngIf="refundForm.get('diagnosticos').get(i.toString()).get('files').get('medicReports').value === ''">
-              publish</mat-icon>
-            <button mat-icon-button matSuffix
-              *ngIf="refundForm.get('diagnosticos').get(i.toString()).get('files').get('medicReports').value !== ''"
-              (click)="this.requestService.clearArchives(this.refundForm.get('diagnosticos').get(i.toString()).get('files').get('medicReports'))"
-              (click)="removableInputMedicReports.clear($event)">
-              <mat-icon style="color: #e2e2e2;">clear</mat-icon>
-            </button>
-            <button mat-icon-button matSuffix
-              *ngIf="refundForm.get('diagnosticos').get(i.toString()).get('files').get('medicReports').value !== ''"
-              (click)="this.requestService.downloadArchives($event, refundForm.get('diagnosticos').get(i.toString()).get('files').get('medicReports').value)"
-              (click)="$event.preventDefault()">
-              <mat-icon style="color: #e2e2e2;">get_app</mat-icon>
-            </button>
-            <mat-error
-              *ngIf="refundForm.get('diagnosticos').get(i.toString()).get('files').get('medicReports').touched && !refundForm.get('diagnosticos').get(i.toString()).get('files').get('medicReports').valid">
-              Este campo es
-              obligatorio
-            </mat-error>
-          </mat-form-field> -->
-          <!-- <mat-form-field class="mr-1" appearance="outline"
-            [ngClass]="{'file-input': this.refundForm.get('diagnosticos').get(i.toString()).get('files').get('paymentVouchers').value !== ''}">
-            <mat-label>Comprobante de pagos</mat-label>
-            <ngx-mat-file-input #removableInputPaymentVouchers placeholder="Basic outline placeholder"
-              [valuePlaceholder]="fileNameWatcher('paymentVouchers', i)"
-              (change)="onFileChange($event, 'paymentVouchers', i)">
-            </ngx-mat-file-input>
-            <mat-icon style="color: #e2e2e2;" matSuffix
-              *ngIf="this.refundForm.get('diagnosticos').get(i.toString()).get('files').get('paymentVouchers').value === ''">
-              publish</mat-icon>
-            <button mat-icon-button matSuffix
-              *ngIf="this.refundForm.get('diagnosticos').get(i.toString()).get('files').get('paymentVouchers').value !== ''"
-              (click)="this.requestService.clearArchives(this.refundForm.get('diagnosticos').get(i.toString()).get('files').get('paymentVouchers'))"
-              (click)="removableInputPaymentVouchers.clear($event)">
-              <mat-icon style="color: #e2e2e2;">clear</mat-icon>
-            </button>
-            <button mat-icon-button matSuffix
-              *ngIf="this.refundForm.get('diagnosticos').get(i.toString()).get('files').get('paymentVouchers').value !== ''"
-              (click)="this.requestService.downloadArchives($event, this.refundForm.get('diagnosticos').get(i.toString()).get('files').get('paymentVouchers').value)"
-              (click)="$event.preventDefault()">
-              <mat-icon style="color: #e2e2e2;">get_app</mat-icon>
-            </button>
-            <mat-error
-              *ngIf="this.refundForm.get('diagnosticos').get(i.toString()).get('files').get('paymentVouchers').touched && !this.refundForm.get('diagnosticos').get(i.toString()).get('files').get('paymentVouchers').valid">
-              Este campo es
-              obligatorio
-            </mat-error>
-          </mat-form-field> -->
         </div>
         <hr class=" my-4 w-full ww-divider">
 

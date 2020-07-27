@@ -15,6 +15,7 @@ import { ActivatedRoute } from '@angular/router';
 import { ClaimsService } from '../../../../services/claims/claims.service';
 import { HttpParams } from '@angular/common/http';
 import { RequestsService } from 'src/app/modules/dashboard/services/requests/requests.service';
+import { FormDataFillingService } from 'src/app/modules/dashboard/services/shared/formDataFillingService';
 
 
 // tslint:disable: no-string-literal
@@ -178,8 +179,8 @@ export class RefundComponent implements OnInit {
 		private route: ActivatedRoute,
 		private cd: ChangeDetectorRef,
 		private claimsService: ClaimsService,
-		public requestService: RequestsService
-
+		public requestService: RequestsService,
+		private dataMappingFromApi: FormDataFillingService,
 	) { }
 
 	ID = null;
@@ -541,8 +542,10 @@ export class RefundComponent implements OnInit {
 
 	fileNameWatcher(type?: string, index?: number, index2?: number) {
 		if (this.filesInformation[index]) {
-			if (this.filesInformation[index][type + 'Url'] && this.refundForm.get('diagnosticos').get(index.toString()).get('files').get(type).value !== '') {
-				return this.filesInformation[index][type + 'Url'];
+			if (this.filesInformation[index].files[type][index2]) {
+				if (this.filesInformation[index].files[type][index2][type + 'Url'] && this.refundForm.get('diagnosticos').get(index.toString()).get('files').get(type).get(index2.toString()).get(type).value !== '') {
+					return this.filesInformation[index].files[type][index2][type + 'Url'];
+				}
 			}
 		}
 	}
@@ -753,89 +756,18 @@ export class RefundComponent implements OnInit {
 			console.log(data);
 			this.refundForm.get('informacion').get('idNumber').disable();
 			this.refundForm.get('informacion').get('filterType').disable();
+
+			this.dataMappingFromApi.iterateThroughtAllObject(data.data, this.refundForm);
+
+			this.filesInformation = data.data.diagnosticos;
+
 			this.showContent = true;
-
-			this.refundForm['controls'].tipoReclamo.setValue(data.data.tipoReclamo);
-			for (let x = 0; x < data.data.diagnosticos.length; x++) {
-				// console.log('hola, soy id numero ' + data.data.diagnosticos[x].id);
-				// console.log("Hola, soy la descripcion de la posicion " + x + ", y mi valor es " + data.data.diagnosticos[x].descripcion)
-				if (x >= 1) {
-					// console.log('Hola, soy yo, ' + x)
-					this.addDiagnostic();
-				}
-				this.refundForm['controls'].diagnosticos['controls'][x]['controls'].diagnostico.setValue(data.data.diagnosticos[x].diagnostico);
-				this.refundForm['controls'].diagnosticos['controls'][x]['controls'].descripcion.setValue(data.data.diagnosticos[x].descripcion);
-				this.refundForm['controls'].diagnosticos['controls'][x]['controls'].fecha.setValue(data.data.diagnosticos[x].fecha);
-				this.refundForm['controls'].diagnosticos['controls'][x]['controls'].lugar.setValue(data.data.diagnosticos[x].lugar);
-				this.refundForm['controls'].diagnosticos['controls'][x]['controls'].tipoReclamoMoneda.setValue(data.data.diagnosticos[x].tipoReclamoMoneda);
-				this.refundForm['controls'].diagnosticos['controls'][x]['controls'].monto.setValue(Number.parseFloat(data.data.diagnosticos[x].monto));
-				this.refundForm['controls'].diagnosticos['controls'][x]['controls'].proveedor.setValue(data.data.diagnosticos[x].proveedor);
-				// this.refundForm['controls'].diagnosticos['controls'][x]['controls'].files['controls'].indications.setValue(data.data.diagnosticos[x].files.indications);
-				// this.refundForm['controls'].diagnosticos['controls'][x]['controls'].files['controls'].invoices.setValue(data.data.diagnosticos[x].files.invoices);
-				// this.refundForm['controls'].diagnosticos['controls'][x]['controls'].files['controls'].medicReports.setValue(data.data.diagnosticos[x].files.medicReports);
-				// this.refundForm['controls'].diagnosticos['controls'][x]['controls'].files['controls'].paymentVouchers.setValue(data.data.diagnosticos[x].files.paymentVouchers);
-				// this.filesInformation.push(data.data.diagnosticos[x].files);
-				// console.log(data.data.diagnosticos[x].files);
-
-				const formID4 = this.refundForm.get('diagnosticos').get([x]) as FormGroup;
-				formID4.addControl('id', this.fb.control(data.data.diagnosticos[x].id, Validators.required));
-			}
-			console.log(this.filesInformation);
-
-			this.refundForm['controls'].haveAditionalComentary.setValue(data.data.haveAditionalComentary);
-			this.refundForm['controls'].comentary.setValue(data.data.comentary);
-			this.refundForm['controls'].fecha.setValue(data.data.fecha);
-			this.refundForm['controls'].forma.setValue(data.data.forma);
-			if (data.data.agreeWithDeclaration === 'TRUE') {
-				this.refundForm['controls'].agreeWithDeclaration.setValue(true);
-			}
-			this.refundForm['controls'].areDiagnosticDatesValid.setValue(data.data.areDiagnosticDatesValid);
-
-			const sd = {
-				value: data.data.forma
-			};
-
-			if (sd.value != null) {
-				this.changePayment(sd);
-				if (this.refundForm.get('infoTransferencia')) {
-					this.refundForm['controls'].infoTransferencia['controls'].noCuenta.setValue(data.data.infoTransferencia.noCuenta);
-					this.refundForm['controls'].infoTransferencia['controls'].tipoCuenta.setValue(data.data.infoTransferencia.tipoCuenta);
-					this.refundForm['controls'].infoTransferencia['controls'].bancoEmisor.setValue(data.data.infoTransferencia.bancoEmisor);
-				}
-			} else if (sd.value == null) {
-				console.log('No hay que crear el control');
-			}
-
-			this.refundForm['controls'].informacion['controls'].filterType.setValue(data.data.informacion.filterType);
-			this.refundForm['controls'].informacion['controls'].direccion.setValue(data.data.informacion.direccion);
-			this.refundForm['controls'].informacion['controls'].idNumber.setValue(data.data.informacion.idNumber);
-			this.refundForm['controls'].informacion['controls'].noPoliza.setValue(data.data.informacion.noPoliza);
-			this.refundForm['controls'].informacion['controls'].nombre.setValue(data.data.informacion.nombre);
-			this.refundForm['controls'].informacion['controls'].telefono.setValue(data.data.informacion.telefono);
-			this.refundForm['controls'].informacion['controls'].correo.setValue(data.data.informacion.correo);
-
-			const formID1 = this.refundForm as FormGroup;
-			formID1.addControl('id', this.fb.control(data.data.id, Validators.required));
-			// formID1.addControl('infoTransferenciaId', this.fb.control(data.data.infoTransferenciaId, Validators.required));
-			// formID1.addControl('informacionId', this.fb.control(data.data.informacionId, Validators.required));
-
-			if (this.refundForm.get('infoTransferencia')) {
-				const formID2 = this.refundForm.get('infoTransferencia') as FormGroup;
-				formID2.addControl('id', this.fb.control(data.data.infoTransferencia.id, Validators.required));
-			}
-
-
-			const formID3 = this.refundForm.get('informacion') as FormGroup;
-			formID3.addControl('id', this.fb.control(data.data.informacion.id, Validators.required));
-
 			this.refundForm.markAllAsTouched();
 			this.refundForm.updateValueAndValidity();
-			// this.cd.markForCheck();
-			console.log('El json de todo el formulario: ', JSON.stringify(this.refundForm.value));
+			this.cd.markForCheck();
 
 		});
 		this.refund.id = null;
-		console.log('this.refund.id es igual a ' + this.refund.id);
 		this.appComponent.showOverlay = false;
 
 

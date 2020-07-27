@@ -10,6 +10,7 @@ import { FormGroup } from '@angular/forms';
 export class InputComponent implements OnInit, AfterViewChecked {
 	@Input() label: string;
 	@Input() name: string;
+	@Input() value?: string;
 	@Input() type: string;
 	@Input() min: string;
 	@Input() max: string;
@@ -19,9 +20,13 @@ export class InputComponent implements OnInit, AfterViewChecked {
 
 	constructor(private cdr: ChangeDetectorRef) { }
 
-  ngOnInit() { }
-  ngAfterViewChecked() {
+	ngOnInit() {
+		if (this.value) {
+			this.group.get(this.name).setValue(this.value);
+		}
+	}
+	ngAfterViewChecked() {
 
-     this.cdr.detectChanges();
-   }
+		this.cdr.detectChanges();
+	}
 }

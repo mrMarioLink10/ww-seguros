@@ -1,4 +1,4 @@
-<mat-form-field [formGroup]="group" appearance="outline" class="w-full">
+<mat-form-field [formGroup]="group" appearance="outline" class="w-full" style="font-size: small !important;">
   <mat-label>{{label}}</mat-label>
   <textarea [formControlName]="name" matInput #input (input)="input.value=$event.target.value.toUpperCase()"></textarea>
   <mat-error *ngIf="group.get(name).touched && !group.get(name).valid">Este campo es obligatorio.</mat-error>

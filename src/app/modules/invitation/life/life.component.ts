@@ -1407,7 +1407,7 @@ export class LifeComponent implements OnInit, DoCheck {
 
         reader.onload = () => {
           this.newRequest.get('files').get('copyId').get(i.toString()).patchValue({
-            ['idId']: reader.result
+            ['copyId']: reader.result
           });
 
           //this.markForCheck();
@@ -2871,7 +2871,7 @@ export class LifeComponent implements OnInit, DoCheck {
 
       case 'filesCopyId':
         return this.fb.group({
-          idId: ['', Validators.required],
+          copyId: ['', Validators.required],
         });
 
       case 'mercantileRegister':
@@ -2899,8 +2899,8 @@ export class LifeComponent implements OnInit, DoCheck {
     if (this.arrayFilesTitlesCopyId) {
       if (this.newRequest.get('files').get('copyId')) {
         // tslint:disable-next-line: max-line-length
-        if (this.arrayFilesTitlesCopyId[i] && this.newRequest.get('files').get('copyId').get(i.toString()).value.idId !== '') {
-          return this.arrayFilesTitlesCopyId[i].idIdUrl;
+        if (this.arrayFilesTitlesCopyId[i] && this.newRequest.get('files').get('copyId').get(i.toString()).value.copyId !== '') {
+          return this.arrayFilesTitlesCopyId[i].copyIdUrl;
         }
       }
     }
@@ -2910,8 +2910,8 @@ export class LifeComponent implements OnInit, DoCheck {
     if (this.arrayFilesTitlesMercantile) {
       if (this.newRequest.get('files').get('mercantile')) {
         // tslint:disable-next-line: max-line-length
-        if (this.arrayFilesTitlesMercantile[i] && this.newRequest.get('files').get('mercantile').get(i.toString()).value.idId !== '') {
-          return this.arrayFilesTitlesMercantile[i].idIdUrl;
+        if (this.arrayFilesTitlesMercantile[i] && this.newRequest.get('files').get('mercantile').get(i.toString()).value.register !== '') {
+          return this.arrayFilesTitlesMercantile[i].registerUrl;
         }
       }
     }
@@ -3053,12 +3053,17 @@ export class LifeComponent implements OnInit, DoCheck {
         //   this.newRequest.removeControl('contractor');
         // }
 
-        // if (formP.get('sameAsPayer').value === 'SI') {
-        //   formP.removeControl('payerIsLegalEntity');
-        //   formEP.removeControl('isPayerExposed');
-        //   formEP.removeControl('payer');
-        //   this.newRequest.removeControl('payer');
-        // }
+        if (formP.get('sameAsPayer')) {
+          if (formP.get('sameAsPayer').value === 'NO') {
+            //   formP.removeControl('payerIsLegalEntity');
+            //   formEP.removeControl('isPayerExposed');
+            //   formEP.removeControl('payer');
+            //   this.newRequest.removeControl('payer');
+              if (formP.get('payerIsLegalEntity')){
+                formP.removeControl('payerIsLegalEntity');
+              }
+            }
+        }
 
         if (formEP.get('isExposed').value !== 'SI') {
           formEP.removeControl('insured');
@@ -3212,19 +3217,19 @@ export class LifeComponent implements OnInit, DoCheck {
         this.primaryAnotherTitle = data.data.primaryBenefits.personBenefited;
         this.contigentAnotherTitle = data.data.contingentBeneficiary.personBenefited;
 
-        // if (this.newRequest.get('files') && this.newRequest.get('files').get('documentsKnowClient')) {
-        //   this.filesDocumentsKnowClientArray = this.newRequest.get('files').get('documentsKnowClient') as FormArray;
-        // }
-        // if (this.newRequest.get('files') && this.newRequest.get('files').get('copyId')) {
-        //   this.filesCopyIdArray = this.newRequest.get('files').get('copyId') as FormArray;
-        // }
-        // if (this.newRequest.get('files') && this.newRequest.get('files').get('mercantile')) {
-        //   this.mercantileRegisterArray = this.newRequest.get('files').get('mercantile') as FormArray;
-        // }
+        if (this.newRequest.get('files') && this.newRequest.get('files').get('documentsKnowClient')) {
+          this.filesDocumentsKnowClientArray = this.newRequest.get('files').get('documentsKnowClient') as FormArray;
+        }
+        if (this.newRequest.get('files') && this.newRequest.get('files').get('copyId')) {
+          this.filesCopyIdArray = this.newRequest.get('files').get('copyId') as FormArray;
+        }
+        if (this.newRequest.get('files') && this.newRequest.get('files').get('mercantile')) {
+          this.mercantileRegisterArray = this.newRequest.get('files').get('mercantile') as FormArray;
+        }
 
-        // this.arrayFilesTitlesDocumentsKnowClient = data.data.files.documentsKnowClient;
-        // this.arrayFilesTitlesCopyId = data.data.files.copyId;
-        // this.arrayFilesTitlesMercantile = data.data.files.mercantile;
+        this.arrayFilesTitlesDocumentsKnowClient = data.data.files.documentsKnowClient;
+        this.arrayFilesTitlesCopyId = data.data.files.copyId;
+        this.arrayFilesTitlesMercantile = data.data.files.mercantile;
 
         this.newRequest.markAllAsTouched();
         this.newRequest.updateValueAndValidity();

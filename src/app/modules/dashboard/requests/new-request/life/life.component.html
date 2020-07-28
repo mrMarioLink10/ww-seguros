@@ -263,27 +263,27 @@
                       <div *ngFor="let copies of filesCopyIdArray.controls; let i = index">
                         <div class="grid grid-cols-2">
                           <mat-form-field class="mr-3" appearance="outline"
-                            [ngClass]="{'file-input': newRequest.get('files').get('copyId').get(i.toString()).get('idId').value !== ''}">
+                            [ngClass]="{'file-input': newRequest.get('files').get('copyId').get(i.toString()).get('copyId').value !== ''}">
                             <mat-label> Copia de Cédula </mat-label>
                             <ngx-mat-file-input #removableInputcopyId
                               [valuePlaceholder]="arrayCopyIdWatcher(i)"
                               (change)="onStudiesChange2($event, i, 'copyId')">
                             </ngx-mat-file-input>
                             <mat-icon style="color: #e2e2e2;" matSuffix
-                              *ngIf="newRequest.get('files').get('copyId').get(i.toString()).get('idId').value === ''">
+                              *ngIf="newRequest.get('files').get('copyId').get(i.toString()).get('copyId').value === ''">
                               publish</mat-icon>
                             <button mat-icon-button matSuffix
-                              *ngIf="newRequest.get('files').get('copyId').get(i.toString()).get('idId').value !== ''"
-                              (click)="this.requestService.clearArchives(newRequest.get('files').get('copyId').get(i.toString()).get('idId'))"
+                              *ngIf="newRequest.get('files').get('copyId').get(i.toString()).get('copyId').value !== ''"
+                              (click)="this.requestService.clearArchives(newRequest.get('files').get('copyId').get(i.toString()).get('copyId'))"
                               (click)="removableInputcopyId.clear($event)">
                               <mat-icon style="color: #e2e2e2;">clear</mat-icon>
                             </button><button mat-icon-button matSuffix
-                              *ngIf="newRequest.get('files').get('copyId').get(i.toString()).get('idId').value !== ''"
-                              (click)="this.requestService.downloadArchives($event, newRequest.get('files').get('copyId').get(i.toString()).get('idId').value)">
+                              *ngIf="newRequest.get('files').get('copyId').get(i.toString()).get('copyId').value !== ''"
+                              (click)="this.requestService.downloadArchives($event, newRequest.get('files').get('copyId').get(i.toString()).get('copyId').value)">
                               <mat-icon style="color: #e2e2e2;">get_app</mat-icon>
                             </button>
                             <mat-error
-                              *ngIf="newRequest.get('files').get('copyId').get(i.toString()).get('idId').touched && !newRequest.get('files').get('copyId').get(i.toString()).get('idId').valid">
+                              *ngIf="newRequest.get('files').get('copyId').get(i.toString()).get('copyId').touched && !newRequest.get('files').get('copyId').get(i.toString()).get('copyId').valid">
                               Este campo es
                               obligatorio
                             </mat-error>

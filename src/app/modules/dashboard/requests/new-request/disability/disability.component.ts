@@ -1493,7 +1493,6 @@ export class DisabilityComponent implements OnInit, DoCheck {
             formFiles.removeControl('copyId');
           }
           formInsured.addControl('mandatorySubject', this.fb.control('', Validators.required));
-
           break;
 
         case 'hasAnotherCoverage':
@@ -2081,8 +2080,8 @@ export class DisabilityComponent implements OnInit, DoCheck {
     if (this.arrayFilesTitlesMercantile) {
       if (this.disabilityGroup.get('files').get('mercantile')) {
         // tslint:disable-next-line: max-line-length
-        if (this.arrayFilesTitlesMercantile[i] && this.disabilityGroup.get('files').get('mercantile').get(i.toString()).value.idId !== '') {
-          return this.arrayFilesTitlesMercantile[i].idIdUrl;
+        if (this.arrayFilesTitlesMercantile[i] && this.disabilityGroup.get('files').get('mercantile').get(i.toString()).value.register !== '') {
+          return this.arrayFilesTitlesMercantile[i].registerUrl;
         }
       }
     }
@@ -2128,12 +2127,12 @@ export class DisabilityComponent implements OnInit, DoCheck {
         if (this.disabilityGroup.get('files') && this.disabilityGroup.get('files').get('documentsKnowClient')) {
           this.filesDocumentsKnowClientArray = this.disabilityGroup.get('files').get('documentsKnowClient') as FormArray;
         }
-        // if (this.disabilityGroup.get('files') && this.disabilityGroup.get('files').get('copyId')) {
-        //   this.filesCopyIdArray = this.disabilityGroup.get('files').get('copyId') as FormArray;
-        // }
-        // if (this.disabilityGroup.get('files') && this.disabilityGroup.get('files').get('mercantile')) {
-        //   this.mercantileRegisterArray = this.disabilityGroup.get('files').get('mercantile') as FormArray;
-        // }
+        if (this.disabilityGroup.get('files') && this.disabilityGroup.get('files').get('copyId')) {
+          this.filesCopyIdArray = this.disabilityGroup.get('files').get('copyId') as FormArray;
+        }
+        if (this.disabilityGroup.get('files') && this.disabilityGroup.get('files').get('mercantile')) {
+          this.mercantileRegisterArray = this.disabilityGroup.get('files').get('mercantile') as FormArray;
+        }
 
         if (formCB.get('hasAnotherCoverage').value !== 'SI') {
           formCB.removeControl('anotherCoverages');
@@ -2154,8 +2153,8 @@ export class DisabilityComponent implements OnInit, DoCheck {
 
         // this.filesDocumentsKnowClientArray = formF.get('documentsKnowClient') as FormArray;
         this.arrayFilesTitlesDocumentsKnowClient = data.data.files.documentsKnowClient;
-        // this.arrayFilesTitlesCopyId = data.data.files.copyId;
-        // this.arrayFilesTitlesMercantile = data.data.files.mercantile;
+        this.arrayFilesTitlesCopyId = data.data.files.copyId;
+        this.arrayFilesTitlesMercantile = data.data.files.mercantile;
 
         this.disabilityGroup.markAllAsTouched();
         this.disabilityGroup.updateValueAndValidity();

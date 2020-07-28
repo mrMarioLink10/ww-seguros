@@ -1,9 +1,9 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
-import {FormBuilder} from '@angular/forms';
-import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
-import {MomentDateAdapter} from '@angular/material-moment-adapter';
-import {PolicyFilter} from '../../models/policy';
-import {MY_FORMATS} from '../../models/date-format';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { FormBuilder } from '@angular/forms';
+import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
+import { MomentDateAdapter } from '@angular/material-moment-adapter';
+import { PolicyFilter } from '../../models/policy';
+import { MY_FORMATS } from '../../models/date-format';
 import { PolicyFilterService } from './services/policy-filter.service';
 import { startWith, map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
@@ -14,9 +14,9 @@ import { AppComponent } from '../../../../../app.component';
   templateUrl: './policy-filter.component.html',
   styleUrls: ['./policy-filter.component.scss'],
   providers: [
-    {provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE]},
-    {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS}
-    ]
+    { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
+    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS }
+  ]
 })
 export class PolicyFilterComponent implements OnInit {
 
@@ -43,7 +43,7 @@ export class PolicyFilterComponent implements OnInit {
     this.returnConsultNames();
 
     // setTimeout(() => {
-		// 	this.appCompo.showOverlay = true;
+    // 	this.appCompo.showOverlay = true;
     // });
 
     // setTimeout(() => {
@@ -58,21 +58,21 @@ export class PolicyFilterComponent implements OnInit {
     //   // });
 
     //   this.filteredOptions = this.filterForm.get('clientName').valueChanges
-		// 		.pipe(
-		// 			startWith(''),
-		// 			map(value => typeof value === 'string' ? value : value),
-		// 			map(value => value ? this._filter(value) : this.autoCompleteConsultNames.slice())
+    // 		.pipe(
+    // 			startWith(''),
+    // 			map(value => typeof value === 'string' ? value : value),
+    // 			map(value => value ? this._filter(value) : this.autoCompleteConsultNames.slice())
     //     );
 
     //   this.timeAutoComplete = 1;
-		// 	   this.appCompo.showOverlay = false;
+    // 	   this.appCompo.showOverlay = false;
     // }, 15000);
     this.filteredOptions = this.filterForm.get('clientName').valueChanges
-				.pipe(
-					startWith(''),
-					map(value => typeof value === 'string' ? value : value),
-					map(value => value ? this._filter(value) : this.autoCompleteConsultNames.slice())
-        );
+      .pipe(
+        startWith(''),
+        map(value => typeof value === 'string' ? value : value),
+        map(value => value ? this._filter(value) : this.autoCompleteConsultNames.slice())
+      );
   }
 
   sendFormToParent() {
@@ -86,8 +86,8 @@ export class PolicyFilterComponent implements OnInit {
       clientName: formValue.clientName ? formValue.clientName.toString() : '',
       paymentState: formValue.paymentState ? formValue.paymentState.toString() : '',
       insuranceType: formValue.insuranceType ? formValue.insuranceType.toString() : '',
-      initialDate: initialDate ? `${initialDate._i.date}/${initialDate._i.month + 1}/${initialDate._i.year}` : '',
-      endDate: endDate ? `${endDate._i.date}/${endDate._i.month + 1}/${endDate._i.year}` : ''
+      initialDate: initialDate ? `${initialDate._i.year}-${initialDate._i.month + 1}-${initialDate._i.date}` : '',
+      endDate: endDate ? `${endDate._i.year}-${endDate._i.month + 1}-${endDate._i.date}` : ''
     };
 
     this.filters.emit(filter);
@@ -114,13 +114,13 @@ export class PolicyFilterComponent implements OnInit {
   }
 
   displayFn(user: any) {
-		return user ? user : '';
+    return user ? user : '';
   }
 
   private _filter(value: string): any[] {
-		const filterValue = value.toLowerCase();
+    const filterValue = value.toLowerCase();
 
-		return this.autoCompleteConsultNames.filter(option => option.toLowerCase().indexOf(filterValue) === 0);
-	}
+    return this.autoCompleteConsultNames.filter(option => option.toLowerCase().indexOf(filterValue) === 0);
+  }
 
 }

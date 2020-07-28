@@ -10,13 +10,14 @@ import { AppComponent } from 'src/app/app.component';
   templateUrl: './refund-filter.component.html',
   styleUrls: ['./refund-filter.component.scss'],
   providers: [
-    {provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE]},
-    {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS}
+    { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
+    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS }
   ]
 })
 export class RefundFilterComponent implements OnInit {
 
   @Output() filters = new EventEmitter<any>();
+  todayDate = new Date();
 
   filterForm = this.fb.group({
     nroPoliza: [''],
@@ -27,11 +28,11 @@ export class RefundFilterComponent implements OnInit {
   });
 
   statusTypes = [
-		{ value: 0, view: 'Reiniciar estatus' },
-		{ value: 1, view: 'Completo' },
-		{ value: 2, view: 'Enviado' },
-		{ value: 3, view: 'Cancelado' },
-		{ value: 4, view: 'Adjuntar Expediente' },
+    { value: 0, view: 'Reiniciar estatus' },
+    { value: 1, view: 'Completo' },
+    { value: 2, view: 'Enviado' },
+    { value: 3, view: 'Cancelado' },
+    { value: 4, view: 'Adjuntar Expediente' },
   ];
 
   constructor(private fb: FormBuilder, private appComponent: AppComponent) { }
@@ -49,8 +50,8 @@ export class RefundFilterComponent implements OnInit {
       nroPoliza: formValue.nroPoliza ? formValue.nroPoliza : '',
       status: formValue.status ? formValue.status : '',
       name: formValue.name ? formValue.name : '',
-      from: from ? `${from._i.date}/${from._i.month + 1}/${from._i.year}` : '',
-      to: to ? `${to._i.date}/${to._i.month + 1}/${to._i.year}` : ''
+      from: from ? `${from._i.year}-${from._i.month + 1}-${from._i.date}` : '',
+      to: to ? `${to._i.year}-${to._i.month + 1}-${to._i.date}` : ''
     };
 
     this.filters.emit(filter);

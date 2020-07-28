@@ -1382,6 +1382,16 @@
                     <app-radio-button class="mt-4" [group]="newRequest.get('generalInformation')"
                       [name]="question.group" [options]="smokingTypes">
                     </app-radio-button>
+                    <app-radio-button class="mt-2" [group]="newRequest.get('generalInformation')"
+                      [name]="question.group" [options]="isActualSmoker" (selected)="selectChange($event)">
+                    </app-radio-button>
+                    <div class="grid grid-cols-4">
+                      <app-date-picker class="mr-3" [max]="todayDate"
+                        *ngIf="newRequest.get('generalInformation').get('lastTimeSmoked')"
+                        [group]="newRequest.get('generalInformation')" name="lastTimeSmoked"
+                        label="Indique última vez que fumó">
+                      </app-date-picker>
+                    </div>
                   </div>
                   <div *ngIf="question.name === 'consumeAlcohol'">
                     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-4 mb-3">
@@ -1566,8 +1576,8 @@
                       [group]="newRequest.get('medicalHistory').get('informations').get('weightChanges')" name="detail"
                       label="Texto"></app-text-area>
                   </div>
-                  <div
-                    *ngIf="question.name !== 'haveHadWeightChanges' && question.name !== 'isWomen' && question.name !== 'listDoctors'">
+                  <div *ngIf="question.name !== 'haveHadWeightChanges' && question.name !== 'isWomen' && question.name !== 'listDoctors' && question.name !== 'haveNotCarriedOut' 
+                    && question.name !== 'haveHadSpecializedTests'">
                     <div *ngFor="let medic of this[question.array].controls; let i = index"
                       class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4 lg:mb-8">
                       <app-input class="mr-3"
@@ -1616,6 +1626,43 @@
                       </button>
                     </div>
                   </div>
+                  <div *ngIf="question.name === 'haveHadSpecializedTests'">
+                    <div *ngFor="let medic of this[question.array].controls; let i = index"
+                      class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
+                      <app-date-picker class="mr-3"
+                        [group]="newRequest.get('medicalHistory').get('informations').get(question.group).get(i.toString())"
+                        name="date" label="¿En qué fecha?">
+                      </app-date-picker>
+                      <app-select class="mr-3" [options]="whichStudyArray"
+                        [group]="newRequest.get('medicalHistory').get('informations').get(question.group).get(i.toString())"
+                        (selected)="whichStudyWatcher(newRequest.get('medicalHistory').get('informations').get(question.group).get(i.toString()), $event)">
+                      </app-select>
+                      <app-input class="mr-3"
+                        *ngIf="newRequest.get('medicalHistory').get('informations').get(question.group).get(i.toString()).get('specifyStudy')"
+                        [group]="newRequest.get('medicalHistory').get('informations').get(question.group).get(i.toString())"
+                        name="specifyStudy" label="Especificar estudio">
+                      </app-input>
+                      <app-input class="mr-3"
+                        [group]="newRequest.get('medicalHistory').get('informations').get(question.group).get(i.toString())"
+                        name="results" label="Resultados">
+                      </app-input>
+                      <div *ngIf="this[question.array].length > 1"
+                        [ngClass]="{'': this[question.array].length === 1, 'col-span-1': this[question.array].length > 1} ">
+                        <button mat-mini-fab aria-label=" Eliminar estudio"
+                          (click)="diseaseService.removeToList(i, this[question.array])" type="button"
+                          class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
+                          <mat-icon style="color: #18446B">remove</mat-icon>
+                        </button>
+                      </div>
+                    </div>
+                    <div class="mb-8">
+                      <button mat-mini-fab aria-label="Agregar estudio"
+                        (click)="addToList(this[question.array], 'specializedTests')" type="button"
+                        class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
+                        <mat-icon style="color: #18446B">add</mat-icon>
+                      </button>
+                    </div>
+                  </div>
                   <div *ngIf="question.name === 'listDoctors'">
                     <div *ngFor="let studies of doctorList.controls; let i = index"
                       class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
@@ -1626,6 +1673,14 @@
                       <app-input class="mr-3"
                         [group]="newRequest.get('medicalHistory').get('informations').get('doctors').get(i.toString())"
                         name="address" label="Dirección">
+                      </app-input>
+                      <app-input class="mr-3"
+                        [group]="newRequest.get('medicalHistory').get('informations').get('doctors').get(i.toString())"
+                        name="ailment" label="Afección">
+                      </app-input>
+                      <app-input class="mr-3"
+                        [group]="newRequest.get('medicalHistory').get('informations').get('doctors').get(i.toString())"
+                        name="differentMedic" label="Médico de cabecera si es diferente">
                       </app-input>
                       <div *ngIf="doctorList.length > 1"
                         [ngClass]="{'': doctorList.length === 1, 'col-span-1': doctorList.length > 1} ">
@@ -1733,7 +1788,11 @@
                       </div>
                     </div>
                   </div>
-
+                  <div *ngIf="question.name === 'haveNotCarriedOut'">
+                    <app-text-area [group]="newRequest.get('medicalHistory').get('informations')"
+                      [name]="question.group" label="Comentario">
+                    </app-text-area>
+                  </div>
                 </div>
                 <hr class=" w-full mb-6 ww-divider">
               </div>
@@ -1750,6 +1809,8 @@
             </mat-expansion-panel-header>
             <div>
               <div class="px-6">
+                <app-text-area label='Descripcion' style='height: 142px!important;' [group]="newRequest"
+                  label="Cometarios adicionales" name='comentary'></app-text-area>
                 <div *ngIf="role !== 'WWS'" class="declaraciones px-4 sm:px-4 md:px-14 lg:px-12 xl:px-12">
                   En la medida de mis conocimientos, las declaraciones y respuestas suministradas en esta declaración
                   son

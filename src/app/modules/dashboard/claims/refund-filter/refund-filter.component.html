@@ -1,61 +1,63 @@
 <form [formGroup]="filterForm" (ngSubmit)="sendFormToParent()" class="p-3 pb-2 mt-5" style="background-color: #F2F2F2">
-    <div class="filter-title">Filtro Rápido</div>
-    <div class="mt-3 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 xl:grid-cols-26">
-      <div class="mr-3 xl:col-span-4 ">
-        <mat-form-field color="accent" appearance="outline" class="w-full bg-transparente"
-          style="font-size: small !important;">
-          <mat-label>No. Póliza</mat-label>
-          <input formControlName="nroPoliza" matInput>
-        </mat-form-field>
-      </div>
-      <div class="mr-3 xl:col-span-4 ">
-        <mat-form-field color="accent" appearance="outline" class="w-full bg-transparente"
-          style="font-size: small !important;">
-          <mat-label>Estatus</mat-label>      
-          <mat-select formControlName="status">
-            <mat-option *ngFor="let stat of statusTypes" [value]="stat.value">{{stat.view | titlecase}}</mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>
+  <div class="filter-title">Filtro Rápido</div>
+  <div class="mt-3 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 xl:grid-cols-26">
+    <div class="mr-3 xl:col-span-4 ">
+      <mat-form-field color="accent" appearance="outline" class="w-full bg-transparente"
+        style="font-size: small !important;">
+        <mat-label>No. Póliza</mat-label>
+        <input formControlName="nroPoliza" matInput>
+      </mat-form-field>
+    </div>
+    <div class="mr-3 xl:col-span-4 ">
+      <mat-form-field color="accent" appearance="outline" class="w-full bg-transparente"
+        style="font-size: small !important;">
+        <mat-label>Estatus</mat-label>
+        <mat-select formControlName="status">
+          <mat-option *ngFor="let stat of statusTypes" [value]="stat.value">{{stat.view | titlecase}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
 
-      <div class="mr-3 xl:col-span-4 -mt-4">
-        <p class="text-xs">Fecha</p>
-        <mat-form-field color="accent" appearance="outline" class="w-full" style="font-size: small !important;">
-          <mat-label>Desde</mat-label>
-          <input formControlName="from" matInput [matDatepicker]="from" placeholder="25/12/2019">
-          <mat-datepicker-toggle matSuffix [for]="from"></mat-datepicker-toggle>
-          <mat-datepicker #from></mat-datepicker>
-        </mat-form-field>
-      </div>
-  
-      <div class="mr-3 xl:col-span-4">
-        <mat-form-field color="accent" appearance="outline" class="w-full" style="font-size: small !important;">
-          <mat-label>Hasta</mat-label>
-          <input formControlName="to" matInput [matDatepicker]="to" placeholder="04/03/2020">
-          <mat-datepicker-toggle matSuffix [for]="to"></mat-datepicker-toggle>
-          <mat-datepicker #to></mat-datepicker>
-        </mat-form-field>
-      </div>
+    <div class="mr-3 xl:col-span-4 -mt-4">
+      <p class="text-xs">Fecha</p>
+      <mat-form-field color="accent" appearance="outline" class="w-full" style="font-size: small !important;">
+        <mat-label>Desde</mat-label>
+        <input formControlName="from" matInput [matDatepicker]="from" [min]="hastaDate.value" placeholder="25/12/2019">
+        <mat-datepicker-toggle matSuffix [for]="from"></mat-datepicker-toggle>
+        <mat-datepicker #from></mat-datepicker>
+      </mat-form-field>
+    </div>
 
-      <div class="mr-3 xl:col-span-4 ">
-        <mat-form-field color="accent" appearance="outline" class="w-full bg-transparente"
-          style="font-size: small !important;">
-          <mat-label>Nombre</mat-label>
-          <input formControlName="name" matInput>
-        </mat-form-field>
-      </div>
-  
-      <div class=""><!-- grid grid-cols-2 xl:col-span-2  -->
-        <!-- <button (click)="resetForm()" class="flex justify-center content-center nofocus small-search-button"
+    <div class="mr-3 xl:col-span-4">
+      <mat-form-field color="accent" appearance="outline" class="w-full" style="font-size: small !important;">
+        <mat-label>Hasta</mat-label>
+        <input formControlName="to" matInput [matDatepicker]="to" #hastaDate [max]="todayDate" placeholder="04/03/2020">
+        <mat-datepicker-toggle matSuffix [for]="to"></mat-datepicker-toggle>
+        <mat-datepicker #to></mat-datepicker>
+      </mat-form-field>
+    </div>
+
+    <div class="mr-3 xl:col-span-4 ">
+      <mat-form-field color="accent" appearance="outline" class="w-full bg-transparente"
+        style="font-size: small !important;">
+        <mat-label>Nombre</mat-label>
+        <input formControlName="name" matInput>
+      </mat-form-field>
+    </div>
+
+    <div class="">
+      <!-- grid grid-cols-2 xl:col-span-2  -->
+      <!-- <button (click)="resetForm()" class="flex justify-center content-center nofocus small-search-button"
           style="color: white;">
           <mat-icon style="padding-top: 7px;">delete</mat-icon>
         </button> -->
-        <button type="submit" class="flex justify-center content-center nofocus small-search-button"> <!-- (click)="loader()" -->
-          <img src="/assets/iconos/search-icon.svg">
-        </button>
-      </div>
+      <button type="submit" class="flex justify-center content-center nofocus small-search-button">
+        <!-- (click)="loader()" -->
+        <img src="/assets/iconos/search-icon.svg">
+      </button>
     </div>
-    <!-- <div class="flex flex-row-reverse -mt-3">
+  </div>
+  <!-- <div class="flex flex-row-reverse -mt-3">
       <button mat-mini-fab color="accent" aria-label="Buscar" (click)="resetForm()" >
         <mat-icon>delete</mat-icon>
       </button>
@@ -64,5 +66,4 @@
         <mat-icon>search</mat-icon>
       </button>
     </div> -->
-  </form>
-  
+</form>

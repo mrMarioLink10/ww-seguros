@@ -7,7 +7,7 @@ import { FormGroup, FormBuilder, Validators, FormArray, FormControl } from '@ang
 export class FormDataFillingService {
 
   excludedKeys = [
-    'id2Attached', 'id2AttachedUrl', 'specifyRelationship'
+    'id2Attached', 'id2AttachedUrl', 'specifyRelationship', 'differentMedic'
   ];
 
   constructor(

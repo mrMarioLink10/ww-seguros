@@ -60,8 +60,6 @@
     <!-- SEGMENTO DE ESPALDA-->
     <div class="body-13 mb-8" style="color: black !important;"> ¿Cuál segmento de su espalda está afectado?
     </div>
-
-
     <div *ngFor="let appliedStudies of affectedSegmentList.controls; let i=index">
       <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5">
         <app-select class="mr-3" [group]="form.get('affectedSegment').get(i.toString())" [options]="segments">
@@ -71,12 +69,10 @@
       <div
         *ngFor="let appliedStudies of form.get('affectedSegment').get(i.toString()).get('affectedVertebra')['controls']; let ix = index"
         class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5">
-
         <app-input class="mr-3"
           [group]="form.get('affectedSegment').get(i.toString()).get('affectedVertebra').get(ix.toString())"
           name="vertebra" label="Vértebra afectada">
         </app-input>
-
         <div class="grid grid-cols-2">
           <button mat-mini-fab aria-label=" Eliminar estudio"
             *ngIf="form.get('affectedSegment').get(i.toString()).get('affectedVertebra')['controls'].length > 1"
@@ -86,17 +82,11 @@
           </button>
         </div>
       </div>
-      <!-- <button mat-mini-fab aria-label="Agregar estudio"
-          (click)="addToList(returnAsFormArray(form.get('affectedSegment').get(i.toString()).get('affectedVertebra')), 'affectedVertebra')"
-          type="button" class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
-          <mat-icon style="color: #18446B">add</mat-icon>
-        </button> -->
       <div
         (click)="addToList(returnAsFormArray(form.get('affectedSegment').get(i.toString()).get('affectedVertebra')), 'affectedVertebra')"
         class="mb-2" style="color: #18446B; font-weight: bold;
           margin-left: 10px; cursor: context-menu;"> Agregar vértebra </div>
       <!-- AQUI ES EL CAMPO DE VERTEBRA -->
-
       <div *ngIf="affectedSegmentList.length > 1"
         [ngClass]="{'': affectedSegmentList.length === 1, 'col-span-1': affectedSegmentList.length > 1} ">
         <button mat-mini-fab aria-label=" Eliminar estudio" (click)="removeToList(i, affectedSegmentList)" type="button"
@@ -112,7 +102,6 @@
         <mat-icon style="color: #18446B">add</mat-icon>
       </button>
     </div>
-
   </div>
 
 

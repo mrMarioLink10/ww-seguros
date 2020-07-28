@@ -303,22 +303,27 @@ export class RefundComponent implements OnInit {
 
 		this.diagnosticList = this.refundForm.get('diagnosticos') as FormArray;
 
+		console.log('diagnosticos', this.refundForm.get('diagnosticos').value);
 		this.refundForm.get('diagnosticos').valueChanges.subscribe(value => {
 			this.validDatesCounter = 0;
 			let total = 0;
 			let totalPesos = 0;
 
+			console.log(value);
+
 			for (const element in value) {
 				if (value.hasOwnProperty(element)) {
+					console.log(this.refundForm.get('diagnosticos').get(element.toString()));
 					if (this.refundForm.get('diagnosticos').get(element.toString()).get('tipoReclamoMoneda')) {
 						if (this.refundForm.get('diagnosticos').get(element.toString()).get(
 							'tipoReclamoMoneda').value != null) {
 							if (this.refundForm.get('diagnosticos').get(element.toString()).get(
-								'tipoReclamoMoneda').value == 'DOLARES') {
+								'tipoReclamoMoneda').value === 'DOLARES') {
+								console.log('total', this.refundForm.get('diagnosticos').get(element.toString()).value.monto);
 								total += this.refundForm.get('diagnosticos').get(element.toString()).value.monto;
 							}
 							if (this.refundForm.get('diagnosticos').get(element.toString()).get(
-								'tipoReclamoMoneda').value == 'PESOS') {
+								'tipoReclamoMoneda').value === 'PESOS') {
 								totalPesos += this.refundForm.get('diagnosticos').get(element.toString()).value.monto;
 							}
 						}
@@ -506,12 +511,12 @@ export class RefundComponent implements OnInit {
 				// 	+ data.data[x].asegurado.id_asegurado);
 
 				this.dataAutoCompleteIdNumberObject.push({
-					name: data.data[x].asegurado.nombres_asegurado + " " + data.data[x].asegurado.apellidos_asegurado,
+					name: data.data[x].asegurado.nombres_asegurado + ' ' + data.data[x].asegurado.apellidos_asegurado,
 					// id: data.data[x].asegurado.id_asegurado,
 					policy: data.data[x].asegurado.no_poliza,
 					value: data.data[x].asegurado.id_asegurado
 				});
-				this.dataAutoCompleteName.push(data.data[x].asegurado.nombres_asegurado + " " + data.data[x].asegurado.apellidos_asegurado);
+				this.dataAutoCompleteName.push(data.data[x].asegurado.nombres_asegurado + ' ' + data.data[x].asegurado.apellidos_asegurado);
 
 				this.dataAutoCompleteIdNumber.push(data.data[x].asegurado.id_asegurado);
 
@@ -622,8 +627,8 @@ export class RefundComponent implements OnInit {
 	}
 
 	addDiagnostic() {
+		console.log('diagnosticos: ', this.refundForm.get('diagnosticos').value);
 		this.diagnosticList.push(this.createDiagnostic());
-		console.log('El json de todo el formulario: ', JSON.stringify(this.refundForm.value));
 
 	}
 
@@ -759,6 +764,7 @@ export class RefundComponent implements OnInit {
 
 			this.dataMappingFromApi.iterateThroughtAllObject(data.data, this.refundForm);
 
+			this.diagnosticList = this.refundForm.get('diagnosticos') as FormArray;
 			this.filesInformation = data.data.diagnosticos;
 
 			if (data.data.agreeWithDeclaration === 'TRUE') {

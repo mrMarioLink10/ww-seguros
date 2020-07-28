@@ -3,7 +3,7 @@ import { DateAdapter, MAT_DATE_LOCALE, MAT_DATE_FORMATS } from '@angular/materia
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { MY_FORMATS } from 'src/app/shared/components/form-components/date-picker/date-picker-onlymonth.component';
 // import {MY_FORMATS} from '../../models/date-format';
-import {FormBuilder} from '@angular/forms';
+import { FormBuilder } from '@angular/forms';
 import { AppComponent } from '../../../../../app.component';
 
 @Component({
@@ -11,8 +11,8 @@ import { AppComponent } from '../../../../../app.component';
   templateUrl: './receipt-filter.component.html',
   styleUrls: ['./receipt-filter.component.scss'],
   providers: [
-    {provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE]},
-    {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS}
+    { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
+    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS }
   ]
 })
 export class ReceiptFilterComponent implements OnInit {
@@ -41,8 +41,8 @@ export class ReceiptFilterComponent implements OnInit {
     const filter = {
       numeroFactura: formValue.numeroFactura ? formValue.numeroFactura : '',
       nombre: formValue.nombre ? formValue.nombre : '',
-      from: from ? `${from._i.date}/${from._i.month + 1}/${from._i.year}` : '',
-      to: to ? `${to._i.date}/${to._i.month + 1}/${to._i.year}` : ''
+      from: from ? `${from._i.year}-${from._i.month + 1}-${from._i.date}` : '',
+      to: to ? `${to._i.year}-${to._i.month + 1}-${to._i.date}` : ''
     };
 
     this.filters.emit(filter);

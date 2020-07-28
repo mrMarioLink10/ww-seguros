@@ -174,7 +174,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
           viewValue: 'No',
         }
       ],
-      name: 'idType',
+      // name: 'idType',
     };
   isContractorData: FieldConfig =
     {
@@ -189,7 +189,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
           viewValue: 'No',
         }
       ],
-      name: 'idType',
+      // name: 'idType',
     };
   idType: FieldConfig =
     {
@@ -554,7 +554,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
       plans: [{ value: '', disabled: false }, Validators.required],
       requestType: ['', Validators.required],
       person: this.fb.group({
-        conozcaSuClientePersona: this.fb.group({}),
+        // conozcaSuClientePersona: this.fb.group({}),
         firstName: ['', Validators.required],
         secondName: [''],
         lastName: ['', Validators.required],
@@ -562,6 +562,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
         heightUnit: ['', Validators.required],
         date: [{ value: '', disabled: false }, Validators.required],
         sex: [{ value: '', disabled: false }, Validators.required],
+        // pep_radio_insured: ['', Validators.required],
         isContractor: ['', Validators.required],
         // isJuridica: ['', Validators.required],
         nationality: ['', Validators.required],
@@ -591,8 +592,8 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
         })
       }),
       contractor: this.fb.group({
-        conozcaSuClientePersonaJuridica: this.fb.group({}),
-        conozcaSuClientePersona: this.fb.group({}),
+        // conozcaSuClientePersonaJuridica: this.fb.group({}),
+        // conozcaSuClientePersona: this.fb.group({}),
         firstName: ['', Validators.required],
         secondName: [''],
         lastName: ['', Validators.required],
@@ -1298,6 +1299,8 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
   }
 
   selectChange(event) {
+    const formGeneral = this.newRequest as FormGroup;
+    const formContractor = this.newRequest.get('contractor') as FormGroup;
     const questionsForm = this.newRequest.get('questionsA') as FormGroup;
     const questionsBForm = this.newRequest.get('questionsB') as FormGroup;
     const mhiForm = this.newRequest.get('questionsB').get('medicalHealthInsurance') as FormGroup;
@@ -1312,19 +1315,35 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
         case 'isContractor':
           formP.removeControl('isJuridica');
           formEP.removeControl('contractor');
+
+          if (formContractor.get('conozcaSuClientePersona')) {
+            formContractor.removeControl('conozcaSuClientePersona');
+          }
+          if (formGeneral.get('contractor')) {
+            formGeneral.removeControl('contractor');
+          }
+          if (formContractor.get('conozcaSuClientePersonaJuridica')) {
+            formContractor.removeControl('conozcaSuClientePersonaJuridica');
+          }
+
           break;
 
         case 'isJuridica':
+
+          formContractor.addControl('conozcaSuClientePersonaJuridica', this.fb.group({}));
+
           console.log('entro');
           this.isJuridica = true;
           this.titles = FormValidationsConstant.titlesForMajorExpenses;
           break;
+
         case 'contractor':
           exposedPersonForm.addControl('contractorExposedInfo', this.fb.group({
             lastPosition: ['', Validators.required],
             time: ['', Validators.required],
             timeNumber: ['', [Validators.required, Validators.min(1)]]
           }));
+          formContractor.addControl('conozcaSuClientePersona', this.fb.group({}));
           break;
 
         case 'headLine':
@@ -1333,6 +1352,8 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
             time: ['', Validators.required],
             timeNumber: ['', [Validators.required, Validators.min(1)]]
           }));
+
+          formP.addControl('conozcaSuClientePersona', this.fb.group({}));
           break;
 
         case 'hasDeclinedInsuranceCompany':
@@ -1362,6 +1383,22 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
           questionsBForm.addControl('familyWithDiseases', this.fb.array([this.createFormArray('haveDisease')]));
           this.familyWithDiseasesList = questionsBForm.get('familyWithDiseases') as FormArray;
           break;
+
+        case 'pep_radio_insured':
+
+          // if (!(this.disabilityGroup.get('files').get('documentsKnowClient'))){
+          //   formFiles.addControl('documentsKnowClient', this.fb.array([this.createFormArray('filesDocumentsKnowClient')]));
+          //   this.filesDocumentsKnowClientArray = this.disabilityGroup.get('files').get('documentsKnowClient') as FormArray;
+          // }
+          // else if (this.disabilityGroup.get('files').get('documentsKnowClient')) {
+
+          //   formFiles.removeControl('documentsKnowClient');
+          //   formFiles.addControl('documentsKnowClient', this.fb.array([this.createFormArray('filesDocumentsKnowClient')]));
+          //   this.filesDocumentsKnowClientArray = this.disabilityGroup.get('files').get('documentsKnowClient') as FormArray;
+          // }
+
+          break;
+
         default:
           break;
       }
@@ -1370,8 +1407,66 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
         case 'isContractor':
           formP.addControl('isJuridica', this.fb.control('', Validators.required));
           formEP.addControl('contractor', this.fb.control('', Validators.required));
+
+          if (!formGeneral.get('contractor')) {
+            formGeneral.addControl('contractor', this.fb.group({
+              // conozcaSuClientePersonaJuridica: this.fb.group({}),
+              // conozcaSuClientePersona: this.fb.group({}),
+              firstName: ['', Validators.required],
+              secondName: [''],
+              lastName: ['', Validators.required],
+              date: ['', Validators.required],
+              sex: ['', Validators.required],
+              nationality: ['', Validators.required],
+              idType: ['', Validators.required],
+              id2: ['', Validators.required],
+              age: [{ value: '', disabled: false }, Validators.required],
+              weight: ['', Validators.required],
+              height: ['', Validators.required],
+              weightUnit: ['', Validators.required],
+              heightUnit: ['', Validators.required],
+              bmi: [{ value: '', disabled: true }, Validators.required],
+              status: ['', Validators.required],
+              country: ['', Validators.required],
+              city: ['', Validators.required],
+              direction: ['', Validators.required],
+              tel: [''],
+              cel: ['', Validators.required],
+              officeTel: [''],
+              fax: [''],
+              email: ['', [Validators.required, Validators.email]],
+              office: this.fb.group({
+                company: [''],
+                position: [''],
+                direction: [''],
+                economicActivity: [''],
+                sector: [''],
+                city: [''],
+                country: [''],
+              })
+              /*societyName: ['', Validators.required],
+              commercialName: [''],
+              taxpayerNumber: ['', Validators.required],
+              socialHome: [''],
+              tel: ['', Validators.required],
+              email: ['', Validators.required],
+              commercialActivity: ['', Validators.required],
+              // requestType: ['', Validators.required],
+              legalRepresentation: this.fb.group({
+                name: ['', Validators.required],
+                position: ['', Validators.required],
+                nationality: ['', Validators.required],
+                idType: ['', Validators.required],
+                id2: ['', Validators.required],
+                policy: [''],
+                email: ['', Validators.required]
+              })*/
+            }));
+          }
           break;
         case 'isJuridica':
+
+          formContractor.removeControl('conozcaSuClientePersonaJuridica');
           this.titles = FormValidationsConstant.titlesForMajorExpensesComplete;
 
           break;
@@ -1389,10 +1484,12 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
 
         case 'contractor':
           exposedPersonForm.removeControl('contractorExposedInfo');
+          formContractor.removeControl('conozcaSuClientePersona');
           break;
 
         case 'headLine':
           exposedPersonForm.removeControl('headLineExposedInfo');
+          formP.removeControl('conozcaSuClientePersona');
           break;
 
         case 'hasDeclinedInsuranceCompany':
@@ -1500,6 +1597,19 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
           questionsBForm.removeControl('familyWithDiseases');
           this.familyWithDiseasesList = undefined;
           break;
+
+        case 'pep_radio_insured':
+          // if (!(this.disabilityGroup.get('files').get('documentsKnowClient'))) {
+          //   formFiles.addControl('documentsKnowClient', this.fb.array([this.createFormArray('filesDocumentsKnowClient')]));
+          //   this.filesDocumentsKnowClientArray = this.disabilityGroup.get('files').get('documentsKnowClient') as FormArray;
+          // }
+          // else if (this.disabilityGroup.get('files').get('documentsKnowClient')) {
+          //   formFiles.removeControl('documentsKnowClient');
+          //   formFiles.addControl('documentsKnowClient', this.fb.array([this.createFormArray('filesDocumentsKnowClient')]));
+          //   this.filesDocumentsKnowClientArray = this.disabilityGroup.get('files').get('documentsKnowClient') as FormArray;
+          // }
+          break;
+         
         default:
           break;
       }
@@ -1967,6 +2077,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
 
         const formP = this.newRequest.get('person') as FormGroup;
         const formEP = this.newRequest.get('exposedPerson') as FormGroup;
+        const formGeneral = this.newRequest as FormGroup;
 
         if (this.newRequest.get('questionsB').get('familyWithDiseases') !== undefined && this.newRequest.get('questionsB').get('familyWithDiseases') !== null) {
           this.familyWithDiseasesList = this.newRequest.get('questionsB').get('familyWithDiseases') as FormArray;
@@ -1977,6 +2088,9 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
 
         if (formP.get('isContractor').value === 'SI') {
           formP.removeControl('isJuridica');
+          if (formGeneral.get('contractor')) {
+            formGeneral.removeControl('contractor');
+          }
         }
 
         if (formP.get('isContractor').value !== 'NO') {

@@ -272,8 +272,8 @@
               </button>
             </mat-action-row>
           </mat-expansion-panel>
-
-          <mat-expansion-panel *ngIf="isContractor && !isJuridica" class="ww-mat-expansion" [expanded]="step === 2"
+          <!--*ngIf="isContractor && !isJuridica"  -->
+          <mat-expansion-panel *ngIf="this.newRequest.get('contractor')" class="ww-mat-expansion" [expanded]="step === 2"
             (opened)="setStep(2)">
             <mat-expansion-panel-header class="body-13 icon-blue">
               <mat-panel-title>
@@ -1520,23 +1520,69 @@
             ></app-mountaineering>
         </mat-accordion>
       </mat-tab>
+      <!-- *ngIf="isContractorPep" -->
       <mat-tab
-        *ngIf="isJuridica || (this.newRequest.get('person').get('isJuridica') && this.newRequest.get('person').get('isJuridica').value == 'SI') || isSolicitantePep || isContractorPep"
-        label="Conozca a su cliente">
+        *ngIf="(this.newRequest.get('person').get('isJuridica') && 
+        this.newRequest.get('person').get('isJuridica').value == 'SI')"
+        label="Conozca a su cliente (Persona Jurídica) - Contratante">
         <mat-accordion #matAccordion="matAccordion" name="matAccordion" class="ww-mat-accordion example-headers-align"
           [togglePosition]="'before'">
           <app-know-your-client
+            [showWarningDot]="showWarningDot(newRequest.get('contractor').get('conozcaSuClientePersonaJuridica'))"
+            *ngIf="this.newRequest.get('contractor').get('conozcaSuClientePersonaJuridica')" [form]="newRequest.get('contractor').get('conozcaSuClientePersonaJuridica')">
+          </app-know-your-client>
+          <!--*ngIf="isJuridica" -->
+          <!-- <app-know-your-customer
+            [showWarningDot]="showWarningDot(newRequest.get('person').get('conozcaSuClientePersona'))"
+            *ngIf="isSolicitantePep" [form]="newRequest.get('person').get('conozcaSuClientePersona')">
+          </app-know-your-customer>
+          <app-know-your-customer
+            [showWarningDot]="showWarningDot(newRequest.get('contractor').get('conozcaSuClientePersona'))"
+            *ngIf="this.newRequest.get('contractor').get('conozcaSuClientePersona')" [form]="newRequest.get('contractor').get('conozcaSuClientePersona')">
+          </app-know-your-customer> -->
+          <!-- *ngIf="isContractorPep" -->
+        </mat-accordion>
+      </mat-tab>
+      <!--*ngIf="isSolicitantePep " -->
+      <mat-tab
+        *ngIf="this.newRequest.get('exposedPerson').get('headLine').value == 'SI' "
+        label="Conozca a su cliente (Persona Física) - Asegurado">
+        <mat-accordion #matAccordion="matAccordion" name="matAccordion" class="ww-mat-accordion example-headers-align"
+          [togglePosition]="'before'">
+          <!-- <app-know-your-client
+            [showWarningDot]="showWarningDot(newRequest.get('contractor').get('conozcaSuClientePersonaJuridica'))"
+            *ngIf="isJuridica" [form]="newRequest.get('contractor').get('conozcaSuClientePersonaJuridica')">
+          </app-know-your-client> -->
+          <app-know-your-customer
+            [showWarningDot]="showWarningDot(newRequest.get('person').get('conozcaSuClientePersona'))"
+            *ngIf="this.newRequest.get('person').get('conozcaSuClientePersona')" [form]="newRequest.get('person').get('conozcaSuClientePersona')">
+          </app-know-your-customer>
+          <!-- <app-know-your-customer
+            [showWarningDot]="showWarningDot(newRequest.get('contractor').get('conozcaSuClientePersona'))"
+            *ngIf="this.newRequest.get('contractor').get('conozcaSuClientePersona')" [form]="newRequest.get('contractor').get('conozcaSuClientePersona')">
+          </app-know-your-customer> -->
+          <!-- *ngIf="isContractorPep" -->
+        </mat-accordion>
+      </mat-tab>
+      <mat-tab
+        *ngIf="(this.newRequest.get('exposedPerson').get('contractor') 
+        && this.newRequest.get('exposedPerson').get('contractor').value == 'SI')"
+        label="Conozca a su cliente (Persona Física) - Contratante">
+        <mat-accordion #matAccordion="matAccordion" name="matAccordion" class="ww-mat-accordion example-headers-align"
+          [togglePosition]="'before'">
+          <!-- <app-know-your-client
             [showWarningDot]="showWarningDot(newRequest.get('contractor').get('conozcaSuClientePersonaJuridica'))"
             *ngIf="isJuridica" [form]="newRequest.get('contractor').get('conozcaSuClientePersonaJuridica')">
           </app-know-your-client>
           <app-know-your-customer
             [showWarningDot]="showWarningDot(newRequest.get('person').get('conozcaSuClientePersona'))"
             *ngIf="isSolicitantePep" [form]="newRequest.get('person').get('conozcaSuClientePersona')">
-          </app-know-your-customer>
+          </app-know-your-customer> -->
           <app-know-your-customer
             [showWarningDot]="showWarningDot(newRequest.get('contractor').get('conozcaSuClientePersona'))"
-            *ngIf="isContractorPep" [form]="newRequest.get('contractor').get('conozcaSuClientePersona')">
+            *ngIf="this.newRequest.get('contractor').get('conozcaSuClientePersona')" [form]="newRequest.get('contractor').get('conozcaSuClientePersona')">
           </app-know-your-customer>
+          <!-- *ngIf="isContractorPep" -->
         </mat-accordion>
       </mat-tab>
       <mat-tab *ngFor=" let element of dependentsFormArray.controls; let i = index"

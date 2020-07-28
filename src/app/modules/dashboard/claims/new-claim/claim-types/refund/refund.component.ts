@@ -304,45 +304,47 @@ export class RefundComponent implements OnInit {
 		this.diagnosticList = this.refundForm.get('diagnosticos') as FormArray;
 
 		console.log('diagnosticos', this.refundForm.get('diagnosticos').value);
-		this.refundForm.get('diagnosticos').valueChanges.subscribe(value => {
-			this.validDatesCounter = 0;
-			let total = 0;
-			let totalPesos = 0;
 
-			console.log(value);
+		if (!this.ID) {
+			this.refundForm.get('diagnosticos').valueChanges.subscribe((value) => {
+				this.validDatesCounter = 0;
+				let total = 0;
+				let totalPesos = 0;
 
-			for (const element in value) {
-				if (value.hasOwnProperty(element)) {
-					console.log(this.refundForm.get('diagnosticos').get(element.toString()));
-					if (this.refundForm.get('diagnosticos').get(element.toString()).get('tipoReclamoMoneda')) {
-						if (this.refundForm.get('diagnosticos').get(element.toString()).get(
-							'tipoReclamoMoneda').value != null) {
+
+				for (const element in value) {
+					if (value.hasOwnProperty(element)) {
+						console.log(this.refundForm.get('diagnosticos').get(element.toString()));
+						if (this.refundForm.get('diagnosticos').get(element.toString()).get('tipoReclamoMoneda')) {
 							if (this.refundForm.get('diagnosticos').get(element.toString()).get(
-								'tipoReclamoMoneda').value === 'DOLARES') {
-								console.log('total', this.refundForm.get('diagnosticos').get(element.toString()).value.monto);
-								total += this.refundForm.get('diagnosticos').get(element.toString()).value.monto;
-							}
-							if (this.refundForm.get('diagnosticos').get(element.toString()).get(
-								'tipoReclamoMoneda').value === 'PESOS') {
-								totalPesos += this.refundForm.get('diagnosticos').get(element.toString()).value.monto;
+								'tipoReclamoMoneda').value != null) {
+								if (this.refundForm.get('diagnosticos').get(element.toString()).get(
+									'tipoReclamoMoneda').value === 'DOLARES') {
+									console.log('total', this.refundForm.get('diagnosticos').get(element.toString()).value.monto);
+									total += this.refundForm.get('diagnosticos').get(element.toString()).value.monto;
+								}
+								if (this.refundForm.get('diagnosticos').get(element.toString()).get(
+									'tipoReclamoMoneda').value === 'PESOS') {
+									totalPesos += this.refundForm.get('diagnosticos').get(element.toString()).value.monto;
+								}
 							}
 						}
-					}
 
-					if (this.calculatedDate(this.refundForm.get('diagnosticos').get(element.toString()).value.fecha) >= 6) {
-						this.receiveDateValidator(false);
+						if (this.calculatedDate(this.refundForm.get('diagnosticos').get(element.toString()).value.fecha) >= 6) {
+							this.receiveDateValidator(false);
 
-					} else {
-						this.receiveDateValidator(true);
+						} else {
+							this.receiveDateValidator(true);
 
+						}
 					}
 				}
-			}
-			this.refundForm.get('totalAmount').setValue(total);
-			this.totalAmount = total;
-			this.refundForm.get('totalAmountPesos').setValue(totalPesos);
-			this.totalAmountPesos = totalPesos;
-		});
+				this.refundForm.get('totalAmount').setValue(total);
+				this.totalAmount = total;
+				this.refundForm.get('totalAmountPesos').setValue(totalPesos);
+				this.totalAmountPesos = totalPesos;
+			});
+		}
 
 		this.refundForm.get('informacion').get('filterType').valueChanges.subscribe(valueFilter => {
 
@@ -775,6 +777,45 @@ export class RefundComponent implements OnInit {
 			this.refundForm.markAllAsTouched();
 			this.refundForm.updateValueAndValidity();
 			this.cd.markForCheck();
+
+			this.refundForm.get('diagnosticos').valueChanges.subscribe((value) => {
+				this.validDatesCounter = 0;
+				let total = 0;
+				let totalPesos = 0;
+
+
+				for (const element in value) {
+					if (value.hasOwnProperty(element)) {
+						console.log(this.refundForm.get('diagnosticos').get(element.toString()));
+						if (this.refundForm.get('diagnosticos').get(element.toString()).get('tipoReclamoMoneda')) {
+							if (this.refundForm.get('diagnosticos').get(element.toString()).get(
+								'tipoReclamoMoneda').value != null) {
+								if (this.refundForm.get('diagnosticos').get(element.toString()).get(
+									'tipoReclamoMoneda').value === 'DOLARES') {
+									console.log('total', this.refundForm.get('diagnosticos').get(element.toString()).value.monto);
+									total += this.refundForm.get('diagnosticos').get(element.toString()).value.monto;
+								}
+								if (this.refundForm.get('diagnosticos').get(element.toString()).get(
+									'tipoReclamoMoneda').value === 'PESOS') {
+									totalPesos += this.refundForm.get('diagnosticos').get(element.toString()).value.monto;
+								}
+							}
+						}
+
+						if (this.calculatedDate(this.refundForm.get('diagnosticos').get(element.toString()).value.fecha) >= 6) {
+							this.receiveDateValidator(false);
+
+						} else {
+							this.receiveDateValidator(true);
+
+						}
+					}
+				}
+				this.refundForm.get('totalAmount').setValue(total);
+				this.totalAmount = total;
+				this.refundForm.get('totalAmountPesos').setValue(totalPesos);
+				this.totalAmountPesos = totalPesos;
+			});
 
 		});
 		this.refund.id = null;

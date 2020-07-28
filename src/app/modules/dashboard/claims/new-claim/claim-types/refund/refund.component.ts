@@ -506,12 +506,12 @@ export class RefundComponent implements OnInit {
 				// 	+ data.data[x].asegurado.id_asegurado);
 
 				this.dataAutoCompleteIdNumberObject.push({
-					name: data.data[x].asegurado.nombres_asegurado + " " +data.data[x].asegurado.apellidos_asegurado,
+					name: data.data[x].asegurado.nombres_asegurado + " " + data.data[x].asegurado.apellidos_asegurado,
 					// id: data.data[x].asegurado.id_asegurado,
 					policy: data.data[x].asegurado.no_poliza,
 					value: data.data[x].asegurado.id_asegurado
 				});
-				this.dataAutoCompleteName.push(data.data[x].asegurado.nombres_asegurado+ " " +data.data[x].asegurado.apellidos_asegurado);
+				this.dataAutoCompleteName.push(data.data[x].asegurado.nombres_asegurado + " " + data.data[x].asegurado.apellidos_asegurado);
 
 				this.dataAutoCompleteIdNumber.push(data.data[x].asegurado.id_asegurado);
 
@@ -760,6 +760,10 @@ export class RefundComponent implements OnInit {
 			this.dataMappingFromApi.iterateThroughtAllObject(data.data, this.refundForm);
 
 			this.filesInformation = data.data.diagnosticos;
+
+			if (data.data.agreeWithDeclaration === 'TRUE') {
+				this.refundForm.get('agreeWithDeclaration').setValue(true);
+			}
 
 			this.showContent = true;
 			this.refundForm.markAllAsTouched();

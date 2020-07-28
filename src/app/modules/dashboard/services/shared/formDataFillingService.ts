@@ -24,7 +24,7 @@ export class FormDataFillingService {
       const value = obj[key];
       if (value !== undefined && (typeof value) !== 'object') {
 
-        const valueToSet = (value === null || value === undefined) ? "" : value;
+        const valueToSet = (value === null || value === undefined) ? '' : value;
 
         if (valueToSet !== undefined) {
           if (!this.has(formDataGroup.controls, key)) {
@@ -39,8 +39,7 @@ export class FormDataFillingService {
             valueFormControl.setValue(valueToSet);
           }
         }
-      }
-      else if (value !== null && value !== undefined && (typeof value) === 'object') {
+      } else if (value !== null && value !== undefined && (typeof value) === 'object') {
         if (Array.isArray(value)) {
           if (this.has(formDataGroup.controls, key)) {
             formDataGroup.removeControl(key);
@@ -57,13 +56,11 @@ export class FormDataFillingService {
               arrayForm.push(fbGroup);
             });
             formDataGroup.addControl(key, this.fb.array(arrayForm));
-          }
-          else {
+          } else {
             formDataGroup.addControl(key, this.fb.array([]));
           }
-        }
-        else {
-          if (key !== "anonimousUser") {
+        } else {
+          if (key !== 'anonimousUser') {
             if (!this.has(formDataGroup.controls, key)) {
               formDataGroup.addControl(key, this.fb.group({
                 id: ['', Validators.required]
@@ -72,8 +69,8 @@ export class FormDataFillingService {
             const form = formDataGroup.get(key);
             this.iterateThroughtAllObject(value, form);
 
-            if ((key.includes("solucionAnti") || key.includes("solicitud") || key.includes("knowYour") || key.includes("columnaVertebralColumnaVertebral")) && form.get("id").value == "0") {
-              console.log("DELETE DATAAAAA");
+            if ((key.includes('solucionAnti') || key.includes('solicitud') || key.includes('knowYour') || key.includes('columnaVertebralColumnaVertebral')) && form.get('id').value == '0') {
+              console.log('DELETE DATAAAAA');
               formDataGroup.removeControl(key);
             }
           }
@@ -84,9 +81,12 @@ export class FormDataFillingService {
   }
 
   controlIsNotRequired(key) {
+    console.log((key.charAt(key.length - 3) + key.charAt(key.length - 2) + key.charAt(key.length - 1)) === 'Url');
     for (const idx in this.excludedKeys) {
       if (Object.prototype.hasOwnProperty.call(this.excludedKeys, idx)) {
         if (key === this.excludedKeys[idx]) {
+          return true;
+        } else if ((key.charAt(key.length - 3) + key.charAt(key.length - 2) + key.charAt(key.length - 1)) === 'Url') {
           return true;
         }
       }

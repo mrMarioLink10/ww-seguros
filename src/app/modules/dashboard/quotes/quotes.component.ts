@@ -6,6 +6,7 @@ import { QuotesService } from '../services/quotes/quotes.service';
 import { HttpParams } from '@angular/common/http';
 import { UserService } from '../../../core/services/user/user.service';
 import { AppComponent } from '../../../app.component';
+import { environment } from 'src/environments/environment';
 
 export interface Quotes {
   noCotizacion: number;
@@ -95,18 +96,18 @@ export class QuotesComponent implements OnInit {
   }
 
   navigateToSaludPdf(id) {
-    window.open(`http://portalwwg.eastus.cloudapp.azure.com:3031/salud/cotizacion-${id}.pdf`, '_blank');
+    window.open(`${environment.urlCotizadores}/salud/cotizacion-${id}.pdf`, '_blank');
 
 }
   navigateToLifePdf(id) {
-      window.open(`http://portalwwg.eastus.cloudapp.azure.com:3031/tmp/cotizacion-${id}.pdf`, '_blank');
+      window.open(`${environment.urlCotizadores}/tmp/cotizacion-${id}.pdf`, '_blank');
 
   }
   newQuote() {
     if (this.userService.getRoleCotizador() === 'WWS') {
-      window.open('http://portalwwg.eastus.cloudapp.azure.com:3000/?cia=wws', '_blank');
+      window.open(`${environment.urlCotizadores}/?cia=wws`, '_blank');
     } else if (this.userService.getRoleCotizador() === 'WMA') {
-      window.open('http://portalwwg.eastus.cloudapp.azure.com:3000/?cia=wwm', '_blank');
+      window.open(`${environment.urlCotizadores}/?cia=wwm`, '_blank');
     }
   }
 

@@ -940,9 +940,9 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
 
   newQuote() {
     if (this.userService.getRoleCotizador() === 'WWS') {
-      window.open('http://portalwwg.eastus.cloudapp.azure.com:3000/salud?cia=wws', '_self');
+      window.open(`${environment.urlCotizadoresSalud}?cia=wws`, '_self');
     } else if (this.userService.getRoleCotizador() === 'WMA') {
-      window.open('http://portalwwg.eastus.cloudapp.azure.com:3000/salud?cia=wwm', '_self');
+      window.open(`${environment.urlCotizadoresSalud}?cia=wwm`, '_self');
     }
   }
   canDeactivate(): Observable<boolean> | boolean {
@@ -1609,7 +1609,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
           //   this.filesDocumentsKnowClientArray = this.disabilityGroup.get('files').get('documentsKnowClient') as FormArray;
           // }
           break;
-         
+
         default:
           break;
       }

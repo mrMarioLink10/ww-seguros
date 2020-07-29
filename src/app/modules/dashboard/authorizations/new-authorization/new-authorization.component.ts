@@ -296,7 +296,7 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy, DoCheck {
 					direccion: [{ value: '', disabled: true }],
 					telefono: [{ value: '', disabled: true }],
 				}),
-				tiempoEstadia: ['', Validators.required],
+				tiempoEstadia: ['', [Validators.required]],
 				nombreServicio: ['', Validators.required],
 				isMedicalEqual: [''],
 				// direccion: ['', Validators.required],
@@ -307,6 +307,8 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy, DoCheck {
 			isComplete: [false, Validators.required]
 
 		});
+
+		this.authorization.get('informacionMedica').get('tiempoEstadia').setValidators(Validators.max(this.maxBasedOnCondition()));
 
 		this.documentsArray = this.authorization.get('files') as FormArray;
 
@@ -388,22 +390,26 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy, DoCheck {
 			}
 		});
 
-		this.authorization.get('informacionMedica').get('condicion').valueChanges.subscribe(value => {
-			if (value === 'HOSPITALIZACIÓN') {
-				if (this.authorization.get('informacionMedica').get('tiempoEstadia').disabled) {
-					this.authorization.get('informacionMedica').get('tiempoEstadia').enable();
-					this.authorization.get('informacionMedica').get('tiempoEstadia').setValue('');
-					this.authorization.get('informacionMedica').get('tiempoEstadia').markAsUntouched();
+		if (!this.ID) {
+			console.log('AOSKDOPAKSDOPSA');
+			this.authorization.get('informacionMedica').get('condicion').valueChanges.subscribe(value => {
+				if (value === 'HOSPITALIZACIÓN') {
+					if (this.authorization.get('informacionMedica').get('tiempoEstadia').disabled) {
+						this.authorization.get('informacionMedica').get('tiempoEstadia').enable();
+						this.authorization.get('informacionMedica').get('tiempoEstadia').setValue('');
+						this.authorization.get('informacionMedica').get('tiempoEstadia').markAsUntouched();
+					}
 				}
-			}
-			// tslint:disable-next-line: one-line
-			else if (value === 'AMBULATORIO') {
-				// this.authorization.get('informacionMedica').get('tiempoEstadia').disable();
-				if (this.authorization.get('informacionMedica').get('tiempoEstadia').value > 1) {
+				// tslint:disable-next-line: one-line
+				else if (value === 'AMBULATORIO') {
+					// this.authorization.get('informacionMedica').get('tiempoEstadia').disable();
 					this.authorization.get('informacionMedica').get('tiempoEstadia').setValue(1);
+					if (this.authorization.get('informacionMedica').get('tiempoEstadia').value > 1) {
+						this.authorization.get('informacionMedica').get('tiempoEstadia').setValue(1);
+					}
 				}
-			}
-		});
+			});
+		}
 
 		this.authorization.get('tipoReclamo').valueChanges.subscribe(value => {
 			if (value == 'LOCAL') {
@@ -443,7 +449,7 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy, DoCheck {
 
 	maxBasedOnCondition() {
 		if (this.authorization.get('informacionMedica').get('condicion').value === 'AMBULATORIO') {
-			return '1';
+			return 1;
 		}
 	}
 
@@ -539,12 +545,12 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy, DoCheck {
 					if (!(data.data[x].polizas[y].ramo.toLocaleLowerCase().includes('vida'))) {
 						// console.log('si incluye vida');
 						this.dataAutoCompleteIdNumberObject.push({
-							name: data.data[x].asegurado.nombres_asegurado + " " +data.data[x].asegurado.apellidos_asegurado,
+							name: data.data[x].asegurado.nombres_asegurado + " " + data.data[x].asegurado.apellidos_asegurado,
 							// id: data.data[x].asegurado.id_asegurado,
 							policy: data.data[x].asegurado.no_poliza,
 							value: data.data[x].asegurado.id_asegurado
 						});
-						this.dataAutoCompleteName.push(data.data[x].asegurado.nombres_asegurado + " " +data.data[x].asegurado.apellidos_asegurado);
+						this.dataAutoCompleteName.push(data.data[x].asegurado.nombres_asegurado + " " + data.data[x].asegurado.apellidos_asegurado);
 
 						this.dataAutoCompleteIdNumber.push(data.data[x].asegurado.id_asegurado);
 
@@ -931,6 +937,23 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy, DoCheck {
 			formID6.addControl('id', this.fb.control(data.data.informacionMedica.primerosSintomas.id, Validators.required));
 
 			console.log(JSON.stringify(this.authorization.value));
+
+			this.authorization.get('informacionMedica').get('condicion').valueChanges.subscribe(value => {
+				if (value === 'HOSPITALIZACIÓN') {
+					if (this.authorization.get('informacionMedica').get('tiempoEstadia').disabled) {
+						this.authorization.get('informacionMedica').get('tiempoEstadia').enable();
+						this.authorization.get('informacionMedica').get('tiempoEstadia').setValue('');
+						this.authorization.get('informacionMedica').get('tiempoEstadia').markAsUntouched();
+					}
+				}
+				// tslint:disable-next-line: one-line
+				else if (value === 'AMBULATORIO') {
+					// this.authorization.get('informacionMedica').get('tiempoEstadia').disable();
+					if (this.authorization.get('informacionMedica').get('tiempoEstadia').value > 1) {
+						this.authorization.get('informacionMedica').get('tiempoEstadia').setValue(1);
+					}
+				}
+			});
 
 			this.authorization.markAllAsTouched();
 			this.authorization.updateValueAndValidity();

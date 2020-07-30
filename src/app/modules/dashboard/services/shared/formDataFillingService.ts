@@ -70,11 +70,10 @@ export class FormDataFillingService {
             this.iterateThroughtAllObject(value, form);
 
             if ((key.includes('solucionAnti') ||
-             key.includes('solicitud') ||
-             key.includes('knowYour') ||
-             key.includes('antiLaundering') ||
-             key.includes('columnaVertebralColumnaVertebral')) && form.get('id').value == '0') {
-              console.log('DELETE DATAAAAA');
+              key.includes('solicitud') ||
+              key.includes('knowYour') ||
+              key.includes('antiLaundering') ||
+              key.includes('columnaVertebralColumnaVertebral')) && form.get('id').value == '0') {
               formDataGroup.removeControl(key);
             }
           }
@@ -85,7 +84,6 @@ export class FormDataFillingService {
   }
 
   controlIsNotRequired(key) {
-    console.log((key.charAt(key.length - 3) + key.charAt(key.length - 2) + key.charAt(key.length - 1)) === 'Url');
     for (const idx in this.excludedKeys) {
       if (Object.prototype.hasOwnProperty.call(this.excludedKeys, idx)) {
         if (key === this.excludedKeys[idx]) {

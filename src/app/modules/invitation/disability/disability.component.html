@@ -510,7 +510,8 @@
                     </div>
                   </div>
 
-                  <div *ngIf="disabilityGroup.get('insured_data').get('policyholderKnowClientRadio')"
+                  <div *ngIf="disabilityGroup.get('insured_data').get('insuredPolicyholderRadio').value == 'SI' &&
+                  disabilityGroup.get('insured_data').get('policyholderKnowClientRadio')"
                     class="mt-4 lg:mt-3 xl:mt-3">
                     <div>
                       <label class="radio-button-label"> ¿Es una persona jurídica? </label>
@@ -2479,7 +2480,7 @@
         </mat-tab>
       </div>
 
-      <mat-tab *ngIf="this.disabilityGroup.get('insured_data').get('pep_radio_insured').value == 'SI'"
+      <!-- <mat-tab *ngIf="this.disabilityGroup.get('insured_data').get('pep_radio_insured').value == 'SI'"
         label="Conozca a su cliente (Persona Física) - Asegurado">
         <mat-accordion #matAccordion="matAccordion" name="matAccordion" class="ww-mat-accordion example-headers-align"
           [togglePosition]="'before'">
@@ -2489,7 +2490,7 @@
           </app-know-your-customer>
         </mat-accordion>
 
-      </mat-tab>
+      </mat-tab> -->
       <div *ngIf="disabilityGroup.get('policyholder')">
         <mat-tab
           *ngIf="this.disabilityGroup.get('policyholder').get('pep_radio_holder').value == 'SI' && disabilityGroup.get('policyholder').get('KnowYourCustomer')"

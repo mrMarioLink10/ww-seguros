@@ -2053,7 +2053,7 @@ export class DisabilityComponent implements OnInit, DoCheck {
       form.removeControl('specifyRelationship');
     }
   }
- 
+
   arrayDocumentsKnowClientWatcher(i: number) {
     if (this.arrayFilesTitlesDocumentsKnowClient) {
       if (this.disabilityGroup.get('files').get('documentsKnowClient')) {

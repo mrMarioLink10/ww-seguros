@@ -81,6 +81,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
   };
   pruebaCheck: any;
   visible = false;
+  todayDate = new Date();
   primaryBenefitsArray: FormArray;
   contingentBeneficiaryArray: FormArray;
   newRequest: FormGroup;
@@ -94,6 +95,10 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
   informationList: FormArray;
   filesStudiesArray: FormArray;
   familyWithDiseasesList: FormArray;
+  musculoSkeletalList: FormArray;
+  endocrineDisordersList: FormArray;
+  urinarySystemList: FormArray;
+  cardiovascularSystemList: FormArray;
 
   arrayFilesTitles = [];
   primaryBeneficaryTitles = [];
@@ -478,6 +483,159 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
     quantity: ['', [Validators.min(1), Validators.max(100)]]
   };
 
+  musculoSkeletalAilment: FieldConfig =
+    {
+      label: 'Padecimiento',
+      options: [
+        {
+          value: 'ARTRITIS',
+          viewValue: 'ARTRITIS',
+        },
+        {
+          value: 'NEURITIS',
+          viewValue: 'NEURITIS',
+        },
+        {
+          value: 'REUMATISMO',
+          viewValue: 'REUMATISMO',
+        },
+        {
+          value: 'OSTEOPOROSIS',
+          viewValue: 'OSTEOPOROSIS',
+        },
+        {
+          value: 'LUMBAGO',
+          viewValue: 'LUMBAGO',
+        },
+        {
+          value: 'HERNIA DISCAL',
+          viewValue: 'HERNIA DISCAL',
+        },
+        {
+          value: 'ESCOLIOSIS',
+          viewValue: 'ESCOLIOSIS',
+        },
+        {
+          value: 'OTRO PADECIMIENTOS DE LA COLUMNA VERTEBRAL',
+          viewValue: 'OTRO PADECIMIENTOS DE LA COLUMNA VERTEBRAL',
+        },
+        {
+          value: 'OTRO TRASTORNO MÚSCULO ESQUELÉTICOS',
+          viewValue: 'OTRO TRASTORNO MÚSCULO ESQUELÉTICOS',
+        },
+      ],
+      name: 'ailment',
+    };
+
+  cardiovascularSystemAilment: FieldConfig =
+    {
+      label: 'Padecimiento',
+      options: [
+        {
+          value: 'PRESIÓN ARTERIAL ALTA',
+          viewValue: 'PRESIÓN ARTERIAL ALTA',
+        },
+        {
+          value: 'PROBLEMAS DEL CORAZÓN',
+          viewValue: 'PROBLEMAS DEL CORAZÓN',
+        },
+        {
+          value: 'SOPLOS',
+          viewValue: 'SOPLOS',
+        },
+        {
+          value: 'VALVULOPATÍAS',
+          viewValue: 'VALVULOPATÍAS',
+        },
+        {
+          value: 'FIEBRE REUMÁTICA',
+          viewValue: 'FIEBRE REUMÁTICA',
+        },
+        {
+          value: 'ANGINA',
+          viewValue: 'ANGINA',
+        },
+        {
+          value: 'INFARTO',
+          viewValue: 'INFARTO',
+        },
+        {
+          value: 'VARICES',
+          viewValue: 'VARICES',
+        },
+        {
+          value: 'FLEBITIS',
+          viewValue: 'FLEBITIS',
+        },
+        {
+          value: 'PATOLOGÍA CARDIACA',
+          viewValue: 'PATOLOGÍA CARDIACA',
+        },
+        {
+          value: 'OTROS PADECIMIENTO DEL SISTEMA CARDIOVASCULAR',
+          viewValue: 'OTROS PADECIMIENTO DEL SISTEMA CARDIOVASCULAR',
+        },
+
+      ],
+      name: 'ailment',
+    };
+
+  endocrineAilment: FieldConfig =
+    {
+      label: 'Padecimiento',
+      options: [
+        {
+          value: 'DIABETES',
+          viewValue: 'DIABETES',
+        },
+        {
+          value: 'COLESTEROL Y/O TRIGLICÉRIDOS ALTOS',
+          viewValue: 'COLESTEROL Y/O TRIGLICÉRIDOS ALTOS',
+        },
+        {
+          value: 'PADECIMIENTOS DE LA TIROIDES',
+          viewValue: 'PADECIMIENTOS DE LA TIROIDES',
+        },
+        {
+          value: 'GOTA O TRASTORNOS ENDÓCRINOS',
+          viewValue: 'GOTA O TRASTORNOS ENDÓCRINOS',
+        },
+      ],
+      name: 'ailment',
+    };
+
+  urineSystemAilment: FieldConfig =
+    {
+      label: 'Padecimiento',
+      options: [
+        {
+          value: 'CÁLCULO RENALES',
+          viewValue: 'CÁLCULO RENALES',
+        },
+        {
+          value: 'NEFRITIS',
+          viewValue: 'NEFRITIS',
+        },
+        {
+          value: 'INFECCIONES URINARIAS',
+          viewValue: 'INFECCIONES URINARIAS',
+        },
+        {
+          value: 'SANGRE EN LA ORINA',
+          viewValue: 'SANGRE EN LA ORINA',
+        },
+        {
+          value: 'PADECIMIENTOS DEL RIÑÓN',
+          viewValue: 'PADECIMIENTOS DEL RIÑÓN',
+        },
+        {
+          value: 'OTROS PADECIMIENTOS DEL SISTEMA URINARIO',
+          viewValue: 'OTROS PADECIMIENTOS DEL SISTEMA URINARIO',
+        },
+      ],
+      name: 'ailment',
+    };
+
   allFamily = $allFamily;
   TitleConozcaClienteAsegurado = 'Conoca Su Cliente (Asegurado)';
   TitleConozcaClienteContratante = 'Conoca Su Cliente (Contratante)';
@@ -681,15 +839,15 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
         haveReproductiveOrganDisorders: [false, Validators.required],
         questionnairesGastosMayores: this.fb.group({}),
       }),
-      questionsB: this.fb.group({
-        haveConsultedForUnmentioned: ['', Validators.required],
-        haveAlterationForUnmentioned: ['', Validators.required],
-        haveHadExamStudiesTests: ['', Validators.required],
-        hasFamilyWithHeartKidneyDisease: ['', Validators.required],
-        hasDeclinedInsuranceCompany: ['', Validators.required],
-        haveHadMedicalHealthInsurance: ['', Validators.required],
-        information: this.fb.array([]),
-      }),
+      // questionsB: this.fb.group({
+      //   haveConsultedForUnmentioned: ['', Validators.required],
+      //   haveAlterationForUnmentioned: ['', Validators.required],
+      //   haveHadExamStudiesTests: ['', Validators.required],
+      //   hasFamilyWithHeartKidneyDisease: ['', Validators.required],
+      //   hasDeclinedInsuranceCompany: ['', Validators.required],
+      //   haveHadMedicalHealthInsurance: ['', Validators.required],
+      //   information: this.fb.array([]),
+      // }),
       primaryBenefits: this.fb.group({
         dependentsC: this.fb.array([this.formMethods.createItem(this.primaryBenefits)]),
         personBenefited: this.fb.group({
@@ -747,8 +905,8 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
     this.studentDependents = this.newRequest.get('dependents').get('students') as FormArray;
     this.dependentsFormArray = this.newRequest.get('dependents').get('allDependents') as FormArray;
     this.questionsFormArray = this.newRequest.get('questionsA') as FormArray;
-    this.questionsBFormArray = this.newRequest.get('questionsB') as FormArray;
-    this.informationList = this.newRequest.get('questionsB').get('information') as FormArray;
+    // this.questionsBFormArray = this.newRequest.get('questionsB') as FormArray;
+    // this.informationList = this.newRequest.get('questionsB').get('information') as FormArray;
     this.filesStudiesArray = this.newRequest.get('files').get('studies') as FormArray;
 
     // this.setQuestionsA();
@@ -1205,8 +1363,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
               .setValue(result);
 
           });
-        }
-        else {
+        } else {
           this.newRequest
             .get('dependents')
             .get('allDependents')
@@ -1609,7 +1766,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
           //   this.filesDocumentsKnowClientArray = this.disabilityGroup.get('files').get('documentsKnowClient') as FormArray;
           // }
           break;
-         
+
         default:
           break;
       }
@@ -1621,7 +1778,220 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
 
   }
 
+  ailmentSelected(type, target, form, watcherForm) {
+    switch (type) {
+      case 'musculoSkeletal':
+        this.checkIfHaveAilment(type, form, watcherForm);
+        break;
+
+      case 'cardiovascularSystem':
+        this.checkIfHaveAilment(type, form, watcherForm);
+        break;
+
+      case 'endocrineDisorders':
+        this.checkIfHaveAilment(type, form, watcherForm);
+        break;
+
+      case 'urinarySystem':
+        this.checkIfHaveAilment(type, form, watcherForm);
+        break;
+
+      default:
+        break;
+    }
+  }
+
+  // tslint:disable: forin
+  checkIfHaveAilment(type, form, watcherForm) {
+    const stay = [];
+
+    for (const key in watcherForm.get(type).value) {
+      const element = watcherForm.get(type).value[key].ailment;
+      stay.push(element);
+    }
+
+    switch (type) {
+      case 'musculoSkeletal':
+        this.ailmentMusculoskeletalGenerator(stay, form);
+        break;
+
+      case 'cardiovascularSystem':
+        this.ailmentCardiovascularGenerator(stay, form);
+        break;
+
+      case 'endocrineDisorders':
+        this.ailmentEndocrineGenerator(stay, form);
+        break;
+
+      case 'urinarySystem':
+        this.ailmentUrinaryGenerator(stay, form);
+        break;
+
+    }
+  }
+
+  // tslint:disable: max-line-length
+  ailmentMusculoskeletalGenerator(stay, form) {
+    let arthritisCounter = 0;
+    let spineCounter = 0;
+    let musculoSkeletal = 0;
+
+    for (const key in stay) {
+      if (Object.prototype.hasOwnProperty.call(stay, key)) {
+        const element = stay[key];
+        if (element === 'ARTRITIS' || element === 'OTRO PADECIMIENTOS DE LA COLUMNA VERTEBRAL' || element === 'OTRO TRASTORNO MÚSCULO ESQUELÉTICOS') {
+          switch (element) {
+            case 'ARTRITIS':
+              arthritisCounter++;
+              break;
+
+            case 'OTRO PADECIMIENTOS DE LA COLUMNA VERTEBRAL':
+              spineCounter++;
+              break;
+
+            case 'OTRO TRASTORNO MÚSCULO ESQUELÉTICOS':
+              musculoSkeletal++;
+              break;
+          }
+        }
+      }
+    }
+
+    if (arthritisCounter > 0) {
+      if (!form.get('solicitudArtitris')) {
+        form.addControl('solicitudArtitris', this.fb.group({}));
+      }
+    } else {
+      if (form.get('solicitudArtitris')) {
+        form.removeControl('solicitudArtitris');
+      }
+    }
+
+    if (spineCounter > 0) {
+      if (!form.get('columnaVertebralColumnaVertebral')) {
+        form.addControl('columnaVertebralColumnaVertebral', this.fb.group({}));
+      }
+    } else {
+      if (form.get('columnaVertebralColumnaVertebral')) {
+        form.removeControl('columnaVertebralColumnaVertebral');
+      }
+    }
+
+    if (musculoSkeletal > 0) {
+      if (!form.get('solicitudMusculoesqueleticos')) {
+        form.addControl('solicitudMusculoesqueleticos', this.fb.group({}));
+      }
+    } else {
+      if (form.get('solicitudMusculoesqueleticos')) {
+        form.removeControl('solicitudMusculoesqueleticos');
+      }
+    }
+  }
+
+  ailmentCardiovascularGenerator(stay, form) {
+    let hypertensionCounter = 0;
+    let cardiovascularCounter = 0;
+
+    for (const key in stay) {
+      if (Object.prototype.hasOwnProperty.call(stay, key)) {
+        const element = stay[key];
+        if (element === 'PRESIÓN ARTERIAL ALTA' || element === 'OTROS PADECIMIENTO DEL SISTEMA CARDIOVASCULAR') {
+          switch (element) {
+            case 'PRESIÓN ARTERIAL ALTA':
+              hypertensionCounter++;
+              break;
+
+            case 'OTROS PADECIMIENTO DEL SISTEMA CARDIOVASCULAR':
+              cardiovascularCounter++;
+              break;
+          }
+        }
+      }
+    }
+
+    if (hypertensionCounter > 0) {
+      if (!form.get('solicitudHipertensionArterial')) {
+        console.warn('CREO EL FORMULARIO: solicitudHipertensionArterial')
+        form.addControl('solicitudHipertensionArterial', this.fb.group({}));
+      }
+    } else {
+      if (form.get('solicitudHipertensionArterial')) {
+        console.warn('ELIMINO EL FORMULARIO: solicitudHipertensionArterial')
+        form.removeControl('solicitudHipertensionArterial');
+      }
+    }
+
+    if (cardiovascularCounter > 0) {
+      if (!form.get('solicitudCardioVasculares')) {
+        console.warn('CREO EL FORMULARIO: solicitudCardioVasculares')
+        form.addControl('solicitudCardioVasculares', this.fb.group({}));
+      }
+    } else {
+      if (form.get('solicitudCardioVasculares')) {
+        console.warn('ELIMINO EL FORMULARIO: solicitudCardioVasculares');
+        form.removeControl('solicitudCardioVasculares');
+      }
+    }
+  }
+
+  ailmentEndocrineGenerator(stay, form) {
+    let diabetesCounter = 0;
+
+    for (const key in stay) {
+      if (Object.prototype.hasOwnProperty.call(stay, key)) {
+        const element = stay[key];
+        if (element === 'DIABETES') {
+          switch (element) {
+            case 'DIABETES':
+              diabetesCounter++;
+              break;
+          }
+        }
+      }
+    }
+    if (diabetesCounter > 0) {
+      if (!form.get('solicitudDiabetes')) {
+        form.addControl('solicitudDiabetes', this.fb.group({}));
+      }
+    } else {
+      if (form.get('solicitudDiabetes')) {
+        form.removeControl('solicitudDiabetes');
+      }
+    }
+  }
+
+  ailmentUrinaryGenerator(stay, form) {
+    let renalCounter = 0;
+
+    for (const key in stay) {
+      if (Object.prototype.hasOwnProperty.call(stay, key)) {
+        const element = stay[key];
+        if (element === 'CÁLCULO RENALES') {
+          switch (element) {
+            case 'CÁLCULO RENALES':
+              renalCounter++;
+              break;
+          }
+        }
+      }
+    }
+    if (renalCounter > 0) {
+      if (!form.get('solicitudRenales')) {
+        console.log('OKIDOKI IN')
+        form.addControl('solicitudRenales', this.fb.group({}));
+      }
+    } else {
+      if (form.get('solicitudRenales')) {
+        console.log('OKIDOKI OUT')
+        form.removeControl('solicitudRenales');
+      }
+    }
+  }
+
+
   valueChange($event, question, typeOrIndex) {
+    const questionsA = this.newRequest.get('questionsA') as FormGroup;
+
     console.log('tipo/index: ', typeOrIndex, 'event:', $event, 'question: ', question);
     if (typeOrIndex === 'solicitante') {
       if ($event.checked === true || $event.valor === 'SI') {
@@ -1666,22 +2036,34 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
             break;
 
           case 'haveEndocrineDisorders':
-            this.questionnairesGastosMayores.addControl('solicitudDiabetes', this.fb.group({}));
+            // this.questionnairesGastosMayores.addControl('solicitudDiabetes', this.fb.group({}));
+            questionsA.addControl('endocrineDisorders', this.fb.array([this.createFormArray('questionsAInformation')]));
+            this.endocrineDisordersList = questionsA.get('endocrineDisorders') as FormArray;
+            break;
             break;
 
           case 'haveUrinarySystem':
-            this.questionnairesGastosMayores.addControl('solicitudRenales', this.fb.group({}));
+            // this.questionnairesGastosMayores.addControl('solicitudRenales', this.fb.group({}));
+            questionsA.addControl('urinarySystem', this.fb.array([this.createFormArray('questionsAInformation')]));
+            this.urinarySystemList = questionsA.get('urinarySystem') as FormArray;
+            break;
             break;
 
           case 'haveMusculoskeletal':
-            this.questionnairesGastosMayores.addControl('solicitudArtitris', this.fb.group({}));
-            this.questionnairesGastosMayores.addControl('columnaVertebralColumnaVertebral', this.fb.group({}));
-            this.questionnairesGastosMayores.addControl('solicitudMusculoesqueleticos', this.fb.group({}));
+            // this.questionnairesGastosMayores.addControl('solicitudArtitris', this.fb.group({}));
+            // this.questionnairesGastosMayores.addControl('columnaVertebralColumnaVertebral', this.fb.group({}));
+            // this.questionnairesGastosMayores.addControl('solicitudMusculoesqueleticos', this.fb.group({}));
+
+            questionsA.addControl('musculoSkeletal', this.fb.array([this.createFormArray('questionsAInformation')]));
+            this.musculoSkeletalList = questionsA.get('musculoSkeletal') as FormArray;
             break;
 
           case 'haveCardiovascularSystem':
-            this.questionnairesGastosMayores.addControl('solicitudHipertensionArterial', this.fb.group({}));
-            this.questionnairesGastosMayores.addControl('solicitudCardioVasculares', this.fb.group({}));
+            // this.questionnairesGastosMayores.addControl('solicitudHipertensionArterial', this.fb.group({}));
+            // this.questionnairesGastosMayores.addControl('solicitudCardioVasculares', this.fb.group({}));
+            questionsA.addControl('cardiovascularSystem', this.fb.array([this.createFormArray('questionsAInformation')]));
+            this.cardiovascularSystemList = questionsA.get('cardiovascularSystem') as FormArray;
+            break;
             break;
 
           default:
@@ -1719,21 +2101,29 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
 
           case 'haveEndocrineDisorders':
             this.questionnairesGastosMayores.removeControl('solicitudDiabetes');
+            questionsA.removeControl('endocrineDisorders');
+            this.endocrineDisordersList = undefined;
             break;
 
           case 'haveUrinarySystem':
             this.questionnairesGastosMayores.removeControl('solicitudRenales');
+            questionsA.removeControl('urinarySystem');
+            this.urinarySystemList = undefined;
             break;
 
           case 'haveMusculoskeletal':
             this.questionnairesGastosMayores.removeControl('solicitudArtitris');
             this.questionnairesGastosMayores.removeControl('columnaVertebralColumnaVertebral');
             this.questionnairesGastosMayores.removeControl('solicitudMusculoesqueleticos');
+            questionsA.removeControl('musculoSkeletal');
+            this.musculoSkeletalList = undefined;
             break;
 
           case 'haveCardiovascularSystem':
             this.questionnairesGastosMayores.removeControl('solicitudHipertensionArterial');
             this.questionnairesGastosMayores.removeControl('solicitudCardioVasculares');
+            questionsA.removeControl('cardiovascularSystem');
+            this.cardiovascularSystemList = undefined;
             break;
 
           default:
@@ -1749,7 +2139,9 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
         console.log('true');
         switch (question) {
           case 'haveEndocrineDisorders':
-            questionnaire.addControl('solicitudDiabetes', this.fb.group({}));
+            // questionnaire.addControl('solicitudDiabetes', this.fb.group({}));
+            questionnaire.addControl('endocrineDisorders', this.fb.array([this.createFormArray('questionsAInformation')]));
+
             break;
 
           case 'havePregnant':
@@ -1789,22 +2181,28 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
             break;
 
           case 'mountaineering':
+
             questionnaire.addControl('solicitudMontanismo', this.fb.group({}));
             break;
 
           case 'haveUrinarySystem':
-            questionnaire.addControl('solicitudRenales', this.fb.group({}));
+            questionnaire.addControl('urinarySystem', this.fb.array([this.createFormArray('questionsAInformation')]));
+
+            // questionnaire.addControl('solicitudRenales', this.fb.group({}));
             break;
 
           case 'haveMusculoskeletal':
-            questionnaire.addControl('solicitudArtitris', this.fb.group({}));
-            questionnaire.addControl('columnaVertebralColumnaVertebral', this.fb.group({}));
-            questionnaire.addControl('solicitudMusculoesqueleticos', this.fb.group({}));
+            // questionnaire.addControl('solicitudArtitris', this.fb.group({}));
+            // questionnaire.addControl('columnaVertebralColumnaVertebral', this.fb.group({}));
+            // questionnaire.addControl('solicitudMusculoesqueleticos', this.fb.group({}));
+            questionnaire.addControl('musculoSkeletal', this.fb.array([this.createFormArray('questionsAInformation')]));
             break;
 
           case 'haveCardiovascularSystem':
-            questionnaire.addControl('solicitudHipertensionArterial', this.fb.group({}));
-            questionnaire.addControl('solicitudCardioVasculares', this.fb.group({}));
+            questionnaire.addControl('cardiovascularSystem', this.fb.array([this.createFormArray('questionsAInformation')]));
+
+            // questionnaire.addControl('solicitudHipertensionArterial', this.fb.group({}));
+            // questionnaire.addControl('solicitudCardioVasculares', this.fb.group({}));
             break;
 
           default:
@@ -1815,6 +2213,8 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
 
         switch (question) {
           case 'haveEndocrineDisorders':
+            questionnaire.removeControl('endocrineDisorders');
+
             questionnaire.removeControl('solicitudDiabetes');
             break;
 
@@ -1832,6 +2232,8 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
 
           case 'haveUrinarySystem':
             questionnaire.removeControl('solicitudRenales');
+            questionnaire.removeControl('urinarySystem');
+
             break;
 
           case 'diving':
@@ -1854,9 +2256,13 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
             questionnaire.removeControl('solicitudArtitris');
             questionnaire.removeControl('columnaVertebralColumnaVertebral');
             questionnaire.removeControl('solicitudMusculoesqueleticos');
+
+            questionnaire.removeControl('musculoSkeletal');
             break;
 
           case 'haveCardiovascularSystem':
+            questionnaire.removeControl('cardiovascularSystem');
+
             questionnaire.removeControl('solicitudHipertensionArterial');
             questionnaire.removeControl('solicitudCardioVasculares');
             break;
@@ -1911,7 +2317,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
     if (weight !== '' && height !== '') {
       if (weightUnit === 'LIBRAS') { weight = weight / 2.205; }
       if (heightUnit === 'PIE') {
-        height = height / 3.281; //(((height * 12) + inches) * 2.54);
+        height = height / 3.281; // (((height * 12) + inches) * 2.54);
       }
 
       const bmi = weight / ((height / 100) * (height / 100));
@@ -1982,7 +2388,18 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
           medicCenterName: [''],
           medicCenterAddress: [''],
         });
-        break;
+
+      case 'questionsAInformation':
+        return this.fb.group({
+          name: [{ value: '', disabled: true }],
+          ailment: ['', Validators.required],
+          date: ['', Validators.required],
+          threatment: ['', Validators.required],
+          time: [''],
+          duration: ['', Validators.min(1)],
+          medicCenterName: [''],
+          medicCenterAddress: [''],
+        });
 
       case 'haveDisease':
         return this.fb.group({
@@ -2001,7 +2418,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
 
   addToList(list: any, type: string) {
     list.push(this.createFormArray(type));
-          // console.log(JSON.stringify(this.newRequest.value));
+    // console.log(JSON.stringify(this.newRequest.value));
   }
 
   SaveForm(newRequestReq: FormGroup) {
@@ -2065,7 +2482,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
 
   getData(id) {
     this.majorExpensesService.returnData(id).subscribe(data => {
-      //console.log(data);
+      // console.log(data);
       // console.log( this.newRequest);
       if (data !== undefined && data.data !== null &&
         data.data !== undefined) {
@@ -2081,8 +2498,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
 
         if (this.newRequest.get('questionsB').get('familyWithDiseases') !== undefined && this.newRequest.get('questionsB').get('familyWithDiseases') !== null) {
           this.familyWithDiseasesList = this.newRequest.get('questionsB').get('familyWithDiseases') as FormArray;
-        }
-        else {
+        } else {
           this.familyWithDiseasesList = undefined;
         }
 

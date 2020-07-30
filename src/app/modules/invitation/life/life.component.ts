@@ -2292,7 +2292,7 @@ export class LifeComponent implements OnInit, DoCheck {
 
         case 'isPayerExposed':
           formEP.removeControl('payer');
-          this.newRequest.removeControl('payer');
+          // this.newRequest.removeControl('payer');
           // if (formPA) {
           //   if (this.role === 'WWS') {
           //     if (((formPA.get('countryOfResidence').value === 'REPÚBLICA DOMINICANA' || formPA.get('countryOfResidence').value === '') || (formPA.get('countryOfBirth').value === 'REPÚBLICA DOMINICANA' || formPA.get('countryOfBirth').value === ''))) {
@@ -2309,7 +2309,7 @@ export class LifeComponent implements OnInit, DoCheck {
 
         case 'isContractorExposed':
           formEP.removeControl('contractor');
-          this.newRequest.removeControl('contractor');
+          // this.newRequest.removeControl('contractor');
           // if (this.role === 'WWS') {
           //   if (formC) {
           //     if (((formC.get('countryOfResidence').value === 'REPÚBLICA DOMINICANA' || formC.get('countryOfResidence').value === '') || (formC.get('countryOfBirth').value === 'REPÚBLICA DOMINICANA' || formC.get('countryOfBirth').value === ''))) {
@@ -3053,7 +3053,6 @@ export class LifeComponent implements OnInit, DoCheck {
         //   formEP.removeControl('contractor');
         //   this.newRequest.removeControl('contractor');
         // }
-
         if (formP.get('sameAsPayer')) {
           if (formP.get('sameAsPayer').value === 'NO') {
             //   formP.removeControl('payerIsLegalEntity');
@@ -3068,6 +3067,14 @@ export class LifeComponent implements OnInit, DoCheck {
 
         if (formEP.get('isExposed').value !== 'SI') {
           formEP.removeControl('insured');
+        }
+
+        if (formEP.get('isPayerExposed').value !== 'SI') {
+          formEP.removeControl('payer');
+        }
+
+        if (formEP.get('isContractorExposed').value !== 'SI') {
+          formEP.removeControl('contractor');
         }
 
         if (formP.get('heightUnit').value !== 'PIE') {
@@ -3159,12 +3166,15 @@ export class LifeComponent implements OnInit, DoCheck {
             break;
         }
 
-        console.log('stay', stay);
-        console.log('formAR.get(connectionTypeInfo).value 1', Object.getOwnPropertyNames(formAR.get('connectionTypeInfo').value));
-
-
         const stableCTIObject = Object.getOwnPropertyNames(formAR.get('connectionTypeInfo').value);
+
         // tslint:disable: forin
+        for (const key in stay) {
+          const stayElement = stay[key];
+          const i = stableCTIObject.indexOf(stayElement);
+          stableCTIObject.splice(i, 1);
+        }
+
         for (const idx in stay) {
           const stayElement = stay[idx];
           for (const key in stableCTIObject) {

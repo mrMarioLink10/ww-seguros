@@ -28,15 +28,29 @@ export class FormDataFillingService {
 
         if (valueToSet !== undefined) {
           if (!this.has(formDataGroup.controls, key)) {
-            if (this.controlIsNotRequired(key)) {
-              formDataGroup.addControl(key, this.fb.control(valueToSet));
+            // tslint:disable-next-line: triple-equals
+            if (valueToSet == 'true' || valueToSet == 'false') {
+              if (this.controlIsNotRequired(key)) {
+                formDataGroup.addControl(key, this.fb.control((valueToSet === 'true')));
+              } else {
+                formDataGroup.addControl(key, this.fb.control((valueToSet === 'true'), Validators.required));
+              }
             } else {
-              formDataGroup.addControl(key, this.fb.control(valueToSet, Validators.required));
+              if (this.controlIsNotRequired(key)) {
+                formDataGroup.addControl(key, this.fb.control(valueToSet));
+              } else {
+                formDataGroup.addControl(key, this.fb.control(valueToSet, Validators.required));
+              }
             }
-          } else {
 
+          } else {
             const valueFormControl = formDataGroup.controls[key] as FormControl;
-            valueFormControl.setValue(valueToSet);
+
+            if (valueToSet == 'true' || valueToSet == 'false') {
+              valueFormControl.setValue((valueToSet === 'true'));
+            } else {
+              valueFormControl.setValue(valueToSet);
+            }
           }
         }
       } else if (value !== null && value !== undefined && (typeof value) === 'object') {

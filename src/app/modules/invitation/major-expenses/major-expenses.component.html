@@ -1780,7 +1780,7 @@
         </mat-accordion>
       </mat-tab>
       <mat-tab
-        *ngIf="(this.newRequest.get('person').get('mandatorySubject') && newRequest.get('person').get('isJuridica').value == 'SI' && 
+        *ngIf="(this.newRequest.get('person').get('mandatorySubject') && newRequest.get('person').get('isJuridica') && newRequest.get('person').get('isJuridica').value == 'SI' && 
         (this.newRequest.get('person').get('mandatorySubject').value == 'SI' || this.newRequest.get('person').get('mandatorySubject').value == 'NO'))"
         label="Conozca a su cliente (Persona Jurídica) - Asegurado">
         <mat-accordion #matAccordion="matAccordion" name="matAccordion" class="ww-mat-accordion example-headers-align"
@@ -1790,8 +1790,9 @@
             *ngIf="this.newRequest.get('contractor').get('conozcaSuClientePersonaJuridica')" [form]="newRequest.get('contractor').get('conozcaSuClientePersonaJuridica')">
           </app-know-your-client> -->
           <app-know-your-client
-            [showWarningDot]="showWarningDot(newRequest.get('person').get('conozcaSuClientePersonaJuridica'))"
-            *ngIf="this.newRequest.get('person').get('conozcaSuClientePersonaJuridica')" [form]="newRequest.get('person').get('conozcaSuClientePersonaJuridica')">
+            [showWarningDot]="showWarningDot(newRequest.get('conozcaSuClientePersonaJuridica'))"
+            *ngIf="this.newRequest.get('conozcaSuClientePersonaJuridica')"
+            [form]="newRequest.get('conozcaSuClientePersonaJuridica')">
           </app-know-your-client>
           <!--*ngIf="isJuridica" -->
           <!-- <app-know-your-customer
@@ -1816,8 +1817,9 @@
             *ngIf="isJuridica" [form]="newRequest.get('contractor').get('conozcaSuClientePersonaJuridica')">
           </app-know-your-client> -->
           <app-know-your-customer
-            [showWarningDot]="showWarningDot(newRequest.get('person').get('conozcaSuClientePersona'))"
-            *ngIf="this.newRequest.get('person').get('conozcaSuClientePersona')" [form]="newRequest.get('person').get('conozcaSuClientePersona')">
+            [showWarningDot]="showWarningDot(newRequest.get('conozcaSuClientePersona'))"
+            *ngIf="this.newRequest.get('conozcaSuClientePersona')"
+            [form]="newRequest.get('conozcaSuClientePersona')">
           </app-know-your-customer>
           <!-- <app-know-your-customer
             [showWarningDot]="showWarningDot(newRequest.get('contractor').get('conozcaSuClientePersona'))"
@@ -1844,9 +1846,8 @@
           label="Formulario politica Anti-lavado de Dinero/Financiamiento y Terrorismo (AML)">
           <mat-accordion #matAccordion="matAccordion" name="matAccordion" class="ww-mat-accordion example-headers-align"
             [togglePosition]="'before'">
-            <app-money-laundering
-              [showWarningDot]="showWarningDot(newRequest.get('person').get('antiLaundering'))"
-              [form]="newRequest.get('person').get('antiLaundering')">
+            <app-money-laundering [showWarningDot]="showWarningDot(newRequest.get('antiLaundering'))"
+                [form]="newRequest.get('antiLaundering')">
             </app-money-laundering>
           </mat-accordion>
         </mat-tab>

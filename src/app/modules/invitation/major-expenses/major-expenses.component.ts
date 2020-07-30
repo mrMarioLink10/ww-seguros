@@ -1478,8 +1478,8 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
         case 'isJuridica':
           
           // formContractor.addControl('conozcaSuClientePersonaJuridica', this.fb.group({}));
-          if (this.newRequest.get('person').get('conozcaSuClientePersona')) {
-            formP.removeControl('conozcaSuClientePersona');
+          if (this.newRequest.get('conozcaSuClientePersona')) {
+            formGeneral.removeControl('conozcaSuClientePersona');
           }
           if (this.newRequest.get('files').get('copyId')) {
             formFiles.removeControl('copyId');
@@ -1553,8 +1553,8 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
           break;
 
           case 'mandatorySubject':
-            if (!(this.newRequest.get('person').get('conozcaSuClientePersonaJuridica'))) {
-              formP.addControl('conozcaSuClientePersonaJuridica', this.fb.group({}));
+            if (!(this.newRequest.get('conozcaSuClientePersonaJuridica'))) {
+              formGeneral.addControl('conozcaSuClientePersonaJuridica', this.fb.group({}));
             }
             if (!(this.newRequest.get('files').get('mercantile'))){
               formFiles.addControl('mercantile', this.fb.array([this.createFormArray('mercantileRegister')]));
@@ -1565,7 +1565,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
               formFiles.addControl('mercantile', this.fb.array([this.createFormArray('mercantileRegister')]));
               this.mercantileRegisterArray = this.newRequest.get('files').get('mercantile') as FormArray;
             }
-            formP.addControl('antiLaundering', this.fb.group({}));
+            formGeneral.addControl('antiLaundering', this.fb.group({}));
             break;
         default:
           break;
@@ -1631,17 +1631,17 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
           //     })*/
           //   }));
 
-          if (this.newRequest.get('person').get('conozcaSuClientePersona')) {
-            formP.removeControl('conozcaSuClientePersona');
+          if (this.newRequest.get('conozcaSuClientePersona')) {
+            formGeneral.removeControl('conozcaSuClientePersona');
           }
           if (this.newRequest.get('files').get('copyId')){
             formFiles.removeControl('copyId');
           }
-          if ((this.newRequest.get('person').get('antiLaundering'))) {
-            formP.removeControl('antiLaundering');
+          if ((this.newRequest.get('antiLaundering'))) {
+            formGeneral.removeControl('antiLaundering');
           }
-          if ((this.newRequest.get('person').get('conozcaSuClientePersonaJuridica'))) {
-            formP.removeControl('conozcaSuClientePersonaJuridica');
+          if ((this.newRequest.get('conozcaSuClientePersonaJuridica'))) {
+            formGeneral.removeControl('conozcaSuClientePersonaJuridica');
           }
           if (this.newRequest.get('person').get('mandatorySubject')){
             formP.removeControl('mandatorySubject');
@@ -1689,11 +1689,11 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
           // formContractor.removeControl('conozcaSuClientePersonaJuridica');
           this.titles = FormValidationsConstant.titlesForMajorExpensesComplete;
 
-          if ((this.newRequest.get('person').get('antiLaundering'))) {
-            formP.removeControl('antiLaundering');
+          if ((this.newRequest.get('antiLaundering'))) {
+            formGeneral.removeControl('antiLaundering');
           }
-          if ((this.newRequest.get('person').get('conozcaSuClientePersonaJuridica'))) {
-            formP.removeControl('conozcaSuClientePersonaJuridica');
+          if ((this.newRequest.get('conozcaSuClientePersonaJuridica'))) {
+            formGeneral.removeControl('conozcaSuClientePersonaJuridica');
           }
           if (this.newRequest.get('person').get('mandatorySubject')){
             formP.removeControl('mandatorySubject');
@@ -1701,7 +1701,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
           if (this.newRequest.get('files').get('mercantile')) {
             formFiles.removeControl('mercantile');
           }
-          formP.addControl('conozcaSuClientePersona', this.fb.group({}));
+          formGeneral.addControl('conozcaSuClientePersona', this.fb.group({}));
 
           formFiles.addControl('copyId', this.fb.array([this.createFormArray('filesCopyId')]));
           this.filesCopyIdArray = this.newRequest.get('files').get('copyId') as FormArray;
@@ -1849,8 +1849,8 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
           break;
 
         case 'mandatorySubject':
-          if (!(this.newRequest.get('person').get('conozcaSuClientePersonaJuridica'))) {
-            formP.addControl('conozcaSuClientePersonaJuridica', this.fb.group({}));
+          if (!(this.newRequest.get('conozcaSuClientePersonaJuridica'))) {
+            formGeneral.addControl('conozcaSuClientePersonaJuridica', this.fb.group({}));
           }
           if (!(this.newRequest.get('files').get('mercantile'))){
             formFiles.addControl('mercantile', this.fb.array([this.createFormArray('mercantileRegister')]));
@@ -1861,8 +1861,8 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
             formFiles.addControl('mercantile', this.fb.array([this.createFormArray('mercantileRegister')]));
             this.mercantileRegisterArray = this.newRequest.get('files').get('mercantile') as FormArray;
           }
-          if ((this.newRequest.get('person').get('antiLaundering'))) {
-            formP.removeControl('antiLaundering');
+          if ((this.newRequest.get('antiLaundering'))) {
+            formGeneral.removeControl('antiLaundering');
           }
 
           break;
@@ -2397,8 +2397,12 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
         this.AddEventOnEachDependentVariable();
 
         const formP = this.newRequest.get('person') as FormGroup;
+        const formQA = this.newRequest.get('questionsA') as FormGroup;
         const formEP = this.newRequest.get('exposedPerson') as FormGroup;
         const formGeneral = this.newRequest as FormGroup;
+        const formSAH = this.newRequest.get('sectionAHelper') as FormGroup;
+        const formContractor = this.newRequest.get('contractor') as FormGroup;
+
 
         if (this.newRequest.get('questionsB').get('familyWithDiseases') !== undefined && this.newRequest.get('questionsB').get('familyWithDiseases') !== null) {
           this.familyWithDiseasesList = this.newRequest.get('questionsB').get('familyWithDiseases') as FormArray;
@@ -2448,13 +2452,67 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
           formEP.removeControl('contractor');
         }
 
+        if (formP.get('heightUnit').value !== 'PIE') {
+          formP.removeControl('inches');
+        }
+
+        if (formP.get('mandatorySubject').value !== 'SI') {
+          formGeneral.removeControl('antiLaundering');
+        }
+
+        if (formP.get('isJuridica')) {
+          if (formP.get('isJuridica').value !== 'SI') {
+            formP.removeControl('mandatorySubject');
+          }
+        } else {
+          formGeneral.removeControl('conozcaSuClientePersona');
+          formGeneral.removeControl('conozcaSuClientePersonaJuridica');
+        }
+
+        if (formP.get('isContractor').value !== 'SI') {
+          formGeneral.removeControl('conozcaSuClientePersona');
+          formGeneral.removeControl('conozcaSuClientePersonaJuridica');
+        }
+
         if (formEP.get('headLine').value !== 'SI') {
           formEP.removeControl('headLineExposedInfo');
         }
+
         if (formEP.get('contractor')) {
           if (formEP.get('contractor').value !== 'SI') {
             formEP.removeControl('contractorExposedInfo');
           }
+        }
+
+        if (formQA.get('haveHighRiskSport').value !== true || formQA.get('haveHighRiskSport').value !== 'TRUE') {
+          formQA.removeControl('highRiskSport');
+        }
+
+        if (formQA.get('haveNicotine').value !== true || formQA.get('haveNicotine').value !== 'TRUE') {
+          formQA.removeControl('nicotine');
+        }
+
+        if (formQA.get('havePregnant').value !== true || formQA.get('havePregnant').value !== 'TRUE') {
+          formQA.removeControl('pregnant');
+        }
+
+        formSAH.removeControl('haveSpine');
+        formQA.removeControl('haveSpine');
+
+        this.newRequest.removeControl('questionsB');
+
+        if (this.newRequest.get('person').get('conozcaSuClientePersona')) {
+          formP.removeControl('conozcaSuClientePersona');
+        }
+        if ((this.newRequest.get('person').get('antiLaundering'))) {
+          formP.removeControl('antiLaundering');
+        }
+        if ((this.newRequest.get('person').get('conozcaSuClientePersonaJuridica'))) {
+          formP.removeControl('conozcaSuClientePersonaJuridica');
+        }
+
+        if (this.newRequest.get('contractor').get('conozcaSuClientePersona')) {
+          formContractor.removeControl('conozcaSuClientePersona');
         }
 
         this.contingentBeneficiaryArray = this.newRequest.get('contingentBeneficiary').get('dependentsC') as FormArray;

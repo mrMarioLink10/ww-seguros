@@ -29,6 +29,11 @@ export class NumberInputComponent implements OnInit {
           control.setValue(parseInt(control.errors.max.max.toString()));
         }
       }
+    } else if (this.max) {
+      if (control.value > this.max) {
+        // tslint:disable-next-line: radix
+        control.setValue(parseInt(this.max.toString()));
+      }
     }
   }
 }

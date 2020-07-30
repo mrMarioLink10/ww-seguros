@@ -11,6 +11,7 @@ import { MatDialog } from '@angular/material';
 import { BaseDialogComponent } from 'src/app/shared/components/base-dialog/base-dialog.component';
 import { map, first } from 'rxjs/operators';
 import { AppComponent } from 'src/app/app.component';
+import { environment } from 'src/environments/environment';
 import { FormValidationsConstant } from 'src/app/shared/ShareConstant/shareConstantFile';
 import { CurrencyPipe } from '@angular/common';
 import { FormDataFillingService } from 'src/app/modules/dashboard/services/shared/formDataFillingService';
@@ -945,9 +946,9 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
 
   newQuote() {
     if (this.userService.getRoleCotizador() === 'WWS') {
-      window.open('http://portalwwg.eastus.cloudapp.azure.com:3000/salud?cia=wws', '_blank');
+      window.open(`${environment.urlCotizadoresSalud}?cia=wws`, '_blank');
     } else if (this.userService.getRoleCotizador() === 'WMA') {
-      window.open('http://portalwwg.eastus.cloudapp.azure.com:3000/salud?cia=wwm', '_blank');
+      window.open(`${environment.urlCotizadoresSalud}?cia=wwm`, '_blank');
     }
   }
   canDeactivate(): Observable<boolean> | boolean {

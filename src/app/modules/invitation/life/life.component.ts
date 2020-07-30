@@ -19,6 +19,7 @@ import { UserService } from 'src/app/core/services/user/user.service';
 import { LifeService } from '../../dashboard/requests/new-request/life/services/life.service';
 import { KnowYourCustomerComponent } from '../../dashboard/shared/components/disease/know-your-customer/know-your-customer.component';
 import { RequestsService } from '../services/requests.service';
+import { environment } from 'src/environments/environment';
 
 // tslint:disable: one-line
 // tslint:disable: max-line-length
@@ -1748,9 +1749,9 @@ export class LifeComponent implements OnInit, DoCheck {
 
   newQuote() {
     if (this.userService.getRoleCotizador() === 'WWS') {
-      window.open('https://cotizadores.wwseguros.com.do/?cia=wws', '_blank');
+      window.open(`${environment.urlCotizadores}/?cia=wws`, '_blank');
     } else if (this.userService.getRoleCotizador() === 'WMA') {
-      window.open('https://cotizadores.wwseguros.com.do/?cia=wwm', '_blank');
+      window.open(`${environment.urlCotizadores}/?cia=wwm`, '_blank');
     }
   }
 

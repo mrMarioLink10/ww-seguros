@@ -769,7 +769,7 @@ export class RefundComponent implements OnInit {
 			this.diagnosticList = this.refundForm.get('diagnosticos') as FormArray;
 			this.filesInformation = data.data.diagnosticos;
 
-			if (data.data.agreeWithDeclaration === 'TRUE') {
+			if (data.data.agreeWithDeclaration === 'true' || data.data.agreeWithDeclaration === 'TRUE') {
 				this.refundForm.get('agreeWithDeclaration').setValue(true);
 			}
 

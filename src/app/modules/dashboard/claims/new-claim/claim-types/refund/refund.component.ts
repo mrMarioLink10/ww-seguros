@@ -280,8 +280,8 @@ export class RefundComponent implements OnInit {
 
 		this.refundForm = this.fb.group({
 			fecha: [new Date(), Validators.required],
-			tipoReclamo: ['', Validators.required],
 			informacion: this.fb.group({
+        tipoReclamo: ['', Validators.required],
 				noPoliza: [{ value: '', disabled: true }, [Validators.required]],
 				filterType: ['', Validators.required],
 				idNumber: ['', Validators.required],

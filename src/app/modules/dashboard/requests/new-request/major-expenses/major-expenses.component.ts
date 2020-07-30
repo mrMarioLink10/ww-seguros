@@ -1518,8 +1518,8 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
     const formGeneral = this.newRequest as FormGroup;
     const formContractor = this.newRequest.get('contractor') as FormGroup;
     const questionsForm = this.newRequest.get('questionsA') as FormGroup;
-    const questionsBForm = this.newRequest.get('questionsB') as FormGroup;
-    const mhiForm = this.newRequest.get('questionsB').get('medicalHealthInsurance') as FormGroup;
+    // const questionsBForm = this.newRequest.get('questionsB') as FormGroup;
+    // const mhiForm = this.newRequest.get('questionsB').get('medicalHealthInsurance') as FormGroup;
     const exposedPersonForm = this.newRequest.get('exposedPerson') as FormGroup;
     const formP = this.newRequest.get('person') as FormGroup;
     const formEP = this.newRequest.get('exposedPerson') as FormGroup;
@@ -1670,31 +1670,31 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
           break;
 
         case 'hasDeclinedInsuranceCompany':
-          questionsBForm.addControl('declinedInsuranceInformation', this.fb.group({
-            reason: ['', Validators.required],
-          }));
+          // questionsBForm.addControl('declinedInsuranceInformation', this.fb.group({
+          //   reason: ['', Validators.required],
+          // }));
           break;
 
         case 'didReclamation':
-          mhiForm.addControl('reclamationInfo', this.fb.control('', Validators.required));
+          // mhiForm.addControl('reclamationInfo', this.fb.control('', Validators.required));
           break;
 
         case 'haveHadMedicalHealthInsurance':
-          questionsBForm.addControl('medicalHealthInsurance', this.fb.group({
-            companyName: ['', Validators.required],
-            policeNo: ['', Validators.required],
-            insureName: ['', Validators.required],
-            insuranceCompany: ['', Validators.required],
-            policeType: ['', Validators.required],
-            emitionDate: ['', Validators.required],
-            isItCurrent: ['', Validators.required],
-            didReclamation: ['', Validators.required],
-          }));
+          // questionsBForm.addControl('medicalHealthInsurance', this.fb.group({
+          //   companyName: ['', Validators.required],
+          //   policeNo: ['', Validators.required],
+          //   insureName: ['', Validators.required],
+          //   insuranceCompany: ['', Validators.required],
+          //   policeType: ['', Validators.required],
+          //   emitionDate: ['', Validators.required],
+          //   isItCurrent: ['', Validators.required],
+          //   didReclamation: ['', Validators.required],
+          // }));
           break;
 
         case 'hasFamilyWithHeartKidneyDisease':
-          questionsBForm.addControl('familyWithDiseases', this.fb.array([this.createFormArray('haveDisease')]));
-          this.familyWithDiseasesList = questionsBForm.get('familyWithDiseases') as FormArray;
+          // questionsBForm.addControl('familyWithDiseases', this.fb.array([this.createFormArray('haveDisease')]));
+          // this.familyWithDiseasesList = questionsBForm.get('familyWithDiseases') as FormArray;
           break;
 
         case 'pep_radio_insured':
@@ -1892,15 +1892,15 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
           break;
 
         case 'hasDeclinedInsuranceCompany':
-          questionsBForm.removeControl('declinedInsuranceInformation');
+          // questionsBForm.removeControl('declinedInsuranceInformation');
           break;
 
         case 'haveHadMedicalHealthInsurance':
-          questionsBForm.removeControl('medicalHealthInsurance');
+          // questionsBForm.removeControl('medicalHealthInsurance');
           break;
 
         case 'didReclamation':
-          mhiForm.removeControl('reclamationInfo');
+          // mhiForm.removeControl('reclamationInfo');
           break;
 
         case 'haveMusculoskeletal':
@@ -1993,7 +1993,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
 
 
         case 'hasFamilyWithHeartKidneyDisease':
-          questionsBForm.removeControl('familyWithDiseases');
+          // questionsBForm.removeControl('familyWithDiseases');
           this.familyWithDiseasesList = undefined;
           break;
 
@@ -2802,17 +2802,19 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
         this.AddEventOnEachDependentVariable();
 
         const formP = this.newRequest.get('person') as FormGroup;
+        const formQA = this.newRequest.get('questionsA') as FormGroup;
         const formEP = this.newRequest.get('exposedPerson') as FormGroup;
+        const formSAH = this.newRequest.get('sectionAHelper') as FormGroup;
         const formGeneral = this.newRequest as FormGroup;
 
-        if (this.newRequest.get('questionsB').get('familyWithDiseases') !== undefined && this.newRequest.get('questionsB').get('familyWithDiseases') !== null) {
-          this.familyWithDiseasesList = this.newRequest.get('questionsB').get('familyWithDiseases') as FormArray;
-        } else {
-          this.familyWithDiseasesList = undefined;
-        }
+        // if (this.newRequest.get('questionsB').get('familyWithDiseases') !== undefined && this.newRequest.get('questionsB').get('familyWithDiseases') !== null) {
+        //   this.familyWithDiseasesList = this.newRequest.get('questionsB').get('familyWithDiseases') as FormArray;
+        // } else {
+        //   this.familyWithDiseasesList = undefined;
+        // }
 
         if (formP.get('isContractor').value === 'NO') {
-          formP.removeControl('isJuridica');
+          // formP.removeControl('isJuridica');
           if (formGeneral.get('contractor')) {
             formGeneral.removeControl('contractor');
           }
@@ -2851,22 +2853,62 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
           formEP.removeControl('contractor');
         }
 
+        if (formP.get('heightUnit').value !== 'PIE') {
+          formP.removeControl('inches');
+        }
+
+        if (formP.get('mandatorySubject').value !== 'SI') {
+          formP.removeControl('antiLaundering');
+        }
+
+        if (formP.get('isJuridica')) {
+          if (formP.get('isJuridica').value !== 'SI') {
+            formP.removeControl('mandatorySubject');
+          }
+        } else {
+          formP.removeControl('conozcaSuClientePersona');
+          formP.removeControl('conozcaSuClientePersonaJuridica');
+        }
+
+        if (formP.get('isContractor').value !== 'SI') {
+          formP.removeControl('conozcaSuClientePersona');
+          formP.removeControl('conozcaSuClientePersonaJuridica');
+        }
+
         if (formEP.get('headLine').value !== 'SI') {
           formEP.removeControl('headLineExposedInfo');
         }
+
         if (formEP.get('contractor')) {
           if (formEP.get('contractor').value !== 'SI') {
             formEP.removeControl('contractorExposedInfo');
           }
         }
 
+        if (formQA.get('haveHighRiskSport').value !== true || formQA.get('haveHighRiskSport').value !== 'TRUE') {
+          formQA.removeControl('highRiskSport');
+        }
+
+        if (formQA.get('haveNicotine').value !== true || formQA.get('haveNicotine').value !== 'TRUE') {
+          formQA.removeControl('nicotine');
+        }
+
+        if (formQA.get('havePregnant').value !== true || formQA.get('havePregnant').value !== 'TRUE') {
+          formQA.removeControl('pregnant');
+        }
+
+        formSAH.removeControl('haveSpine');
+        formQA.removeControl('haveSpine');
+
+        this.newRequest.removeControl('questionsB');
+
         this.contingentBeneficiaryArray = this.newRequest.get('contingentBeneficiary').get('dependentsC') as FormArray;
         this.primaryBenefitsArray = this.newRequest.get('primaryBenefits').get('dependentsC') as FormArray;
         this.studentDependents = this.newRequest.get('dependents').get('students') as FormArray;
         this.dependentsFormArray = this.newRequest.get('dependents').get('allDependents') as FormArray;
         this.questionsFormArray = this.newRequest.get('questionsA') as FormArray;
-        this.questionsBFormArray = this.newRequest.get('questionsB') as FormArray;
-        this.informationList = this.newRequest.get('questionsB').get('information') as FormArray;
+        // this.questionsBFormArray = this.newRequest.get('questionsB') as FormArray;
+        // this.informationList = this.newRequest.get('questionsB').get('information') as FormArray;
         this.filesStudiesArray = this.newRequest.get('files').get('studies') as FormArray;
 
         this.isFormValidToFill = true;

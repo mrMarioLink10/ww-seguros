@@ -33,13 +33,13 @@ export class FormDataFillingService {
               if (this.controlIsNotRequired(key)) {
                 formDataGroup.addControl(key, this.fb.control((valueToSet === 'true')));
               } else {
-                formDataGroup.addControl(key, this.fb.control((valueToSet === 'true'), Validators.required));
+                formDataGroup.addControl(key, this.fb.control((valueToSet === 'true')/*, Validators.required*/));
               }
             } else {
               if (this.controlIsNotRequired(key)) {
                 formDataGroup.addControl(key, this.fb.control(valueToSet));
               } else {
-                formDataGroup.addControl(key, this.fb.control(valueToSet, Validators.required));
+                formDataGroup.addControl(key, this.fb.control(valueToSet/*, Validators.required*/));
               }
             }
 
@@ -63,7 +63,7 @@ export class FormDataFillingService {
             const arrayForm = [];
             value.forEach((element) => {
               const fbGroup = this.fb.group({
-                id: ['', Validators.required]
+                id: [''/*, Validators.required*/]
               });
 
               this.iterateThroughtAllObject(element, fbGroup);
@@ -77,7 +77,7 @@ export class FormDataFillingService {
           if (key !== 'anonimousUser') {
             if (!this.has(formDataGroup.controls, key)) {
               formDataGroup.addControl(key, this.fb.group({
-                id: ['', Validators.required]
+                id: [''/*, Validators.required*/]
               }));
             }
             const form = formDataGroup.get(key);

@@ -301,7 +301,8 @@
 
                     <div class="mt-3 lg:mt-3 xl:mt-3">
                       <div>
-                        <label class="radio-button-label"> ¿Es usted una PEP o tiene usted una prima mayor de US$10,000? </label>
+                        <label class="radio-button-label"> ¿Es usted una PEP o tiene usted una prima mayor de US$10,000?
+                        </label>
                       </div>
                       <div class="mr-3">
                         <app-radio-button [group]="disabilityGroup.get('insured_data')" [options]="YesNo"
@@ -320,7 +321,8 @@
                       </div>
                     </div>
 
-                    <div class="mt-2" *ngIf="disabilityGroup.get('insured_data').get('pep_radio_insured').value == 'SI'">
+                    <div class="mt-2"
+                      *ngIf="disabilityGroup.get('insured_data').get('pep_radio_insured').value == 'SI'">
                       <div class="radio-button-label" style="font-size: 12px !important; max-width: 63vw;">Adjuntar
                         documentos "Copia de Cédula" y "Certificación de Ingresos declarados"
                       </div>
@@ -354,7 +356,7 @@
                                 obligatorio
                               </mat-error>
                             </mat-form-field>
-                            <div *ngIf= "filesDocumentsKnowClientArray.length > 1"
+                            <div *ngIf="filesDocumentsKnowClientArray.length > 1"
                               [ngClass]="{'': filesDocumentsKnowClientArray.length === 1, 'col-span-1': filesDocumentsKnowClientArray.length > 1} ">
                               <button mat-mini-fab aria-label=" Eliminar estudio"
                                 (click)="diseaseService.removeToList(i, filesDocumentsKnowClientArray)" type="button"
@@ -373,7 +375,8 @@
                         </button>
                       </div>
                     </div>
-                    <div class="mt-2" *ngIf="disabilityGroup.get('insured_data').get('pep_radio_insured').value == 'NO'">
+                    <div class="mt-2"
+                      *ngIf="disabilityGroup.get('insured_data').get('pep_radio_insured').value == 'NO'">
                       <div class="radio-button-label" style="font-size: 12px !important; max-width: 63vw;">Adjuntar
                         documentos "Copia de Cédula"
                       </div>
@@ -407,7 +410,7 @@
                                 obligatorio
                               </mat-error>
                             </mat-form-field>
-                            <div *ngIf= "filesDocumentsKnowClientArray.length > 1"
+                            <div *ngIf="filesDocumentsKnowClientArray.length > 1"
                               [ngClass]="{'': filesDocumentsKnowClientArray.length === 1, 'col-span-1': filesDocumentsKnowClientArray.length > 1} ">
                               <button mat-mini-fab aria-label=" Eliminar estudio"
                                 (click)="diseaseService.removeToList(i, filesDocumentsKnowClientArray)" type="button"
@@ -499,7 +502,9 @@
                     </div>
                   </div>
 
-                  <div *ngIf="disabilityGroup.get('insured_data').get('pep_radio_insured').value == 'SI' || disabilityGroup.get('insured_data').get('pep_radio_insured').value == 'NO'" class="mt-4">
+                  <div
+                    *ngIf="disabilityGroup.get('insured_data').get('pep_radio_insured').value == 'SI' || disabilityGroup.get('insured_data').get('pep_radio_insured').value == 'NO'"
+                    class="mt-4">
                     <div>
                       <label class="radio-button-label"> ¿El asegurador y el contratante/pagador son distintos? </label>
                     </div>
@@ -510,8 +515,8 @@
                     </div>
                   </div>
 
-                  <div *ngIf="disabilityGroup.get('insured_data').get('policyholderKnowClientRadio')"
-                    class="mt-4 lg:mt-3 xl:mt-3">
+                  <div *ngIf="disabilityGroup.get('insured_data').get('insuredPolicyholderRadio').value == 'SI' &&
+                  disabilityGroup.get('insured_data').get('policyholderKnowClientRadio')" class="mt-4 lg:mt-3 xl:mt-3">
                     <div>
                       <label class="radio-button-label"> ¿Es una persona jurídica? </label>
                     </div>
@@ -525,15 +530,13 @@
                       <div class="radio-button-label" style="font-size: 12px !important; max-width: 63vw;">Adjuntar
                         documentos
                       </div>
-                      <div
-                        *ngIf="disabilityGroup.get('files') && disabilityGroup.get('files').get('copyId')">
+                      <div *ngIf="disabilityGroup.get('files') && disabilityGroup.get('files').get('copyId')">
                         <div *ngFor="let copies of filesCopyIdArray.controls; let i = index">
                           <div class="grid grid-cols-2">
                             <mat-form-field class="mr-3" appearance="outline"
                               [ngClass]="{'file-input': disabilityGroup.get('files').get('copyId').get(i.toString()).get('idId').value !== ''}">
                               <mat-label> Copia de Cédula </mat-label>
-                              <ngx-mat-file-input #removableInputcopyId
-                                [valuePlaceholder]="arrayCopyIdWatcher(i)"
+                              <ngx-mat-file-input #removableInputcopyId [valuePlaceholder]="arrayCopyIdWatcher(i)"
                                 (change)="onStudiesChange($event, i, 'copyId')">
                               </ngx-mat-file-input>
                               <mat-icon style="color: #e2e2e2;" matSuffix
@@ -589,12 +592,12 @@
                         </app-radio-button>
                       </div>
 
-                      <div *ngIf="disabilityGroup.get('insured_data').get('mandatorySubject').value == 'SI' || disabilityGroup.get('insured_data').get('mandatorySubject').value == 'NO'">
+                      <div
+                        *ngIf="disabilityGroup.get('insured_data').get('mandatorySubject').value == 'SI' || disabilityGroup.get('insured_data').get('mandatorySubject').value == 'NO'">
                         <div class="radio-button-label" style="font-size: 12px !important; max-width: 63vw;">Adjuntar
                           documentos
                         </div>
-                        <div
-                          *ngIf="disabilityGroup.get('files') && disabilityGroup.get('files').get('mercantile')">
+                        <div *ngIf="disabilityGroup.get('files') && disabilityGroup.get('files').get('mercantile')">
                           <div *ngFor="let registers of mercantileRegisterArray.controls; let i = index">
                             <div class="grid grid-cols-2">
                               <mat-form-field class="mr-3" appearance="outline"
@@ -2479,7 +2482,7 @@
         </mat-tab>
       </div>
 
-      <mat-tab *ngIf="this.disabilityGroup.get('insured_data').get('pep_radio_insured').value == 'SI'"
+      <!-- <mat-tab *ngIf="this.disabilityGroup.get('insured_data').get('pep_radio_insured').value == 'SI'"
         label="Conozca a su cliente (Persona Física) - Asegurado">
         <mat-accordion #matAccordion="matAccordion" name="matAccordion" class="ww-mat-accordion example-headers-align"
           [togglePosition]="'before'">
@@ -2489,7 +2492,7 @@
           </app-know-your-customer>
         </mat-accordion>
 
-      </mat-tab>
+      </mat-tab> -->
       <div *ngIf="disabilityGroup.get('policyholder')">
         <mat-tab
           *ngIf="this.disabilityGroup.get('policyholder').get('pep_radio_holder').value == 'SI' && disabilityGroup.get('policyholder').get('KnowYourCustomer')"
@@ -2514,31 +2517,35 @@
       </div> -->
       <div *ngIf="this.disabilityGroup.get('insured_data').get('insuredPolicyholderRadio').value == 'SI'">
         <div *ngIf="this.disabilityGroup.get('insured_data').get('policyholderKnowClientRadio').value == 'SI'">
-          <mat-tab *ngIf="this.disabilityGroup.get('insured_data').get('mandatorySubject').value == 'SI' || 
+          <div *ngIf="disabilityGroup.get('insured_data').get('mandatorySubject')">
+            <mat-tab *ngIf="this.disabilityGroup.get('insured_data').get('mandatorySubject').value == 'SI' || 
           this.disabilityGroup.get('insured_data').get('mandatorySubject').value == 'NO'"
-            label="Conozca a su cliente (Persona Jurídica) - Asegurado">
-            <mat-accordion #matAccordion="matAccordion" name="matAccordion" class="ww-mat-accordion example-headers-align"
-              [togglePosition]="'before'">
-              <app-know-your-client
-                [showWarningDot]="showWarningDot(disabilityGroup.get('insured_data').get('knowYourClient'))"
-                [form]="disabilityGroup.get('insured_data').get('knowYourClient')">
-              </app-know-your-client>
-            </mat-accordion>
-          </mat-tab>
+              label="Conozca a su cliente (Persona Jurídica) - Asegurado">
+              <mat-accordion #matAccordion="matAccordion" name="matAccordion"
+                class="ww-mat-accordion example-headers-align" [togglePosition]="'before'">
+                <app-know-your-client
+                  [showWarningDot]="showWarningDot(disabilityGroup.get('insured_data').get('knowYourClient'))"
+                  [form]="disabilityGroup.get('insured_data').get('knowYourClient')">
+                </app-know-your-client>
+              </mat-accordion>
+            </mat-tab>
+          </div>
         </div>
       </div>
       <div *ngIf="this.disabilityGroup.get('insured_data').get('insuredPolicyholderRadio').value == 'SI'">
         <div *ngIf="this.disabilityGroup.get('insured_data').get('policyholderKnowClientRadio').value == 'SI'">
-          <mat-tab *ngIf="this.disabilityGroup.get('insured_data').get('mandatorySubject').value == 'SI'"
-          label="Formulario politica Anti-lavado de Dinero/Financiamiento y Terrorismo (AML)">
-          <mat-accordion #matAccordion="matAccordion" name="matAccordion" class="ww-mat-accordion example-headers-align"
-            [togglePosition]="'before'">
-            <app-money-laundering
-              [showWarningDot]="showWarningDot(disabilityGroup.get('insured_data').get('antiLaundering'))"
-              [form]="disabilityGroup.get('insured_data').get('antiLaundering')">
-            </app-money-laundering>
-          </mat-accordion>
-        </mat-tab>
+          <div *ngIf="disabilityGroup.get('insured_data').get('mandatorySubject')">
+            <mat-tab *ngIf="this.disabilityGroup.get('insured_data').get('mandatorySubject').value == 'SI'"
+              label="Formulario politica Anti-lavado de Dinero/Financiamiento y Terrorismo (AML)">
+              <mat-accordion #matAccordion="matAccordion" name="matAccordion"
+                class="ww-mat-accordion example-headers-align" [togglePosition]="'before'">
+                <app-money-laundering
+                  [showWarningDot]="showWarningDot(disabilityGroup.get('insured_data').get('antiLaundering'))"
+                  [form]="disabilityGroup.get('insured_data').get('antiLaundering')">
+                </app-money-laundering>
+              </mat-accordion>
+            </mat-tab>
+          </div>
         </div>
       </div>
     </mat-tab-group>

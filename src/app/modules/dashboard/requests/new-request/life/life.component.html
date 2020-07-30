@@ -241,13 +241,16 @@
                 </div>
 
               </div>
-              <app-radio-button *ngIf="newRequest.get('person').get('contractorIsLegalEntity')" class="mr-3"
+              <app-radio-button *ngIf="newRequest.get('person').get('contractorIsLegalEntity') && 
+              (newRequest.get('person').get('sameAsContractor').value == 'NO' || 
+              newRequest.get('person').get('sameAsContractor').value == 'SI')" class="mr-3"
                 (selected)="selectChange($event)" [group]="newRequest.get('person')" name="contractorIsLegalEntity"
                 title="¿El asegurador y el contratante/pagador son distintos?" [options]="diseaseService.yesOrNoOriginal">
               </app-radio-button>
               <div class="mr-3">
                 <div>
-                  <app-radio-button *ngIf="newRequest.get('person').get('sameAsPayer')"  (selected)="selectChange($event)" [group]="newRequest.get('person')"
+                  <app-radio-button *ngIf="newRequest.get('person').get('sameAsPayer') && 
+                  newRequest.get('person').get('contractorIsLegalEntity').value == 'SI'"  (selected)="selectChange($event)" [group]="newRequest.get('person')"
                     name="sameAsPayer" title="¿Es una persona jurídica?"
                     [options]="diseaseService.yesOrNoOriginal">
                   </app-radio-button>
@@ -311,8 +314,9 @@
 
               </div>
               <div class="mr-3">
-                <div>
-                  <app-radio-button *ngIf="newRequest.get('person').get('payerIsLegalEntity')" class="mr-3"
+                <div *ngIf="newRequest.get('person').get('sameAsPayer')">
+                  <app-radio-button *ngIf="newRequest.get('person').get('payerIsLegalEntity') &&
+                  newRequest.get('person').get('sameAsPayer').value == 'SI'" class="mr-3"
                     (selected)="selectChange($event)" [group]="newRequest.get('person')" name="payerIsLegalEntity"
                     title="¿Es un sujeto obligado?" [options]="diseaseService.yesOrNoOriginal">
                   </app-radio-button>

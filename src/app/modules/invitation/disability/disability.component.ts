@@ -1348,7 +1348,7 @@ export class DisabilityComponent implements OnInit, DoCheck {
 
           // if (this.role === 'WMA') { formInsured.addControl('knowYourClient', this.fb.group({})); }
           // else if (this.role === 'WWS') { formInsured.addControl('knowYourCustomer', this.fb.group({})); }
-          if (!(this.disabilityGroup.get('files').get('documentsKnowClient'))){
+          if (!(this.disabilityGroup.get('files').get('documentsKnowClient'))) {
             formFiles.addControl('documentsKnowClient', this.fb.array([this.createFormArray('filesDocumentsKnowClient')]));
             this.filesDocumentsKnowClientArray = this.disabilityGroup.get('files').get('documentsKnowClient') as FormArray;
           }
@@ -1473,7 +1473,7 @@ export class DisabilityComponent implements OnInit, DoCheck {
           break;
 
         case 'policyholderKnowClientRadio':
-// if (this.disabilityGroup.get('insured_data').get('policyholderKnowClientRadio')){
+          // if (this.disabilityGroup.get('insured_data').get('policyholderKnowClientRadio')){
           //   formInsured.removeControl('policyholderKnowClientRadio');
           // }
           // this.accordionTitles = [
@@ -1485,10 +1485,10 @@ export class DisabilityComponent implements OnInit, DoCheck {
           // formInsured.addControl('knowYourClient', this.fb.group({}));
           // formFiles.addControl('documentsKnowClient', this.fb.array([]));
           // this.filesDocumentsKnowClientArray = this.disabilityGroup.get('files').get('documentsKnowClient') as FormArray;
-          if (this.disabilityGroup.get('insured_data').get('KnowYourCustomer')){
+          if (this.disabilityGroup.get('insured_data').get('KnowYourCustomer')) {
             formInsured.removeControl('KnowYourCustomer');
           }
-          if (this.disabilityGroup.get('files').get('copyId')){
+          if (this.disabilityGroup.get('files').get('copyId')) {
             formFiles.removeControl('copyId');
           }
           formInsured.addControl('mandatorySubject', this.fb.control('', Validators.required));
@@ -1509,7 +1509,7 @@ export class DisabilityComponent implements OnInit, DoCheck {
           if (!(this.disabilityGroup.get('insured_data').get('knowYourClient'))) {
             formInsured.addControl('knowYourClient', this.fb.group({}));
           }
-          if (!(this.disabilityGroup.get('files').get('mercantile'))){
+          if (!(this.disabilityGroup.get('files').get('mercantile'))) {
             formFiles.addControl('mercantile', this.fb.array([this.createFormArray('mercantileRegister')]));
             this.mercantileRegisterArray = this.disabilityGroup.get('files').get('mercantile') as FormArray;
           }
@@ -1672,10 +1672,10 @@ export class DisabilityComponent implements OnInit, DoCheck {
           if (this.disabilityGroup.get('insured_data').get('policyholderKnowClientRadio')) {
             formInsured.removeControl('policyholderKnowClientRadio');
           }
-          if (this.disabilityGroup.get('insured_data').get('KnowYourCustomer')){
+          if (this.disabilityGroup.get('insured_data').get('KnowYourCustomer')) {
             formInsured.removeControl('KnowYourCustomer');
           }
-          if (this.disabilityGroup.get('files').get('copyId')){
+          if (this.disabilityGroup.get('files').get('copyId')) {
             formFiles.removeControl('copyId');
           }
           if ((this.disabilityGroup.get('insured_data').get('antiLaundering'))) {
@@ -1684,7 +1684,7 @@ export class DisabilityComponent implements OnInit, DoCheck {
           if ((this.disabilityGroup.get('insured_data').get('knowYourClient'))) {
             formInsured.removeControl('knowYourClient');
           }
-          if (this.disabilityGroup.get('insured_data').get('mandatorySubject')){
+          if (this.disabilityGroup.get('insured_data').get('mandatorySubject')) {
             formInsured.removeControl('mandatorySubject');
           }
           if (this.disabilityGroup.get('files').get('mercantile')) {
@@ -1725,7 +1725,7 @@ export class DisabilityComponent implements OnInit, DoCheck {
           if ((this.disabilityGroup.get('insured_data').get('antiLaundering'))) {
             formInsured.removeControl('antiLaundering');
           }
-          if (this.disabilityGroup.get('insured_data').get('mandatorySubject')){
+          if (this.disabilityGroup.get('insured_data').get('mandatorySubject')) {
             formInsured.removeControl('mandatorySubject');
           }
           if (this.disabilityGroup.get('files').get('mercantile')) {
@@ -1754,7 +1754,7 @@ export class DisabilityComponent implements OnInit, DoCheck {
           if (!(this.disabilityGroup.get('insured_data').get('knowYourClient'))) {
             formInsured.addControl('knowYourClient', this.fb.group({}));
           }
-          if (!(this.disabilityGroup.get('files').get('mercantile'))){
+          if (!(this.disabilityGroup.get('files').get('mercantile'))) {
             formFiles.addControl('mercantile', this.fb.array([this.createFormArray('mercantileRegister')]));
             this.mercantileRegisterArray = this.disabilityGroup.get('files').get('mercantile') as FormArray;
           }
@@ -2109,8 +2109,11 @@ export class DisabilityComponent implements OnInit, DoCheck {
 
         this.dataMappingFromApi.iterateThroughtAllObject(data.data, this.disabilityGroup);
         const formF = this.disabilityGroup.get('files') as FormGroup;
+        const formI = this.disabilityGroup.get('insured_data') as FormGroup;
         const formCB = this.disabilityGroup.get('contingent') as FormGroup;
         const formM = this.disabilityGroup.get('main') as FormGroup;
+        const formQ = this.disabilityGroup.get('questions') as FormGroup;
+        const formQQ = this.disabilityGroup.get('questions').get('questionnaire') as FormGroup;
         console.log(this.disabilityGroup);
         console.log(data.data);
 
@@ -2132,6 +2135,9 @@ export class DisabilityComponent implements OnInit, DoCheck {
         this.existingCoveragesList = this.disabilityGroup.get('contingent').get('anotherCoverages') as FormArray;
         this.changingCoveragesList = this.disabilityGroup.get('contingent').get('changingCoverages') as FormArray;
         this.filesStudiesArray = formF.get('studies') as FormArray;
+        this.mainFormArray = this.disabilityGroup.get('main').get('main_array') as FormArray;
+        this.contingentFormArray = this.disabilityGroup.get('contingent').get('contingent_array') as FormArray;
+
         if (this.disabilityGroup.get('files') && this.disabilityGroup.get('files').get('documentsKnowClient')) {
           this.filesDocumentsKnowClientArray = this.disabilityGroup.get('files').get('documentsKnowClient') as FormArray;
         }
@@ -2148,6 +2154,34 @@ export class DisabilityComponent implements OnInit, DoCheck {
           formCB.get('changeAnotherCoverage').reset();
           formCB.removeControl('changeAnotherCoverage');
           this.changingCoveragesList = undefined;
+        }
+
+        if (formQ.get('alcohol_radio').value !== 'SI') {
+          formQ.removeControl('alcohol');
+        }
+
+        if (formQ.get('smoker_radio').value !== 'SI') {
+          formQ.removeControl('smoke');
+        }
+
+        if (formQ.get('heightUnit').value !== 'PIE') {
+          formQ.removeControl('inches');
+        }
+
+        if (formQ.get('alcohol_radio').value !== 'SI') {
+          formQ.removeControl('alcohol');
+        }
+
+        if (formQQ.get('health_radio').value !== 'SI') {
+          formQQ.removeControl('health');
+        }
+
+        if (formQQ.get('sicknessType_radio').value !== 'SI') {
+          formQQ.removeControl('sicknessType');
+        }
+
+        if (formI.get('insuredPolicyholderRadio').value !== 'SI') {
+          formI.removeControl('policyholder');
         }
 
         //this.disabilityGroup['controls'].num_financial_quote.setValue(data.data.num_financial_quote)

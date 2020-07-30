@@ -254,7 +254,7 @@
                     [options]="diseaseService.yesOrNoOriginal">
                   </app-radio-button>
                 </div>
-                
+
                 <div *ngIf="newRequest.get('person').get('sameAsPayer')">
                   <div *ngIf="newRequest.get('person').get('sameAsPayer').value == 'NO'">
                     <div class="radio-button-label" style="font-size: 12px !important; max-width: 63vw;">Adjuntar
@@ -1578,7 +1578,7 @@
                       [group]="newRequest.get('medicalHistory').get('informations').get('weightChanges')" name="detail"
                       label="Texto"></app-text-area>
                   </div>
-                  <div *ngIf="question.name !== 'haveHadWeightChanges' && question.name !== 'isWomen' && question.name !== 'listDoctors' && question.name !== 'haveNotCarriedOut' 
+                  <div *ngIf="question.name !== 'haveHadWeightChanges' && question.name !== 'isWomen' && question.name !== 'listDoctors' && question.name !== 'haveNotCarriedOut'
                     && question.name !== 'haveHadSpecializedTests'">
                     <div *ngFor="let medic of this[question.array].controls; let i = index"
                       class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4 lg:mb-8">

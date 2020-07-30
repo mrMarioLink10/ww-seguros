@@ -817,6 +817,9 @@ export class RefundComponent implements OnInit {
 				this.totalAmountPesos = totalPesos;
 			});
 
+			this.totalAmount = data.data.totalAmount;
+			this.totalAmountPesos = data.data.totalAmountPesos;
+
 		});
 		this.refund.id = null;
 		this.appComponent.showOverlay = false;

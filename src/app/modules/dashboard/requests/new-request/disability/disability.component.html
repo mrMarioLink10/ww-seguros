@@ -510,7 +510,8 @@
                     </div>
                   </div>
 
-                  <div *ngIf="disabilityGroup.get('insured_data').get('policyholderKnowClientRadio')"
+                  <div *ngIf="disabilityGroup.get('insured_data').get('insuredPolicyholderRadio').value == 'SI' && 
+                  disabilityGroup.get('insured_data').get('policyholderKnowClientRadio')"
                     class="mt-4 lg:mt-3 xl:mt-3">
                     <div>
                       <label class="radio-button-label"> ¿Es una persona jurídica? </label>

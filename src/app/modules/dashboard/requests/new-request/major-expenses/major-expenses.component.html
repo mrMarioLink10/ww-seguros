@@ -160,13 +160,271 @@
                 name='officeTel'>
               </app-number-input>
               <app-input class="mr-3" [group]="newRequest.get('person')" label="Correo" name='email'></app-input>
-              <app-radio-button class="mr-3" (selected)="selectChange($event)" [group]="newRequest.get('person')"
-                name="isContractor" [options]="isContractorData">
+
+              <div class="mt-3 lg:mt-3 xl:mt-3">
+                <div>
+                  <label class="radio-button-label"> ¿Es usted una PEP o tiene usted una prima mayor de US$10,000?
+                  </label>
+                </div>
+                <div class="mr-3">
+                  <app-radio-button [group]="newRequest.get('person')" [options]="yesOrNo" name='pep_radio_insured'
+                    (selected)="selectChange($event)">
+                  </app-radio-button>
+                  <!-- <div style="max-width: 85%;"
+                    *ngIf="!newRequest.get('person').get('pep_radio_insured').valid && !newRequest.get('person').get('pep_radio_insured').touched || newRequest.get('person').get('pep_radio_insured').valid && newRequest.get('person').get('pep_radio_insured').touched || newRequest.get('person').get('pep_radio_insured').valid && !newRequest.get('person').get('pep_radio_insured').touched"
+                    class="-mt-8">
+                    <small> (Sí la respuesta es si, favor completar formulario "Conozca a su Cliente") </small>
+                  </div>
+                  <div style="max-width: 85%;"
+                    *ngIf="!newRequest.get('person').get('pep_radio_insured').valid && newRequest.get('person').get('pep_radio_insured').touched"
+                    class="-mt-2">
+                    <small> (Sí la respuesta es si, favor completar formulario "Conozca a su Cliente") </small>
+                  </div> -->
+                </div>
+
+                <div class="mt-2" *ngIf="newRequest.get('person').get('pep_radio_insured').value == 'SI'">
+                  <div class="radio-button-label" style="font-size: 12px !important; max-width: 63vw;">Adjuntar
+                    documentos "Copia de Cédula" y "Certificación de Ingresos declarados"
+                  </div>
+                  <div *ngIf="newRequest.get('files') && newRequest.get('files').get('documentsKnowClient')">
+                    <div *ngFor="let studies of filesDocumentsKnowClientArray.controls; let i = index">
+                      <div class="grid grid-cols-2">
+                        <mat-form-field class="mr-3" appearance="outline"
+                          [ngClass]="{'file-input': newRequest.get('files').get('documentsKnowClient').get(i.toString()).get('document').value !== ''}">
+                          <mat-label> Copia de Cédula / Certificación de Ingresos declarados </mat-label>
+                          <ngx-mat-file-input #removableInputdocumentsKnowClient
+                            [valuePlaceholder]="arrayDocumentsKnowClientWatcher(i)"
+                            (change)="onStudiesChange2($event, i, 'documentsKnowClient')">
+                          </ngx-mat-file-input>
+                          <mat-icon style="color: #e2e2e2;" matSuffix
+                            *ngIf="newRequest.get('files').get('documentsKnowClient').get(i.toString()).get('document').value === ''">
+                            publish</mat-icon>
+                          <button mat-icon-button matSuffix
+                            *ngIf="newRequest.get('files').get('documentsKnowClient').get(i.toString()).get('document').value !== ''"
+                            (click)="this.requestService.clearArchives(newRequest.get('files').get('documentsKnowClient').get(i.toString()).get('document'))"
+                            (click)="removableInputdocumentsKnowClient.clear($event)">
+                            <mat-icon style="color: #e2e2e2;">clear</mat-icon>
+                          </button><button mat-icon-button matSuffix
+                            *ngIf="newRequest.get('files').get('documentsKnowClient').get(i.toString()).get('document').value !== ''"
+                            (click)="this.requestService.downloadArchives($event, newRequest.get('files').get('documentsKnowClient').get(i.toString()).get('document').value)">
+                            <mat-icon style="color: #e2e2e2;">get_app</mat-icon>
+                          </button>
+                          <mat-error
+                            *ngIf="newRequest.get('files').get('documentsKnowClient').get(i.toString()).get('document').touched && !newRequest.get('files').get('documentsKnowClient').get(i.toString()).get('document').valid">
+                            Este campo es
+                            obligatorio
+                          </mat-error>
+                        </mat-form-field>
+                        <div *ngIf="filesDocumentsKnowClientArray.length > 1"
+                          [ngClass]="{'': filesDocumentsKnowClientArray.length === 1, 'col-span-1': filesDocumentsKnowClientArray.length > 1} ">
+                          <button mat-mini-fab aria-label=" Eliminar estudio"
+                            (click)="diseaseService.removeToList(i, filesDocumentsKnowClientArray)" type="button"
+                            class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
+                            <mat-icon style="color: #18446B">remove</mat-icon>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="">
+                    <button mat-mini-fab aria-label="Agregar estudio"
+                      (click)="addToList(filesDocumentsKnowClientArray, 'filesDocumentsKnowClient')" type="button"
+                      class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
+                      <mat-icon style="color: #18446B">add</mat-icon>
+                    </button>
+                  </div>
+                </div>
+                <div class="mt-2" *ngIf="newRequest.get('person').get('pep_radio_insured').value == 'NO'">
+                  <div class="radio-button-label" style="font-size: 12px !important; max-width: 63vw;">Adjuntar
+                    documentos "Copia de Cédula"
+                  </div>
+                  <div *ngIf="newRequest.get('files') && newRequest.get('files').get('documentsKnowClient')">
+                    <div *ngFor="let studies of filesDocumentsKnowClientArray.controls; let i = index">
+                      <div class="grid grid-cols-2">
+                        <mat-form-field class="mr-3" appearance="outline"
+                          [ngClass]="{'file-input': newRequest.get('files').get('documentsKnowClient').get(i.toString()).get('document').value !== ''}">
+                          <mat-label> Copia de Cédula </mat-label>
+                          <ngx-mat-file-input #removableInputdocumentsKnowClient
+                            [valuePlaceholder]="arrayDocumentsKnowClientWatcher(i)"
+                            (change)="onStudiesChange2($event, i, 'documentsKnowClient')">
+                          </ngx-mat-file-input>
+                          <mat-icon style="color: #e2e2e2;" matSuffix
+                            *ngIf="newRequest.get('files').get('documentsKnowClient').get(i.toString()).get('document').value === ''">
+                            publish</mat-icon>
+                          <button mat-icon-button matSuffix
+                            *ngIf="newRequest.get('files').get('documentsKnowClient').get(i.toString()).get('document').value !== ''"
+                            (click)="this.requestService.clearArchives(newRequest.get('files').get('documentsKnowClient').get(i.toString()).get('document'))"
+                            (click)="removableInputdocumentsKnowClient.clear($event)">
+                            <mat-icon style="color: #e2e2e2;">clear</mat-icon>
+                          </button><button mat-icon-button matSuffix
+                            *ngIf="newRequest.get('files').get('documentsKnowClient').get(i.toString()).get('document').value !== ''"
+                            (click)="this.requestService.downloadArchives($event, newRequest.get('files').get('documentsKnowClient').get(i.toString()).get('document').value)">
+                            <mat-icon style="color: #e2e2e2;">get_app</mat-icon>
+                          </button>
+                          <mat-error
+                            *ngIf="newRequest.get('files').get('documentsKnowClient').get(i.toString()).get('document').touched && !newRequest.get('files').get('documentsKnowClient').get(i.toString()).get('document').valid">
+                            Este campo es
+                            obligatorio
+                          </mat-error>
+                        </mat-form-field>
+                        <div *ngIf="filesDocumentsKnowClientArray.length > 1"
+                          [ngClass]="{'': filesDocumentsKnowClientArray.length === 1, 'col-span-1': filesDocumentsKnowClientArray.length > 1} ">
+                          <button mat-mini-fab aria-label=" Eliminar estudio"
+                            (click)="diseaseService.removeToList(i, filesDocumentsKnowClientArray)" type="button"
+                            class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
+                            <mat-icon style="color: #18446B">remove</mat-icon>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="">
+                    <button mat-mini-fab aria-label="Agregar estudio"
+                      (click)="addToList(filesDocumentsKnowClientArray, 'filesDocumentsKnowClient')" type="button"
+                      class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
+                      <mat-icon style="color: #18446B">add</mat-icon>
+                    </button>
+                  </div>
+                </div>
+
+              </div>
+
+              <app-radio-button *ngIf="newRequest.get('person').get('pep_radio_insured').value == 'SI' || 
+              newRequest.get('person').get('pep_radio_insured').value == 'NO'" class="mr-3"
+                (selected)="selectChange($event)" [group]="newRequest.get('person')" name="isContractor"
+                [options]="isContractorData">
               </app-radio-button>
-              <app-radio-button *ngIf="newRequest.get('person').get('isContractor').value === 'NO'"
-                (selected)="selectChange($event)" class="mr-3" [group]="newRequest.get('person')" name="isJuridica"
-                [options]="isJuridicaData">
-              </app-radio-button>
+              <div class="mr-3">
+                <div>
+                  <app-radio-button
+                    *ngIf="newRequest.get('person').get('isJuridica') && newRequest.get('person').get('isContractor').value === 'SI'"
+                    (selected)="selectChange($event)" [group]="newRequest.get('person')" name="isJuridica"
+                    [options]="isJuridicaData">
+                  </app-radio-button>
+                </div>
+
+                <div class="mt-2"
+                  *ngIf="newRequest.get('person').get('isJuridica') && newRequest.get('person').get('isJuridica').value == 'NO'">
+                  <div class="radio-button-label" style="font-size: 12px !important; max-width: 63vw;">Adjuntar
+                    documentos
+                  </div>
+                  <div *ngIf="newRequest.get('files') && newRequest.get('files').get('copyId')">
+                    <div *ngFor="let copies of filesCopyIdArray.controls; let i = index">
+                      <div class="grid grid-cols-2">
+                        <mat-form-field class="mr-3" appearance="outline"
+                          [ngClass]="{'file-input': newRequest.get('files').get('copyId').get(i.toString()).get('idId').value !== ''}">
+                          <mat-label> Copia de Cédula </mat-label>
+                          <ngx-mat-file-input #removableInputcopyId [valuePlaceholder]="arrayCopyIdWatcher(i)"
+                            (change)="onStudiesChange2($event, i, 'copyId')">
+                          </ngx-mat-file-input>
+                          <mat-icon style="color: #e2e2e2;" matSuffix
+                            *ngIf="newRequest.get('files').get('copyId').get(i.toString()).get('idId').value === ''">
+                            publish</mat-icon>
+                          <button mat-icon-button matSuffix
+                            *ngIf="newRequest.get('files').get('copyId').get(i.toString()).get('idId').value !== ''"
+                            (click)="this.requestService.clearArchives(newRequest.get('files').get('copyId').get(i.toString()).get('idId'))"
+                            (click)="removableInputcopyId.clear($event)">
+                            <mat-icon style="color: #e2e2e2;">clear</mat-icon>
+                          </button><button mat-icon-button matSuffix
+                            *ngIf="newRequest.get('files').get('copyId').get(i.toString()).get('idId').value !== ''"
+                            (click)="this.requestService.downloadArchives($event, newRequest.get('files').get('copyId').get(i.toString()).get('idId').value)">
+                            <mat-icon style="color: #e2e2e2;">get_app</mat-icon>
+                          </button>
+                          <mat-error
+                            *ngIf="newRequest.get('files').get('copyId').get(i.toString()).get('idId').touched && !newRequest.get('files').get('copyId').get(i.toString()).get('idId').valid">
+                            Este campo es
+                            obligatorio
+                          </mat-error>
+                        </mat-form-field>
+                        <div *ngIf="filesCopyIdArray.length > 1"
+                          [ngClass]="{'': filesCopyIdArray.length === 1, 'col-span-1': filesCopyIdArray.length > 1} ">
+                          <button mat-mini-fab aria-label=" Eliminar estudio"
+                            (click)="diseaseService.removeToList(i, filesCopyIdArray)" type="button"
+                            class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
+                            <mat-icon style="color: #18446B">remove</mat-icon>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="">
+                    <button mat-mini-fab aria-label="Agregar estudio"
+                      (click)="addToList(filesCopyIdArray, 'filesCopyId')" type="button"
+                      class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
+                      <mat-icon style="color: #18446B">add</mat-icon>
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <div>
+                <div
+                  *ngIf="newRequest.get('person').get('isJuridica') && newRequest.get('person').get('isJuridica').value == 'SI'"
+                  class="mt-4 lg:mt-3 xl:mt-3">
+                  <div>
+                    <label class="radio-button-label"> ¿Es un sujeto obligado? </label>
+                  </div>
+                  <div *ngIf="newRequest.get('person').get('mandatorySubject')" class="mr-3">
+                    <app-radio-button [group]="newRequest.get('person')" [options]="yesOrNo" name='mandatorySubject'
+                      (selected)="selectChange($event)">
+                    </app-radio-button>
+                  </div>
+
+                  <div
+                    *ngIf="newRequest.get('person').get('mandatorySubject') && (newRequest.get('person').get('mandatorySubject').value == 'SI' || newRequest.get('person').get('mandatorySubject').value == 'NO')">
+                    <div class="radio-button-label" style="font-size: 12px !important; max-width: 63vw;">Adjuntar
+                      documentos
+                    </div>
+                    <div *ngIf="newRequest.get('files') && newRequest.get('files').get('mercantile')">
+                      <div *ngFor="let registers of mercantileRegisterArray.controls; let i = index">
+                        <div class="grid grid-cols-2">
+                          <mat-form-field class="mr-3" appearance="outline"
+                            [ngClass]="{'file-input': newRequest.get('files').get('mercantile').get(i.toString()).get('register').value !== ''}">
+                            <mat-label> Registro Mercantil </mat-label>
+                            <ngx-mat-file-input #removableInputmercantile [valuePlaceholder]="arrayRegisterWatcher(i)"
+                              (change)="onStudiesChange2($event, i, 'mercantile')">
+                            </ngx-mat-file-input>
+                            <mat-icon style="color: #e2e2e2;" matSuffix
+                              *ngIf="newRequest.get('files').get('mercantile').get(i.toString()).get('register').value === ''">
+                              publish</mat-icon>
+                            <button mat-icon-button matSuffix
+                              *ngIf="newRequest.get('files').get('mercantile').get(i.toString()).get('register').value !== ''"
+                              (click)="this.requestService.clearArchives(newRequest.get('files').get('mercantile').get(i.toString()).get('register'))"
+                              (click)="removableInputmercantile.clear($event)">
+                              <mat-icon style="color: #e2e2e2;">clear</mat-icon>
+                            </button><button mat-icon-button matSuffix
+                              *ngIf="newRequest.get('files').get('mercantile').get(i.toString()).get('register').value !== ''"
+                              (click)="this.requestService.downloadArchives($event, newRequest.get('files').get('mercantile').get(i.toString()).get('register').value)">
+                              <mat-icon style="color: #e2e2e2;">get_app</mat-icon>
+                            </button>
+                            <mat-error
+                              *ngIf="newRequest.get('files').get('mercantile').get(i.toString()).get('register').touched && !newRequest.get('files').get('mercantile').get(i.toString()).get('register').valid">
+                              Este campo es
+                              obligatorio
+                            </mat-error>
+                          </mat-form-field>
+                          <div *ngIf="mercantileRegisterArray.length > 1"
+                            [ngClass]="{'': mercantileRegisterArray.length === 1, 'col-span-1': mercantileRegisterArray.length > 1} ">
+                            <button mat-mini-fab aria-label=" Eliminar estudio"
+                              (click)="diseaseService.removeToList(i, mercantileRegisterArray)" type="button"
+                              class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
+                              <mat-icon style="color: #18446B">remove</mat-icon>
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="">
+                      <button mat-mini-fab aria-label="Agregar estudio"
+                        (click)="addToList(mercantileRegisterArray, 'mercantileRegister')" type="button"
+                        class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
+                        <mat-icon style="color: #18446B">add</mat-icon>
+                      </button>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
             </div>
 
             <mat-divider class="divider"></mat-divider>
@@ -1994,15 +2252,20 @@
         </mat-accordion>
       </mat-tab>
       <!-- *ngIf="isContractorPep" -->
-      <mat-tab *ngIf="(this.newRequest.get('person').get('isJuridica') && 
-        this.newRequest.get('person').get('isJuridica').value == 'SI')"
-        label="Conozca a su cliente (Persona Jurídica) - Contratante">
+      <mat-tab
+        *ngIf="(this.newRequest.get('person').get('mandatorySubject') && newRequest.get('person').get('isJuridica').value == 'SI' &&
+        (this.newRequest.get('person').get('mandatorySubject').value == 'SI' || this.newRequest.get('person').get('mandatorySubject').value == 'NO'))"
+        label="Conozca a su cliente (Persona Jurídica) - Asegurado">
         <mat-accordion #matAccordion="matAccordion" name="matAccordion" class="ww-mat-accordion example-headers-align"
           [togglePosition]="'before'">
-          <app-know-your-client
+          <!-- <app-know-your-client
             [showWarningDot]="showWarningDot(newRequest.get('contractor').get('conozcaSuClientePersonaJuridica'))"
-            *ngIf="this.newRequest.get('contractor').get('conozcaSuClientePersonaJuridica')"
-            [form]="newRequest.get('contractor').get('conozcaSuClientePersonaJuridica')">
+            *ngIf="this.newRequest.get('contractor').get('conozcaSuClientePersonaJuridica')" [form]="newRequest.get('contractor').get('conozcaSuClientePersonaJuridica')">
+          </app-know-your-client> -->
+          <app-know-your-client
+            [showWarningDot]="showWarningDot(newRequest.get('person').get('conozcaSuClientePersonaJuridica'))"
+            *ngIf="this.newRequest.get('person').get('conozcaSuClientePersonaJuridica')"
+            [form]="newRequest.get('person').get('conozcaSuClientePersonaJuridica')">
           </app-know-your-client>
           <!--*ngIf="isJuridica" -->
           <!-- <app-know-your-customer
@@ -2017,7 +2280,8 @@
         </mat-accordion>
       </mat-tab>
       <!--*ngIf="isSolicitantePep " -->
-      <mat-tab *ngIf="this.newRequest.get('exposedPerson').get('headLine').value == 'SI' "
+      <mat-tab
+        *ngIf="newRequest.get('person').get('isJuridica') && this.newRequest.get('person').get('isJuridica').value == 'NO' "
         label="Conozca a su cliente (Persona Física) - Asegurado">
         <mat-accordion #matAccordion="matAccordion" name="matAccordion" class="ww-mat-accordion example-headers-align"
           [togglePosition]="'before'">
@@ -2042,22 +2306,26 @@
         label="Conozca a su cliente (Persona Física) - Contratante">
         <mat-accordion #matAccordion="matAccordion" name="matAccordion" class="ww-mat-accordion example-headers-align"
           [togglePosition]="'before'">
-          <!-- <app-know-your-client
-            [showWarningDot]="showWarningDot(newRequest.get('contractor').get('conozcaSuClientePersonaJuridica'))"
-            *ngIf="isJuridica" [form]="newRequest.get('contractor').get('conozcaSuClientePersonaJuridica')">
-          </app-know-your-client>
-          <app-know-your-customer
-            [showWarningDot]="showWarningDot(newRequest.get('person').get('conozcaSuClientePersona'))"
-            *ngIf="isSolicitantePep" [form]="newRequest.get('person').get('conozcaSuClientePersona')">
-          </app-know-your-customer> -->
           <app-know-your-customer
             [showWarningDot]="showWarningDot(newRequest.get('contractor').get('conozcaSuClientePersona'))"
             *ngIf="this.newRequest.get('contractor').get('conozcaSuClientePersona')"
             [form]="newRequest.get('contractor').get('conozcaSuClientePersona')">
           </app-know-your-customer>
-          <!-- *ngIf="isContractorPep" -->
         </mat-accordion>
-      </mat-tab>
+      </mat-tab> -->
+      <div *ngIf="this.newRequest.get('person').get('isContractor').value == 'SI'">
+        <div *ngIf="this.newRequest.get('person').get('isJuridica').value == 'SI'">
+          <mat-tab *ngIf="this.newRequest.get('person').get('mandatorySubject').value == 'SI'"
+            label="Formulario politica Anti-lavado de Dinero/Financiamiento y Terrorismo (AML)">
+            <mat-accordion #matAccordion="matAccordion" name="matAccordion"
+              class="ww-mat-accordion example-headers-align" [togglePosition]="'before'">
+              <app-money-laundering [showWarningDot]="showWarningDot(newRequest.get('person').get('antiLaundering'))"
+                [form]="newRequest.get('person').get('antiLaundering')">
+              </app-money-laundering>
+            </mat-accordion>
+          </mat-tab>
+        </div>
+      </div>
       <mat-tab *ngFor=" let element of dependentsFormArray.controls; let i = index"
         [label]="'D'+ (i+1) +' - '+ newRequest.get('dependents').get('allDependents').get(i.toString()).value.name +' '+ newRequest.get('dependents').get('allDependents').get(i.toString()).value.lastName">
         <mat-accordion #matAccordion="matAccordion" name="matAccordion" class="ww-mat-accordion example-headers-align"

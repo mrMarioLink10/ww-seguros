@@ -7,6 +7,7 @@ import { DiseaseService } from '../../../shared/components/disease/shared/diseas
 import { FormHandlerService } from 'src/app/core/services/forms/form-handler.service';
 import { UserService } from '../../../../../core/services/user/user.service';
 import { Router, ActivatedRoute } from '@angular/router';
+import { environment } from 'src/environments/environment';
 import { LifeService } from './services/life.service';
 import { DialogService } from 'src/app/core/services/dialog/dialog.service';
 import { DialogOptionService } from 'src/app/core/services/dialog/dialog-option.service';
@@ -1769,9 +1770,9 @@ export class LifeComponent implements OnInit, DoCheck {
 
   newQuote() {
     if (this.userService.getRoleCotizador() === 'WWS') {
-      window.open('http://portalwwg.eastus.cloudapp.azure.com:3000/vida?cia=wws', '_self');
+      window.open(`${environment.urlCotizadores}/vida?cia=wws`, '_self');
     } else if (this.userService.getRoleCotizador() === 'WMA') {
-      window.open('http://portalwwg.eastus.cloudapp.azure.com:3000/vida?cia=wwm', '_self');
+      window.open(`${environment.urlCotizadores}/vida?cia=wwm`, '_self');
     }
   }
 

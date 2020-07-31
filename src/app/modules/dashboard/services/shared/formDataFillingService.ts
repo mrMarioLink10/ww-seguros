@@ -7,7 +7,7 @@ import { FormGroup, FormBuilder, Validators, FormArray, FormControl } from '@ang
 export class FormDataFillingService {
 
   excludedKeys = [
-    'id2Attached', 'id2AttachedUrl', 'specifyRelationship', 'differentMedic', 'isJuridica'
+    'id2Attached', 'id2AttachedUrl', 'specifyRelationship', 'differentMedic', 'isJuridica', 'name', 'nombre', 'edad', 'age'
   ];
 
   constructor(
@@ -39,7 +39,14 @@ export class FormDataFillingService {
               if (this.controlIsNotRequired(key)) {
                 formDataGroup.addControl(key, this.fb.control(valueToSet));
               } else {
+                if (valueToSet === '')
+                {
+                  formDataGroup.addControl(key, this.fb.control(valueToSet/*, Validators.required*/));
+                }
+                else
+                {
                 formDataGroup.addControl(key, this.fb.control(valueToSet, Validators.required));
+                }
               }
             }
 

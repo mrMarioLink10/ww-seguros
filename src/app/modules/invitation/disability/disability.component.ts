@@ -2184,7 +2184,7 @@ export class DisabilityComponent implements OnInit, DoCheck {
         }
 
         if (formI.get('insuredPolicyholderRadio').value !== 'SI') {
-          formI.removeControl('policyholder');
+          formGeneral.removeControl('policyholder');
         }
 
         if (formHolder.get('pep_radio_holder').value != 'SI') {

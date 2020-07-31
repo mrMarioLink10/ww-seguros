@@ -324,38 +324,39 @@ export class KnowYourCustomerComponent implements OnInit, DoCheck {
   addBasicControls() {
 
 
-    this.form.addControl('request', this.fb.control('', [Validators.required, Validators.min(1)]));
-    this.form.addControl('general_data', this.fb.group({
+    // this.form.addControl('request', this.fb.control(''));
+    // this.form.addControl('general_data', this.fb.group({
 
-      first_name: ['', Validators.required],
-      middle_name: [''],
-      last_names: ['', Validators.required],
-      birthdate: [new Date(), Validators.required],
-      gender: ['', Validators.required],
-      id_passport: ['', Validators.required],
-      marital_status: ['', Validators.required],
-      nationality: ['', Validators.required],
-      country: ['', Validators.required],
-      post_office_box: ['', Validators.required],
-      address: ['', Validators.required],
-      telephone: ['', Validators.required],
-      cellphone: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
+    //   first_name: ['' , Validators.required],
+    //   middle_name: ['', Validators.required],
+    //   last_names: ['' ],
+    //   birthdate: [new Date() ],
+    //   gender: ['' ],
+    //   id_passport: ['' ],
+    //   marital_status: ['' ],
+    //   nationality: ['' ],
+    //   country: ['' ],
+    //   post_office_box: ['' ],
+    //   address: ['' ],
+    //   telephone: ['' ],
+    //   cellphone: ['' ],
+    //   email: [''],
 
-    }));
+    // }));
 
-    this.form.addControl('professional_data', this.fb.group({
+    // this.form.addControl('professional_data', this.fb.group({
 
-      profession: ['', Validators.required],
-      occupation: ['', Validators.required],
-      company: ['', Validators.required],
-      company_address: ['', Validators.required],
-      time_in_the_job: ['', Validators.required],
-      telephone: ['', Validators.required],
-      fax: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
+    //   profession: ['' ],
+    //   occupation: ['' ],
+    //   company: ['' ],
+    //   company_address: ['' ],
+    //   time_in_the_job: ['' ],
+    //   telephone: ['' ],
+    //   fax: ['' ],
+    //   email: [''],
 
-    }));
+    // }));
+
 
     // this.form.addControl('exposed', this.fb.group({
 
@@ -376,12 +377,15 @@ export class KnowYourCustomerComponent implements OnInit, DoCheck {
 
     }));
 
-    this.form.addControl('info_for_the_insurance_carrier', this.fb.group({
+    // this.form.addControl('info_for_the_insurance_carrier', this.fb.group({
 
-      fullname_functionary: ['', Validators.required],
-      position_functionary: ['', Validators.required]
+    //   fullname_functionary: ['', Validators.required],
+    //   position_functionary: ['', Validators.required]
 
-    }));
+    // }));
+
+    //     this.form.get('general_data').get('first_name').clearValidators();
+    // this.form.get('general_data').get('middle_name').updateValueAndValidity();
 
   }
 

@@ -326,7 +326,7 @@ export class KnowYourClientComponent implements OnInit {
 
 	addBasicControls() {
 
-		this.form.addControl('request', this.fb.control('', [Validators.required, Validators.min(1)]));
+		// this.form.addControl('request', this.fb.control('', [Validators.required, Validators.min(1)]));
 
 		this.form.addControl('general_data', this.fb.group({
 			society_name: ['', Validators.required],
@@ -390,11 +390,16 @@ export class KnowYourClientComponent implements OnInit {
 			license_num: ['', [Validators.required, Validators.min(1)]],
 		}));
 
-		this.form.addControl('info_for_the_insurance_carrier', this.fb.group({
-			fullname_functionary: ['', Validators.required],
-			position_functionary: ['', Validators.required]
-		}));
+		// const exposedGroup = this.form.get('exposed') as FormGroup;
 
+		// this.form.addControl('info_for_the_insurance_carrier', this.fb.group({
+		// 	fullname_functionary: [' '],
+		// 	position_functionary: [' ']
+		// }));
+
+		// this.form.addControl('request', this.fb.control(' '));
+		// exposedGroup.addControl('input', this.fb.control(' '));
+		// exposedGroup.addControl('exposed_person', this.fb.control(' '));
 	}
 
 	addMBody(bodyMembersFormArray, group) {

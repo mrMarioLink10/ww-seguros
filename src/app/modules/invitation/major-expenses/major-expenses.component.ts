@@ -2914,8 +2914,10 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
           formP.removeControl('conozcaSuClientePersonaJuridica');
         }
 
-        if (this.newRequest.get('contractor').get('conozcaSuClientePersona')) {
-          formContractor.removeControl('conozcaSuClientePersona');
+        if (this.newRequest.get('contractor')) {
+          if (this.newRequest.get('contractor').get('conozcaSuClientePersona')) {
+            formContractor.removeControl('conozcaSuClientePersona');
+          }
         }
 
         this.contingentBeneficiaryArray = this.newRequest.get('contingentBeneficiary').get('dependentsC') as FormArray;

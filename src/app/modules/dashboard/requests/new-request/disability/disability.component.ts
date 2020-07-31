@@ -743,9 +743,9 @@ export class DisabilityComponent implements OnInit, DoCheck {
         changeAnotherCoverage: ['', Validators.required],
       }),
       // bankTransfer: this.fb.group({
-      //   bankEntity: [''],
-      //   amount: ['', Validators.min(0)],
-      //   contact: ['']
+      //   bankEntity: [' '],
+      //   amount: [' '],
+      //   contact: [' ']
       // }),
       questionnaires: this.fb.group({}),
       files: this.fb.group({
@@ -2176,13 +2176,13 @@ export class DisabilityComponent implements OnInit, DoCheck {
         }
 
         if (formI.get('insuredPolicyholderRadio').value !== 'SI') {
-          formI.removeControl('policyholder');
+          formGeneral.removeControl('policyholder');
         }
 
         if (formHolder.get('pep_radio_holder').value != 'SI') {
           formHolder.removeControl('pep');
         }
-
+        
         // tslint:disable-next-line: prefer-for-of
         for (let x = 0; x < this.mainFormArray.length; x++) {
           const mainArrayGroup = this.disabilityGroup.get('main').get('main_array').get(x.toString()) as FormGroup;

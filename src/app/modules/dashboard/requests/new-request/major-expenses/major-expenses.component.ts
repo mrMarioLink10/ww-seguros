@@ -2952,6 +2952,12 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
             if (element.get('havePregnant').value !== true || element.get('havePregnant').value !== 'TRUE') {
               element.removeControl('pregnant');
             }
+
+            if (element.get('heightUnit').value !== 'PIE') {
+              element.removeControl('inches');
+            }
+
+            element.removeControl('haveSpine');
           }
         }
 

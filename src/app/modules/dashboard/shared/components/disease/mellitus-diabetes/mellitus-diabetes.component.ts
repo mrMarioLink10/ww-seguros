@@ -13,6 +13,8 @@ export class MellitusDiabetesComponent implements OnInit {
   @Input() showWarningDot: boolean;
   step: number;
 
+  todayDate = new Date();
+
   oralMedicationList: FormArray;
   insulinList: FormArray;
   bloodGlucoseAnalysisList: FormArray;
@@ -159,6 +161,9 @@ export class MellitusDiabetesComponent implements OnInit {
 
     this.form.addControl('hbA1cResults', this.fb.array([this.createFormArray('analysis')]));
     this.hbA1cResultsList = this.form.get('hbA1cResults') as FormArray;
+
+    this.form.removeControl('everHospitalized');
+    this.form.removeControl('name');
   }
 
   selectChange(event) {

@@ -111,7 +111,10 @@ export class FormDataFillingService {
               key.includes('columnaVertebralColumnaVertebral')) && (value.id == '0' || value.id == '')/*form.get('id').value == '0'*/) {
               formDataGroup.removeControl(key);
             }
-            if (  form.get('id').value == '') {
+            if (
+              form.get('id') !== undefined &&
+              form.get('id') !== null &&
+             form.get('id').value == '') {
               formDataGroup.removeControl(key);
             }
           }

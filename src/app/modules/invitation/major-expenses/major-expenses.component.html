@@ -2182,7 +2182,7 @@
 
       </mat-tab>
       <mat-tab label="Cuestionarios Adicionales" class="mat-tab-forms"
-      *ngif="isFormReadyToRender();">
+      *ngIf="isFormReadyToRender();">
         <mat-accordion #matAccordion="matAccordion" name="matAccordion" class="ww-mat-accordion example-headers-align"
           [togglePosition]="'before'">
           <app-hypertension
@@ -2228,7 +2228,7 @@
         </mat-accordion>
       </mat-tab>
       <mat-tab label="Cuestionarios Actividades"
-      class="mat-tab-forms" *ngif="isActivityReadyToRender();">
+      class="mat-tab-forms" *ngIf="isActivityReadyToRender();">
         <mat-accordion #matAccordion="matAccordion" name="matAccordion" class="ww-mat-accordion example-headers-align"
           [togglePosition]="'before'">
           <app-diving

@@ -2086,7 +2086,28 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
 
     }
   }
-
+isFormReadyToRender()
+{
+  let validation = this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudHipertensionArterial') ||
+  this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudCardioVasculares') ||
+  this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudDiabetes') ||
+  this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudArtitris') ||
+  this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('columnaVertebralColumnaVertebral') ||
+  this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudMusculoesqueleticos') ||
+  this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudRenales') ||
+  this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudProstatica')   ;
+console.log(validation);
+  return validation;
+}
+isActivityReadyToRender()
+{
+  let validation = this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudBuceo') ||
+  this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudMoto') ||
+  this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudAviacion') ||
+  this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudMontanismo')  ;
+console.log(validation);
+  return validation;
+}
   // tslint:disable: max-line-length
   ailmentMusculoskeletalGenerator(stay, form) {
     let arthritisCounter = 0;

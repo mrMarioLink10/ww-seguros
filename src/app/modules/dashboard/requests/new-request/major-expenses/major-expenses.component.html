@@ -289,7 +289,7 @@
 
               </div>
 
-              <app-radio-button *ngIf="newRequest.get('person').get('pep_radio_insured').value == 'SI' || 
+              <app-radio-button *ngIf="newRequest.get('person').get('pep_radio_insured').value == 'SI' ||
               newRequest.get('person').get('pep_radio_insured').value == 'NO'" class="mr-3"
                 (selected)="selectChange($event)" [group]="newRequest.get('person')" name="isContractor"
                 [options]="isContractorData">
@@ -2181,7 +2181,9 @@
           [form]="newRequest.get('contractor').get('conozcaSuClientePersonaJuridica')"> </app-know-your-client> -->
 
       </mat-tab>
-      <mat-tab label="Cuestionarios Adicionales" class="mat-tab-forms">
+      <mat-tab label="Cuestionarios Adicionales"
+      class="mat-tab-forms"
+      *ngIf="isFormReadyToRender();">
         <mat-accordion #matAccordion="matAccordion" name="matAccordion" class="ww-mat-accordion example-headers-align"
           [togglePosition]="'before'">
           <app-hypertension
@@ -2226,7 +2228,8 @@
           </app-prostatic>
         </mat-accordion>
       </mat-tab>
-      <mat-tab label="Cuestionarios Actividades" class="mat-tab-forms">
+      <mat-tab label="Cuestionarios Actividades" class="mat-tab-forms"
+      *ngIf="isActivityReadyToRender();">>
         <mat-accordion #matAccordion="matAccordion" name="matAccordion" class="ww-mat-accordion example-headers-align"
           [togglePosition]="'before'">
           <app-diving
@@ -2301,7 +2304,7 @@
           <!-- *ngIf="isContractorPep" -->
         </mat-accordion>
       </mat-tab>
-      <!-- <mat-tab *ngIf="(this.newRequest.get('exposedPerson').get('contractor') 
+      <!-- <mat-tab *ngIf="(this.newRequest.get('exposedPerson').get('contractor')
         && this.newRequest.get('exposedPerson').get('contractor').value == 'SI')"
         label="Conozca a su cliente (Persona Física) - Contratante">
         <mat-accordion #matAccordion="matAccordion" name="matAccordion" class="ww-mat-accordion example-headers-align"

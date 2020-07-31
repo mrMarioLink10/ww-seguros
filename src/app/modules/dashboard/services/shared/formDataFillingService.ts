@@ -7,7 +7,17 @@ import { FormGroup, FormBuilder, Validators, FormArray, FormControl } from '@ang
 export class FormDataFillingService {
 
   excludedKeys = [
-    'id2Attached', 'id2AttachedUrl', 'specifyRelationship', 'differentMedic', 'isJuridica', 'name', 'nombre', 'edad', 'age'
+    'id2Attached', 'id2AttachedUrl', 'specifyRelationship', 'differentMedic', 'isJuridica', 'name', 'nombre', 'edad', 'age', 'exposed_person',
+    'fullname_functionary', 'position_functionary', 'old_current_position', 'request', 'exposed_name', 'createdBy'
+    , 'lastChangeBy'
+    , 'investigated'
+    , 'position'
+    , 'functionary_name'
+    , 'bankEntity'
+    , 'contact'
+    , 'amount'
+    , 'inches'
+    , 'createdBy'
   ];
 
   constructor(
@@ -41,7 +51,8 @@ export class FormDataFillingService {
               } else {
                 if (valueToSet === '')
                 {
-                  formDataGroup.addControl(key, this.fb.control(valueToSet/*, Validators.required*/));
+                  console.log(key);
+                  formDataGroup.addControl(key, this.fb.control(valueToSet, Validators.required));
                 }
                 else
                 {
@@ -88,13 +99,19 @@ export class FormDataFillingService {
               }));
             }
             const form = formDataGroup.get(key);
+            if (value.id != '0' && value.id != '')
+            {
             this.iterateThroughtAllObject(value, form);
+            }
 
             if ((key.includes('solucionAnti') ||
               key.includes('solicitud') ||
               key.includes('knowYour') ||
               key.includes('antiLaundering') ||
-              key.includes('columnaVertebralColumnaVertebral')) && form.get('id').value == '0') {
+              key.includes('columnaVertebralColumnaVertebral')) && (value.id == '0' || value.id == '')/*form.get('id').value == '0'*/) {
+              formDataGroup.removeControl(key);
+            }
+            if (  form.get('id').value == '') {
               formDataGroup.removeControl(key);
             }
           }

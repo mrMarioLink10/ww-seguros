@@ -922,18 +922,14 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
 
 
     if (this.ID != null) {
-      console.log('El ID es ' + this.ID);
       this.getData(this.ID);
     } else if (this.ID == null) {
-      console.log('ID esta vacio');
     }
 
     if (this.noCotizacion != null) {
       this.getDataCotizaciones(this.noCotizacion);
-      console.log('El noCotizacion es ' + this.noCotizacion);
       // this.getData(this.ID);
     } else if (this.noCotizacion == null) {
-      console.log('noCotizacion esta vacio');
       this.noCotizacion = '';
     }
   }
@@ -980,6 +976,28 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
     console.log(event);
   }
 
+  isFormReadyToRender()
+  {
+    let validation = this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudHipertensionArterial') ||
+    this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudCardioVasculares') ||
+    this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudDiabetes') ||
+    this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudArtitris') ||
+    this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('columnaVertebralColumnaVertebral') ||
+    this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudMusculoesqueleticos') ||
+    this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudRenales') ||
+    this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudProstatica')   ;
+  console.log(validation);
+    return validation;
+  }
+  isActivityReadyToRender()
+  {
+    let validation = this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudBuceo') ||
+    this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudMoto') ||
+    this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudAviacion') ||
+    this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudMontanismo')  ;
+  console.log(validation);
+    return validation;
+  }
   addEventChange() {
     this.newRequest.get('person').get('weightUnit').valueChanges.subscribe(value => {
       this.getBmi(this.newRequest.get('person').value.height, this.newRequest.get('person').value.weight);
@@ -1160,11 +1178,10 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
             ['document']: reader.result
           });
 
-          //this.markForCheck();
+          // this.markForCheck();
         };
       }
-    }
-    else if (name == 'copyId') {
+    } else if (name == 'copyId') {
       const reader = new FileReader();
 
       if (event.target.files && event.target.files.length) {
@@ -1176,11 +1193,10 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
             ['idId']: reader.result
           });
 
-          //this.markForCheck();
+          // this.markForCheck();
         };
       }
-    }
-    else if (name == 'mercantile') {
+    } else if (name == 'mercantile') {
       const reader = new FileReader();
 
       if (event.target.files && event.target.files.length) {
@@ -1192,7 +1208,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
             ['register']: reader.result
           });
 
-          //this.markForCheck();
+          // this.markForCheck();
         };
       }
     }
@@ -1599,8 +1615,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
                 email: ['', Validators.required]
               })*/
             }));
-          }
-          else {
+          } else {
             console.log('Ya existe, por tanto no hay que crear a contractor de nuevo.');
           }
 
@@ -1702,8 +1717,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
           if (!(this.newRequest.get('files').get('documentsKnowClient'))) {
             formFiles.addControl('documentsKnowClient', this.fb.array([this.createFormArray('filesDocumentsKnowClient')]));
             this.filesDocumentsKnowClientArray = this.newRequest.get('files').get('documentsKnowClient') as FormArray;
-          }
-          else if (this.newRequest.get('files').get('documentsKnowClient')) {
+          } else if (this.newRequest.get('files').get('documentsKnowClient')) {
 
             formFiles.removeControl('documentsKnowClient');
             formFiles.addControl('documentsKnowClient', this.fb.array([this.createFormArray('filesDocumentsKnowClient')]));
@@ -1719,8 +1733,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
           if (!(this.newRequest.get('files').get('mercantile'))) {
             formFiles.addControl('mercantile', this.fb.array([this.createFormArray('mercantileRegister')]));
             this.mercantileRegisterArray = this.newRequest.get('files').get('mercantile') as FormArray;
-          }
-          else if (this.newRequest.get('files').get('mercantile')) {
+          } else if (this.newRequest.get('files').get('mercantile')) {
             formFiles.removeControl('mercantile');
             formFiles.addControl('mercantile', this.fb.array([this.createFormArray('mercantileRegister')]));
             this.mercantileRegisterArray = this.newRequest.get('files').get('mercantile') as FormArray;
@@ -2001,8 +2014,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
           if (!(this.newRequest.get('files').get('documentsKnowClient'))) {
             formFiles.addControl('documentsKnowClient', this.fb.array([this.createFormArray('filesDocumentsKnowClient')]));
             this.filesDocumentsKnowClientArray = this.newRequest.get('files').get('documentsKnowClient') as FormArray;
-          }
-          else if (this.newRequest.get('files').get('documentsKnowClient')) {
+          } else if (this.newRequest.get('files').get('documentsKnowClient')) {
             formFiles.removeControl('documentsKnowClient');
             formFiles.addControl('documentsKnowClient', this.fb.array([this.createFormArray('filesDocumentsKnowClient')]));
             this.filesDocumentsKnowClientArray = this.newRequest.get('files').get('documentsKnowClient') as FormArray;
@@ -2016,8 +2028,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
           if (!(this.newRequest.get('files').get('mercantile'))) {
             formFiles.addControl('mercantile', this.fb.array([this.createFormArray('mercantileRegister')]));
             this.mercantileRegisterArray = this.newRequest.get('files').get('mercantile') as FormArray;
-          }
-          else if (this.newRequest.get('files').get('mercantile')) {
+          } else if (this.newRequest.get('files').get('mercantile')) {
             formFiles.removeControl('mercantile');
             formFiles.addControl('mercantile', this.fb.array([this.createFormArray('mercantileRegister')]));
             this.mercantileRegisterArray = this.newRequest.get('files').get('mercantile') as FormArray;
@@ -2172,19 +2183,19 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
 
     if (hypertensionCounter > 0) {
       if (!form.get('solicitudHipertensionArterial')) {
-        console.warn('CREO EL FORMULARIO: solicitudHipertensionArterial')
+        console.warn('CREO EL FORMULARIO: solicitudHipertensionArterial');
         form.addControl('solicitudHipertensionArterial', this.fb.group({}));
       }
     } else {
       if (form.get('solicitudHipertensionArterial')) {
-        console.warn('ELIMINO EL FORMULARIO: solicitudHipertensionArterial')
+        console.warn('ELIMINO EL FORMULARIO: solicitudHipertensionArterial');
         form.removeControl('solicitudHipertensionArterial');
       }
     }
 
     if (cardiovascularCounter > 0) {
       if (!form.get('solicitudCardioVasculares')) {
-        console.warn('CREO EL FORMULARIO: solicitudCardioVasculares')
+        console.warn('CREO EL FORMULARIO: solicitudCardioVasculares');
         form.addControl('solicitudCardioVasculares', this.fb.group({}));
       }
     } else {
@@ -2238,12 +2249,12 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
     }
     if (renalCounter > 0) {
       if (!form.get('solicitudRenales')) {
-        console.log('OKIDOKI IN')
+        console.log('OKIDOKI IN');
         form.addControl('solicitudRenales', this.fb.group({}));
       }
     } else {
       if (form.get('solicitudRenales')) {
-        console.log('OKIDOKI OUT')
+        console.log('OKIDOKI OUT');
         form.removeControl('solicitudRenales');
       }
     }
@@ -2798,7 +2809,6 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
         this.ID = data.data.id;
         console.log(data.data);
         this.dataMappingFromApi.iterateThroughtAllObject(data.data, this.newRequest);
-        console.log(this.newRequest);
         this.AddEventOnEachDependentVariable();
 
         const formP = this.newRequest.get('person') as FormGroup;
@@ -2950,6 +2960,31 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
         this.arrayFilesTitlesDocumentsKnowClient = data.data.files.documentsKnowClient;
         this.arrayFilesTitlesCopyId = data.data.files.copyId;
         this.arrayFilesTitlesMercantile = data.data.files.mercantile;
+
+        for (const dependent in this.dependentsFormArray.controls) {
+          if (Object.prototype.hasOwnProperty.call(this.dependentsFormArray.controls, dependent)) {
+            const element = this.dependentsFormArray.controls[dependent] as FormGroup;
+            console.log('dependentsFormArray element', element);
+
+            if (element.get('haveHighRiskSport').value !== true || element.get('haveHighRiskSport').value !== 'TRUE') {
+              element.removeControl('highRiskSport');
+            }
+
+            if (element.get('haveNicotine').value !== true || element.get('haveNicotine').value !== 'TRUE') {
+              element.removeControl('nicotine');
+            }
+
+            if (element.get('havePregnant').value !== true || element.get('havePregnant').value !== 'TRUE') {
+              element.removeControl('pregnant');
+            }
+
+            if (element.get('heightUnit').value !== 'PIE') {
+              element.removeControl('inches');
+            }
+
+            element.removeControl('haveSpine');
+          }
+        }
 
         this.newRequest.markAllAsTouched();
         this.newRequest.updateValueAndValidity();

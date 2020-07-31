@@ -1709,21 +1709,21 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
 
           break;
 
-          case 'mandatorySubject':
-            if (!(this.newRequest.get('conozcaSuClientePersonaJuridica'))) {
-              formGeneral.addControl('conozcaSuClientePersonaJuridica', this.fb.group({}));
-            }
-            if (!(this.newRequest.get('files').get('mercantile'))){
-              formFiles.addControl('mercantile', this.fb.array([this.createFormArray('mercantileRegister')]));
-              this.mercantileRegisterArray = this.newRequest.get('files').get('mercantile') as FormArray;
-            }
-            else if (this.newRequest.get('files').get('mercantile')) {
-              formFiles.removeControl('mercantile');
-              formFiles.addControl('mercantile', this.fb.array([this.createFormArray('mercantileRegister')]));
-              this.mercantileRegisterArray = this.newRequest.get('files').get('mercantile') as FormArray;
-            }
-            formGeneral.addControl('antiLaundering', this.fb.group({}));
-            break;
+        case 'mandatorySubject':
+          if (!(this.newRequest.get('conozcaSuClientePersonaJuridica'))) {
+            formGeneral.addControl('conozcaSuClientePersonaJuridica', this.fb.group({}));
+          }
+          if (!(this.newRequest.get('files').get('mercantile'))) {
+            formFiles.addControl('mercantile', this.fb.array([this.createFormArray('mercantileRegister')]));
+            this.mercantileRegisterArray = this.newRequest.get('files').get('mercantile') as FormArray;
+          }
+          else if (this.newRequest.get('files').get('mercantile')) {
+            formFiles.removeControl('mercantile');
+            formFiles.addControl('mercantile', this.fb.array([this.createFormArray('mercantileRegister')]));
+            this.mercantileRegisterArray = this.newRequest.get('files').get('mercantile') as FormArray;
+          }
+          formGeneral.addControl('antiLaundering', this.fb.group({}));
+          break;
         default:
           break;
       }
@@ -2086,7 +2086,28 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
 
     }
   }
-
+isFormReadyToRender()
+{
+  let validation = this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudHipertensionArterial') ||
+  this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudCardioVasculares') ||
+  this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudDiabetes') ||
+  this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudArtitris') ||
+  this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('columnaVertebralColumnaVertebral') ||
+  this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudMusculoesqueleticos') ||
+  this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudRenales') ||
+  this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudProstatica')   ;
+console.log(validation);
+  return validation;
+}
+isActivityReadyToRender()
+{
+  let validation = this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudBuceo') ||
+  this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudMoto') ||
+  this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudAviacion') ||
+  this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudMontanismo')  ;
+console.log(validation);
+  return validation;
+}
   // tslint:disable: max-line-length
   ailmentMusculoskeletalGenerator(stay, form) {
     let arthritisCounter = 0;
@@ -2949,6 +2970,31 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
         this.arrayFilesTitlesDocumentsKnowClient = data.data.files.documentsKnowClient;
         this.arrayFilesTitlesCopyId = data.data.files.copyId;
         this.arrayFilesTitlesMercantile = data.data.files.mercantile;
+
+        for (const dependent in this.dependentsFormArray.controls) {
+          if (Object.prototype.hasOwnProperty.call(this.dependentsFormArray.controls, dependent)) {
+            const element = this.dependentsFormArray.controls[dependent] as FormGroup;
+            console.log('dependentsFormArray element', element);
+
+            if (element.get('haveHighRiskSport').value !== true || element.get('haveHighRiskSport').value !== 'TRUE') {
+              element.removeControl('highRiskSport');
+            }
+
+            if (element.get('haveNicotine').value !== true || element.get('haveNicotine').value !== 'TRUE') {
+              element.removeControl('nicotine');
+            }
+
+            if (element.get('havePregnant').value !== true || element.get('havePregnant').value !== 'TRUE') {
+              element.removeControl('pregnant');
+            }
+
+            if (element.get('heightUnit').value !== 'PIE') {
+              element.removeControl('inches');
+            }
+
+            element.removeControl('haveSpine');
+          }
+        }
 
         this.newRequest.markAllAsTouched();
         this.newRequest.updateValueAndValidity();

@@ -280,8 +280,8 @@ export class RefundComponent implements OnInit {
 
 		this.refundForm = this.fb.group({
 			fecha: [new Date(), Validators.required],
-			tipoReclamo: ['', Validators.required],
 			informacion: this.fb.group({
+				tipoReclamo: ['', Validators.required],
 				noPoliza: [{ value: '', disabled: true }, [Validators.required]],
 				filterType: ['', Validators.required],
 				idNumber: ['', Validators.required],
@@ -769,7 +769,7 @@ export class RefundComponent implements OnInit {
 			this.diagnosticList = this.refundForm.get('diagnosticos') as FormArray;
 			this.filesInformation = data.data.diagnosticos;
 
-			if (data.data.agreeWithDeclaration === 'TRUE') {
+			if (data.data.agreeWithDeclaration === 'true' || data.data.agreeWithDeclaration === 'TRUE') {
 				this.refundForm.get('agreeWithDeclaration').setValue(true);
 			}
 

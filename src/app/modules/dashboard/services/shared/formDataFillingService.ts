@@ -7,7 +7,17 @@ import { FormGroup, FormBuilder, Validators, FormArray, FormControl } from '@ang
 export class FormDataFillingService {
 
   excludedKeys = [
-    'id2Attached', 'id2AttachedUrl', 'specifyRelationship', 'differentMedic', 'isJuridica'
+    'id2Attached', 'id2AttachedUrl', 'specifyRelationship', 'differentMedic', 'isJuridica', 'name', 'nombre', 'edad', 'age', 'exposed_person',
+    'fullname_functionary', 'position_functionary', 'old_current_position', 'request', 'exposed_name', 'createdBy'
+    , 'lastChangeBy'
+    , 'investigated'
+    , 'position'
+    , 'functionary_name'
+    , 'bankEntity'
+    , 'contact'
+    , 'amount'
+    , 'inches'
+    , 'createdBy'
   ];
 
   constructor(
@@ -28,15 +38,37 @@ export class FormDataFillingService {
 
         if (valueToSet !== undefined) {
           if (!this.has(formDataGroup.controls, key)) {
-            if (this.controlIsNotRequired(key)) {
-              formDataGroup.addControl(key, this.fb.control(valueToSet));
+            // tslint:disable-next-line: triple-equals
+            if (valueToSet == 'true' || valueToSet == 'false') {
+              if (this.controlIsNotRequired(key)) {
+                formDataGroup.addControl(key, this.fb.control((valueToSet === 'true')));
+              } else {
+                formDataGroup.addControl(key, this.fb.control((valueToSet === 'true'), Validators.required));
+              }
             } else {
-              formDataGroup.addControl(key, this.fb.control(valueToSet, Validators.required));
+              if (this.controlIsNotRequired(key)) {
+                formDataGroup.addControl(key, this.fb.control(valueToSet));
+              } else {
+                if (valueToSet === '')
+                {
+                  console.log(key);
+                  formDataGroup.addControl(key, this.fb.control(valueToSet, Validators.required));
+                }
+                else
+                {
+                formDataGroup.addControl(key, this.fb.control(valueToSet, Validators.required));
+                }
+              }
             }
-          } else {
 
+          } else {
             const valueFormControl = formDataGroup.controls[key] as FormControl;
-            valueFormControl.setValue(valueToSet);
+
+            if (valueToSet == 'true' || valueToSet == 'false') {
+              valueFormControl.setValue((valueToSet === 'true'));
+            } else {
+              valueFormControl.setValue(valueToSet);
+            }
           }
         }
       } else if (value !== null && value !== undefined && (typeof value) === 'object') {
@@ -67,14 +99,19 @@ export class FormDataFillingService {
               }));
             }
             const form = formDataGroup.get(key);
+            if (value.id != '0' && value.id != '')
+            {
             this.iterateThroughtAllObject(value, form);
+            }
 
             if ((key.includes('solucionAnti') ||
-             key.includes('solicitud') ||
-             key.includes('knowYour') ||
-             key.includes('antiLaundering') ||
-             key.includes('columnaVertebralColumnaVertebral')) && form.get('id').value == '0') {
-              console.log('DELETE DATAAAAA');
+              key.includes('solicitud') ||
+              key.includes('knowYour') ||
+              key.includes('antiLaundering') ||
+              key.includes('columnaVertebralColumnaVertebral')) && (value.id == '0' || value.id == '')/*form.get('id').value == '0'*/) {
+              formDataGroup.removeControl(key);
+            }
+            if (  form.get('id').value == '') {
               formDataGroup.removeControl(key);
             }
           }
@@ -85,7 +122,6 @@ export class FormDataFillingService {
   }
 
   controlIsNotRequired(key) {
-    console.log((key.charAt(key.length - 3) + key.charAt(key.length - 2) + key.charAt(key.length - 1)) === 'Url');
     for (const idx in this.excludedKeys) {
       if (Object.prototype.hasOwnProperty.call(this.excludedKeys, idx)) {
         if (key === this.excludedKeys[idx]) {

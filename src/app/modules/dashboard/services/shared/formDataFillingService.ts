@@ -17,7 +17,9 @@ export class FormDataFillingService {
     , 'contact'
     , 'amount'
     , 'inches'
-    , 'createdBy'
+    , 'createdBy','mandatorySubject', 'diagnosis', 'document',
+    'idId','middle_name',
+    'marital_status','post_office_box','creationDate'
   ];
 
   constructor(

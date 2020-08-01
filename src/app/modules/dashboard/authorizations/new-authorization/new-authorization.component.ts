@@ -265,7 +265,7 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy, DoCheck {
 			fecha: [new Date(), Validators.required],
 			informacionAsegurado: this.fb.group({
 				tipoReclamo: ['', Validators.required],
-				tipoReclamoMoneda: ['', Validators.required],
+				//tipoReclamoMoneda: ['', Validators.required],
 				nombres: [{ value: '', disabled: true }, [Validators.required]],
 				apellidos: [{ value: '', disabled: true }, [Validators.required]],
 				noPoliza: [{ value: '', disabled: true }, [Validators.required]],
@@ -412,6 +412,7 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy, DoCheck {
 		}
 
 		this.authorization.get('informacionAsegurado').get('tipoReclamo').valueChanges.subscribe(value => {
+
 			if (value == 'LOCAL') {
 				for (let x = 0; x < this.documentsArray.length; x++) {
 					this.authorization.get('files').get(x.toString()).get('indications').setValidators(Validators.required);
@@ -503,7 +504,7 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy, DoCheck {
 	createFormArray() {
 		return this.fb.group({
 			medicReport: ['', Validators.required],
-			budget: ['', Validators.required],
+			budget: [''],
 			studies: ['', Validators.required],
 			indications: ['']
 		});
@@ -820,8 +821,8 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy, DoCheck {
 			}
 
 			this.authorization['controls'].fecha.setValue(data.data.fecha);
-			this.authorization['controls'].informacionAsegurado['controls'].tipoReclamo.setValue(data.data.tipoReclamo);
-			this.authorization['controls'].informacionAsegurado['controls'].tipoReclamoMoneda.setValue(data.data.tipoReclamoMoneda);
+			this.authorization['controls'].informacionAsegurado['controls'].tipoReclamo.setValue(data.data.informacionAsegurado.tipoReclamo);
+			//this.authorization['controls'].informacionAsegurado['controls'].tipoReclamoMoneda.setValue(data.data.tipoReclamoMoneda);
 			this.authorization['controls'].informacionAsegurado['controls'].nombres.setValue(data.data.informacionAsegurado.nombres);
 			this.authorization['controls'].informacionAsegurado['controls'].apellidos.setValue(data.data.informacionAsegurado.apellidos);
 			this.authorization['controls'].informacionAsegurado['controls'].noPoliza.setValue(data.data.informacionAsegurado.noPoliza);

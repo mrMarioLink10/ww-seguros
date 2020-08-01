@@ -84,7 +84,9 @@
                     <app-input [group]="disabilityGroup.get('insured_data')" label="Nacionalidad(es)" name="nationality"
                       placeholder="Por ej: Dominicano"></app-input>
                   </div>
-
+                  <div class="mr-3 mt-2 sm:mt-0 md:mt-0 lg:mt-0 xl:mt-0">
+                    <app-select class="mr-3 pt-21" [options]="idType" [group]="disabilityGroup.get('insured_data')"></app-select>
+                  </div>
                   <div
                     class="col-span-1 mt-2 sm:mt-0 md:col-span-2 md:mt-3 md:mt-0 lg:col-span-3 lg:mt-0 xl:mt-0 xl:col-span-2 mr-3">
                     <app-input [group]="disabilityGroup.get('insured_data')" label="Cédula/Pasaporte" name="id_passport"
@@ -700,7 +702,9 @@
                   <app-input [group]="disabilityGroup.get('policyholder')" label="Nombre Completo o Razón Social"
                     name="name" placeholder="Por ej: Ramón Pérez de los Santos"></app-input>
                 </div>
-
+                <div class="mr-3 mt-2 sm:mt-0 md:mt-0 lg:mt-0 xl:mt-0">
+                  <app-select class="mr-3 pt-21" [options]="idType" [group]="disabilityGroup.get('policyholder')"></app-select>
+                </div>
                 <div class="mr-3 mt-8 sm:mt-5 md:mt-0 lg:mt-0 xl:mt-0">
                   <app-input [group]="disabilityGroup.get('policyholder')" label="Cédula, Pasaporte o RUC"
                     name="id_passport" placeholder="Por ej: 402-0070002-8"></app-input>
@@ -807,7 +811,9 @@
                   <app-input label="Representante Legal" [group]="disabilityGroup.get('policyholder')"
                     name="representative" placeholder="Manuel de los Santos Ramírez"> </app-input>
                 </div>
-
+                <div class="mr-3 mt-8 sm:mt-6 md:mt-6 md:col-span-2 lg:col-span-1 xl:col-span-1 lg:mt-4 xl:mt-3">
+                  <app-select class="mr-3 pt-21" [options]="idTypeRepre" [group]="disabilityGroup.get('policyholder')"></app-select>
+                </div>
                 <div class="mr-3 mt-8 sm:mt-6 md:mt-6 md:col-span-2 lg:col-span-1 xl:col-span-1 lg:mt-4 xl:mt-3">
                   <app-input label="Cédula o Pasaporte del representante legal"
                     [group]="disabilityGroup.get('policyholder')" name="passport_id" placeholder="402-0070000-8">
@@ -1859,6 +1865,10 @@
                             label="Nombres y Apellidos" name="full_name" placeholder="Ej.: Juan Ramón Martínez Puello">
                           </app-input>
                         </div>
+                        <div class="mr-3 mt-2 lg:mt-0 xl:mt-0">
+                          <!-- mb-3  sm:mb-3 xl:mt-8 xl:pt-1 -->
+                          <app-select class="mr-3 pt-21" [options]="idType" [group]="disabilityGroup.get('main').get('main_array').get(in.toString())"></app-select>
+                        </div>
                         <div class="mr-3 mt-2 md:mt-0 lg:mt-0 xl:mt-0">
                           <!-- mb-3  sm:mb-3 xl:mt-8 xl:pt-1 -->
                           <app-input [group]="disabilityGroup.get('main').get('main_array').get(in.toString())"
@@ -1967,6 +1977,9 @@
                       name='specifyRelationship'></app-input>
                     <!-- <app-input [group]="disabilityGroup.get('main')" label="Parentesco" name='relationship'
                         placeholder="Por ej: Su Hijo"> </app-input> -->
+                        <div class="mr-3 mt-2 sm:mt-0 md:mt-0 lg:mt-0 xl:mt-0">
+                          <app-select class="mr-3 pt-21" [options]="idType" [group]="disabilityGroup.get('main')"></app-select>
+                        </div>
                     <div class="mr-3 mt-2 md:col-span-2 lg:col-span-2 lg:mt-0 xl:col-span-1 xl:mt-0">
                       <app-input [group]="disabilityGroup.get('main')" label="Cédula/Pasaporte" name='id_passport'
                         placeholder="Por ej: 402-0070012-8"> </app-input>
@@ -2033,6 +2046,9 @@
                             [group]="disabilityGroup.get('contingent').get('contingent_array').get(in.toString())"
                             label="Nombres y Apellidos" name="full_name" placeholder="Ej.: Juan Ramón Martínez Puello">
                           </app-input>
+                        </div><div class="mr-3 mt-2 lg:mt-0 xl:mt-0">
+                          <!-- mb-3  sm:mb-3 xl:mt-8 xl:pt-1 -->
+                          <app-select class="mr-3 pt-21" [options]="idType" [group]="disabilityGroup.get('contingent').get('contingent_array').get(in.toString())"></app-select>
                         </div>
                         <div class="mr-3 mt-2 md:mt-0 lg:mt-0 xl:mt-0">
                           <!-- mb-3  sm:mb-3 xl:mt-8 xl:pt-1 -->
@@ -2142,6 +2158,9 @@
                     <app-input class="mr-3" [group]="disabilityGroup.get('contingent')"
                       *ngIf="disabilityGroup.get('contingent').get('specifyRelationship')" label="Especificar"
                       name='specifyRelationship'></app-input>
+                      <div class="mr-3 mt-2 sm:mt-0 md:mt-0 lg:mt-0 xl:mt-0">
+                        <app-select class="mr-3 pt-21" [options]="idType" [group]="disabilityGroup.get('contingent')"></app-select>
+                      </div>
                     <div class="mr-3 mt-2 md:col-span-2 lg:col-span-2 lg:mt-0 xl:col-span-1 xl:mt-0">
                       <app-input [group]="disabilityGroup.get('contingent')" label="Cédula/Pasaporte" name='id_passport'
                         placeholder="Por ej: 402-0070012-8"> </app-input>
@@ -2518,7 +2537,7 @@
       <div *ngIf="this.disabilityGroup.get('insured_data').get('insuredPolicyholderRadio').value == 'SI'">
         <div *ngIf="this.disabilityGroup.get('insured_data').get('policyholderKnowClientRadio').value == 'SI'">
           <div *ngIf="disabilityGroup.get('insured_data').get('mandatorySubject')">
-            <mat-tab *ngIf="this.disabilityGroup.get('insured_data').get('mandatorySubject').value == 'SI' || 
+            <mat-tab *ngIf="this.disabilityGroup.get('insured_data').get('mandatorySubject').value == 'SI' ||
           this.disabilityGroup.get('insured_data').get('mandatorySubject').value == 'NO'"
               label="Conozca a su cliente (Persona Jurídica) - Asegurado">
               <mat-accordion #matAccordion="matAccordion" name="matAccordion"

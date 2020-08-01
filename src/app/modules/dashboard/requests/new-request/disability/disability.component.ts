@@ -66,7 +66,36 @@ export class DisabilityComponent implements OnInit, DoCheck {
       }
     ]
   };
-
+  idType: FieldConfig =
+  {
+    label: 'Tipo de documento de identidad',
+    options: [
+      {
+        value: 'CÉDULA',
+        viewValue: 'CÉDULA',
+      },
+      {
+        value: 'PASAPORTE',
+        viewValue: 'PASAPORTE',
+      }
+    ],
+    name: 'id2Type',
+  };
+  idTypeRepre: FieldConfig =
+  {
+    label: 'Tipo de documento de identidad',
+    options: [
+      {
+        value: 'CÉDULA',
+        viewValue: 'CÉDULA',
+      },
+      {
+        value: 'PASAPORTE',
+        viewValue: 'PASAPORTE',
+      }
+    ],
+    name: 'idTypeRepre',
+  };
   contractOPtions: FieldConfig = {
     label: '',
     options: [
@@ -412,6 +441,7 @@ export class DisabilityComponent implements OnInit, DoCheck {
     full_name: ['', Validators.required],
     id2: ['', Validators.required],
     id2Attached: [''],
+    id2Type: ['', Validators.required],
     nationality: ['', Validators.required],
     ocupation: ['', Validators.required],
     family: ['', Validators.required],
@@ -421,6 +451,7 @@ export class DisabilityComponent implements OnInit, DoCheck {
   contingentGroup = {
     full_name: [''],
     id2: [''],
+    id2Type: ['' ],
     id2Attached: [''],
     nationality: [''],
     ocupation: [''],
@@ -454,6 +485,8 @@ export class DisabilityComponent implements OnInit, DoCheck {
   policyHolderGroup = {
     name: ['', Validators.required],
     id_passport: ['', Validators.required],
+    id2Type: ['', Validators.required],
+    idTypeRepre: ['', Validators.required],
     marital_status: ['', Validators.required],
     nationality: ['', Validators.required],
     telephone: ['', Validators.required],
@@ -673,6 +706,7 @@ export class DisabilityComponent implements OnInit, DoCheck {
         job: ['', Validators.required],
         nationality: ['', Validators.required],
         id_passport: ['', Validators.required],
+        id2Type: ['', Validators.required],
         contract: ['', Validators.required],
         date_since: ['', Validators.required],
         date_until: ['', Validators.required],
@@ -730,6 +764,7 @@ export class DisabilityComponent implements OnInit, DoCheck {
         full_name: [''],
         family: [''],
         id_passport: [''],
+        id2Type: ['' ],
         id2Attached: [''],
         main_array: this.fb.array([this.formMethods.createItem(this.mainGroup)])
       }),
@@ -737,6 +772,7 @@ export class DisabilityComponent implements OnInit, DoCheck {
         full_name: [''],
         family: [''],
         id_passport: [''],
+        id2Type: ['' ],
         id2Attached: [''],
         contingent_array: this.fb.array([this.formMethods.createItem(this.contingentGroup)]),
         hasAnotherCoverage: ['', Validators.required],

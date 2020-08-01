@@ -95,7 +95,7 @@
                 <app-number-input *ngIf="this.newRequest.get('person').get('heightUnit').value !== 'PIE'" class="mr-3"
                   [group]="newRequest.get('person')" label="Altura" name='height'>
                 </app-number-input>
-                <app-input [group]="newRequest.get('person')" label="BMI" name='bmi'>
+                <app-input [group]="newRequest.get('person')" label="BMI" name='bmi'  style="display:none;">
                 </app-input>
               </div>
               <app-select class="mr-3" id="status" [options]="status" [group]="newRequest.get('person')">
@@ -468,7 +468,7 @@
                 <app-input id='date' class="mr-3 pt-21" [group]="newRequest.get('contractor')"
                   label="Apellidos / Apellido de Casada" name='lastName'></app-input>
                 <div class="mr-3 pt-21">
-                  <app-date-picker class="mr-3 " label="Fecha de Nacimiento" [max]="todayDate"
+                  <app-date-picker class="mr-3 " label="Fecha de Nacimiento" [max]="maxDate"
                     [group]="newRequest.get('contractor')" name='date'>
                   </app-date-picker>
                 </div>
@@ -484,23 +484,23 @@
 
 
                 <div class="mr-3">
-                  <label for="">País de Nacimiento</label>
+
                   <app-select class="mr-3" [options]="countryOfBirth" [group]="newRequest.get('contractor')">
                   </app-select>
                 </div>
 
                 <div class="mr-3">
-                  <label>Estado Civil</label>
+
                   <app-select class="mr-3" id="status" [options]="status" [group]="newRequest.get('contractor')">
                   </app-select>
                 </div>
                 <div class="mr-3">
-                  <label for="">País de Residencia</label>
+
                   <app-select class="mr-3" [options]=" countryOfResidence" [group]="newRequest.get('contractor')">
                   </app-select>
                 </div>
                 <div class="mr-3 col-span-2">
-                  <label for="">Dirección de Residencia</label>
+
                   <app-input class="mr-3" [group]="newRequest.get('contractor')"
                     placeholderM='Provincia/Distrito/Corregimiento/Urbanización/Calle/Casa o Apto./Edificio.'
                     name='direction'></app-input>
@@ -514,7 +514,7 @@
                 <app-number-input isPhone="true" class="mr-3 pt-21" [group]="newRequest.get('contractor')"
                   label="Tel. Oficina" name='officeTel'>
                 </app-number-input>
-                <app-input class="mr-3 pt-21" [group]="newRequest.get('contractor')" label="Fax" name='fax'></app-input>
+                <app-number-input class="mr-3 pt-21" [group]="newRequest.get('contractor')" label="Fax" name='fax' isPhone="true" ></app-number-input>
                 <app-input class="mr-3 pt-21" [group]="newRequest.get('contractor')" label="Correo" name='email'>
                 </app-input>
               </div>
@@ -539,8 +539,11 @@
                   [group]="newRequest.get('contractor').get('company')"></app-select>
                 <app-input class="mr-3" [group]="newRequest.get('contractor').get('company')"
                   label="Propósito del Seguro" name='insurancePurpose'></app-input>
-                <app-input class="mr-3 pt-21" [group]="newRequest.get('contractor').get('company')"
-                  label="Parentesco con el asegurado" name='kinship'></app-input>
+               <!-- <app-input class="mr-3 pt-21" [group]="newRequest.get('contractor').get('company')"
+                  label="Parentesco con el asegurado" name='kinship'></app-input> -->
+                  <app-select class="mr-3" [options]="parentescoAsegurado"
+                  [group]="newRequest.get('contractor').get('company')" name="kinship">
+                </app-select>
                 <div class="mr-3">
                   <label for="">País(es) donde el contratante tributa por sus ingresos</label>
                   <app-select class="mr-3" [options]="country" name='contractorCountry'
@@ -575,7 +578,7 @@
                 <app-input id='date' class="mr-3 pt-21" [group]="newRequest.get('payer')"
                   label="Apellidos / Apellido de Casada" name='lastName'></app-input>
                 <div class="mr-3">
-                  <label>Fecha de Nacimiento</label>
+
                   <app-date-picker [max]="todayDate" class="mr-3" [group]="newRequest.get('payer')" name='date'>
                   </app-date-picker>
                 </div>
@@ -589,22 +592,22 @@
 
 
                 <div class="mr-3">
-                  <label for="">País de Nacimiento</label>
+
                   <app-select class="mr-3" [options]="countryOfBirth" [group]="newRequest.get('payer')"></app-select>
                 </div>
 
                 <div class="mr-3">
-                  <label>Estado Civil</label>
+
                   <app-select class="mr-3" id="status" [options]="status" [group]="newRequest.get('payer')">
                   </app-select>
                 </div>
                 <div class="mr-3">
-                  <label for="">País de Residencia</label>
+
                   <app-select class="mr-3" [options]=" countryOfResidence" [group]="newRequest.get('payer')">
                   </app-select>
                 </div>
                 <div class="mr-3 col-span-2">
-                  <label for="">Dirección de Residencia</label>
+
                   <app-input class="mr-3" [group]="newRequest.get('payer')"
                     placeholderM='Provincia/Distrito/Corregimiento/Urbanización/Calle/Casa o Apto./Edificio.'
                     name='direction'></app-input>
@@ -618,7 +621,7 @@
                 <app-number-input isPhone="true" class="mr-3 pt-21" [group]="newRequest.get('payer')"
                   label="Tel. Oficina" name='officeTel'>
                 </app-number-input>
-                <app-input class="mr-3 pt-21" [group]="newRequest.get('payer')" label="Fax" name='fax'></app-input>
+                <app-number-input class="mr-3 pt-21" [group]="newRequest.get('payer')" label="Fax" name='fax' isPhone="true" ></app-number-input>
                 <app-input class="mr-3 pt-21" [group]="newRequest.get('payer')" label="Correo" name='email'></app-input>
               </div>
               <mat-divider></mat-divider>
@@ -640,8 +643,11 @@
                   [group]="newRequest.get('payer').get('company')"></app-select>
                 <app-input class="mr-3" [group]="newRequest.get('payer').get('company')" label="Propósito del Seguro"
                   name='insurancePurpose'></app-input>
-                <app-input class="mr-3 pt-21" [group]="newRequest.get('payer').get('company')"
-                  label="Parentesco con el asegurado" name='kinship'></app-input>
+                  <app-select class="mr-3" [options]="parentescoAsegurado"
+                  [group]="newRequest.get('payer').get('company')" name="kinship">
+                </app-select>
+              <!--  <app-input class="mr-3 pt-21" [group]="newRequest.get('payer').get('company')"
+                  label="Parentesco con el asegurado" name='kinship'></app-input> -->
                 <div class="mr-3">
                   <label for="">País(es) donde el pagador tributa por sus ingresos</label>
                   <app-select class="mr-3" [options]="country" name='contractorCountry'

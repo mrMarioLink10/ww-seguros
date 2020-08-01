@@ -135,9 +135,11 @@ export class KnowYourClientComponent implements OnInit {
 		other_info_branch_office: ['', Validators.required]
 
 	}
-
+  minDate: Date;
 	constructor(private fb: FormBuilder, public formMethods: FormArrayGeneratorService) {
-
+    var d = new Date();
+    d.setFullYear(d.getFullYear() - 18);
+    this.minDate = d;
 	}
 
 	selectChangeText(event: any) {
@@ -215,7 +217,16 @@ export class KnowYourClientComponent implements OnInit {
 	ngOnInit() {
 
 		// this.branch_property = this.fb.array([this.createFormArray()]);
-
+    if (this.form.get('general_data').get('email'))
+    {
+        this.form.get('general_data').get('email').setValidators([Validators.required, Validators.email]);
+        this.form.get('general_data').get('email').updateValueAndValidity();
+    }
+    if (this.form.get('representative_data').get('representative_email'))
+    {
+        this.form.get('representative_data').get('representative_email').setValidators([Validators.required, Validators.email]);
+        this.form.get('representative_data').get('representative_email').updateValueAndValidity();
+    }
 		this.addBasicControls();
 
 		console.log(this.form);
@@ -318,7 +329,21 @@ export class KnowYourClientComponent implements OnInit {
 	// 		console.log("HolAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
 	// 	}
 	}
-
+  idType: FieldConfig =
+  {
+    label: 'Tipo de documento de identidad',
+    options: [
+      {
+        value: 'CÉDULA',
+        viewValue: 'CÉDULA',
+      },
+      {
+        value: 'PASAPORTE',
+        viewValue: 'PASAPORTE',
+      }
+    ],
+    name: 'idType',
+  };
 	addBasicControls() {
 
 		// this.form.addControl('request', this.fb.control('', [Validators.required, Validators.min(1)]));
@@ -344,7 +369,8 @@ export class KnowYourClientComponent implements OnInit {
 			home_telephone: ['', Validators.required],
 			cellphone: ['', Validators.required],
 			id_passport: ['', Validators.required],
-			representative_email: ['', Validators.required],
+			idType: ['', Validators.required],
+			representative_email: ['', Validators.required, , Validators.email],
 			address: ['', Validators.required],
 		}));
 		// tslint:disable-next-line: align
@@ -370,8 +396,8 @@ export class KnowYourClientComponent implements OnInit {
 
 		this.form.addControl('finance', this.fb.group({
 
-			main_annual_income: ['', Validators.required],
-			annual_income_others: ['', Validators.required],
+			main_annual_income: ['' ],
+			annual_income_others: ['' ],
 			documents: this.fb.group({
 				mercantile_register_document: [false],
 				id_shareholder_document: [false],

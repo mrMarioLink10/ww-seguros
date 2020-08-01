@@ -48,7 +48,11 @@ export class LifeComponent implements OnInit, DoCheck {
     private appComponent: AppComponent,
     private cd: ChangeDetectorRef,
     public requestService: RequestsService
-  ) { }
+  ) {
+    var d = new Date();
+    d.setFullYear(d.getFullYear() - 18);
+    this.maxDate = d;
+  }
   step: number;
   showContent = false;
 
@@ -99,6 +103,7 @@ export class LifeComponent implements OnInit, DoCheck {
   needFinancialStatus = false;
   showNewQuoteRequest = false;
   todayDate = new Date();
+  maxDate = new Date();
 
   primaryBeneficaryTitles = [];
   contigentBeneficaryTitles = [];
@@ -546,6 +551,12 @@ export class LifeComponent implements OnInit, DoCheck {
     name: 'relationship',
     options: $family.options
   };
+
+  parentescoAsegurado = {
+    label: 'Parentesco con el asegurado',
+    name: 'kinship',
+    options: $family.options
+  };
   // tslint:disable-next-line: max-line-length
   titles = ['Información del Propuesto Asegurado',
     'Perfil Financiero',
@@ -613,7 +624,7 @@ export class LifeComponent implements OnInit, DoCheck {
       comentary: [''],
       person: this.fb.group({
         firstName: [{ value: '', disabled: false }, [Validators.required]],
-        secondName: [''],
+        secondName: ['', Validators.required],
         lastName: ['', Validators.required],
         date: [{ value: '', disabled: true }, [Validators.required]],
         sex: [{ value: '', disabled: true }, [Validators.required]],

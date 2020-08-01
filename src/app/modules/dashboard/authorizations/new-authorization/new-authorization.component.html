@@ -126,20 +126,20 @@
             </app-radio-button>
 
           </div>
-          <div class="mr-3"
+         <!--<div class="mr-3"
             *ngIf="authorization.get('informacionAsegurado').get('tipoReclamo') && authorization.get('informacionAsegurado').get('tipoReclamo').value === 'LOCAL'">
             <app-radio-button class="mr-3 " [group]="authorization.get('informacionAsegurado')" name="tipoReclamoMoneda"
               [options]="tipoReclamoLocal">
             </app-radio-button>
 
-          </div>
-          <div class="mr-3"
+          </div>-->
+         <!--<div class="mr-3"
             *ngIf="authorization.get('informacionAsegurado').get('tipoReclamo') && authorization.get('informacionAsegurado').get('tipoReclamo').value === 'INTERNACIONAL'">
             <app-radio-button class="mr-3 " [group]="authorization.get('informacionAsegurado')" name="tipoReclamoMoneda"
               [options]="tipoReclamoInternacional">
             </app-radio-button>
 
-          </div>
+          </div>-->
           <app-input class="mr-3" [group]="authorization.get('informacionAsegurado')" label="Nombres" name='nombres'>
           </app-input>
           <app-input class="mr-3" [group]="authorization.get('informacionAsegurado')" label="Apellidos"

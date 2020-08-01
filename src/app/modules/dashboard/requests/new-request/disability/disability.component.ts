@@ -2099,7 +2099,7 @@ export class DisabilityComponent implements OnInit, DoCheck {
       if (data !== undefined && data.data !== null &&
         data.data != undefined) {
         this.ID = data.data.id;
-        this.dataMappingFromApi.iterateThroughtAllObject(data.data, this.disabilityGroup);
+        this.dataMappingFromApi.iterateThroughtAllObjectDisability(data.data, this.disabilityGroup);
         const formF = this.disabilityGroup.get('files') as FormGroup;
         const formI = this.disabilityGroup.get('insured_data') as FormGroup;
         const formCB = this.disabilityGroup.get('contingent') as FormGroup;
@@ -2182,7 +2182,7 @@ export class DisabilityComponent implements OnInit, DoCheck {
         if (formHolder.get('pep_radio_holder').value != 'SI') {
           formHolder.removeControl('pep');
         }
-        
+
         // tslint:disable-next-line: prefer-for-of
         for (let x = 0; x < this.mainFormArray.length; x++) {
           const mainArrayGroup = this.disabilityGroup.get('main').get('main_array').get(x.toString()) as FormGroup;

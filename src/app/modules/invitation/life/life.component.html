@@ -238,8 +238,8 @@
 
               </div>
 
-              <app-radio-button *ngIf="newRequest.get('person').get('contractorIsLegalEntity') && 
-              (newRequest.get('person').get('sameAsContractor').value == 'NO' || 
+              <app-radio-button *ngIf="newRequest.get('person').get('contractorIsLegalEntity') &&
+              (newRequest.get('person').get('sameAsContractor').value == 'NO' ||
               newRequest.get('person').get('sameAsContractor').value == 'SI')" class="mr-3"
                 (selected)="selectChange($event)" [group]="newRequest.get('person')" name="contractorIsLegalEntity"
                 title="¿El asegurador y el contratante/pagador son distintos?"
@@ -248,7 +248,7 @@
 
               <div class="mr-3">
                 <div>
-                  <app-radio-button *ngIf="newRequest.get('person').get('sameAsPayer') && 
+                  <app-radio-button *ngIf="newRequest.get('person').get('sameAsPayer') &&
                   newRequest.get('person').get('contractorIsLegalEntity').value == 'SI'"
                     (selected)="selectChange($event)" [group]="newRequest.get('person')" name="sameAsPayer"
                     title="¿Es una persona jurídica?" [options]="diseaseService.yesOrNoOriginal">
@@ -472,6 +472,7 @@
                     [group]="newRequest.get('contractor')" name='date'>
                   </app-date-picker>
                 </div>
+                <app-select class="mr-3 pt-21" [options]="idType" [group]="newRequest.get('contractor')"></app-select>
                 <app-radio-button class="mr-3 pt-21" [group]="newRequest.get('contractor')" name="sex" [options]="sex">
                 </app-radio-button>
                 <app-input class="mr-3 pt-21" [group]="newRequest.get('contractor')" label="Nacionalidad"
@@ -582,6 +583,7 @@
                 </app-radio-button>
                 <app-input class="mr-3 pt-21" [group]="newRequest.get('payer')" label="Nacionalidad" name='nationality'>
                 </app-input>
+                <app-select class="mr-3 pt-21" [options]="idType" [group]="newRequest.get('payer')"></app-select>
                 <app-input class="mr-3 pt-21" [group]="newRequest.get('payer')" label="Cédula/Pasaporte" name='id2'>
                 </app-input>
 

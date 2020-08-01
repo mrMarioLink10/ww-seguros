@@ -2107,7 +2107,7 @@ export class DisabilityComponent implements OnInit, DoCheck {
             break;
         }
 
-        this.dataMappingFromApi.iterateThroughtAllObject(data.data, this.disabilityGroup);
+        this.dataMappingFromApi.iterateThroughtAllObjectDisability(data.data, this.disabilityGroup);
         const formF = this.disabilityGroup.get('files') as FormGroup;
         const formI = this.disabilityGroup.get('insured_data') as FormGroup;
         const formCB = this.disabilityGroup.get('contingent') as FormGroup;

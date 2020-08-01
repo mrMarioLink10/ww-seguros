@@ -25,7 +25,7 @@ export class ConsultHeaderComponent implements OnInit {
   }
 
   activatePolicyTab() {
-    this.activeTab.emit(0);
+    this.activeTab.emit(1);
   }
 
 }

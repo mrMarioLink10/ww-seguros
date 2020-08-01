@@ -81,6 +81,7 @@ export class AccountStatusTableComponent implements OnInit {
 
 
     if (this.statusFilter.initialDate && this.statusFilter.initialDate !== '') {
+      console.log(this.statusFilter.initialDate.toString());
       httpParams = httpParams.append('initialDate', this.statusFilter.initialDate.toString());
     }
 

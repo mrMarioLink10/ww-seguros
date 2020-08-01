@@ -290,48 +290,52 @@ export class CardiovascularComponent implements OnInit, DoCheck {
 
 	ngDoCheck(): void {
 
-		if (this.form.get('haveAnotherDisease').value == 'si' &&
-			!this.form.get('anotherDiseases')) {
-			const varDisease = {
-				valor: 'si',
-				name: 'haveAnotherDisease'
-			};
-			// tslint:disable-next-line: align
-			this.selectChange(varDisease);
-			console.log('HolAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA anotherDiseases');
+		if (this.form.get('haveAnotherDisease').value == 'SI' &&
+			(this.anotherDiseasesList == null || this.anotherDiseasesList == undefined) ) {
+			// const varDisease = {
+			// 	valor: 'si',
+			// 	name: 'haveAnotherDisease'
+			// };
+			// // tslint:disable-next-line: align
+			// this.selectChange(varDisease);
+			// console.log('HolAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA anotherDiseases');
+			this.anotherDiseasesList = this.form.get('anotherDiseases') as FormArray;
 		}
 
-		if (this.form.get('haveFamilyWithCardio').value == 'si' &&
-			!this.form.get('familyWithCardio')) {
-			const varFamilyCardio = {
-				valor: 'si',
-				name: 'haveFamilyWithCardio'
-			};
-			// tslint:disable-next-line: align
-			this.selectChange(varFamilyCardio);
-			console.log('HolAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA familyWithCardio');
+		if (this.form.get('haveFamilyWithCardio').value == 'SI' &&
+		(this.familiarWithCardioList == null || this.familiarWithCardioList == undefined)) {
+			// const varFamilyCardio = {
+			// 	valor: 'si',
+			// 	name: 'haveFamilyWithCardio'
+			// };
+			// // tslint:disable-next-line: align
+			// this.selectChange(varFamilyCardio);
+			// console.log('HolAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA familyWithCardio');
+			this.familiarWithCardioList = this.form.get('familyWithCardio') as FormArray;
 		}
 
-		if (this.form.get('haveHypertensionStudies').value == 'si' &&
-			!this.form.get('hypertensionStudies')) {
-			const varArterial = {
-				valor: 'si',
-				name: 'haveHypertensionStudies'
-			};
-			// tslint:disable-next-line: align
-			this.selectChange(varArterial);
-			console.log('HolAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA hypertensionStudies');
+		if (this.form.get('haveHypertensionStudies').value == 'SI' &&
+		(this.hypertensionStudiesList == null || this.hypertensionStudiesList == undefined)) {
+			// const varArterial = {
+			// 	valor: 'si',
+			// 	name: 'haveHypertensionStudies'
+			// };
+			// // tslint:disable-next-line: align
+			// this.selectChange(varArterial);
+			// console.log('HolAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA hypertensionStudies');
+			this.hypertensionStudiesList = this.form.get('hypertensionStudies') as FormArray;
 		}
 
-		if (this.form.get('haveLiquidAnomaly').value == 'si'  &&
-		!this.form.get('liquidAnomaly')) {
-			const varAnomaly = {
-				valor: 'si',
-				name: 'haveLiquidAnomaly'
-			};
-			// tslint:disable-next-line: align
-			this.selectChange(varAnomaly);
-			console.log('HolAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA liquidAnomaly');
+		if (this.form.get('haveLiquidAnomaly').value == 'SI'  &&
+		(this.liquidAnomalyList == null || this.liquidAnomalyList == undefined)) {
+			// const varAnomaly = {
+			// 	valor: 'si',
+			// 	name: 'haveLiquidAnomaly'
+			// };
+			// // tslint:disable-next-line: align
+			// this.selectChange(varAnomaly);
+			// console.log('HolAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA liquidAnomaly');
+			this.liquidAnomalyList = this.form.get('liquidAnomaly') as FormArray;
 		}
 	}
 

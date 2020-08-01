@@ -2842,8 +2842,8 @@ export class LifeComponent implements OnInit, DoCheck {
           treatment: ['', Validators.required],
           hospitalNameAdress: ['', Validators.required],
           date: ['', Validators.required],
-          duration: ['', [Validators.required, Validators.min(1)]],
-          time: ['', Validators.required],
+          // duration: ['', [Validators.required, Validators.min(1)]],
+          // time: ['', Validators.required],
           results: ['', Validators.required],
         });
         break;
@@ -3177,29 +3177,32 @@ export class LifeComponent implements OnInit, DoCheck {
         }
 
         console.log('stay', stay);
-        console.log('formAR.get(connectionTypeInfo).value 1', Object.getOwnPropertyNames(formAR.get('connectionTypeInfo').value));
 
+        if (formAR.get('connectionType').value !== '') {
+          console.log('formAR.get(connectionTypeInfo).value 1', Object.getOwnPropertyNames(formAR.get('connectionTypeInfo').value));
 
-        const stableCTIObject = Object.getOwnPropertyNames(formAR.get('connectionTypeInfo').value);
+          const stableCTIObject = Object.getOwnPropertyNames(formAR.get('connectionTypeInfo').value);
 
-        // tslint:disable: forin
-        for (const key in stay) {
-          const stayElement = stay[key];
-          const i = stableCTIObject.indexOf(stayElement);
-          stableCTIObject.splice(i, 1);
-        }
+          // tslint:disable: forin
+          for (const key in stay) {
+            const stayElement = stay[key];
+            const i = stableCTIObject.indexOf(stayElement);
+            stableCTIObject.splice(i, 1);
+          }
 
-        for (const idx in stay) {
-          const stayElement = stay[idx];
-          for (const key in stableCTIObject) {
-            const existingName = stableCTIObject[key];
-            if (stayElement !== existingName && existingName !== 'id') {
-              formARCTI.removeControl(existingName);
+          for (const idx in stay) {
+            const stayElement = stay[idx];
+            for (const key in stableCTIObject) {
+              const existingName = stableCTIObject[key];
+              if (stayElement !== existingName && existingName !== 'id') {
+                formARCTI.removeControl(existingName);
+              }
             }
           }
-        }
 
-        console.log('formAR.get(connectionTypeInfo).value 2', formAR.get('connectionTypeInfo').value);
+          console.log('formAR.get(connectionTypeInfo).value 2', formAR.get('connectionTypeInfo').value);
+
+        }
 
         formP.removeControl('isExposed');
         formP.removeControl('city');
@@ -3208,7 +3211,11 @@ export class LifeComponent implements OnInit, DoCheck {
         this.familyRelationshipInsurances = formAR.get('familyInsurances') as FormArray;
         this.existingCoveragesList = formGI.get('anotherCoverages') as FormArray;
         this.changingCoveragesList = formGI.get('changingCoverages') as FormArray;
-        this.womenDisordersList = formWI.get('disorders') as FormArray;
+
+        if (formWI) {
+          this.womenDisordersList = formWI.get('disorders') as FormArray;
+        }
+
         this.heartPainList = formHMI.get('heartPain') as FormArray;
         this.hypertensionList = formHMI.get('hypertension') as FormArray;
         this.lostDriveLicenseList = formGI.get('lostDriveLicense') as FormArray;

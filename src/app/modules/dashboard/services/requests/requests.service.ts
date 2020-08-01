@@ -36,6 +36,7 @@ export class RequestsService {
 
     if (type === 'vnd.openxmlformats-officedocument.spreadsheetml.sheet') { type = 'csv'; }
     if (type === 'plain') { type = 'txt'; }
+    if (type === 'vnd.openxmlformats-officedocument.wordprocessingml.document') { type = 'docx'; }
 
     const fileNumber = Math.floor(Math.random() * 10000);
     const fileName = `wwfile${fileNumber}.${type}`;

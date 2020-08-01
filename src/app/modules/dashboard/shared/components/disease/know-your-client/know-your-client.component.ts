@@ -219,10 +219,10 @@ export class KnowYourClientComponent implements OnInit {
 		this.addBasicControls();
 
 		console.log(this.form);
-		if (this.form.get('exposed').get('branch_office') &&
-			this.form.get('exposed').get('branch_office').get('allBranch_office')) {
-			this.branchOfficeFormArray = this.form.get('exposed').get('branch_office').get('allBranch_office') as FormArray;
-		}
+		// if (this.form.get('exposed').get('branch_office') &&
+		// 	this.form.get('exposed').get('branch_office').get('allBranch_office')) {
+		// 	this.branchOfficeFormArray = this.form.get('exposed').get('branch_office').get('allBranch_office') as FormArray;
+		// }
 		// 	this.form = this.fb.group({
 		// 		request: ['', Validators.required],
 
@@ -302,18 +302,13 @@ export class KnowYourClientComponent implements OnInit {
 
 	}
 
-	// ngDoCheck(): void {
+	ngDoCheck(): void {
 
-	// 	if (this.form.get('exposed').get('branch_office_radio').value == 'si' &&
-	// 		!this.form.get('exposed').get('branch_office').get('allBranch_office')) {
-	// 		const varBranch = {
-	// 			valor: 'si',
-	// 			name: 'branch_office_radio'
-	// 		};
-	// 		this.selectChangeBranchOffice(varBranch);
-	// 		console.log("HolAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA branch")
-
-	// 	}
+		if (this.form.get('exposed').get('branch_office_radio').value == 'SI') {
+			if ( this.branchOfficeFormArray == null || this.branchOfficeFormArray == undefined ) {
+				this.branchOfficeFormArray = this.form.get('exposed').get('branch_office').get('allBranch_office') as FormArray;
+			}
+		}
 	// 	if (this.form.get('exposed').get('investigated_representative').value == 'si' && !this.form.get('exposed').get('areatext')) {
 	// 		const varInvestigated = {
 	// 			valor: 'si',
@@ -322,7 +317,7 @@ export class KnowYourClientComponent implements OnInit {
 	// 		this.selectChangeText(varInvestigated);
 	// 		console.log("HolAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
 	// 	}
-	// }
+	}
 
 	addBasicControls() {
 

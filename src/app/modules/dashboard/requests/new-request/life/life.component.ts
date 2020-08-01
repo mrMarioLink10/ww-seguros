@@ -3176,11 +3176,13 @@ export class LifeComponent implements OnInit, DoCheck {
             break;
         }
 
+        let stableCTIObject;
+
         console.log('stay', stay);
-        console.log('formAR.get(connectionTypeInfo).value 1', Object.getOwnPropertyNames(formAR.get('connectionTypeInfo').value));
-
-
-        const stableCTIObject = Object.getOwnPropertyNames(formAR.get('connectionTypeInfo').value);
+        if (formAR.get('connectionTypeInfo')) {
+          console.log('formAR.get(connectionTypeInfo).value 1', Object.getOwnPropertyNames(formAR.get('connectionTypeInfo').value));
+          stableCTIObject = Object.getOwnPropertyNames(formAR.get('connectionTypeInfo').value);
+        }
 
         // tslint:disable: forin
         for (const key in stay) {
@@ -3198,8 +3200,10 @@ export class LifeComponent implements OnInit, DoCheck {
             }
           }
         }
+        if (formAR.get('connectionTypeInfo')) {
+          console.log('formAR.get(connectionTypeInfo).value 2', formAR.get('connectionTypeInfo').value);
+        }
 
-        console.log('formAR.get(connectionTypeInfo).value 2', formAR.get('connectionTypeInfo').value);
 
         formP.removeControl('isExposed');
         formP.removeControl('city');
@@ -3208,7 +3212,15 @@ export class LifeComponent implements OnInit, DoCheck {
         this.familyRelationshipInsurances = formAR.get('familyInsurances') as FormArray;
         this.existingCoveragesList = formGI.get('anotherCoverages') as FormArray;
         this.changingCoveragesList = formGI.get('changingCoverages') as FormArray;
-        this.womenDisordersList = formWI.get('disorders') as FormArray;
+        if (this.newRequest.get('medicalHistory')) {
+          if (this.newRequest.get('medicalHistory').get('informations')) {
+            if (this.newRequest.get('medicalHistory').get('informations').get('womenInformation')) {
+              if (formWI.get('disorders')) {
+                this.womenDisordersList = formWI.get('disorders') as FormArray;
+              }
+            }
+          }
+        }
         this.heartPainList = formHMI.get('heartPain') as FormArray;
         this.hypertensionList = formHMI.get('hypertension') as FormArray;
         this.lostDriveLicenseList = formGI.get('lostDriveLicense') as FormArray;

@@ -288,7 +288,7 @@ export class RefundComponent implements OnInit {
 				nombre: [{ value: '', disabled: true }, [Validators.required]],
 				direccion: ['',],
 				telefono: ['',],
-				correo: ['', [/*Validators.required,*/ Validators.email]],
+				correo: ['', [Validators.required, Validators.email]],
 			}),
 			diagnosticos: this.fb.array([this.createDiagnostic()]),
 			haveAditionalComentary: [''],

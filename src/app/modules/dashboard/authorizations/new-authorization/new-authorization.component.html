@@ -385,7 +385,7 @@
           <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
             <!-- <input id="file" type="file" class="form-control"> -->
             <mat-form-field class="mr-3" appearance="outline"
-              [ngClass]="{'file-input': authorization.get('files').get(in.toString()).get('medicReport').value !== '', 'file-error': authorization.get('files').get(in.toString()).get('medicReport').touched && !authorization.get('files').get(in.toString()).get('medicReport').valid}">
+              [ngClass]="{'file-input': authorization.get('files').get(in.toString()).get('medicReport').value !== '', 'file-error':  !authorization.get('files').get(in.toString()).get('medicReport').valid}">
               <mat-label>Informe médico</mat-label>
               <ngx-mat-file-input #removableMedicReport placeholder="Basic outline placeholder"
                 [valuePlaceholder]="fileNameWatcher('medicReport', in)"
@@ -404,7 +404,7 @@
                 <mat-icon style="color: #e2e2e2;">get_app</mat-icon>
               </button>
               <mat-error
-                *ngIf="authorization.get('files').get(in.toString()).get('medicReport').touched && !authorization.get('files').get(in.toString()).get('medicReport').valid">
+                *ngIf="  !authorization.get('files').get(in.toString()).get('medicReport').valid">
                 Este campo es
                 obligatorio
               </mat-error>
@@ -434,7 +434,7 @@
               </mat-error>
             </mat-form-field>
             <mat-form-field class="mr-3" appearance="outline"
-              [ngClass]="{'file-input': authorization.get('files').get(in.toString()).get('studies').value !== '', 'file-error': authorization.get('files').get(in.toString()).get('studies').touched && !authorization.get('files').get(in.toString()).get('studies').valid}">
+              [ngClass]="{'file-input': authorization.get('files').get(in.toString()).get('studies').value !== '', 'file-error':   !authorization.get('files').get(in.toString()).get('studies').valid}">
               <mat-label>Estudios</mat-label>
               <ngx-mat-file-input #removableStudies placeholder="Estudios"
                 [valuePlaceholder]="fileNameWatcher('studies', in)" (change)="onFileChange($event, 'studies', in)">
@@ -452,7 +452,7 @@
                 <mat-icon style="color: #e2e2e2;">get_app</mat-icon>
               </button>
               <mat-error
-                *ngIf="authorization.get('files').get(in.toString()).get('studies').touched && !authorization.get('files').get(in.toString()).get('studies').valid">
+                *ngIf="  !authorization.get('files').get(in.toString()).get('studies').valid">
                 Este campo es
                 obligatorio
               </mat-error>
@@ -460,7 +460,7 @@
             <div class="grid"
               [ngClass]="{'grid-cols-1': documentsArray.length === 1, 'grid-cols-5': documentsArray.length > 1}">
               <mat-form-field
-                [ngClass]="{'': documentsArray.length === 1, 'col-span-4 mr-3': documentsArray.length > 1, 'file-input': authorization.get('files').get(in.toString()).get('indications').value !== '', 'file-error': authorization.get('files').get(in.toString()).get('indications').touched && !authorization.get('files').get(in.toString()).get('indications').valid}"
+                [ngClass]="{'': documentsArray.length === 1, 'col-span-4 mr-3': documentsArray.length > 1, 'file-input': authorization.get('files').get(in.toString()).get('indications').value !== '', 'file-error':  !authorization.get('files').get(in.toString()).get('indications').valid}"
                 class="mr-3" appearance="outline">
                 <mat-label>Indicacion</mat-label>
                 <ngx-mat-file-input #removableIndication placeholder="Indicacion"
@@ -480,7 +480,7 @@
                   <mat-icon style="color: #e2e2e2;">get_app</mat-icon>
                 </button>
                 <mat-error
-                  *ngIf="authorization.get('files').get(in.toString()).get('indications').touched && !authorization.get('files').get(in.toString()).get('indications').valid">
+                  *ngIf=" !authorization.get('files').get(in.toString()).get('indications').valid">
                   Este campo es
                   obligatorio
                 </mat-error>

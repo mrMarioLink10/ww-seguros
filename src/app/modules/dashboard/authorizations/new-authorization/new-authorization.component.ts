@@ -437,7 +437,7 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy, DoCheck {
 				// this.authorization.get('informacionAsegurado').get('direccion').clearValidators();
 				// this.authorization.get('informacionAsegurado').get('direccion').updateValueAndValidity();
 				// this.authorization.get('informacionAsegurado').get('direccion').markAsUntouched();
-			}
+      }
 			// console.log('Hola, reclamo');
 		});
 		// console.log(JSON.stringify(this.authorization.value));
@@ -502,12 +502,12 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy, DoCheck {
 	}
 
 	createFormArray() {
-		return this.fb.group({
-			medicReport: ['', Validators.required],
-			budget: [''],
-			studies: ['', Validators.required],
-			indications: ['']
-		});
+    return this.fb.group({
+      medicReport: ['', Validators.required],
+      budget: [''],
+      studies: ['', Validators.required],
+      indications: ['']
+    });
 	}
 
 	returnAutoCompleteData() {
@@ -667,7 +667,23 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy, DoCheck {
 	}
 
 	addToList() {
-		this.documentsArray.push(this.createFormArray());
+    this.documentsArray.push(this.createFormArray());
+    if (this.authorization.get('informacionAsegurado').get('tipoReclamo').value == 'LOCAL')
+    {
+      for (let x = 0; x < this.documentsArray.length; x++) {
+        this.authorization.get('files').get(x.toString()).get('indications').setValidators(Validators.required);
+        this.authorization.get('files').get(x.toString()).get('indications').updateValueAndValidity();
+        this.authorization.get('files').get(x.toString()).get('indications').markAsUntouched();
+      }
+    }
+    else if (this.authorization.get('informacionAsegurado').get('tipoReclamo').value == 'INTERNACIONAL')
+    {
+      for (let x = 0; x < this.documentsArray.length; x++) {
+        this.authorization.get('files').get(x.toString()).get('indications').clearValidators();
+        this.authorization.get('files').get(x.toString()).get('indications').updateValueAndValidity();
+        this.authorization.get('files').get(x.toString()).get('indications').markAsUntouched();
+      }
+    }
 		console.log(JSON.stringify(this.authorization.value));
 	}
 

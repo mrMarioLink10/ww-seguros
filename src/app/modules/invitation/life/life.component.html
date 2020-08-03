@@ -137,8 +137,8 @@
                   </div>
                   <div *ngIf="newRequest.get('files') && newRequest.get('files').get('documentsKnowClient')">
                     <div *ngFor="let studies of filesDocumentsKnowClientArray.controls; let i = index">
-                      <div class="grid grid-cols-2">
-                        <mat-form-field class="mr-3" appearance="outline"
+                      <div class="grid grid-cols-6">
+                        <!-- <mat-form-field class="mr-3" appearance="outline"
                           [ngClass]="{'file-input': newRequest.get('files').get('documentsKnowClient').get(i.toString()).get('document').value !== ''}">
                           <mat-label> Copia de Cédula / Certificación de Ingresos declarados </mat-label>
                           <ngx-mat-file-input #removableInputdocumentsKnowClient
@@ -163,7 +163,14 @@
                             Este campo es
                             obligatorio
                           </mat-error>
-                        </mat-form-field>
+                        </mat-form-field> -->
+                        <app-file-input
+                          [ngClass]="{'col-span-6': filesDocumentsKnowClientArray.length === 1, 'col-span-5': filesDocumentsKnowClientArray.length > 1}"
+                          class="mr-3" [group]="newRequest.get('files').get('documentsKnowClient').get(i.toString())"
+                          name="document" label="Cédula / Certificación de Ingresos declarados"
+                          [fileNameWatcher]="arrayDocumentsKnowClientWatcher(i)"
+                          (onFileChange)="onStudiesChange2($event, i, 'documentsKnowClient')">
+                        </app-file-input>
                         <div *ngIf="filesDocumentsKnowClientArray.length > 1"
                           [ngClass]="{'': filesDocumentsKnowClientArray.length === 1, 'col-span-1': filesDocumentsKnowClientArray.length > 1} ">
                           <button mat-mini-fab aria-label=" Eliminar estudio"
@@ -189,33 +196,13 @@
                   </div>
                   <div *ngIf="newRequest.get('files') && newRequest.get('files').get('documentsKnowClient')">
                     <div *ngFor="let studies of filesDocumentsKnowClientArray.controls; let i = index">
-                      <div class="grid grid-cols-2">
-                        <mat-form-field class="mr-3" appearance="outline"
-                          [ngClass]="{'file-input': newRequest.get('files').get('documentsKnowClient').get(i.toString()).get('document').value !== ''}">
-                          <mat-label> Copia de Cédula </mat-label>
-                          <ngx-mat-file-input #removableInputdocumentsKnowClient
-                            [valuePlaceholder]="arrayDocumentsKnowClientWatcher(i)"
-                            (change)="onStudiesChange2($event, i, 'documentsKnowClient')">
-                          </ngx-mat-file-input>
-                          <mat-icon style="color: #e2e2e2;" matSuffix
-                            *ngIf="newRequest.get('files').get('documentsKnowClient').get(i.toString()).get('document').value === ''">
-                            publish</mat-icon>
-                          <button mat-icon-button matSuffix
-                            *ngIf="newRequest.get('files').get('documentsKnowClient').get(i.toString()).get('document').value !== ''"
-                            (click)="this.requestService.clearArchives(newRequest.get('files').get('documentsKnowClient').get(i.toString()).get('document'))"
-                            (click)="removableInputdocumentsKnowClient.clear($event)">
-                            <mat-icon style="color: #e2e2e2;">clear</mat-icon>
-                          </button><button mat-icon-button matSuffix
-                            *ngIf="newRequest.get('files').get('documentsKnowClient').get(i.toString()).get('document').value !== ''"
-                            (click)="this.requestService.downloadArchives($event, newRequest.get('files').get('documentsKnowClient').get(i.toString()).get('document').value)">
-                            <mat-icon style="color: #e2e2e2;">get_app</mat-icon>
-                          </button>
-                          <mat-error
-                            *ngIf="newRequest.get('files').get('documentsKnowClient').get(i.toString()).get('document').touched && !newRequest.get('files').get('documentsKnowClient').get(i.toString()).get('document').valid">
-                            Este campo es
-                            obligatorio
-                          </mat-error>
-                        </mat-form-field>
+                      <div class="grid grid-cols-6">
+                        <app-file-input
+                          [ngClass]="{'col-span-6': filesDocumentsKnowClientArray.length === 1, 'col-span-5': filesDocumentsKnowClientArray.length > 1}"
+                          class="mr-3" [group]="newRequest.get('files').get('documentsKnowClient').get(i.toString())"
+                          name="document" label="Copia de Cédula" [fileNameWatcher]="arrayDocumentsKnowClientWatcher(i)"
+                          (onFileChange)="onStudiesChange2($event, i, 'documentsKnowClient')">
+                        </app-file-input>
                         <div *ngIf="filesDocumentsKnowClientArray.length > 1"
                           [ngClass]="{'': filesDocumentsKnowClientArray.length === 1, 'col-span-1': filesDocumentsKnowClientArray.length > 1} ">
                           <button mat-mini-fab aria-label=" Eliminar estudio"
@@ -237,7 +224,6 @@
                 </div>
 
               </div>
-
               <app-radio-button *ngIf="newRequest.get('person').get('contractorIsLegalEntity') &&
               (newRequest.get('person').get('sameAsContractor').value == 'NO' ||
               newRequest.get('person').get('sameAsContractor').value == 'SI')" class="mr-3"
@@ -245,7 +231,6 @@
                 title="¿El asegurador y el contratante/pagador son distintos?"
                 [options]="diseaseService.yesOrNoOriginal">
               </app-radio-button>
-
               <div class="mr-3">
                 <div>
                   <app-radio-button *ngIf="newRequest.get('person').get('sameAsPayer') &&
@@ -262,32 +247,13 @@
                     </div>
                     <div *ngIf="newRequest.get('files') && newRequest.get('files').get('copyId')">
                       <div *ngFor="let copies of filesCopyIdArray.controls; let i = index">
-                        <div class="grid grid-cols-2">
-                          <mat-form-field class="mr-3" appearance="outline"
-                            [ngClass]="{'file-input': newRequest.get('files').get('copyId').get(i.toString()).get('copyId').value !== ''}">
-                            <mat-label> Copia de Cédula </mat-label>
-                            <ngx-mat-file-input #removableInputcopyId [valuePlaceholder]="arrayCopyIdWatcher(i)"
-                              (change)="onStudiesChange2($event, i, 'copyId')">
-                            </ngx-mat-file-input>
-                            <mat-icon style="color: #e2e2e2;" matSuffix
-                              *ngIf="newRequest.get('files').get('copyId').get(i.toString()).get('copyId').value === ''">
-                              publish</mat-icon>
-                            <button mat-icon-button matSuffix
-                              *ngIf="newRequest.get('files').get('copyId').get(i.toString()).get('copyId').value !== ''"
-                              (click)="this.requestService.clearArchives(newRequest.get('files').get('copyId').get(i.toString()).get('copyId'))"
-                              (click)="removableInputcopyId.clear($event)">
-                              <mat-icon style="color: #e2e2e2;">clear</mat-icon>
-                            </button><button mat-icon-button matSuffix
-                              *ngIf="newRequest.get('files').get('copyId').get(i.toString()).get('copyId').value !== ''"
-                              (click)="this.requestService.downloadArchives($event, newRequest.get('files').get('copyId').get(i.toString()).get('copyId').value)">
-                              <mat-icon style="color: #e2e2e2;">get_app</mat-icon>
-                            </button>
-                            <mat-error
-                              *ngIf="newRequest.get('files').get('copyId').get(i.toString()).get('copyId').touched && !newRequest.get('files').get('copyId').get(i.toString()).get('copyId').valid">
-                              Este campo es
-                              obligatorio
-                            </mat-error>
-                          </mat-form-field>
+                        <div class="grid grid-cols-6">
+                          <app-file-input
+                            [ngClass]="{'col-span-6': filesCopyIdArray.length === 1, 'col-span-5': filesCopyIdArray.length > 1}"
+                            class="mr-3" [group]="newRequest.get('files').get('copyId').get(i.toString())" name="copyId"
+                            label="Copia de Cédula" [fileNameWatcher]="arrayCopyIdWatcher(i)"
+                            (onFileChange)="onStudiesChange2($event, i, 'copyId')">
+                          </app-file-input>
                           <div *ngIf="filesCopyIdArray.length > 1"
                             [ngClass]="{'': filesCopyIdArray.length === 1, 'col-span-1': filesCopyIdArray.length > 1} ">
                             <button mat-mini-fab aria-label=" Eliminar estudio"
@@ -327,32 +293,13 @@
                     </div>
                     <div *ngIf="newRequest.get('files') && newRequest.get('files').get('mercantile')">
                       <div *ngFor="let registers of mercantileRegisterArray.controls; let i = index">
-                        <div class="grid grid-cols-2">
-                          <mat-form-field class="mr-3" appearance="outline"
-                            [ngClass]="{'file-input': newRequest.get('files').get('mercantile').get(i.toString()).get('register').value !== ''}">
-                            <mat-label> Registro Mercantil </mat-label>
-                            <ngx-mat-file-input #removableInputmercantile [valuePlaceholder]="arrayRegisterWatcher(i)"
-                              (change)="onStudiesChange2($event, i, 'mercantile')">
-                            </ngx-mat-file-input>
-                            <mat-icon style="color: #e2e2e2;" matSuffix
-                              *ngIf="newRequest.get('files').get('mercantile').get(i.toString()).get('register').value === ''">
-                              publish</mat-icon>
-                            <button mat-icon-button matSuffix
-                              *ngIf="newRequest.get('files').get('mercantile').get(i.toString()).get('register').value !== ''"
-                              (click)="this.requestService.clearArchives(newRequest.get('files').get('mercantile').get(i.toString()).get('register'))"
-                              (click)="removableInputmercantile.clear($event)">
-                              <mat-icon style="color: #e2e2e2;">clear</mat-icon>
-                            </button><button mat-icon-button matSuffix
-                              *ngIf="newRequest.get('files').get('mercantile').get(i.toString()).get('register').value !== ''"
-                              (click)="this.requestService.downloadArchives($event, newRequest.get('files').get('mercantile').get(i.toString()).get('register').value)">
-                              <mat-icon style="color: #e2e2e2;">get_app</mat-icon>
-                            </button>
-                            <mat-error
-                              *ngIf="newRequest.get('files').get('mercantile').get(i.toString()).get('register').touched && !newRequest.get('files').get('mercantile').get(i.toString()).get('register').valid">
-                              Este campo es
-                              obligatorio
-                            </mat-error>
-                          </mat-form-field>
+                        <div class="grid grid-cols-6">
+                          <app-file-input
+                            [ngClass]="{'col-span-6': mercantileRegisterArray.length === 1, 'col-span-5': mercantileRegisterArray.length > 1}"
+                            class="mr-3" [group]="newRequest.get('files').get('mercantile').get(i.toString())"
+                            name="register" label="Registro Mercantil" [fileNameWatcher]="arrayRegisterWatcher(i)"
+                            (onFileChange)="onStudiesChange2($event, i, 'mercantile')">
+                          </app-file-input>
                           <div *ngIf="mercantileRegisterArray.length > 1"
                             [ngClass]="{'': mercantileRegisterArray.length === 1, 'col-span-1': mercantileRegisterArray.length > 1} ">
                             <button mat-mini-fab aria-label=" Eliminar estudio"
@@ -468,16 +415,16 @@
                 <app-input id='date' class="mr-3 pt-21" [group]="newRequest.get('contractor')"
                   label="Apellidos / Apellido de Casada" name='lastName'></app-input>
                 <div class="mr-3 pt-21">
-                  <app-date-picker class="mr-3 " label="Fecha de Nacimiento" [max]="maxDate"
+                  <app-date-picker class="mr-3 " label="Fecha de Nacimiento" [max]="todayDate"
                     [group]="newRequest.get('contractor')" name='date'>
                   </app-date-picker>
                 </div>
-                <app-select class="mr-3 pt-21" [options]="idType" [group]="newRequest.get('contractor')"></app-select>
                 <app-radio-button class="mr-3 pt-21" [group]="newRequest.get('contractor')" name="sex" [options]="sex">
                 </app-radio-button>
                 <app-input class="mr-3 pt-21" [group]="newRequest.get('contractor')" label="Nacionalidad"
                   name='nationality'>
                 </app-input>
+                <app-select class="mr-3 pt-21" [options]="idType" [group]="newRequest.get('contractor')"></app-select>
                 <app-input class="mr-3 pt-21" [group]="newRequest.get('contractor')" label="Cédula/Pasaporte"
                   name='id2'>
                 </app-input>
@@ -495,15 +442,15 @@
                   </app-select>
                 </div>
                 <div class="mr-3">
-
+                  <label for="">País de Residencia</label>
                   <app-select class="mr-3" [options]=" countryOfResidence" [group]="newRequest.get('contractor')">
                   </app-select>
                 </div>
                 <div class="mr-3 col-span-2">
 
                   <app-input class="mr-3" [group]="newRequest.get('contractor')"
-                    label='Provincia/Distrito/Corregimiento/Urbanización/Calle/Casa o Apto./Edificio.'
-                    name='direction'></app-input>
+                    label='Provincia/Distrito/Corregimiento/Urbanización/Calle/Casa o Apto./Edificio.' name='direction'>
+                  </app-input>
                 </div>
                 <app-number-input isPhone="true" class="mr-3 pt-21" [group]="newRequest.get('contractor')"
                   label="Tel. Residencia" name='tel'>
@@ -528,8 +475,8 @@
                 <div class="mr-3 col-span-2">
                   <app-input class="mr-3" label="Dirección de la empresa"
                     [group]="newRequest.get('contractor').get('company')"
-                    label='Provincia/Distrito/Corregimiento/Urbanización/Calle/Casa o Apto./Edificio.'
-                    name='direction'></app-input>
+                    label='Provincia/Distrito/Corregimiento/Urbanización/Calle/Casa o Apto./Edificio.' name='direction'>
+                  </app-input>
                 </div>
 
                 <app-input class="mr-3" [group]="newRequest.get('contractor').get('company')"
@@ -579,8 +526,7 @@
                 <app-input id='date' class="mr-3 pt-21" [group]="newRequest.get('payer')"
                   label="Apellidos / Apellido de Casada" name='lastName'></app-input>
                 <div class="mr-3">
-
-                  <app-date-picker [max]="todayDate" class="mr-3" [group]="newRequest.get('payer')" name='date'>
+                  <app-date-picker [max]="maxDate" class="mr-3" [group]="newRequest.get('payer')" name='date'>
                   </app-date-picker>
                 </div>
                 <app-radio-button class="mr-3 pt-21" [group]="newRequest.get('payer')" name="sex" [options]="sex">
@@ -610,8 +556,8 @@
                 <div class="mr-3 col-span-2">
 
                   <app-input class="mr-3" [group]="newRequest.get('payer')"
-                    label='Provincia/Distrito/Corregimiento/Urbanización/Calle/Casa o Apto./Edificio.'
-                    name='direction'></app-input>
+                    label='Provincia/Distrito/Corregimiento/Urbanización/Calle/Casa o Apto./Edificio.' name='direction'>
+                  </app-input>
                 </div>
                 <app-number-input isPhone="true" class="mr-3 pt-21" [group]="newRequest.get('payer')"
                   label="Tel. Residencia" name='tel'>
@@ -634,8 +580,8 @@
                   name='position'></app-input>
                 <app-input class="mr-3 col-span-2" label="Dirección de la empresa"
                   [group]="newRequest.get('payer').get('company')"
-                  label='Provincia/Distrito/Corregimiento/Urbanización/Calle/Casa o Apto./Edificio.'
-                  name='direction'></app-input>
+                  label='Provincia/Distrito/Corregimiento/Urbanización/Calle/Casa o Apto./Edificio.' name='direction'>
+                </app-input>
 
                 <app-input class="mr-3" [group]="newRequest.get('payer').get('company')"
                   label="Actividad Económica de la Empresa" name='economicActivity'></app-input>
@@ -648,8 +594,8 @@
                 <app-select class="mr-3" [options]="parentescoAsegurado"
                   [group]="newRequest.get('payer').get('company')" name="kinship">
                 </app-select>
-                <!--  <app-input class="mr-3 pt-21" [group]="newRequest.get('payer').get('company')"
-                  label="Parentesco con el asegurado" name='kinship'></app-input> -->
+                <!-- <app-input class="mr-3 pt-21" [group]="newRequest.get('payer').get('company')"
+                  label="Parentesco con el asegurado" name='kinship'></app-input>-->
                 <div class="mr-3">
                   <label for="">País(es) donde el pagador tributa por sus ingresos</label>
                   <app-select class="mr-3" [options]="country" name='contractorCountry'
@@ -936,33 +882,12 @@
                         <app-number-input class="mr-3" min="1" max="100"
                           [group]="newRequest.get('primaryBenefits').get('dependentsC').get(index.toString())"
                           label="Cant. en %" name='quantity'></app-number-input>
-                        <mat-form-field class="mr-3"
-                          [ngClass]="{'file-input':newRequest.get('primaryBenefits').get('dependentsC').get(index.toString()).get('id2Attached').value !== '' }"
-                          appearance="outline">
-                          <mat-label> Adjuntar documento de identidad si es mayor de edad </mat-label>
-                          <ngx-mat-file-input #removableInputPrimaryBenefits placeholder="Documento de Identidad"
-                            [valuePlaceholder]="id2AttachedViewValue(index, 'primaryBenefits')"
-                            (change)="onFileChangeOnArray($event, 'id2Attached', index, 'primaryBenefits')">
-                          </ngx-mat-file-input>
-                          <mat-icon style="color: #e2e2e2;" matSuffix
-                            *ngIf="newRequest.get('primaryBenefits').get('dependentsC').get(index.toString()).get('id2Attached').value === ''">
-                            publish</mat-icon>
-                          <button mat-icon-button matSuffix
-                            *ngIf="newRequest.get('primaryBenefits').get('dependentsC').get(index.toString()).get('id2Attached').value !== ''"
-                            (click)="this.requestService.clearArchives(newRequest.get('primaryBenefits').get('dependentsC').get(index.toString()).get('id2Attached'))"
-                            (click)="removableInputPrimaryBenefits.clear($event)">
-                            <mat-icon style="color: #e2e2e2;">clear</mat-icon>
-                          </button><button mat-icon-button matSuffix
-                            *ngIf="newRequest.get('primaryBenefits').get('dependentsC').get(index.toString()).get('id2Attached').value !== ''"
-                            (click)="this.requestService.downloadArchives($event, newRequest.get('primaryBenefits').get('dependentsC').get(index.toString()).get('id2Attached').value)">
-                            <mat-icon style="color: #e2e2e2;">get_app</mat-icon>
-                          </button>
-                          <mat-error
-                            *ngIf="newRequest.get('primaryBenefits').get('dependentsC').get(index.toString()).get('id2Attached').touched && !newRequest.get('primaryBenefits').get('dependentsC').get(index.toString()).get('id2Attached').valid">
-                            Este campo es
-                            obligatorio
-                          </mat-error>
-                        </mat-form-field>
+                        <app-file-input class="mr-3"
+                          [group]="newRequest.get('primaryBenefits').get('dependentsC').get(index.toString())"
+                          name="id2Attached" label="Adjuntar documento de identidad si es mayor de edad"
+                          [fileNameWatcher]="id2AttachedViewValue(index, 'primaryBenefits')"
+                          (onFileChange)="onFileChangeOnArray($event, 'id2Attached', index, 'primaryBenefits')">
+                        </app-file-input>
                         <!-- [valuePlaceholder]="fileNameWatcher('id2Attached')" -->
                       </div>
 
@@ -1014,34 +939,11 @@
                     label="Especificar" name='specifyRelationship'></app-input>
                   <app-input class="mr-3" [group]="newRequest.get('primaryBenefits').get('personBenefited')"
                     label="Cédula/Pasaporte" name='id2'></app-input>
-                  <mat-form-field class="mr-3"
-                    [ngClass]="{'file-input': newRequest.get('primaryBenefits').get('personBenefited').get('id2Attached').value !== ''}"
-                    appearance="outline">
-                    <mat-label> Adjuntar documento de identidad </mat-label>
-                    <ngx-mat-file-input #removableInputPersonBenefited placeholder="Documento de Identidad"
-                      [valuePlaceholder]="id2AttachedViewValue(null, 'primaryBenefits')"
-                      (change)="onFileChangeOnArray($event, 'id2Attached', null, 'primaryBenefits')">
-                    </ngx-mat-file-input>
-                    <mat-icon style="color: #e2e2e2;" matSuffix
-                      *ngIf="newRequest.get('primaryBenefits').get('personBenefited').get('id2Attached').value === ''">
-                      publish
-                    </mat-icon>
-                    <button mat-icon-button matSuffix
-                      *ngIf="newRequest.get('primaryBenefits').get('personBenefited').get('id2Attached').value !== ''"
-                      (click)="this.requestService.clearArchives(newRequest.get('primaryBenefits').get('personBenefited').get('id2Attached'))"
-                      (click)="removableInputPersonBenefited.clear($event)">
-                      <mat-icon style="color: #e2e2e2;">clear</mat-icon>
-                    </button><button mat-icon-button matSuffix
-                      *ngIf="newRequest.get('primaryBenefits').get('personBenefited').get('id2Attached').value !== ''"
-                      (click)="this.requestService.downloadArchives($event, newRequest.get('primaryBenefits').get('personBenefited').get('id2Attached').value)">
-                      <mat-icon style="color: #e2e2e2;">get_app</mat-icon>
-                    </button>
-                    <mat-error
-                      *ngIf="newRequest.get('primaryBenefits').get('personBenefited').get('id2Attached').touched && !newRequest.get('primaryBenefits').get('personBenefited').get('id2Attached').valid">
-                      Este campo es
-                      obligatorio
-                    </mat-error>
-                  </mat-form-field>
+                  <app-file-input class="mr-3" [group]="newRequest.get('primaryBenefits').get('personBenefited')"
+                    name="id2Attached" label="Adjuntar documento de identidad"
+                    [fileNameWatcher]="id2AttachedViewValue(null, 'primaryBenefits')"
+                    (onFileChange)="onFileChangeOnArray($event, 'id2Attached', null, 'primaryBenefits')">
+                  </app-file-input>
                 </div>
               </div>
             </div>
@@ -1095,34 +997,12 @@
                         <app-number-input class="mr-3" min="1" max="100"
                           [group]="newRequest.get('contingentBeneficiary').get('dependentsC').get(index.toString())"
                           label="Cant. en %" name='quantity'></app-number-input>
-                        <mat-form-field class="mr-3"
-                          [ngClass]="{'file-input': newRequest.get('contingentBeneficiary').get('dependentsC').get(index.toString()).get('id2Attached').value !== ''}"
-                          appearance="outline">
-                          <mat-label> Adjuntar documento de identidad si es mayor de edad </mat-label>
-                          <ngx-mat-file-input #removableInputContingentBeneficiary placeholder="Documento de Identidad"
-                            [valuePlaceholder]="id2AttachedViewValue(index, 'contingentBeneficiary')"
-                            (change)="onFileChangeOnArray($event, 'id2Attached', index, 'contingentBeneficiary')">
-                          </ngx-mat-file-input>
-                          <mat-icon
-                            *ngIf="newRequest.get('contingentBeneficiary').get('dependentsC').get(index.toString()).get('id2Attached').value == ''"
-                            style="color: #e2e2e2;" matSuffix>
-                            publish</mat-icon>
-                          <button mat-icon-button matSuffix
-                            *ngIf="newRequest.get('contingentBeneficiary').get('dependentsC').get(index.toString()).get('id2Attached').value !== ''"
-                            (click)="this.requestService.clearArchives(newRequest.get('contingentBeneficiary').get('dependentsC').get(index.toString()).get('id2Attached'))"
-                            (click)="removableInputContingentBeneficiary.clear($event)">
-                            <mat-icon style="color: #e2e2e2;">clear</mat-icon>
-                          </button><button mat-icon-button matSuffix
-                            *ngIf="newRequest.get('contingentBeneficiary').get('dependentsC').get(index.toString()).get('id2Attached').value !== ''"
-                            (click)="this.requestService.downloadArchives($event, newRequest.get('contingentBeneficiary').get('dependentsC').get(index.toString()).get('id2Attached').value)">
-                            <mat-icon style="color: #e2e2e2;">get_app</mat-icon>
-                          </button>
-                          <mat-error
-                            *ngIf="newRequest.get('contingentBeneficiary').get('dependentsC').get(index.toString()).get('id2Attached').touched && !newRequest.get('contingentBeneficiary').get('dependentsC').get(index.toString()).get('id2Attached').valid">
-                            Este campo es
-                            obligatorio
-                          </mat-error>
-                        </mat-form-field>
+                        <app-file-input class="mr-3"
+                          [group]="newRequest.get('contingentBeneficiary').get('dependentsC').get(index.toString())"
+                          name="id2Attached" label="Adjuntar documento de identidad si es mayor de edad"
+                          [fileNameWatcher]="id2AttachedViewValue(index, 'contingentBeneficiary')"
+                          (onFileChange)="onFileChangeOnArray($event, 'id2Attached', index, 'contingentBeneficiary')">
+                        </app-file-input>
                       </div>
                       <button mat-mini-fab aria-label="Eliminar reclamacion"
                         (click)="formMethods.deleteOneElement(contingentBeneficiaryArray, index)" type="button"
@@ -1169,33 +1049,13 @@
                     label="Especificar" name='specifyRelationship'></app-input>
                   <app-input class="mr-3" [group]="newRequest.get('contingentBeneficiary').get('personBenefited')"
                     label="Cédula/Pasaporte" name='id2'></app-input>
-                  <mat-form-field class="mr-3"
-                    [ngClass]="{'file-input': newRequest.get('contingentBeneficiary').get('personBenefited').get('id2Attached').value !== ''}"
-                    appearance="outline">
-                    <mat-label> Adjuntar documento de identidad </mat-label>
-                    <ngx-mat-file-input #removableInputBeneficiaryPersonBenefited placeholder="Documento de Identidad"
-                      [valuePlaceholder]="id2AttachedViewValue(null, 'contingentBeneficiary')"
-                      (change)="onFileChangeOnArray($event, 'id2Attached', null, 'contingentBeneficiary')">
-                    </ngx-mat-file-input>
-                    <mat-icon style="color: #e2e2e2;" matSuffix
-                      *ngIf="newRequest.get('contingentBeneficiary').get('personBenefited').get('id2Attached').value === ''">
-                      publish</mat-icon>
-                    <button mat-icon-button matSuffix
-                      *ngIf="newRequest.get('contingentBeneficiary').get('personBenefited').get('id2Attached').value !== ''"
-                      (click)="this.requestService.clearArchives(newRequest.get('contingentBeneficiary').get('personBenefited').get('id2Attached'))"
-                      (click)="removableInputBeneficiaryPersonBenefited.clear($event)">
-                      <mat-icon style="color: #e2e2e2;">clear</mat-icon>
-                    </button><button mat-icon-button matSuffix
-                      *ngIf="newRequest.get('contingentBeneficiary').get('personBenefited').get('id2Attached').value !== ''"
-                      (click)="this.requestService.downloadArchives($event, newRequest.get('contingentBeneficiary').get('personBenefited').get('id2Attached').value)">
-                      <mat-icon style="color: #e2e2e2;">get_app</mat-icon>
-                    </button>
-                    <mat-error
-                      *ngIf="newRequest.get('contingentBeneficiary').get('personBenefited').get('id2Attached').touched && !newRequest.get('contingentBeneficiary').get('personBenefited').get('id2Attached').valid">
-                      Este campo es
-                      obligatorio
-                    </mat-error>
-                  </mat-form-field>
+                  <app-file-input class="mr-3" [group]="newRequest.get('contingentBeneficiary').get('personBenefited')"
+                    name="id2Attached"
+                    *ngIf="newRequest.get('contingentBeneficiary').get('personBenefited').get('family').value == 'OTROS'"
+                    label="Adjuntar documento de identidad"
+                    [fileNameWatcher]="id2AttachedViewValue(null, 'contingentBeneficiary')"
+                    (onFileChange)="onFileChangeOnArray($event, 'id2Attached', null, 'contingentBeneficiary')">
+                  </app-file-input>
                 </div>
               </div>
 
@@ -1488,11 +1348,11 @@
                             name="name" label="Nombre tratamiento">
                           </app-input>
                         </div>
-                      </div>
-                      <div class="radio-button-label" style="font-size: 12px !important;">Detalle</div> -->
+                      </div> -->
+                      <!-- <div class="radio-button-label" style="font-size: 12px !important;">Detalle</div> -->
                       <app-text-area
                         [group]="newRequest.get('generalInformation').get('insuranceProposed').get(i.toString())"
-                        name="detail" label="Texto">
+                        name="detail" label="Detalle">
                       </app-text-area>
                       <div *ngIf="insuranceProposedList.length > 1"
                         [ngClass]="{'': insuranceProposedList.length === 1, 'col-span-1': insuranceProposedList.length > 1} ">
@@ -2100,31 +1960,10 @@
               </div>
               <div *ngFor="let studies of filesStudiesArray.controls; let i = index">
                 <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
-                  <mat-form-field class="mr-3" appearance="outline"
-                    [ngClass]="{'file-input': newRequest.get('files').get('studies').get(i.toString()).get('study').value !== '', 'file-error': newRequest.get('files').get('studies').get(i.toString()).get('study').touched && !newRequest.get('files').get('studies').get(i.toString()).get('study').valid}">
-                    <mat-label> Estudio </mat-label>
-                    <ngx-mat-file-input #removableInputStudies [valuePlaceholder]="arrayStudiesWatcher(i)"
-                      (change)="onStudiesChange($event, i)">
-                    </ngx-mat-file-input>
-                    <mat-icon style="color: #e2e2e2;" matSuffix
-                      *ngIf="newRequest.get('files').get('studies').get(i.toString()).get('study').value === ''">publish
-                    </mat-icon>
-                    <button mat-icon-button matSuffix
-                      *ngIf="newRequest.get('files').get('studies').get(i.toString()).get('study').value !== ''"
-                      (click)="this.requestService.clearArchives(newRequest.get('files').get('studies').get(i.toString()).get('study'))"
-                      (click)="removableInputStudies.clear($event)">
-                      <mat-icon style="color: #e2e2e2;">clear</mat-icon>
-                    </button><button mat-icon-button matSuffix
-                      *ngIf="newRequest.get('files').get('studies').get(i.toString()).get('study').value !== ''"
-                      (click)="this.requestService.downloadArchives($event, newRequest.get('files').get('studies').get(i.toString()).get('study').value)">
-                      <mat-icon style="color: #e2e2e2;">get_app</mat-icon>
-                    </button>
-                    <mat-error
-                      *ngIf="newRequest.get('files').get('studies').get(i.toString()).get('study').touched && !newRequest.get('files').get('studies').get(i.toString()).get('study').valid">
-                      Este campo es
-                      obligatorio
-                    </mat-error>
-                  </mat-form-field>
+                  <app-file-input class="mr-3" [group]="newRequest.get('files').get('studies').get(i.toString())"
+                    name="study" label="Estudio" [fileNameWatcher]="arrayStudiesWatcher(i)"
+                    (onFileChange)="onStudiesChange($event, i)">
+                  </app-file-input>
                   <div [ngClass]="{'': filesStudiesArray.length === 1, 'col-span-1': filesStudiesArray.length > 1} ">
                     <button mat-mini-fab aria-label=" Eliminar estudio"
                       (click)="diseaseService.removeToList(i, filesStudiesArray)" type="button"
@@ -2141,413 +1980,89 @@
                 </button>
               </div>
               <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4 ">
-                <mat-form-field class="mx-3" appearance="outline"
-                  [ngClass]="{'file-input': newRequest.get('files').get('healthDeclaration').value !== '', 'file-error': newRequest.get('files').get('healthDeclaration').touched && !newRequest.get('files').get('healthDeclaration').valid}"
-                  *ngIf="this.newRequest.get('files').get('healthDeclaration')">
-                  <mat-label> Declaración de salud </mat-label>
-                  <ngx-mat-file-input #removableInputHealthDeclaration
-                    [valuePlaceholder]="fileNameWatcher('healthDeclaration')"
-                    (change)="onFileChange($event, 'healthDeclaration')"></ngx-mat-file-input>
-                  <mat-icon style="color: #e2e2e2;" matSuffix
-                    *ngIf="newRequest.get('files').get('healthDeclaration').value === ''">publish
-                  </mat-icon>
-                  <button mat-icon-button matSuffix
-                    *ngIf="newRequest.get('files').get('healthDeclaration').value !== ''"
-                    (click)="this.requestService.clearArchives(newRequest.get('files').get('healthDeclaration'))"
-                    (click)="removableInputHealthDeclaration.clear($event)">
-                    <mat-icon style="color: #e2e2e2;">clear</mat-icon>
-                  </button><button mat-icon-button matSuffix
-                    *ngIf="newRequest.get('files').get('healthDeclaration').value !== ''"
-                    (click)="this.requestService.downloadArchives($event, newRequest.get('files').get('healthDeclaration').value)">
-                    <mat-icon style="color: #e2e2e2;">get_app</mat-icon>
-                  </button>
-                  <mat-error
-                    *ngIf="newRequest.get('files').get('healthDeclaration').touched && !newRequest.get('files').get('healthDeclaration').valid">
-                    Este campo es
-                    obligatorio
-                  </mat-error>
-                </mat-form-field>
-                <mat-form-field
-                  [ngClass]="{'file-input': newRequest.get('files').get('id2').value !== '', 'file-error': newRequest.get('files').get('id2').touched && !newRequest.get('files').get('id2').valid}"
-                  class="mr-3" appearance="outline" *ngIf="this.newRequest.get('files').get('id2')">
-                  <mat-label> Cédula de identidad o pasaporte vigente </mat-label>
-                  <ngx-mat-file-input #removableInputId2 [valuePlaceholder]="fileNameWatcher('id2')"
-                    (change)="onFileChange($event, 'id2')"></ngx-mat-file-input>
-                  <mat-icon style="color: #e2e2e2;" matSuffix *ngIf="newRequest.get('files').get('id2').value === ''">
-                    publish
-                  </mat-icon>
-                  <button mat-icon-button matSuffix *ngIf="newRequest.get('files').get('id2').value !== ''"
-                    (click)="this.requestService.clearArchives(newRequest.get('files').get('id2'))"
-                    (click)="removableInputId2.clear($event)">
-                    <mat-icon style="color: #e2e2e2;">clear</mat-icon>
-                  </button><button mat-icon-button matSuffix *ngIf="newRequest.get('files').get('id2').value !== ''"
-                    (click)="this.requestService.downloadArchives($event, newRequest.get('files').get('id2').value)">
-                    <mat-icon style="color: #e2e2e2;">get_app</mat-icon>
-                  </button>
-                  <mat-error
-                    *ngIf="newRequest.get('files').get('id2').touched && !newRequest.get('files').get('id2').valid">
-                    Este campo es
-                    obligatorio
-                  </mat-error>
-                </mat-form-field>
-                <mat-form-field
-                  [ngClass]="{'file-input': newRequest.get('files').get('medicExam').value !== '', 'file-error': newRequest.get('files').get('medicExam').touched && !newRequest.get('files').get('medicExam').valid}"
-                  class="mr-3" appearance="outline" *ngIf="this.newRequest.get('files').get('medicExam')">
-                  <mat-label> Examen médico </mat-label>
-                  <ngx-mat-file-input #removableInputMedicExam [valuePlaceholder]="fileNameWatcher('medicExam')"
-                    (change)="onFileChange($event, 'medicExam')"></ngx-mat-file-input>
-                  <mat-icon style="color: #e2e2e2;" matSuffix
-                    *ngIf="newRequest.get('files').get('medicExam').value === ''">publish
-                  </mat-icon>
-                  <button mat-icon-button matSuffix *ngIf="newRequest.get('files').get('medicExam').value !== ''"
-                    (click)="this.requestService.clearArchives(newRequest.get('files').get('medicExam'))"
-                    (click)="removableInputMedicExam.clear($event)">
-                    <mat-icon style="color: #e2e2e2;">clear</mat-icon>
-                  </button><button mat-icon-button matSuffix
-                    *ngIf="newRequest.get('files').get('medicExam').value !== ''"
-                    (click)="this.requestService.downloadArchives($event, newRequest.get('files').get('medicExam').value)">
-                    <mat-icon style="color: #e2e2e2;">get_app</mat-icon>
-                  </button>
-                  <mat-error
-                    *ngIf="newRequest.get('files').get('medicExam').touched && !newRequest.get('files').get('medicExam').valid">
-                    Este campo es
-                    obligatorio
-                  </mat-error>
-                </mat-form-field>
-                <mat-form-field
-                  [ngClass]="{'file-input': newRequest.get('files').get('glycemia').value !== '', 'file-error': newRequest.get('files').get('glycemia').touched && !newRequest.get('files').get('glycemia').valid}"
-                  class="mr-3" appearance="outline" *ngIf="this.newRequest.get('files').get('glycemia')">
-                  <mat-label> Glicemia </mat-label>
-                  <ngx-mat-file-input #removableInputGlycemia [valuePlaceholder]="fileNameWatcher('glycemia')"
-                    (change)="onFileChange($event, 'glycemia')"></ngx-mat-file-input>
-                  <mat-icon style="color: #e2e2e2;" matSuffix
-                    *ngIf="newRequest.get('files').get('glycemia').value === ''">publish
-                  </mat-icon>
-                  <button mat-icon-button matSuffix *ngIf="newRequest.get('files').get('glycemia').value !== ''"
-                    (click)="this.requestService.clearArchives(newRequest.get('files').get('glycemia'))"
-                    (click)="removableInputGlycemia.clear($event)">
-                    <mat-icon style="color: #e2e2e2;">clear</mat-icon>
-                  </button><button mat-icon-button matSuffix
-                    *ngIf="newRequest.get('files').get('glycemia').value !== ''"
-                    (click)="this.requestService.downloadArchives($event, newRequest.get('files').get('glycemia').value)">
-                    <mat-icon style="color: #e2e2e2;">get_app</mat-icon>
-                  </button>
-                  <mat-error
-                    *ngIf="newRequest.get('files').get('glycemia').touched && !newRequest.get('files').get('glycemia').valid">
-                    Este campo es
-                    obligatorio
-                  </mat-error>
-                </mat-form-field>
-                <mat-form-field
-                  [ngClass]="{'file-input': newRequest.get('files').get('hbA1C').value !== '', 'file-error': newRequest.get('files').get('hbA1C').touched && !newRequest.get('files').get('hbA1C').valid}"
-                  class="mr-3" appearance="outline" *ngIf="this.newRequest.get('files').get('hbA1C')">
-                  <mat-label> hbA1C </mat-label>
-                  <ngx-mat-file-input #removableInputHbA1C [valuePlaceholder]="fileNameWatcher('hbA1C')"
-                    (change)="onFileChange($event, 'hbA1C')"></ngx-mat-file-input>
-                  <mat-icon style="color: #e2e2e2;" matSuffix *ngIf="newRequest.get('files').get('hbA1C').value === ''">
-                    publish
-                  </mat-icon>
-                  <button mat-icon-button matSuffix *ngIf="newRequest.get('files').get('hbA1C').value !== ''"
-                    (click)="this.requestService.clearArchives(newRequest.get('files').get('hbA1C'))"
-                    (click)="removableInputHbA1C.clear($event)">
-                    <mat-icon style="color: #e2e2e2;">clear</mat-icon>
-                  </button><button mat-icon-button matSuffix *ngIf="newRequest.get('files').get('hbA1C').value !== ''"
-                    (click)="this.requestService.downloadArchives($event, newRequest.get('files').get('hbA1C').value)">
-                    <mat-icon style="color: #e2e2e2;">get_app</mat-icon>
-                  </button>
-                  <mat-error
-                    *ngIf="newRequest.get('files').get('hbA1C').touched && !newRequest.get('files').get('hbA1C').valid">
-                    Este campo es
-                    obligatorio
-                  </mat-error>
-                </mat-form-field>
-                <mat-form-field
-                  [ngClass]="{'file-input': newRequest.get('files').get('totalCholestor').value !== '', 'file-error': newRequest.get('files').get('totalCholestor').touched && !newRequest.get('files').get('totalCholestor').valid}"
-                  class="mr-3" appearance="outline" *ngIf="this.newRequest.get('files').get('totalCholestor')">
-                  <mat-label> Cólesterol total </mat-label>
-                  <ngx-mat-file-input #removableInputTotalCholestor
-                    [valuePlaceholder]="fileNameWatcher('totalCholestor')"
-                    (change)="onFileChange($event, 'totalCholestor')"></ngx-mat-file-input>
-                  <mat-icon style="color: #e2e2e2;" matSuffix
-                    *ngIf="newRequest.get('files').get('totalCholestor').value === ''">publish
-                  </mat-icon>
-                  <button mat-icon-button matSuffix *ngIf="newRequest.get('files').get('totalCholestor').value !== ''"
-                    (click)="this.requestService.clearArchives(newRequest.get('files').get('totalCholestor'))"
-                    (click)="removableInputTotalCholestor.clear($event)">
-                    <mat-icon style="color: #e2e2e2;">clear</mat-icon>
-                  </button><button mat-icon-button matSuffix
-                    *ngIf="newRequest.get('files').get('totalCholestor').value !== ''"
-                    (click)="this.requestService.downloadArchives($event, newRequest.get('files').get('totalCholestor').value)">
-                    <mat-icon style="color: #e2e2e2;">get_app</mat-icon>
-                  </button>
-                  <mat-error
-                    *ngIf="newRequest.get('files').get('totalCholestor').touched && !newRequest.get('files').get('totalCholestor').valid">
-                    Este campo es
-                    obligatorio
-                  </mat-error>
-                </mat-form-field>
-                <mat-form-field
-                  [ngClass]="{'file-input': newRequest.get('files').get('HDL').value !== '', 'file-error': newRequest.get('files').get('HDL').touched && !newRequest.get('files').get('HDL').valid}"
-                  class="mr-3" appearance="outline" *ngIf="this.newRequest.get('files').get('HDL')">
-                  <mat-label> HDL </mat-label>
-                  <ngx-mat-file-input #removableInputHDL [valuePlaceholder]="fileNameWatcher('HDL')"
-                    (change)="onFileChange($event, 'HDL')"></ngx-mat-file-input>
-                  <mat-icon style="color: #e2e2e2;" matSuffix *ngIf="newRequest.get('files').get('HDL').value === ''">
-                    publish
-                  </mat-icon>
-                  <button mat-icon-button matSuffix *ngIf="newRequest.get('files').get('HDL').value !== ''"
-                    (click)="this.requestService.clearArchives(newRequest.get('files').get('HDL'))"
-                    (click)="removableInputHDL.clear($event)">
-                    <mat-icon style="color: #e2e2e2;">clear</mat-icon>
-                  </button><button mat-icon-button matSuffix *ngIf="newRequest.get('files').get('HDL').value !== ''"
-                    (click)="this.requestService.downloadArchives($event, newRequest.get('files').get('HDL').value)">
-                    <mat-icon style="color: #e2e2e2;">get_app</mat-icon>
-                  </button>
-                  <mat-error
-                    *ngIf="newRequest.get('files').get('HDL').touched && !newRequest.get('files').get('HDL').valid">
-                    Este campo es
-                    obligatorio
-                  </mat-error>
-                </mat-form-field>
-                <mat-form-field
-                  [ngClass]="{'file-input': newRequest.get('files').get('triglycerides').value !== '', 'file-error': newRequest.get('files').get('triglycerides').touched && !newRequest.get('files').get('triglycerides').valid}"
-                  class="mr-3" appearance="outline" *ngIf="this.newRequest.get('files').get('triglycerides')">
-                  <mat-label> Triglicéridos </mat-label>
-                  <ngx-mat-file-input #removableInputTriglycerides [valuePlaceholder]="fileNameWatcher('triglycerides')"
-                    (change)="onFileChange($event, 'triglycerides')"></ngx-mat-file-input>
-                  <mat-icon style="color: #e2e2e2;" matSuffix
-                    *ngIf="newRequest.get('files').get('triglycerides').value === ''">publish
-                  </mat-icon>
-                  <button mat-icon-button matSuffix *ngIf="newRequest.get('files').get('triglycerides').value !== ''"
-                    (click)="this.requestService.clearArchives(newRequest.get('files').get('triglycerides'))"
-                    (click)="removableInputTriglycerides.clear($event)">
-                    <mat-icon style="color: #e2e2e2;">clear</mat-icon>
-                  </button><button mat-icon-button matSuffix
-                    *ngIf="newRequest.get('files').get('triglycerides').value !== ''"
-                    (click)="this.requestService.downloadArchives($event, newRequest.get('files').get('triglycerides').value)">
-                    <mat-icon style="color: #e2e2e2;">get_app</mat-icon>
-                  </button>
-                  <mat-error
-                    *ngIf="newRequest.get('files').get('triglycerides').touched && !newRequest.get('files').get('triglycerides').valid">
-                    Este campo es
-                    obligatorio
-                  </mat-error>
-                </mat-form-field>
-                <mat-form-field
-                  [ngClass]="{'file-input': newRequest.get('files').get('creatinine').value !== '', 'file-error': newRequest.get('files').get('creatinine').touched && !newRequest.get('files').get('creatinine').valid}"
-                  class="mr-3" appearance="outline" *ngIf="this.newRequest.get('files').get('creatinine')">
-                  <mat-label> Creatinina </mat-label>
-                  <ngx-mat-file-input #removableInputCreatinine [valuePlaceholder]="fileNameWatcher('creatinine')"
-                    (change)="onFileChange($event, 'creatinine')"></ngx-mat-file-input>
-                  <mat-icon style="color: #e2e2e2;" matSuffix
-                    *ngIf="newRequest.get('files').get('creatinine').value === ''">publish
-                  </mat-icon>
-                  <button mat-icon-button matSuffix *ngIf="newRequest.get('files').get('creatinine').value !== ''"
-                    (click)="this.requestService.clearArchives(newRequest.get('files').get('creatinine'))"
-                    (click)="removableInputCreatinine.clear($event)">
-                    <mat-icon style="color: #e2e2e2;">clear</mat-icon>
-                  </button><button mat-icon-button matSuffix
-                    *ngIf="newRequest.get('files').get('creatinine').value !== ''"
-                    (click)="this.requestService.downloadArchives($event, newRequest.get('files').get('creatinine').value)">
-                    <mat-icon style="color: #e2e2e2;">get_app</mat-icon>
-                  </button>
-                  <mat-error
-                    *ngIf="newRequest.get('files').get('creatinine').touched && !newRequest.get('files').get('creatinine').valid">
-                    Este campo es
-                    obligatorio
-                  </mat-error>
-                </mat-form-field>
-                <mat-form-field
-                  [ngClass]="{'file-input': newRequest.get('files').get('AST').value !== '', 'file-error': newRequest.get('files').get('AST').touched && !newRequest.get('files').get('AST').valid}"
-                  class="mr-3" appearance="outline" *ngIf="this.newRequest.get('files').get('AST')">
-                  <mat-label> AST </mat-label>
-                  <ngx-mat-file-input #removableInputAST [valuePlaceholder]="fileNameWatcher('AST')"
-                    (change)="onFileChange($event, 'AST')"></ngx-mat-file-input>
-                  <mat-icon style="color: #e2e2e2;" matSuffix *ngIf="newRequest.get('files').get('AST').value === ''">
-                    publish
-                  </mat-icon>
-                  <button mat-icon-button matSuffix *ngIf="newRequest.get('files').get('AST').value !== ''"
-                    (click)="this.requestService.clearArchives(newRequest.get('files').get('AST'))"
-                    (click)="removableInputAST.clear($event)">
-                    <mat-icon style="color: #e2e2e2;">clear</mat-icon>
-                  </button><button mat-icon-button matSuffix *ngIf="newRequest.get('files').get('AST').value !== ''"
-                    (click)="this.requestService.downloadArchives($event, newRequest.get('files').get('AST').value)">
-                    <mat-icon style="color: #e2e2e2;">get_app</mat-icon>
-                  </button>
-                  <mat-error
-                    *ngIf="newRequest.get('files').get('AST').touched && !newRequest.get('files').get('AST').valid">
-                    Este campo es
-                    obligatorio
-                  </mat-error>
-                </mat-form-field>
-                <mat-form-field
-                  [ngClass]="{'file-input': newRequest.get('files').get('ALT').value !== '', 'file-error': newRequest.get('files').get('ALT').touched && !newRequest.get('files').get('ALT').valid}"
-                  class="mr-3" appearance="outline" *ngIf="this.newRequest.get('files').get('ALT')">
-                  <mat-label> ALT </mat-label>
-                  <ngx-mat-file-input #removableInputALT [valuePlaceholder]="fileNameWatcher('ALT')"
-                    (change)="onFileChange($event, 'ALT')"></ngx-mat-file-input>
-                  <mat-icon style="color: #e2e2e2;" matSuffix *ngIf="newRequest.get('files').get('ALT').value === ''">
-                    publish
-                  </mat-icon>
-                  <button mat-icon-button matSuffix *ngIf="newRequest.get('files').get('ALT').value !== ''"
-                    (click)="this.requestService.clearArchives(newRequest.get('files').get('ALT'))"
-                    (click)="removableInputALT.clear($event)">
-                    <mat-icon style="color: #e2e2e2;">clear</mat-icon>
-                  </button><button mat-icon-button matSuffix *ngIf="newRequest.get('files').get('ALT').value !== ''"
-                    (click)="this.requestService.downloadArchives($event, newRequest.get('files').get('ALT').value)">
-                    <mat-icon style="color: #e2e2e2;">get_app</mat-icon>
-                  </button>
-                  <mat-error
-                    *ngIf="newRequest.get('files').get('ALT').touched && !newRequest.get('files').get('ALT').valid">
-                    Este campo es
-                    obligatorio
-                  </mat-error>
-                </mat-form-field>
-                <mat-form-field
-                  [ngClass]="{'file-input': newRequest.get('files').get('GGT').value !== '', 'file-error': newRequest.get('files').get('GGT').touched && !newRequest.get('files').get('GGT').valid}"
-                  class="mr-3" appearance="outline" *ngIf="this.newRequest.get('files').get('GGT')">
-                  <mat-label> GGT </mat-label>
-                  <ngx-mat-file-input #removableInputGGT [valuePlaceholder]="fileNameWatcher('GGT')"
-                    (change)="onFileChange($event, 'GGT')"></ngx-mat-file-input>
-                  <mat-icon style="color: #e2e2e2;" matSuffix *ngIf="newRequest.get('files').get('GGT').value === ''">
-                    publish
-                  </mat-icon>
-                  <button mat-icon-button matSuffix *ngIf="newRequest.get('files').get('GGT').value !== ''"
-                    (click)="this.requestService.clearArchives(newRequest.get('files').get('GGT'))"
-                    (click)="removableInputGGT.clear($event)">
-                    <mat-icon style="color: #e2e2e2;">clear</mat-icon>
-                  </button><button mat-icon-button matSuffix *ngIf="newRequest.get('files').get('GGT').value !== ''"
-                    (click)="this.requestService.downloadArchives($event, newRequest.get('files').get('GGT').value)">
-                    <mat-icon style="color: #e2e2e2;">get_app</mat-icon>
-                  </button>
-                  <mat-error
-                    *ngIf="newRequest.get('files').get('GGT').touched && !newRequest.get('files').get('GGT').valid">
-                    Este campo es
-                    obligatorio
-                  </mat-error>
-                </mat-form-field>
-                <mat-form-field
-                  [ngClass]="{'file-input': newRequest.get('files').get('HIV').value !== '', 'file-error': newRequest.get('files').get('HIV').touched && !newRequest.get('files').get('HIV').valid}"
-                  class="mr-3" appearance="outline" *ngIf="this.newRequest.get('files').get('HIV')">
-                  <mat-label> HIV </mat-label>
-                  <ngx-mat-file-input #removableInputHIV [valuePlaceholder]="fileNameWatcher('HIV')"
-                    (change)="onFileChange($event, 'HIV')"></ngx-mat-file-input>
-                  <mat-icon style="color: #e2e2e2;" matSuffix *ngIf="newRequest.get('files').get('HIV').value === ''">
-                    publish
-                  </mat-icon>
-                  <button mat-icon-button matSuffix *ngIf="newRequest.get('files').get('HIV').value !== ''"
-                    (click)="this.requestService.clearArchives(newRequest.get('files').get('HIV'))"
-                    (click)="removableInputHIV.clear($event)">
-                    <mat-icon style="color: #e2e2e2;">clear</mat-icon>
-                  </button><button mat-icon-button matSuffix *ngIf="newRequest.get('files').get('HIV').value !== ''"
-                    (click)="this.requestService.downloadArchives($event, newRequest.get('files').get('HIV').value)">
-                    <mat-icon style="color: #e2e2e2;">get_app</mat-icon>
-                  </button>
-                  <mat-error
-                    *ngIf="newRequest.get('files').get('HIV').touched && !newRequest.get('files').get('HIV').valid">
-                    Este campo es
-                    obligatorio
-                  </mat-error>
-                </mat-form-field>
-                <mat-form-field
-                  [ngClass]="{'file-input': newRequest.get('files').get('cocaine').value !== '', 'file-error': newRequest.get('files').get('cocaine').touched && !newRequest.get('files').get('cocaine').valid}"
-                  class="mr-3" appearance="outline" *ngIf="this.newRequest.get('files').get('cocaine')">
-                  <mat-label> Cocaína </mat-label>
-                  <ngx-mat-file-input #removableInputCocaine [valuePlaceholder]="fileNameWatcher('cocaine')"
-                    (change)="onFileChange($event, 'cocaine')"></ngx-mat-file-input>
-                  <mat-icon style="color: #e2e2e2;" matSuffix
-                    *ngIf="newRequest.get('files').get('cocaine').value === ''">publish
-                  </mat-icon>
-                  <button mat-icon-button matSuffix *ngIf="newRequest.get('files').get('cocaine').value !== ''"
-                    (click)="this.requestService.clearArchives(newRequest.get('files').get('cocaine'))"
-                    (click)="removableInputCocaine.clear($event)">
-                    <mat-icon style="color: #e2e2e2;">clear</mat-icon>
-                  </button><button mat-icon-button matSuffix *ngIf="newRequest.get('files').get('cocaine').value !== ''"
-                    (click)="this.requestService.downloadArchives($event, newRequest.get('files').get('cocaine').value)">
-                    <mat-icon style="color: #e2e2e2;">get_app</mat-icon>
-                  </button>
-                  <mat-error
-                    *ngIf="newRequest.get('files').get('cocaine').touched && !newRequest.get('files').get('cocaine').valid">
-                    Este campo es
-                    obligatorio
-                  </mat-error>
-                </mat-form-field>
-                <mat-form-field
-                  [ngClass]="{'file-input': newRequest.get('files').get('nicotine').value !== '', 'file-error': newRequest.get('files').get('nicotine').touched && !newRequest.get('files').get('nicotine').valid}"
-                  class="mr-3" appearance="outline" *ngIf="this.newRequest.get('files').get('nicotine')">
-                  <mat-label> Nicotina </mat-label>
-                  <ngx-mat-file-input #removableInputNicotine [valuePlaceholder]="fileNameWatcher('nicotine')"
-                    (change)="onFileChange($event, 'nicotine')"></ngx-mat-file-input>
-                  <mat-icon style="color: #e2e2e2;" matSuffix
-                    *ngIf="newRequest.get('files').get('nicotine').value === ''">publish
-                  </mat-icon>
-                  <button mat-icon-button matSuffix *ngIf="newRequest.get('files').get('nicotine').value !== ''"
-                    (click)="this.requestService.clearArchives(newRequest.get('files').get('nicotine'))"
-                    (click)="removableInputNicotine.clear($event)">
-                    <mat-icon style="color: #e2e2e2;">clear</mat-icon>
-                  </button><button mat-icon-button matSuffix
-                    *ngIf="newRequest.get('files').get('nicotine').value !== ''"
-                    (click)="this.requestService.downloadArchives($event, newRequest.get('files').get('nicotine').value)">
-                    <mat-icon style="color: #e2e2e2;">get_app</mat-icon>
-                  </button>
-                  <mat-error
-                    *ngIf="newRequest.get('files').get('nicotine').touched && !newRequest.get('files').get('nicotine').valid">
-                    Este campo es
-                    obligatorio
-                  </mat-error>
-                </mat-form-field>
-                <mat-form-field
-                  [ngClass]="{'file-input': newRequest.get('files').get('urineAnalysis').value !== '', 'file-error': newRequest.get('files').get('urineAnalysis').touched && !newRequest.get('files').get('urineAnalysis').valid}"
-                  class="mr-3" appearance="outline" *ngIf="this.newRequest.get('files').get('urineAnalysis')">
-                  <mat-label> Analísis químico y microscópico de orina </mat-label>
-                  <ngx-mat-file-input #removableInputUrineAnalysis [valuePlaceholder]="fileNameWatcher('urineAnalysis')"
-                    (change)="onFileChange($event, 'urineAnalysis')"></ngx-mat-file-input>
-                  <mat-icon style="color: #e2e2e2;" matSuffix
-                    *ngIf="newRequest.get('files').get('urineAnalysis').value === ''">publish
-                  </mat-icon>
-                  <button mat-icon-button matSuffix *ngIf="newRequest.get('files').get('urineAnalysis').value !== ''"
-                    (click)="this.requestService.clearArchives(newRequest.get('files').get('urineAnalysis'))"
-                    (click)="removableInputUrineAnalysis.clear($event)">
-                    <mat-icon style="color: #e2e2e2;">clear</mat-icon>
-                  </button><button mat-icon-button matSuffix
-                    *ngIf="newRequest.get('files').get('urineAnalysis').value !== ''"
-                    (click)="this.requestService.downloadArchives($event, newRequest.get('files').get('urineAnalysis').value)">
-                    <mat-icon style="color: #e2e2e2;">get_app</mat-icon>
-                  </button>
-                  <mat-error
-                    *ngIf="newRequest.get('files').get('urineAnalysis').touched && !newRequest.get('files').get('urineAnalysis').valid">
-                    Este campo es
-                    obligatorio
-                  </mat-error>
-                </mat-form-field>
-                <mat-form-field
-                  [ngClass]="{'file-input': newRequest.get('files').get('restingElectrocardiogram').value !== '', 'file-error': newRequest.get('files').get('restingElectrocardiogram').touched && !newRequest.get('files').get('restingElectrocardiogram').valid}"
-                  class="mr-3" appearance="outline"
-                  *ngIf="this.newRequest.get('files').get('restingElectrocardiogram')">
-                  <mat-label> Electrocardiograma en reposo </mat-label>
-                  <ngx-mat-file-input #removableInputRestingElectrocardiogram
-                    [valuePlaceholder]="fileNameWatcher('restingElectrocardiogram')"
-                    (change)="onFileChange($event, 'restingElectrocardiogram')"></ngx-mat-file-input>
-                  <mat-icon style="color: #e2e2e2;" matSuffix
-                    *ngIf="newRequest.get('files').get('restingElectrocardiogram').value === ''">publish
-                  </mat-icon>
-                  <button mat-icon-button matSuffix
-                    *ngIf="newRequest.get('files').get('restingElectrocardiogram').value !== ''"
-                    (click)="this.requestService.clearArchives(newRequest.get('files').get('restingElectrocardiogram'))"
-                    (click)="removableInputRestingElectrocardiogram.clear($event)">
-                    <mat-icon style="color: #e2e2e2;">clear</mat-icon>
-                  </button><button mat-icon-button matSuffix
-                    *ngIf="newRequest.get('files').get('restingElectrocardiogram').value !== ''"
-                    (click)="this.requestService.downloadArchives($event, newRequest.get('files').get('restingElectrocardiogram').value)">
-                    <mat-icon style="color: #e2e2e2;">get_app</mat-icon>
-                  </button>
-                  <mat-error
-                    *ngIf="newRequest.get('files').get('restingElectrocardiogram').touched && !newRequest.get('files').get('restingElectrocardiogram').valid">
-                    Este campo es
-                    obligatorio
-                  </mat-error>
-                </mat-form-field>
-                <mat-form-field
+                <app-file-input class="mr-3" [group]="newRequest.get('files')" name="healthDeclaration"
+                  *ngIf="newRequest.get('files').get('healthDeclaration')" label="Declaración de salud"
+                  [fileNameWatcher]="fileNameWatcher('healthDeclaration')"
+                  (onFileChange)="onFileChange($event, 'healthDeclaration')">
+                </app-file-input>
+                <app-file-input class="mr-3" [group]="newRequest.get('files')" name="id2"
+                  *ngIf="newRequest.get('files').get('id2')" label="Cédula de identidad o pasaporte vigente"
+                  [fileNameWatcher]="fileNameWatcher('id2')" (onFileChange)="onFileChange($event, 'id2')">
+                </app-file-input>
+                <app-file-input class="mr-3" [group]="newRequest.get('files')" name="medicExam"
+                  *ngIf="newRequest.get('files').get('medicExam')" label="Examen médico"
+                  [fileNameWatcher]="fileNameWatcher('medicExam')" (onFileChange)="onFileChange($event, 'medicExam')">
+                </app-file-input>
+                <app-file-input class="mr-3" [group]="newRequest.get('files')" name="glycemia"
+                  *ngIf="newRequest.get('files').get('glycemia')" label="Glicemia"
+                  [fileNameWatcher]="fileNameWatcher('glycemia')" (onFileChange)="onFileChange($event, 'glycemia')">
+                </app-file-input>
+                <app-file-input class="mr-3" [group]="newRequest.get('files')" name="hbA1C"
+                  *ngIf="newRequest.get('files').get('hbA1C')" label="hbA1C"
+                  [fileNameWatcher]="fileNameWatcher('hbA1C')" (onFileChange)="onFileChange($event, 'hbA1C')">
+                </app-file-input>
+                <app-file-input class="mr-3" [group]="newRequest.get('files')" name="totalCholestor"
+                  *ngIf="newRequest.get('files').get('totalCholestor')" label="Cólesterol total"
+                  [fileNameWatcher]="fileNameWatcher('totalCholestor')"
+                  (onFileChange)="onFileChange($event, 'totalCholestor')">
+                </app-file-input>
+                <app-file-input class="mr-3" [group]="newRequest.get('files')" name="HDL"
+                  *ngIf="newRequest.get('files').get('HDL')" label="HDL" [fileNameWatcher]="fileNameWatcher('HDL')"
+                  (onFileChange)="onFileChange($event, 'HDL')">
+                </app-file-input>
+                <app-file-input class="mr-3" [group]="newRequest.get('files')" name="hbA1C"
+                  *ngIf="newRequest.get('files').get('hbA1C')" label="hbA1C"
+                  [fileNameWatcher]="fileNameWatcher('hbA1C')" (onFileChange)="onFileChange($event, 'hbA1C')">
+                </app-file-input>
+                <app-file-input class="mr-3" [group]="newRequest.get('files')" name="triglycerides"
+                  *ngIf="newRequest.get('files').get('triglycerides')" label="Triglicéridos"
+                  [fileNameWatcher]="fileNameWatcher('triglycerides')"
+                  (onFileChange)="onFileChange($event, 'triglycerides')">
+                </app-file-input>
+                <app-file-input class="mr-3" [group]="newRequest.get('files')" name="creatinine"
+                  *ngIf="newRequest.get('files').get('creatinine')" label="Creatinina"
+                  [fileNameWatcher]="fileNameWatcher('creatinine')" (onFileChange)="onFileChange($event, 'creatinine')">
+                </app-file-input>
+                <app-file-input class="mr-3" [group]="newRequest.get('files')" name="AST"
+                  *ngIf="newRequest.get('files').get('AST')" label="AST" [fileNameWatcher]="fileNameWatcher('AST')"
+                  (onFileChange)="onFileChange($event, 'AST')">
+                </app-file-input>
+                <app-file-input class="mr-3" [group]="newRequest.get('files')" name="ALT"
+                  *ngIf="newRequest.get('files').get('ALT')" label="ALT" [fileNameWatcher]="fileNameWatcher('ALT')"
+                  (onFileChange)="onFileChange($event, 'ALT')">
+                </app-file-input>
+                <app-file-input class="mr-3" [group]="newRequest.get('files')" name="GGT"
+                  *ngIf="newRequest.get('files').get('GGT')" label="GGT" [fileNameWatcher]="fileNameWatcher('GGT')"
+                  (onFileChange)="onFileChange($event, 'GGT')">
+                </app-file-input>
+                <app-file-input class="mr-3" [group]="newRequest.get('files')" name="HIV"
+                  *ngIf="newRequest.get('files').get('HIV')" label="HIV" [fileNameWatcher]="fileNameWatcher('HIV')"
+                  (onFileChange)="onFileChange($event, 'HIV')">
+                </app-file-input>
+                <app-file-input class="mr-3" [group]="newRequest.get('files')" name="cocaine"
+                  *ngIf="newRequest.get('files').get('cocaine')" label="Cocaína"
+                  [fileNameWatcher]="fileNameWatcher('cocaine')" (onFileChange)="onFileChange($event, 'cocaine')">
+                </app-file-input>
+                <app-file-input class="mr-3" [group]="newRequest.get('files')" name="nicotine"
+                  *ngIf="newRequest.get('files').get('nicotine')" label="Nicotina"
+                  [fileNameWatcher]="fileNameWatcher('nicotine')" (onFileChange)="onFileChange($event, 'nicotine')">
+                </app-file-input>
+                <app-file-input class="mr-3" [group]="newRequest.get('files')" name="urineAnalysis"
+                  *ngIf="newRequest.get('files').get('urineAnalysis')" label="Analísis químico y microscópico de orina"
+                  [fileNameWatcher]="fileNameWatcher('urineAnalysis')"
+                  (onFileChange)="onFileChange($event, 'urineAnalysis')">
+                </app-file-input>
+                <app-file-input class="mr-3" [group]="newRequest.get('files')" name="restingElectrocardiogram"
+                  *ngIf="newRequest.get('files').get('restingElectrocardiogram')" label="Electrocardiograma en reposo"
+                  [fileNameWatcher]="fileNameWatcher('restingElectrocardiogram')"
+                  (onFileChange)="onFileChange($event, 'restingElectrocardiogram')">
+                </app-file-input>
+                <app-file-input class="mr-3" [group]="newRequest.get('files')" name="stressElectrocardiogram"
+                  *ngIf="newRequest.get('files').get('stressElectrocardiogram')" label="Electrocardiograma de esfuerzo"
+                  [fileNameWatcher]="fileNameWatcher('stressElectrocardiogram')"
+                  (onFileChange)="onFileChange($event, 'stressElectrocardiogram')">
+                </app-file-input>
+                <!-- <mat-form-field
                   [ngClass]="{'file-input': newRequest.get('files').get('stressElectrocardiogram').value !== '', 'file-error': newRequest.get('files').get('stressElectrocardiogram').touched && !newRequest.get('files').get('stressElectrocardiogram').valid}"
                   class="mr-3" appearance="outline" *ngIf="this.newRequest.get('files').get('stressElectrocardiogram')">
                   <mat-label> Electrocardiograma de esfuerzo </mat-label>
@@ -2572,7 +2087,7 @@
                     Este campo stressElectrocardiogram
                     obligatorio
                   </mat-error>
-                </mat-form-field>
+                </mat-form-field> -->
               </div>
             </div>
             <mat-action-row class="action-row">

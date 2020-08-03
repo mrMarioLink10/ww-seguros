@@ -896,14 +896,14 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy, DoCheck {
 			for (let x = 0; x < this.documentsArray.length; x++) {
 				this.authorization.get('files').get(x.toString()).get('indications').setValidators(Validators.required);
 				this.authorization.get('files').get(x.toString()).get('indications').updateValueAndValidity();
-				this.authorization.get('files').get(x.toString()).get('indications').markAsUntouched();
+				// this.authorization.get('files').get(x.toString()).get('indications').markAsUntouched();
 			}
 		}
 		else if (this.authorization.get('informacionAsegurado').get('tipoReclamo').value == 'INTERNACIONAL') {
 			for (let x = 0; x < this.documentsArray.length; x++) {
 				this.authorization.get('files').get(x.toString()).get('indications').clearValidators();
 				this.authorization.get('files').get(x.toString()).get('indications').updateValueAndValidity();
-				this.authorization.get('files').get(x.toString()).get('indications').markAsUntouched();
+				// this.authorization.get('files').get(x.toString()).get('indications').markAsUntouched();
 			}
 		}
 		console.log(JSON.stringify(this.authorization.value));

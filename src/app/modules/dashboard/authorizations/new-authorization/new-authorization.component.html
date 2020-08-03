@@ -263,9 +263,8 @@
                 <mat-label>Nombre</mat-label>
                 <input formControlName="nombreMedico" matInput class="" type="text" [matAutocomplete]="auto2"
                   placeholder="Dr. Juan Juan">
-                <mat-autocomplete #auto2="matAutocomplete" [displayWith]="displayFn" 
-                (optionSelected)=
-                "selectionDoctor($event, authorization.get('informacionMedica').get('primerosSintomas'))">
+                <mat-autocomplete #auto2="matAutocomplete" [displayWith]="displayFn"
+                  (optionSelected)="selectionDoctor($event, authorization.get('informacionMedica').get('primerosSintomas'))">
                   <mat-option *ngFor="let option of filteredOptionsMedicoTratante | async" [value]="option">
                     {{option}}
                   </mat-option>
@@ -282,8 +281,8 @@
             <app-select name="telefono" [options]="doctorFieldNumbers" [group]="authorization.get('informacionMedica').get('primerosSintomas')">
             </app-select> -->
 
-            <app-input 
-              *ngIf="authorization.get('informacionMedica').get('primerosSintomas').get('nombreMedico').value.toLowerCase() == 'otro'" 
+            <app-input
+              *ngIf="authorization.get('informacionMedica').get('primerosSintomas').get('nombreMedico').value.toLowerCase() == 'otro'"
               [group]="authorization.get('informacionMedica').get('primerosSintomas')" label="Especificar nombre"
               name="specifyOthers">
             </app-input>
@@ -326,9 +325,8 @@
                 <mat-label>Nombre</mat-label>
                 <input formControlName="nombreMedico" matInput class="" type="text" [matAutocomplete]="auto3"
                   placeholder="Dr. Juan Juan">
-                <mat-autocomplete #auto3="matAutocomplete" [displayWith]="displayFn" 
-                (optionSelected)=
-                "selectionDoctor($event, authorization.get('informacionMedica').get('admision'))">
+                <mat-autocomplete #auto3="matAutocomplete" [displayWith]="displayFn"
+                  (optionSelected)="selectionDoctor($event, authorization.get('informacionMedica').get('admision'))">
                   <mat-option *ngFor="let option of filteredOptionsMedicoReferente | async" [value]="option">
                     {{option}}
                   </mat-option>
@@ -340,8 +338,8 @@
               </mat-form-field>
             </form>
 
-            <app-input 
-              *ngIf="authorization.get('informacionMedica').get('admision').get('nombreMedico').value.toLowerCase() == 'otro'" 
+            <app-input
+              *ngIf="authorization.get('informacionMedica').get('admision').get('nombreMedico').value.toLowerCase() == 'otro'"
               [group]="authorization.get('informacionMedica').get('admision')" label="Especificar nombre"
               name="specifyOthers">
             </app-input>
@@ -398,8 +396,7 @@
                 <input formControlName="nombreServicio" matInput class="" type="text" [matAutocomplete]="auto4"
                   placeholder="Dr. Juan Juan">
                 <mat-autocomplete #auto4="matAutocomplete" [displayWith]="displayFn"
-                (optionSelected)=
-                "selectionDoctor($event, authorization.get('informacionMedica'), 'nombreServicio')">
+                  (optionSelected)="selectionDoctor($event, authorization.get('informacionMedica'), 'nombreServicio')">
                   <mat-option *ngFor="let option of filteredOptionsCentroServicio | async" [value]="option">
                     {{option}}
                   </mat-option>
@@ -411,10 +408,9 @@
               </mat-form-field>
             </form>
 
-            <app-input 
-              *ngIf="authorization.get('informacionMedica').get('nombreServicio').value.toLowerCase() == 'otro'" 
-              [group]="authorization.get('informacionMedica')" label="Especificar nombre"
-              name="specifyOthers">
+            <app-input
+              *ngIf="authorization.get('informacionMedica').get('nombreServicio').value.toLowerCase() == 'otro'"
+              [group]="authorization.get('informacionMedica')" label="Especificar nombre" name="specifyOthers">
             </app-input>
             <!-- <app-input [group]="authorization.get('informacionMedica')" label="Dirección" name="direccion">
             </app-input>
@@ -472,11 +468,55 @@
             </app-file-input>
             <div class="grid"
               [ngClass]="{'grid-cols-1': documentsArray.length === 1, 'grid-cols-5': documentsArray.length > 1}">
-              <app-file-input class="mr-3" [group]="authorization.get('files').get(in.toString())" name="indications"
-                label="Indicacion" [fileNameWatcher]="fileNameWatcher('indications', in)"
+              <app-file-input
+                [ngClass]="{'': documentsArray.length === 1, 'col-span-4 mr-3': documentsArray.length > 1}" class="mr-3"
+                [group]="authorization.get('files').get(in.toString())" name="indications" label="Indicacion"
+                [fileNameWatcher]="fileNameWatcher('indications', in)"
                 (onFileChange)="onFileChange($event, 'indications', in)">
               </app-file-input>
+              <div *ngIf="documentsArray.length > 1"
+                [ngClass]="{'': documentsArray.length === 1, 'col-span-1': documentsArray.length > 1} ">
+                <button mat-mini-fab aria-label=" Eliminar documentos" (click)="removeToList(in)" type="button"
+                  class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
+                  <mat-icon style="color: #18446B">remove</mat-icon>
+                </button>
+              </div>
             </div>
+            <!-- <div class="grid"
+              [ngClass]="{'grid-cols-1': documentsArray.length === 1, 'grid-cols-5': documentsArray.length > 1}">
+              <mat-form-field
+                [ngClass]="{'': documentsArray.length === 1, 'col-span-4 mr-3': documentsArray.length > 1, 'file-input': authorization.get('files').get(in.toString()).get('indications').value !== '', 'file-error':  !authorization.get('files').get(in.toString()).get('indications').valid}"
+                class="mr-3" appearance="outline">
+                <mat-label>Indicacion</mat-label>
+                <ngx-mat-file-input #removableIndication placeholder="Indicacion"
+                  [valuePlaceholder]="fileNameWatcher('indications', in)"
+                  (change)="onFileChange($event, 'indications', in)">
+                </ngx-mat-file-input>
+                <mat-icon *ngIf="authorization.get('files').get(in.toString()).get('indications').value == ''"
+                  style="color: #e2e2e2;" matSuffix>publish</mat-icon>
+                <button mat-icon-button matSuffix
+                  *ngIf="authorization.get('files').get(in.toString()).get('indications').value !== ''"
+                  (click)="this.requestService.clearArchives(authorization.get('files').get(in.toString()).get('indications'))"
+                  (click)="removableIndication.clear($event)">
+                  <mat-icon style="color: #e2e2e2;">clear</mat-icon>
+                </button><button mat-icon-button matSuffix
+                  *ngIf="authorization.get('files').get(in.toString()).get('indications').value !== ''"
+                  (click)="this.requestService.downloadArchives($event, authorization.get('files').get(in.toString()).get('indications').value)">
+                  <mat-icon style="color: #e2e2e2;">get_app</mat-icon>
+                </button>
+                <mat-error *ngIf=" !authorization.get('files').get(in.toString()).get('indications').valid">
+                  Este campo es
+                  obligatorio
+                </mat-error>
+              </mat-form-field>
+              <div *ngIf="documentsArray.length > 1"
+                [ngClass]="{'': documentsArray.length === 1, 'col-span-1': documentsArray.length > 1} ">
+                <button mat-mini-fab aria-label=" Eliminar documentos" (click)="removeToList(in)" type="button"
+                  class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
+                  <mat-icon style="color: #18446B">remove</mat-icon>
+                </button>
+              </div>
+            </div> -->
           </div>
         </div>
         <div>

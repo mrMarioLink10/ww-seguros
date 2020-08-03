@@ -22,6 +22,7 @@ export class AppAuthGuard extends KeycloakAuthGuard implements CanLoad {
         const result = await this.checkAccessAllowed(route.data);
         resolve(result);
       } catch (error) {
+        console.error(error);
         reject('An error happened during access validation. Details:' + error);
       }
     });

@@ -12,6 +12,11 @@ import { DatepickerViewsSelectionSingleMonth } from './date-picker/date-picker-o
 import { TextAreaComponent } from './text-area/text-area.component';
 import { NumberInputComponent } from './number-input/number-input.component';
 import { NgxMaskModule } from 'ngx-mask';
+import { FileInputComponent } from './file-input/file-input.component';
+import { AuthorizationsRoutingModule } from 'src/app/modules/dashboard/authorizations/authorizations-routing.module';
+import { GlobalSharedModule } from '../../global-shared.module';
+import { SharedModule } from 'src/app/modules/dashboard/shared/shared.module';
+import { MaterialFileInputModule } from 'ngx-material-file-input';
 
 @NgModule({
 	declarations: [
@@ -21,7 +26,9 @@ import { NgxMaskModule } from 'ngx-mask';
 		DatepickerViewsSelectionSingleMonth,
 		DatePickerComponent,
 		TextAreaComponent,
-		NumberInputComponent],
+		NumberInputComponent,
+		FileInputComponent,
+	],
 	exports: [
 		SelectComponent,
 		InputComponent,
@@ -29,7 +36,17 @@ import { NgxMaskModule } from 'ngx-mask';
 		DatepickerViewsSelectionSingleMonth,
 		DatePickerComponent,
 		TextAreaComponent,
-		NumberInputComponent],
-	imports: [CommonModule, MaterialModule, ReactiveFormsModule, FormsModule, CommonModule, RouterModule, NgxMaskModule]
+		NumberInputComponent,
+		FileInputComponent
+	],
+	imports: [
+		CommonModule,
+		MaterialModule,
+		ReactiveFormsModule,
+		FormsModule,
+		RouterModule,
+		NgxMaskModule,
+		MaterialFileInputModule
+	]
 })
 export class FormComponentsModule { }

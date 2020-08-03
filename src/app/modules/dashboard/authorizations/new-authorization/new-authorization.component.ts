@@ -648,9 +648,9 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy, DoCheck {
 
 	onFileChange(event, formName, i) {
 		const reader = new FileReader();
-		console.log(this.authorization.get('files'));
-		console.log('event.targe: ', event.target.files);
-		console.log('event: ', event);
+		// console.log(this.authorization.get('files'));
+		// console.log('event.targe: ', event.target.files);
+		console.log('event: ', event, 'formName: ', formName, 'i: ', i);
 
 		if (event.target.files && event.target.files.length) {
 			const [file] = event.target.files;

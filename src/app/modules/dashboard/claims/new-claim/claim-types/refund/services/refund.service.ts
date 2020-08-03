@@ -49,4 +49,8 @@ export class RefundService {
   getBanks(): Observable<any> {
     return this.http.get(`${environment.apiUrl}/api/DatosEmpresa/GetBancos`);
   }
+
+  getCategoriasDatosProveedores(): Observable<any> {
+    return this.http.get(`${environment.apiUrl}/api/DatosEmpresa/GetDatosProveedores`);
+  }
 }

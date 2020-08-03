@@ -578,6 +578,7 @@ export class DisabilityComponent implements OnInit, DoCheck {
   ) { }
 
   ID = null;
+
   ngOnInit() {
 
     //this.ID = this.disabilityService.id;

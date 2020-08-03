@@ -576,7 +576,7 @@
                 <app-input id='date' class="mr-3 pt-21" [group]="newRequest.get('payer')"
                   label="Apellidos / Apellido de Casada" name='lastName'></app-input>
                 <div class="mr-3">
-                  <app-date-picker [max]="maxDate" class="mr-3" [group]="newRequest.get('payer')" name='date'>
+                  <app-date-picker [max]="maxDate" label="Fecha de Nacimiento" class="mr-3" [group]="newRequest.get('payer')" name='date'>
                   </app-date-picker>
                 </div>
                 <app-radio-button class="mr-3 pt-21" [group]="newRequest.get('payer')" name="sex" [options]="sex">

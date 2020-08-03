@@ -523,6 +523,9 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy, DoCheck {
 		this.authorization.get('informacionMedica').get('primerosSintomas').get('nombreMedico').valueChanges.subscribe(value => {
 			if (value.toLowerCase() === 'otro') {
 
+				this.authorization.get('informacionMedica').get('primerosSintomas').get('telefono').setValue('');
+				this.authorization.get('informacionMedica').get('primerosSintomas').get('telefono').markAsUntouched();
+				this.authorization.get('informacionMedica').get('primerosSintomas').get('direccion').setValue('');
 				this.authorization.get('informacionMedica').get('primerosSintomas').get('telefono').enable();
 				this.authorization.get('informacionMedica').get('primerosSintomas').get('direccion').enable();
 
@@ -533,6 +536,10 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy, DoCheck {
 					|| this.authorization.get('informacionMedica').get('isMedicalEqual').value == 'true') {
 						(this.authorization.get('informacionMedica').get('admision') as
 						FormGroup).addControl('specifyOthers', this.fb.control('', Validators.required));
+
+						this.otroNombreMedicoSB = this.authorization.get('informacionMedica').get('primerosSintomas').get('specifyOthers').valueChanges.subscribe(value => {
+							this.authorization.get('informacionMedica').get('admision').get('specifyOthers').setValue(value);
+						});
 
 						this.authorization.get('informacionMedica').get('admision').get('specifyOthers').disable();
 					}
@@ -554,6 +561,12 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy, DoCheck {
 			if (value.toLowerCase() === 'otro') {
 				if (this.authorization.get('informacionMedica').get('isMedicalEqual').value == '' ||
 				this.authorization.get('informacionMedica').get('isMedicalEqual').value == false) {
+					this.authorization.get('informacionMedica').get('admision').get('telefono').setValue('');
+					this.authorization.get('informacionMedica').get('admision').get('direccion').setValue('');
+					if (this.authorization.get('informacionMedica').get('admision').get('specifyOthers')) {
+						this.authorization.get('informacionMedica').get('admision').get('specifyOthers').setValue('');
+						this.authorization.get('informacionMedica').get('admision').get('specifyOthers').markAsUntouched();
+					}
 					this.authorization.get('informacionMedica').get('admision').get('telefono').enable();
 					this.authorization.get('informacionMedica').get('admision').get('direccion').enable();
 				}
@@ -934,6 +947,7 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy, DoCheck {
 			if (name != 'nombreServicio') {
 				group.get('direccion').setValue('');
 				group.get('telefono').setValue('');
+				group.get('telefono').markAsUntouched();
 				group.get('direccion').enable();
 				group.get('telefono').enable();
 			}

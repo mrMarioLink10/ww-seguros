@@ -1050,9 +1050,7 @@
                   <app-input class="mr-3" [group]="newRequest.get('contingentBeneficiary').get('personBenefited')"
                     label="Cédula/Pasaporte" name='id2'></app-input>
                   <app-file-input class="mr-3" [group]="newRequest.get('contingentBeneficiary').get('personBenefited')"
-                    name="id2Attached"
-                    *ngIf="newRequest.get('contingentBeneficiary').get('personBenefited').get('family').value == 'OTROS'"
-                    label="Adjuntar documento de identidad"
+                    name="id2Attached" label="Adjuntar documento de identidad"
                     [fileNameWatcher]="id2AttachedViewValue(null, 'contingentBeneficiary')"
                     (onFileChange)="onFileChangeOnArray($event, 'id2Attached', null, 'contingentBeneficiary')">
                   </app-file-input>

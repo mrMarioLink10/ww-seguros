@@ -95,7 +95,7 @@
                 <app-number-input *ngIf="this.newRequest.get('person').get('heightUnit').value !== 'PIE'" class="mr-3"
                   [group]="newRequest.get('person')" label="Altura" name='height'>
                 </app-number-input>
-                <app-input [group]="newRequest.get('person')" label="BMI" name='bmi'  style="display:none;">
+                <app-input [group]="newRequest.get('person')" label="BMI" name='bmi' style="display:none;">
                 </app-input>
               </div>
               <app-select class="mr-3" id="status" [options]="status" [group]="newRequest.get('person')">
@@ -514,7 +514,8 @@
                 <app-number-input isPhone="true" class="mr-3 pt-21" [group]="newRequest.get('contractor')"
                   label="Tel. Oficina" name='officeTel'>
                 </app-number-input>
-                <app-number-input class="mr-3 pt-21" [group]="newRequest.get('contractor')" label="Fax" name='fax' isPhone="true" ></app-number-input>
+                <app-number-input class="mr-3 pt-21" [group]="newRequest.get('contractor')" label="Fax" name='fax'
+                  isPhone="true"></app-number-input>
                 <app-input class="mr-3 pt-21" [group]="newRequest.get('contractor')" label="Correo" name='email'>
                 </app-input>
               </div>
@@ -539,9 +540,9 @@
                   [group]="newRequest.get('contractor').get('company')"></app-select>
                 <app-input class="mr-3" [group]="newRequest.get('contractor').get('company')"
                   label="Propósito del Seguro" name='insurancePurpose'></app-input>
-               <!-- <app-input class="mr-3 pt-21" [group]="newRequest.get('contractor').get('company')"
+                <!-- <app-input class="mr-3 pt-21" [group]="newRequest.get('contractor').get('company')"
                   label="Parentesco con el asegurado" name='kinship'></app-input> -->
-                  <app-select class="mr-3" [options]="parentescoAsegurado"
+                <app-select class="mr-3" [options]="parentescoAsegurado"
                   [group]="newRequest.get('contractor').get('company')" name="kinship">
                 </app-select>
                 <div class="mr-3">
@@ -621,7 +622,8 @@
                 <app-number-input isPhone="true" class="mr-3 pt-21" [group]="newRequest.get('payer')"
                   label="Tel. Oficina" name='officeTel'>
                 </app-number-input>
-                <app-number-input class="mr-3 pt-21" [group]="newRequest.get('payer')" label="Fax" name='fax' isPhone="true" ></app-number-input>
+                <app-number-input class="mr-3 pt-21" [group]="newRequest.get('payer')" label="Fax" name='fax'
+                  isPhone="true"></app-number-input>
                 <app-input class="mr-3 pt-21" [group]="newRequest.get('payer')" label="Correo" name='email'></app-input>
               </div>
               <mat-divider></mat-divider>
@@ -643,10 +645,10 @@
                   [group]="newRequest.get('payer').get('company')"></app-select>
                 <app-input class="mr-3" [group]="newRequest.get('payer').get('company')" label="Propósito del Seguro"
                   name='insurancePurpose'></app-input>
-                  <app-select class="mr-3" [options]="parentescoAsegurado"
+                <app-select class="mr-3" [options]="parentescoAsegurado"
                   [group]="newRequest.get('payer').get('company')" name="kinship">
                 </app-select>
-              <!--  <app-input class="mr-3 pt-21" [group]="newRequest.get('payer').get('company')"
+                <!--  <app-input class="mr-3 pt-21" [group]="newRequest.get('payer').get('company')"
                   label="Parentesco con el asegurado" name='kinship'></app-input> -->
                 <div class="mr-3">
                   <label for="">País(es) donde el pagador tributa por sus ingresos</label>
@@ -1479,7 +1481,7 @@
 
                   <div *ngIf="question.name === 'anyoneProposed'">
                     <div *ngFor="let studies of insuranceProposedList.controls; let i = index">
-                      <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-5 xl:grid-cols-5">
+                      <!-- <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-5 xl:grid-cols-5">
                         <div class="mr-3">
                           <app-input
                             [group]="newRequest.get('generalInformation').get('insuranceProposed').get(i.toString())"
@@ -1487,7 +1489,7 @@
                           </app-input>
                         </div>
                       </div>
-                      <div class="radio-button-label" style="font-size: 12px !important;">Detalle</div>
+                      <div class="radio-button-label" style="font-size: 12px !important;">Detalle</div> -->
                       <app-text-area
                         [group]="newRequest.get('generalInformation').get('insuranceProposed').get(i.toString())"
                         name="detail" label="Texto">

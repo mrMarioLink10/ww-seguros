@@ -116,6 +116,7 @@ export class RefundComponent implements OnInit {
 
 
 	filteredOptions: Observable<any[]>;
+	filteredOptionsProveedor = [];
 
 	cuentaTipos: FieldConfig = {
 		label: 'Tipo de Cuenta',
@@ -149,11 +150,53 @@ export class RefundComponent implements OnInit {
 		]
 	};
 
-	proveedores = [];
+	Otrosproveedores = [];
 
-	proveedoresField = {
+	OtrosproveedoresField = {
 		label: 'Proveedor',
-		options: this.proveedores
+		options: this.Otrosproveedores
+	};
+
+	Centros = [];
+
+	CentrosField = {
+		label: 'Proveedor',
+		options: this.Centros
+	};
+
+	farmacias = [];
+
+	farmaciasField = {
+		label: 'Proveedor',
+		options: this.farmacias
+	};
+
+	clinicas = [];
+
+	clinicasField = {
+		label: 'Proveedor',
+		options: this.clinicas
+	};
+
+	labs = [];
+
+	labsField = {
+		label: 'Proveedor',
+		options: this.labs
+	};
+
+	medicos = [];
+
+	medicosField = {
+		label: 'Proveedor',
+		options: this.medicos
+	};
+
+	categorias = [];
+
+	categoriasField = {
+		label: 'Categoria',
+		options: this.categorias
 	};
 
 	banks = [];
@@ -162,6 +205,8 @@ export class RefundComponent implements OnInit {
 		label: 'Banco Emisor',
 		options: this.banks
 	};
+
+	filterValueArray = [];
 
 	refundForm: FormGroup;
 	diagnosticList: FormArray;
@@ -190,7 +235,8 @@ export class RefundComponent implements OnInit {
 	ngOnInit() {
 
 		this.appComponent.showOverlay = true;
-		this.returnProveedores();
+		this.returnCategorias();
+		// this.returnProveedores();
 		this.returnBanks();
 		this.returnAutoCompleteData();
 		// setTimeout(() => {
@@ -288,7 +334,7 @@ export class RefundComponent implements OnInit {
 				nombre: [{ value: '', disabled: true }, [Validators.required]],
 				direccion: ['',],
 				telefono: ['',],
-				correo: ['', [/*Validators.required,*/ Validators.email]],
+				correo: ['', [Validators.required, Validators.email]],
 			}),
 			diagnosticos: this.fb.array([this.createDiagnostic()]),
 			haveAditionalComentary: [''],
@@ -377,6 +423,68 @@ export class RefundComponent implements OnInit {
 			}
 		});
 
+		this.manageFilters(0);
+
+		// tslint:disable-next-line: prefer-for-of
+		// for (let x = 0; x < this.diagnosticList.length; x++) {
+
+		// 	this.refundForm.get('diagnosticos').get(x.toString()).get('categoria').valueChanges.subscribe(valueFilter => {
+
+		// 		this.refundForm.get('diagnosticos').get(x.toString()).get('proveedor').setValue('');
+		// 		this.refundForm.get('diagnosticos').get(x.toString()).get('proveedor').markAsUntouched();
+
+		// 		if (valueFilter == 'OTROS_PROVEEDORES') {
+		// 			this.filteredOptionsProveedor[x] = this.refundForm.get('diagnosticos').get(x.toString()).get('proveedor').valueChanges
+		// 				.pipe(
+		// 					startWith(''),
+		// 					map(value => typeof value === 'string' ? value : value),
+		// 					map(value => value ? this._filterProveedores(value) : this.Otrosproveedores.slice())
+		// 				);
+		// 		}
+		// 		if (valueFilter == 'CENTROS_ESPECIALIZADOS') {
+		// 			this.filteredOptionsProveedor[x] = this.refundForm.get('diagnosticos').get(x.toString()).get('proveedor').valueChanges
+		// 				.pipe(
+		// 					startWith(''),
+		// 					map(value => typeof value === 'string' ? value : value),
+		// 					map(value => value ? this._filterProveedores(value) : this.Centros.slice())
+		// 				);
+		// 		}
+		// 		if (valueFilter == 'FARMACIAS') {
+		// 			this.filteredOptionsProveedor[x] = this.refundForm.get('diagnosticos').get(x.toString()).get('proveedor').valueChanges
+		// 				.pipe(
+		// 					startWith(''),
+		// 					map(value => typeof value === 'string' ? value : value),
+		// 					map(value => value ? this._filterProveedores(value) : this.farmacias.slice())
+		// 				);
+		// 		}
+		// 		if (valueFilter == 'CLINICAS_HOSPITALES') {
+		// 			this.filteredOptionsProveedor[x] = this.refundForm.get('diagnosticos').get(x.toString()).get('proveedor').valueChanges
+		// 				.pipe(
+		// 					startWith(''),
+		// 					map(value => typeof value === 'string' ? value : value),
+		// 					map(value => value ? this._filterProveedores(value) : this.clinicas.slice())
+		// 				);
+		// 		}
+		// 		if (valueFilter == 'LABORATORIOS') {
+		// 			this.filteredOptionsProveedor[x] = this.refundForm.get('diagnosticos').get(x.toString()).get('proveedor').valueChanges
+		// 				.pipe(
+		// 					startWith(''),
+		// 					map(value => typeof value === 'string' ? value : value),
+		// 					map(value => value ? this._filterProveedores(value) : this.labs.slice())
+		// 				);
+		// 		}
+		// 		if (valueFilter == 'MEDICOS') {
+		// 			this.filteredOptionsProveedor[x] = this.refundForm.get('diagnosticos').get(x.toString()).get('proveedor').valueChanges
+		// 				.pipe(
+		// 					startWith(''),
+		// 					map(value => typeof value === 'string' ? value : value),
+		// 					map(value => value ? this._filterProveedores(value) : this.medicos.slice())
+		// 				);
+		// 		}
+		// 		console.log(this.filteredOptionsProveedor);
+		// 	});
+		// }
+
 		console.log('El json de todo el formulario: ', JSON.stringify(this.refundForm.value));
 
 	}
@@ -394,7 +502,68 @@ export class RefundComponent implements OnInit {
 	// 	this.role = this.userService.getRoleCotizador();
 	// 	}
 
+	manageFilters(index) {
+		// for (let x = 0; x < this.diagnosticList.length; x++) {
 
+			this.refundForm.get('diagnosticos').get(index.toString()).get('categoria').valueChanges.subscribe(valueFilter => {
+
+				if (this.refundForm.get('diagnosticos').get(index.toString())) {
+					this.refundForm.get('diagnosticos').get(index.toString()).get('proveedor').setValue('');
+					this.refundForm.get('diagnosticos').get(index.toString()).get('proveedor').markAsUntouched();
+
+					if (valueFilter == 'OTROS_PROVEEDORES') {
+						this.filteredOptionsProveedor[index] = this.refundForm.get('diagnosticos').get(index.toString()).get('proveedor').valueChanges
+							.pipe(
+								startWith(''),
+								map(value => typeof value === 'string' ? value : value),
+								map(value => value ? this._filterProveedores(index, value) : this.Otrosproveedores.slice())
+							);
+					}
+					if (valueFilter == 'CENTROS_ESPECIALIZADOS') {
+						this.filteredOptionsProveedor[index] = this.refundForm.get('diagnosticos').get(index.toString()).get('proveedor').valueChanges
+							.pipe(
+								startWith(''),
+								map(value => typeof value === 'string' ? value : value),
+								map(value => value ? this._filterProveedores(index, value) : this.Centros.slice())
+							);
+					}
+					if (valueFilter == 'FARMACIAS') {
+						this.filteredOptionsProveedor[index] = this.refundForm.get('diagnosticos').get(index.toString()).get('proveedor').valueChanges
+							.pipe(
+								startWith(''),
+								map(value => typeof value === 'string' ? value : value),
+								map(value => value ? this._filterProveedores(index, value) : this.farmacias.slice())
+							);
+					}
+					if (valueFilter == 'CLINICAS_HOSPITALES') {
+						this.filteredOptionsProveedor[index] = this.refundForm.get('diagnosticos').get(index.toString()).get('proveedor').valueChanges
+							.pipe(
+								startWith(''),
+								map(value => typeof value === 'string' ? value : value),
+								map(value => value ? this._filterProveedores(index, value) : this.clinicas.slice())
+							);
+					}
+					if (valueFilter == 'LABORATORIOS') {
+						this.filteredOptionsProveedor[index] = this.refundForm.get('diagnosticos').get(index.toString()).get('proveedor').valueChanges
+							.pipe(
+								startWith(''),
+								map(value => typeof value === 'string' ? value : value),
+								map(value => value ? this._filterProveedores(index, value) : this.labs.slice())
+							);
+					}
+					if (valueFilter == 'MEDICOS') {
+						this.filteredOptionsProveedor[index] = this.refundForm.get('diagnosticos').get(index.toString()).get('proveedor').valueChanges
+							.pipe(
+								startWith(''),
+								map(value => typeof value === 'string' ? value : value),
+								map(value => value ? this._filterProveedores(index, value) : this.medicos.slice())
+							);
+					}
+				}
+				console.log(this.filteredOptionsProveedor);
+			});
+		// }
+	}
 
 	showWarningDot(form: any): boolean {
 		if (!this.ID) {
@@ -456,9 +625,46 @@ export class RefundComponent implements OnInit {
 
 			return this.dataAutoCompletePolicy.filter(option => option.toLowerCase().indexOf(filterValue) === 0);
 		}
-
 		// return arrayValue;
+	}
 
+	private _filterProveedores(index, value?): any[] {
+
+		if (this.refundForm.get('diagnosticos').get(index.toString())) {
+			// tslint:disable-next-line: prefer-for-of
+			// for (let x = 0; x < this.diagnosticList.length; x++) {
+				if (this.refundForm.get('diagnosticos').get(index.toString()).get('categoria').value == 'OTROS_PROVEEDORES') {
+					// let filterValue: any[];
+					this.filterValueArray[index] = value.toLowerCase();
+					return this.Otrosproveedores.filter(option => option.toLowerCase().indexOf(this.filterValueArray[index]) === 0);
+				}
+				if (this.refundForm.get('diagnosticos').get(index.toString()).get('categoria').value == 'CENTROS_ESPECIALIZADOS') {
+					// let filterValue: any[];
+					this.filterValueArray[index] = value.toLowerCase();
+					return this.Centros.filter(option => option.toLowerCase().indexOf(this.filterValueArray[index]) === 0);
+				}
+				if (this.refundForm.get('diagnosticos').get(index.toString()).get('categoria').value == 'FARMACIAS') {
+					// let filterValue: any[];
+					this.filterValueArray[index] = value.toLowerCase();
+					return this.farmacias.filter(option => option.toLowerCase().indexOf(this.filterValueArray[index]) === 0);
+				}
+				if (this.refundForm.get('diagnosticos').get(index.toString()).get('categoria').value == 'CLINICAS_HOSPITALES') {
+					// let filterValue: any[];
+					this.filterValueArray[index] = value.toLowerCase();
+					return this.clinicas.filter(option => option.toLowerCase().indexOf(this.filterValueArray[index]) === 0);
+				}
+				if (this.refundForm.get('diagnosticos').get(index.toString()).get('categoria').value == 'LABORATORIOS') {
+					// let filterValue: any[];
+					this.filterValueArray[index] = value.toLowerCase();
+					return this.labs.filter(option => option.toLowerCase().indexOf(this.filterValueArray[index]) === 0);
+				}
+				if (this.refundForm.get('diagnosticos').get(index.toString()).get('categoria').value == 'MEDICOS') {
+					// let filterValue: any[];
+					this.filterValueArray[index] = value.toLowerCase();
+					return this.medicos.filter(option => option.toLowerCase().indexOf(this.filterValueArray[index]) === 0);
+				}
+			// }
+		}
 	}
 
 	//   consoleMethod(nameOption){
@@ -472,20 +678,99 @@ export class RefundComponent implements OnInit {
 	// 	(typeof Number.parseInt((nameOption).slice((nameOption).indexOf(' - ') + 3)) ) );
 	//   }
 
-	returnProveedores() {
-		this.refund.getProveedores().subscribe(data => {
+	returnCategorias() {
+		this.refund.getCategoriasDatosProveedores().subscribe(data => {
 			console.log(data.data);
-
 
 			// tslint:disable-next-line: prefer-for-of
 			for (let x = 0; x < data.data.length; x++) {
-				this.proveedores.push({
-					value: data.data[x].nombre,
-					viewValue: data.data[x].nombre,
+				this.categorias.push({
+					value: data.data[x].categoria,
+					viewValue: data.data[x].categoria,
 				});
+
+				// tslint:disable-next-line: prefer-for-of
+				for (let y = 0; y < data.data[x].categoryList.length; y++) {
+					if (data.data[x].categoria == 'OTROS_PROVEEDORES') {
+						this.Otrosproveedores.push(
+							// {
+							// value: data.data[x].categoryList[y].nombre + ' - ' + data.data[x].categoryList[y].telefono,
+							// viewValue: data.data[x].categoryList[y].nombre + ' - ' + data.data[x].categoryList[y].telefono
+							// }
+							data.data[x].categoryList[y].nombre + ' - ' + data.data[x].categoryList[y].telefono
+						);
+					}
+					else if (data.data[x].categoria == 'CENTROS_ESPECIALIZADOS') {
+						this.Centros.push(
+							// {
+							// value: data.data[x].categoryList[y].nombre + ' - ' + data.data[x].categoryList[y].telefono,
+							// viewValue: data.data[x].categoryList[y].nombre + ' - ' + data.data[x].categoryList[y].telefono
+							// }
+							data.data[x].categoryList[y].nombre + ' - ' + data.data[x].categoryList[y].telefono
+						);
+					}
+					else if (data.data[x].categoria == 'FARMACIAS') {
+						this.farmacias.push(
+							// {
+							// value: data.data[x].categoryList[y].nombre + ' - ' + data.data[x].categoryList[y].telefono,
+							// viewValue: data.data[x].categoryList[y].nombre + ' - ' + data.data[x].categoryList[y].telefono
+							// }
+							data.data[x].categoryList[y].nombre + ' - ' + data.data[x].categoryList[y].telefono
+						);
+					}
+					else if (data.data[x].categoria == 'CLINICAS_HOSPITALES') {
+						this.clinicas.push(
+							// {
+							// value: data.data[x].categoryList[y].nombre + ' - ' + data.data[x].categoryList[y].telefono,
+							// viewValue: data.data[x].categoryList[y].nombre + ' - ' + data.data[x].categoryList[y].telefono
+							// }
+							data.data[x].categoryList[y].nombre + ' - ' + data.data[x].categoryList[y].telefono
+						);
+					}
+					else if (data.data[x].categoria == 'LABORATORIOS') {
+						this.labs.push(
+							// {
+							// value: data.data[x].categoryList[y].nombre + ' - ' + data.data[x].categoryList[y].telefono,
+							// viewValue: data.data[x].categoryList[y].nombre + ' - ' + data.data[x].categoryList[y].telefono
+							// }
+							data.data[x].categoryList[y].nombre + ' - ' + data.data[x].categoryList[y].telefono
+						);
+					}
+					else if (data.data[x].categoria == 'MEDICOS') {
+						this.medicos.push(
+							// {
+							// value: data.data[x].categoryList[y].nombre + ' - ' + data.data[x].categoryList[y].telefono,
+							// viewValue: data.data[x].categoryList[y].nombre + ' - ' + data.data[x].categoryList[y].telefono
+							// }
+							data.data[x].categoryList[y].nombre + ' - ' + data.data[x].categoryList[y].telefono
+						);
+					}
+					// this.proveedores.find()
+				}
 			}
+			console.log(this.OtrosproveedoresField);
+			console.log(this.CentrosField);
+			console.log(this.farmaciasField);
+			console.log(this.clinicasField);
+			console.log(this.labsField);
+			console.log(this.medicosField);
 		});
 	}
+
+	// returnProveedores() {
+	// 	this.refund.getProveedores().subscribe(data => {
+	// 		console.log(data.data);
+
+
+	// 		// tslint:disable-next-line: prefer-for-of
+	// 		for (let x = 0; x < data.data.length; x++) {
+	// 			this.Otrosproveedores.push({
+	// 				value: data.data[x].nombre,
+	// 				viewValue: data.data[x].nombre,
+	// 			});
+	// 		}
+	// 	});
+	// }
 
 	returnBanks() {
 		this.refund.getBanks().subscribe(data => {
@@ -618,6 +903,7 @@ export class RefundComponent implements OnInit {
 			tipoReclamoMoneda: ['', Validators.required],
 			descripcion: ['', Validators.required],
 			monto: ['', Validators.required],
+			categoria: ['', Validators.required],
 			proveedor: ['', Validators.required],
 			files: this.fb.group({
 				invoices: this.fb.array([this.createFormArray('invoices')]),
@@ -631,7 +917,8 @@ export class RefundComponent implements OnInit {
 	addDiagnostic() {
 		console.log('diagnosticos: ', this.refundForm.get('diagnosticos').value);
 		this.diagnosticList.push(this.createDiagnostic());
-
+		this.manageFilters(this.diagnosticList.length - 1);
+		this.filterValueArray.push();
 	}
 
 	createFormArray(type: string): any {
@@ -677,8 +964,25 @@ export class RefundComponent implements OnInit {
 	}
 
 	removeDiagnostic(index) {
-		this.diagnosticList.removeAt(index);
 
+		let valuePrueba;
+		let valuePrueba2;
+		if (this.refundForm.get('diagnosticos').get((index + 1).toString())) {
+			valuePrueba = this.refundForm.get('diagnosticos').get((index + 1).toString()).get('categoria').value;
+			valuePrueba2 = this.refundForm.get('diagnosticos').get((index + 1).toString()).get('proveedor').value;
+			this.filteredOptionsProveedor.splice(index, 1);
+			this.filterValueArray.splice(index, 1);
+			this.diagnosticList.removeAt(index);
+			this.manageFilters(index);
+			this.refundForm.get('diagnosticos').get((index).toString()).get('categoria').setValue('');
+			this.refundForm.get('diagnosticos').get((index).toString()).get('categoria').setValue(valuePrueba);
+			this.refundForm.get('diagnosticos').get((index).toString()).get('proveedor').setValue('');
+			// this.refundForm.get('diagnosticos').get((index).toString()).get('proveedor').updateValueAndValidity();
+			this.refundForm.get('diagnosticos').get((index).toString()).get('proveedor').setValue(valuePrueba2);
+		}
+		else {
+			this.diagnosticList.removeAt(index);
+		}
 	}
 
 	canDeactivate(): Observable<boolean> | boolean {
@@ -820,6 +1124,119 @@ export class RefundComponent implements OnInit {
 			this.totalAmount = data.data.totalAmount;
 			this.totalAmountPesos = data.data.totalAmountPesos;
 
+			for (let x = 0; x < data.data.diagnosticos.length; x++ ) {
+				// this.manageFilters(x);
+
+				let valueFilter = this.refundForm.get('diagnosticos').get(x.toString()).get('categoria').value;
+				if (valueFilter == 'OTROS_PROVEEDORES') {
+					this.filteredOptionsProveedor[x] = this.refundForm.get('diagnosticos').get(x.toString()).get('proveedor').valueChanges
+						.pipe(
+							startWith(''),
+							map(value => typeof value === 'string' ? value : value),
+							map(value => value ? this._filterProveedores(x, value) : this.Otrosproveedores.slice())
+						);
+				}
+				if (valueFilter == 'CENTROS_ESPECIALIZADOS') {
+					this.filteredOptionsProveedor[x] = this.refundForm.get('diagnosticos').get(x.toString()).get('proveedor').valueChanges
+						.pipe(
+							startWith(''),
+							map(value => typeof value === 'string' ? value : value),
+							map(value => value ? this._filterProveedores(x, value) : this.Centros.slice())
+						);
+				}
+				if (valueFilter == 'FARMACIAS') {
+					this.filteredOptionsProveedor[x] = this.refundForm.get('diagnosticos').get(x.toString()).get('proveedor').valueChanges
+						.pipe(
+							startWith(''),
+							map(value => typeof value === 'string' ? value : value),
+							map(value => value ? this._filterProveedores(x, value) : this.farmacias.slice())
+						);
+				}
+				if (valueFilter == 'CLINICAS_HOSPITALES') {
+					this.filteredOptionsProveedor[x] = this.refundForm.get('diagnosticos').get(x.toString()).get('proveedor').valueChanges
+						.pipe(
+							startWith(''),
+							map(value => typeof value === 'string' ? value : value),
+							map(value => value ? this._filterProveedores(x, value) : this.clinicas.slice())
+						);
+				}
+				if (valueFilter == 'LABORATORIOS') {
+					this.filteredOptionsProveedor[x] = this.refundForm.get('diagnosticos').get(x.toString()).get('proveedor').valueChanges
+						.pipe(
+							startWith(''),
+							map(value => typeof value === 'string' ? value : value),
+							map(value => value ? this._filterProveedores(x, value) : this.labs.slice())
+						);
+				}
+				if (valueFilter == 'MEDICOS') {
+					this.filteredOptionsProveedor[x] = this.refundForm.get('diagnosticos').get(x.toString()).get('proveedor').valueChanges
+						.pipe(
+							startWith(''),
+							map(value => typeof value === 'string' ? value : value),
+							map(value => value ? this._filterProveedores(x, value) : this.medicos.slice())
+						);
+				}
+
+				this.refundForm.get('diagnosticos').get(x.toString()).get('categoria').valueChanges.subscribe(valueFilter => {
+
+					if (this.refundForm.get('diagnosticos').get(x.toString())) {
+						this.refundForm.get('diagnosticos').get(x.toString()).get('proveedor').setValue('');
+						this.refundForm.get('diagnosticos').get(x.toString()).get('proveedor').markAsUntouched();
+
+						if (valueFilter == 'OTROS_PROVEEDORES') {
+							this.filteredOptionsProveedor[x] = this.refundForm.get('diagnosticos').get(x.toString()).get('proveedor').valueChanges
+								.pipe(
+									startWith(''),
+									map(value => typeof value === 'string' ? value : value),
+									map(value => value ? this._filterProveedores(x, value) : this.Otrosproveedores.slice())
+								);
+						}
+						if (valueFilter == 'CENTROS_ESPECIALIZADOS') {
+							this.filteredOptionsProveedor[x] = this.refundForm.get('diagnosticos').get(x.toString()).get('proveedor').valueChanges
+								.pipe(
+									startWith(''),
+									map(value => typeof value === 'string' ? value : value),
+									map(value => value ? this._filterProveedores(x, value) : this.Centros.slice())
+								);
+						}
+						if (valueFilter == 'FARMACIAS') {
+							this.filteredOptionsProveedor[x] = this.refundForm.get('diagnosticos').get(x.toString()).get('proveedor').valueChanges
+								.pipe(
+									startWith(''),
+									map(value => typeof value === 'string' ? value : value),
+									map(value => value ? this._filterProveedores(x, value) : this.farmacias.slice())
+								);
+						}
+						if (valueFilter == 'CLINICAS_HOSPITALES') {
+							this.filteredOptionsProveedor[x] = this.refundForm.get('diagnosticos').get(x.toString()).get('proveedor').valueChanges
+								.pipe(
+									startWith(''),
+									map(value => typeof value === 'string' ? value : value),
+									map(value => value ? this._filterProveedores(x, value) : this.clinicas.slice())
+								);
+						}
+						if (valueFilter == 'LABORATORIOS') {
+							this.filteredOptionsProveedor[x] = this.refundForm.get('diagnosticos').get(x.toString()).get('proveedor').valueChanges
+								.pipe(
+									startWith(''),
+									map(value => typeof value === 'string' ? value : value),
+									map(value => value ? this._filterProveedores(x, value) : this.labs.slice())
+								);
+						}
+						if (valueFilter == 'MEDICOS') {
+							this.filteredOptionsProveedor[x] = this.refundForm.get('diagnosticos').get(x.toString()).get('proveedor').valueChanges
+								.pipe(
+									startWith(''),
+									map(value => typeof value === 'string' ? value : value),
+									map(value => value ? this._filterProveedores(x, value) : this.medicos.slice())
+								);
+						}
+					}
+					console.log(this.filteredOptionsProveedor);
+				});
+
+			 	this.filterValueArray.push();
+			}
 		});
 		this.refund.id = null;
 		this.appComponent.showOverlay = false;

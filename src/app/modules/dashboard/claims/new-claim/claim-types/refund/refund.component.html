@@ -202,10 +202,149 @@
               label="Descripción del procedimiento">
             </app-text-area>
           </div>
-          <div class="mr-3 md:col-span-2">
-            <app-select name="proveedor" [options]="proveedoresField"
+          <div class="mr-3">
+            <app-select name="categoria" [options]="categoriasField"
               [group]="refundForm.get('diagnosticos').get(i.toString())">
             </app-select>
+          </div>
+          <div *ngIf="refundForm.get('diagnosticos').get(i.toString()).get('categoria').value == 'OTROS_PROVEEDORES'" class="mr-3 md:col-span-2">
+            <!-- <app-select name="proveedor" [options]="OtrosproveedoresField"
+              [group]="refundForm.get('diagnosticos').get(i.toString())">
+            </app-select> -->
+
+            <form [formGroup]="refundForm.get('diagnosticos').get(i.toString())">
+              <mat-form-field color="accent" appearance="outline" class="w-full bg-transparente"
+                style="font-size: small !important;">
+                <mat-label>Proveedores</mat-label>
+                <input formControlName="proveedor" matInput class="" type="text" [matAutocomplete]="auto2"
+                  placeholder="">
+                <mat-autocomplete #auto2="matAutocomplete" [displayWith]="displayFn">
+                  <mat-option *ngFor="let option of filteredOptionsProveedor[i] | async" [value]="option">
+                    {{option}}
+                  </mat-option>
+                </mat-autocomplete>
+                <mat-error
+                  *ngIf="refundForm.get('diagnosticos').get(i.toString()).get('proveedor').touched && !refundForm.get('diagnosticos').get(i.toString()).get('proveedor').valid">
+                  Este campo es obligatorio
+                </mat-error>
+              </mat-form-field>
+            </form>
+          </div>
+          
+          <div *ngIf="refundForm.get('diagnosticos').get(i.toString()).get('categoria').value == 'CENTROS_ESPECIALIZADOS'" class="mr-3 md:col-span-2">
+            <!-- <app-select name="proveedor" [options]="CentrosField"
+              [group]="refundForm.get('diagnosticos').get(i.toString())">
+            </app-select> -->
+
+            <form [formGroup]="refundForm.get('diagnosticos').get(i.toString())">
+              <mat-form-field color="accent" appearance="outline" class="w-full bg-transparente"
+                style="font-size: small !important;">
+                <mat-label>Proveedores</mat-label>
+                <input formControlName="proveedor" matInput class="" type="text" [matAutocomplete]="auto2"
+                  placeholder="">
+                <mat-autocomplete #auto2="matAutocomplete" [displayWith]="displayFn">
+                  <mat-option *ngFor="let option of filteredOptionsProveedor[i] | async" [value]="option">
+                    {{option}}
+                  </mat-option>
+                </mat-autocomplete>
+                <mat-error
+                  *ngIf="refundForm.get('diagnosticos').get(i.toString()).get('proveedor').touched && !refundForm.get('diagnosticos').get(i.toString()).get('proveedor').valid">
+                  Este campo es obligatorio
+                </mat-error>
+              </mat-form-field>
+            </form>
+          </div>
+          <div *ngIf="refundForm.get('diagnosticos').get(i.toString()).get('categoria').value == 'FARMACIAS'" class="mr-3 md:col-span-2">
+            <!-- <app-select name="proveedor" [options]="farmaciasField"
+              [group]="refundForm.get('diagnosticos').get(i.toString())">
+            </app-select> -->
+
+            <form [formGroup]="refundForm.get('diagnosticos').get(i.toString())">
+              <mat-form-field color="accent" appearance="outline" class="w-full bg-transparente"
+                style="font-size: small !important;">
+                <mat-label>Proveedores</mat-label>
+                <input formControlName="proveedor" matInput class="" type="text" [matAutocomplete]="auto2"
+                  placeholder="">
+                <mat-autocomplete #auto2="matAutocomplete" [displayWith]="displayFn">
+                  <mat-option *ngFor="let option of filteredOptionsProveedor[i] | async" [value]="option">
+                    {{option}}
+                  </mat-option>
+                </mat-autocomplete>
+                <mat-error
+                  *ngIf="refundForm.get('diagnosticos').get(i.toString()).get('proveedor').touched && !refundForm.get('diagnosticos').get(i.toString()).get('proveedor').valid">
+                  Este campo es obligatorio
+                </mat-error>
+              </mat-form-field>
+            </form>
+          </div>
+          <div *ngIf="refundForm.get('diagnosticos').get(i.toString()).get('categoria').value == 'CLINICAS_HOSPITALES'" class="mr-3 md:col-span-2">
+            <!-- <app-select name="proveedor" [options]="clinicasField"
+              [group]="refundForm.get('diagnosticos').get(i.toString())">
+            </app-select> -->
+
+            <form [formGroup]="refundForm.get('diagnosticos').get(i.toString())">
+              <mat-form-field color="accent" appearance="outline" class="w-full bg-transparente"
+                style="font-size: small !important;">
+                <mat-label>Proveedores</mat-label>
+                <input formControlName="proveedor" matInput class="" type="text" [matAutocomplete]="auto2"
+                  placeholder="">
+                <mat-autocomplete #auto2="matAutocomplete" [displayWith]="displayFn">
+                  <mat-option *ngFor="let option of filteredOptionsProveedor[i] | async" [value]="option">
+                    {{option}}
+                  </mat-option>
+                </mat-autocomplete>
+                <mat-error
+                  *ngIf="refundForm.get('diagnosticos').get(i.toString()).get('proveedor').touched && !refundForm.get('diagnosticos').get(i.toString()).get('proveedor').valid">
+                  Este campo es obligatorio
+                </mat-error>
+              </mat-form-field>
+            </form>
+          </div>
+          <div *ngIf="refundForm.get('diagnosticos').get(i.toString()).get('categoria').value == 'LABORATORIOS'" class="mr-3 md:col-span-2">
+            <!-- <app-select name="proveedor" [options]="labsField"
+              [group]="refundForm.get('diagnosticos').get(i.toString())">
+            </app-select> -->
+
+            <form [formGroup]="refundForm.get('diagnosticos').get(i.toString())">
+              <mat-form-field color="accent" appearance="outline" class="w-full bg-transparente"
+                style="font-size: small !important;">
+                <mat-label>Proveedores</mat-label>
+                <input formControlName="proveedor" matInput class="" type="text" [matAutocomplete]="auto2"
+                  placeholder="">
+                <mat-autocomplete #auto2="matAutocomplete" [displayWith]="displayFn">
+                  <mat-option *ngFor="let option of filteredOptionsProveedor[i] | async" [value]="option">
+                    {{option}}
+                  </mat-option>
+                </mat-autocomplete>
+                <mat-error
+                  *ngIf="refundForm.get('diagnosticos').get(i.toString()).get('proveedor').touched && !refundForm.get('diagnosticos').get(i.toString()).get('proveedor').valid">
+                  Este campo es obligatorio
+                </mat-error>
+              </mat-form-field>
+            </form>
+          </div>
+          <div *ngIf="refundForm.get('diagnosticos').get(i.toString()).get('categoria').value == 'MEDICOS'" class="mr-3 md:col-span-2">
+            <!-- <app-select name="proveedor" [options]="medicosField"
+              [group]="refundForm.get('diagnosticos').get(i.toString())">
+            </app-select> -->
+
+            <form [formGroup]="refundForm.get('diagnosticos').get(i.toString())">
+              <mat-form-field color="accent" appearance="outline" class="w-full bg-transparente"
+                style="font-size: small !important;">
+                <mat-label>Proveedores</mat-label>
+                <input formControlName="proveedor" matInput class="" type="text" [matAutocomplete]="auto2"
+                  placeholder="">
+                <mat-autocomplete #auto2="matAutocomplete" [displayWith]="displayFn">
+                  <mat-option *ngFor="let option of filteredOptionsProveedor[i] | async" [value]="option">
+                    {{option}}
+                  </mat-option>
+                </mat-autocomplete>
+                <mat-error
+                  *ngIf="refundForm.get('diagnosticos').get(i.toString()).get('proveedor').touched && !refundForm.get('diagnosticos').get(i.toString()).get('proveedor').valid">
+                  Este campo es obligatorio
+                </mat-error>
+              </mat-form-field>
+            </form>
           </div>
           <div class="mr-3"
             *ngIf="refundForm.get('informacion').get('tipoReclamo') && refundForm.get('informacion').get('tipoReclamo').value === 'LOCAL'">

@@ -253,17 +253,40 @@
             <div class="my-4">
               <label> <strong> Médico tratante: </strong> </label>
             </div>
-
-            <app-select name="nombreMedico"
+            <!-- <app-select name="nombreMedico"
               (selected)="selectionDoctor($event, authorization.get('informacionMedica').get('primerosSintomas'))"
               [options]="doctorFieldNames" [group]="authorization.get('informacionMedica').get('primerosSintomas')">
-            </app-select>
-
+            </app-select> (selectionChange) -->
+            <form [formGroup]="authorization.get('informacionMedica').get('primerosSintomas')">
+              <mat-form-field color="accent" appearance="outline" class="w-full bg-transparente"
+                style="font-size: small !important;">
+                <mat-label>Nombre</mat-label>
+                <input formControlName="nombreMedico" matInput class="" type="text" [matAutocomplete]="auto2"
+                  placeholder="Dr. Juan Juan">
+                <mat-autocomplete #auto2="matAutocomplete" [displayWith]="displayFn" 
+                (optionSelected)=
+                "selectionDoctor($event, authorization.get('informacionMedica').get('primerosSintomas'))">
+                  <mat-option *ngFor="let option of filteredOptionsMedicoTratante | async" [value]="option">
+                    {{option}}
+                  </mat-option>
+                </mat-autocomplete>
+                <mat-error
+                  *ngIf="authorization.get('informacionMedica').get('primerosSintomas').get('nombreMedico').touched && !authorization.get('informacionMedica').get('primerosSintomas').get('nombreMedico').valid">
+                  Este campo es obligatorio
+                </mat-error>
+              </mat-form-field>
+            </form>
             <!-- <app-select name="direccion" [options]="doctorFieldMedicCenter" [group]="authorization.get('informacionMedica').get('primerosSintomas')">
             </app-select>
 
             <app-select name="telefono" [options]="doctorFieldNumbers" [group]="authorization.get('informacionMedica').get('primerosSintomas')">
             </app-select> -->
+
+            <app-input 
+              *ngIf="authorization.get('informacionMedica').get('primerosSintomas').get('nombreMedico').value.toLowerCase() == 'otro'" 
+              [group]="authorization.get('informacionMedica').get('primerosSintomas')" label="Especificar nombre"
+              name="specifyOthers">
+            </app-input>
 
             <!-- <app-input [group]="authorization.get('informacionMedica').get('primerosSintomas')" label="Nombre"
               name="nombreMedico">
@@ -292,10 +315,36 @@
             <!-- <app-input [group]="authorization.get('informacionMedica').get('admision')" label="Nombre"
               name="nombreMedico">
             </app-input> -->
-            <app-select name="nombreMedico"
+            <!-- <app-select name="nombreMedico"
               (selected)="selectionDoctor($event, authorization.get('informacionMedica').get('admision'))"
               [options]="doctorFieldNames" [group]="authorization.get('informacionMedica').get('admision')">
-            </app-select>
+            </app-select> -->
+
+            <form [formGroup]="authorization.get('informacionMedica').get('admision')">
+              <mat-form-field color="accent" appearance="outline" class="w-full bg-transparente"
+                style="font-size: small !important;">
+                <mat-label>Nombre</mat-label>
+                <input formControlName="nombreMedico" matInput class="" type="text" [matAutocomplete]="auto3"
+                  placeholder="Dr. Juan Juan">
+                <mat-autocomplete #auto3="matAutocomplete" [displayWith]="displayFn" 
+                (optionSelected)=
+                "selectionDoctor($event, authorization.get('informacionMedica').get('admision'))">
+                  <mat-option *ngFor="let option of filteredOptionsMedicoReferente | async" [value]="option">
+                    {{option}}
+                  </mat-option>
+                </mat-autocomplete>
+                <mat-error
+                  *ngIf="authorization.get('informacionMedica').get('admision').get('nombreMedico').touched && !authorization.get('informacionMedica').get('admision').get('nombreMedico').valid">
+                  Este campo es obligatorio
+                </mat-error>
+              </mat-form-field>
+            </form>
+
+            <app-input 
+              *ngIf="authorization.get('informacionMedica').get('admision').get('nombreMedico').value.toLowerCase() == 'otro'" 
+              [group]="authorization.get('informacionMedica').get('admision')" label="Especificar nombre"
+              name="specifyOthers">
+            </app-input>
             <!-- <app-input [group]="authorization.get('informacionMedica').get('admision')" label="Dirección"
               name="direccion">
             </app-input> -->
@@ -339,9 +388,34 @@
             </div>
             <!-- <app-input [group]="authorization.get('informacionMedica')" label="Nombre" name="nombreServicio">
             </app-input> -->
-            <app-select name="nombreServicio" [options]="serviceCenters"
+            <!-- <app-select name="nombreServicio" [options]="serviceCenters"
               [group]="authorization.get('informacionMedica')">
-            </app-select>
+            </app-select> -->
+            <form [formGroup]="authorization.get('informacionMedica')">
+              <mat-form-field color="accent" appearance="outline" class="w-full bg-transparente"
+                style="font-size: small !important;">
+                <mat-label>Nombre</mat-label>
+                <input formControlName="nombreServicio" matInput class="" type="text" [matAutocomplete]="auto4"
+                  placeholder="Dr. Juan Juan">
+                <mat-autocomplete #auto4="matAutocomplete" [displayWith]="displayFn"
+                (optionSelected)=
+                "selectionDoctor($event, authorization.get('informacionMedica'), 'nombreServicio')">
+                  <mat-option *ngFor="let option of filteredOptionsCentroServicio | async" [value]="option">
+                    {{option}}
+                  </mat-option>
+                </mat-autocomplete>
+                <mat-error
+                  *ngIf="authorization.get('informacionMedica').get('nombreServicio').touched && !authorization.get('informacionMedica').get('nombreServicio').valid">
+                  Este campo es obligatorio
+                </mat-error>
+              </mat-form-field>
+            </form>
+
+            <app-input 
+              *ngIf="authorization.get('informacionMedica').get('nombreServicio').value.toLowerCase() == 'otro'" 
+              [group]="authorization.get('informacionMedica')" label="Especificar nombre"
+              name="specifyOthers">
+            </app-input>
             <!-- <app-input [group]="authorization.get('informacionMedica')" label="Dirección" name="direccion">
             </app-input>
 

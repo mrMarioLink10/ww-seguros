@@ -263,7 +263,7 @@
                 <mat-label>Nombre</mat-label>
                 <input formControlName="nombreMedico" matInput class="" type="text" [matAutocomplete]="auto2"
                   placeholder="Dr. Juan Juan">
-                <mat-autocomplete #auto2="matAutocomplete" [displayWith]="displayFn" 
+                <mat-autocomplete #auto2="matAutocomplete" [displayWith]="displayFn"
                 (optionSelected)=
                 "selectionDoctor($event, authorization.get('informacionMedica').get('primerosSintomas'))">
                   <mat-option *ngFor="let option of filteredOptionsMedicoTratante | async" [value]="option">
@@ -282,8 +282,8 @@
             <app-select name="telefono" [options]="doctorFieldNumbers" [group]="authorization.get('informacionMedica').get('primerosSintomas')">
             </app-select> -->
 
-            <app-input 
-              *ngIf="authorization.get('informacionMedica').get('primerosSintomas').get('nombreMedico').value.toLowerCase() == 'otro'" 
+            <app-input
+              *ngIf="authorization.get('informacionMedica').get('primerosSintomas').get('nombreMedico').value.toLowerCase() == 'otro'"
               [group]="authorization.get('informacionMedica').get('primerosSintomas')" label="Especificar nombre"
               name="specifyOthers">
             </app-input>
@@ -326,7 +326,7 @@
                 <mat-label>Nombre</mat-label>
                 <input formControlName="nombreMedico" matInput class="" type="text" [matAutocomplete]="auto3"
                   placeholder="Dr. Juan Juan">
-                <mat-autocomplete #auto3="matAutocomplete" [displayWith]="displayFn" 
+                <mat-autocomplete #auto3="matAutocomplete" [displayWith]="displayFn"
                 (optionSelected)=
                 "selectionDoctor($event, authorization.get('informacionMedica').get('admision'))">
                   <mat-option *ngFor="let option of filteredOptionsMedicoReferente | async" [value]="option">
@@ -340,8 +340,8 @@
               </mat-form-field>
             </form>
 
-            <app-input 
-              *ngIf="authorization.get('informacionMedica').get('admision').get('nombreMedico').value.toLowerCase() == 'otro'" 
+            <app-input
+              *ngIf="authorization.get('informacionMedica').get('admision').get('nombreMedico').value.toLowerCase() == 'otro'"
               [group]="authorization.get('informacionMedica').get('admision')" label="Especificar nombre"
               name="specifyOthers">
             </app-input>
@@ -411,8 +411,8 @@
               </mat-form-field>
             </form>
 
-            <app-input 
-              *ngIf="authorization.get('informacionMedica').get('nombreServicio').value.toLowerCase() == 'otro'" 
+            <app-input
+              *ngIf="authorization.get('informacionMedica').get('nombreServicio').value.toLowerCase() == 'otro'"
               [group]="authorization.get('informacionMedica')" label="Especificar nombre"
               name="specifyOthers">
             </app-input>

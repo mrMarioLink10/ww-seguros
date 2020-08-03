@@ -1062,7 +1062,9 @@ export class RefundComponent implements OnInit {
 	}
 
 	getData(id) {
-		this.appComponent.showOverlay = true;
+		setTimeout(() => {
+			this.appComponent.showOverlay = true;
+		});
 		this.refund.returnData(id).subscribe(data => {
 			console.log(data);
 			this.refundForm.get('informacion').get('idNumber').disable();

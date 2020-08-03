@@ -398,6 +398,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
     height: ['', [Validators.required, Validators.min(0)]],
     sex: ['', Validators.required],
     id2: ['', Validators.required],
+    idType:['', Validators.required],
     nationality: ['', Validators.required],
     age: [{ value: '', disabled: true }, Validators.required],
     bmi: [{ value: '', disabled: true }, Validators.required],
@@ -465,6 +466,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
     name: ['', Validators.required],
     date: [new Date(), Validators.required],
     id2: ['', Validators.required],
+    idType:['', Validators.required],
     id2Attached: [''],
     nationality: ['', Validators.required],
     ocupation: ['', Validators.required],
@@ -476,6 +478,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
     name: [''],
     date: [new Date()],
     id2: [''],
+    idType:['' ],
     id2Attached: [''],
     nationality: [''],
     ocupation: [''],
@@ -721,7 +724,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
       person: this.fb.group({
         // conozcaSuClientePersona: this.fb.group({}),
         firstName: ['', Validators.required],
-        secondName: [''],
+        secondName: ['', Validators.required],
         lastName: ['', Validators.required],
         weightUnit: ['', Validators.required],
         heightUnit: ['', Validators.required],
@@ -760,7 +763,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
         // conozcaSuClientePersonaJuridica: this.fb.group({}),
         // conozcaSuClientePersona: this.fb.group({}),
         firstName: ['', Validators.required],
-        secondName: [''],
+        secondName: ['', Validators.required],
         lastName: ['', Validators.required],
         date: ['', Validators.required],
         sex: ['', Validators.required],
@@ -1566,7 +1569,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
               // conozcaSuClientePersonaJuridica: this.fb.group({}),
               // conozcaSuClientePersona: this.fb.group({}),
               firstName: ['', Validators.required],
-              secondName: [''],
+              secondName: ['', Validators.required],
               lastName: ['', Validators.required],
               date: ['', Validators.required],
               sex: ['', Validators.required],
@@ -2929,7 +2932,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
             formContractor.removeControl('conozcaSuClientePersona');
           }
         }
-        
+
 
         this.contingentBeneficiaryArray = this.newRequest.get('contingentBeneficiary').get('dependentsC') as FormArray;
         this.primaryBenefitsArray = this.newRequest.get('primaryBenefits').get('dependentsC') as FormArray;

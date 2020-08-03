@@ -29,6 +29,7 @@ export class ConsultationComponent implements OnInit {
 
   setActiveTab(event) {
     this.activeTab = event;
+    console.log(this.activeTab );
   }
 
   setPendingPolicies(event) {

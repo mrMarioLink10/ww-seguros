@@ -611,7 +611,7 @@
               <app-number-input isPhone="true" class="mr-3" [group]="newRequest.get('contractor')" label="Tel. Oficina"
                 name='officeTel'>
               </app-number-input>
-              <app-input class="mr-3" [group]="newRequest.get('contractor')" label="Fax" name='fax'></app-input>
+              <app-number-input class="mr-3" [group]="newRequest.get('contractor')" label="Fax" name='fax' isPhone="true" ></app-number-input>
               <app-input class="mr-3" [group]="newRequest.get('contractor')" label="Correo" name='email'>
               </app-input>
 
@@ -689,6 +689,7 @@
                     <app-input class="mr-3"
                       [group]="newRequest.get('dependents').get('allDependents').get(index.toString())"
                       label="Apellidos" name='lastName'></app-input>
+                      <app-select class="mr-3" [options]="idType" [group]="newRequest.get('dependents').get('allDependents').get(index.toString())"></app-select>
                     <app-input class="mr-3"
                       [group]="newRequest.get('dependents').get('allDependents').get(index.toString())"
                       label="Cedula o documento de identidad" name='id2'></app-input>
@@ -1693,6 +1694,7 @@
                       <app-date-picker class="mr-3" id='date'
                         [group]="newRequest.get('primaryBenefits').get('dependentsC').get(index.toString())"
                         label="Fecha de Nacimiento" name='date'></app-date-picker>
+                        <app-select class="mr-3" [options]="idType" [group]="newRequest.get('primaryBenefits').get('dependentsC').get(index.toString())"></app-select>
                       <app-input class="mr-3"
                         [group]="newRequest.get('primaryBenefits').get('dependentsC').get(index.toString())"
                         label="Documento de Identidad" name='id2'></app-input>
@@ -1858,6 +1860,7 @@
                       <app-date-picker class="mr-3" id='date'
                         [group]="newRequest.get('contingentBeneficiary').get('dependentsC').get(index.toString())"
                         label="Fecha de Nacimiento" name='date'></app-date-picker>
+                        <app-select class="mr-3" [options]="idType" [group]="newRequest.get('contingentBeneficiary').get('dependentsC').get(index.toString())"></app-select>
                       <app-input class="mr-3"
                         [group]="newRequest.get('contingentBeneficiary').get('dependentsC').get(index.toString())"
                         label="Documento de Identidad" name='id2'></app-input>

@@ -48,7 +48,11 @@ export class LifeComponent implements OnInit, DoCheck {
     private appComponent: AppComponent,
     private cd: ChangeDetectorRef,
     public requestService: RequestsService
-  ) { }
+  ) {
+    var d = new Date();
+    d.setFullYear(d.getFullYear() - 18);
+    this.maxDate = d;
+  }
   step: number;
   showContent = false;
 
@@ -99,6 +103,7 @@ export class LifeComponent implements OnInit, DoCheck {
   needFinancialStatus = false;
   showNewQuoteRequest = false;
   todayDate = new Date();
+  maxDate = new Date();
 
   primaryBeneficaryTitles = [];
   contigentBeneficaryTitles = [];
@@ -546,6 +551,12 @@ export class LifeComponent implements OnInit, DoCheck {
     name: 'relationship',
     options: $family.options
   };
+
+  parentescoAsegurado = {
+    label: 'Parentesco con el asegurado',
+    name: 'kinship',
+    options: $family.options
+  };
   // tslint:disable-next-line: max-line-length
   titles = ['Información del Propuesto Asegurado',
     'Perfil Financiero',
@@ -613,7 +624,7 @@ export class LifeComponent implements OnInit, DoCheck {
       comentary: [''],
       person: this.fb.group({
         firstName: [{ value: '', disabled: false }, [Validators.required]],
-        secondName: [''],
+        secondName: ['', Validators.required],
         lastName: ['', Validators.required],
         date: [{ value: '', disabled: true }, [Validators.required]],
         sex: [{ value: '', disabled: true }, [Validators.required]],
@@ -831,7 +842,7 @@ export class LifeComponent implements OnInit, DoCheck {
         label: 'a. ¿Hipertensión arterial?',
         name: 'haveHypertension',
         array: 'hypertensionList',
-        group: 'hypertension'
+        group: 'hypertensionVida'
       },
       {
         label: 'b. ¿Ahogos, ronquera, tos persistente, esputos de sangre, bronquitis, pleuresía, asma, enfisema, tuberculosis o trastornos respiratorios crónicos?',
@@ -861,7 +872,7 @@ export class LifeComponent implements OnInit, DoCheck {
         label: 'e. ¿Diabetes?',
         name: 'haveDiabetes',
         array: 'diabetesList',
-        group: 'diabetes'
+        group: 'diabetesVida'
       },
       {
         label: 'f. ¿Neuritis, ciática, reumatismo, artritis, gota o desorden de los músculos o huesos, incluso de la columna vertebral, ¿la espalda y las articulaciones?',
@@ -2175,8 +2186,8 @@ export class LifeComponent implements OnInit, DoCheck {
 
         case 'haveHypertension':
           formQ.addControl('solicitudHipertensionArterial', this.fb.group({}));
-          formHMI.addControl('hypertension', this.fb.array([this.createFormArray('medicalInfo')]));
-          this.hypertensionList = formHMI.get('hypertension') as FormArray;
+          formHMI.addControl('hypertensionVida', this.fb.array([this.createFormArray('medicalInfo')]));
+          this.hypertensionList = formHMI.get('hypertensionVida') as FormArray;
           break;
 
         case 'haveRespiratoryDisorder':
@@ -2202,8 +2213,8 @@ export class LifeComponent implements OnInit, DoCheck {
         case 'haveDiabetes':
           formQ.addControl('solicitudDiabetes', this.fb.group({}));
 
-          formHMI.addControl('diabetes', this.fb.array([this.createFormArray('medicalInfo')]));
-          this.diabetesList = formHMI.get('diabetes') as FormArray;
+          formHMI.addControl('diabetesVida', this.fb.array([this.createFormArray('medicalInfo')]));
+          this.diabetesList = formHMI.get('diabetesVida') as FormArray;
           break;
 
         case 'haveSpineDisorder':
@@ -2686,7 +2697,7 @@ export class LifeComponent implements OnInit, DoCheck {
 
         case 'haveHypertension':
           formQ.removeControl('solicitudHipertensionArterial');
-          formHMI.removeControl('hypertension');
+          formHMI.removeControl('hypertensionVida');
           this.hypertensionList = undefined;
           break;
 
@@ -2709,7 +2720,7 @@ export class LifeComponent implements OnInit, DoCheck {
 
         case 'haveDiabetes':
           formQ.removeControl('solicitudDiabetes');
-          formHMI.removeControl('diabetes');
+          formHMI.removeControl('diabetesVida');
           this.diabetesList = undefined;
           break;
 
@@ -3027,7 +3038,7 @@ export class LifeComponent implements OnInit, DoCheck {
         data.data != undefined) {
         this.ID = data.data.id;
         console.log(data.data);
-        this.dataMappingFromApi.iterateThroughtAllObject(data.data, this.newRequest);
+        this.dataMappingFromApi.iterateThroughtAllObjectVida(data.data, this.newRequest);
 
         console.log(this.newRequest);
         console.log(data.data);
@@ -3217,13 +3228,13 @@ export class LifeComponent implements OnInit, DoCheck {
         }
 
         this.heartPainList = formHMI.get('heartPain') as FormArray;
-        this.hypertensionList = formHMI.get('hypertension') as FormArray;
+        this.hypertensionList = formHMI.get('hypertensionVida') as FormArray;
         this.lostDriveLicenseList = formGI.get('lostDriveLicense') as FormArray;
         this.respiratoryDisorderList = formHMI.get('respiratoryDisorder') as FormArray;
         this.mentalNervousDisorderList = formHMI.get('mentalNervousDisorder') as FormArray;
         this.stomachDisorderList = formHMI.get('stomachDisorder') as FormArray;
         this.endocrineDisorderList = formHMI.get('endocrineDisorder') as FormArray;
-        this.diabetesList = formHMI.get('diabetes') as FormArray;
+        this.diabetesList = formHMI.get('diabetesVida') as FormArray;
         this.spineDisorderList = formHMI.get('spineDisorder') as FormArray;
         this.unexplainedDiseaseList = formHMI.get('unexplainedDisease') as FormArray;
         this.renalDisorderList = formHMI.get('renalDisorder') as FormArray;

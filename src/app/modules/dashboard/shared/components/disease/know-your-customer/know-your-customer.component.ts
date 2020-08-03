@@ -319,6 +319,17 @@ export class KnowYourCustomerComponent implements OnInit, DoCheck {
     //   // tslint:disable-next-line: no-unused-expression
     //   this.life.idKNOWCustomer == null;
     // }
+    if (this.form.get('policy').get('total_policy_radio').value == 'SI') {
+      if ( this.bankFormArray == null || this.bankFormArray == undefined ) {
+        this.bankFormArray = this.form.get('questions').get('bank').get('bank_array') as FormArray;
+      }
+      else if ( this.commercialFormArray == null || this.commercialFormArray == undefined ) {
+        this.commercialFormArray = this.form.get('questions').get('commercial').get('commercial_array') as FormArray;
+      }
+      else if ( this.personalFormArray == null || this.personalFormArray == undefined ) {
+        this.personalFormArray = this.form.get('questions').get('personal').get('personal_array') as FormArray;
+      }
+    }
   }
 
   addBasicControls() {

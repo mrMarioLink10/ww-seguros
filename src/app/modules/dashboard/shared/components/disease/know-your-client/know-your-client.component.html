@@ -103,7 +103,7 @@
       </div>
 
       <div class="mr-3">
-        <app-date-picker [group]="form.get('representative_data')" label="Fecha" name='birthdate'>
+        <app-date-picker [group]="form.get('representative_data')" label="Fecha" name='birthdate' [max]="minDate">
         </app-date-picker>
       </div>
 
@@ -133,6 +133,9 @@
 
     </div>
 
+    <div class="mr-3 mt-5 sm:mt-3 md:mt-5 lg:mt-2 xl:mt-2">
+      <app-select class="mr-3 pt-21" [options]="idType" [group]="form.get('representative_data')"></app-select>
+    </div>
     <div class="mr-3 mt-5 sm:mt-3 md:mt-5 lg:mt-2 xl:mt-2">
       <app-input [group]="form.get('representative_data')" label="Cédula / Pasaporte" name='id_passport' placeholder="">
       </app-input>
@@ -174,7 +177,9 @@
             <app-input [group]="form.get('management_body_composition').get('allMembers').get(index.toString())"
               label="Cargo" name='position'></app-input>
           </div>
-
+          <div class="mr-3 mt-3 sm:mt-3 md:mt-3 lg:mt-0 xl:mt-0">
+            <app-select class="mr-3 pt-21" [options]="idType" [group]="form.get('management_body_composition').get('allMembers').get(index.toString())"></app-select>
+          </div>
           <div class="mr-3 mt-3 sm:mt-3 md:mt-3 lg:mt-0 xl:mt-0">
             <app-input [group]="form.get('management_body_composition').get('allMembers').get(index.toString())"
               label="Cédula / Pasaporte" name='id_passport_management_body'></app-input>
@@ -239,7 +244,9 @@
               </app-number-input>
 
             </div>
-
+            <div class="mr-3 mt-8 sm:mt-5 md:mt-8 lg:mt-3 xl:mt-0">
+              <app-select class="mr-3 pt-21" [options]="idType" [group]="form.get('shareholders').get('allShareholders').get(index.toString())"></app-select>
+            </div>
             <div class="mr-3 mt-8 sm:mt-5 md:mt-8 lg:mt-3 xl:mt-0">
               <app-input [group]="form.get('shareholders').get('allShareholders').get(index.toString())"
                 label="Cédula / Pasaporte" name='id_passport_shareholder'></app-input>
@@ -503,7 +510,7 @@
   <hr class="ww-divider">
 
 
-  <!-- Bloque 2 -->
+  <!-- Bloque 2
   <div class="mt-8">
 
     <label> <strong> Documentos Necesarios: </strong> </label>
@@ -545,7 +552,7 @@
 
     </div>
 
-  </div>
+  </div>-->
 
   <!-- Sección Declaración -->
 

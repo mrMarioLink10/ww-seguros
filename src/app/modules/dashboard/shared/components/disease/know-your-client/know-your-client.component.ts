@@ -135,9 +135,11 @@ export class KnowYourClientComponent implements OnInit {
 		other_info_branch_office: ['', Validators.required]
 
 	}
-
+  minDate: Date;
 	constructor(private fb: FormBuilder, public formMethods: FormArrayGeneratorService) {
-
+    var d = new Date();
+    d.setFullYear(d.getFullYear() - 18);
+    this.minDate = d;
 	}
 
 	selectChangeText(event: any) {
@@ -215,14 +217,23 @@ export class KnowYourClientComponent implements OnInit {
 	ngOnInit() {
 
 		// this.branch_property = this.fb.array([this.createFormArray()]);
-
+    if (this.form.get('general_data').get('email'))
+    {
+        this.form.get('general_data').get('email').setValidators([Validators.required, Validators.email]);
+        this.form.get('general_data').get('email').updateValueAndValidity();
+    }
+    if (this.form.get('representative_data').get('representative_email'))
+    {
+        this.form.get('representative_data').get('representative_email').setValidators([Validators.required, Validators.email]);
+        this.form.get('representative_data').get('representative_email').updateValueAndValidity();
+    }
 		this.addBasicControls();
 
 		console.log(this.form);
-		if (this.form.get('exposed').get('branch_office') &&
-			this.form.get('exposed').get('branch_office').get('allBranch_office')) {
-			this.branchOfficeFormArray = this.form.get('exposed').get('branch_office').get('allBranch_office') as FormArray;
-		}
+		// if (this.form.get('exposed').get('branch_office') &&
+		// 	this.form.get('exposed').get('branch_office').get('allBranch_office')) {
+		// 	this.branchOfficeFormArray = this.form.get('exposed').get('branch_office').get('allBranch_office') as FormArray;
+		// }
 		// 	this.form = this.fb.group({
 		// 		request: ['', Validators.required],
 
@@ -302,18 +313,13 @@ export class KnowYourClientComponent implements OnInit {
 
 	}
 
-	// ngDoCheck(): void {
+	ngDoCheck(): void {
 
-	// 	if (this.form.get('exposed').get('branch_office_radio').value == 'si' &&
-	// 		!this.form.get('exposed').get('branch_office').get('allBranch_office')) {
-	// 		const varBranch = {
-	// 			valor: 'si',
-	// 			name: 'branch_office_radio'
-	// 		};
-	// 		this.selectChangeBranchOffice(varBranch);
-	// 		console.log("HolAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA branch")
-
-	// 	}
+		if (this.form.get('exposed').get('branch_office_radio').value == 'SI') {
+			if ( this.branchOfficeFormArray == null || this.branchOfficeFormArray == undefined ) {
+				this.branchOfficeFormArray = this.form.get('exposed').get('branch_office').get('allBranch_office') as FormArray;
+			}
+		}
 	// 	if (this.form.get('exposed').get('investigated_representative').value == 'si' && !this.form.get('exposed').get('areatext')) {
 	// 		const varInvestigated = {
 	// 			valor: 'si',
@@ -322,8 +328,22 @@ export class KnowYourClientComponent implements OnInit {
 	// 		this.selectChangeText(varInvestigated);
 	// 		console.log("HolAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
 	// 	}
-	// }
-
+	}
+  idType: FieldConfig =
+  {
+    label: 'Tipo de documento de identidad',
+    options: [
+      {
+        value: 'CÉDULA',
+        viewValue: 'CÉDULA',
+      },
+      {
+        value: 'PASAPORTE',
+        viewValue: 'PASAPORTE',
+      }
+    ],
+    name: 'idType',
+  };
 	addBasicControls() {
 
 		// this.form.addControl('request', this.fb.control('', [Validators.required, Validators.min(1)]));
@@ -349,7 +369,8 @@ export class KnowYourClientComponent implements OnInit {
 			home_telephone: ['', Validators.required],
 			cellphone: ['', Validators.required],
 			id_passport: ['', Validators.required],
-			representative_email: ['', Validators.required],
+			idType: ['', Validators.required],
+			representative_email: ['', Validators.required, , Validators.email],
 			address: ['', Validators.required],
 		}));
 		// tslint:disable-next-line: align
@@ -375,8 +396,8 @@ export class KnowYourClientComponent implements OnInit {
 
 		this.form.addControl('finance', this.fb.group({
 
-			main_annual_income: ['', Validators.required],
-			annual_income_others: ['', Validators.required],
+			main_annual_income: ['' ],
+			annual_income_others: ['' ],
 			documents: this.fb.group({
 				mercantile_register_document: [false],
 				id_shareholder_document: [false],

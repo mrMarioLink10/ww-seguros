@@ -207,6 +207,7 @@ export class RefundComponent implements OnInit {
 	};
 
 	filterValueArray = [];
+	categoriaSubscribe: any = [];
 
 	refundForm: FormGroup;
 	diagnosticList: FormArray;
@@ -505,7 +506,7 @@ export class RefundComponent implements OnInit {
 	manageFilters(index) {
 		// for (let x = 0; x < this.diagnosticList.length; x++) {
 
-			this.refundForm.get('diagnosticos').get(index.toString()).get('categoria').valueChanges.subscribe(valueFilter => {
+			this.categoriaSubscribe[index] = this.refundForm.get('diagnosticos').get(index.toString()).get('categoria').valueChanges.subscribe(valueFilter => {
 
 				if (this.refundForm.get('diagnosticos').get(index.toString())) {
 					this.refundForm.get('diagnosticos').get(index.toString()).get('proveedor').setValue('');
@@ -965,20 +966,58 @@ export class RefundComponent implements OnInit {
 
 	removeDiagnostic(index) {
 
-		let valuePrueba;
-		let valuePrueba2;
+		let valuePrueba = [];
+		let valuePrueba2 = [];
+
+		for (let x = 0; x < this.diagnosticList.length; x++ ) {
+			valuePrueba.push(this.refundForm.get('diagnosticos').get((x).toString()).get('categoria').value);
+			valuePrueba2.push(this.refundForm.get('diagnosticos').get((x).toString()).get('proveedor').value);
+		}
+		valuePrueba.splice(index, 1);
+		valuePrueba2.splice(index, 1);
+		console.log(valuePrueba);
+		console.log(valuePrueba2);
+
+		let y = 0;
 		if (this.refundForm.get('diagnosticos').get((index + 1).toString())) {
-			valuePrueba = this.refundForm.get('diagnosticos').get((index + 1).toString()).get('categoria').value;
-			valuePrueba2 = this.refundForm.get('diagnosticos').get((index + 1).toString()).get('proveedor').value;
-			this.filteredOptionsProveedor.splice(index, 1);
-			this.filterValueArray.splice(index, 1);
-			this.diagnosticList.removeAt(index);
-			this.manageFilters(index);
-			this.refundForm.get('diagnosticos').get((index).toString()).get('categoria').setValue('');
-			this.refundForm.get('diagnosticos').get((index).toString()).get('categoria').setValue(valuePrueba);
-			this.refundForm.get('diagnosticos').get((index).toString()).get('proveedor').setValue('');
-			// this.refundForm.get('diagnosticos').get((index).toString()).get('proveedor').updateValueAndValidity();
-			this.refundForm.get('diagnosticos').get((index).toString()).get('proveedor').setValue(valuePrueba2);
+
+			for (let x = index; x < this.diagnosticList.length; x++ ) {
+
+				// if (this.refundForm.get('diagnosticos').get((x + 1).toString())) {
+
+					this.filteredOptionsProveedor.splice(x, 1);
+					this.filterValueArray.splice(x, 1);
+					this.categoriaSubscribe[x].unsubscribe();
+					// this.categoriaSubscribe.splice(x, 1);
+					if ( y == 0) {
+						this.diagnosticList.removeAt(index);
+						y++;
+					}
+					this.manageFilters(x);
+					this.refundForm.get('diagnosticos').get((x).toString()).get('categoria').setValue('');
+					this.refundForm.get('diagnosticos').get((x).toString()).get('categoria').setValue(valuePrueba[x]);
+					this.refundForm.get('diagnosticos').get((x).toString()).get('proveedor').setValue('');
+					// this.refundForm.get('diagnosticos').get((x).toString()).get('proveedor').updateValueAndValidity();
+					this.refundForm.get('diagnosticos').get((x).toString()).get('proveedor').setValue(valuePrueba2[x]);
+
+					setTimeout(() => {
+						this.refundForm.get('diagnosticos').get((x).toString()).get('proveedor'
+						).setValue(valuePrueba2[x] + ' ');
+						console.log('yaaaaaaaaaaaaaa proveedor ' + x + ' eliminar');
+					},
+					1000);
+
+					setTimeout(() => {
+						this.refundForm.get('diagnosticos').get((x).toString()).get('proveedor'
+						).setValue(valuePrueba2[x]);
+						console.log('yaaaaaaaaaaaaaa proveedor ' + x + ' eliminar, parte 2');
+					},
+					1000);
+
+					this.refundForm.get('diagnosticos').updateValueAndValidity();
+
+				// }
+			}
 		}
 		else {
 			this.diagnosticList.removeAt(index);
@@ -1179,13 +1218,13 @@ export class RefundComponent implements OnInit {
 						);
 				}
 
-				this.refundForm.get('diagnosticos').get(x.toString()).get('categoria').valueChanges.subscribe(valueFilter => {
+				this.categoriaSubscribe[x] = this.refundForm.get('diagnosticos').get(x.toString()).get('categoria').valueChanges.subscribe(valueFilterEdit => {
 
 					if (this.refundForm.get('diagnosticos').get(x.toString())) {
 						this.refundForm.get('diagnosticos').get(x.toString()).get('proveedor').setValue('');
 						this.refundForm.get('diagnosticos').get(x.toString()).get('proveedor').markAsUntouched();
 
-						if (valueFilter == 'OTROS_PROVEEDORES') {
+						if (valueFilterEdit == 'OTROS_PROVEEDORES') {
 							this.filteredOptionsProveedor[x] = this.refundForm.get('diagnosticos').get(x.toString()).get('proveedor').valueChanges
 								.pipe(
 									startWith(''),
@@ -1193,7 +1232,7 @@ export class RefundComponent implements OnInit {
 									map(value => value ? this._filterProveedores(x, value) : this.Otrosproveedores.slice())
 								);
 						}
-						if (valueFilter == 'CENTROS_ESPECIALIZADOS') {
+						if (valueFilterEdit == 'CENTROS_ESPECIALIZADOS') {
 							this.filteredOptionsProveedor[x] = this.refundForm.get('diagnosticos').get(x.toString()).get('proveedor').valueChanges
 								.pipe(
 									startWith(''),
@@ -1201,7 +1240,7 @@ export class RefundComponent implements OnInit {
 									map(value => value ? this._filterProveedores(x, value) : this.Centros.slice())
 								);
 						}
-						if (valueFilter == 'FARMACIAS') {
+						if (valueFilterEdit == 'FARMACIAS') {
 							this.filteredOptionsProveedor[x] = this.refundForm.get('diagnosticos').get(x.toString()).get('proveedor').valueChanges
 								.pipe(
 									startWith(''),
@@ -1209,7 +1248,7 @@ export class RefundComponent implements OnInit {
 									map(value => value ? this._filterProveedores(x, value) : this.farmacias.slice())
 								);
 						}
-						if (valueFilter == 'CLINICAS_HOSPITALES') {
+						if (valueFilterEdit == 'CLINICAS_HOSPITALES') {
 							this.filteredOptionsProveedor[x] = this.refundForm.get('diagnosticos').get(x.toString()).get('proveedor').valueChanges
 								.pipe(
 									startWith(''),
@@ -1217,7 +1256,7 @@ export class RefundComponent implements OnInit {
 									map(value => value ? this._filterProveedores(x, value) : this.clinicas.slice())
 								);
 						}
-						if (valueFilter == 'LABORATORIOS') {
+						if (valueFilterEdit == 'LABORATORIOS') {
 							this.filteredOptionsProveedor[x] = this.refundForm.get('diagnosticos').get(x.toString()).get('proveedor').valueChanges
 								.pipe(
 									startWith(''),
@@ -1225,7 +1264,7 @@ export class RefundComponent implements OnInit {
 									map(value => value ? this._filterProveedores(x, value) : this.labs.slice())
 								);
 						}
-						if (valueFilter == 'MEDICOS') {
+						if (valueFilterEdit == 'MEDICOS') {
 							this.filteredOptionsProveedor[x] = this.refundForm.get('diagnosticos').get(x.toString()).get('proveedor').valueChanges
 								.pipe(
 									startWith(''),
@@ -1237,7 +1276,24 @@ export class RefundComponent implements OnInit {
 					console.log(this.filteredOptionsProveedor);
 				});
 
-			 	this.filterValueArray.push();
+				this.filterValueArray.push();
+
+				const valueProveedorArray = this.refundForm.get('diagnosticos').get((x).toString()
+				 ).get('proveedor').value;
+
+				setTimeout(() => {
+					this.refundForm.get('diagnosticos').get((x).toString()).get('proveedor'
+					).setValue(valueProveedorArray + ' ');
+					console.log('yaaaaaaaaaaaaaa proveedor ' + x);
+				},
+				1000);
+
+				setTimeout(() => {
+					this.refundForm.get('diagnosticos').get((x).toString()).get('proveedor'
+					).setValue(valueProveedorArray);
+					console.log('yaaaaaaaaaaaaaa proveedor ' + x + ', parte 2');
+				},
+				2000);
 			}
 		});
 		this.refund.id = null;

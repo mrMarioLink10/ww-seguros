@@ -1239,6 +1239,54 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy, DoCheck {
 				}
 			});
 
+			const valueSintomasNombreMedico = this.authorization.get('informacionMedica').get('primerosSintomas').get('nombreMedico').value;
+
+			setTimeout(() => {
+				this.authorization.get('informacionMedica').get('primerosSintomas').get('nombreMedico'
+				).setValue(valueSintomasNombreMedico + ' ');
+				console.log('yaaaaaaaaaaaaaa primerosSintomas');
+			},
+			1000);
+
+			setTimeout(() => {
+				this.authorization.get('informacionMedica').get('primerosSintomas').get('nombreMedico'
+				).setValue(valueSintomasNombreMedico);
+				console.log('yaaaaaaaaaaaaaa primerosSintomas parte 2');
+			},
+			2000);
+
+			const valueAdmisionNombreMedico = this.authorization.get('informacionMedica').get('admision').get('nombreMedico').value;
+
+			setTimeout(() => {
+				this.authorization.get('informacionMedica').get('admision').get('nombreMedico'
+				).setValue(valueAdmisionNombreMedico + ' ');
+				console.log('yaaaaaaaaaaaaaa admision');
+			},
+			1000);
+
+			setTimeout(() => {
+				this.authorization.get('informacionMedica').get('admision').get('nombreMedico'
+				).setValue(valueAdmisionNombreMedico);
+				console.log('yaaaaaaaaaaaaaa admision parte 2');
+			},
+			2000);
+
+			const valueServiciosNombreMedico = this.authorization.get('informacionMedica').get('nombreServicio').value;
+
+			setTimeout(() => {
+				this.authorization.get('informacionMedica').get('nombreServicio'
+				).setValue(valueServiciosNombreMedico + ' ');
+				console.log('yaaaaaaaaaaaaaa Servicios');
+			},
+			1000);
+
+			setTimeout(() => {
+				this.authorization.get('informacionMedica').get('nombreServicio'
+				).setValue(valueServiciosNombreMedico);
+				console.log('yaaaaaaaaaaaaaa Servicios parte 2');
+			},
+			2000);
+
 			this.authorization.markAllAsTouched();
 			this.authorization.updateValueAndValidity();
 			this.appComponent.showOverlay = false;

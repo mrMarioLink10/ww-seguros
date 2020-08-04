@@ -131,9 +131,13 @@
                   </app-radio-button>
                 </div>
 
-                <div class="mt-2" *ngIf="newRequest.get('person').get('sameAsContractor').value == 'SI'">
-                  <div class="radio-button-label" style="font-size: 12px !important; max-width: 63vw;">Adjuntar
+                <div class="mt-2" *ngIf="newRequest.get('person').get('sameAsContractor').value == 'SI' 
+                || newRequest.get('person').get('sameAsContractor').value == 'NO'">
+                  <div *ngIf="newRequest.get('person').get('sameAsContractor').value == 'SI'" class="radio-button-label" style="font-size: 12px !important; max-width: 63vw;">Adjuntar
                     documentos "Copia de Cédula" y "Certificación de Ingresos declarados"
+                  </div>
+                  <div *ngIf="newRequest.get('person').get('sameAsContractor').value == 'NO'" class="radio-button-label" style="font-size: 12px !important; max-width: 63vw;">Adjuntar
+                    documentos "Copia de Cédula"
                   </div>
                   <div *ngIf="newRequest.get('files') && newRequest.get('files').get('documentsKnowClient')">
                     <div *ngFor="let studies of filesDocumentsKnowClientArray.controls; let i = index">
@@ -167,7 +171,7 @@
                         <app-file-input
                           [ngClass]="{'col-span-6': filesDocumentsKnowClientArray.length === 1, 'col-span-5': filesDocumentsKnowClientArray.length > 1}"
                           class="mr-3" [group]="newRequest.get('files').get('documentsKnowClient').get(i.toString())"
-                          name="document" label="Cédula / Certificación de Ingresos declarados"
+                          name="document" label="Documento"
                           [fileNameWatcher]="arrayDocumentsKnowClientWatcher(i)"
                           (onFileChange)="onStudiesChange2($event, i, 'documentsKnowClient')">
                         </app-file-input>
@@ -190,7 +194,7 @@
                     </button>
                   </div>
                 </div>
-                <div class="mt-2" *ngIf="newRequest.get('person').get('sameAsContractor').value == 'NO'">
+                <!-- <div class="mt-2" *ngIf="newRequest.get('person').get('sameAsContractor').value == 'NO'">
                   <div class="radio-button-label" style="font-size: 12px !important; max-width: 63vw;">Adjuntar
                     documentos "Copia de Cédula"
                   </div>
@@ -221,7 +225,7 @@
                       <mat-icon style="color: #18446B">add</mat-icon>
                     </button>
                   </div>
-                </div>
+                </div> -->
 
               </div>
               <app-radio-button *ngIf="newRequest.get('person').get('contractorIsLegalEntity') &&

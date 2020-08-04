@@ -207,7 +207,8 @@
               [group]="refundForm.get('diagnosticos').get(i.toString())">
             </app-select>
           </div>
-          <div *ngIf="refundForm.get('diagnosticos').get(i.toString()).get('categoria').value == 'OTROS_PROVEEDORES'" class="mr-3 md:col-span-2">
+          <div *ngIf="refundForm.get('diagnosticos').get(i.toString()).get('categoria').value == 'OTROS_PROVEEDORES'"
+            class="mr-3 md:col-span-2">
             <!-- <app-select name="proveedor" [options]="OtrosproveedoresField"
               [group]="refundForm.get('diagnosticos').get(i.toString())">
             </app-select> -->
@@ -230,8 +231,10 @@
               </mat-form-field>
             </form>
           </div>
-          
-          <div *ngIf="refundForm.get('diagnosticos').get(i.toString()).get('categoria').value == 'CENTROS_ESPECIALIZADOS'" class="mr-3 md:col-span-2">
+
+          <div
+            *ngIf="refundForm.get('diagnosticos').get(i.toString()).get('categoria').value == 'CENTROS_ESPECIALIZADOS'"
+            class="mr-3 md:col-span-2">
             <!-- <app-select name="proveedor" [options]="CentrosField"
               [group]="refundForm.get('diagnosticos').get(i.toString())">
             </app-select> -->
@@ -254,7 +257,8 @@
               </mat-form-field>
             </form>
           </div>
-          <div *ngIf="refundForm.get('diagnosticos').get(i.toString()).get('categoria').value == 'FARMACIAS'" class="mr-3 md:col-span-2">
+          <div *ngIf="refundForm.get('diagnosticos').get(i.toString()).get('categoria').value == 'FARMACIAS'"
+            class="mr-3 md:col-span-2">
             <!-- <app-select name="proveedor" [options]="farmaciasField"
               [group]="refundForm.get('diagnosticos').get(i.toString())">
             </app-select> -->
@@ -277,7 +281,8 @@
               </mat-form-field>
             </form>
           </div>
-          <div *ngIf="refundForm.get('diagnosticos').get(i.toString()).get('categoria').value == 'CLINICAS_HOSPITALES'" class="mr-3 md:col-span-2">
+          <div *ngIf="refundForm.get('diagnosticos').get(i.toString()).get('categoria').value == 'CLINICAS_HOSPITALES'"
+            class="mr-3 md:col-span-2">
             <!-- <app-select name="proveedor" [options]="clinicasField"
               [group]="refundForm.get('diagnosticos').get(i.toString())">
             </app-select> -->
@@ -300,7 +305,8 @@
               </mat-form-field>
             </form>
           </div>
-          <div *ngIf="refundForm.get('diagnosticos').get(i.toString()).get('categoria').value == 'LABORATORIOS'" class="mr-3 md:col-span-2">
+          <div *ngIf="refundForm.get('diagnosticos').get(i.toString()).get('categoria').value == 'LABORATORIOS'"
+            class="mr-3 md:col-span-2">
             <!-- <app-select name="proveedor" [options]="labsField"
               [group]="refundForm.get('diagnosticos').get(i.toString())">
             </app-select> -->
@@ -323,7 +329,8 @@
               </mat-form-field>
             </form>
           </div>
-          <div *ngIf="refundForm.get('diagnosticos').get(i.toString()).get('categoria').value == 'MEDICOS'" class="mr-3 md:col-span-2">
+          <div *ngIf="refundForm.get('diagnosticos').get(i.toString()).get('categoria').value == 'MEDICOS'"
+            class="mr-3 md:col-span-2">
             <!-- <app-select name="proveedor" [options]="medicosField"
               [group]="refundForm.get('diagnosticos').get(i.toString())">
             </app-select> -->
@@ -380,6 +387,7 @@
               *ngFor="let appliedStudies of refundForm.get('diagnosticos').get(i.toString()).get('files').get('invoices')['controls']; let ix = index"
               [ngClass]="{'grid grid-cols-5': refundForm.get('diagnosticos').get(i.toString()).get('files').get('invoices')['controls'].length > 1}">
               <app-file-input class="mr-3"
+                [ngClass]="{'col-span-4': refundForm.get('diagnosticos').get(i.toString()).get('files').get('invoices')['controls'].length > 1}"
                 [group]="refundForm.get('diagnosticos').get(i.toString()).get('files').get('invoices').get(ix.toString())"
                 name="invoices" label="Facturas Pendientes" [fileNameWatcher]="fileNameWatcher('invoices', i, ix)"
                 (onFileChange)="onFileChange($event, 'invoices', i, ix)">
@@ -406,6 +414,7 @@
               *ngFor="let appliedStudies of refundForm.get('diagnosticos').get(i.toString()).get('files').get('indications')['controls']; let ix = index"
               [ngClass]="{'grid grid-cols-5': refundForm.get('diagnosticos').get(i.toString()).get('files').get('indications')['controls'].length > 1}">
               <app-file-input class="mr-3"
+                [ngClass]="{'col-span-4': refundForm.get('diagnosticos').get(i.toString()).get('files').get('indications')['controls'].length > 1}"
                 [group]="refundForm.get('diagnosticos').get(i.toString()).get('files').get('indications').get(ix.toString())"
                 name="indications" label="Indicaciones médicas"
                 [fileNameWatcher]="fileNameWatcher('indications', i, ix)"
@@ -433,6 +442,7 @@
               *ngFor="let appliedStudies of refundForm.get('diagnosticos').get(i.toString()).get('files').get('medicReports')['controls']; let ix = index"
               [ngClass]="{'grid grid-cols-5': refundForm.get('diagnosticos').get(i.toString()).get('files').get('medicReports')['controls'].length > 1}">
               <app-file-input class="mr-3"
+                [ngClass]="{'col-span-4': refundForm.get('diagnosticos').get(i.toString()).get('files').get('medicReports')['controls'].length > 1}"
                 [group]="refundForm.get('diagnosticos').get(i.toString()).get('files').get('medicReports').get(ix.toString())"
                 name="medicReports" label="Informe médico" [fileNameWatcher]="fileNameWatcher('medicReports', i, ix)"
                 (onFileChange)="onFileChange($event, 'medicReports', i, ix)">
@@ -459,6 +469,7 @@
               *ngFor="let appliedStudies of refundForm.get('diagnosticos').get(i.toString()).get('files').get('paymentVouchers')['controls']; let ix = index"
               [ngClass]="{'grid grid-cols-5': refundForm.get('diagnosticos').get(i.toString()).get('files').get('paymentVouchers')['controls'].length > 1}">
               <app-file-input class="mr-3"
+                [ngClass]="{'col-span-4': refundForm.get('diagnosticos').get(i.toString()).get('files').get('paymentVouchers')['controls'].length > 1}"
                 [group]="refundForm.get('diagnosticos').get(i.toString()).get('files').get('paymentVouchers').get(ix.toString())"
                 name="paymentVouchers" label="Comprobante de pagos"
                 [fileNameWatcher]="fileNameWatcher('paymentVouchers', i, ix)"

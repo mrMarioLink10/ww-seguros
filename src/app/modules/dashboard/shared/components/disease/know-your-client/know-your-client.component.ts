@@ -114,6 +114,7 @@ export class KnowYourClientComponent implements OnInit {
 	management_bodyFormGroup = {
 		name_lastname: ['', Validators.required],
 		position: ['', Validators.required],
+		idType: ['', Validators.required],
 		id_passport_management_body: ['', Validators.required],
 		nationality_management_body: ['', Validators.required]
 	}
@@ -121,6 +122,7 @@ export class KnowYourClientComponent implements OnInit {
 	shareholdersFormGroup = {
 		name_lastname_shareholder: ['', Validators.required],
 		participation_percentage: ['', [Validators.required, Validators.min(1), Validators.max(100)]],
+		idType: ['', Validators.required],
 		id_passport_shareholder: ['', Validators.required],
 		nationality_shareholder: ['', Validators.required]
 	}
@@ -135,6 +137,23 @@ export class KnowYourClientComponent implements OnInit {
 		other_info_branch_office: ['', Validators.required]
 
 	}
+
+	idType: FieldConfig =
+  {
+    label: 'Tipo de documento de identidad',
+    options: [
+      {
+        value: 'CÉDULA',
+        viewValue: 'CÉDULA',
+      },
+      {
+        value: 'PASAPORTE',
+        viewValue: 'PASAPORTE',
+      }
+    ],
+    name: 'idType',
+  };
+
   minDate: Date;
 	constructor(private fb: FormBuilder, public formMethods: FormArrayGeneratorService) {
     var d = new Date();
@@ -217,16 +236,20 @@ export class KnowYourClientComponent implements OnInit {
 	ngOnInit() {
 
 		// this.branch_property = this.fb.array([this.createFormArray()]);
-    if (this.form.get('general_data').get('email'))
-    {
-        this.form.get('general_data').get('email').setValidators([Validators.required, Validators.email]);
-        this.form.get('general_data').get('email').updateValueAndValidity();
-    }
-    if (this.form.get('representative_data').get('representative_email'))
-    {
-        this.form.get('representative_data').get('representative_email').setValidators([Validators.required, Validators.email]);
-        this.form.get('representative_data').get('representative_email').updateValueAndValidity();
-    }
+		if (this.form.get('general_data')) {
+			if (this.form.get('general_data').get('email'))
+			{
+				this.form.get('general_data').get('email').setValidators([Validators.required, Validators.email]);
+				this.form.get('general_data').get('email').updateValueAndValidity();
+			}
+		}
+		if (this.form.get('representative_data')) {
+			if (this.form.get('representative_data').get('representative_email'))
+			{
+				this.form.get('representative_data').get('representative_email').setValidators([Validators.required, Validators.email]);
+				this.form.get('representative_data').get('representative_email').updateValueAndValidity();
+			}
+		}
 		this.addBasicControls();
 
 		console.log(this.form);
@@ -315,9 +338,13 @@ export class KnowYourClientComponent implements OnInit {
 
 	ngDoCheck(): void {
 
-		if (this.form.get('exposed').get('branch_office_radio').value == 'SI') {
-			if ( this.branchOfficeFormArray == null || this.branchOfficeFormArray == undefined ) {
-				this.branchOfficeFormArray = this.form.get('exposed').get('branch_office').get('allBranch_office') as FormArray;
+		if (this.form.get('exposed')) {
+			if (this.form.get('exposed').get('branch_office_radio')) {
+				if (this.form.get('exposed').get('branch_office_radio').value == 'SI') {
+					if ( this.branchOfficeFormArray == null || this.branchOfficeFormArray == undefined ) {
+						this.branchOfficeFormArray = this.form.get('exposed').get('branch_office').get('allBranch_office') as FormArray;
+					}
+				}
 			}
 		}
 	// 	if (this.form.get('exposed').get('investigated_representative').value == 'si' && !this.form.get('exposed').get('areatext')) {
@@ -329,22 +356,8 @@ export class KnowYourClientComponent implements OnInit {
 	// 		console.log("HolAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
 	// 	}
 	}
-  idType: FieldConfig =
-  {
-    label: 'Tipo de documento de identidad',
-    options: [
-      {
-        value: 'CÉDULA',
-        viewValue: 'CÉDULA',
-      },
-      {
-        value: 'PASAPORTE',
-        viewValue: 'PASAPORTE',
-      }
-    ],
-    name: 'idType',
-  };
-	addBasicControls() {
+
+  	addBasicControls() {
 
 		// this.form.addControl('request', this.fb.control('', [Validators.required, Validators.min(1)]));
 

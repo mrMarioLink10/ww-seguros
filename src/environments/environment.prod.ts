@@ -11,12 +11,12 @@ export const environment = {
   production: true,
   fileUrl: 'http://wwsdevportalbackend.azurewebsites.net',
   mailForHelp: "ayuda_wws@wws.com.do",
-  urlCotizadores: "https://cotizadores.wwseguros.com.do",
-  urlCotizadoresBoth: "https://cotizadores.wwseguros.com.do/?cia=",
-  urlCotizadoresVida: "https://cotizadores.wwseguros.com.do/vida",
-  urlCotizadoresSalud: "https://cotizadores.wwseguros.com.do/salud",
+  urlCotizadores: "http://portalwwg.eastus.cloudapp.azure.com:3000",
+  urlCotizadoresBoth: "http://portalwwg.eastus.cloudapp.azure.com:3000/?cia=",
+  urlCotizadoresVida: "http://portalwwg.eastus.cloudapp.azure.com:3000/vida",
+  urlCotizadoresSalud: "http://portalwwg.eastus.cloudapp.azure.com:3000/salud",
   mailForHelpPM: "ayuda_wwma@wwmedicalassurance.com",
-  baseUrl: 'https://portal.wwseguros.com.do/',
+  baseUrl: 'https://wwsdevfrontend-staging.azurewebsites.net/',
   keycloak: keycloakConfig,
   apiUrl: 'https://wwsdevportalbackend.azurewebsites.net',
   keycloakConfig
@@ -25,7 +25,7 @@ export const environment = {
 export const FormValidationsConstant = {
   maxMenAge: 50,
   MaleSexCode: 'M',
-  linkCotizadores: 'https://cotizadores.wwseguros.com.do/?cia=',
+  linkCotizadores: 'http://portalwwg.eastus.cloudapp.azure.com:3000/?cia=',
   titlesForMajorExpenses: [
     'Solicitante',
     'Persona políticamente expuesta',

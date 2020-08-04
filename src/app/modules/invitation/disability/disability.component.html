@@ -85,7 +85,8 @@
                       placeholder="Por ej: Dominicano"></app-input>
                   </div>
                   <div class="mr-3 mt-2 sm:mt-0 md:mt-0 lg:mt-0 xl:mt-0">
-                    <app-select class="mr-3 pt-21" [options]="idType" [group]="disabilityGroup.get('insured_data')"></app-select>
+                    <app-select class="mr-3 pt-21" [options]="idType" [group]="disabilityGroup.get('insured_data')">
+                    </app-select>
                   </div>
                   <div
                     class="col-span-1 mt-2 sm:mt-0 md:col-span-2 md:mt-3 md:mt-0 lg:col-span-3 lg:mt-0 xl:mt-0 xl:col-span-2 mr-3">
@@ -310,7 +311,7 @@
                         <app-radio-button [group]="disabilityGroup.get('insured_data')" [options]="YesNo"
                           name='pep_radio_insured' (selected)="selectChange($event)">
                         </app-radio-button>
-                        <!-- <div style="max-width: 85%;"
+                        <div style="max-width: 85%;"
                           *ngIf="!disabilityGroup.get('insured_data').get('pep_radio_insured').valid && !disabilityGroup.get('insured_data').get('pep_radio_insured').touched || disabilityGroup.get('insured_data').get('pep_radio_insured').valid && disabilityGroup.get('insured_data').get('pep_radio_insured').touched || disabilityGroup.get('insured_data').get('pep_radio_insured').valid && !disabilityGroup.get('insured_data').get('pep_radio_insured').touched"
                           class="-mt-8">
                           <small> (Sí la respuesta es si, favor completar formulario "Conozca a su Cliente") </small>
@@ -319,7 +320,7 @@
                           *ngIf="!disabilityGroup.get('insured_data').get('pep_radio_insured').valid && disabilityGroup.get('insured_data').get('pep_radio_insured').touched"
                           class="-mt-2">
                           <small> (Sí la respuesta es si, favor completar formulario "Conozca a su Cliente") </small>
-                        </div> -->
+                        </div>
                       </div>
                     </div>
 
@@ -331,8 +332,8 @@
                       <div
                         *ngIf="disabilityGroup.get('files') && disabilityGroup.get('files').get('documentsKnowClient')">
                         <div *ngFor="let studies of filesDocumentsKnowClientArray.controls; let i = index">
-                          <div class="grid grid-cols-2">
-                            <mat-form-field class="mr-3" appearance="outline"
+                          <div class="grid grid-cols-6">
+                            <!-- <mat-form-field class="mr-3" appearance="outline"
                               [ngClass]="{'file-input': disabilityGroup.get('files').get('documentsKnowClient').get(i.toString()).get('document').value !== ''}">
                               <mat-label> Copia de Cédula / Certificación de Ingresos declarados </mat-label>
                               <ngx-mat-file-input #removableInputdocumentsKnowClient
@@ -357,7 +358,15 @@
                                 Este campo es
                                 obligatorio
                               </mat-error>
-                            </mat-form-field>
+                            </mat-form-field> -->
+                            <app-file-input
+                              [ngClass]="{'col-span-6': filesDocumentsKnowClientArray.length === 1, 'col-span-5': filesDocumentsKnowClientArray.length > 1}"
+                              class="mr-3"
+                              [group]="disabilityGroup.get('files').get('documentsKnowClient').get(i.toString())"
+                              name="document" label="Copia de Cédula / Certificación de Ingresos declarados"
+                              [fileNameWatcher]="arrayDocumentsKnowClientWatcher(i)"
+                              (onFileChange)="onStudiesChange($event, i, 'documentsKnowClient')">
+                            </app-file-input>
                             <div *ngIf="filesDocumentsKnowClientArray.length > 1"
                               [ngClass]="{'': filesDocumentsKnowClientArray.length === 1, 'col-span-1': filesDocumentsKnowClientArray.length > 1} ">
                               <button mat-mini-fab aria-label=" Eliminar estudio"
@@ -385,33 +394,15 @@
                       <div
                         *ngIf="disabilityGroup.get('files') && disabilityGroup.get('files').get('documentsKnowClient')">
                         <div *ngFor="let studies of filesDocumentsKnowClientArray.controls; let i = index">
-                          <div class="grid grid-cols-2">
-                            <mat-form-field class="mr-3" appearance="outline"
-                              [ngClass]="{'file-input': disabilityGroup.get('files').get('documentsKnowClient').get(i.toString()).get('document').value !== ''}">
-                              <mat-label> Copia de Cédula </mat-label>
-                              <ngx-mat-file-input #removableInputdocumentsKnowClient
-                                [valuePlaceholder]="arrayDocumentsKnowClientWatcher(i)"
-                                (change)="onStudiesChange($event, i, 'documentsKnowClient')">
-                              </ngx-mat-file-input>
-                              <mat-icon style="color: #e2e2e2;" matSuffix
-                                *ngIf="disabilityGroup.get('files').get('documentsKnowClient').get(i.toString()).get('document').value === ''">
-                                publish</mat-icon>
-                              <button mat-icon-button matSuffix
-                                *ngIf="disabilityGroup.get('files').get('documentsKnowClient').get(i.toString()).get('document').value !== ''"
-                                (click)="this.requestService.clearArchives(disabilityGroup.get('files').get('documentsKnowClient').get(i.toString()).get('document'))"
-                                (click)="removableInputdocumentsKnowClient.clear($event)">
-                                <mat-icon style="color: #e2e2e2;">clear</mat-icon>
-                              </button><button mat-icon-button matSuffix
-                                *ngIf="disabilityGroup.get('files').get('documentsKnowClient').get(i.toString()).get('document').value !== ''"
-                                (click)="this.requestService.downloadArchives($event, disabilityGroup.get('files').get('documentsKnowClient').get(i.toString()).get('document').value)">
-                                <mat-icon style="color: #e2e2e2;">get_app</mat-icon>
-                              </button>
-                              <mat-error
-                                *ngIf="disabilityGroup.get('files').get('documentsKnowClient').get(i.toString()).get('document').touched && !disabilityGroup.get('files').get('documentsKnowClient').get(i.toString()).get('document').valid">
-                                Este campo es
-                                obligatorio
-                              </mat-error>
-                            </mat-form-field>
+                          <div class="grid grid-cols-6">
+                            <app-file-input
+                              [ngClass]="{'col-span-6': filesDocumentsKnowClientArray.length === 1, 'col-span-5': filesDocumentsKnowClientArray.length > 1}"
+                              class="mr-3"
+                              [group]="disabilityGroup.get('files').get('documentsKnowClient').get(i.toString())"
+                              name="document" label="Copia de Cédula"
+                              [fileNameWatcher]="arrayDocumentsKnowClientWatcher(i)"
+                              (onFileChange)="onStudiesChange($event, i, 'documentsKnowClient')">
+                            </app-file-input>
                             <div *ngIf="filesDocumentsKnowClientArray.length > 1"
                               [ngClass]="{'': filesDocumentsKnowClientArray.length === 1, 'col-span-1': filesDocumentsKnowClientArray.length > 1} ">
                               <button mat-mini-fab aria-label=" Eliminar estudio"
@@ -534,32 +525,13 @@
                       </div>
                       <div *ngIf="disabilityGroup.get('files') && disabilityGroup.get('files').get('copyId')">
                         <div *ngFor="let copies of filesCopyIdArray.controls; let i = index">
-                          <div class="grid grid-cols-2">
-                            <mat-form-field class="mr-3" appearance="outline"
-                              [ngClass]="{'file-input': disabilityGroup.get('files').get('copyId').get(i.toString()).get('idId').value !== ''}">
-                              <mat-label> Copia de Cédula </mat-label>
-                              <ngx-mat-file-input #removableInputcopyId [valuePlaceholder]="arrayCopyIdWatcher(i)"
-                                (change)="onStudiesChange($event, i, 'copyId')">
-                              </ngx-mat-file-input>
-                              <mat-icon style="color: #e2e2e2;" matSuffix
-                                *ngIf="disabilityGroup.get('files').get('copyId').get(i.toString()).get('idId').value === ''">
-                                publish</mat-icon>
-                              <button mat-icon-button matSuffix
-                                *ngIf="disabilityGroup.get('files').get('copyId').get(i.toString()).get('idId').value !== ''"
-                                (click)="this.requestService.clearArchives(disabilityGroup.get('files').get('copyId').get(i.toString()).get('idId'))"
-                                (click)="removableInputcopyId.clear($event)">
-                                <mat-icon style="color: #e2e2e2;">clear</mat-icon>
-                              </button><button mat-icon-button matSuffix
-                                *ngIf="disabilityGroup.get('files').get('copyId').get(i.toString()).get('idId').value !== ''"
-                                (click)="this.requestService.downloadArchives($event, disabilityGroup.get('files').get('copyId').get(i.toString()).get('idId').value)">
-                                <mat-icon style="color: #e2e2e2;">get_app</mat-icon>
-                              </button>
-                              <mat-error
-                                *ngIf="disabilityGroup.get('files').get('copyId').get(i.toString()).get('idId').touched && !disabilityGroup.get('files').get('copyId').get(i.toString()).get('idId').valid">
-                                Este campo es
-                                obligatorio
-                              </mat-error>
-                            </mat-form-field>
+                          <div class="grid grid-cols-6">
+                            <app-file-input
+                              [ngClass]="{'col-span-6': filesCopyIdArray.length === 1, 'col-span-5': filesCopyIdArray.length > 1}"
+                              class="mr-3" [group]="disabilityGroup.get('files').get('copyId').get(i.toString())"
+                              name="idId" label="Copia de Cédula" [fileNameWatcher]="arrayCopyIdWatcher(i)"
+                              (onFileChange)="onStudiesChange($event, i, 'copyId')">
+                            </app-file-input>
                             <div *ngIf="filesCopyIdArray.length > 1"
                               [ngClass]="{'': filesCopyIdArray.length === 1, 'col-span-1': filesCopyIdArray.length > 1} ">
                               <button mat-mini-fab aria-label=" Eliminar estudio"
@@ -588,7 +560,7 @@
                       <div>
                         <label class="radio-button-label"> ¿Es un sujeto obligado? </label>
                       </div>
-                      <div class="mr-3">
+                      <div *ngIf="disabilityGroup.get('insured_data').get('mandatorySubject')" class="mr-3">
                         <app-radio-button [group]="disabilityGroup.get('insured_data')" [options]="YesNo"
                           name='mandatorySubject' (selected)="selectChange($event)">
                         </app-radio-button>
@@ -601,33 +573,13 @@
                         </div>
                         <div *ngIf="disabilityGroup.get('files') && disabilityGroup.get('files').get('mercantile')">
                           <div *ngFor="let registers of mercantileRegisterArray.controls; let i = index">
-                            <div class="grid grid-cols-2">
-                              <mat-form-field class="mr-3" appearance="outline"
-                                [ngClass]="{'file-input': disabilityGroup.get('files').get('mercantile').get(i.toString()).get('register').value !== ''}">
-                                <mat-label> Registro Mercantil </mat-label>
-                                <ngx-mat-file-input #removableInputmercantile
-                                  [valuePlaceholder]="arrayRegisterWatcher(i)"
-                                  (change)="onStudiesChange($event, i, 'mercantile')">
-                                </ngx-mat-file-input>
-                                <mat-icon style="color: #e2e2e2;" matSuffix
-                                  *ngIf="disabilityGroup.get('files').get('mercantile').get(i.toString()).get('register').value === ''">
-                                  publish</mat-icon>
-                                <button mat-icon-button matSuffix
-                                  *ngIf="disabilityGroup.get('files').get('mercantile').get(i.toString()).get('register').value !== ''"
-                                  (click)="this.requestService.clearArchives(disabilityGroup.get('files').get('mercantile').get(i.toString()).get('register'))"
-                                  (click)="removableInputmercantile.clear($event)">
-                                  <mat-icon style="color: #e2e2e2;">clear</mat-icon>
-                                </button><button mat-icon-button matSuffix
-                                  *ngIf="disabilityGroup.get('files').get('mercantile').get(i.toString()).get('register').value !== ''"
-                                  (click)="this.requestService.downloadArchives($event, disabilityGroup.get('files').get('mercantile').get(i.toString()).get('register').value)">
-                                  <mat-icon style="color: #e2e2e2;">get_app</mat-icon>
-                                </button>
-                                <mat-error
-                                  *ngIf="disabilityGroup.get('files').get('mercantile').get(i.toString()).get('register').touched && !disabilityGroup.get('files').get('mercantile').get(i.toString()).get('register').valid">
-                                  Este campo es
-                                  obligatorio
-                                </mat-error>
-                              </mat-form-field>
+                            <div class="grid grid-cols-6">
+                              <app-file-input
+                                [ngClass]="{'col-span-6': mercantileRegisterArray.length === 1, 'col-span-5': mercantileRegisterArray.length > 1}"
+                                class="mr-3" [group]="disabilityGroup.get('files').get('mercantile').get(i.toString())"
+                                name="register" label="Registro Mercantil" [fileNameWatcher]="arrayRegisterWatcher(i)"
+                                (onFileChange)="onStudiesChange($event, i, 'mercantile')">
+                              </app-file-input>
                               <div *ngIf="mercantileRegisterArray.length > 1"
                                 [ngClass]="{'': mercantileRegisterArray.length === 1, 'col-span-1': mercantileRegisterArray.length > 1} ">
                                 <button mat-mini-fab aria-label=" Eliminar estudio"
@@ -703,7 +655,8 @@
                     name="name" placeholder="Por ej: Ramón Pérez de los Santos"></app-input>
                 </div>
                 <div class="mr-3 mt-2 sm:mt-0 md:mt-0 lg:mt-0 xl:mt-0">
-                  <app-select class="mr-3 pt-21" [options]="idType" [group]="disabilityGroup.get('policyholder')"></app-select>
+                  <app-select class="mr-3 pt-21" [options]="idType" [group]="disabilityGroup.get('policyholder')">
+                  </app-select>
                 </div>
                 <div class="mr-3 mt-8 sm:mt-5 md:mt-0 lg:mt-0 xl:mt-0">
                   <app-input [group]="disabilityGroup.get('policyholder')" label="Cédula, Pasaporte o RUC"
@@ -793,7 +746,7 @@
                     <app-radio-button [group]="disabilityGroup.get('policyholder')" (selected)="selectChange($event)"
                       [options]="YesNo" name='pep_radio_holder'>
                     </app-radio-button>
-                    <div style="max-width: 85%;"
+                    <!-- <div style="max-width: 85%;"
                       *ngIf="!disabilityGroup.get('policyholder').get('pep_radio_holder').valid && !disabilityGroup.get('policyholder').get('pep_radio_holder').touched || disabilityGroup.get('policyholder').get('pep_radio_holder').valid && disabilityGroup.get('policyholder').get('pep_radio_holder').touched || disabilityGroup.get('policyholder').get('pep_radio_holder').valid && !disabilityGroup.get('policyholder').get('pep_radio_holder').touched"
                       class="-mt-8">
                       <small> (Sí la respuesta es si, favor completar formulario "Conozca a su Cliente") </small>
@@ -802,7 +755,7 @@
                       *ngIf="!disabilityGroup.get('policyholder').get('pep_radio_holder').valid && disabilityGroup.get('policyholder').get('pep_radio_holder').touched"
                       class="-mt-2">
                       <small> (Sí la respuesta es si, favor completar formulario "Conozca a su Cliente") </small>
-                    </div>
+                    </div> -->
                   </div>
 
                 </div>
@@ -812,7 +765,8 @@
                     name="representative" placeholder="Manuel de los Santos Ramírez"> </app-input>
                 </div>
                 <div class="mr-3 mt-8 sm:mt-6 md:mt-6 md:col-span-2 lg:col-span-1 xl:col-span-1 lg:mt-4 xl:mt-3">
-                  <app-select class="mr-3 pt-21" [options]="idTypeRepre" [group]="disabilityGroup.get('policyholder')"></app-select>
+                  <app-select class="mr-3 pt-21" [options]="idTypeRepre" [group]="disabilityGroup.get('policyholder')">
+                  </app-select>
                 </div>
                 <div class="mr-3 mt-8 sm:mt-6 md:mt-6 md:col-span-2 lg:col-span-1 xl:col-span-1 lg:mt-4 xl:mt-3">
                   <app-input label="Cédula o Pasaporte del representante legal"
@@ -1867,7 +1821,8 @@
                         </div>
                         <div class="mr-3 mt-2 lg:mt-0 xl:mt-0">
                           <!-- mb-3  sm:mb-3 xl:mt-8 xl:pt-1 -->
-                          <app-select class="mr-3 pt-21" [options]="idType" [group]="disabilityGroup.get('main').get('main_array').get(in.toString())"></app-select>
+                          <app-select class="mr-3 pt-21" [options]="idType"
+                            [group]="disabilityGroup.get('main').get('main_array').get(in.toString())"></app-select>
                         </div>
                         <div class="mr-3 mt-2 md:mt-0 lg:mt-0 xl:mt-0">
                           <!-- mb-3  sm:mb-3 xl:mt-8 xl:pt-1 -->
@@ -1899,32 +1854,12 @@
                             label="Cant. en %" name="percentage" placeholder="Ej.: 35" min="1" max="100">
                           </app-number-input>
                         </div>
-                        <mat-form-field class="mr-3" appearance="outline"
-                          [ngClass]="{'file-input': disabilityGroup.get('main').get('main_array').get(in.toString()).get('id2Attached').value !== ''}">
-                          <mat-label> Adjuntar documento de identidad si es mayor de edad </mat-label>
-                          <ngx-mat-file-input #removableInputPrimaryBenefits placeholder="Documento de Identidad"
-                            [valuePlaceholder]="id2AttachedViewValue(in, 'primaryBenefits')"
-                            (change)="onBeneficiaryFileChangeOnArray($event, 'id2Attached', in, 'main', 'main_array')">
-                          </ngx-mat-file-input>
-                          <mat-icon style="color: #e2e2e2;" matSuffix
-                            *ngIf="disabilityGroup.get('main').get('main_array').get(in.toString()).get('id2Attached').value === ''">
-                            publish</mat-icon>
-                          <button mat-icon-button matSuffix
-                            *ngIf="disabilityGroup.get('main').get('main_array').get(in.toString()).get('id2Attached').value !== ''"
-                            (click)="this.requestService.clearArchives(disabilityGroup.get('main').get('main_array').get(in.toString()).get('id2Attached'))"
-                            (click)="removableInputPrimaryBenefits.clear($event)">
-                            <mat-icon style="color: #e2e2e2;">clear</mat-icon>
-                          </button><button mat-icon-button matSuffix
-                            *ngIf="disabilityGroup.get('main').get('main_array').get(in.toString()).get('id2Attached').value !== ''"
-                            (click)="this.requestService.downloadArchives($event, disabilityGroup.get('main').get('main_array').get(in.toString()).get('id2Attached').value)">
-                            <mat-icon style="color: #e2e2e2;">get_app</mat-icon>
-                          </button>
-                          <mat-error
-                            *ngIf="disabilityGroup.get('main').get('main_array').get(in.toString()).get('id2Attached').touched && !disabilityGroup.get('main').get('main_array').get(in.toString()).get('id2Attached').valid">
-                            Este campo es
-                            obligatorio
-                          </mat-error>
-                        </mat-form-field>
+                        <app-file-input class="mr-3"
+                          [group]="disabilityGroup.get('main').get('main_array').get(in.toString())" name="id2Attached"
+                          label="Adjuntar documento de identidad si es mayor de edad"
+                          [fileNameWatcher]="id2AttachedViewValue(in, 'primaryBenefits')"
+                          (onFileChange)="onBeneficiaryFileChangeOnArray($event, 'id2Attached', in, 'main', 'main_array')">
+                        </app-file-input>
                       </div>
                       <div
                         class="mb-8 -mx-2 sm:mb-8 sm:mx-0 md:mb-8 md:mx-0 lg:mb-8 lg:mx-0 lg:mt-2 xl:mx-0 xl:mb-8 mt-2">
@@ -1977,38 +1912,19 @@
                       name='specifyRelationship'></app-input>
                     <!-- <app-input [group]="disabilityGroup.get('main')" label="Parentesco" name='relationship'
                         placeholder="Por ej: Su Hijo"> </app-input> -->
-                        <div class="mr-3 mt-2 sm:mt-0 md:mt-0 lg:mt-0 xl:mt-0">
-                          <app-select class="mr-3 pt-21" [options]="idType" [group]="disabilityGroup.get('main')"></app-select>
-                        </div>
+                    <div class="mr-3 mt-2 md:col-span-2 lg:col-span-2 lg:mt-0 xl:col-span-1 xl:mt-0">
+                      <app-select class="mr-3 pt-21" [options]="idType" [group]="disabilityGroup.get('main')">
+                      </app-select>
+                    </div>
                     <div class="mr-3 mt-2 md:col-span-2 lg:col-span-2 lg:mt-0 xl:col-span-1 xl:mt-0">
                       <app-input [group]="disabilityGroup.get('main')" label="Cédula/Pasaporte" name='id_passport'
                         placeholder="Por ej: 402-0070012-8"> </app-input>
                     </div>
-                    <mat-form-field class="mr-3" appearance="outline"
-                      [ngClass]="{'file-input': disabilityGroup.get('main').get('id2Attached').value !== ''}">
-                      <mat-label> Adjuntar documento de identidad si es mayor de edad </mat-label>
-                      <ngx-mat-file-input #removableInputMain placeholder="Documento de Identidad"
-                        [valuePlaceholder]="id2AttachedViewValue(null, 'primaryBenefits')"
-                        (change)="onBeneficiaryFileChangeOnArray($event, 'id2Attached', null, 'main')">
-                      </ngx-mat-file-input>
-                      <mat-icon style="color: #e2e2e2;" matSuffix
-                        *ngIf="disabilityGroup.get('main').get('id2Attached').value === ''">publish</mat-icon>
-                      <button mat-icon-button matSuffix
-                        *ngIf="disabilityGroup.get('main').get('id2Attached').value !== ''"
-                        (click)="this.requestService.clearArchives(disabilityGroup.get('main').get('id2Attached'))"
-                        (click)="removableInputMain.clear($event)">
-                        <mat-icon style="color: #e2e2e2;">clear</mat-icon>
-                      </button><button mat-icon-button matSuffix
-                        *ngIf="disabilityGroup.get('main').get('id2Attached').value !== ''"
-                        (click)="this.requestService.downloadArchives($event, disabilityGroup.get('main').get('id2Attached').value)">
-                        <mat-icon style="color: #e2e2e2;">get_app</mat-icon>
-                      </button>
-                      <mat-error
-                        *ngIf="disabilityGroup.get('main').get('id2Attached').touched && !disabilityGroup.get('main').get('id2Attached').valid">
-                        Este campo es
-                        obligatorio
-                      </mat-error>
-                    </mat-form-field>
+                    <app-file-input class="mr-3" [group]="disabilityGroup.get('main')" name="id2Attached"
+                      label="Adjuntar documento de identidad"
+                      [fileNameWatcher]="id2AttachedViewValue(null, 'primaryBenefits')"
+                      (onFileChange)="onBeneficiaryFileChangeOnArray($event, 'id2Attached', null, 'main')">
+                    </app-file-input>
                   </div>
                 </div>
               </div>
@@ -2046,9 +1962,12 @@
                             [group]="disabilityGroup.get('contingent').get('contingent_array').get(in.toString())"
                             label="Nombres y Apellidos" name="full_name" placeholder="Ej.: Juan Ramón Martínez Puello">
                           </app-input>
-                        </div><div class="mr-3 mt-2 lg:mt-0 xl:mt-0">
+                        </div>
+                        <div class="mr-3 mt-2 lg:mt-0 xl:mt-0">
                           <!-- mb-3  sm:mb-3 xl:mt-8 xl:pt-1 -->
-                          <app-select class="mr-3 pt-21" [options]="idType" [group]="disabilityGroup.get('contingent').get('contingent_array').get(in.toString())"></app-select>
+                          <app-select class="mr-3 pt-21" [options]="idType"
+                            [group]="disabilityGroup.get('contingent').get('contingent_array').get(in.toString())">
+                          </app-select>
                         </div>
                         <div class="mr-3 mt-2 md:mt-0 lg:mt-0 xl:mt-0">
                           <!-- mb-3  sm:mb-3 xl:mt-8 xl:pt-1 -->
@@ -2082,33 +2001,12 @@
                             label="Cant. en %" name="percentage" placeholder="Ej.: 35" min="1" max="100">
                           </app-number-input>
                         </div>
-                        <mat-form-field class="mr-3" appearance="outline"
-                          [ngClass]="{'file-input': disabilityGroup.get('contingent').get('contingent_array').get(in.toString()).get('id2Attached').value !== ''}">
-                          <mat-label> Adjuntar documento de identidad si es mayor de edad </mat-label>
-                          <ngx-mat-file-input #removableInputContingent placeholder="Documento de Identidad"
-                            [valuePlaceholder]="id2AttachedViewValue(in, 'contingent')"
-                            (change)="onBeneficiaryFileChangeOnArray($event, 'id2Attached', in, 'contingent', 'contingent_array')">
-                          </ngx-mat-file-input>
-                          <mat-icon style="color: #e2e2e2;" matSuffix
-                            *ngIf="disabilityGroup.get('contingent').get('contingent_array').get(in.toString()).get('id2Attached').value === ''">
-                            publish
-                          </mat-icon>
-                          <button mat-icon-button matSuffix
-                            *ngIf="disabilityGroup.get('contingent').get('contingent_array').get(in.toString()).get('id2Attached').value !== ''"
-                            (click)="this.requestService.clearArchives(disabilityGroup.get('contingent').get('contingent_array').get(in.toString()).get('id2Attached'))"
-                            (click)="removableInputContingent.clear($event)">
-                            <mat-icon style="color: #e2e2e2;">clear</mat-icon>
-                          </button><button mat-icon-button matSuffix
-                            *ngIf="disabilityGroup.get('contingent').get('contingent_array').get(in.toString()).get('id2Attached').value !== ''"
-                            (click)="this.requestService.downloadArchives($event, disabilityGroup.get('contingent').get('contingent_array').get(in.toString()).get('id2Attached').value)">
-                            <mat-icon style="color: #e2e2e2;">get_app</mat-icon>
-                          </button>
-                          <mat-error
-                            *ngIf="disabilityGroup.get('contingent').get('contingent_array').get(in.toString()).get('id2Attached').touched && !disabilityGroup.get('contingent').get('contingent_array').get(in.toString()).get('id2Attached').valid">
-                            Este campo es
-                            obligatorio
-                          </mat-error>
-                        </mat-form-field>
+                        <app-file-input class="mr-3"
+                          [group]="disabilityGroup.get('contingent').get('contingent_array').get(in.toString())"
+                          name="id2Attached" label="Adjuntar documento de identidad si es mayor de edad"
+                          [fileNameWatcher]="id2AttachedViewValue(in, 'contingent')"
+                          (onFileChange)="onBeneficiaryFileChangeOnArray($event, 'id2Attached', in, 'contingent', 'contingent_array')">
+                        </app-file-input>
                       </div>
 
                       <button mat-mini-fab aria-label="Eliminar análisis"
@@ -2158,39 +2056,19 @@
                     <app-input class="mr-3" [group]="disabilityGroup.get('contingent')"
                       *ngIf="disabilityGroup.get('contingent').get('specifyRelationship')" label="Especificar"
                       name='specifyRelationship'></app-input>
-                      <div class="mr-3 mt-2 sm:mt-0 md:mt-0 lg:mt-0 xl:mt-0">
-                        <app-select class="mr-3 pt-21" [options]="idType" [group]="disabilityGroup.get('contingent')"></app-select>
-                      </div>
+                    <div class="mr-3 mt-2 md:col-span-2 lg:col-span-2 lg:mt-0 xl:col-span-1 xl:mt-0">
+                      <app-select class="mr-3 pt-21" [options]="idType" [group]="disabilityGroup.get('contingent')">
+                      </app-select>
+                    </div>
                     <div class="mr-3 mt-2 md:col-span-2 lg:col-span-2 lg:mt-0 xl:col-span-1 xl:mt-0">
                       <app-input [group]="disabilityGroup.get('contingent')" label="Cédula/Pasaporte" name='id_passport'
                         placeholder="Por ej: 402-0070012-8"> </app-input>
                     </div>
-                    <mat-form-field class="mr-3" appearance="outline"
-                      [ngClass]="{'file-input': disabilityGroup.get('contingent').get('id2Attached').value !== ''}">
-                      <mat-label> Adjuntar documento de identidad si es mayor de edad </mat-label>
-                      <ngx-mat-file-input #removableInputPersonBenefitedContingent placeholder="Documento de Identidad"
-                        [valuePlaceholder]="id2AttachedViewValue(null, 'contingent')"
-                        (change)="onBeneficiaryFileChangeOnArray($event, 'id2Attached', null, 'contingent')">
-                      </ngx-mat-file-input>
-                      <mat-icon style="color: #e2e2e2;" matSuffix
-                        *ngIf="disabilityGroup.get('contingent').get('id2Attached').value === ''">
-                        publish</mat-icon>
-                      <button mat-icon-button matSuffix
-                        *ngIf="disabilityGroup.get('contingent').get('id2Attached').value !== ''"
-                        (click)="this.requestService.clearArchives(disabilityGroup.get('contingent').get('id2Attached'))"
-                        (click)="removableInputPersonBenefitedContingent.clear($event)">
-                        <mat-icon style="color: #e2e2e2;">clear</mat-icon>
-                      </button><button mat-icon-button matSuffix
-                        *ngIf="disabilityGroup.get('contingent').get('id2Attached').value !== ''"
-                        (click)="this.requestService.downloadArchives($event, disabilityGroup.get('contingent').get('id2Attached').value)">
-                        <mat-icon style="color: #e2e2e2;">get_app</mat-icon>
-                      </button>
-                      <mat-error
-                        *ngIf="disabilityGroup.get('contingent').get('id2Attached').touched && !disabilityGroup.get('contingent').get('id2Attached').valid">
-                        Este campo es
-                        obligatorio
-                      </mat-error>
-                    </mat-form-field>
+                    <app-file-input class="mr-3" [group]="disabilityGroup.get('contingent')" name="id2Attached"
+                      label="Adjuntar documento de identidad"
+                      [fileNameWatcher]="id2AttachedViewValue(null, 'contingent')"
+                      (onFileChange)="onBeneficiaryFileChangeOnArray($event, 'id2Attached', null, 'contingent')">
+                    </app-file-input>
                   </div>
                 </div>
 
@@ -2374,32 +2252,10 @@
               </div>
               <div *ngFor="let studies of filesStudiesArray.controls; let i = index">
                 <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
-                  <mat-form-field class="mr-3" appearance="outline"
-                    [ngClass]="{'file-input': disabilityGroup.get('files').get('studies').get(i.toString()).get('study').value !== ''}">
-                    <mat-label> Estudio/Documento </mat-label>
-                    <ngx-mat-file-input #removableInputStudiesDocuments [valuePlaceholder]="arrayStudiesWatcher(i)"
-                      (change)="onStudiesChange($event, i, 'studies')">
-                    </ngx-mat-file-input>
-                    <mat-icon style="color: #e2e2e2;" matSuffix
-                      *ngIf="disabilityGroup.get('files').get('studies').get(i.toString()).get('study').value === ''">
-                      publish
-                    </mat-icon>
-                    <button mat-icon-button matSuffix
-                      *ngIf="disabilityGroup.get('files').get('studies').get(i.toString()).get('study').value !== ''"
-                      (click)="this.requestService.clearArchives(disabilityGroup.get('files').get('studies').get(i.toString()).get('study'))"
-                      (click)="removableInputStudiesDocuments.clear($event)">
-                      <mat-icon style="color: #e2e2e2;">clear</mat-icon>
-                    </button><button mat-icon-button matSuffix
-                      *ngIf="disabilityGroup.get('files').get('studies').get(i.toString()).get('study').value !== ''"
-                      (click)="this.requestService.downloadArchives($event, disabilityGroup.get('files').get('studies').get(i.toString()).get('study').value)">
-                      <mat-icon style="color: #e2e2e2;">get_app</mat-icon>
-                    </button>
-                    <mat-error
-                      *ngIf="disabilityGroup.get('files').get('studies').get(i.toString()).get('study').touched && !disabilityGroup.get('files').get('studies').get(i.toString()).get('study').valid">
-                      Este campo es
-                      obligatorio
-                    </mat-error>
-                  </mat-form-field>
+                  <app-file-input class="mr-3" [group]="disabilityGroup.get('files').get('studies').get(i.toString())"
+                    name="study" label="Estudio / Documento" [fileNameWatcher]="arrayStudiesWatcher(i)"
+                    (onFileChange)="onStudiesChange($event, i, 'studies')">
+                  </app-file-input>
                   <div [ngClass]="{'': filesStudiesArray.length === 1, 'col-span-1': filesStudiesArray.length > 1} ">
                     <button mat-mini-fab aria-label=" Eliminar estudio"
                       (click)="diseaseService.removeToList(i, filesStudiesArray)" type="button"
@@ -2493,25 +2349,13 @@
           label="Conozca a su cliente (Persona Física) - Asegurado">
           <mat-accordion #matAccordion="matAccordion" name="matAccordion" class="ww-mat-accordion example-headers-align"
             [togglePosition]="'before'">
-            <app-know-your-customer
-              [showWarningDot]="showWarningDot(disabilityGroup.get('KnowYourCustomer'))"
+            <app-know-your-customer [showWarningDot]="showWarningDot(disabilityGroup.get('KnowYourCustomer'))"
               [form]="disabilityGroup.get('KnowYourCustomer')">
             </app-know-your-customer>
           </mat-accordion>
         </mat-tab>
       </div>
 
-      <!-- <mat-tab *ngIf="this.disabilityGroup.get('insured_data').get('pep_radio_insured').value == 'SI'"
-        label="Conozca a su cliente (Persona Física) - Asegurado">
-        <mat-accordion #matAccordion="matAccordion" name="matAccordion" class="ww-mat-accordion example-headers-align"
-          [togglePosition]="'before'">
-          <app-know-your-customer
-            [showWarningDot]="showWarningDot(disabilityGroup.get('insured_data').get('KnowYourCustomer'))"
-            [form]="disabilityGroup.get('insured_data').get('KnowYourCustomer')">
-          </app-know-your-customer>
-        </mat-accordion>
-
-      </mat-tab> -->
       <div *ngIf="disabilityGroup.get('policyholder')">
         <mat-tab
           *ngIf="this.disabilityGroup.get('policyholder').get('pep_radio_holder').value == 'SI' && disabilityGroup.get('policyholder').get('KnowYourCustomer')"
@@ -2542,8 +2386,7 @@
               label="Conozca a su cliente (Persona Jurídica) - Asegurado">
               <mat-accordion #matAccordion="matAccordion" name="matAccordion"
                 class="ww-mat-accordion example-headers-align" [togglePosition]="'before'">
-                <app-know-your-client
-                  [showWarningDot]="showWarningDot(disabilityGroup.get('knowYourClient'))"
+                <app-know-your-client [showWarningDot]="showWarningDot(disabilityGroup.get('knowYourClient'))"
                   [form]="disabilityGroup.get('knowYourClient')">
                 </app-know-your-client>
               </mat-accordion>
@@ -2553,18 +2396,15 @@
       </div>
       <div *ngIf="this.disabilityGroup.get('insured_data').get('insuredPolicyholderRadio').value == 'SI'">
         <div *ngIf="this.disabilityGroup.get('insured_data').get('policyholderKnowClientRadio').value == 'SI'">
-          <div *ngIf="disabilityGroup.get('insured_data').get('mandatorySubject')">
-            <mat-tab *ngIf="this.disabilityGroup.get('insured_data').get('mandatorySubject').value == 'SI'"
-              label="Formulario politica Anti-lavado de Dinero/Financiamiento y Terrorismo (AML)">
-              <mat-accordion #matAccordion="matAccordion" name="matAccordion"
-                class="ww-mat-accordion example-headers-align" [togglePosition]="'before'">
-                <app-money-laundering
-                  [showWarningDot]="showWarningDot(disabilityGroup.get('antiLaundering'))"
-                  [form]="disabilityGroup.get('antiLaundering')">
-                </app-money-laundering>
-              </mat-accordion>
-            </mat-tab>
-          </div>
+          <mat-tab *ngIf="this.disabilityGroup.get('insured_data').get('mandatorySubject').value == 'SI'"
+            label="Formulario politica Anti-lavado de Dinero/Financiamiento y Terrorismo (AML)">
+            <mat-accordion #matAccordion="matAccordion" name="matAccordion"
+              class="ww-mat-accordion example-headers-align" [togglePosition]="'before'">
+              <app-money-laundering [showWarningDot]="showWarningDot(disabilityGroup.get('antiLaundering'))"
+                [form]="disabilityGroup.get('antiLaundering')">
+              </app-money-laundering>
+            </mat-accordion>
+          </mat-tab>
         </div>
       </div>
     </mat-tab-group>

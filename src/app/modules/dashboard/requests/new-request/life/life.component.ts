@@ -1530,7 +1530,7 @@ export class LifeComponent implements OnInit, DoCheck {
   }
 
   addFilesC(form: FormGroup) {
-    form.addControl('glycemia', this.fb.control('', Validators.required));
+    /*form.addControl('glycemia', this.fb.control('', Validators.required));
     form.addControl('hbA1C', this.fb.control('', Validators.required));
     form.addControl('totalCholestor', this.fb.control('', Validators.required));
     form.addControl('HDL', this.fb.control('', Validators.required));
@@ -1541,7 +1541,7 @@ export class LifeComponent implements OnInit, DoCheck {
     form.addControl('GGT', this.fb.control('', Validators.required));
     form.addControl('HIV', this.fb.control('', Validators.required));
     form.addControl('cocaine', this.fb.control('', Validators.required));
-    form.addControl('nicotine', this.fb.control('', Validators.required));
+    form.addControl('nicotine', this.fb.control('', Validators.required));*/
   }
 
   addFilesD(form: FormGroup) {
@@ -1557,7 +1557,7 @@ export class LifeComponent implements OnInit, DoCheck {
   }
 
   deleteFiles(form: FormGroup) {
-    form.removeControl('stressElectrocardiogram');
+    /*form.removeControl('stressElectrocardiogram');
     form.removeControl('restingElectrocardiogram');
     form.removeControl('urineAnalysis');
     form.removeControl('glycemia');
@@ -1571,7 +1571,7 @@ export class LifeComponent implements OnInit, DoCheck {
     form.removeControl('GGT');
     form.removeControl('HIV');
     form.removeControl('cocaine');
-    form.removeControl('nicotine');
+    form.removeControl('nicotine');*/
     form.removeControl('healthDeclaration');
     form.removeControl('id2');
     form.removeControl('medicExam');

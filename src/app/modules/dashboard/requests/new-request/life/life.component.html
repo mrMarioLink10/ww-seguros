@@ -131,7 +131,7 @@
                   </app-radio-button>
                 </div>
 
-                <div class="mt-2" *ngIf="newRequest.get('person').get('sameAsContractor').value == 'SI' 
+                <div class="mt-2" *ngIf="newRequest.get('person').get('sameAsContractor').value == 'SI'
                 || newRequest.get('person').get('sameAsContractor').value == 'NO'">
                   <div *ngIf="newRequest.get('person').get('sameAsContractor').value == 'SI'" class="radio-button-label"
                     style="font-size: 12px !important; max-width: 63vw;">Adjuntar
@@ -1960,29 +1960,7 @@
               </mat-panel-description>
             </mat-expansion-panel-header>
             <div [formGroup]="newRequest.get('files')">
-              <div class="radio-button-label" style="font-size: 12px !important; max-width: 63vw;">Adjuntar estudios
-              </div>
-              <div *ngFor="let studies of filesStudiesArray.controls; let i = index">
-                <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
-                  <app-file-input class="mr-3" [group]="newRequest.get('files').get('studies').get(i.toString())"
-                    name="study" label="Estudio" [fileNameWatcher]="arrayStudiesWatcher(i)"
-                    (onFileChange)="onStudiesChange($event, i)">
-                  </app-file-input>
-                  <div [ngClass]="{'': filesStudiesArray.length === 1, 'col-span-1': filesStudiesArray.length > 1} ">
-                    <button mat-mini-fab aria-label=" Eliminar estudio"
-                      (click)="diseaseService.removeToList(i, filesStudiesArray)" type="button"
-                      class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
-                      <mat-icon style="color: #18446B">remove</mat-icon>
-                    </button>
-                  </div>
-                </div>
-              </div>
-              <div class="mb-6">
-                <button mat-mini-fab aria-label="Agregar estudio" (click)="addToList(filesStudiesArray, 'filesStudies')"
-                  type="button" class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
-                  <mat-icon style="color: #18446B">add</mat-icon>
-                </button>
-              </div>
+
               <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4 ">
                 <app-file-input class="mr-3" [group]="newRequest.get('files')" name="healthDeclaration"
                   *ngIf="newRequest.get('files').get('healthDeclaration')" label="Declaración de salud"
@@ -1990,14 +1968,14 @@
                   (onFileChange)="onFileChange($event, 'healthDeclaration')">
                 </app-file-input>
                 <app-file-input class="mr-3" [group]="newRequest.get('files')" name="id2"
-                  *ngIf="newRequest.get('files').get('id2')" label="Cédula de identidad o pasaporte vigente"
+                  *ngIf="newRequest.get('files').get('id2')" label="Documento de Identificación"
                   [fileNameWatcher]="fileNameWatcher('id2')" (onFileChange)="onFileChange($event, 'id2')">
                 </app-file-input>
                 <app-file-input class="mr-3" [group]="newRequest.get('files')" name="medicExam"
                   *ngIf="newRequest.get('files').get('medicExam')" label="Examen médico"
                   [fileNameWatcher]="fileNameWatcher('medicExam')" (onFileChange)="onFileChange($event, 'medicExam')">
                 </app-file-input>
-                <app-file-input class="mr-3" [group]="newRequest.get('files')" name="glycemia"
+               <!-- <app-file-input class="mr-3" [group]="newRequest.get('files')" name="glycemia"
                   *ngIf="newRequest.get('files').get('glycemia')" label="Glicemia"
                   [fileNameWatcher]="fileNameWatcher('glycemia')" (onFileChange)="onFileChange($event, 'glycemia')">
                 </app-file-input>
@@ -2065,7 +2043,7 @@
                   *ngIf="newRequest.get('files').get('stressElectrocardiogram')" label="Electrocardiograma de esfuerzo"
                   [fileNameWatcher]="fileNameWatcher('stressElectrocardiogram')"
                   (onFileChange)="onFileChange($event, 'stressElectrocardiogram')">
-                </app-file-input>
+                </app-file-input>-->
                 <!-- <mat-form-field
                   [ngClass]="{'file-input': newRequest.get('files').get('stressElectrocardiogram').value !== '', 'file-error': newRequest.get('files').get('stressElectrocardiogram').touched && !newRequest.get('files').get('stressElectrocardiogram').valid}"
                   class="mr-3" appearance="outline" *ngIf="this.newRequest.get('files').get('stressElectrocardiogram')">
@@ -2092,6 +2070,29 @@
                     obligatorio
                   </mat-error>
                 </mat-form-field> -->
+              </div>
+              <div class="radio-button-label" style="font-size: 12px !important; max-width: 63vw;">Adjuntar otros documentos
+              </div>
+              <div *ngFor="let studies of filesStudiesArray.controls; let i = index">
+                <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
+                  <app-file-input class="mr-3" [group]="newRequest.get('files').get('studies').get(i.toString())"
+                    name="study" label="Adjunto" [fileNameWatcher]="arrayStudiesWatcher(i)"
+                    (onFileChange)="onStudiesChange($event, i)">
+                  </app-file-input>
+                  <div [ngClass]="{'': filesStudiesArray.length === 1, 'col-span-1': filesStudiesArray.length > 1} ">
+                    <button mat-mini-fab aria-label=" Eliminar estudio"
+                      (click)="diseaseService.removeToList(i, filesStudiesArray)" type="button"
+                      class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
+                      <mat-icon style="color: #18446B">remove</mat-icon>
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div class="mb-6">
+                <button mat-mini-fab aria-label="Agregar estudio" (click)="addToList(filesStudiesArray, 'filesStudies')"
+                  type="button" class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
+                  <mat-icon style="color: #18446B">add</mat-icon>
+                </button>
               </div>
             </div>
             <mat-action-row class="action-row">

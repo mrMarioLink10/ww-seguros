@@ -2159,26 +2159,26 @@
         </mat-accordion>
 
       </mat-tab> -->
-      <mat-tab *ngIf="this.newRequest.get('person').get('contractorLegalEntity')"
+      <mat-tab *ngIf="this.newRequest.get('contractorLegalEntity')"
         label="Conozca a su cliente (Persona Física) - Asegurado">
         <mat-accordion #matAccordion="matAccordion" name="matAccordion" class="ww-mat-accordion example-headers-align"
           [togglePosition]="'before'">
-          <!-- <app-know-your-client [showWarningDot]="showWarningDot(newRequest.get('person').get('contractorLegalEntity'))"
-            *ngIf="this.role === 'WMA'" [form]="newRequest.get('person').get('contractorLegalEntity')">
+          <!-- <app-know-your-client [showWarningDot]="showWarningDot(newRequest.get('contractorLegalEntity'))"
+            *ngIf="this.role === 'WMA'" [form]="newRequest.get('contractorLegalEntity')">
           </app-know-your-client> -->
           <app-know-your-customer
-            [showWarningDot]="showWarningDot(newRequest.get('person').get('contractorLegalEntity'))"
-            [form]="newRequest.get('person').get('contractorLegalEntity')">
+            [showWarningDot]="showWarningDot(newRequest.get('contractorLegalEntity'))"
+            [form]="newRequest.get('contractorLegalEntity')">
           </app-know-your-customer>
         </mat-accordion>
 
       </mat-tab>
-      <mat-tab *ngIf="this.newRequest.get('person').get('payerLegalEntity')"
+      <mat-tab *ngIf="this.newRequest.get('payerLegalEntity')"
         label="Conozca a su cliente (Persona jurídica) - Asegurado">
         <mat-accordion #matAccordion="matAccordion" name="matAccordion" class="ww-mat-accordion example-headers-align"
           [togglePosition]="'before'">
-          <app-know-your-client [showWarningDot]="showWarningDot(newRequest.get('person').get('payerLegalEntity'))"
-            [form]="newRequest.get('person').get('payerLegalEntity')">
+          <app-know-your-client [showWarningDot]="showWarningDot(newRequest.get('payerLegalEntity'))"
+            [form]="newRequest.get('payerLegalEntity')">
           </app-know-your-client>
           <!-- <app-know-your-customer [showWarningDot]="showWarningDot(newRequest.get('person').get('payerLegalEntity'))"
             *ngIf="this.role === 'WWS'" [form]="newRequest.get('person').get('payerLegalEntity')">

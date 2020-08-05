@@ -1815,6 +1815,7 @@ export class LifeComponent implements OnInit, DoCheck {
     const formHMI = this.newRequest.get('medicalHistory').get('informations') as FormGroup;
     const formWI = this.newRequest.get('medicalHistory').get('informations').get('womenInformation') as FormGroup;
     const formFiles = this.newRequest.get('files') as FormGroup;
+    const formGeneral = this.newRequest as FormGroup;
 
     console.log('SELECT CHANGE EVENT: ', event);
 
@@ -1929,8 +1930,8 @@ export class LifeComponent implements OnInit, DoCheck {
           // formP.removeControl('payerLegalEntity');
           // formPQ.removeControl('solucionAntiLavadoDinero');
 
-          if (formP.get('contractorLegalEntity')) {
-            formP.removeControl('contractorLegalEntity');
+          if (formGeneral.get('contractorLegalEntity')) {
+            formGeneral.removeControl('contractorLegalEntity');
           }
           if (this.newRequest.get('files').get('copyId')) {
             formFiles.removeControl('copyId');
@@ -1945,8 +1946,8 @@ export class LifeComponent implements OnInit, DoCheck {
             formQ.addControl('solucionAntiLavadoDinero', this.fb.group({}));
           }
 
-          if (!(formP.get('payerLegalEntity'))) {
-            formP.addControl('payerLegalEntity', this.fb.group({}));
+          if (!(formGeneral.get('payerLegalEntity'))) {
+            formGeneral.addControl('payerLegalEntity', this.fb.group({}));
           }
           if (!(this.newRequest.get('files').get('mercantile'))) {
             formFiles.addControl('mercantile', this.fb.array([this.createFormArray('mercantileRegister')]));
@@ -2377,8 +2378,8 @@ export class LifeComponent implements OnInit, DoCheck {
           if (formQ.get('solucionAntiLavadoDinero')) {
             formQ.removeControl('solucionAntiLavadoDinero');
           }
-          if (formP.get('payerLegalEntity')) {
-            formP.removeControl('payerLegalEntity');
+          if (formGeneral.get('payerLegalEntity')) {
+            formGeneral.removeControl('payerLegalEntity');
           }
           if (formP.get('payerIsLegalEntity')) {
             formP.removeControl('payerIsLegalEntity');
@@ -2386,7 +2387,7 @@ export class LifeComponent implements OnInit, DoCheck {
           if (this.newRequest.get('files').get('mercantile')) {
             formFiles.removeControl('mercantile');
           }
-          formP.addControl('contractorLegalEntity', this.fb.group({}));
+          formGeneral.addControl('contractorLegalEntity', this.fb.group({}));
 
           formFiles.addControl('copyId', this.fb.array([this.createFormArray('filesCopyId')]));
           this.filesCopyIdArray = this.newRequest.get('files').get('copyId') as FormArray;
@@ -2489,8 +2490,8 @@ export class LifeComponent implements OnInit, DoCheck {
           //   sameAsPayer
           //   formInsured.removeControl('policyholderKnowClientRadio'); //juridica
           // }
-          if (formP.get('contractorLegalEntity')) {
-            formP.removeControl('contractorLegalEntity');
+          if (formGeneral.get('contractorLegalEntity')) {
+            formGeneral.removeControl('contractorLegalEntity');
           }
           if (this.newRequest.get('files').get('copyId')) {
             formFiles.removeControl('copyId');
@@ -2498,8 +2499,8 @@ export class LifeComponent implements OnInit, DoCheck {
           if (formQ.get('solucionAntiLavadoDinero')) {
             formQ.removeControl('solucionAntiLavadoDinero');
           }
-          if (formP.get('payerLegalEntity')) {
-            formP.removeControl('payerLegalEntity');
+          if (formGeneral.get('payerLegalEntity')) {
+            formGeneral.removeControl('payerLegalEntity');
           }
           if (formP.get('payerIsLegalEntity')) {
             formP.removeControl('payerIsLegalEntity');
@@ -2546,8 +2547,8 @@ export class LifeComponent implements OnInit, DoCheck {
           // if (formEP.get('isPayerExposed').value !== 'SI') {
           //   formPQ.removeControl('solucionAntiLavadoDinero');
           // }
-          if (!(formP.get('payerLegalEntity'))) {
-            formP.addControl('payerLegalEntity', this.fb.group({}));
+          if (!(formGeneral.get('payerLegalEntity'))) {
+            formGeneral.addControl('payerLegalEntity', this.fb.group({}));
           }
           if (!(this.newRequest.get('files').get('mercantile'))) {
             formFiles.addControl('mercantile', this.fb.array([this.createFormArray('mercantileRegister')]));

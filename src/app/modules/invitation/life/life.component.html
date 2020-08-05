@@ -133,10 +133,12 @@
 
                 <div class="mt-2" *ngIf="newRequest.get('person').get('sameAsContractor').value == 'SI' 
                 || newRequest.get('person').get('sameAsContractor').value == 'NO'">
-                  <div *ngIf="newRequest.get('person').get('sameAsContractor').value == 'SI'" class="radio-button-label" style="font-size: 12px !important; max-width: 63vw;">Adjuntar
+                  <div *ngIf="newRequest.get('person').get('sameAsContractor').value == 'SI'" class="radio-button-label"
+                    style="font-size: 12px !important; max-width: 63vw;">Adjuntar
                     documentos "Copia de Cédula" y "Certificación de Ingresos declarados"
                   </div>
-                  <div *ngIf="newRequest.get('person').get('sameAsContractor').value == 'NO'" class="radio-button-label" style="font-size: 12px !important; max-width: 63vw;">Adjuntar
+                  <div *ngIf="newRequest.get('person').get('sameAsContractor').value == 'NO'" class="radio-button-label"
+                    style="font-size: 12px !important; max-width: 63vw;">Adjuntar
                     documentos "Copia de Cédula"
                   </div>
                   <div *ngIf="newRequest.get('files') && newRequest.get('files').get('documentsKnowClient')">
@@ -171,8 +173,7 @@
                         <app-file-input
                           [ngClass]="{'col-span-6': filesDocumentsKnowClientArray.length === 1, 'col-span-5': filesDocumentsKnowClientArray.length > 1}"
                           class="mr-3" [group]="newRequest.get('files').get('documentsKnowClient').get(i.toString())"
-                          name="document" label="Documento"
-                          [fileNameWatcher]="arrayDocumentsKnowClientWatcher(i)"
+                          name="document" label="Documento" [fileNameWatcher]="arrayDocumentsKnowClientWatcher(i)"
                           (onFileChange)="onStudiesChange2($event, i, 'documentsKnowClient')">
                         </app-file-input>
                         <div *ngIf="filesDocumentsKnowClientArray.length > 1"
@@ -1345,15 +1346,15 @@
 
                   <div *ngIf="question.name === 'anyoneProposed'">
                     <div *ngFor="let studies of insuranceProposedList.controls; let i = index">
-                      <!-- <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-5 xl:grid-cols-5">
+                      <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-5 xl:grid-cols-5">
                         <div class="mr-3">
                           <app-input
                             [group]="newRequest.get('generalInformation').get('insuranceProposed').get(i.toString())"
-                            name="name" label="Nombre tratamiento">
+                            name="name" label="Nombre">
                           </app-input>
                         </div>
-                      </div> -->
-                      <!-- <div class="radio-button-label" style="font-size: 12px !important;">Detalle</div> -->
+                      </div>
+                      <div class="radio-button-label" style="font-size: 12px !important;">Detalle</div>
                       <app-text-area
                         [group]="newRequest.get('generalInformation').get('insuranceProposed').get(i.toString())"
                         name="detail" label="Detalle">

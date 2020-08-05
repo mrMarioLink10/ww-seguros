@@ -2845,7 +2845,7 @@ export class LifeComponent implements OnInit, DoCheck {
 
       case 'insurance':
         return this.fb.group({
-          // name: ['', Validators.required],
+          name: ['', Validators.required],
           detail: ['', Validators.required],
         });
         break;

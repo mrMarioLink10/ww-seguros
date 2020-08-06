@@ -23,7 +23,7 @@ export class CardiovascularComponent implements OnInit, DoCheck {
 			{ viewValue: 'Diabetes', value: 'DIABETES' },
 			{ viewValue: 'Enfisema derrames cerebrales', value: 'ENFISEMA DERRAMES CEREBRALES' },
 			{ viewValue: 'Cáncer', value: 'CANCER' },
-			{ viewValue: 'Enfermedad renal o vascular', value: 'ENFERMEDAD RENAL o VASCULAR' },
+			{ viewValue: 'Enfermedad renal o vascular', value: 'ENFERMEDAD RENAL O VASCULAR' },
 
 		]
 	};

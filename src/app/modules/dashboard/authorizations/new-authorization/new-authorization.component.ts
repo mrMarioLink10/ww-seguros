@@ -321,9 +321,9 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy, DoCheck {
 		this.isMedicalEqualSB = this.authorization.get('informacionMedica').get('isMedicalEqual').valueChanges.subscribe(response => {
 			switch (response) {
 				case true:
-					this.authorization.get('informacionMedica').get('admision').get('nombreMedico').setValue(this.authorization.get('informacionMedica').get('primerosSintomas').get('nombreMedico').value);
-					this.authorization.get('informacionMedica').get('admision').get('telefono').setValue(this.authorization.get('informacionMedica').get('primerosSintomas').get('telefono').value);
-					this.authorization.get('informacionMedica').get('admision').get('direccion').setValue(this.authorization.get('informacionMedica').get('primerosSintomas').get('direccion').value);
+					this.authorization.get('informacionMedica').get('admision').get('nombreMedico').setValue((this.authorization.get('informacionMedica').get('primerosSintomas').get('nombreMedico').value).toUpperCase());
+					this.authorization.get('informacionMedica').get('admision').get('telefono').setValue((this.authorization.get('informacionMedica').get('primerosSintomas').get('telefono').value).toUpperCase());
+					this.authorization.get('informacionMedica').get('admision').get('direccion').setValue((this.authorization.get('informacionMedica').get('primerosSintomas').get('direccion').value).toUpperCase());
 
 					if (this.authorization.get('informacionMedica').get('admision').get('specifyOthers') &&
 						!this.authorization.get('informacionMedica').get('primerosSintomas').get('specifyOthers')) {
@@ -333,27 +333,27 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy, DoCheck {
 					else if (this.authorization.get('informacionMedica').get('admision').get('specifyOthers') &&
 						this.authorization.get('informacionMedica').get('primerosSintomas').get('specifyOthers')) {
 
-						this.authorization.get('informacionMedica').get('admision').get('specifyOthers').setValue(this.authorization.get('informacionMedica').get('primerosSintomas').get('specifyOthers').value);
+						this.authorization.get('informacionMedica').get('admision').get('specifyOthers').setValue((this.authorization.get('informacionMedica').get('primerosSintomas').get('specifyOthers').value).toUpperCase());
 					}
 					else if (!this.authorization.get('informacionMedica').get('admision').get('specifyOthers') &&
 						this.authorization.get('informacionMedica').get('primerosSintomas').get('specifyOthers')) {
 
 						(this.authorization.get('informacionMedica').get('admision') as
-							FormGroup).addControl('specifyOthers', this.fb.control('', Validators.required));
+							FormGroup).addControl('specifyOthers', this.fb.control(''));
 
-						this.authorization.get('informacionMedica').get('admision').get('specifyOthers').setValue(this.authorization.get('informacionMedica').get('primerosSintomas').get('specifyOthers').value);
+						this.authorization.get('informacionMedica').get('admision').get('specifyOthers').setValue((this.authorization.get('informacionMedica').get('primerosSintomas').get('specifyOthers').value).toUpperCase());
 					}
 
 					this.nombreMedicoSB = this.authorization.get('informacionMedica').get('primerosSintomas').get('nombreMedico').valueChanges.subscribe(value => {
-						this.authorization.get('informacionMedica').get('admision').get('nombreMedico').setValue(value);
+						this.authorization.get('informacionMedica').get('admision').get('nombreMedico').setValue(value.toUpperCase());
 					});
 
 					this.telefonoSB = this.authorization.get('informacionMedica').get('primerosSintomas').get('telefono').valueChanges.subscribe(value => {
-						this.authorization.get('informacionMedica').get('admision').get('telefono').setValue(value);
+						this.authorization.get('informacionMedica').get('admision').get('telefono').setValue(value.toUpperCase());
 					});
 
 					this.direccionSB = this.authorization.get('informacionMedica').get('primerosSintomas').get('direccion').valueChanges.subscribe(value => {
-						this.authorization.get('informacionMedica').get('admision').get('direccion').setValue(value);
+						this.authorization.get('informacionMedica').get('admision').get('direccion').setValue(value.toUpperCase());
 					});
 
 					if (this.authorization.get('informacionMedica').get('admision').get('specifyOthers') &&
@@ -365,7 +365,7 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy, DoCheck {
 						this.authorization.get('informacionMedica').get('primerosSintomas').get('specifyOthers')) {
 
 						this.otroNombreMedicoSB = this.authorization.get('informacionMedica').get('primerosSintomas').get('specifyOthers').valueChanges.subscribe(value => {
-							this.authorization.get('informacionMedica').get('admision').get('specifyOthers').setValue(value);
+							this.authorization.get('informacionMedica').get('admision').get('specifyOthers').setValue(value.toUpperCase());
 						});
 
 						this.authorization.get('informacionMedica').get('admision').get('specifyOthers').disable();
@@ -374,10 +374,10 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy, DoCheck {
 						this.authorization.get('informacionMedica').get('primerosSintomas').get('specifyOthers')) {
 
 						(this.authorization.get('informacionMedica').get('admision') as
-							FormGroup).addControl('specifyOthers', this.fb.control('', Validators.required));
+							FormGroup).addControl('specifyOthers', this.fb.control(''));
 
 						this.otroNombreMedicoSB = this.authorization.get('informacionMedica').get('primerosSintomas').get('specifyOthers').valueChanges.subscribe(value => {
-							this.authorization.get('informacionMedica').get('admision').get('specifyOthers').setValue(value);
+							this.authorization.get('informacionMedica').get('admision').get('specifyOthers').setValue(value.toUpperCase());
 						});
 
 						this.authorization.get('informacionMedica').get('admision').get('specifyOthers').disable();
@@ -535,10 +535,10 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy, DoCheck {
 				if (this.authorization.get('informacionMedica').get('isMedicalEqual').value == true
 					|| this.authorization.get('informacionMedica').get('isMedicalEqual').value == 'true') {
 					(this.authorization.get('informacionMedica').get('admision') as
-						FormGroup).addControl('specifyOthers', this.fb.control('', Validators.required));
+						FormGroup).addControl('specifyOthers', this.fb.control(''));
 
 					this.otroNombreMedicoSB = this.authorization.get('informacionMedica').get('primerosSintomas').get('specifyOthers').valueChanges.subscribe(value => {
-						this.authorization.get('informacionMedica').get('admision').get('specifyOthers').setValue(value);
+						this.authorization.get('informacionMedica').get('admision').get('specifyOthers').setValue(value.toUpperCase());
 					});
 
 					this.authorization.get('informacionMedica').get('admision').get('specifyOthers').disable();
@@ -572,7 +572,7 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy, DoCheck {
 				}
 
 				(this.authorization.get('informacionMedica').get('admision') as
-					FormGroup).addControl('specifyOthers', this.fb.control('', Validators.required));
+					FormGroup).addControl('specifyOthers', this.fb.control(''));
 			}
 			// tslint:disable-next-line: one-line
 			else if (value.toLowerCase() !== 'otro') {
@@ -813,13 +813,13 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy, DoCheck {
 						}
 
 						this.nombreMedicoSB = this.authorization.get('informacionMedica').get('primerosSintomas').get('nombreMedico').valueChanges.subscribe(value => {
-							this.authorization.get('informacionMedica').get('admision').get('nombreMedico').setValue(value);
+							this.authorization.get('informacionMedica').get('admision').get('nombreMedico').setValue(value.toUpperCase());
 						});
 						this.telefonoSB = this.authorization.get('informacionMedica').get('primerosSintomas').get('telefono').valueChanges.subscribe(value => {
-							this.authorization.get('informacionMedica').get('admision').get('telefono').setValue(value);
+							this.authorization.get('informacionMedica').get('admision').get('telefono').setValue(value.toUpperCase());
 						});
 						this.direccionSB = this.authorization.get('informacionMedica').get('primerosSintomas').get('direccion').valueChanges.subscribe(value => {
-							this.authorization.get('informacionMedica').get('admision').get('direccion').setValue(value);
+							this.authorization.get('informacionMedica').get('admision').get('direccion').setValue(value.toUpperCase());
 						});
 
 						if (this.authorization.get('informacionMedica').get('admision').get('specifyOthers') &&
@@ -831,7 +831,7 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy, DoCheck {
 							this.authorization.get('informacionMedica').get('primerosSintomas').get('specifyOthers')) {
 
 							this.otroNombreMedicoSB = this.authorization.get('informacionMedica').get('primerosSintomas').get('specifyOthers').valueChanges.subscribe(value => {
-								this.authorization.get('informacionMedica').get('admision').get('specifyOthers').setValue(value);
+								this.authorization.get('informacionMedica').get('admision').get('specifyOthers').setValue(value.toUpperCase());
 							});
 
 							this.authorization.get('informacionMedica').get('admision').get('specifyOthers').disable();
@@ -840,10 +840,10 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy, DoCheck {
 							this.authorization.get('informacionMedica').get('primerosSintomas').get('specifyOthers')) {
 
 							(this.authorization.get('informacionMedica').get('admision') as
-								FormGroup).addControl('specifyOthers', this.fb.control('', Validators.required));
+								FormGroup).addControl('specifyOthers', this.fb.control(''));
 
 							this.otroNombreMedicoSB = this.authorization.get('informacionMedica').get('primerosSintomas').get('specifyOthers').valueChanges.subscribe(value => {
-								this.authorization.get('informacionMedica').get('admision').get('specifyOthers').setValue(value);
+								this.authorization.get('informacionMedica').get('admision').get('specifyOthers').setValue(value.toUpperCase());
 							});
 
 							this.authorization.get('informacionMedica').get('admision').get('specifyOthers').disable();
@@ -940,7 +940,12 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy, DoCheck {
 		}
 		else if (event.option.value.toLowerCase() == 'otro') {
 			if (!addForm.get('specifyOthers')) {
-				addForm.addControl('specifyOthers', this.fb.control('', Validators.required));
+				if (group == "authorization.get('informacionMedica').get('admision')") {
+					addForm.addControl('specifyOthers', this.fb.control(''));
+				}
+				else {
+					addForm.addControl('specifyOthers', this.fb.control('', Validators.required));
+				}
 			}
 			if (name != 'nombreServicio') {
 				group.get('direccion').setValue('');
@@ -1122,7 +1127,7 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy, DoCheck {
 			this.authorization['controls'].informacionMedica['controls'].admision['controls'].telefono.setValue(data.data.informacionMedica.admision.telefono);
 			if (data.data.informacionMedica.admision.nombreMedico.toLowerCase() == 'otro') {
 				(this.authorization.get('informacionMedica').get('admision') as
-					FormGroup).addControl('specifyOthers', this.fb.control('', Validators.required));
+					FormGroup).addControl('specifyOthers', this.fb.control(''));
 				this.authorization['controls'].informacionMedica['controls'].admision['controls'].specifyOthers.setValue(data.data.informacionMedica.admision.specifyOthers);
 			}
 			this.authorization['controls'].informacionMedica['controls'].tiempoEstadia.setValue(data.data.informacionMedica.tiempoEstadia);
@@ -1246,14 +1251,14 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy, DoCheck {
 				).setValue(valueSintomasNombreMedico + ' ');
 				console.log('yaaaaaaaaaaaaaa primerosSintomas');
 			},
-			1000);
+			1500);
 
 			setTimeout(() => {
 				this.authorization.get('informacionMedica').get('primerosSintomas').get('nombreMedico'
 				).setValue(valueSintomasNombreMedico);
 				console.log('yaaaaaaaaaaaaaa primerosSintomas parte 2');
 			},
-			2000);
+			1500);
 
 			const valueAdmisionNombreMedico = this.authorization.get('informacionMedica').get('admision').get('nombreMedico').value;
 
@@ -1262,14 +1267,14 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy, DoCheck {
 				).setValue(valueAdmisionNombreMedico + ' ');
 				console.log('yaaaaaaaaaaaaaa admision');
 			},
-			1000);
+			1500);
 
 			setTimeout(() => {
 				this.authorization.get('informacionMedica').get('admision').get('nombreMedico'
 				).setValue(valueAdmisionNombreMedico);
 				console.log('yaaaaaaaaaaaaaa admision parte 2');
 			},
-			2000);
+			1500);
 
 			const valueServiciosNombreMedico = this.authorization.get('informacionMedica').get('nombreServicio').value;
 
@@ -1278,18 +1283,22 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy, DoCheck {
 				).setValue(valueServiciosNombreMedico + ' ');
 				console.log('yaaaaaaaaaaaaaa Servicios');
 			},
-			1000);
+			1500);
 
 			setTimeout(() => {
 				this.authorization.get('informacionMedica').get('nombreServicio'
 				).setValue(valueServiciosNombreMedico);
 				console.log('yaaaaaaaaaaaaaa Servicios parte 2');
 			},
-			2000);
+			1500);
 
 			this.authorization.markAllAsTouched();
 			this.authorization.updateValueAndValidity();
-			this.appComponent.showOverlay = false;
+			setTimeout(() => {
+				this.appComponent.showOverlay = false;
+			},
+			2000);
+			
 		});
 		this.newAuthorization.id = null;
 		console.log('this.newAuthorization.id es igual a ' + this.newAuthorization.id);

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, DoCheck } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { FieldConfig } from 'src/app/shared/components/form-components/models/field-config';
 import { $time } from 'src/app/core/form/objects';
@@ -10,7 +10,7 @@ import { FormArrayGeneratorService } from 'src/app/core/services/forms/form-arra
   templateUrl: './musculoskeletal.component.html',
   styles: []
 })
-export class MusculoskeletalComponent implements OnInit {
+export class MusculoskeletalComponent implements OnInit, DoCheck {
 
   @Input() form: FormGroup;
   @Input() showWarningDot: boolean;
@@ -187,6 +187,16 @@ export class MusculoskeletalComponent implements OnInit {
     }
 
     console.log(this.surgeryFormArray);
+
+  }
+
+  ngDoCheck() {
+
+    if (this.form.get('data').get('recovered_radio').value == 'NO') {
+      if (this.form.get('data').get('date')) {
+        (this.form.get('data') as FormGroup).removeControl('date');
+      }
+    }
 
   }
 

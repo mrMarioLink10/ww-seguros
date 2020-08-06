@@ -980,6 +980,7 @@ export class RefundComponent implements OnInit {
 				indications: this.fb.array([this.createFormArray('indications')]),
 				medicReports: this.fb.array([this.createFormArray('medicReports')]),
 				paymentVouchers: this.fb.array([this.createFormArray('paymentVouchers')]),
+				otros: this.fb.array([this.createFormArray('otros')]),
 			})
 		});
 	}
@@ -1026,6 +1027,11 @@ export class RefundComponent implements OnInit {
 			case 'paymentVouchers':
 				return this.fb.group({
 					paymentVouchers: ['', Validators.required],
+				});
+
+			case 'otros':
+				return this.fb.group({
+					otros: ['', Validators.required],
 				});
 
 			default:

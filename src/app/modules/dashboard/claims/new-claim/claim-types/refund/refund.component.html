@@ -217,7 +217,7 @@
               [group]="refundForm.get('diagnosticos').get(i.toString())">
             </app-input>
           </div>
-          <div *ngIf="refundForm.get('diagnosticos').get(i.toString()).get('categoria').value == 'OTROS_PROVEEDORES' && 
+          <div *ngIf="refundForm.get('diagnosticos').get(i.toString()).get('categoria').value == 'OTROS_PROVEEDORES' &&
           refundForm.get('informacion').get('tipoReclamo').value !== 'INTERNACIONAL'"
             class="mr-3 md:col-span-2">
             <!-- <app-select name="proveedor" [options]="OtrosproveedoresField"
@@ -244,7 +244,7 @@
           </div>
 
           <div
-            *ngIf="refundForm.get('diagnosticos').get(i.toString()).get('categoria').value == 'CENTROS_ESPECIALIZADOS' && 
+            *ngIf="refundForm.get('diagnosticos').get(i.toString()).get('categoria').value == 'CENTROS_ESPECIALIZADOS' &&
             refundForm.get('informacion').get('tipoReclamo').value !== 'INTERNACIONAL'"
             class="mr-3 md:col-span-2">
             <!-- <app-select name="proveedor" [options]="CentrosField"
@@ -269,7 +269,7 @@
               </mat-form-field>
             </form>
           </div>
-          <div *ngIf="refundForm.get('diagnosticos').get(i.toString()).get('categoria').value == 'FARMACIAS' && 
+          <div *ngIf="refundForm.get('diagnosticos').get(i.toString()).get('categoria').value == 'FARMACIAS' &&
           refundForm.get('informacion').get('tipoReclamo').value !== 'INTERNACIONAL'"
             class="mr-3 md:col-span-2">
             <!-- <app-select name="proveedor" [options]="farmaciasField"
@@ -294,7 +294,7 @@
               </mat-form-field>
             </form>
           </div>
-          <div *ngIf="refundForm.get('diagnosticos').get(i.toString()).get('categoria').value == 'CLINICAS_HOSPITALES' && 
+          <div *ngIf="refundForm.get('diagnosticos').get(i.toString()).get('categoria').value == 'CLINICAS_HOSPITALES' &&
           refundForm.get('informacion').get('tipoReclamo').value !== 'INTERNACIONAL'"
             class="mr-3 md:col-span-2">
             <!-- <app-select name="proveedor" [options]="clinicasField"
@@ -319,7 +319,7 @@
               </mat-form-field>
             </form>
           </div>
-          <div *ngIf="refundForm.get('diagnosticos').get(i.toString()).get('categoria').value == 'LABORATORIOS' && 
+          <div *ngIf="refundForm.get('diagnosticos').get(i.toString()).get('categoria').value == 'LABORATORIOS' &&
           refundForm.get('informacion').get('tipoReclamo').value !== 'INTERNACIONAL'"
             class="mr-3 md:col-span-2">
             <!-- <app-select name="proveedor" [options]="labsField"
@@ -344,7 +344,7 @@
               </mat-form-field>
             </form>
           </div>
-          <div *ngIf="refundForm.get('diagnosticos').get(i.toString()).get('categoria').value == 'MEDICOS' && 
+          <div *ngIf="refundForm.get('diagnosticos').get(i.toString()).get('categoria').value == 'MEDICOS' &&
           refundForm.get('informacion').get('tipoReclamo').value !== 'INTERNACIONAL'"
             class="mr-3 md:col-span-2">
             <!-- <app-select name="proveedor" [options]="medicosField"
@@ -510,7 +510,7 @@
               <mat-icon style="color: #18446B">add</mat-icon>
             </button>
           </div>
-          
+
           <div class="mr-3">
             <div
               *ngFor="let appliedStudies of refundForm.get('diagnosticos').get(i.toString()).get('files').get('otros')['controls']; let ix = index"
@@ -615,9 +615,12 @@
           </app-radio-button>
         </div>
         <div class="mr-3">
-          <app-radio-button [group]="refundForm.get('infoTransferencia')" name="tipoMoneda" [options]="tipoMoneda">
+          <app-radio-button   *ngIf="refundForm.get('informacion').get('tipoReclamo') && refundForm.get('informacion').get('tipoReclamo').value === 'INTERNACIONAL'" [group]="refundForm.get('infoTransferencia')" name="tipoMoneda" [options]="tipoMoneda">
+          </app-radio-button>
+          <app-radio-button   *ngIf="refundForm.get('informacion').get('tipoReclamo') && refundForm.get('informacion').get('tipoReclamo').value === 'LOCAL'" [group]="refundForm.get('infoTransferencia')" name="tipoMoneda" [options]="tipoMonedaLocalInfo">
           </app-radio-button>
         </div>
+
         <div class="mr-3 sm:col-span-2">
           <!-- <app-input [group]="refundForm.get('infoTransferencia')" label="Banco Emisor" name='bancoEmisor'
             placeholder="BHD Leon">

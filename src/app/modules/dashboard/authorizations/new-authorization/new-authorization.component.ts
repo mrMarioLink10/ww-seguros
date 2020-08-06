@@ -1120,6 +1120,8 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy, DoCheck {
 				(this.authorization.get('informacionMedica').get('primerosSintomas') as
 					FormGroup).addControl('specifyOthers', this.fb.control('', Validators.required));
 				this.authorization['controls'].informacionMedica['controls'].primerosSintomas['controls'].specifyOthers.setValue(data.data.informacionMedica.primerosSintomas.specifyOthers);
+				// this.authorization.get('informacionMedica').get('primerosSintomas').get('specifyOthers').markAsTouched();
+				// this.authorization.get('informacionMedica').get('primerosSintomas').get('specifyOthers').updateValueAndValidity();
 			}
 			this.authorization['controls'].informacionMedica['controls'].admision['controls'].fecha.setValue(data.data.informacionMedica.admision.fecha);
 			this.authorization['controls'].informacionMedica['controls'].admision['controls'].nombreMedico.setValue(data.data.informacionMedica.admision.nombreMedico);
@@ -1129,6 +1131,8 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy, DoCheck {
 				(this.authorization.get('informacionMedica').get('admision') as
 					FormGroup).addControl('specifyOthers', this.fb.control(''));
 				this.authorization['controls'].informacionMedica['controls'].admision['controls'].specifyOthers.setValue(data.data.informacionMedica.admision.specifyOthers);
+				// this.authorization.get('informacionMedica').get('admision').get('specifyOthers').markAsTouched();
+				// this.authorization.get('informacionMedica').get('admision').get('specifyOthers').updateValueAndValidity();
 			}
 			this.authorization['controls'].informacionMedica['controls'].tiempoEstadia.setValue(data.data.informacionMedica.tiempoEstadia);
 			this.authorization['controls'].informacionMedica['controls'].nombreServicio.setValue(data.data.informacionMedica.nombreServicio);
@@ -1136,6 +1140,8 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy, DoCheck {
 				(this.authorization.get('informacionMedica') as
 					FormGroup).addControl('specifyOthers', this.fb.control('', Validators.required));
 				this.authorization['controls'].informacionMedica['controls'].specifyOthers.setValue(data.data.informacionMedica.specifyOthers);
+				// this.authorization.get('informacionMedica').get('specifyOthers').markAsTouched();
+				// this.authorization.get('informacionMedica').get('specifyOthers').updateValueAndValidity();
 			}
 			this.authorization['controls'].informacionMedica['controls'].isMedicalEqual.setValue(data.data.informacionMedica.isMedicalEqual);
 			this.authorization['controls'].informacionMedica['controls'].autorizacion.setValue(data.data.informacionMedica.autorizacion);
@@ -1257,6 +1263,11 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy, DoCheck {
 				this.authorization.get('informacionMedica').get('primerosSintomas').get('nombreMedico'
 				).setValue(valueSintomasNombreMedico);
 				console.log('yaaaaaaaaaaaaaa primerosSintomas parte 2');
+
+				if (this.authorization.get('informacionMedica').get('primerosSintomas').get('specifyOthers')) {
+					this.authorization.get('informacionMedica').get('primerosSintomas').get('specifyOthers').markAsTouched();
+					this.authorization.get('informacionMedica').get('primerosSintomas').get('specifyOthers').updateValueAndValidity();
+				}
 			},
 			1500);
 
@@ -1273,6 +1284,11 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy, DoCheck {
 				this.authorization.get('informacionMedica').get('admision').get('nombreMedico'
 				).setValue(valueAdmisionNombreMedico);
 				console.log('yaaaaaaaaaaaaaa admision parte 2');
+
+				if (this.authorization.get('informacionMedica').get('admision').get('specifyOthers')) {
+					this.authorization.get('informacionMedica').get('admision').get('specifyOthers').markAsTouched();
+					this.authorization.get('informacionMedica').get('admision').get('specifyOthers').updateValueAndValidity();
+				}
 			},
 			1500);
 
@@ -1289,16 +1305,22 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy, DoCheck {
 				this.authorization.get('informacionMedica').get('nombreServicio'
 				).setValue(valueServiciosNombreMedico);
 				console.log('yaaaaaaaaaaaaaa Servicios parte 2');
+
+				if (this.authorization.get('informacionMedica').get('specifyOthers')) {
+					this.authorization.get('informacionMedica').get('specifyOthers').markAsTouched();
+					this.authorization.get('informacionMedica').get('specifyOthers').updateValueAndValidity();
+				}
 			},
 			1500);
 
 			this.authorization.markAllAsTouched();
 			this.authorization.updateValueAndValidity();
+
 			setTimeout(() => {
 				this.appComponent.showOverlay = false;
 			},
 			2000);
-			
+
 		});
 		this.newAuthorization.id = null;
 		console.log('this.newAuthorization.id es igual a ' + this.newAuthorization.id);

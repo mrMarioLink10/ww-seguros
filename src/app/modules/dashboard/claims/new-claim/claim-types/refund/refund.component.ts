@@ -83,6 +83,15 @@ export class RefundComponent implements OnInit {
 			}
 		]
 	};
+  tipoMonedaLocalInfo: FieldConfig = {
+		label: 'Moneda',
+		options: [
+			{
+				value: 'PESOS',
+				viewValue: 'Pesos'
+			}
+		]
+	};
 
 	tipoMoneda: FieldConfig = {
 		label: 'Moneda',
@@ -1011,27 +1020,27 @@ export class RefundComponent implements OnInit {
 		switch (type) {
 			case 'invoices':
 				return this.fb.group({
-					invoices: ['', Validators.required],
+					invoices: ['' ],
 				});
 
 			case 'indications':
 				return this.fb.group({
-					indications: ['', Validators.required],
+					indications: ['' ],
 				});
 
 			case 'medicReports':
 				return this.fb.group({
-					medicReports: ['', Validators.required],
+					medicReports: ['' ],
 				});
 
 			case 'paymentVouchers':
 				return this.fb.group({
-					paymentVouchers: ['', Validators.required],
+					paymentVouchers: ['' ],
 				});
 
 			case 'otros':
 				return this.fb.group({
-					otros: ['', Validators.required],
+					otros: ['' ],
 				});
 
 			default:

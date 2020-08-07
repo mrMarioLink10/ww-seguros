@@ -17,6 +17,7 @@ import { AuthorizationsRoutingModule } from 'src/app/modules/dashboard/authoriza
 import { GlobalSharedModule } from '../../global-shared.module';
 import { SharedModule } from 'src/app/modules/dashboard/shared/shared.module';
 import { MaterialFileInputModule } from 'ngx-material-file-input';
+import { SectionABlockComponent } from './section-a-block/section-a-block.component';
 
 @NgModule({
 	declarations: [
@@ -28,6 +29,7 @@ import { MaterialFileInputModule } from 'ngx-material-file-input';
 		TextAreaComponent,
 		NumberInputComponent,
 		FileInputComponent,
+		SectionABlockComponent,
 	],
 	exports: [
 		SelectComponent,
@@ -37,7 +39,8 @@ import { MaterialFileInputModule } from 'ngx-material-file-input';
 		DatePickerComponent,
 		TextAreaComponent,
 		NumberInputComponent,
-		FileInputComponent
+		FileInputComponent,
+		SectionABlockComponent
 	],
 	imports: [
 		CommonModule,

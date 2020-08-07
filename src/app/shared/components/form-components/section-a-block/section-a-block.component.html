@@ -1,0 +1,122 @@
+<div
+  *ngIf="(newRequest.get('questionsA').value[inFormName] === true || newRequest.get('questionsA').value[inFormName] === 'TRUE') && newRequest.get('questionsA').get(arrayName)">
+  <hr class=" w-full mb-6 ww-divider">
+  <div class="radio-button-label mb-4" style="font-size: 12px !important;">Información del padecimiento
+    del asegurado</div>
+  <div *ngFor="let studies of newRequest.get('questionsA').get(arrayName)['controls']; let i = index"
+    class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
+    <app-input class="mr-3" [group]="newRequest.get('questionsA').get(arrayName).get(i.toString())" name="name"
+      label="Nombre del Paciente"
+      [value]="newRequest.get('person').value.firstName+' '+newRequest.get('person').value.lastName">
+    </app-input>
+    <app-input *ngIf="!haveToShowWhichFormComponent(inFormName)" class="mr-3"
+      [group]="newRequest.get('questionsA').get(arrayName).get(i.toString())" name="ailment" label="Padecimiento">
+    </app-input>
+    <app-select *ngIf="haveToShowWhichFormComponent(inFormName)" class="mr-3" [options]="ailmentOptions"
+      (selected)="ailmentSelectedInBlock(arrayName, questionnairesGastosMayores, newRequest.get('questionsA'))"
+      [group]="newRequest.get('questionsA').get(arrayName).get(i.toString())"></app-select>
+    <app-date-picker class="mr-3" [max]="todayDate"
+      [group]="newRequest.get('questionsA').get(arrayName).get(i.toString())" name="date"
+      label="Fecha del Padecimiento">
+    </app-date-picker>
+    <app-input class="mr-3" [group]="newRequest.get('questionsA').get(arrayName).get(i.toString())" name="threatment"
+      label="Tratamiento">
+    </app-input>
+    <app-input class="mr-3" [group]="newRequest.get('questionsA').get(arrayName).get(i.toString())"
+      name="medicCenterName" label="Nombre del proveedor o centro médico">
+    </app-input>
+    <app-input class="mr-3" [group]="newRequest.get('questionsA').get(arrayName).get(i.toString())"
+      name="medicCenterAddress" label="Dirección del proveedor o centro médico">
+    </app-input>
+    <app-number-input class="mr-3" [group]="newRequest.get('questionsA').get(arrayName).get(i.toString())"
+      label="Duración del Tratamiento" name='duration' min="1">
+    </app-number-input>
+    <div class="grid grid-cols-2">
+      <app-select class="mr-3" [options]="year" [group]="newRequest.get('questionsA').get(arrayName).get(i.toString())">
+      </app-select>
+      <div *ngIf="newRequest.get('questionsA').get(arrayName)['controls'].length > 1"
+        [ngClass]="{'': newRequest.get('questionsA').get(arrayName)['controls'].length === 1, 'col-span-1': newRequest.get('questionsA').get(arrayName)['controls'].length > 1} ">
+        <button mat-mini-fab aria-label=" Eliminar estudio"
+          (click)="diseaseService.removeToList(i, newRequest.get('questionsA').get(arrayName))"
+          (click)="ailmentSelectedInBlock(arrayName, questionnairesGastosMayores, newRequest.get('questionsA'))"
+          type="button" class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
+          <mat-icon style="color: #18446B">remove</mat-icon>
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="mb-8">
+    <button mat-mini-fab aria-label="Agregar estudio"
+      (click)="addToListInBlock(newRequest.get('questionsA').get(arrayName), 'questionsAInformation')" type="button"
+      class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
+      <mat-icon style="color: #18446B">add</mat-icon>
+    </button>
+  </div>
+</div>
+<div *ngFor="let dpd of dependentsArrayList.controls; index as ixd">
+  <div
+    *ngIf="(newRequest.get('dependents').get('allDependents').get(ixd.toString()).value[inFormName] === true || newRequest.get('dependents').get('allDependents').get(ixd.toString()).value[inFormName] === 'TRUE') && newRequest.get('dependents').get('allDependents').get(ixd.toString()).get(arrayName)">
+    <hr class=" w-full mb-6 ww-divider">
+    <div class="radio-button-label mb-4" style="font-size: 12px !important;">Informacion del dependiente /
+      {{dpd.value.name | titlecase}}
+      {{dpd.value.lastName | titlecase}}</div>
+    <div
+      *ngFor="let studies of newRequest.get('dependents').get('allDependents').get(ixd.toString()).get(arrayName)['controls']; let i = index"
+      class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
+      <app-input class="mr-3"
+        [group]="newRequest.get('dependents').get('allDependents').get(ixd.toString()).get(arrayName).get(i.toString())"
+        name="name" label="Nombre del Paciente" [value]="dpd.value.name+' '+dpd.value.lastName">
+      </app-input>
+      <app-input *ngIf="!haveToShowWhichFormComponent(inFormName)" class="mr-3"
+        [group]="newRequest.get('dependents').get('allDependents').get(ixd.toString()).get(arrayName).get(i.toString())"
+        name="ailment" label="Padecimiento">
+      </app-input>
+      <app-select class="mr-3" [options]="ailmentOptions" *ngIf="haveToShowWhichFormComponent(inFormName)"
+        (selected)="ailmentSelectedInBlock(arrayName, newRequest.get('dependents').get('allDependents').get(ixd.toString()), newRequest.get('dependents').get('allDependents').get(ixd.toString()))"
+        [group]="newRequest.get('dependents').get('allDependents').get(ixd.toString()).get(arrayName).get(i.toString())">
+      </app-select>
+      <app-date-picker class="mr-3" [max]="todayDate"
+        [group]="newRequest.get('dependents').get('allDependents').get(ixd.toString()).get(arrayName).get(i.toString())"
+        name="date" label="Fecha del Padecimiento">
+      </app-date-picker>
+      <app-input class="mr-3"
+        [group]="newRequest.get('dependents').get('allDependents').get(ixd.toString()).get(arrayName).get(i.toString())"
+        name="threatment" label="Tratamiento">
+      </app-input>
+      <app-input class="mr-3"
+        [group]="newRequest.get('dependents').get('allDependents').get(ixd.toString()).get(arrayName).get(i.toString())"
+        name="medicCenterName" label="Nombre del proveedor o centro médico">
+      </app-input>
+      <app-input class="mr-3"
+        [group]="newRequest.get('dependents').get('allDependents').get(ixd.toString()).get(arrayName).get(i.toString())"
+        name="medicCenterAddress" label="Dirección del proveedor o centro médico">
+      </app-input>
+      <app-number-input class="mr-3"
+        [group]="newRequest.get('dependents').get('allDependents').get(ixd.toString()).get(arrayName).get(i.toString())"
+        label="Duración del Tratamiento" name='duration' min="1">
+      </app-number-input>
+      <div class="grid grid-cols-2">
+        <app-select class="mr-3" [options]="year"
+          [group]="newRequest.get('dependents').get('allDependents').get(ixd.toString()).get(arrayName).get(i.toString())">
+        </app-select>
+        <div
+          *ngIf="newRequest.get('dependents').get('allDependents').get(ixd.toString()).get(arrayName)['controls'].length > 1"
+          [ngClass]="{'': newRequest.get('dependents').get('allDependents').get(ixd.toString()).get(arrayName)['controls'].length === 1, 'col-span-1': newRequest.get('dependents').get('allDependents').get(ixd.toString()).get(arrayName)['controls'].length > 1} ">
+          <button mat-mini-fab aria-label=" Eliminar estudio"
+            (click)="diseaseService.removeToList(i, newRequest.get('dependents').get('allDependents').get(ixd.toString()).get(arrayName))"
+            (selected)="ailmentSelectedInBlock(arrayName, newRequest.get('dependents').get('allDependents').get(ixd.toString()), newRequest.get('dependents').get('allDependents').get(ixd.toString()))"
+            type="button" class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
+            <mat-icon style="color: #18446B">remove</mat-icon>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="mb-8">
+      <button mat-mini-fab aria-label="Agregar estudio"
+        (click)="addToListInBlock(newRequest.get('dependents').get('allDependents').get(ixd.toString()).get(arrayName), 'questionsAInformation')"
+        type="button" class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
+        <mat-icon style="color: #18446B">add</mat-icon>
+      </button>
+    </div>
+  </div>
+</div>

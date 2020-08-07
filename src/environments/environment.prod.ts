@@ -19,6 +19,7 @@ export const environment = {
   baseUrl: 'https://wwsdevfrontend-staging.azurewebsites.net/',
   keycloak: keycloakConfig,
   apiUrl: 'https://wwsdevportalbackend.azurewebsites.net',
+  urlNotAccess: 'https://wwsdevportalbackend.azurewebsites.net/AccesoPortal/index/?location=',
   keycloakConfig
 };
 

@@ -3165,15 +3165,21 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
           }
         }
 
-        if (formQA.get('haveHighRiskSport').value !== true || formQA.get('haveHighRiskSport').value !== 'TRUE') {
+        if (formQA.get('haveHighRiskSport').value !== true) {
           formQA.removeControl('highRiskSport');
         }
 
-        if (formQA.get('haveNicotine').value !== true || formQA.get('haveNicotine').value !== 'TRUE') {
+        if (formQA.get('haveNicotine').value !== true) {
           formQA.removeControl('nicotine');
         }
 
-        if (formQA.get('havePregnant').value !== true || formQA.get('havePregnant').value !== 'TRUE') {
+        if (formQA.get('nicotine').get('isActualSmoker').value !== 'EX-FUMADOR') {
+          const formQAC = formQA.get('nicotine') as FormGroup;
+
+          formQAC.removeControl('lastTimeSmoked');
+        }
+
+        if (formQA.get('havePregnant').value !== true) {
           formQA.removeControl('pregnant');
         }
 
@@ -3236,15 +3242,15 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
             const element = this.dependentsFormArray.controls[dependent] as FormGroup;
             console.log('dependentsFormArray element', element);
 
-            if (element.get('haveHighRiskSport').value !== true || element.get('haveHighRiskSport').value !== 'TRUE') {
+            if (element.get('haveHighRiskSport').value !== true) {
               element.removeControl('highRiskSport');
             }
 
-            if (element.get('haveNicotine').value !== true || element.get('haveNicotine').value !== 'TRUE') {
+            if (element.get('haveNicotine').value !== true) {
               element.removeControl('nicotine');
             }
 
-            if (element.get('havePregnant').value !== true || element.get('havePregnant').value !== 'TRUE') {
+            if (element.get('havePregnant').value !== true) {
               element.removeControl('pregnant');
             }
 

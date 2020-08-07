@@ -17,11 +17,11 @@ export class FormDataFillingService {
     , 'contact'
     , 'amount'
     , 'inches'
-    , 'createdBy','mandatorySubject', 'diagnosis', 'document',
-    'idId','middle_name',
-    'marital_status','post_office_box','creationDate',
+    , 'createdBy', 'mandatorySubject', 'diagnosis', 'document',
+    'idId', 'middle_name',
+    'marital_status', 'post_office_box', 'creationDate',
     'diabetesOther',
-    'everHospitalized'
+    'everHospitalized', 'lastTimeSmoked'
   ];
   excludedKeysDisability = [
     'id2Attached', 'id2AttachedUrl', 'specifyRelationship', 'differentMedic', 'isJuridica', 'name', 'nombre', 'edad', 'age', 'exposed_person',
@@ -34,11 +34,11 @@ export class FormDataFillingService {
     , 'contact'
     , 'amount'
     , 'inches'
-    , 'createdBy','mandatorySubject', 'diagnosis', 'document',
-    'idId','middle_name',
-    'marital_status','post_office_box','creationDate',
+    , 'createdBy', 'mandatorySubject', 'diagnosis', 'document',
+    'idId', 'middle_name',
+    'marital_status', 'post_office_box', 'creationDate',
     'diabetesOther',
-    'everHospitalized','insured','contractor', 'policeNo', 'lastName'
+    'everHospitalized', 'insured', 'contractor', 'policeNo', 'lastName'
   ];
   excludedKeysVida = [
     'id2Attached', 'id2AttachedUrl', 'specifyRelationship', 'differentMedic', 'isJuridica', 'name', 'nombre', 'edad', 'age', 'exposed_person',
@@ -51,9 +51,9 @@ export class FormDataFillingService {
     , 'contact'
     , 'amount'
     , 'inches'
-    , 'createdBy','mandatorySubject', 'diagnosis', 'document',
-    'idId','middle_name',
-    'marital_status','post_office_box','creationDate', 'time', 'duration', 'last_names',
+    , 'createdBy', 'mandatorySubject', 'diagnosis', 'document',
+    'idId', 'middle_name',
+    'marital_status', 'post_office_box', 'creationDate', 'time', 'duration', 'last_names',
     'type_radio',
     'engine',
     'brand',
@@ -98,14 +98,11 @@ export class FormDataFillingService {
               if (this.controlIsNotRequired(key)) {
                 formDataGroup.addControl(key, this.fb.control(valueToSet));
               } else {
-                if (valueToSet === '')
-                {
-                  console.log(key);
+                if (valueToSet === '') {
                   formDataGroup.addControl(key, this.fb.control(valueToSet, Validators.required));
                 }
-                else
-                {
-                formDataGroup.addControl(key, this.fb.control(valueToSet, Validators.required));
+                else {
+                  formDataGroup.addControl(key, this.fb.control(valueToSet, Validators.required));
                 }
               }
             }
@@ -148,9 +145,8 @@ export class FormDataFillingService {
               }));
             }
             const form = formDataGroup.get(key);
-            if (value.id != '0' && value.id != '')
-            {
-            this.iterateThroughtAllObject(value, form);
+            if (value.id != '0' && value.id != '') {
+              this.iterateThroughtAllObject(value, form);
             }
 
             if ((key.includes('solucionAnti') ||
@@ -163,7 +159,7 @@ export class FormDataFillingService {
             if (
               form.get('id') !== undefined &&
               form.get('id') !== null &&
-             form.get('id').value == '') {
+              form.get('id').value == '') {
               formDataGroup.removeControl(key);
             }
           }
@@ -195,14 +191,11 @@ export class FormDataFillingService {
               if (this.controlIsNotRequiredDisability(key)) {
                 formDataGroup.addControl(key, this.fb.control(valueToSet));
               } else {
-                if (valueToSet === '')
-                {
-                  console.log(key);
+                if (valueToSet === '') {
                   formDataGroup.addControl(key, this.fb.control(valueToSet, Validators.required));
                 }
-                else
-                {
-                formDataGroup.addControl(key, this.fb.control(valueToSet, Validators.required));
+                else {
+                  formDataGroup.addControl(key, this.fb.control(valueToSet, Validators.required));
                 }
               }
             }
@@ -245,9 +238,8 @@ export class FormDataFillingService {
               }));
             }
             const form = formDataGroup.get(key);
-            if (value.id != '0' && value.id != '')
-            {
-            this.iterateThroughtAllObjectDisability(value, form);
+            if (value.id != '0' && value.id != '') {
+              this.iterateThroughtAllObjectDisability(value, form);
             }
 
             if ((key.includes('solucionAnti') ||
@@ -260,7 +252,7 @@ export class FormDataFillingService {
             if (
               form.get('id') !== undefined &&
               form.get('id') !== null &&
-             form.get('id').value == '') {
+              form.get('id').value == '') {
               formDataGroup.removeControl(key);
             }
           }
@@ -292,14 +284,11 @@ export class FormDataFillingService {
               if (this.controlIsNotRequiredVida(key)) {
                 formDataGroup.addControl(key, this.fb.control(valueToSet));
               } else {
-                if (valueToSet === '')
-                {
-                  console.log(key);
+                if (valueToSet === '') {
                   formDataGroup.addControl(key, this.fb.control(valueToSet, Validators.required));
                 }
-                else
-                {
-                formDataGroup.addControl(key, this.fb.control(valueToSet, Validators.required));
+                else {
+                  formDataGroup.addControl(key, this.fb.control(valueToSet, Validators.required));
                 }
               }
             }
@@ -342,9 +331,8 @@ export class FormDataFillingService {
               }));
             }
             const form = formDataGroup.get(key);
-            if (value.id != '0' && value.id != '')
-            {
-            this.iterateThroughtAllObjectVida(value, form);
+            if (value.id != '0' && value.id != '') {
+              this.iterateThroughtAllObjectVida(value, form);
             }
 
             if ((key.includes('solucionAnti') ||
@@ -357,7 +345,7 @@ export class FormDataFillingService {
             if (
               form.get('id') !== undefined &&
               form.get('id') !== null &&
-             form.get('id').value == '') {
+              form.get('id').value == '') {
               formDataGroup.removeControl(key);
             }
           }

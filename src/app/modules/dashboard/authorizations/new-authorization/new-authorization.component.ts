@@ -454,7 +454,7 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy, DoCheck {
 			}
 		});
 
-		if (!this.ID) {
+		//if (!this.ID) {
 			console.log('AOSKDOPAKSDOPSA');
 			this.authorization.get('informacionMedica').get('condicion').valueChanges.subscribe(value => {
 				if (value === 'HOSPITALIZACIÓN') {
@@ -473,7 +473,7 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy, DoCheck {
 					}
 				}
 			});
-		}
+		//}
 
 		this.authorization.get('informacionAsegurado').get('tipoReclamo').valueChanges.subscribe(value => {
 
@@ -1118,7 +1118,8 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy, DoCheck {
 			this.authorization['controls'].informacionMedica['controls'].primerosSintomas['controls'].telefono.setValue(data.data.informacionMedica.primerosSintomas.telefono);
 			if (data.data.informacionMedica.primerosSintomas.nombreMedico.toLowerCase() == 'otro') {
 				(this.authorization.get('informacionMedica').get('primerosSintomas') as
-					FormGroup).addControl('specifyOthers', this.fb.control('', Validators.required));
+          FormGroup).addControl('specifyOthers', this.fb.control('', Validators.required));
+          console.log(data.data.informacionMedica.primerosSintomas);
 				this.authorization['controls'].informacionMedica['controls'].primerosSintomas['controls'].specifyOthers.setValue(data.data.informacionMedica.primerosSintomas.specifyOthers);
 				// this.authorization.get('informacionMedica').get('primerosSintomas').get('specifyOthers').markAsTouched();
 				// this.authorization.get('informacionMedica').get('primerosSintomas').get('specifyOthers').updateValueAndValidity();

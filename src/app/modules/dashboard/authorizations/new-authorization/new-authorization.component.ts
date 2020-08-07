@@ -1128,7 +1128,10 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy, DoCheck {
 			this.authorization['controls'].informacionMedica['controls'].admision['controls'].nombreMedico.setValue(data.data.informacionMedica.admision.nombreMedico);
 			this.authorization['controls'].informacionMedica['controls'].admision['controls'].direccion.setValue(data.data.informacionMedica.admision.direccion);
 			this.authorization['controls'].informacionMedica['controls'].admision['controls'].telefono.setValue(data.data.informacionMedica.admision.telefono);
-			if (data.data.informacionMedica.admision.nombreMedico.toLowerCase() == 'otro') {
+      console.log('Aqui como la ley 2');
+      console.log(data.data.informacionMedica.admision.nombreMedico.toLowerCase());
+      if (data.data.informacionMedica.admision.nombreMedico.toLowerCase() == 'otro') {
+        console.log('Aqui como la ley');
 				(this.authorization.get('informacionMedica').get('admision') as
 					FormGroup).addControl('specifyOthers', this.fb.control(''));
 				this.authorization['controls'].informacionMedica['controls'].admision['controls'].specifyOthers.setValue(data.data.informacionMedica.admision.specifyOthers);

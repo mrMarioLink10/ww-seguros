@@ -3216,7 +3216,6 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
         }
         this.filesStudiesArray = this.newRequest.get('files').get('studies') as FormArray;
 
-        this.isFormValidToFill = true;
 
         this.arrayFilesTitles = data.data.files.studies;
         this.primaryBeneficaryTitles = data.data.primaryBenefits.dependentsC;
@@ -3261,6 +3260,9 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
             element.removeControl('haveSpine');
           }
         }
+
+        this.isFormValidToFill = true;
+
 
         this.newRequest.markAllAsTouched();
         this.newRequest.updateValueAndValidity();

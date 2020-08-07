@@ -3302,8 +3302,6 @@ else{
         }
         this.filesStudiesArray = this.newRequest.get('files').get('studies') as FormArray;
 
-        this.isFormValidToFill = true;
-
         this.arrayFilesTitles = data.data.files.studies;
         this.primaryBeneficaryTitles = data.data.primaryBenefits.dependentsC;
         this.contigentBeneficaryTitles = data.data.contingentBeneficiary.dependentsC;
@@ -3347,6 +3345,9 @@ else{
             element.removeControl('haveSpine');
           }
         }
+
+        this.isFormValidToFill = true;
+
 
         this.newRequest.markAllAsTouched();
         this.newRequest.updateValueAndValidity();

@@ -597,6 +597,10 @@
             (change)="changePayment($event)">
             {{option.viewValue}}</mat-radio-button>
         </mat-radio-group>
+        <mat-error style="font-size: 10px;"
+          *ngIf="refundForm.get('forma').touched && !refundForm.get('forma').valid">
+          Este campo es obligatorio
+        </mat-error>
       </div>
 
       <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"

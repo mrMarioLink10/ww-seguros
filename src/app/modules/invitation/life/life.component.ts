@@ -51,7 +51,8 @@ export class LifeComponent implements OnInit, DoCheck {
   ) {
     var d = new Date();
     d.setFullYear(d.getFullYear() - 18);
-    this.maxDate = d;}
+    this.maxDate = d;
+  }
   step: number;
   showContent = false;
 
@@ -461,11 +462,11 @@ export class LifeComponent implements OnInit, DoCheck {
       ],
       name: 'id2Type',
     };
-    parentescoAsegurado = {
-      label: 'Parentesco con el asegurado',
-      name: 'kinship',
-      options: $family.options
-    };
+  parentescoAsegurado = {
+    label: 'Parentesco con el asegurado',
+    name: 'kinship',
+    options: $family.options
+  };
   smokingTypes = {
     options: [
       {
@@ -836,97 +837,97 @@ export class LifeComponent implements OnInit, DoCheck {
         group: 'heartPain'
       },
       {
-        label: 'a. ¿Hipertensión arterial?',
+        label: 'b. ¿Hipertensión arterial?',
         name: 'haveHypertension',
         array: 'hypertensionList',
         group: 'hypertensionVida'
       },
       {
-        label: 'b. ¿Ahogos, ronquera, tos persistente, esputos de sangre, bronquitis, pleuresía, asma, enfisema, tuberculosis o trastornos respiratorios crónicos?',
+        label: 'c. ¿Ahogos, ronquera, tos persistente, esputos de sangre, bronquitis, pleuresía, asma, enfisema, tuberculosis o trastornos respiratorios crónicos?',
         name: 'haveRespiratoryDisorder',
         array: 'respiratoryDisorderList',
         group: 'respiratoryDisorder'
       },
       {
-        label: 'c. ¿Mareos, desmayos, epilepsia, convulsiones, dolor de cabeza, afección del habla, parálisis, apoplejía, trastorno mental o nervioso?',
+        label: 'd. ¿Mareos, desmayos, epilepsia, convulsiones, dolor de cabeza, afección del habla, parálisis, apoplejía, trastorno mental o nervioso?',
         name: 'haveMentalNervousDisorder',
         array: 'mentalNervousDisorderList',
         group: 'mentalNervousDisorder'
       },
       {
-        label: 'd. ¿Ictericia, hemorragia intestinal, úulcera, hernia, apendicitis, colitis, diverticulitis, hemorroides, indigestión recurrente u otro desorden del estómago, intestino, hígado, hepatitis B o C y vesícula biliar?',
+        label: 'e. ¿Ictericia, hemorragia intestinal, úulcera, hernia, apendicitis, colitis, diverticulitis, hemorroides, indigestión recurrente u otro desorden del estómago, intestino, hígado, hepatitis B o C y vesícula biliar?',
         name: 'haveStomachDisorder',
         array: 'stomachDisorderList',
         group: 'stomachDisorder'
       },
       {
-        label: 'e. ¿Tiroides u otro trastorno endocrino?',
+        label: 'f. ¿Tiroides u otro trastorno endocrino?',
         name: 'haveEndocrineDisorder',
         array: 'endocrineDisorderList',
         group: 'endocrineDisorder'
       },
       {
-        label: 'e. ¿Diabetes?',
+        label: 'g. ¿Diabetes?',
         name: 'haveDiabetes',
         array: 'diabetesList',
         group: 'diabetesVida'
       },
       {
-        label: 'f. ¿Neuritis, ciática, reumatismo, artritis, gota o desorden de los músculos o huesos, incluso de la columna vertebral, ¿la espalda y las articulaciones?',
+        label: 'h. ¿Neuritis, ciática, reumatismo, artritis, gota o desorden de los músculos o huesos, incluso de la columna vertebral, ¿la espalda y las articulaciones?',
         name: 'haveSpineDisorder',
         array: 'spineDisorderList',
         group: 'spineDisorder'
       },
       {
-        label: 'g. ¿Enfermedad de la piel, ganglios linfáticos, quiste, tumor, cáncer, sudores nocturnos, fatiga o fiebre sin explicación?',
+        label: 'i. ¿Enfermedad de la piel, ganglios linfáticos, quiste, tumor, cáncer, sudores nocturnos, fatiga o fiebre sin explicación?',
         name: 'haveUnexplainedDisease',
         array: 'unexplainedDiseaseList',
         group: 'unexplainedDisease'
       },
       {
-        label: 'h. ¿Albúmina, azúcar, sangre o pus en la orina, enfermedades venéreas, cálculos renales u otros trastornos renales, de la vejiga, próstata u órganos reproductivos?',
+        label: 'j. ¿Albúmina, azúcar, sangre o pus en la orina, enfermedades venéreas, cálculos renales u otros trastornos renales, de la vejiga, próstata u órganos reproductivos?',
         name: 'haveRenalDisorder',
         array: 'renalDisorderList',
         group: 'renalDisorder'
       },
       {
-        label: 'i. ¿Cualquier problema de los ojos, oídos, nariz o garganta?',
+        label: 'k. ¿Cualquier problema de los ojos, oídos, nariz o garganta?',
         name: 'haveEyesNoseThroatProblem',
         array: 'eyesNoseThroatProblemList',
         group: 'eyesNoseThroatProblem'
       },
       {
-        label: 'j. ¿Alergias, anemia u otro desorden sanguíneo?',
+        label: 'l. ¿Alergias, anemia u otro desorden sanguíneo?',
         name: 'haveBloodDisorder',
         array: 'bloodDisorderList',
         group: 'bloodDisorder'
       },
       {
-        label: 'k. ¿Ha tenido alguna deformidad, enfermedad o defecto congénito?',
+        label: 'm. ¿Ha tenido alguna deformidad, enfermedad o defecto congénito?',
         name: 'haveBirthDefect',
         array: 'birthDefectList',
         group: 'birthDefect'
       },
       {
-        label: 'l. ¿Ha tenido un examen médico, consulta, enfermedad, lesión o procedimientos médicos ambulatorios o intrahospitalarios?',
+        label: 'n. ¿Ha tenido un examen médico, consulta, enfermedad, lesión o procedimientos médicos ambulatorios o intrahospitalarios?',
         name: 'haveMedicalProcedures',
         array: 'medicalProceduresList',
         group: 'medicalProcedures'
       },
       {
-        label: 'm. ¿Ha sido paciente en un hospital, clínica, sanatorio u otra institución médica?',
+        label: 'o. ¿Ha sido paciente en un hospital, clínica, sanatorio u otra institución médica?',
         name: 'haveBeenAPatient',
         array: 'beenAPatientList',
         group: 'beenAPatient'
       },
       {
-        label: 'n. ¿Se ha hecho un electrocardiograma, radiografía u otras pruebas especializadas?',
+        label: 'p. ¿Se ha hecho un electrocardiograma, radiografía u otras pruebas especializadas?',
         name: 'haveHadSpecializedTests',
         array: 'hadSpecializedTestsList',
         group: 'hadSpecializedTests'
       },
       {
-        label: 'o. ¿Se le aconsejó alguna prueba diagnóstica, hospitalización o cirugía que no se ha llevado a cabo?',
+        label: 'q. ¿Se le aconsejó alguna prueba diagnóstica, hospitalización o cirugía que no se ha llevado a cabo?',
         name: 'haveNotCarriedOut',
         array: 'notCarriedOutList',
         group: 'notCarriedOut2'

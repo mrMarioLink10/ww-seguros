@@ -1485,9 +1485,12 @@ export class RefundComponent implements OnInit {
 					this.refundForm.get('diagnosticos').get(x.toString()).get('files').get('otros').get(y.toString()).get('otros').updateValueAndValidity();
 				}
 			}
+			// setTimeout(() => {
+				this.appComponent.showOverlay = false;
+			// },
+			// 5000);
 		});
 		this.refund.id = null;
-		this.appComponent.showOverlay = false;
 
 
 	}

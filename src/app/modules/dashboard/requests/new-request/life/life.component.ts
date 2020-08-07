@@ -548,84 +548,84 @@ export class LifeComponent implements OnInit, DoCheck {
     label: 'Parentesco / Vinculación',
     name: 'familyBeneficiary',
     options: [
-        { value: 'CONYUGE', viewValue: 'CÓNYUGE' },
-        { value: 'HIJO', viewValue: 'HIJO' },
-        { value: 'HIJA', viewValue: 'HIJA' },
-        { value: 'ABUELO', viewValue: 'ABUELO' },
-        { value: 'ABUELA', viewValue: 'ABUELA' },
-        { value: 'TIO', viewValue: 'TIO' },
-        { value: 'TIA', viewValue: 'TIA' },
-        { value: 'HERMANA', viewValue: 'HERMANA' },
-        { value: 'HERMANO', viewValue: 'HERMANO' },
-        { value: 'PADRE', viewValue: 'PADRE' },
-        { value: 'MADRE', viewValue: 'MADRE' },
-        { value: 'HEREDEROS LEGALES', viewValue: 'HEREDEROS LEGALES' },
-        { value: 'SOBRINO', viewValue: 'SOBRINO' },
-        { value: 'SOBRINA', viewValue: 'SOBRINA' },
-        { value: 'NIETO', viewValue: 'NIETO' },
-        { value: 'NIETA', viewValue: 'NIETA' },
-        { value: 'ACREEDOR', viewValue: 'ACREEDOR' },
-        { value: 'SUEGRA', viewValue: 'SUEGRA' },
-        { value: 'SUEGRO', viewValue: 'SUEGRO' },
-        { value: 'HIJASTRA', viewValue: 'HIJASTRA' },
-        { value: 'HIJASTRO', viewValue: 'HIJASTRO' },
-        { value: 'TUTOR', viewValue: 'TUTOR' },
-        { value: 'CESIONARIO', viewValue: 'CESIONARIO' },
-        { value: 'CONTINGENTE', viewValue: 'CONTINGENTE' },
-        { value: 'ACOMPAÑANTE', viewValue: 'ACOMPAÑANTE' },
-        { value: 'AMIGO', viewValue: 'AMIGO' },
-        { value: 'AMIGA', viewValue: 'AMIGA' },
-        { value: 'CUÑADA', viewValue: 'CUÑADA' },
-        { value: 'RELACIONADO', viewValue: 'RELACIONADO' },
-        { value: 'COMADRE', viewValue: 'COMADRE' },
-        { value: 'COMPADRE', viewValue: 'COMPADRE' },
-        { value: 'COMPAÑERA', viewValue: 'COMPAÑERA' },
-        { value: 'COMPAÑERO', viewValue: 'COMPAÑERO' },
-        { value: 'COMPAÑÍA', viewValue: 'COMPAÑÍA' },
-        { value: 'CONTRATANTE', viewValue: 'CONTRATANTE' },
-        { value: 'CONYUGE', viewValue: 'CONYUGE' },
-        { value: 'COMPAÑERO DE VIDA', viewValue: 'COMPAÑERO DE VIDA' },
-        { value: 'CUÑADO', viewValue: 'CUÑADO' },
-        { value: 'PATRONO', viewValue: 'PATRONO' },
-        { value: 'EX ESPOSA', viewValue: 'EX ESPOSA' },
-        { value: 'EX ESPOSO', viewValue: 'EX ESPOSO' },
-        { value: 'FAMILIAR', viewValue: 'FAMILIAR' },
-        { value: 'HIJA ADOPTIVA', viewValue: 'HIJA ADOPTIVA' },
-        { value: 'HIJO ADOPTIVO', viewValue: 'HIJO ADOPTIVO' },
-        { value: 'HIJA DE CRIANZA', viewValue: 'HIJA DE CRIANZA' },
-        { value: 'HIJO DE CRIANZA', viewValue: 'HIJO DE CRIANZA' },
-        { value: 'HERMANA DE CRIANZA', viewValue: 'HERMANA DE CRIANZA' },
-        { value: 'HERMANO DE CRIANZA', viewValue: 'HERMANO DE CRIANZA' },
-        { value: 'MADRASTA', viewValue: 'MADRASTA' },
-        { value: 'PADRASTO', viewValue: 'PADRASTO' },
-        { value: 'MADRE DE CRIANZA', viewValue: 'MADRE DE CRIANZA' },
-        { value: 'PADRE DE CRIANZA', viewValue: 'PADRE DE CRIANZA' },
-        { value: 'MADRE DE LOS HIJOS', viewValue: 'MADRE DE LOS HIJOS' },
-        { value: 'PADRE DE LOS HIJOS', viewValue: 'PADRE DE LOS HIJOS' },
-        { value: 'MADRINA', viewValue: 'MADRINA' },
-        { value: 'PADRINO', viewValue: 'PADRINO' },
-        { value: 'NO DECLARADO', viewValue: 'NO DECLARADO' },
-        { value: 'NOVIA', viewValue: 'NOVIA' },
-        { value: 'NOVIO', viewValue: 'NOVIO' },
-        { value: 'PASTOR DE LA IGLESIA', viewValue: 'PASTOR DE LA IGLESIA' },
-        { value: 'PATRONO', viewValue: 'PATRONO' },
-        { value: 'PRIMA', viewValue: 'PRIMA' },
-        { value: 'PRIMO', viewValue: 'PRIMO' },
-        { value: 'PROTEGIDA', viewValue: 'PROTEGIDA' },
-        { value: 'PROTEGIDO', viewValue: 'PROTEGIDO' },
-        { value: 'SOCIA', viewValue: 'SOCIA' },
-        { value: 'SOCIO', viewValue: 'SOCIO' },
-        { value: 'SOCIEDAD ANONIMA', viewValue: 'SOCIEDAD ANONIMA' },
-        { value: 'TUTORA', viewValue: 'TUTORA' },
-        { value: 'TUTOR', viewValue: 'TUTOR' },
-        { value: 'TUTORES LEGALES', viewValue: 'TUTORES LEGALES' },
-        { value: 'EMPLEADO', viewValue: 'EMPLEADO' },
-        { value: 'HIJO ADULTO', viewValue: 'HIJO ADULTO' },
-        { value: 'HIJA ADULTA', viewValue: 'HIJA ADULTA' },
-        { value: 'YERNO', viewValue: 'YERNO' },
-        { value: 'OTROS', viewValue: 'OTROS' },
+      { value: 'CONYUGE', viewValue: 'CÓNYUGE' },
+      { value: 'HIJO', viewValue: 'HIJO' },
+      { value: 'HIJA', viewValue: 'HIJA' },
+      { value: 'ABUELO', viewValue: 'ABUELO' },
+      { value: 'ABUELA', viewValue: 'ABUELA' },
+      { value: 'TIO', viewValue: 'TIO' },
+      { value: 'TIA', viewValue: 'TIA' },
+      { value: 'HERMANA', viewValue: 'HERMANA' },
+      { value: 'HERMANO', viewValue: 'HERMANO' },
+      { value: 'PADRE', viewValue: 'PADRE' },
+      { value: 'MADRE', viewValue: 'MADRE' },
+      { value: 'HEREDEROS LEGALES', viewValue: 'HEREDEROS LEGALES' },
+      { value: 'SOBRINO', viewValue: 'SOBRINO' },
+      { value: 'SOBRINA', viewValue: 'SOBRINA' },
+      { value: 'NIETO', viewValue: 'NIETO' },
+      { value: 'NIETA', viewValue: 'NIETA' },
+      { value: 'ACREEDOR', viewValue: 'ACREEDOR' },
+      { value: 'SUEGRA', viewValue: 'SUEGRA' },
+      { value: 'SUEGRO', viewValue: 'SUEGRO' },
+      { value: 'HIJASTRA', viewValue: 'HIJASTRA' },
+      { value: 'HIJASTRO', viewValue: 'HIJASTRO' },
+      { value: 'TUTOR', viewValue: 'TUTOR' },
+      { value: 'CESIONARIO', viewValue: 'CESIONARIO' },
+      { value: 'CONTINGENTE', viewValue: 'CONTINGENTE' },
+      { value: 'ACOMPAÑANTE', viewValue: 'ACOMPAÑANTE' },
+      { value: 'AMIGO', viewValue: 'AMIGO' },
+      { value: 'AMIGA', viewValue: 'AMIGA' },
+      { value: 'CUÑADA', viewValue: 'CUÑADA' },
+      { value: 'RELACIONADO', viewValue: 'RELACIONADO' },
+      { value: 'COMADRE', viewValue: 'COMADRE' },
+      { value: 'COMPADRE', viewValue: 'COMPADRE' },
+      { value: 'COMPAÑERA', viewValue: 'COMPAÑERA' },
+      { value: 'COMPAÑERO', viewValue: 'COMPAÑERO' },
+      { value: 'COMPAÑÍA', viewValue: 'COMPAÑÍA' },
+      { value: 'CONTRATANTE', viewValue: 'CONTRATANTE' },
+      { value: 'CONYUGE', viewValue: 'CONYUGE' },
+      { value: 'COMPAÑERO DE VIDA', viewValue: 'COMPAÑERO DE VIDA' },
+      { value: 'CUÑADO', viewValue: 'CUÑADO' },
+      { value: 'PATRONO', viewValue: 'PATRONO' },
+      { value: 'EX ESPOSA', viewValue: 'EX ESPOSA' },
+      { value: 'EX ESPOSO', viewValue: 'EX ESPOSO' },
+      { value: 'FAMILIAR', viewValue: 'FAMILIAR' },
+      { value: 'HIJA ADOPTIVA', viewValue: 'HIJA ADOPTIVA' },
+      { value: 'HIJO ADOPTIVO', viewValue: 'HIJO ADOPTIVO' },
+      { value: 'HIJA DE CRIANZA', viewValue: 'HIJA DE CRIANZA' },
+      { value: 'HIJO DE CRIANZA', viewValue: 'HIJO DE CRIANZA' },
+      { value: 'HERMANA DE CRIANZA', viewValue: 'HERMANA DE CRIANZA' },
+      { value: 'HERMANO DE CRIANZA', viewValue: 'HERMANO DE CRIANZA' },
+      { value: 'MADRASTA', viewValue: 'MADRASTA' },
+      { value: 'PADRASTO', viewValue: 'PADRASTO' },
+      { value: 'MADRE DE CRIANZA', viewValue: 'MADRE DE CRIANZA' },
+      { value: 'PADRE DE CRIANZA', viewValue: 'PADRE DE CRIANZA' },
+      { value: 'MADRE DE LOS HIJOS', viewValue: 'MADRE DE LOS HIJOS' },
+      { value: 'PADRE DE LOS HIJOS', viewValue: 'PADRE DE LOS HIJOS' },
+      { value: 'MADRINA', viewValue: 'MADRINA' },
+      { value: 'PADRINO', viewValue: 'PADRINO' },
+      { value: 'NO DECLARADO', viewValue: 'NO DECLARADO' },
+      { value: 'NOVIA', viewValue: 'NOVIA' },
+      { value: 'NOVIO', viewValue: 'NOVIO' },
+      { value: 'PASTOR DE LA IGLESIA', viewValue: 'PASTOR DE LA IGLESIA' },
+      { value: 'PATRONO', viewValue: 'PATRONO' },
+      { value: 'PRIMA', viewValue: 'PRIMA' },
+      { value: 'PRIMO', viewValue: 'PRIMO' },
+      { value: 'PROTEGIDA', viewValue: 'PROTEGIDA' },
+      { value: 'PROTEGIDO', viewValue: 'PROTEGIDO' },
+      { value: 'SOCIA', viewValue: 'SOCIA' },
+      { value: 'SOCIO', viewValue: 'SOCIO' },
+      { value: 'SOCIEDAD ANONIMA', viewValue: 'SOCIEDAD ANONIMA' },
+      { value: 'TUTORA', viewValue: 'TUTORA' },
+      { value: 'TUTOR', viewValue: 'TUTOR' },
+      { value: 'TUTORES LEGALES', viewValue: 'TUTORES LEGALES' },
+      { value: 'EMPLEADO', viewValue: 'EMPLEADO' },
+      { value: 'HIJO ADULTO', viewValue: 'HIJO ADULTO' },
+      { value: 'HIJA ADULTA', viewValue: 'HIJA ADULTA' },
+      { value: 'YERNO', viewValue: 'YERNO' },
+      { value: 'OTROS', viewValue: 'OTROS' },
     ]
-};
+  };
   family = $family;
   familyRelationship = {
     label: 'Parentesco',
@@ -3130,7 +3130,6 @@ export class LifeComponent implements OnInit, DoCheck {
         this.primaryBenefitsArray = this.newRequest.get('primaryBenefits').get('dependentsC') as FormArray;
         this.contingentBeneficiaryArray = this.newRequest.get('contingentBeneficiary').get('dependentsC') as FormArray;
         this.dependentsFormArray = this.newRequest.get('dependents') as FormArray;
-        this.showContent = true;
 
         const formCB = this.newRequest.get('contingentBeneficiary') as FormGroup;
         const formGI = this.newRequest.get('generalInformation') as FormGroup;
@@ -3174,12 +3173,16 @@ export class LifeComponent implements OnInit, DoCheck {
           formEP.removeControl('insured');
         }
 
-        if (formEP.get('isPayerExposed').value !== 'SI') {
-          formEP.removeControl('payer');
+        if (formEP.get('isPayerExposed')) {
+          if (formEP.get('isPayerExposed').value !== 'SI') {
+            formEP.removeControl('payer');
+          }
         }
 
-        if (formEP.get('isContractorExposed').value !== 'SI') {
-          formEP.removeControl('contractor');
+        if (formEP.get('isContractorExposed')) {
+          if (formEP.get('isContractorExposed').value !== 'SI') {
+            formEP.removeControl('contractor');
+          }
         }
 
         if (formP.get('heightUnit').value !== 'PIE') {
@@ -3344,6 +3347,7 @@ export class LifeComponent implements OnInit, DoCheck {
         this.primaryAnotherTitle = data.data.primaryBenefits.personBenefited;
         this.contigentAnotherTitle = data.data.contingentBeneficiary.personBenefited;
 
+        console.log('DOCUMENTOS', this.newRequest.get('files').get('documentsKnowClient'));
         if (this.newRequest.get('files') && this.newRequest.get('files').get('documentsKnowClient')) {
           this.filesDocumentsKnowClientArray = this.newRequest.get('files').get('documentsKnowClient') as FormArray;
         }
@@ -3358,9 +3362,13 @@ export class LifeComponent implements OnInit, DoCheck {
         this.arrayFilesTitlesCopyId = data.data.files.copyId;
         this.arrayFilesTitlesMercantile = data.data.files.mercantile;
 
+        this.showContent = true;
+
         this.newRequest.markAllAsTouched();
         this.newRequest.updateValueAndValidity();
       }
+
+      this.showContent = true;
 
       this.appComponent.showOverlay = false;
     });

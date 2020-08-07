@@ -2259,22 +2259,22 @@
         <mat-accordion #matAccordion="matAccordion" name="matAccordion" class="ww-mat-accordion example-headers-align"
           [togglePosition]="'before'">
           <app-diving
-            [showWarningDot]="showWarningDot(newRequest.get('questionnairesGastosMayores').get('solicitudBuceo'))"
+            [showWarningDot]="showWarningDot(newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudBuceo'))"
             *ngIf="newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudBuceo')"
             [form]="newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudBuceo')">
             ></app-diving>
           <app-racing
-            [showWarningDot]="showWarningDot(newRequest.get('questionnairesGastosMayores').get('solicitudMoto'))"
+            [showWarningDot]="showWarningDot(newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudMoto'))"
             *ngIf="newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudMoto')"
             [form]="newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudMoto')">
             ></app-racing>
           <app-skydiving
-            [showWarningDot]="showWarningDot(newRequest.get('questionnairesGastosMayores').get('solicitudAviacion'))"
+            [showWarningDot]="showWarningDot(newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudAviacion'))"
             *ngIf="newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudAviacion')"
             [form]="newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudAviacion')">
             ></app-skydiving>
           <app-mountaineering
-            [showWarningDot]="showWarningDot(newRequest.get('questionnairesGastosMayores').get('solicitudMontanismo'))"
+            [showWarningDot]="showWarningDot(newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudMontanismo'))"
             *ngIf="newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudMontanismo')"
             [form]="newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudMontanismo')">
             ></app-mountaineering>

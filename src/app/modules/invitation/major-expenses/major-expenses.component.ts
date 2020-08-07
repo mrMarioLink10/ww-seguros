@@ -3173,10 +3173,12 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
           formQA.removeControl('nicotine');
         }
 
-        if (formQA.get('nicotine').get('isActualSmoker').value !== 'EX-FUMADOR') {
-          const formQAC = formQA.get('nicotine') as FormGroup;
+        if (formQA.get('nicotine')) {
+          if (formQA.get('nicotine').get('isActualSmoker').value !== 'EX-FUMADOR') {
+            const formQAC = formQA.get('nicotine') as FormGroup;
 
-          formQAC.removeControl('lastTimeSmoked');
+            formQAC.removeControl('lastTimeSmoked');
+          }
         }
 
         if (formQA.get('havePregnant').value !== true) {
@@ -3187,7 +3189,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
         formQA.removeControl('haveSpine');
         formQB.removeControl('hasFamilyWithHeartKidneyDisease');
 
-        this.newRequest.removeControl('questionsB');
+        // this.newRequest.removeControl('questionsB');
 
         if (this.newRequest.get('person').get('conozcaSuClientePersona')) {
           formP.removeControl('conozcaSuClientePersona');

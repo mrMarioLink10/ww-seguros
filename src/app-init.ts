@@ -23,6 +23,7 @@ export function initializer(keycloak: KeycloakService): () => Promise<any> {
                 localStorage.setItem('ang-refresh-token', keycloak._instance.refreshToken);
                 localStorage.setItem('user-information', JSON.stringify(keycloak._instance.tokenParsed));
 
+
                 // tslint:disable: max-line-length
                 setInterval(() => {
                     // console.log('No te mentire, se ve muy fresco el pana token, se vence en: ' + Math.round(keycloak._instance.tokenParsed.exp + keycloak._instance.timeSkew - new Date().getTime() / 1000) + ' segundos');

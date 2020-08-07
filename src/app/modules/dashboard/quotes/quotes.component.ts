@@ -96,11 +96,11 @@ export class QuotesComponent implements OnInit {
   }
 
   navigateToSaludPdf(id) {
-    window.open(`${environment.urlCotizadores}/salud/cotizacion-${id}.pdf`, '_blank');
+    window.open(`${environment.urlCotizadoresPdf}/salud/cotizacion-${id}.pdf`, '_blank');
 
 }
   navigateToLifePdf(id) {
-      window.open(`${environment.urlCotizadores}/tmp/cotizacion-${id}.pdf`, '_blank');
+      window.open(`${environment.urlCotizadoresPdf}/tmp/cotizacion-${id}.pdf`, '_blank');
 
   }
   newQuote() {

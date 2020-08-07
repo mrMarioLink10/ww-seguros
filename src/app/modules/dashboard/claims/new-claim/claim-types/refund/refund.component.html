@@ -202,12 +202,23 @@
               label="Descripción del procedimiento">
             </app-text-area>
           </div>
-          <div class="mr-3">
+          <div *ngIf="refundForm.get('informacion').get('tipoReclamo').value !== 'INTERNACIONAL'" class="mr-3">
             <app-select name="categoria" [options]="categoriasField"
               [group]="refundForm.get('diagnosticos').get(i.toString())">
             </app-select>
           </div>
-          <div *ngIf="refundForm.get('diagnosticos').get(i.toString()).get('categoria').value == 'OTROS_PROVEEDORES'"
+          <div *ngIf="refundForm.get('informacion').get('tipoReclamo').value === 'INTERNACIONAL'" class="mr-3">
+            <app-input name="categoria" label="Categoria"
+              [group]="refundForm.get('diagnosticos').get(i.toString())">
+            </app-input>
+          </div>
+          <div *ngIf="refundForm.get('informacion').get('tipoReclamo').value === 'INTERNACIONAL'" class="mr-3 md:col-span-2">
+            <app-input name="proveedor" label="Proveedores"
+              [group]="refundForm.get('diagnosticos').get(i.toString())">
+            </app-input>
+          </div>
+          <div *ngIf="refundForm.get('diagnosticos').get(i.toString()).get('categoria').value == 'OTROS_PROVEEDORES' &&
+          refundForm.get('informacion').get('tipoReclamo').value !== 'INTERNACIONAL'"
             class="mr-3 md:col-span-2">
             <!-- <app-select name="proveedor" [options]="OtrosproveedoresField"
               [group]="refundForm.get('diagnosticos').get(i.toString())">
@@ -233,7 +244,8 @@
           </div>
 
           <div
-            *ngIf="refundForm.get('diagnosticos').get(i.toString()).get('categoria').value == 'CENTROS_ESPECIALIZADOS'"
+            *ngIf="refundForm.get('diagnosticos').get(i.toString()).get('categoria').value == 'CENTROS_ESPECIALIZADOS' &&
+            refundForm.get('informacion').get('tipoReclamo').value !== 'INTERNACIONAL'"
             class="mr-3 md:col-span-2">
             <!-- <app-select name="proveedor" [options]="CentrosField"
               [group]="refundForm.get('diagnosticos').get(i.toString())">
@@ -257,7 +269,8 @@
               </mat-form-field>
             </form>
           </div>
-          <div *ngIf="refundForm.get('diagnosticos').get(i.toString()).get('categoria').value == 'FARMACIAS'"
+          <div *ngIf="refundForm.get('diagnosticos').get(i.toString()).get('categoria').value == 'FARMACIAS' &&
+          refundForm.get('informacion').get('tipoReclamo').value !== 'INTERNACIONAL'"
             class="mr-3 md:col-span-2">
             <!-- <app-select name="proveedor" [options]="farmaciasField"
               [group]="refundForm.get('diagnosticos').get(i.toString())">
@@ -281,7 +294,8 @@
               </mat-form-field>
             </form>
           </div>
-          <div *ngIf="refundForm.get('diagnosticos').get(i.toString()).get('categoria').value == 'CLINICAS_HOSPITALES'"
+          <div *ngIf="refundForm.get('diagnosticos').get(i.toString()).get('categoria').value == 'CLINICAS_HOSPITALES' &&
+          refundForm.get('informacion').get('tipoReclamo').value !== 'INTERNACIONAL'"
             class="mr-3 md:col-span-2">
             <!-- <app-select name="proveedor" [options]="clinicasField"
               [group]="refundForm.get('diagnosticos').get(i.toString())">
@@ -305,7 +319,8 @@
               </mat-form-field>
             </form>
           </div>
-          <div *ngIf="refundForm.get('diagnosticos').get(i.toString()).get('categoria').value == 'LABORATORIOS'"
+          <div *ngIf="refundForm.get('diagnosticos').get(i.toString()).get('categoria').value == 'LABORATORIOS' &&
+          refundForm.get('informacion').get('tipoReclamo').value !== 'INTERNACIONAL'"
             class="mr-3 md:col-span-2">
             <!-- <app-select name="proveedor" [options]="labsField"
               [group]="refundForm.get('diagnosticos').get(i.toString())">
@@ -329,7 +344,8 @@
               </mat-form-field>
             </form>
           </div>
-          <div *ngIf="refundForm.get('diagnosticos').get(i.toString()).get('categoria').value == 'MEDICOS'"
+          <div *ngIf="refundForm.get('diagnosticos').get(i.toString()).get('categoria').value == 'MEDICOS' &&
+          refundForm.get('informacion').get('tipoReclamo').value !== 'INTERNACIONAL'"
             class="mr-3 md:col-span-2">
             <!-- <app-select name="proveedor" [options]="medicosField"
               [group]="refundForm.get('diagnosticos').get(i.toString())">
@@ -381,7 +397,10 @@
             </div>
           </div>
         </div>
-        <div class="mt-3 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
+        <div class="mt-3 mb-1 formulary-labels">
+            <label> <strong> Formato de los documentos: PDF (.pdf), JPG (.jpg) y PNG (.png)</strong> </label>
+        </div>
+        <div class="mt-3 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-5 xl:grid-cols-5">
           <div class="mr-3">
             <div
               *ngFor="let appliedStudies of refundForm.get('diagnosticos').get(i.toString()).get('files').get('invoices')['controls']; let ix = index"
@@ -491,6 +510,33 @@
               <mat-icon style="color: #18446B">add</mat-icon>
             </button>
           </div>
+
+          <div class="mr-3">
+            <div
+              *ngFor="let appliedStudies of refundForm.get('diagnosticos').get(i.toString()).get('files').get('otros')['controls']; let ix = index"
+              [ngClass]="{'grid grid-cols-5': refundForm.get('diagnosticos').get(i.toString()).get('files').get('otros')['controls'].length > 1}">
+              <app-file-input class="mr-3"
+                [ngClass]="{'col-span-4': refundForm.get('diagnosticos').get(i.toString()).get('files').get('otros')['controls'].length > 1}"
+                [group]="refundForm.get('diagnosticos').get(i.toString()).get('files').get('otros').get(ix.toString())"
+                name="otros" label="Otros" [fileNameWatcher]="fileNameWatcher('otros', i, ix)"
+                (onFileChange)="onFileChange($event, 'otros', i, ix)">
+              </app-file-input>
+              <div
+                [ngClass]="{'col-span-1 ml-2 mt-1': refundForm.get('diagnosticos').get(i.toString()).get('files').get('otros')['controls'].length > 1}">
+                <button mat-mini-fab aria-label=" Eliminar archivo"
+                  *ngIf="refundForm.get('diagnosticos').get(i.toString()).get('files').get('otros')['controls'].length > 1"
+                  (click)="removeToList(ix, returnAsFormArray(refundForm.get('diagnosticos').get(i.toString()).get('files').get('otros')))"
+                  type="button" class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
+                  <mat-icon style="color: #18446B">remove</mat-icon>
+                </button>
+              </div>
+            </div>
+            <button mat-mini-fab aria-label="Agregar archivo"
+              (click)="addToList(returnAsFormArray(refundForm.get('diagnosticos').get(i.toString()).get('files').get('otros')), 'otros')"
+              type="button" class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
+              <mat-icon style="color: #18446B">add</mat-icon>
+            </button>
+          </div>
         </div>
         <hr class=" my-4 w-full ww-divider">
 
@@ -551,6 +597,10 @@
             (change)="changePayment($event)">
             {{option.viewValue}}</mat-radio-button>
         </mat-radio-group>
+        <mat-error style="font-size: 10px;"
+          *ngIf="refundForm.get('forma').touched && !refundForm.get('forma').valid">
+          Este campo es obligatorio
+        </mat-error>
       </div>
 
       <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
@@ -569,15 +619,42 @@
           </app-radio-button>
         </div>
         <div class="mr-3">
-          <app-radio-button [group]="refundForm.get('infoTransferencia')" name="tipoMoneda" [options]="tipoMoneda">
+          <app-radio-button   *ngIf="refundForm.get('informacion').get('tipoReclamo') && refundForm.get('informacion').get('tipoReclamo').value === 'INTERNACIONAL'" [group]="refundForm.get('infoTransferencia')" name="tipoMoneda" [options]="tipoMoneda">
+          </app-radio-button>
+          <app-radio-button   *ngIf="refundForm.get('informacion').get('tipoReclamo') && refundForm.get('informacion').get('tipoReclamo').value === 'LOCAL'" [group]="refundForm.get('infoTransferencia')" name="tipoMoneda" [options]="tipoMonedaLocalInfo">
           </app-radio-button>
         </div>
+
         <div class="mr-3 sm:col-span-2">
           <!-- <app-input [group]="refundForm.get('infoTransferencia')" label="Banco Emisor" name='bancoEmisor'
             placeholder="BHD Leon">
           </app-input> -->
-          <app-select name="bancoEmisor" [options]="banksField" [group]="refundForm.get('infoTransferencia')">
-          </app-select>
+          <!-- <app-select name="bancoEmisor" [options]="banksField" [group]="refundForm.get('infoTransferencia')">
+          </app-select> -->
+
+          <form [formGroup]="refundForm.get('infoTransferencia')">
+            <mat-form-field color="accent" appearance="outline" class="w-full bg-transparente"
+              style="font-size: small !important;">
+              <mat-label>Banco Emisor</mat-label>
+              <input formControlName="bancoEmisor" matInput class="" type="text" [matAutocomplete]="auto3"
+                placeholder="">
+              <mat-autocomplete #auto3="matAutocomplete" [displayWith]="displayFn">
+                <mat-option *ngFor="let option of filteredOptionsBanks | async" [value]="option">
+                  {{option}}
+                </mat-option>
+              </mat-autocomplete>
+              <mat-error
+                *ngIf="refundForm.get('infoTransferencia').get('bancoEmisor').touched && !refundForm.get('infoTransferencia').get('bancoEmisor').valid">
+                Este campo es obligatorio
+              </mat-error>
+            </mat-form-field>
+          </form>
+
+          <div *ngIf="refundForm.get('informacion').get('tipoReclamo').value == 'INTERNACIONAL'" class="mt-3 sm:col-span-2">
+            <app-text-area [group]="refundForm.get('infoTransferencia')" name="instruccion"
+                  label="Intrucciones para transferencias internacionales">
+            </app-text-area>
+          </div>
         </div>
 
 

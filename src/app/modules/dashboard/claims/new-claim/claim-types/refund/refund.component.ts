@@ -83,6 +83,15 @@ export class RefundComponent implements OnInit {
 			}
 		]
 	};
+  tipoMonedaLocalInfo: FieldConfig = {
+		label: 'Moneda',
+		options: [
+			{
+				value: 'PESOS',
+				viewValue: 'Pesos'
+			}
+		]
+	};
 
 	tipoMoneda: FieldConfig = {
 		label: 'Moneda',
@@ -117,7 +126,7 @@ export class RefundComponent implements OnInit {
 
 	filteredOptions: Observable<any[]>;
 	filteredOptionsProveedor = [];
-
+	filteredOptionsBanks: Observable<any[]>;
 	cuentaTipos: FieldConfig = {
 		label: 'Tipo de Cuenta',
 		options: [
@@ -486,6 +495,56 @@ export class RefundComponent implements OnInit {
 		// 	});
 		// }
 
+		this.refundForm.get('informacion').get('tipoReclamo').valueChanges.subscribe( valueReclamo => {
+
+			if (valueReclamo == 'INTERNACIONAL') {
+				for (let x = 0; x < this.diagnosticList.length; x++) {
+					// setTimeout(() => {
+						this.refundForm.get('diagnosticos').get(x.toString()).get('tipoReclamoMoneda').setValue('DOLARES');
+						this.refundForm.get('diagnosticos').get(x.toString()).get('categoria').setValue('INTERNACIONAL');
+						this.refundForm.get('diagnosticos').get(x.toString()).get('categoria').disable();
+						// this.categoriaSubscribe[x].unsubscribe();
+					// }, 1000);
+				}
+				if (this.refundForm.get('infoTransferencia')) {
+					(this.refundForm.get('infoTransferencia') as FormGroup).addControl('instruccion', this.fb.control('', Validators.required));
+					(this.refundForm.get('infoTransferencia') as FormGroup).addControl('tipoMoneda', this.fb.control('', Validators.required));
+					this.refundForm.get('infoTransferencia').get('tipoMoneda').setValue('');
+					// if (!this.refundForm.get('infoTransferencia').get('instruccion').valid) {
+					// 	this.refundForm.get('infoTransferencia').get('instruccion').markAsTouched();
+					// 	this.refundForm.get('infoTransferencia').get('instruccion').updateValueAndValidity();
+					// }
+				}
+
+			}
+			else {
+				for (let x = 0; x < this.diagnosticList.length; x++) {
+					this.refundForm.get('diagnosticos').get(x.toString()).get('tipoReclamoMoneda').setValue('');
+					setTimeout(() => {
+						// this.refundForm.get('diagnosticos').get(x.toString()).get('categoria').setValue('');
+						this.refundForm.get('diagnosticos').get(x.toString()).get('categoria').enable();
+						this.refundForm.get('diagnosticos').get(x.toString()).get('proveedor').setValue('');
+						this.refundForm.get('diagnosticos').get(x.toString()).get('proveedor').markAsUntouched();
+					}, 500);
+					// this.manageFilters(x);
+				}
+				if (this.refundForm.get('infoTransferencia')) {
+					(this.refundForm.get('infoTransferencia') as FormGroup).removeControl('instruccion');
+					(this.refundForm.get('infoTransferencia') as FormGroup).addControl('tipoMoneda', this.fb.control('', Validators.required));
+					this.refundForm.get('infoTransferencia').get('tipoMoneda').setValue('');
+				}
+			}
+		});
+
+		// if (this.refundForm.get('infoTransferencia')) {
+		// 	this.filteredOptionsBanks = this.refundForm.get('infoTransferencia').get('bancoEmisor').valueChanges
+		// 		.pipe(
+		// 			startWith(''),
+		// 			map(value => typeof value === 'string' ? value : value),
+		// 			map(value => value ? this._filterBanks(value) : this.banks.slice())
+		// 		);
+		// }
+
 		console.log('El json de todo el formulario: ', JSON.stringify(this.refundForm.value));
 
 	}
@@ -569,8 +628,6 @@ export class RefundComponent implements OnInit {
 	showWarningDot(form: any): boolean {
 		if (!this.ID) {
 			if (form === this.refundForm.get('forma') && this.refundForm.get('infoTransferencia')) {
-				console.log(!this.refundForm.get('infoTransferencia').valid);
-
 				if (!this.refundForm.get('infoTransferencia').valid && this.form.submitted) {
 					return true;
 				} else {
@@ -584,10 +641,18 @@ export class RefundComponent implements OnInit {
 				}
 			}
 		} else {
-			if (form.valid) {
-				return false;
+			if (form === this.refundForm.get('forma') && this.refundForm.get('infoTransferencia')) {
+				if (!this.refundForm.get('infoTransferencia').valid) {
+					return true;
+				} else {
+					return false;
+				}
 			} else {
-				return true;
+				if (!form.valid) {
+					return true;
+				} else {
+					return false;
+				}
 			}
 		}
 	}
@@ -666,6 +731,19 @@ export class RefundComponent implements OnInit {
 				}
 			// }
 		}
+	}
+
+	private _filterBanks(value): any[] {
+
+
+		// if (this.refundForm.get('informacion').get('filterType').value == 'NOMBRE') {
+		// 	const filterValue = value.toLowerCase();
+
+		// 	return this.dataAutoCompleteName.filter(option => option.toLowerCase().indexOf(filterValue) === 0);
+		// }
+		const filterValue = value.toLowerCase();
+
+		return this.banks.filter(option => option.toLowerCase().indexOf(filterValue) === 0);
 	}
 
 	//   consoleMethod(nameOption){
@@ -780,10 +858,11 @@ export class RefundComponent implements OnInit {
 
 			// tslint:disable-next-line: prefer-for-of
 			for (let x = 0; x < data.data.length; x++) {
-				this.banks.push({
-					value: data.data[x].descripcion,
-					viewValue: data.data[x].descripcion,
-				});
+				// this.banks.push({
+				// 	value: data.data[x].descripcion,
+				// 	viewValue: data.data[x].descripcion,
+				// });
+				this.banks.push(data.data[x].descripcion);
 			}
 		});
 	}
@@ -872,6 +951,7 @@ export class RefundComponent implements OnInit {
 	changePayment(event) {
 		if (event.value === 'CHEQUE') {
 			this.refundForm.removeControl('infoTransferencia');
+			// this.filteredOptionsBanks.unsubscribe();
 		} else if (event.value === 'TRANSFERENCIA') {
 			this.refundForm.addControl(
 				'infoTransferencia',
@@ -879,9 +959,34 @@ export class RefundComponent implements OnInit {
 					noCuenta: ['', Validators.required],
 					tipoCuenta: ['', Validators.required],
 					bancoEmisor: ['', Validators.required],
-					tipoMoneda: ['', Validators.required]
+					// tipoMoneda: ['', Validators.required]
 				})
 			);
+
+			if (this.refundForm.get('infoTransferencia') &&
+			this.refundForm.get('informacion').get('tipoReclamo').value == 'INTERNACIONAL' &&
+			!this.refundForm.get('infoTransferencia').get('instruccion')) {
+				(this.refundForm.get('infoTransferencia') as FormGroup).addControl('instruccion', this.fb.control('', Validators.required));
+				// if (!this.refundForm.get('infoTransferencia').get('instruccion').valid) {
+				// 	this.refundForm.get('infoTransferencia').get('instruccion').markAsTouched();
+				// 	this.refundForm.get('infoTransferencia').get('instruccion').updateValueAndValidity();
+				// }
+			}
+
+			if (this.refundForm.get('infoTransferencia') &&
+			(this.refundForm.get('informacion').get('tipoReclamo').value == 'INTERNACIONAL' ||
+			this.refundForm.get('informacion').get('tipoReclamo').value == 'LOCAL') &&
+			!this.refundForm.get('infoTransferencia').get('tipoMoneda')) {
+				(this.refundForm.get('infoTransferencia') as FormGroup).addControl('tipoMoneda', this.fb.control('', Validators.required));
+				this.refundForm.get('infoTransferencia').get('tipoMoneda').setValue('');
+			}
+
+			this.filteredOptionsBanks = this.refundForm.get('infoTransferencia').get('bancoEmisor').valueChanges
+				.pipe(
+					startWith(''),
+					map(value => typeof value === 'string' ? value : value),
+					map(value => value ? this._filterBanks(value) : this.banks.slice())
+				);
 		}
 	}
 
@@ -891,7 +996,7 @@ export class RefundComponent implements OnInit {
 			noCuenta: ['', Validators.required],
 			tipoCuenta: ['', Validators.required],
 			bancoEmisor: ['', Validators.required],
-			tipoMoneda: ['', Validators.required],
+			// tipoMoneda: ['', Validators.required],
 			// correo: ['', Validators.required]
 		});
 	}
@@ -911,6 +1016,7 @@ export class RefundComponent implements OnInit {
 				indications: this.fb.array([this.createFormArray('indications')]),
 				medicReports: this.fb.array([this.createFormArray('medicReports')]),
 				paymentVouchers: this.fb.array([this.createFormArray('paymentVouchers')]),
+				otros: this.fb.array([this.createFormArray('otros')]),
 			})
 		});
 	}
@@ -920,28 +1026,48 @@ export class RefundComponent implements OnInit {
 		this.diagnosticList.push(this.createDiagnostic());
 		this.manageFilters(this.diagnosticList.length - 1);
 		this.filterValueArray.push();
+
+		// this.refundForm.get('informacion').get('tipoReclamo').valueChanges.subscribe( valueReclamo => {
+
+		if (this.refundForm.get('informacion').get('tipoReclamo').value == 'INTERNACIONAL') {
+				// for (let x = 0; x < this.diagnosticList.length; x++) {
+					// setTimeout(() => {
+						this.refundForm.get('diagnosticos').get((this.diagnosticList.length - 1).toString()
+						).get('tipoReclamoMoneda').setValue('DOLARES');
+						this.refundForm.get('diagnosticos').get((this.diagnosticList.length - 1).toString()).get('categoria').setValue('INTERNACIONAL');
+						this.refundForm.get('diagnosticos').get((this.diagnosticList.length - 1).toString()).get('categoria').disable();
+						// this.categoriaSubscribe[(this.diagnosticList.length - 1)].unsubscribe();
+					// }, 2000);
+				// }
+			}
+		// });
 	}
 
 	createFormArray(type: string): any {
 		switch (type) {
 			case 'invoices':
 				return this.fb.group({
-					invoices: ['', Validators.required],
+					invoices: [''],
 				});
 
 			case 'indications':
 				return this.fb.group({
-					indications: ['', Validators.required],
+					indications: [''],
 				});
 
 			case 'medicReports':
 				return this.fb.group({
-					medicReports: ['', Validators.required],
+					medicReports: [''],
 				});
 
 			case 'paymentVouchers':
 				return this.fb.group({
-					paymentVouchers: ['', Validators.required],
+					paymentVouchers: [''],
+				});
+
+			case 'otros':
+				return this.fb.group({
+					otros: [''],
 				});
 
 			default:
@@ -994,25 +1120,25 @@ export class RefundComponent implements OnInit {
 						y++;
 					}
 					this.manageFilters(x);
-					this.refundForm.get('diagnosticos').get((x).toString()).get('categoria').setValue('');
-					this.refundForm.get('diagnosticos').get((x).toString()).get('categoria').setValue(valuePrueba[x]);
+					// this.refundForm.get('diagnosticos').get((x).toString()).get('categoria').setValue('');
+					this.refundForm.get('diagnosticos').get((x).toString()).get('categoria').setValue(valuePrueba[x].toUpperCase());
 					this.refundForm.get('diagnosticos').get((x).toString()).get('proveedor').setValue('');
 					// this.refundForm.get('diagnosticos').get((x).toString()).get('proveedor').updateValueAndValidity();
-					this.refundForm.get('diagnosticos').get((x).toString()).get('proveedor').setValue(valuePrueba2[x]);
+					this.refundForm.get('diagnosticos').get((x).toString()).get('proveedor').setValue(valuePrueba2[x].toUpperCase());
 
 					setTimeout(() => {
 						this.refundForm.get('diagnosticos').get((x).toString()).get('proveedor'
-						).setValue(valuePrueba2[x] + ' ');
+						).setValue(valuePrueba2[x].toUpperCase() + ' ');
 						console.log('yaaaaaaaaaaaaaa proveedor ' + x + ' eliminar');
 					},
-					1000);
+					500);
 
 					setTimeout(() => {
 						this.refundForm.get('diagnosticos').get((x).toString()).get('proveedor'
-						).setValue(valuePrueba2[x]);
+						).setValue(valuePrueba2[x].toUpperCase());
 						console.log('yaaaaaaaaaaaaaa proveedor ' + x + ' eliminar, parte 2');
 					},
-					1000);
+					500);
 
 					this.refundForm.get('diagnosticos').updateValueAndValidity();
 
@@ -1294,10 +1420,77 @@ export class RefundComponent implements OnInit {
 					console.log('yaaaaaaaaaaaaaa proveedor ' + x + ', parte 2');
 				},
 				2000);
+
+				if (this.refundForm.get('informacion').get('tipoReclamo').value == 'INTERNACIONAL') {
+					// for (let x = 0; x < this.diagnosticList.length; x++) {
+						// setTimeout(() => {
+							// this.refundForm.get('diagnosticos').get(x.toString()).get('tipoReclamoMoneda').setValue('DOLARES');
+							// this.refundForm.get('diagnosticos').get(x.toString()).get('categoria').setValue('INTERNACIONAL');
+							this.refundForm.get('diagnosticos').get(x.toString()).get('categoria').disable();
+							// this.categoriaSubscribe[x].unsubscribe();
+						// }, 1000);
+					// }
+				}
+
 			}
+			if (this.refundForm.get('infoTransferencia')) {
+
+				const valueBanco = this.refundForm.get('infoTransferencia').get('bancoEmisor').value;
+				this.filteredOptionsBanks = this.refundForm.get('infoTransferencia').get('bancoEmisor').valueChanges
+				.pipe(
+					startWith(''),
+					map(value => typeof value === 'string' ? value : value),
+					map(value => value ? this._filterBanks(value) : this.banks.slice())
+				);
+				setTimeout(() => {
+					this.refundForm.get('infoTransferencia').get('bancoEmisor').setValue(valueBanco + ' ');
+					console.log('yaaaaaaaaaaaaaa bancoEmisor ');
+				},
+				1000);
+				setTimeout(() => {
+					this.refundForm.get('infoTransferencia').get('bancoEmisor').setValue(valueBanco);
+					console.log('yaaaaaaaaaaaaaa bancoEmisor, parte 2');
+				},
+				2000);
+			}
+			for (let x = 0; x < this.diagnosticList.length; x++) {
+
+				for (let y = 0; y < this.refundForm.get('diagnosticos').get(x.toString()).get('files').get('invoices')['controls'].length; y++) {
+
+					this.refundForm.get('diagnosticos').get(x.toString()).get('files').get('invoices').get(y.toString()).get('invoices').clearValidators();
+					this.refundForm.get('diagnosticos').get(x.toString()).get('files').get('invoices').get(y.toString()).get('invoices').updateValueAndValidity();
+				}
+
+				for (let y = 0; y < this.refundForm.get('diagnosticos').get(x.toString()).get('files').get('indications')['controls'].length; y++) {
+
+					this.refundForm.get('diagnosticos').get(x.toString()).get('files').get('indications').get(y.toString()).get('indications').clearValidators();
+					this.refundForm.get('diagnosticos').get(x.toString()).get('files').get('indications').get(y.toString()).get('indications').updateValueAndValidity();
+				}
+
+				for (let y = 0; y < this.refundForm.get('diagnosticos').get(x.toString()).get('files').get('medicReports')['controls'].length; y++) {
+
+					this.refundForm.get('diagnosticos').get(x.toString()).get('files').get('medicReports').get(y.toString()).get('medicReports').clearValidators();
+					this.refundForm.get('diagnosticos').get(x.toString()).get('files').get('medicReports').get(y.toString()).get('medicReports').updateValueAndValidity();
+				}
+
+				for (let y = 0; y < this.refundForm.get('diagnosticos').get(x.toString()).get('files').get('paymentVouchers')['controls'].length; y++) {
+
+					this.refundForm.get('diagnosticos').get(x.toString()).get('files').get('paymentVouchers').get(y.toString()).get('paymentVouchers').clearValidators();
+					this.refundForm.get('diagnosticos').get(x.toString()).get('files').get('paymentVouchers').get(y.toString()).get('paymentVouchers').updateValueAndValidity();
+				}
+
+				for (let y = 0; y < this.refundForm.get('diagnosticos').get(x.toString()).get('files').get('otros')['controls'].length; y++) {
+
+					this.refundForm.get('diagnosticos').get(x.toString()).get('files').get('otros').get(y.toString()).get('otros').clearValidators();
+					this.refundForm.get('diagnosticos').get(x.toString()).get('files').get('otros').get(y.toString()).get('otros').updateValueAndValidity();
+				}
+			}
+			// setTimeout(() => {
+				this.appComponent.showOverlay = false;
+			// },
+			// 5000);
 		});
 		this.refund.id = null;
-		this.appComponent.showOverlay = false;
 
 
 	}

@@ -172,6 +172,88 @@ export class LifeComponent implements OnInit, DoCheck {
     name: 'time'
   };
 
+  familyBeneficiary = {
+    label: 'Parentesco / Vinculación',
+    name: 'familyBeneficiary',
+    options: [
+        { value: 'CONYUGE', viewValue: 'CÓNYUGE' },
+        { value: 'HIJO', viewValue: 'HIJO' },
+        { value: 'HIJA', viewValue: 'HIJA' },
+        { value: 'ABUELO', viewValue: 'ABUELO' },
+        { value: 'ABUELA', viewValue: 'ABUELA' },
+        { value: 'TIO', viewValue: 'TIO' },
+        { value: 'TIA', viewValue: 'TIA' },
+        { value: 'HERMANA', viewValue: 'HERMANA' },
+        { value: 'HERMANO', viewValue: 'HERMANO' },
+        { value: 'PADRE', viewValue: 'PADRE' },
+        { value: 'MADRE', viewValue: 'MADRE' },
+        { value: 'HEREDEROS LEGALES', viewValue: 'HEREDEROS LEGALES' },
+        { value: 'SOBRINO', viewValue: 'SOBRINO' },
+        { value: 'SOBRINA', viewValue: 'SOBRINA' },
+        { value: 'NIETO', viewValue: 'NIETO' },
+        { value: 'NIETA', viewValue: 'NIETA' },
+        { value: 'ACREEDOR', viewValue: 'ACREEDOR' },
+        { value: 'SUEGRA', viewValue: 'SUEGRA' },
+        { value: 'SUEGRO', viewValue: 'SUEGRO' },
+        { value: 'HIJASTRA', viewValue: 'HIJASTRA' },
+        { value: 'HIJASTRO', viewValue: 'HIJASTRO' },
+        { value: 'TUTOR', viewValue: 'TUTOR' },
+        { value: 'CESIONARIO', viewValue: 'CESIONARIO' },
+        { value: 'CONTINGENTE', viewValue: 'CONTINGENTE' },
+        { value: 'ACOMPAÑANTE', viewValue: 'ACOMPAÑANTE' },
+        { value: 'AMIGO', viewValue: 'AMIGO' },
+        { value: 'AMIGA', viewValue: 'AMIGA' },
+        { value: 'CUÑADA', viewValue: 'CUÑADA' },
+        { value: 'RELACIONADO', viewValue: 'RELACIONADO' },
+        { value: 'COMADRE', viewValue: 'COMADRE' },
+        { value: 'COMPADRE', viewValue: 'COMPADRE' },
+        { value: 'COMPAÑERA', viewValue: 'COMPAÑERA' },
+        { value: 'COMPAÑERO', viewValue: 'COMPAÑERO' },
+        { value: 'COMPAÑÍA', viewValue: 'COMPAÑÍA' },
+        { value: 'CONTRATANTE', viewValue: 'CONTRATANTE' },
+        { value: 'CONYUGE', viewValue: 'CONYUGE' },
+        { value: 'COMPAÑERO DE VIDA', viewValue: 'COMPAÑERO DE VIDA' },
+        { value: 'CUÑADO', viewValue: 'CUÑADO' },
+        { value: 'PATRONO', viewValue: 'PATRONO' },
+        { value: 'EX ESPOSA', viewValue: 'EX ESPOSA' },
+        { value: 'EX ESPOSO', viewValue: 'EX ESPOSO' },
+        { value: 'FAMILIAR', viewValue: 'FAMILIAR' },
+        { value: 'HIJA ADOPTIVA', viewValue: 'HIJA ADOPTIVA' },
+        { value: 'HIJO ADOPTIVO', viewValue: 'HIJO ADOPTIVO' },
+        { value: 'HIJA DE CRIANZA', viewValue: 'HIJA DE CRIANZA' },
+        { value: 'HIJO DE CRIANZA', viewValue: 'HIJO DE CRIANZA' },
+        { value: 'HERMANA DE CRIANZA', viewValue: 'HERMANA DE CRIANZA' },
+        { value: 'HERMANO DE CRIANZA', viewValue: 'HERMANO DE CRIANZA' },
+        { value: 'MADRASTA', viewValue: 'MADRASTA' },
+        { value: 'PADRASTO', viewValue: 'PADRASTO' },
+        { value: 'MADRE DE CRIANZA', viewValue: 'MADRE DE CRIANZA' },
+        { value: 'PADRE DE CRIANZA', viewValue: 'PADRE DE CRIANZA' },
+        { value: 'MADRE DE LOS HIJOS', viewValue: 'MADRE DE LOS HIJOS' },
+        { value: 'PADRE DE LOS HIJOS', viewValue: 'PADRE DE LOS HIJOS' },
+        { value: 'MADRINA', viewValue: 'MADRINA' },
+        { value: 'PADRINO', viewValue: 'PADRINO' },
+        { value: 'NO DECLARADO', viewValue: 'NO DECLARADO' },
+        { value: 'NOVIA', viewValue: 'NOVIA' },
+        { value: 'NOVIO', viewValue: 'NOVIO' },
+        { value: 'PASTOR DE LA IGLESIA', viewValue: 'PASTOR DE LA IGLESIA' },
+        { value: 'PATRONO', viewValue: 'PATRONO' },
+        { value: 'PRIMA', viewValue: 'PRIMA' },
+        { value: 'PRIMO', viewValue: 'PRIMO' },
+        { value: 'PROTEGIDA', viewValue: 'PROTEGIDA' },
+        { value: 'PROTEGIDO', viewValue: 'PROTEGIDO' },
+        { value: 'SOCIA', viewValue: 'SOCIA' },
+        { value: 'SOCIO', viewValue: 'SOCIO' },
+        { value: 'SOCIEDAD ANONIMA', viewValue: 'SOCIEDAD ANONIMA' },
+        { value: 'TUTORA', viewValue: 'TUTORA' },
+        { value: 'TUTOR', viewValue: 'TUTOR' },
+        { value: 'TUTORES LEGALES', viewValue: 'TUTORES LEGALES' },
+        { value: 'EMPLEADO', viewValue: 'EMPLEADO' },
+        { value: 'HIJO ADULTO', viewValue: 'HIJO ADULTO' },
+        { value: 'HIJA ADULTA', viewValue: 'HIJA ADULTA' },
+        { value: 'YERNO', viewValue: 'YERNO' },
+        { value: 'OTROS', viewValue: 'OTROS' },
+    ]
+};
   weightUnit = {
     label: 'Unidad de peso',
     options: $weightTypes,
@@ -228,13 +310,13 @@ export class LifeComponent implements OnInit, DoCheck {
   };
 
   contigentBenefits = {
-    name: [''],
-    id2: [''],
-    id2Attached: [''],
-    nationality: [''],
-    ocupation: [''],
-    family: [''],
-    quantity: ['', [Validators.min(1), Validators.max(100)]]
+    nameBenefited: [''],
+    id2Benefited: [''],
+    id2AttachedBenefited: [''],
+    nationalityBenefited: [''],
+    ocupationBenefited: [''],
+    familyBenefited: [''],
+    quantityBenefited: ['', [Validators.min(1), Validators.max(100)]]
   };
 
   annualIncomeValues = {
@@ -660,7 +742,7 @@ export class LifeComponent implements OnInit, DoCheck {
       }),
       financialProfile: this.fb.group({
         annualIncome: ['', Validators.required],
-        othersAnnualIncome: ['', Validators.required],
+        othersAnnualIncome: [''],
         paymentOrigin: ['', Validators.required],
       }),
       releventPlanInformation: this.fb.group({
@@ -694,10 +776,10 @@ export class LifeComponent implements OnInit, DoCheck {
       contingentBeneficiary: this.fb.group({
         dependentsC: this.fb.array([this.formMethods.createItem(this.contigentBenefits)]),
         personBenefited: this.fb.group({
-          name: [''],
-          family: [''],
-          id2: [''],
-          id2Attached: ['']
+          nameBeneficiary: [''],
+          familyBeneficiary: [''],
+          id2Beneficiary: [''],
+          id2AttachedBeneficiary: ['']
         }),
       }),
       bankTransfer: this.fb.group({
@@ -1513,7 +1595,7 @@ export class LifeComponent implements OnInit, DoCheck {
   }
 
   addFilesC(form: FormGroup) {
-    form.addControl('glycemia', this.fb.control('', Validators.required));
+    /*form.addControl('glycemia', this.fb.control('', Validators.required));
     form.addControl('hbA1C', this.fb.control('', Validators.required));
     form.addControl('totalCholestor', this.fb.control('', Validators.required));
     form.addControl('HDL', this.fb.control('', Validators.required));
@@ -1524,7 +1606,7 @@ export class LifeComponent implements OnInit, DoCheck {
     form.addControl('GGT', this.fb.control('', Validators.required));
     form.addControl('HIV', this.fb.control('', Validators.required));
     form.addControl('cocaine', this.fb.control('', Validators.required));
-    form.addControl('nicotine', this.fb.control('', Validators.required));
+    form.addControl('nicotine', this.fb.control('', Validators.required));*/
   }
 
   addFilesD(form: FormGroup) {
@@ -1540,7 +1622,7 @@ export class LifeComponent implements OnInit, DoCheck {
   }
 
   deleteFiles(form: FormGroup) {
-    form.removeControl('stressElectrocardiogram');
+    /*form.removeControl('stressElectrocardiogram');
     form.removeControl('restingElectrocardiogram');
     form.removeControl('urineAnalysis');
     form.removeControl('glycemia');
@@ -1554,7 +1636,7 @@ export class LifeComponent implements OnInit, DoCheck {
     form.removeControl('GGT');
     form.removeControl('HIV');
     form.removeControl('cocaine');
-    form.removeControl('nicotine');
+    form.removeControl('nicotine');*/
     form.removeControl('healthDeclaration');
     form.removeControl('id2');
     form.removeControl('medicExam');
@@ -1816,6 +1898,7 @@ export class LifeComponent implements OnInit, DoCheck {
     const formHMI = this.newRequest.get('medicalHistory').get('informations') as FormGroup;
     const formWI = this.newRequest.get('medicalHistory').get('informations').get('womenInformation') as FormGroup;
     const formFiles = this.newRequest.get('files') as FormGroup;
+    const formGeneral = this.newRequest as FormGroup;
 
     console.log('SELECT CHANGE EVENT: ', event);
 
@@ -1930,8 +2013,8 @@ export class LifeComponent implements OnInit, DoCheck {
           // formP.removeControl('payerLegalEntity');
           // formPQ.removeControl('solucionAntiLavadoDinero');
 
-          if (formP.get('contractorLegalEntity')) {
-            formP.removeControl('contractorLegalEntity');
+          if (formGeneral.get('contractorLegalEntity')) {
+            formGeneral.removeControl('contractorLegalEntity');
           }
           if (this.newRequest.get('files').get('copyId')) {
             formFiles.removeControl('copyId');
@@ -1946,8 +2029,8 @@ export class LifeComponent implements OnInit, DoCheck {
             formQ.addControl('solucionAntiLavadoDinero', this.fb.group({}));
           }
 
-          if (!(formP.get('payerLegalEntity'))) {
-            formP.addControl('payerLegalEntity', this.fb.group({}));
+          if (!(formGeneral.get('payerLegalEntity'))) {
+            formGeneral.addControl('payerLegalEntity', this.fb.group({}));
           }
           if (!(this.newRequest.get('files').get('mercantile'))) {
             formFiles.addControl('mercantile', this.fb.array([this.createFormArray('mercantileRegister')]));
@@ -2378,8 +2461,8 @@ export class LifeComponent implements OnInit, DoCheck {
           if (formQ.get('solucionAntiLavadoDinero')) {
             formQ.removeControl('solucionAntiLavadoDinero');
           }
-          if (formP.get('payerLegalEntity')) {
-            formP.removeControl('payerLegalEntity');
+          if (formGeneral.get('payerLegalEntity')) {
+            formGeneral.removeControl('payerLegalEntity');
           }
           if (formP.get('payerIsLegalEntity')) {
             formP.removeControl('payerIsLegalEntity');
@@ -2387,7 +2470,7 @@ export class LifeComponent implements OnInit, DoCheck {
           if (this.newRequest.get('files').get('mercantile')) {
             formFiles.removeControl('mercantile');
           }
-          formP.addControl('contractorLegalEntity', this.fb.group({}));
+          formGeneral.addControl('contractorLegalEntity', this.fb.group({}));
 
           formFiles.addControl('copyId', this.fb.array([this.createFormArray('filesCopyId')]));
           this.filesCopyIdArray = this.newRequest.get('files').get('copyId') as FormArray;
@@ -2490,8 +2573,8 @@ export class LifeComponent implements OnInit, DoCheck {
           //   sameAsPayer
           //   formInsured.removeControl('policyholderKnowClientRadio'); //juridica
           // }
-          if (formP.get('contractorLegalEntity')) {
-            formP.removeControl('contractorLegalEntity');
+          if (formGeneral.get('contractorLegalEntity')) {
+            formGeneral.removeControl('contractorLegalEntity');
           }
           if (this.newRequest.get('files').get('copyId')) {
             formFiles.removeControl('copyId');
@@ -2499,8 +2582,8 @@ export class LifeComponent implements OnInit, DoCheck {
           if (formQ.get('solucionAntiLavadoDinero')) {
             formQ.removeControl('solucionAntiLavadoDinero');
           }
-          if (formP.get('payerLegalEntity')) {
-            formP.removeControl('payerLegalEntity');
+          if (formGeneral.get('payerLegalEntity')) {
+            formGeneral.removeControl('payerLegalEntity');
           }
           if (formP.get('payerIsLegalEntity')) {
             formP.removeControl('payerIsLegalEntity');
@@ -2547,8 +2630,8 @@ export class LifeComponent implements OnInit, DoCheck {
           // if (formEP.get('isPayerExposed').value !== 'SI') {
           //   formPQ.removeControl('solucionAntiLavadoDinero');
           // }
-          if (!(formP.get('payerLegalEntity'))) {
-            formP.addControl('payerLegalEntity', this.fb.group({}));
+          if (!(formGeneral.get('payerLegalEntity'))) {
+            formGeneral.addControl('payerLegalEntity', this.fb.group({}));
           }
           if (!(this.newRequest.get('files').get('mercantile'))) {
             formFiles.addControl('mercantile', this.fb.array([this.createFormArray('mercantileRegister')]));

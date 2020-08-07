@@ -1250,78 +1250,29 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy, DoCheck {
 				}
 			});
 
-			const valueSintomasNombreMedico = this.authorization.get('informacionMedica').get('primerosSintomas').get('nombreMedico').value;
+		 if (this.authorization.get('informacionMedica').get('primerosSintomas').get('specifyOthers')) {
+				this.authorization.get('informacionMedica').get('primerosSintomas').get('specifyOthers').markAsTouched();
+				this.authorization.get('informacionMedica').get('primerosSintomas').get('specifyOthers').updateValueAndValidity();
+			}
 
-			setTimeout(() => {
-				this.authorization.get('informacionMedica').get('primerosSintomas').get('nombreMedico'
-				).setValue(valueSintomasNombreMedico + ' ');
-				console.log('yaaaaaaaaaaaaaa primerosSintomas');
-			},
-			1500);
+		 if (this.authorization.get('informacionMedica').get('admision').get('specifyOthers')) {
+				this.authorization.get('informacionMedica').get('admision').get('specifyOthers').markAsTouched();
+				this.authorization.get('informacionMedica').get('admision').get('specifyOthers').updateValueAndValidity();
+			}
 
-			setTimeout(() => {
-				this.authorization.get('informacionMedica').get('primerosSintomas').get('nombreMedico'
-				).setValue(valueSintomasNombreMedico);
-				console.log('yaaaaaaaaaaaaaa primerosSintomas parte 2');
-
-				if (this.authorization.get('informacionMedica').get('primerosSintomas').get('specifyOthers')) {
-					this.authorization.get('informacionMedica').get('primerosSintomas').get('specifyOthers').markAsTouched();
-					this.authorization.get('informacionMedica').get('primerosSintomas').get('specifyOthers').updateValueAndValidity();
-				}
-			},
-			1500);
-
-			const valueAdmisionNombreMedico = this.authorization.get('informacionMedica').get('admision').get('nombreMedico').value;
-
-			setTimeout(() => {
-				this.authorization.get('informacionMedica').get('admision').get('nombreMedico'
-				).setValue(valueAdmisionNombreMedico + ' ');
-				console.log('yaaaaaaaaaaaaaa admision');
-			},
-			1500);
-
-			setTimeout(() => {
-				this.authorization.get('informacionMedica').get('admision').get('nombreMedico'
-				).setValue(valueAdmisionNombreMedico);
-				console.log('yaaaaaaaaaaaaaa admision parte 2');
-
-				if (this.authorization.get('informacionMedica').get('admision').get('specifyOthers')) {
-					this.authorization.get('informacionMedica').get('admision').get('specifyOthers').markAsTouched();
-					this.authorization.get('informacionMedica').get('admision').get('specifyOthers').updateValueAndValidity();
-				}
-			},
-			1500);
-
-			const valueServiciosNombreMedico = this.authorization.get('informacionMedica').get('nombreServicio').value;
-
-			setTimeout(() => {
-				this.authorization.get('informacionMedica').get('nombreServicio'
-				).setValue(valueServiciosNombreMedico + ' ');
-				console.log('yaaaaaaaaaaaaaa Servicios');
-			},
-			1500);
-
-			setTimeout(() => {
-				this.authorization.get('informacionMedica').get('nombreServicio'
-				).setValue(valueServiciosNombreMedico);
-				console.log('yaaaaaaaaaaaaaa Servicios parte 2');
-
-				if (this.authorization.get('informacionMedica').get('specifyOthers')) {
-					this.authorization.get('informacionMedica').get('specifyOthers').markAsTouched();
-					this.authorization.get('informacionMedica').get('specifyOthers').updateValueAndValidity();
-				}
-			},
-			1500);
+		 if (this.authorization.get('informacionMedica').get('specifyOthers')) {
+				this.authorization.get('informacionMedica').get('specifyOthers').markAsTouched();
+				this.authorization.get('informacionMedica').get('specifyOthers').updateValueAndValidity();
+			}
 
 			this.authorization.markAllAsTouched();
 			this.authorization.updateValueAndValidity();
 
-			setTimeout(() => {
-				this.appComponent.showOverlay = false;
-			},
-			2000);
-
 		});
+		setTimeout(() => {
+			this.appComponent.showOverlay = false;
+		},
+		10000);
 		this.newAuthorization.id = null;
 		console.log('this.newAuthorization.id es igual a ' + this.newAuthorization.id);
 

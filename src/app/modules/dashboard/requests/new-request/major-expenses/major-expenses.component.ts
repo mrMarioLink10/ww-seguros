@@ -1277,45 +1277,45 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
     this.AddEventOnEachDependentVariable();
   }
   addInfo(dependentsFormArray, name, lastName, date, gender) {
-let group = {
-  name: [name, Validators.required],
-  lastName: [lastName, Validators.required],
-  family: ['', Validators.required],
-  weightUnit: ['', Validators.required],
-  heightUnit: ['', Validators.required],
-  weight: ['', [Validators.required, Validators.min(0)]],
-  date: [date, Validators.required],
-  height: ['', [Validators.required, Validators.min(0)]],
-  sex: [gender, Validators.required],
-  id2: ['', Validators.required],
-  idType: ['', Validators.required],
-  nationality: ['', Validators.required],
-  age: [{ value: '', disabled: true }, Validators.required],
-  bmi: [{ value: '', disabled: true }, Validators.required],
-  haveMusculoskeletal: [false, Validators.required],
-  haveCerebrovascular: [false, Validators.required],
-  haveNervousSystem: [false, Validators.required],
-  haveVisionHearing: [false, Validators.required],
-  haveCardiovascularSystem: [false, Validators.required],
-  haveRespiratorySystem: [false, Validators.required],
-  haveDigestiveSystem: [false, Validators.required],
-  haveUrinarySystem: [false, Validators.required],
-  haveMaleReproductiveOrgans: [false, Validators.required],
-  haveBloodDisorders: [false, Validators.required],
-  haveEndocrineDisorders: [false, Validators.required],
-  haveAlternateTreatment: [false, Validators.required],
-  haveFunctionalLimitation: [false, Validators.required],
-  haveDeformity: [false, Validators.required],
-  haveBloodTransfusion: [false, Validators.required],
-  haveAlcoholicDependence: [false, Validators.required],
-  haveNicotine: [false, Validators.required],
-  haveStd: [false, Validators.required],
-  havePhysiologicalDisorder: [false, Validators.required],
-  haveHighRiskSport: [false, Validators.required],
-  havePregnant: [false, Validators.required],
-  haveReproductiveOrganDisorders: [false, Validators.required],
-  isBmiEventAssigned: [false, Validators.required]
-};
+    let group = {
+      name: [name, Validators.required],
+      lastName: [lastName, Validators.required],
+      family: ['', Validators.required],
+      weightUnit: ['', Validators.required],
+      heightUnit: ['', Validators.required],
+      weight: ['', [Validators.required, Validators.min(0)]],
+      date: [date, Validators.required],
+      height: ['', [Validators.required, Validators.min(0)]],
+      sex: [gender, Validators.required],
+      id2: ['', Validators.required],
+      idType: ['', Validators.required],
+      nationality: ['', Validators.required],
+      age: [{ value: '', disabled: true }, Validators.required],
+      bmi: [{ value: '', disabled: true }, Validators.required],
+      haveMusculoskeletal: [false, Validators.required],
+      haveCerebrovascular: [false, Validators.required],
+      haveNervousSystem: [false, Validators.required],
+      haveVisionHearing: [false, Validators.required],
+      haveCardiovascularSystem: [false, Validators.required],
+      haveRespiratorySystem: [false, Validators.required],
+      haveDigestiveSystem: [false, Validators.required],
+      haveUrinarySystem: [false, Validators.required],
+      haveMaleReproductiveOrgans: [false, Validators.required],
+      haveBloodDisorders: [false, Validators.required],
+      haveEndocrineDisorders: [false, Validators.required],
+      haveAlternateTreatment: [false, Validators.required],
+      haveFunctionalLimitation: [false, Validators.required],
+      haveDeformity: [false, Validators.required],
+      haveBloodTransfusion: [false, Validators.required],
+      haveAlcoholicDependence: [false, Validators.required],
+      haveNicotine: [false, Validators.required],
+      haveStd: [false, Validators.required],
+      havePhysiologicalDisorder: [false, Validators.required],
+      haveHighRiskSport: [false, Validators.required],
+      havePregnant: [false, Validators.required],
+      haveReproductiveOrganDisorders: [false, Validators.required],
+      isBmiEventAssigned: [false, Validators.required]
+    };
     const increment = dependentsFormArray.length + 1;
     dependentsFormArray = this.formMethods.addElement(dependentsFormArray, increment, group).formArray;
 
@@ -3029,9 +3029,9 @@ let group = {
 
       if (data !== undefined && data.data !== null && data.data !== undefined /*&& data.data.nombre !== undefined*/) {
         const resultPrincipal = data.data.filter(word => word.rol.toLowerCase().includes(filterPrincipal));
-        console.log(resultPrincipal );
+        console.log(resultPrincipal);
         const dialogRef = this.dialog.open(BaseDialogComponent, {
-          data: this.dialogOption.noCFound(resultPrincipal [0]),
+          data: this.dialogOption.noCFound(resultPrincipal[0]),
           minWidth: 385,
         });
         setTimeout(() => {
@@ -3040,65 +3040,64 @@ let group = {
         this.isFormValidToFill = true;
         this.notFoundQuote = false;
         data.data.forEach(element => {
-if(element.rol.toLowerCase().includes(filterPrincipal))
-{
-  this.newRequest.get('payment').setValue(this.currencyPipe.transform(element.monto));
-        this.newRequest.get('plans').setValue(element.plan);
-        this.newRequest.get('deducibles').setValue(element.deducible);
-        this.newRequest.get('person').get('date').setValue(element.fecha_nacimiento);
-        this.newRequest.get('person').get('firstName').setValue(element.nombre);
-        this.newRequest.get('person').get('lastName').setValue(element.apellidos);
-        switch (element.sexo) {
-          case 'M':
-            this.newRequest.get('person').get('sex').setValue('MASCULINO');
-            break;
+          if (element.rol.toLowerCase().includes(filterPrincipal)) {
+            this.newRequest.get('payment').setValue(this.currencyPipe.transform(element.monto));
+            this.newRequest.get('plans').setValue(element.plan);
+            this.newRequest.get('deducibles').setValue(element.deducible);
+            this.newRequest.get('person').get('date').setValue(element.fecha_nacimiento);
+            this.newRequest.get('person').get('firstName').setValue(element.nombre);
+            this.newRequest.get('person').get('lastName').setValue(element.apellidos);
+            switch (element.sexo) {
+              case 'M':
+                this.newRequest.get('person').get('sex').setValue('MASCULINO');
+                break;
 
-          case 'F':
-            this.newRequest.get('person').get('sex').setValue('FEMENINO');
-            break;
+              case 'F':
+                this.newRequest.get('person').get('sex').setValue('FEMENINO');
+                break;
 
-          default:
-            break;
-        }
-}
-else{
-  let sexGender = 'MASCULINO';
-  switch (element.sexo) {
-    case 'M':
-      sexGender = 'MASCULINO';
-      break;
+              default:
+                break;
+            }
+          }
+          else {
+            let sexGender = 'MASCULINO';
+            switch (element.sexo) {
+              case 'M':
+                sexGender = 'MASCULINO';
+                break;
 
-    case 'F':
-      sexGender = 'FEMENINO';
-      break;
+              case 'F':
+                sexGender = 'FEMENINO';
+                break;
 
-    default:
-      break;
-  }
-  this.addInfo(this.dependentsFormArray, element.nombre, element.apellidos, element.fecha_nacimiento, sexGender);
-}
+              default:
+                break;
+            }
+            this.addInfo(this.dependentsFormArray, element.nombre, element.apellidos, element.fecha_nacimiento, sexGender);
+          }
 
         });
-       /* this.newRequest.get('payment').setValue(this.currencyPipe.transform(data.data.monto));
-        this.newRequest.get('plans').setValue(data.data.plan);
-        this.newRequest.get('deducibles').setValue(data.data.deducible);
-        this.newRequest.get('person').get('date').setValue(data.data.fecha_nacimiento);
-        this.newRequest.get('person').get('firstName').setValue(data.data.nombre);
-        this.newRequest.get('person').get('lastName').setValue(data.data.apellidos);
-
-        switch (data.data.sexo) {
-          case 'M':
-            this.newRequest.get('person').get('sex').setValue('MASCULINO');
-            break;
-
-          case 'F':
-            this.newRequest.get('person').get('sex').setValue('FEMENINO');
-            break;
-
-          default:
-            break;
-        }
-*/
+        /* this.newRequest.get('payment').setValue(this.currencyPipe.transform(data.data.monto));
+         this.newRequest.get('plans').setValue(data.data.plan);
+         this.newRequest.get('deducibles').setValue(data.data.deducible);
+         this.newRequest.get('person').get('date').setValue(data.data.fecha_nacimiento);
+         this.newRequest.get('person').get('firstName').setValue(data.data.nombre);
+         this.newRequest.get('person').get('lastName').setValue(data.data.apellidos);
+ 
+         switch (data.data.sexo) {
+           case 'M':
+             this.newRequest.get('person').get('sex').setValue('MASCULINO');
+             break;
+ 
+           case 'F':
+             this.newRequest.get('person').get('sex').setValue('FEMENINO');
+             break;
+ 
+           default:
+             break;
+         }
+ */
       } else {
         this.notFoundQuote = true;
 
@@ -3260,10 +3259,12 @@ else{
           formQA.removeControl('nicotine');
         }
 
-        if (formQA.get('nicotine').get('isActualSmoker').value !== 'EX-FUMADOR') {
-          const formQAC = formQA.get('nicotine') as FormGroup;
+        if (formQA.get('nicotine')) {
+          if (formQA.get('nicotine').get('isActualSmoker').value !== 'EX-FUMADOR') {
+            const formQAC = formQA.get('nicotine') as FormGroup;
 
-          formQAC.removeControl('lastTimeSmoked');
+            formQAC.removeControl('lastTimeSmoked');
+          }
         }
 
         if (formQA.get('havePregnant').value !== true) {

@@ -18,4 +18,7 @@ export class QuotesService {
   returnDataSalud(id): Observable<any> {
     return this.http.get(`${environment.apiUrl}/api/Cotizaciones/${id}/salud`);
   }
+  returnDataSaludList(id): Observable<any> {
+    return this.http.get(`${environment.apiUrl}/api/Cotizaciones/list/${id}/salud`);
+  }
 }

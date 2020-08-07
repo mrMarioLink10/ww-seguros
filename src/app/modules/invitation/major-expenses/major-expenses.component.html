@@ -857,7 +857,7 @@
                 </div>
               </div>
               <!-- FLUJO NUEVO MUSCULOESQUELETICO -->
-              <div
+              <!-- <div
                 *ngIf="(newRequest.get('questionsA').value.haveMusculoskeletal === true || newRequest.get('questionsA').value.haveMusculoskeletal === 'TRUE') && question.name === 'haveMusculoskeletal' && newRequest.get('questionsA').get('musculoSkeletal')">
                 <hr class=" w-full mb-6 ww-divider">
                 <div class="radio-button-label mb-4" style="font-size: 12px !important;">Información del padecimiento
@@ -975,9 +975,9 @@
                     </button>
                   </div>
                 </div>
-              </div>
+              </div> -->
               <!-- FLUJO NUEVO CARDIOVASCULAR -->
-              <div
+              <!-- <div
                 *ngIf="(newRequest.get('questionsA').value.haveCardiovascularSystem === true || newRequest.get('questionsA').value.haveCardiovascularSystem === 'TRUE') && question.name === 'haveCardiovascularSystem' && newRequest.get('questionsA').get('cardiovascularSystem')">
                 <hr class=" w-full mb-6 ww-divider">
                 <div class="radio-button-label mb-4" style="font-size: 12px !important;">Información del padecimiento
@@ -1095,9 +1095,9 @@
                     </button>
                   </div>
                 </div>
-              </div>
+              </div> -->
               <!-- FLUJO NUEVO ENDOCRINO -->
-              <div
+              <!-- <div
                 *ngIf="(newRequest.get('questionsA').value.haveEndocrineDisorders === true || newRequest.get('questionsA').value.haveEndocrineDisorders === 'TRUE') && question.name === 'haveEndocrineDisorders' && newRequest.get('questionsA').get('endocrineDisorders')">
                 <hr class=" w-full mb-6 ww-divider">
                 <div class="radio-button-label mb-4" style="font-size: 12px !important;">Información del padecimiento
@@ -1215,9 +1215,9 @@
                     </button>
                   </div>
                 </div>
-              </div>
+              </div> -->
               <!-- FLUJO NUEVO URINARIO -->
-              <div
+              <!-- <div
                 *ngIf="(newRequest.get('questionsA').value.haveUrinarySystem === true || newRequest.get('questionsA').value.haveUrinarySystem === 'TRUE') && question.name === 'haveUrinarySystem' && newRequest.get('questionsA').get('urinarySystem')">
                 <hr class=" w-full mb-6 ww-divider">
                 <div class="radio-button-label mb-4" style="font-size: 12px !important;">Información del padecimiento
@@ -1331,12 +1331,59 @@
                     </button>
                   </div>
                 </div>
+              </div> -->
+              <!-- NUEVO FLUJO DEL FLUJO NUEVO EN TODAS LAS INFORMNAME -->
+              <div
+                *ngIf="question.name !== 'haveNicotine' && question.name !== 'haveHighRiskSport' && question.name !== 'havePregnant' && question.name !== 'haveAlcoholicDependence'">
+                <app-section-a-block [newRequest]="newRequest" [inFormName]="question.name" [arrayName]="question.array"
+                  [dependentsArrayList]="allDependents" [ailmentOptions]="this[question.array+'Ailment']"
+                  [questionnairesGastosMayores]="newRequest.get('questionsA').get('questionnairesGastosMayores')"
+                  (addToList)="addToList($event.array, $event.name)"
+                  (ailmentSelected)="ailmentSelected($event.type, $event.form, $event.watcherForm)">
+                </app-section-a-block>
+              </div>
+              <!-- SI FUMABA -->
+              <div
+                *ngIf="(newRequest.get('questionsA').value.haveAlcoholicDependence === true || newRequest.get('questionsA').value.haveAlcoholicDependence === 'TRUE') && question.name === 'haveAlcoholicDependence' && newRequest.get('questionsA').get('alcoholicDependence')">
+                <mat-label class="radio-button-label">Información Asegurado</mat-label>
+                <div class='grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4'>
+                  <app-date-picker class="mr-3" [group]="newRequest.get('questionsA').get('alcoholicDependence')"
+                    label="Fecha" name='date'>
+                  </app-date-picker>
+                  <app-input class="mr-3" [group]="newRequest.get('questionsA').get('alcoholicDependence')"
+                    label="Sustancia" name='substance'>
+                  </app-input>
+                  <app-input class="mr-3" [group]="newRequest.get('questionsA').get('alcoholicDependence')"
+                    label="Tratamiento" name='threatment'>
+                  </app-input>
+                </div>
+              </div>
+              <div *ngFor="let dpd of allDependents.controls; index as ixd">
+                <div
+                  *ngIf="(newRequest.get('dependents').get('allDependents').get(ixd.toString()).value.haveAlcoholicDependence === true || newRequest.get('dependents').get('allDependents').get(ixd.toString()).value.haveAlcoholicDependence === 'TRUE') && question.name === 'haveAlcoholicDependence' && newRequest.get('dependents').get('allDependents').get(ixd.toString()).get('alcoholicDependence')">
+                  <label class="my-2 text-xs">Información / D{{ixd+1}} - {{dpd.value.name}}
+                    {{dpd.value.lastName}}</label>
+                  <div class='grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4'>
+                    <app-date-picker class="mr-3"
+                      [group]="newRequest.get('dependents').get('allDependents').get(ixd.toString()).get('alcoholicDependence')"
+                      label="Fecha" name='date'>
+                    </app-date-picker>
+                    <app-input class="mr-3"
+                      [group]="newRequest.get('dependents').get('allDependents').get(ixd.toString()).get('alcoholicDependence')"
+                      label="Sustancia" name='substance'>
+                    </app-input>
+                    <app-input class="mr-3"
+                      [group]="newRequest.get('dependents').get('allDependents').get(ixd.toString()).get('alcoholicDependence')"
+                      label="Tratamiento" name='threatment'>
+                    </app-input>
+                  </div>
+                </div>
               </div>
               <!-- SI FUMABA -->
               <div
                 *ngIf="(newRequest.get('questionsA').value.haveNicotine === true || newRequest.get('questionsA').value.haveNicotine === 'TRUE') && question.name === 'haveNicotine' && newRequest.get('questionsA').get('nicotine')">
-                <label class="my-2 text-xs">Especifique cantidad por día y cuánto tiempo tiene o estuvo
-                  fumando</label>
+                <mat-label class="radio-button-label">Especifique cantidad por día y cuánto tiempo tiene o estuvo
+                  fumando</mat-label>
                 <div class='grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2'>
                   <div class='grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2'>
                     <app-number-input class="mr-3" [group]="newRequest.get('questionsA').get('nicotine')"
@@ -1351,6 +1398,17 @@
                     </div>
                   </div>
                   <div></div>
+                </div>
+                <app-radio-button class="mt-2" [group]="newRequest.get('questionsA').get('nicotine')"
+                  name="isActualSmoker" [options]="isActualSmoker"
+                  (selected)="valueChange($event, question.name, 'solicitante')">
+                </app-radio-button>
+                <div class="grid grid-cols-4">
+                  <app-date-picker class="mr-3" [max]="todayDate"
+                    *ngIf="newRequest.get('questionsA').get('nicotine').get('lastTimeSmoked')"
+                    [group]="newRequest.get('questionsA').get('nicotine')" name="lastTimeSmoked"
+                    label="Indique última vez que fumó">
+                  </app-date-picker>
                 </div>
               </div>
               <div *ngFor="let dpd of allDependents.controls; index as ixd">
@@ -1376,6 +1434,17 @@
                       </div>
                     </div>
                     <div></div>
+                  </div>
+                  <app-radio-button class="mt-2"
+                    [group]="newRequest.get('dependents').get('allDependents').get(ixd.toString()).get('nicotine')"
+                    name="isActualSmoker" [options]="isActualSmoker" (selected)="valueChange($event, question.name, i)">
+                  </app-radio-button>
+                  <div class="grid grid-cols-4">
+                    <app-date-picker class="mr-3" [max]="todayDate"
+                      *ngIf="newRequest.get('dependents').get('allDependents').get(ixd.toString()).get('nicotine').get('isActualSmoker').value === 'EX-FUMADOR'"
+                      [group]="newRequest.get('dependents').get('allDependents').get(ixd.toString()).get('nicotine')"
+                      name="lastTimeSmoked" label="Indique última vez que fumó">
+                    </app-date-picker>
                   </div>
                 </div>
               </div>
@@ -1454,7 +1523,7 @@
               </button>
             </mat-action-row>
           </mat-expansion-panel>
-          <!-- <mat-expansion-panel class="ww-mat-expansion" [expanded]="step === 6" (opened)="setStep(6)">
+          <mat-expansion-panel class="ww-mat-expansion" [expanded]="step === 6" (opened)="setStep(6)">
             <mat-expansion-panel-header class="body-13 icon-blue">
               <mat-panel-title>
                 Sección B
@@ -1480,17 +1549,14 @@
                   [options]="diseaseService.yesOrNoOriginal" (selected)="selectChange($event)">
                 </app-radio-button>
               </div>
-              <div *ngIf="question.name === 'haveHadExamStudiesTests'">
-                <hr class=" w-full mb-6 ww-divider">
-
-                <div class="radio-button-label mb-4" style="font-size: 12px !important;">Si usted ha indicado SI en
-                  alguna
-                  parte de la Sección A o Sección B, por favor indique por escrito la siguiente información.</div>
-                <div *ngFor="let studies of informationList.controls; let i = index"
+              <div
+                *ngIf="question.name === 'haveConsultedForUnmentioned' && newRequest.get('questionsB').value.haveConsultedForUnmentioned === 'SI' && newRequest.get('questionsB').get('consultedForUnmentioned')">
+                <div
+                  *ngFor="let studies of newRequest.get('questionsB').get('consultedForUnmentioned')['controls']; let i = index"
                   class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
                   <mat-form-field class="mr-3" color="accent" appearance="outline"
-                    [formGroup]="newRequest.get('questionsB').get('information').get(i.toString())">
-                    <mat-label>Nombre del Paciente</mat-label>
+                    [formGroup]="newRequest.get('questionsB').get('consultedForUnmentioned').get(i.toString())">
+                    <mat-label>Nombre de la persona</mat-label>
                     <mat-select formControlName="name">
                       <mat-option
                         value="{{newRequest.get('person').value.firstName}} {{newRequest.get('person').value.lastName}}">
@@ -1502,49 +1568,156 @@
                       </mat-option>
                     </mat-select>
                   </mat-form-field>
-                  <app-input class="mr-3" [group]="newRequest.get('questionsB').get('information').get(i.toString())"
+                  <app-input class="mr-3"
+                    [group]="newRequest.get('questionsB').get('consultedForUnmentioned').get(i.toString())"
                     name="ailment" label="Padecimiento">
                   </app-input>
                   <app-date-picker class="mr-3"
-                    [group]="newRequest.get('questionsB').get('information').get(i.toString())" name="date"
+                    [group]="newRequest.get('questionsB').get('consultedForUnmentioned').get(i.toString())" name="date"
                     label="Fecha del Padecimiento">
                   </app-date-picker>
-                  <app-input class="mr-3" [group]="newRequest.get('questionsB').get('information').get(i.toString())"
+                  <app-input class="mr-3"
+                    [group]="newRequest.get('questionsB').get('consultedForUnmentioned').get(i.toString())"
                     name="threatment" label="Tratamiento">
                   </app-input>
-                  <div class="grid grid-cols-2">
-                    <app-number-input class="mr-3"
-                      [group]="newRequest.get('questionsB').get('information').get(i.toString())"
-                      label="Duración del Tratamiento" name='duration' min="1">
-                    </app-number-input>
-                    <app-select class="mr-3" [options]="year"
-                      [group]="newRequest.get('questionsB').get('information').get(i.toString())"></app-select>
-                  </div>
-                  <app-input class="mr-3" [group]="newRequest.get('questionsB').get('information').get(i.toString())"
+                  <app-input class="mr-3"
+                    [group]="newRequest.get('questionsB').get('consultedForUnmentioned').get(i.toString())"
                     name="medicCenterName" label="Nombre del proveedor o centro médico">
                   </app-input>
-                  <app-input class="mr-3" [group]="newRequest.get('questionsB').get('information').get(i.toString())"
+                  <app-input class="mr-3"
+                    [group]="newRequest.get('questionsB').get('consultedForUnmentioned').get(i.toString())"
                     name="medicCenterAddress" label="Dirección del proveedor o centro médico">
                   </app-input>
-                  <div *ngIf="informationList.length > 0"
-                    [ngClass]="{'': informationList.length === 1, 'col-span-1': informationList.length > 1} ">
+                  <app-number-input class="mr-3"
+                    [group]="newRequest.get('questionsB').get('consultedForUnmentioned').get(i.toString())"
+                    label="Duración del Tratamiento" name='duration' min="1">
+                  </app-number-input>
+                  <div class="grid grid-cols-2">
+                    <app-select class="mr-3" [options]="year"
+                      [group]="newRequest.get('questionsB').get('consultedForUnmentioned').get(i.toString())">
+                    </app-select>
+                    <div *ngIf="newRequest.get('questionsB').get('consultedForUnmentioned')['controls'].length > 1">
+                      <button mat-mini-fab aria-label=" Eliminar estudio"
+                        (click)="diseaseService.removeToList(i, newRequest.get('questionsB').get('consultedForUnmentioned'))"
+                        type="button" class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
+                        <mat-icon style="color: #18446B">remove</mat-icon>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                <div class="mb-8">
+                  <button mat-mini-fab aria-label="Agregar estudio"
+                    (click)="addToList(newRequest.get('questionsB').get('consultedForUnmentioned'), 'medicInformation')"
+                    type="button" class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
+                    <mat-icon style="color: #18446B">add</mat-icon>
+                  </button>
+                </div>
+              </div>
+              <div
+                *ngIf="question.name === 'haveAlterationForUnmentioned' && newRequest.get('questionsB').value.haveAlterationForUnmentioned === 'SI' && newRequest.get('questionsB').get('alterationForUnmentioned')">
+                <div
+                  *ngFor="let studies of newRequest.get('questionsB').get('alterationForUnmentioned')['controls']; let i = index"
+                  class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
+                  <mat-form-field class="mr-3" color="accent" appearance="outline"
+                    [formGroup]="newRequest.get('questionsB').get('alterationForUnmentioned').get(i.toString())">
+                    <mat-label>Nombre de la persona</mat-label>
+                    <mat-select formControlName="name">
+                      <mat-option
+                        value="{{newRequest.get('person').value.firstName}} {{newRequest.get('person').value.lastName}}">
+                        {{newRequest.get('person').value.firstName}} {{newRequest.get('person').value.lastName}}
+                      </mat-option>
+                      <mat-option *ngFor="let dpd of allDependents.controls; index as i"
+                        value="{{dpd.value.name}} {{dpd.value.lastName}}">
+                        {{dpd.value.name}} {{dpd.value.lastName}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                  <app-input class="mr-3"
+                    [group]="newRequest.get('questionsB').get('alterationForUnmentioned').get(i.toString())"
+                    name="ailment" label="Padecimiento">
+                  </app-input>
+                  <app-date-picker class="mr-3"
+                    [group]="newRequest.get('questionsB').get('alterationForUnmentioned').get(i.toString())" name="date"
+                    label="Fecha del Padecimiento">
+                  </app-date-picker>
+                  <app-input class="mr-3"
+                    [group]="newRequest.get('questionsB').get('alterationForUnmentioned').get(i.toString())"
+                    name="threatment" label="Tratamiento">
+                  </app-input>
+                  <app-input class="mr-3"
+                    [group]="newRequest.get('questionsB').get('alterationForUnmentioned').get(i.toString())"
+                    name="medicCenterName" label="Nombre del proveedor o centro médico">
+                  </app-input>
+                  <app-input class="mr-3"
+                    [group]="newRequest.get('questionsB').get('alterationForUnmentioned').get(i.toString())"
+                    name="medicCenterAddress" label="Dirección del proveedor o centro médico">
+                  </app-input>
+                  <app-number-input class="mr-3"
+                    [group]="newRequest.get('questionsB').get('alterationForUnmentioned').get(i.toString())"
+                    label="Duración del Tratamiento" name='duration' min="1">
+                  </app-number-input>
+                  <div class="grid grid-cols-2">
+                    <app-select class="mr-3" [options]="year"
+                      [group]="newRequest.get('questionsB').get('alterationForUnmentioned').get(i.toString())">
+                    </app-select>
+                    <div *ngIf="newRequest.get('questionsB').get('alterationForUnmentioned')['controls'].length > 1">
+                      <button mat-mini-fab aria-label=" Eliminar estudio"
+                        (click)="diseaseService.removeToList(i, newRequest.get('questionsB').get('alterationForUnmentioned'))"
+                        type="button" class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
+                        <mat-icon style="color: #18446B">remove</mat-icon>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                <div class="mb-8">
+                  <button mat-mini-fab aria-label="Agregar estudio"
+                    (click)="addToList(newRequest.get('questionsB').get('alterationForUnmentioned'), 'medicInformation')"
+                    type="button" class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
+                    <mat-icon style="color: #18446B">add</mat-icon>
+                  </button>
+                </div>
+              </div>
+              <div *ngIf="question.name === 'haveHadExamStudiesTests' &&
+                newRequest.get('questionsB').value.haveHadExamStudiesTests==='SI' &&
+                newRequest.get('questionsB').get('specializedTests')">
+                <div
+                  *ngFor="let medic of newRequest.get('questionsB').get('specializedTests')['controls']; let i = index"
+                  class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
+                  <app-date-picker class="mr-3"
+                    [group]="newRequest.get('questionsB').get('specializedTests').get(i.toString())" name="date"
+                    label="¿En qué fecha?">
+                  </app-date-picker>
+                  <app-select class="mr-3" [options]="whichStudyArray"
+                    [group]="newRequest.get('questionsB').get('specializedTests').get(i.toString())"
+                    (selected)="whichStudyWatcher(newRequest.get('questionsB').get('specializedTests').get(i.toString()), $event)">
+                  </app-select>
+                  <app-input class="mr-3"
+                    *ngIf="newRequest.get('questionsB').get('specializedTests').get(i.toString()).get('specifyStudy')"
+                    [group]="newRequest.get('questionsB').get('specializedTests').get(i.toString())" name="specifyStudy"
+                    label="Especificar estudio">
+                  </app-input>
+                  <app-input class="mr-3"
+                    [group]="newRequest.get('questionsB').get('specializedTests').get(i.toString())" name="results"
+                    label="Resultados">
+                  </app-input>
+                  <div *ngIf="newRequest.get('questionsB').get('specializedTests')['controls'].length > 1">
                     <button mat-mini-fab aria-label=" Eliminar estudio"
-                      (click)="diseaseService.removeToList(i, informationList)" type="button"
-                      class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
+                      (click)="diseaseService.removeToList(i, newRequest.get('questionsB').get('specializedTests'))"
+                      type="button" class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
                       <mat-icon style="color: #18446B">remove</mat-icon>
                     </button>
                   </div>
                 </div>
                 <div class="mb-8">
                   <button mat-mini-fab aria-label="Agregar estudio"
-                    (click)="addToList(informationList, 'medicInformation')" type="button"
-                    class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
+                    (click)="addToList(newRequest.get('questionsB').get('specializedTests'), 'specializedTests')"
+                    type="button" class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
                     <mat-icon style="color: #18446B">add</mat-icon>
                   </button>
                 </div>
               </div>
               <div *ngIf="newRequest.get('questionsB').value[question.name] === 'SI'">
-                <div *ngIf="question.name === 'hasFamilyWithHeartKidneyDisease' && familyWithDiseasesList !== null">
+                <!-- <div *ngIf="question.name === 'hasFamilyWithHeartKidneyDisease' && familyWithDiseasesList !== null">
                   <div *ngFor="let studies of familyWithDiseasesList.controls; let i = index"
                     class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
                     <app-select class="mr-3" [options]="family"
@@ -1566,7 +1739,7 @@
                       <mat-icon style="color: #18446B">add</mat-icon>
                     </button>
                   </div>
-                </div>
+                </div> -->
                 <div
                   *ngIf="question.name === 'hasDeclinedInsuranceCompany' && newRequest.get('questionsB').get('declinedInsuranceInformation')">
                   <div class="radio-button-label mb-2" style="font-size: 12px !important;">¿Por qué razón?</div>
@@ -1622,8 +1795,8 @@
                 Siguiente
               </button>
             </mat-action-row>
-          </mat-expansion-panel> -->
-          <mat-expansion-panel class="ww-mat-expansion" [expanded]="step === 6" (opened)="setStep(6)">
+          </mat-expansion-panel>
+          <mat-expansion-panel class="ww-mat-expansion" [expanded]="step === 7" (opened)="setStep(7)">
             <mat-expansion-panel-header class="body-13 icon-blue">
               <mat-panel-title>
                 Sección C Beneficiarios Primarios
@@ -1742,7 +1915,7 @@
               </button>
             </mat-action-row>
           </mat-expansion-panel>
-          <mat-expansion-panel class="ww-mat-expansion" [expanded]="step === 7" (opened)="setStep(7)">
+          <mat-expansion-panel class="ww-mat-expansion" [expanded]="step === 8" (opened)="setStep(8)">
             <mat-expansion-panel-header class="body-13 icon-blue">
               <mat-panel-title>
                 Beneficiario(s) Contingente(s)
@@ -1865,7 +2038,7 @@
               </button>
             </mat-action-row>
           </mat-expansion-panel>
-          <mat-expansion-panel class="ww-mat-expansion" [expanded]="step === 8" (opened)="setStep(8)">
+          <mat-expansion-panel class="ww-mat-expansion" [expanded]="step === 9" (opened)="setStep(9)">
             <mat-expansion-panel-header class="body-13 icon-blue">
               <mat-panel-title>
                 Archivos Adjuntos
@@ -1906,7 +2079,7 @@
               </button>
             </mat-action-row>
           </mat-expansion-panel>
-          <mat-expansion-panel class="ww-mat-expansion" [expanded]="step === 9" (opened)="setStep(9)">
+          <mat-expansion-panel class="ww-mat-expansion" [expanded]="step === 10" (opened)="setStep(10)">
             <mat-expansion-panel-header class="body-13 icon-blue">
               <mat-panel-title>
                 Comentarios adicionales

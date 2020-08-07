@@ -13,6 +13,7 @@ export const environment = {
   mailForHelp: "ayuda_wws@wws.com.do",
   mailForHelpPM: "ayuda_wwma@wwmedicalassurance.com",
   urlCotizadores: "http://portalwwg.eastus.cloudapp.azure.com:3000",
+  urlCotizadoresPdf: "http://portalwwg.eastus.cloudapp.azure.com:3031",
   urlCotizadoresBoth: "http://portalwwg.eastus.cloudapp.azure.com:3000/?cia=",
   urlCotizadoresVida: "http://portalwwg.eastus.cloudapp.azure.com:3000/vida",
   urlCotizadoresSalud: "http://portalwwg.eastus.cloudapp.azure.com:3000/salud",

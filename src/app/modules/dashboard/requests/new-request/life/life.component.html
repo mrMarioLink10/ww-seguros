@@ -982,32 +982,32 @@
                       <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-4">
                         <app-input class="mr-3"
                           [group]="newRequest.get('contingentBeneficiary').get('dependentsC').get(index.toString())"
-                          label="Nombres y Apellidos" name='name'></app-input>
+                          label="Nombres y Apellidos" name='nameBeneficiary'></app-input>
                         <app-input class="mr-3"
                           [group]="newRequest.get('contingentBeneficiary').get('dependentsC').get(index.toString())"
-                          label="Documento de Identidad" name='id2'></app-input>
+                          label="Documento de Identidad" name='id2Beneficiary'></app-input>
                         <app-input class="mr-3"
                           [group]="newRequest.get('contingentBeneficiary').get('dependentsC').get(index.toString())"
-                          label="Nacionalidad" name='nationality'></app-input>
+                          label="Nacionalidad" name='nationalityBeneficiary'></app-input>
                         <app-input class="mr-3"
                           [group]="newRequest.get('contingentBeneficiary').get('dependentsC').get(index.toString())"
-                          label="Ocupación" name='ocupation'></app-input>
-                        <app-select class="mr-3" [options]="family"
+                          label="Ocupación" name='ocupationBeneficiary'></app-input>
+                        <app-select class="mr-3" [options]="familyBeneficiary"
                           [group]="newRequest.get('contingentBeneficiary').get('dependentsC').get(index.toString())"
                           (selected)="relationWatcher($event, newRequest.get('contingentBeneficiary').get('dependentsC').get(index.toString()))">
                         </app-select>
                         <app-input class="mr-3"
                           [group]="newRequest.get('contingentBeneficiary').get('dependentsC').get(index.toString())"
-                          *ngIf="newRequest.get('contingentBeneficiary').get('dependentsC').get(index.toString()).get('family').value == 'OTROS'"
-                          label="Especificar" name='specifyRelationship'></app-input>
+                          *ngIf="newRequest.get('contingentBeneficiary').get('dependentsC').get(index.toString()).get('familyBeneficiary').value == 'OTROS'"
+                          label="Especificar" name='specifyRelationshipBeneficiary'></app-input>
                         <app-number-input class="mr-3" min="1" max="100"
                           [group]="newRequest.get('contingentBeneficiary').get('dependentsC').get(index.toString())"
-                          label="Cant. en %" name='quantity'></app-number-input>
+                          label="Cant. en %" name='quantityBeneficiary'></app-number-input>
                         <app-file-input class="mr-3"
                           [group]="newRequest.get('contingentBeneficiary').get('dependentsC').get(index.toString())"
-                          name="id2Attached" label="Adjuntar documento de identidad si es mayor de edad"
+                          name="id2AttachedBeneficiary" label="Adjuntar documento de identidad si es mayor de edad"
                           [fileNameWatcher]="id2AttachedViewValue(index, 'contingentBeneficiary')"
-                          (onFileChange)="onFileChangeOnArray($event, 'id2Attached', index, 'contingentBeneficiary')">
+                          (onFileChange)="onFileChangeOnArray($event, 'id2AttachedBeneficiary', index, 'contingentBeneficiary')">
                         </app-file-input>
                       </div>
                       <button mat-mini-fab aria-label="Eliminar reclamacion"
@@ -1045,20 +1045,20 @@
                   correspondiente será entregado a</div><br>
                 <div class='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-4'>
                   <app-input class="mr-3" [group]="newRequest.get('contingentBeneficiary').get('personBenefited')"
-                    label="Nombre" name="name"></app-input>
-                  <app-select class="mr-3" [options]="family"
+                    label="Nombre" name="nameBeneficiary"></app-input>
+                  <app-select class="mr-3" [options]="familyBeneficiary"
                     [group]="newRequest.get('contingentBeneficiary').get('personBenefited')"
                     (selected)="relationWatcher($event, newRequest.get('contingentBeneficiary').get('personBenefited'))">
                   </app-select>
                   <app-input class="mr-3" [group]="newRequest.get('contingentBeneficiary').get('personBenefited')"
-                    *ngIf="newRequest.get('contingentBeneficiary').get('personBenefited').get('family').value == 'OTROS'"
-                    label="Especificar" name='specifyRelationship'></app-input>
+                    *ngIf="newRequest.get('contingentBeneficiary').get('personBenefited').get('familyBeneficiary').value == 'OTROS'"
+                    label="Especificar" name='specifyRelationshipBeneficiary'></app-input>
                   <app-input class="mr-3" [group]="newRequest.get('contingentBeneficiary').get('personBenefited')"
-                    label="Cédula/Pasaporte" name='id2'></app-input>
+                    label="Cédula/Pasaporte" name='id2Beneficiary'></app-input>
                   <app-file-input class="mr-3" [group]="newRequest.get('contingentBeneficiary').get('personBenefited')"
-                    name="id2Attached" label="Adjuntar documento de identidad"
+                    name="id2AttachedBeneficiary" label="Adjuntar documento de identidad"
                     [fileNameWatcher]="id2AttachedViewValue(null, 'contingentBeneficiary')"
-                    (onFileChange)="onFileChangeOnArray($event, 'id2Attached', null, 'contingentBeneficiary')">
+                    (onFileChange)="onFileChangeOnArray($event, 'id2AttachedBeneficiary', null, 'contingentBeneficiary')">
                   </app-file-input>
                 </div>
               </div>

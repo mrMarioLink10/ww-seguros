@@ -46,6 +46,7 @@ export class FormDataFillingService {
     , 'lastChangeBy'
     , 'investigated'
     , 'position'
+    , 'othersAnnualIncome'
     , 'functionary_name'
     , 'bankEntity'
     , 'contact'
@@ -67,7 +68,16 @@ export class FormDataFillingService {
     'condition',
     'incomeMainActivity',
     'isExposed',
-    'currency'
+    'currency',
+    'nameBeneficiary',
+    'familyBeneficiary',
+    'id2Beneficiary',
+    'id2AttachedBeneficiary',
+    'id2AttachedBeneficiaryUrl',
+    'specifyRelationshipBeneficiary',
+    'nationalityBeneficiary',
+    'ocupationBeneficiary',
+    'quantityBeneficiary'
   ];
   constructor(
     private fb: FormBuilder

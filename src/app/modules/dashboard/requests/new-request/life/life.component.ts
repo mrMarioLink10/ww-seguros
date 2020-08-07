@@ -242,13 +242,13 @@ export class LifeComponent implements OnInit, DoCheck {
   };
 
   contigentBenefits = {
-    name: [''],
-    id2: [''],
-    id2Attached: [''],
-    nationality: [''],
-    ocupation: [''],
-    family: [''],
-    quantity: ['', [Validators.min(1), Validators.max(100)]]
+    nameBeneficiary: [''],
+    id2Beneficiary: [''],
+    id2AttachedBeneficiary: [''],
+    nationalityBeneficiary: [''],
+    ocupationBeneficiary: [''],
+    familyBeneficiary: [''],
+    quantityBeneficiary: ['', [Validators.min(1), Validators.max(100)]]
   };
 
   annualIncomeValues = {
@@ -544,7 +544,88 @@ export class LifeComponent implements OnInit, DoCheck {
     student: [false],
     telUnivercity: ['']
   };
-
+  familyBeneficiary = {
+    label: 'Parentesco / Vinculación',
+    name: 'familyBeneficiary',
+    options: [
+        { value: 'CONYUGE', viewValue: 'CÓNYUGE' },
+        { value: 'HIJO', viewValue: 'HIJO' },
+        { value: 'HIJA', viewValue: 'HIJA' },
+        { value: 'ABUELO', viewValue: 'ABUELO' },
+        { value: 'ABUELA', viewValue: 'ABUELA' },
+        { value: 'TIO', viewValue: 'TIO' },
+        { value: 'TIA', viewValue: 'TIA' },
+        { value: 'HERMANA', viewValue: 'HERMANA' },
+        { value: 'HERMANO', viewValue: 'HERMANO' },
+        { value: 'PADRE', viewValue: 'PADRE' },
+        { value: 'MADRE', viewValue: 'MADRE' },
+        { value: 'HEREDEROS LEGALES', viewValue: 'HEREDEROS LEGALES' },
+        { value: 'SOBRINO', viewValue: 'SOBRINO' },
+        { value: 'SOBRINA', viewValue: 'SOBRINA' },
+        { value: 'NIETO', viewValue: 'NIETO' },
+        { value: 'NIETA', viewValue: 'NIETA' },
+        { value: 'ACREEDOR', viewValue: 'ACREEDOR' },
+        { value: 'SUEGRA', viewValue: 'SUEGRA' },
+        { value: 'SUEGRO', viewValue: 'SUEGRO' },
+        { value: 'HIJASTRA', viewValue: 'HIJASTRA' },
+        { value: 'HIJASTRO', viewValue: 'HIJASTRO' },
+        { value: 'TUTOR', viewValue: 'TUTOR' },
+        { value: 'CESIONARIO', viewValue: 'CESIONARIO' },
+        { value: 'CONTINGENTE', viewValue: 'CONTINGENTE' },
+        { value: 'ACOMPAÑANTE', viewValue: 'ACOMPAÑANTE' },
+        { value: 'AMIGO', viewValue: 'AMIGO' },
+        { value: 'AMIGA', viewValue: 'AMIGA' },
+        { value: 'CUÑADA', viewValue: 'CUÑADA' },
+        { value: 'RELACIONADO', viewValue: 'RELACIONADO' },
+        { value: 'COMADRE', viewValue: 'COMADRE' },
+        { value: 'COMPADRE', viewValue: 'COMPADRE' },
+        { value: 'COMPAÑERA', viewValue: 'COMPAÑERA' },
+        { value: 'COMPAÑERO', viewValue: 'COMPAÑERO' },
+        { value: 'COMPAÑÍA', viewValue: 'COMPAÑÍA' },
+        { value: 'CONTRATANTE', viewValue: 'CONTRATANTE' },
+        { value: 'CONYUGE', viewValue: 'CONYUGE' },
+        { value: 'COMPAÑERO DE VIDA', viewValue: 'COMPAÑERO DE VIDA' },
+        { value: 'CUÑADO', viewValue: 'CUÑADO' },
+        { value: 'PATRONO', viewValue: 'PATRONO' },
+        { value: 'EX ESPOSA', viewValue: 'EX ESPOSA' },
+        { value: 'EX ESPOSO', viewValue: 'EX ESPOSO' },
+        { value: 'FAMILIAR', viewValue: 'FAMILIAR' },
+        { value: 'HIJA ADOPTIVA', viewValue: 'HIJA ADOPTIVA' },
+        { value: 'HIJO ADOPTIVO', viewValue: 'HIJO ADOPTIVO' },
+        { value: 'HIJA DE CRIANZA', viewValue: 'HIJA DE CRIANZA' },
+        { value: 'HIJO DE CRIANZA', viewValue: 'HIJO DE CRIANZA' },
+        { value: 'HERMANA DE CRIANZA', viewValue: 'HERMANA DE CRIANZA' },
+        { value: 'HERMANO DE CRIANZA', viewValue: 'HERMANO DE CRIANZA' },
+        { value: 'MADRASTA', viewValue: 'MADRASTA' },
+        { value: 'PADRASTO', viewValue: 'PADRASTO' },
+        { value: 'MADRE DE CRIANZA', viewValue: 'MADRE DE CRIANZA' },
+        { value: 'PADRE DE CRIANZA', viewValue: 'PADRE DE CRIANZA' },
+        { value: 'MADRE DE LOS HIJOS', viewValue: 'MADRE DE LOS HIJOS' },
+        { value: 'PADRE DE LOS HIJOS', viewValue: 'PADRE DE LOS HIJOS' },
+        { value: 'MADRINA', viewValue: 'MADRINA' },
+        { value: 'PADRINO', viewValue: 'PADRINO' },
+        { value: 'NO DECLARADO', viewValue: 'NO DECLARADO' },
+        { value: 'NOVIA', viewValue: 'NOVIA' },
+        { value: 'NOVIO', viewValue: 'NOVIO' },
+        { value: 'PASTOR DE LA IGLESIA', viewValue: 'PASTOR DE LA IGLESIA' },
+        { value: 'PATRONO', viewValue: 'PATRONO' },
+        { value: 'PRIMA', viewValue: 'PRIMA' },
+        { value: 'PRIMO', viewValue: 'PRIMO' },
+        { value: 'PROTEGIDA', viewValue: 'PROTEGIDA' },
+        { value: 'PROTEGIDO', viewValue: 'PROTEGIDO' },
+        { value: 'SOCIA', viewValue: 'SOCIA' },
+        { value: 'SOCIO', viewValue: 'SOCIO' },
+        { value: 'SOCIEDAD ANONIMA', viewValue: 'SOCIEDAD ANONIMA' },
+        { value: 'TUTORA', viewValue: 'TUTORA' },
+        { value: 'TUTOR', viewValue: 'TUTOR' },
+        { value: 'TUTORES LEGALES', viewValue: 'TUTORES LEGALES' },
+        { value: 'EMPLEADO', viewValue: 'EMPLEADO' },
+        { value: 'HIJO ADULTO', viewValue: 'HIJO ADULTO' },
+        { value: 'HIJA ADULTA', viewValue: 'HIJA ADULTA' },
+        { value: 'YERNO', viewValue: 'YERNO' },
+        { value: 'OTROS', viewValue: 'OTROS' },
+    ]
+};
   family = $family;
   familyRelationship = {
     label: 'Parentesco',
@@ -662,7 +743,7 @@ export class LifeComponent implements OnInit, DoCheck {
       }),
       financialProfile: this.fb.group({
         annualIncome: ['', Validators.required],
-        othersAnnualIncome: ['', Validators.required],
+        othersAnnualIncome: [''],
         paymentOrigin: ['', Validators.required],
       }),
       releventPlanInformation: this.fb.group({
@@ -696,10 +777,10 @@ export class LifeComponent implements OnInit, DoCheck {
       contingentBeneficiary: this.fb.group({
         dependentsC: this.fb.array([this.formMethods.createItem(this.contigentBenefits)]),
         personBenefited: this.fb.group({
-          name: [''],
-          family: [''],
-          id2: [''],
-          id2Attached: ['']
+          nameBeneficiary: [''],
+          familyBeneficiary: [''],
+          id2Beneficiary: [''],
+          id2AttachedBeneficiary: ['']
         }),
       }),
       bankTransfer: this.fb.group({

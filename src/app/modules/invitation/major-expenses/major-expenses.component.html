@@ -184,10 +184,12 @@
 
                 <div class="mt-2" *ngIf="newRequest.get('person').get('pep_radio_insured').value == 'SI' || 
                   newRequest.get('person').get('pep_radio_insured').value == 'NO'">
-                  <div *ngIf="newRequest.get('person').get('pep_radio_insured').value == 'SI'" class="radio-button-label" style="font-size: 12px !important; max-width: 63vw;">Adjuntar
+                  <div *ngIf="newRequest.get('person').get('pep_radio_insured').value == 'SI'"
+                    class="radio-button-label" style="font-size: 12px !important; max-width: 63vw;">Adjuntar
                     documentos "Copia de Cédula" y "Certificación de Ingresos declarados"
                   </div>
-                  <div *ngIf="newRequest.get('person').get('pep_radio_insured').value == 'NO'" class="radio-button-label" style="font-size: 12px !important; max-width: 63vw;">Adjuntar
+                  <div *ngIf="newRequest.get('person').get('pep_radio_insured').value == 'NO'"
+                    class="radio-button-label" style="font-size: 12px !important; max-width: 63vw;">Adjuntar
                     documentos "Copia de Cédula"
                   </div>
                   <div *ngIf="newRequest.get('files') && newRequest.get('files').get('documentsKnowClient')">
@@ -222,8 +224,7 @@
                         <app-file-input
                           [ngClass]="{'col-span-6': filesDocumentsKnowClientArray.length === 1, 'col-span-5': filesDocumentsKnowClientArray.length > 1}"
                           class="mr-3" [group]="newRequest.get('files').get('documentsKnowClient').get(i.toString())"
-                          name="document" label="Documento"
-                          [fileNameWatcher]="arrayDocumentsKnowClientWatcher(i)"
+                          name="document" label="Documento" [fileNameWatcher]="arrayDocumentsKnowClientWatcher(i)"
                           (onFileChange)="onStudiesChange2($event, i, 'documentsKnowClient')">
                         </app-file-input>
                         <div *ngIf="filesDocumentsKnowClientArray.length > 1"
@@ -1441,7 +1442,8 @@
                   </div>
                   <app-radio-button class="mt-2"
                     [group]="newRequest.get('dependents').get('allDependents').get(ixd.toString()).get('nicotine')"
-                    name="isActualSmoker" [options]="isActualSmoker" (selected)="valueChange($event, question.name, i)">
+                    name="isActualSmoker" [options]="isActualSmoker"
+                    (selected)="valueChange($event, question.name, ixd)">
                   </app-radio-button>
                   <div class="grid grid-cols-4">
                     <app-date-picker class="mr-3" [max]="todayDate"

@@ -24,6 +24,7 @@ export class UserService {
   }
 
   getRoleCotizador() {
+    this.checkValidAccess();
     const user = this.getUserInformation();
     for (const key in user.resource_access.cotizador.roles) {
       if (user.resource_access.cotizador.roles.hasOwnProperty(key)) {
@@ -32,6 +33,25 @@ export class UserService {
         }
       }
     }
+  }
+
+  checkValidAccess()
+  {
+    let isRD = "true";
+    const user = this.getUserInformation();
+    for (const key in user.resource_access.cotizador.roles) {
+      if (user.resource_access.cotizador.roles.hasOwnProperty(key)) {
+        if (  user.resource_access.cotizador.roles[key] === 'WMA') {
+          isRD = "false";
+        }
+      }
+    }
+      let isNdaReady = true;// (user && user.CodBroker && user.CodBroker === "true");
+      if (!isNdaReady)
+        {
+          console.log(user);
+          window.location.href=environment.urlNotAccess+isRD;
+        }
   }
 
   getInsurancePeople(idNumber: string) {

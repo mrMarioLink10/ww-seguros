@@ -2125,7 +2125,7 @@
             [form]="newRequest.get('activitiesQuestionnaires').get('solicitudMontanismo')"></app-mountaineering>
         </mat-accordion>
       </mat-tab>
-      <mat-tab label="Cuestionarios Adicionales" *ngIf="questionsLength() > 0" class="mat-tab-forms">
+      <mat-tab label="Cuestionarios Adicionales" *ngIf="newRequest.get('questionnaires').get('solicitudHipertensionArterial') || newRequest.get('questionnaires').get('solicitudDiabetes')" class="mat-tab-forms">
         <mat-accordion #matAccordion="matAccordion" name="matAccordion" class="ww-mat-accordion example-headers-align"
           [togglePosition]="'before'">
           <app-hypertension
@@ -2179,7 +2179,7 @@
 
       </mat-tab>
       <mat-tab *ngIf="this.newRequest.get('payerLegalEntity')"
-        label="Conozca a su cliente (Persona jurídica) - Asegurado">
+        label="Conozca a su cliente (Persona jurídica)">
         <mat-accordion #matAccordion="matAccordion" name="matAccordion" class="ww-mat-accordion example-headers-align"
           [togglePosition]="'before'">
           <app-know-your-client [showWarningDot]="showWarningDot(newRequest.get('payerLegalEntity'))"

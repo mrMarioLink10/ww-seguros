@@ -2388,7 +2388,7 @@
           <div *ngIf="disabilityGroup.get('insured_data').get('mandatorySubject')">
             <mat-tab *ngIf="this.disabilityGroup.get('insured_data').get('mandatorySubject').value == 'SI' ||
           this.disabilityGroup.get('insured_data').get('mandatorySubject').value == 'NO'"
-              label="Conozca a su cliente (Persona Jurídica) - Asegurado">
+              label="Conozca a su cliente (Persona Jurídica)">
               <mat-accordion #matAccordion="matAccordion" name="matAccordion"
                 class="ww-mat-accordion example-headers-align" [togglePosition]="'before'">
                 <app-know-your-client [showWarningDot]="showWarningDot(disabilityGroup.get('knowYourClient'))"

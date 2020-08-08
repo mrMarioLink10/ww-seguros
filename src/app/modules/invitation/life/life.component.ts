@@ -3023,6 +3023,7 @@ export class LifeComponent implements OnInit, DoCheck {
   }
 
   questionsLength() {
+    console.log(Object.keys(this.newRequest.get('questionnaires').value).length);
     if (this.newRequest.get('questionnaires').get('solucionAntiLavadoDinero') && this.newRequest.get('questionnaires').get('solicitudEstadoFinancieroConfidencial')) {
       return Object.keys(this.newRequest.get('questionnaires').value).length - 2;
     } else if (this.newRequest.get('questionnaires').get('solucionAntiLavadoDinero')) {

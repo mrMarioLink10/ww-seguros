@@ -1402,7 +1402,11 @@ export class DisabilityComponent implements OnInit, DoCheck {
             formFiles.addControl('documentsKnowClient', this.fb.array([this.createFormArray('filesDocumentsKnowClient')]));
             this.filesDocumentsKnowClientArray = this.disabilityGroup.get('files').get('documentsKnowClient') as FormArray;
           }
-          // formInsured.addControl('KnowYourCustomer', this.fb.group({}));
+          if (!(this.disabilityGroup.get('knowYourCustomer') )) {
+            this.disabilityGroup.addControl('knowYourCustomer', this.fb.group({}));
+            console.log('foroooooo');
+
+          }
           break;
 
         case 'pep_radio_holder':
@@ -1419,7 +1423,7 @@ export class DisabilityComponent implements OnInit, DoCheck {
 
           // if (this.role === 'WMA') { formHolder.addControl('knowYourClient', this.fb.group({})); }
           // else if (this.role === 'WWS') { formHolder.addControl('KnowYourCustomer', this.fb.group({})); }
-          // formHolder.addControl('KnowYourCustomer', this.fb.group({}));
+          formGeneral.addControl('knowYourCustomerContratante', this.fb.group({}));
           break;
 
         case 'haveArthritis':
@@ -1509,7 +1513,7 @@ export class DisabilityComponent implements OnInit, DoCheck {
           //   'Beneficiario(s) Contigente(s)', 'Archivos Adjuntos'];
           // formGeneral.removeControl('policyholder');
           break;
-
+// Si
         case 'policyholderKnowClientRadio':
           // if (this.disabilityGroup.get('insured_data').get('policyholderKnowClientRadio')){
           //   formInsured.removeControl('policyholderKnowClientRadio');
@@ -1523,11 +1527,21 @@ export class DisabilityComponent implements OnInit, DoCheck {
           // formInsured.addControl('knowYourClient', this.fb.group({}));
           // formFiles.addControl('documentsKnowClient', this.fb.array([]));
           // this.filesDocumentsKnowClientArray = this.disabilityGroup.get('files').get('documentsKnowClient') as FormArray;
-          if (this.disabilityGroup.get('KnowYourCustomer')) {
-            formGeneral.removeControl('KnowYourCustomer');
+          if (this.disabilityGroup.get('knowYourCustomerContratante')) {
+            formGeneral.removeControl('knowYourCustomerContratante');
+          }
+          if (this.disabilityGroup.get('policyholder')) {
+            formGeneral.removeControl('policyholder');
+          }
+          if (!(this.disabilityGroup.get('knowYourClient'))) {
+            formGeneral.addControl('knowYourClient', this.fb.group({}));
           }
           if (this.disabilityGroup.get('files').get('copyId')) {
             formFiles.removeControl('copyId');
+          }
+
+          if (!(this.disabilityGroup.get('knowYourClient'))) {
+            formGeneral.addControl('knowYourClient', this.fb.group({}));
           }
           formInsured.addControl('mandatorySubject', this.fb.control('', Validators.required));
           break;
@@ -1544,9 +1558,6 @@ export class DisabilityComponent implements OnInit, DoCheck {
           break;
 
         case 'mandatorySubject':
-          if (!(this.disabilityGroup.get('knowYourClient'))) {
-            formGeneral.addControl('knowYourClient', this.fb.group({}));
-          }
           if (!(this.disabilityGroup.get('files').get('mercantile'))) {
             formFiles.addControl('mercantile', this.fb.array([this.createFormArray('mercantileRegister')]));
             this.mercantileRegisterArray = this.disabilityGroup.get('files').get('mercantile') as FormArray;
@@ -1678,19 +1689,20 @@ export class DisabilityComponent implements OnInit, DoCheck {
 
             //   }
             // }
-            formFiles.removeControl('documentsKnowClient');
+           // formFiles.removeControl('documentsKnowClient');
             formFiles.addControl('documentsKnowClient', this.fb.array([this.createFormArray('filesDocumentsKnowClient')]));
             this.filesDocumentsKnowClientArray = this.disabilityGroup.get('files').get('documentsKnowClient') as FormArray;
           }
 
-          // formInsured.removeControl('KnowYourCustomer');
+          this.disabilityGroup.removeControl('knowYourCustomer');
           break;
 
 
         case 'pep_radio_holder':
           formHolder.removeControl('pep');
+          formGeneral.removeControl('knowYourCustomerContratante');
           // formHolder.removeControl('knowYourClient');
-          // formHolder.removeControl('KnowYourCustomer');
+          //formHolder.removeControl('KnowYourCustomer');
           break;
 
         case 'insuredPolicyholderRadio':
@@ -1710,8 +1722,8 @@ export class DisabilityComponent implements OnInit, DoCheck {
           if (this.disabilityGroup.get('insured_data').get('policyholderKnowClientRadio')) {
             formInsured.removeControl('policyholderKnowClientRadio');
           }
-          if (this.disabilityGroup.get('KnowYourCustomer')) {
-            formGeneral.removeControl('KnowYourCustomer');
+          if (this.disabilityGroup.get('KnowYourCustomerContratante')) {
+            formGeneral.removeControl('KnowYourCustomerContratante');
           }
           if (this.disabilityGroup.get('files').get('copyId')) {
             formFiles.removeControl('copyId');
@@ -1731,11 +1743,15 @@ export class DisabilityComponent implements OnInit, DoCheck {
           // if (this.disabilityGroup.get('files').get('documentsKnowClient')) {
           //   formFiles.removeControl('documentsKnowClient');
           // }
+
+          if (this.disabilityGroup.get('policyholder')) {
+            formGeneral.removeControl('policyholder');
+          }
           this.accordionTitles = [
             'Sección A. Datos del propuesto Asegurado y Estatus laboral', 'Sección C. Cuestionario Médico',
             'Sección D. Opción del Plan', 'Sección E. Beneficiarios Primarios',
             'Beneficiario(s) Contigente(s)', 'Archivos Adjuntos'];
-          formGeneral.removeControl('policyholder');
+          //formGeneral.removeControl('policyholder');
           break;
 
         case 'policyholderKnowClientRadio':
@@ -1760,6 +1776,15 @@ export class DisabilityComponent implements OnInit, DoCheck {
           if ((this.disabilityGroup.get('knowYourClient'))) {
             formGeneral.removeControl('knowYourClient');
           }
+
+          if (!this.disabilityGroup.get('policyholder')) {
+            formGeneral.addControl('policyholder', this.fb.group(this.policyHolderGroup));
+            this.accordionTitles = [
+              'Sección A. Datos del propuesto Asegurado y Estatus laboral',
+              'Sección B. Datos del Contratante', 'Sección C. Cuestionario Médico',
+              'Sección D. Opción del Plan', 'Sección E. Beneficiarios Primarios',
+              'Beneficiario(s) Contigente(s)', 'Archivos Adjuntos'];
+          }
           if ((this.disabilityGroup.get('antiLaundering'))) {
             formGeneral.removeControl('antiLaundering');
           }
@@ -1769,7 +1794,7 @@ export class DisabilityComponent implements OnInit, DoCheck {
           if (this.disabilityGroup.get('files').get('mercantile')) {
             formFiles.removeControl('mercantile');
           }
-          formGeneral.addControl('KnowYourCustomer', this.fb.group({}));
+          //formGeneral.addControl('KnowYourCustomer', this.fb.group({}));
 
           formFiles.addControl('copyId', this.fb.array([this.createFormArray('filesCopyId')]));
           this.filesCopyIdArray = this.disabilityGroup.get('files').get('copyId') as FormArray;
@@ -1790,9 +1815,7 @@ export class DisabilityComponent implements OnInit, DoCheck {
           break;
 
         case 'mandatorySubject':
-          if (!(this.disabilityGroup.get('knowYourClient'))) {
-            formGeneral.addControl('knowYourClient', this.fb.group({}));
-          }
+
           if (!(this.disabilityGroup.get('files').get('mercantile'))) {
             formFiles.addControl('mercantile', this.fb.array([this.createFormArray('mercantileRegister')]));
             this.mercantileRegisterArray = this.disabilityGroup.get('files').get('mercantile') as FormArray;
@@ -2146,6 +2169,8 @@ export class DisabilityComponent implements OnInit, DoCheck {
         const formHolder = this.disabilityGroup.get('policyholder') as FormGroup;
         const formFiles = this.disabilityGroup.get('files') as FormGroup;
         const formGeneral = this.disabilityGroup as FormGroup;
+
+    const formInsured = this.disabilityGroup.get('insured_data') as FormGroup;
         console.log(this.disabilityGroup);
         console.log(data.data);
 
@@ -2214,10 +2239,39 @@ export class DisabilityComponent implements OnInit, DoCheck {
 
         if (formI.get('insuredPolicyholderRadio').value !== 'SI') {
           formGeneral.removeControl('policyholder');
+          if (this.disabilityGroup.get('insured_data').get('policyholderKnowClientRadio')) {
+            formInsured.removeControl('policyholderKnowClientRadio');
+          }
+          if (this.disabilityGroup.get('KnowYourCustomerContratante')) {
+            formGeneral.removeControl('KnowYourCustomerContratante');
+          }
+          if (this.disabilityGroup.get('files').get('copyId')) {
+            formFiles.removeControl('copyId');
+          }
+          if ((this.disabilityGroup.get('antiLaundering'))) {
+            formGeneral.removeControl('antiLaundering');
+          }
+          if ((this.disabilityGroup.get('knowYourClient'))) {
+            formGeneral.removeControl('knowYourClient');
+          }
+          if (this.disabilityGroup.get('insured_data').get('mandatorySubject')) {
+            formInsured.removeControl('mandatorySubject');
+          }
+          if (this.disabilityGroup.get('files').get('mercantile')) {
+            formFiles.removeControl('mercantile');
+          }
+          // if (this.disabilityGroup.get('files').get('documentsKnowClient')) {
+          //   formFiles.removeControl('documentsKnowClient');
+          // }
+
+          if (this.disabilityGroup.get('policyholder')) {
+            formGeneral.removeControl('policyholder');
+          }
         }
 
         if (formHolder.get('pep_radio_holder').value != 'SI') {
           formHolder.removeControl('pep');
+          formGeneral.removeControl('knowYourCustomerContratante');
         }
 
         // tslint:disable-next-line: prefer-for-of
@@ -2271,6 +2325,11 @@ export class DisabilityComponent implements OnInit, DoCheck {
 
         if (this.disabilityGroup.get('insured_data').get('insuredPolicyholderRadio').value != 'SI') {
           formI.removeControl('policyholderKnowClientRadio');
+        }
+        if (this.disabilityGroup.get('insured_data').get('insuredPolicyholderRadio').value == 'SI') {
+          if (this.disabilityGroup.get('policyholder')) {
+            formGeneral.removeControl('policyholder');
+          }
         }
 
         if (this.disabilityGroup.get('insured_data').get('pep')) {

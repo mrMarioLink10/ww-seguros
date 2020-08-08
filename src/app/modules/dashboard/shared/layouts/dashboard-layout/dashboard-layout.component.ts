@@ -96,7 +96,9 @@ export class DashboardLayoutComponent implements OnInit, OnDestroy {
   navigateBack() {
     this.location.back();
   }
-
+  GetInstrucstivo(){
+    window.open(environment.instructivo, '_blank');
+  }
   ngOnDestroy() {
     // tslint:disable-next-line: deprecation
     this.mobileQuery.removeListener(this.mobileQueryListener);

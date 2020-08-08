@@ -32,7 +32,7 @@
             <mat-expansion-panel class="ww-mat-expansion" [expanded]="step === 0" (opened)="setStep(0)">
               <mat-expansion-panel-header class="body-13 icon-blue">
                 <mat-panel-title>
-                  Sección A. Datos del propuesto Asegurado y Estatus laboral
+                   Datos del propuesto Asegurado y Estatus laboral
                 </mat-panel-title>
                 <mat-panel-description>
                   <div></div>
@@ -645,7 +645,7 @@
               [expanded]="step === 1" (opened)="setStep(1)">
               <mat-expansion-panel-header class="body-13 icon-blue">
                 <mat-panel-title>
-                  Sección B. Datos del Contratante
+                    Datos del Contratante
                 </mat-panel-title>
                 <mat-panel-description>
                   <div></div>
@@ -811,7 +811,7 @@
             <mat-expansion-panel class="ww-mat-expansion" [expanded]="step === 2" (opened)="setStep(2)">
               <mat-expansion-panel-header class="body-13 icon-blue">
                 <mat-panel-title>
-                  Sección C. Cuestionario Médico
+                 Cuestionario Médico
                 </mat-panel-title>
                 <mat-panel-description>
                   <div></div>
@@ -1739,7 +1739,7 @@
             <mat-expansion-panel class="ww-mat-expansion" [expanded]="step === 3" (opened)="setStep(3)">
               <mat-expansion-panel-header class="body-13 icon-blue">
                 <mat-panel-title>
-                  Sección D. Opción del Plan
+                    Opción del Plan
                 </mat-panel-title>
                 <mat-panel-description>
                   <div></div>
@@ -1803,7 +1803,7 @@
             <mat-expansion-panel class="ww-mat-expansion" [expanded]="step === 4" (opened)="setStep(4)">
               <mat-expansion-panel-header class="body-13 icon-blue">
                 <mat-panel-title>
-                  Sección E. Beneficiarios Primarios
+                   Beneficiarios Primarios
                 </mat-panel-title>
                 <mat-panel-description>
                   <div></div>
@@ -2349,19 +2349,30 @@
           </app-know-your-customer>
         </mat-tab>
       </div> -->
-      <div *ngIf="this.disabilityGroup.get('insured_data').get('insuredPolicyholderRadio').value == 'SI'">
-        <mat-tab *ngIf="this.disabilityGroup.get('insured_data').get('policyholderKnowClientRadio').value == 'NO'"
+      <div *ngIf="disabilityGroup.get('knowYourCustomer')">
+        <mat-tab *ngIf="disabilityGroup.get('knowYourCustomer')"
           label="Conozca a su cliente (Persona Física) - Asegurado">
           <mat-accordion #matAccordion="matAccordion" name="matAccordion" class="ww-mat-accordion example-headers-align"
             [togglePosition]="'before'">
-            <app-know-your-customer [showWarningDot]="showWarningDot(disabilityGroup.get('KnowYourCustomer'))"
-              [form]="disabilityGroup.get('KnowYourCustomer')">
+            <app-know-your-customer [showWarningDot]="showWarningDot(disabilityGroup.get('knowYourCustomer'))"
+              [form]="disabilityGroup.get('knowYourCustomer')">
             </app-know-your-customer>
           </mat-accordion>
         </mat-tab>
       </div>
 
-      <div *ngIf="disabilityGroup.get('policyholder')">
+      <div *ngIf="disabilityGroup.get('knowYourCustomerContratante')">
+        <mat-tab *ngIf="disabilityGroup.get('knowYourCustomerContratante')"
+          label="Conozca a su cliente (Persona Física) - Contratante">
+          <mat-accordion #matAccordion="matAccordion" name="matAccordion" class="ww-mat-accordion example-headers-align"
+            [togglePosition]="'before'">
+            <app-know-your-customer [showWarningDot]="showWarningDot(disabilityGroup.get('knowYourCustomerContratante'))"
+              [form]="disabilityGroup.get('knowYourCustomerContratante')">
+            </app-know-your-customer>
+          </mat-accordion>
+        </mat-tab>
+      </div>
+    <!--  <div *ngIf="disabilityGroup.get('policyholder')">
         <mat-tab
           *ngIf="this.disabilityGroup.get('policyholder').get('pep_radio_holder').value == 'SI' && disabilityGroup.get('policyholder').get('KnowYourCustomer')"
           label="Conozca a su cliente (Persona Física) - Contratante">
@@ -2375,7 +2386,7 @@
 
         </mat-tab>
       </div>
-      <!-- <div *ngIf ="this.disabilityGroup.get('insured_data').get('insuredPolicyholderRadio').value == 'no'">
+       <div *ngIf ="this.disabilityGroup.get('insured_data').get('insuredPolicyholderRadio').value == 'no'">
       <mat-tab *ngIf="this.disabilityGroup.get('insured_data').get('policyholderKnowClientRadio').value == 'si'"
         label="Conozca a su cliente (Persona Jurídica) - Contratante">
         <app-know-your-client [form]="disabilityGroup.get('insured_data').get('knowYourClientSecond')">
@@ -2383,11 +2394,10 @@
         </app-know-your-client>
       </mat-tab>
       </div> -->
-      <div *ngIf="this.disabilityGroup.get('insured_data').get('insuredPolicyholderRadio').value == 'SI'">
-        <div *ngIf="this.disabilityGroup.get('insured_data').get('policyholderKnowClientRadio').value == 'SI'">
+      <div *ngIf="disabilityGroup.get('knowYourClient')">
+        <div *ngIf="disabilityGroup.get('knowYourClient')">
           <div *ngIf="disabilityGroup.get('insured_data').get('mandatorySubject')">
-            <mat-tab *ngIf="this.disabilityGroup.get('insured_data').get('mandatorySubject').value == 'SI' ||
-          this.disabilityGroup.get('insured_data').get('mandatorySubject').value == 'NO'"
+            <mat-tab *ngIf="disabilityGroup.get('knowYourClient')"
               label="Conozca a su cliente (Persona Jurídica)">
               <mat-accordion #matAccordion="matAccordion" name="matAccordion"
                 class="ww-mat-accordion example-headers-align" [togglePosition]="'before'">
@@ -2399,9 +2409,9 @@
           </div>
         </div>
       </div>
-      <div *ngIf="this.disabilityGroup.get('insured_data').get('insuredPolicyholderRadio').value == 'SI'">
-        <div *ngIf="this.disabilityGroup.get('insured_data').get('policyholderKnowClientRadio').value == 'SI'">
-          <mat-tab *ngIf="this.disabilityGroup.get('insured_data').get('mandatorySubject').value == 'SI'"
+      <div *ngIf="disabilityGroup.get('antiLaundering')">
+        <div *ngIf="disabilityGroup.get('antiLaundering')">
+          <mat-tab *ngIf="disabilityGroup.get('antiLaundering')"
             label="Formulario politica Anti-lavado de Dinero/Financiamiento y Terrorismo (AML)">
             <mat-accordion #matAccordion="matAccordion" name="matAccordion"
               class="ww-mat-accordion example-headers-align" [togglePosition]="'before'">

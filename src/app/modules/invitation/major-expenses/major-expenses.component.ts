@@ -1565,10 +1565,17 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
 
         case 'isJuridica':
 
-          // formContractor.addControl('conozcaSuClientePersonaJuridica', this.fb.group({}));
-          if (this.newRequest.get('conozcaSuClientePersona')) {
-            formGeneral.removeControl('conozcaSuClientePersona');
+          if (formGeneral.get('contractor')) {
+            formGeneral.removeControl('contractor');
           }
+          if (this.newRequest.get('conozcaSuClientePersonaContratante')) {
+            formGeneral.removeControl('conozcaSuClientePersonaContratante');
+          }
+          if (!(this.newRequest.get('conozcaSuClientePersonaJuridica'))) {
+            formGeneral.addControl('conozcaSuClientePersonaJuridica', this.fb.group({}));
+          }
+          // formContractor.addControl('conozcaSuClientePersonaJuridica', this.fb.group({}));
+
           if (this.newRequest.get('files').get('copyId')) {
             formFiles.removeControl('copyId');
           }
@@ -1585,9 +1592,9 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
             time: ['', Validators.required],
             timeNumber: ['', [Validators.required, Validators.min(1)]]
           }));
-          // formContractor.addControl('conozcaSuClientePersona', this.fb.group({}));
+          formGeneral.addControl('conozcaSuClientePersonaContratante', this.fb.group({}));
           break;
-
+// Si
         case 'headLine':
           exposedPersonForm.addControl('headLineExposedInfo', this.fb.group({
             lastPosition: ['', Validators.required],
@@ -1595,7 +1602,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
             timeNumber: ['', [Validators.required, Validators.min(1)]]
           }));
 
-          // formP.addControl('conozcaSuClientePersona', this.fb.group({}));
+          formGeneral.addControl('conozcaSuClientePersona', this.fb.group({}));
           break;
 
         case 'hasDeclinedInsuranceCompany':
@@ -1640,11 +1647,20 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
 
         case 'pep_radio_insured':
 
+          this.newRequest.addControl('exposedPerson', this.fb.group({
+            headLine: ['', Validators.required],
+
+          }));
+          if (formContractor)
+          {
+            const formEP2 = this.newRequest.get('exposedPerson') as FormGroup;
+
+            formEP2.addControl('contractor', this.fb.control('', Validators.required));
+        }
           if (!(this.newRequest.get('files').get('documentsKnowClient'))) {
             formFiles.addControl('documentsKnowClient', this.fb.array([this.createFormArray('filesDocumentsKnowClient')]));
             this.filesDocumentsKnowClientArray = this.newRequest.get('files').get('documentsKnowClient') as FormArray;
           } else if (this.newRequest.get('files').get('documentsKnowClient')) {
-
             formFiles.removeControl('documentsKnowClient');
             formFiles.addControl('documentsKnowClient', this.fb.array([this.createFormArray('filesDocumentsKnowClient')]));
             this.filesDocumentsKnowClientArray = this.newRequest.get('files').get('documentsKnowClient') as FormArray;
@@ -1653,9 +1669,9 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
           break;
 
         case 'mandatorySubject':
-          if (!(this.newRequest.get('conozcaSuClientePersonaJuridica'))) {
+         /* if (!(this.newRequest.get('conozcaSuClientePersonaJuridica'))) {
             formGeneral.addControl('conozcaSuClientePersonaJuridica', this.fb.group({}));
-          }
+          }*/
           if (!(this.newRequest.get('files').get('mercantile'))) {
             formFiles.addControl('mercantile', this.fb.array([this.createFormArray('mercantileRegister')]));
             this.mercantileRegisterArray = this.newRequest.get('files').get('mercantile') as FormArray;
@@ -1803,10 +1819,66 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
           if (this.newRequest.get('files').get('mercantile')) {
             formFiles.removeControl('mercantile');
           }
-          formGeneral.addControl('conozcaSuClientePersona', this.fb.group({}));
-
-          formFiles.addControl('copyId', this.fb.array([this.createFormArray('filesCopyId')]));
-          this.filesCopyIdArray = this.newRequest.get('files').get('copyId') as FormArray;
+          //formGeneral.addControl('conozcaSuClientePersona', this.fb.group({}));
+          if (!(this.newRequest.get('copyId'))) {
+            formFiles.addControl('copyId', this.fb.array([this.createFormArray('filesCopyId')]));
+            this.filesCopyIdArray = this.newRequest.get('files').get('copyId') as FormArray;
+          }
+          if (!formGeneral.get('contractor')) {
+            formGeneral.addControl('contractor', this.fb.group({
+              // conozcaSuClientePersonaJuridica: this.fb.group({}),
+              // conozcaSuClientePersona: this.fb.group({}),
+              firstName: ['', Validators.required],
+              secondName: ['', Validators.required],
+              lastName: ['', Validators.required],
+              date: ['', Validators.required],
+              sex: ['', Validators.required],
+              nationality: ['', Validators.required],
+              idType: ['', Validators.required],
+              id2: ['', Validators.required],
+              age: [{ value: '', disabled: false }, Validators.required],
+              weight: ['', Validators.required],
+              height: ['', Validators.required],
+              weightUnit: ['', Validators.required],
+              heightUnit: ['', Validators.required],
+              bmi: [{ value: '', disabled: true }, Validators.required],
+              status: ['', Validators.required],
+              country: ['', Validators.required],
+              city: ['', Validators.required],
+              direction: ['', Validators.required],
+              tel: [''],
+              cel: ['', Validators.required],
+              officeTel: [''],
+              fax: [''],
+              email: ['', [Validators.required, Validators.email]],
+              office: this.fb.group({
+                company: [''],
+                position: [''],
+                direction: [''],
+                economicActivity: [''],
+                sector: [''],
+                city: [''],
+                country: [''],
+              })
+              /*societyName: ['', Validators.required],
+              commercialName: [''],
+              taxpayerNumber: ['', Validators.required],
+              socialHome: [''],
+              tel: ['', Validators.required],
+              email: ['', Validators.required],
+              commercialActivity: ['', Validators.required],
+              // requestType: ['', Validators.required],
+              legalRepresentation: this.fb.group({
+                name: ['', Validators.required],
+                position: ['', Validators.required],
+                nationality: ['', Validators.required],
+                idType: ['', Validators.required],
+                id2: ['', Validators.required],
+                policy: [''],
+                email: ['', Validators.required]
+              })*/
+            }));
+          }
           break;
 
         case 'havePregnant':
@@ -1822,12 +1894,17 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
 
         case 'contractor':
           exposedPersonForm.removeControl('contractorExposedInfo');
-          // formContractor.removeControl('conozcaSuClientePersona');
+          if (this.newRequest.get('conozcaSuClientePersonaContratante')) {
+            formGeneral.removeControl('conozcaSuClientePersonaContratante');
+          }
           break;
 
         case 'headLine':
           exposedPersonForm.removeControl('headLineExposedInfo');
-          // formP.removeControl('conozcaSuClientePersona');
+
+          if (this.newRequest.get('conozcaSuClientePersona')) {
+            formGeneral.removeControl('conozcaSuClientePersona');
+          }
           break;
 
         case 'hasDeclinedInsuranceCompany':
@@ -1935,8 +2012,16 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
           questionsBForm.removeControl('familyWithDiseases');
           this.familyWithDiseasesList = undefined;
           break;
-
+// No
         case 'pep_radio_insured':
+
+          if (this.newRequest.get('conozcaSuClientePersona')) {
+            formGeneral.removeControl('conozcaSuClientePersona');
+          }
+          if (this.newRequest.get('conozcaSuClientePersonaContratante')) {
+            formGeneral.removeControl('conozcaSuClientePersonaContratante');
+          }
+          this.newRequest.removeControl('exposedPerson');
           if (!(this.newRequest.get('files').get('documentsKnowClient'))) {
             formFiles.addControl('documentsKnowClient', this.fb.array([this.createFormArray('filesDocumentsKnowClient')]));
             this.filesDocumentsKnowClientArray = this.newRequest.get('files').get('documentsKnowClient') as FormArray;
@@ -1948,9 +2033,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
           break;
 
         case 'mandatorySubject':
-          if (!(this.newRequest.get('conozcaSuClientePersonaJuridica'))) {
-            formGeneral.addControl('conozcaSuClientePersonaJuridica', this.fb.group({}));
-          }
+
           if (!(this.newRequest.get('files').get('mercantile'))) {
             formFiles.addControl('mercantile', this.fb.array([this.createFormArray('mercantileRegister')]));
             this.mercantileRegisterArray = this.newRequest.get('files').get('mercantile') as FormArray;
@@ -3086,6 +3169,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
         const formSAH = this.newRequest.get('sectionAHelper') as FormGroup;
         const formGeneral = this.newRequest as FormGroup;
         const formContractor = this.newRequest.get('contractor') as FormGroup;
+        const formFiles = this.newRequest.get('files') as FormGroup;
 
         if (this.newRequest.get('questionsB').get('familyWithDiseases') !== undefined && this.newRequest.get('questionsB').get('familyWithDiseases') !== null) {
           this.familyWithDiseasesList = this.newRequest.get('questionsB').get('familyWithDiseases') as FormArray;
@@ -3094,7 +3178,30 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
         }
 
         if (formP.get('isContractor').value === 'NO') {
-          // formP.removeControl('isJuridica');
+          if (formGeneral.get('contractor')) {
+            formGeneral.removeControl('contractor');
+          }
+          if (this.newRequest.get('conozcaSuClientePersona')) {
+            formGeneral.removeControl('conozcaSuClientePersona');
+          }
+          if (this.newRequest.get('files').get('copyId')) {
+            formFiles.removeControl('copyId');
+          }
+          if ((this.newRequest.get('antiLaundering'))) {
+            formGeneral.removeControl('antiLaundering');
+          }
+          if ((this.newRequest.get('conozcaSuClientePersonaJuridica'))) {
+            formGeneral.removeControl('conozcaSuClientePersonaJuridica');
+          }
+          if (this.newRequest.get('person').get('mandatorySubject')) {
+            formP.removeControl('mandatorySubject');
+          }
+          formP.removeControl('isJuridica');
+          formEP.removeControl('contractor');
+          formEP.removeControl('contractorExposedInfo');
+          if (this.newRequest.get('files').get('mercantile')) {
+            formFiles.removeControl('mercantile');
+          }
           if (formGeneral.get('contractor')) {
             formGeneral.removeControl('contractor');
           }
@@ -3126,11 +3233,53 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
           this.newRequest.get('person').get('office').get('country').setValidators(Validators.required);
           this.newRequest.get('person').get('office').get('country').updateValueAndValidity();
           this.newRequest.get('person').get('office').get('country').markAsUntouched();
+
+          if (this.newRequest.get('conozcaSuClientePersona')) {
+            formGeneral.removeControl('conozcaSuClientePersona');
+          }
+          if (this.newRequest.get('files').get('copyId')) {
+            formFiles.removeControl('copyId');
+          }
+          if ((this.newRequest.get('antiLaundering'))) {
+            formGeneral.removeControl('antiLaundering');
+          }
+          if ((this.newRequest.get('conozcaSuClientePersonaJuridica'))) {
+            formGeneral.removeControl('conozcaSuClientePersonaJuridica');
+          }
+          if (this.newRequest.get('person').get('mandatorySubject')) {
+            formP.removeControl('mandatorySubject');
+          }
+          formP.removeControl('isJuridica');
+          formEP.removeControl('contractor');
+          formEP.removeControl('contractorExposedInfo');
+          if (this.newRequest.get('files').get('mercantile')) {
+            formFiles.removeControl('mercantile');
+          }
         }
 
         if (formP.get('isContractor').value !== 'SI') {
+          formGeneral.removeControl('conozcaSuClientePersonaContratante');
+          formGeneral.removeControl('conozcaSuClientePersona');
+          formGeneral.removeControl('conozcaSuClientePersonaJuridica');
+        }
+
+        if (formEP.get('headLine').value !== 'SI') {
+          formEP.removeControl('headLineExposedInfo');
+          formEP.removeControl('headLineExposedInfo');
+
+          if (this.newRequest.get('conozcaSuClientePersona')) {
+            formGeneral.removeControl('conozcaSuClientePersona');
+          }
+        }
+
+        if (formEP.get('contractor')) {
+          if (formEP.get('contractor').value !== 'SI') {
+            formEP.removeControl('contractorExposedInfo');
+          }
           formEP.removeControl('contractorExposedInfo');
-          formEP.removeControl('contractor');
+          if (this.newRequest.get('conozcaSuClientePersonaContratante')) {
+            formEP.removeControl('conozcaSuClientePersonaContratante');
+          }
         }
 
         if (formP.get('heightUnit').value !== 'PIE') {
@@ -3146,8 +3295,21 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
             formP.removeControl('mandatorySubject');
           }
         } else {
-          formGeneral.removeControl('conozcaSuClientePersona');
-          formGeneral.removeControl('conozcaSuClientePersonaJuridica');
+          //formGeneral.removeControl('conozcaSuClientePersona');
+          formGeneral.removeControl('conozcaSuClientePersonaJuridica');if (formGeneral.get('contractor')) {
+            formGeneral.removeControl('contractor');
+          }
+          if (this.newRequest.get('conozcaSuClientePersonaContratante')) {
+            formGeneral.removeControl('conozcaSuClientePersonaContratante');
+          }
+          if (!(this.newRequest.get('conozcaSuClientePersonaJuridica'))) {
+            formGeneral.addControl('conozcaSuClientePersonaJuridica', this.fb.group({}));
+          }
+          // formContractor.addControl('conozcaSuClientePersonaJuridica', this.fb.group({}));
+
+          if (this.newRequest.get('files').get('copyId')) {
+            formFiles.removeControl('copyId');
+          }
         }
 
         if (formP.get('isContractor').value !== 'SI') {
@@ -3155,7 +3317,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
           formGeneral.removeControl('conozcaSuClientePersonaJuridica');
         }
 
-        if (formEP.get('headLine').value !== 'SI') {
+       /* if (formEP.get('headLine').value !== 'SI') {
           formEP.removeControl('headLineExposedInfo');
         }
 
@@ -3163,7 +3325,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
           if (formEP.get('contractor').value !== 'SI') {
             formEP.removeControl('contractorExposedInfo');
           }
-        }
+        }*/
 
         if (formQA.get('haveHighRiskSport').value !== true) {
           formQA.removeControl('highRiskSport');

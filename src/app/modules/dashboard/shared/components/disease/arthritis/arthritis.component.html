@@ -8,6 +8,8 @@
       <div *ngIf="showWarningDot" class="warning-accordion-dot"></div>
     </mat-panel-description>
   </mat-expansion-panel-header>
+  <div class="my-4 affected-form-name" *ngIf="affected">{{affected}}</div>
+
   <div class="p-3 pb-0 mb-4" style="background-color: #F2F2F2">
     <div class="mt-3 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 xl:grid-cols-5">
       <!--    <div class="mr-3">

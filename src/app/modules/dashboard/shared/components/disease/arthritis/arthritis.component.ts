@@ -10,6 +10,7 @@ import { DiseaseService } from '../shared/disease/disease.service';
 })
 export class ArthritisComponent implements OnInit {
   @Input() form: FormGroup;
+  @Input() affected: string;
 
   constructor(private fb: FormBuilder, public diseaseService: DiseaseService) { }
 

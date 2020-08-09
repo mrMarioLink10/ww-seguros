@@ -10,6 +10,8 @@ import { FieldConfig } from 'src/app/shared/components/form-components/models/fi
 export class CardiovascularComponent implements OnInit, DoCheck {
 	@Input() form: FormGroup;
 	@Input() showWarningDot: boolean;
+	@Input() affected: string;
+
 	step: number;
 
 	accordionTitle = ['Datos'];
@@ -291,7 +293,7 @@ export class CardiovascularComponent implements OnInit, DoCheck {
 	ngDoCheck(): void {
 
 		if (this.form.get('haveAnotherDisease').value == 'SI' &&
-			(this.anotherDiseasesList == null || this.anotherDiseasesList == undefined) ) {
+			(this.anotherDiseasesList == null || this.anotherDiseasesList == undefined)) {
 			// const varDisease = {
 			// 	valor: 'si',
 			// 	name: 'haveAnotherDisease'
@@ -303,7 +305,7 @@ export class CardiovascularComponent implements OnInit, DoCheck {
 		}
 
 		if (this.form.get('haveFamilyWithCardio').value == 'SI' &&
-		(this.familiarWithCardioList == null || this.familiarWithCardioList == undefined)) {
+			(this.familiarWithCardioList == null || this.familiarWithCardioList == undefined)) {
 			// const varFamilyCardio = {
 			// 	valor: 'si',
 			// 	name: 'haveFamilyWithCardio'
@@ -315,7 +317,7 @@ export class CardiovascularComponent implements OnInit, DoCheck {
 		}
 
 		if (this.form.get('haveHypertensionStudies').value == 'SI' &&
-		(this.hypertensionStudiesList == null || this.hypertensionStudiesList == undefined)) {
+			(this.hypertensionStudiesList == null || this.hypertensionStudiesList == undefined)) {
 			// const varArterial = {
 			// 	valor: 'si',
 			// 	name: 'haveHypertensionStudies'
@@ -326,8 +328,8 @@ export class CardiovascularComponent implements OnInit, DoCheck {
 			this.hypertensionStudiesList = this.form.get('hypertensionStudies') as FormArray;
 		}
 
-		if (this.form.get('haveLiquidAnomaly').value == 'SI'  &&
-		(this.liquidAnomalyList == null || this.liquidAnomalyList == undefined)) {
+		if (this.form.get('haveLiquidAnomaly').value == 'SI' &&
+			(this.liquidAnomalyList == null || this.liquidAnomalyList == undefined)) {
 			// const varAnomaly = {
 			// 	valor: 'si',
 			// 	name: 'haveLiquidAnomaly'

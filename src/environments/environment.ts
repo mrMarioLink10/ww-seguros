@@ -20,11 +20,10 @@ export const environment = {
   urlCotizadoresSalud: "http://portalwwg.eastus.cloudapp.azure.com:3000/salud",
   baseUrl: 'https://wwsdevfrontend-desadevfrontend.azurewebsites.net/',
   keycloak: keycloakConfig,
-  apiUrl: 'https://wwsdevportalbackend-desadevportalbackend.azurewebsites.net',
+  apiUrl: 'https://wwsdevportalbackend.azurewebsites.net/',
   urlNotAccess: 'https://wwsdevportalbackend-desadevportalbackend.azurewebsites.net/AccesoPortal/index/?location=',
   keycloakConfig
 };
-
 
 /*
  * For easier debugging in development mode, you can import the following file

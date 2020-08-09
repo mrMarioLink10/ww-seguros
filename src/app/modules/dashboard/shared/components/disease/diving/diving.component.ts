@@ -12,6 +12,7 @@ export class DivingComponent implements OnInit {
 
 
   accordionTitles = ['Cuestionario'];
+  @Input() affected: string;
 
   activity = [{
 

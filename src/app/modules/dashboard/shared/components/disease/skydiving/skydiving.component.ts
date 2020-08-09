@@ -15,6 +15,7 @@ export class SkydivingComponent implements OnInit {
 
   @Input() form: FormGroup;
   @Input() showWarningDot: boolean;
+  @Input() affected: string;
   step: number;
   constructor(private fb: FormBuilder) { }
 

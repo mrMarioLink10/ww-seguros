@@ -26,6 +26,8 @@
         </app-input>
       </div>
     </div> -->
+  <div class="my-4 affected-form-name" *ngIf="affected">{{affected}}</div>
+
   <div *ngFor="let question of questions">
     <div
       class="w-full xl:flex xl:justify-between lg:flex lg:justify-between md:flex md:justify-between sm:flex sm:justify-between">

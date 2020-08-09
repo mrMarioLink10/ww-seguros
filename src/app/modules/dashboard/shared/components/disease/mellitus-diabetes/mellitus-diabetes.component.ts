@@ -11,6 +11,8 @@ import { DiseaseService } from '../shared/disease/disease.service';
 export class MellitusDiabetesComponent implements OnInit {
   @Input() form: FormGroup;
   @Input() showWarningDot: boolean;
+  @Input() affected: string;
+
   step: number;
 
   todayDate = new Date();

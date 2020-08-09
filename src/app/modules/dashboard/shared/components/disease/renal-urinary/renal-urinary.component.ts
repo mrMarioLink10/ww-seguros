@@ -13,6 +13,8 @@ export class RenalUrinaryComponent implements OnInit {
 
   @Input() form: FormGroup;
   @Input() showWarningDot: boolean;
+  @Input() affected: string;
+
   step: number;
 
   todayDate = new Date();

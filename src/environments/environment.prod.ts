@@ -9,6 +9,7 @@ const keycloakConfig: KeycloakConfig = {
 
 export const environment = {
   production: true,
+  instructivo: "http://wwsdevportalbackend.azurewebsites.net/INSTRUCTIVO_V2.pdf",
   fileUrl: 'http://wwsdevportalbackend.azurewebsites.net',
   mailForHelp: "ayuda_wws@wws.com.do",
   urlCotizadores: "http://portalwwg.eastus.cloudapp.azure.com:3000",

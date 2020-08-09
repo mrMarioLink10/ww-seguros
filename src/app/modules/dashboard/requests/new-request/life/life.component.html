@@ -241,7 +241,7 @@
                   <app-radio-button *ngIf="newRequest.get('person').get('sameAsPayer') &&
                   newRequest.get('person').get('contractorIsLegalEntity').value == 'SI'"
                     (selected)="selectChange($event)" [group]="newRequest.get('person')" name="sameAsPayer"
-                    title="¿Es una persona jurídica?" [options]="diseaseService.yesOrNoOriginal">
+                    title="¿Pagador Es una persona jurídica?" [options]="diseaseService.yesOrNoOriginal">
                   </app-radio-button>
                 </div>
 
@@ -286,7 +286,7 @@
                   <app-radio-button *ngIf="newRequest.get('person').get('payerIsLegalEntity') &&
                   newRequest.get('person').get('sameAsPayer').value == 'SI'" class="mr-3"
                     (selected)="selectChange($event)" [group]="newRequest.get('person')" name="payerIsLegalEntity"
-                    title="¿Es un sujeto obligado?" [options]="diseaseService.yesOrNoOriginal">
+                    title="¿Pagador Es un sujeto obligado?" [options]="diseaseService.yesOrNoOriginal">
                   </app-radio-button>
                 </div>
 
@@ -615,7 +615,8 @@
               </button>
             </mat-action-row>
           </mat-expansion-panel>
-          <mat-expansion-panel class="ww-mat-expansion" [expanded]="step === 5" (opened)="setStep(5)">
+          <mat-expansion-panel class="ww-mat-expansion" [expanded]="step === 5" (opened)="setStep(5)"
+          *ngIf="newRequest.get('exposedPerson')">
             <mat-expansion-panel-header class="body-13 icon-blue">
               <mat-panel-title>
                 Persona políticamente expuesta
@@ -657,7 +658,7 @@
                   </div>
                 </div>
 
-                <div *ngIf="newRequest.get('person').value.contractorIsLegalEntity === 'SI'">
+                <div *ngIf="newRequest.get('payer')">
                   <hr class="w-full ww-divider">
                   <div
                     class="w-full mt-8 xl:flex xl:justify-between lg:flex lg:justify-between md:flex md:justify-between sm:flex sm:justify-between">
@@ -680,7 +681,7 @@
                     </div>
                   </div>
                 </div>
-                <div *ngIf="newRequest.get('person').value.contractorIsLegalEntity === 'SI'">
+                <div *ngIf="newRequest.get('contractor')">
                   <hr class="w-full ww-divider">
                   <div
                     class="w-full mt-8 xl:flex xl:justify-between lg:flex lg:justify-between md:flex md:justify-between sm:flex sm:justify-between">
@@ -890,7 +891,7 @@
                           label="Cant. en %" name='quantity'></app-number-input>
                         <app-file-input class="mr-3"
                           [group]="newRequest.get('primaryBenefits').get('dependentsC').get(index.toString())"
-                          name="id2Attached" label="Adjuntar documento de identidad si es mayor de edad"
+                          name="id2Attached" label="Adjuntar documento de identidad si es mayor de edad - Formato de los documentos: PDF (.pdf), JPG (.jpg) y PNG (.png)"
                           [fileNameWatcher]="id2AttachedViewValue(index, 'primaryBenefits')"
                           (onFileChange)="onFileChangeOnArray($event, 'id2Attached', index, 'primaryBenefits')">
                         </app-file-input>
@@ -946,7 +947,7 @@
                   <app-input class="mr-3" [group]="newRequest.get('primaryBenefits').get('personBenefited')"
                     label="Cédula/Pasaporte" name='id2'></app-input>
                   <app-file-input class="mr-3" [group]="newRequest.get('primaryBenefits').get('personBenefited')"
-                    name="id2Attached" label="Adjuntar documento de identidad"
+                    name="id2Attached" label="Adjuntar documento de identidad - Formato de los documentos: PDF (.pdf), JPG (.jpg) y PNG (.png)"
                     [fileNameWatcher]="id2AttachedViewValue(null, 'primaryBenefits')"
                     (onFileChange)="onFileChangeOnArray($event, 'id2Attached', null, 'primaryBenefits')">
                   </app-file-input>
@@ -1005,7 +1006,7 @@
                           label="Cant. en %" name='quantityBeneficiary'></app-number-input>
                         <app-file-input class="mr-3"
                           [group]="newRequest.get('contingentBeneficiary').get('dependentsC').get(index.toString())"
-                          name="id2AttachedBeneficiary" label="Adjuntar documento de identidad si es mayor de edad"
+                          name="id2AttachedBeneficiary" label="Adjuntar documento de identidad si es mayor de edad - Formato de los documentos: PDF (.pdf), JPG (.jpg) y PNG (.png)"
                           [fileNameWatcher]="id2AttachedViewValue(index, 'contingentBeneficiary')"
                           (onFileChange)="onFileChangeOnArray($event, 'id2AttachedBeneficiary', index, 'contingentBeneficiary')">
                         </app-file-input>
@@ -1056,7 +1057,7 @@
                   <app-input class="mr-3" [group]="newRequest.get('contingentBeneficiary').get('personBenefited')"
                     label="Cédula/Pasaporte" name='id2Beneficiary'></app-input>
                   <app-file-input class="mr-3" [group]="newRequest.get('contingentBeneficiary').get('personBenefited')"
-                    name="id2AttachedBeneficiary" label="Adjuntar documento de identidad"
+                    name="id2AttachedBeneficiary" label="Adjuntar documento de identidad - Formato de los documentos: PDF (.pdf), JPG (.jpg) y PNG (.png)"
                     [fileNameWatcher]="id2AttachedViewValue(null, 'contingentBeneficiary')"
                     (onFileChange)="onFileChangeOnArray($event, 'id2AttachedBeneficiary', null, 'contingentBeneficiary')">
                   </app-file-input>
@@ -2123,7 +2124,7 @@
             [form]="newRequest.get('activitiesQuestionnaires').get('solicitudMontanismo')"></app-mountaineering>
         </mat-accordion>
       </mat-tab>
-      <mat-tab label="Cuestionarios Adicionales" *ngIf="questionsLength() > 0" class="mat-tab-forms">
+      <mat-tab label="Cuestionarios Adicionales" *ngIf="newRequest.get('questionnaires').get('solicitudDiabetes') || newRequest.get('questionnaires').get('solicitudHipertensionArterial')" class="mat-tab-forms">
         <mat-accordion #matAccordion="matAccordion" name="matAccordion" class="ww-mat-accordion example-headers-align"
           [togglePosition]="'before'">
           <app-hypertension
@@ -2162,44 +2163,84 @@
         </mat-accordion>
 
       </mat-tab> -->
-      <mat-tab *ngIf="this.newRequest.get('contractorLegalEntity')"
-        label="Conozca a su cliente (Persona Física) - Asegurado">
-        <mat-accordion #matAccordion="matAccordion" name="matAccordion" class="ww-mat-accordion example-headers-align"
-          [togglePosition]="'before'">
-          <!-- <app-know-your-client [showWarningDot]="showWarningDot(newRequest.get('contractorLegalEntity'))"
-            *ngIf="this.role === 'WMA'" [form]="newRequest.get('contractorLegalEntity')">
-          </app-know-your-client> -->
-          <app-know-your-customer
-            [showWarningDot]="showWarningDot(newRequest.get('contractorLegalEntity'))"
-            [form]="newRequest.get('contractorLegalEntity')">
-          </app-know-your-customer>
-        </mat-accordion>
+      <mat-tab *ngIf="this.newRequest.get('knowYourCustomerPagador')"
+      label="Conozca a su cliente (Persona Física) - Pagador">
+      <mat-accordion #matAccordion="matAccordion" name="matAccordion" class="ww-mat-accordion example-headers-align"
+      [togglePosition]="'before'">
+      <!-- <app-know-your-client [showWarningDot]="showWarningDot(newRequest.get('contractorLegalEntity'))"
+        *ngIf="this.role === 'WMA'" [form]="newRequest.get('contractorLegalEntity')">
+      </app-know-your-client> -->
+      <app-know-your-customer
+        [showWarningDot]="showWarningDot(newRequest.get('knowYourCustomerPagador'))"
+        [form]="newRequest.get('knowYourCustomerPagador')">
+      </app-know-your-customer>
+    </mat-accordion>
+  </mat-tab>
+    <mat-tab *ngIf="this.newRequest.get('knowYourCustomerContratante')"
+    label="Conozca a su cliente (Persona Física) - Contratante">
+    <mat-accordion #matAccordion="matAccordion" name="matAccordion" class="ww-mat-accordion example-headers-align"
+      [togglePosition]="'before'">
+      <!-- <app-know-your-client [showWarningDot]="showWarningDot(newRequest.get('contractorLegalEntity'))"
+        *ngIf="this.role === 'WMA'" [form]="newRequest.get('contractorLegalEntity')">
+      </app-know-your-client> -->
+      <app-know-your-customer
+        [showWarningDot]="showWarningDot(newRequest.get('knowYourCustomerContratante'))"
+        [form]="newRequest.get('knowYourCustomerContratante')">
+      </app-know-your-customer>
+    </mat-accordion>
 
-      </mat-tab>
-      <mat-tab *ngIf="this.newRequest.get('payerLegalEntity')"
-        label="Conozca a su cliente (Persona jurídica) - Asegurado">
-        <mat-accordion #matAccordion="matAccordion" name="matAccordion" class="ww-mat-accordion example-headers-align"
-          [togglePosition]="'before'">
-          <app-know-your-client [showWarningDot]="showWarningDot(newRequest.get('payerLegalEntity'))"
-            [form]="newRequest.get('payerLegalEntity')">
-          </app-know-your-client>
-          <!-- <app-know-your-customer [showWarningDot]="showWarningDot(newRequest.get('person').get('payerLegalEntity'))"
-            *ngIf="this.role === 'WWS'" [form]="newRequest.get('person').get('payerLegalEntity')">
-          </app-know-your-customer> -->
-        </mat-accordion>
+  </mat-tab>
+    <mat-tab *ngIf="this.newRequest.get('knowYourCustomer')"
+      label="Conozca a su cliente (Persona Física) - Asegurado">
+      <mat-accordion #matAccordion="matAccordion" name="matAccordion" class="ww-mat-accordion example-headers-align"
+        [togglePosition]="'before'">
+        <!-- <app-know-your-client [showWarningDot]="showWarningDot(newRequest.get('contractorLegalEntity'))"
+          *ngIf="this.role === 'WMA'" [form]="newRequest.get('contractorLegalEntity')">
+        </app-know-your-client> -->
+        <app-know-your-customer
+          [showWarningDot]="showWarningDot(newRequest.get('knowYourCustomer'))"
+          [form]="newRequest.get('knowYourCustomer')">
+        </app-know-your-customer>
+      </mat-accordion>
 
-      </mat-tab>
-      <mat-tab *ngIf="newRequest.get('questionnaires').get('solucionAntiLavadoDinero')"
-        label="Formulario politica Anti-lavado de Dinero/Financiamiento y Terrorismo (AML)">
-        <mat-accordion #matAccordion="matAccordion" name="matAccordion" class="ww-mat-accordion example-headers-align"
-          [togglePosition]="'before'">
-          <app-money-laundering
-            [showWarningDot]="showWarningDot(newRequest.get('questionnaires').get('solucionAntiLavadoDinero'))"
-            [form]="newRequest.get('questionnaires').get('solucionAntiLavadoDinero')">
-          </app-money-laundering>
-        </mat-accordion>
+    </mat-tab>
+    <mat-tab *ngIf="this.newRequest.get('contractorLegalEntity')"
+      label="Conozca a su cliente (Persona jurídica) - Contratante">
+      <mat-accordion #matAccordion="matAccordion" name="matAccordion" class="ww-mat-accordion example-headers-align"
+        [togglePosition]="'before'">
+        <app-know-your-client [showWarningDot]="showWarningDot(newRequest.get('contractorLegalEntity'))"
+          [form]="newRequest.get('contractorLegalEntity')">
+        </app-know-your-client>
+        <!-- <app-know-your-customer [showWarningDot]="showWarningDot(newRequest.get('person').get('payerLegalEntity'))"
+          *ngIf="this.role === 'WWS'" [form]="newRequest.get('person').get('payerLegalEntity')">
+        </app-know-your-customer> -->
+      </mat-accordion>
 
-      </mat-tab>
+    </mat-tab>
+    <mat-tab *ngIf="this.newRequest.get('payerLegalEntity')"
+      label="Conozca a su cliente (Persona jurídica) - Pagador">
+      <mat-accordion #matAccordion="matAccordion" name="matAccordion" class="ww-mat-accordion example-headers-align"
+        [togglePosition]="'before'">
+        <app-know-your-client [showWarningDot]="showWarningDot(newRequest.get('payerLegalEntity'))"
+          [form]="newRequest.get('payerLegalEntity')">
+        </app-know-your-client>
+        <!-- <app-know-your-customer [showWarningDot]="showWarningDot(newRequest.get('person').get('payerLegalEntity'))"
+          *ngIf="this.role === 'WWS'" [form]="newRequest.get('person').get('payerLegalEntity')">
+        </app-know-your-customer> -->
+      </mat-accordion>
+
+    </mat-tab>
+    <mat-tab *ngIf="newRequest.get('questionnaires').get('solucionAntiLavadoDinero')"
+      label="Formulario politica Anti-lavado de Dinero/Financiamiento y Terrorismo (AML)">
+      <mat-accordion #matAccordion="matAccordion" name="matAccordion" class="ww-mat-accordion example-headers-align"
+        [togglePosition]="'before'">
+        <app-money-laundering
+          [showWarningDot]="showWarningDot(newRequest.get('questionnaires').get('solucionAntiLavadoDinero'))"
+          [form]="newRequest.get('questionnaires').get('solucionAntiLavadoDinero')">
+        </app-money-laundering>
+      </mat-accordion>
+
+    </mat-tab>
       <mat-tab *ngIf="newRequest.get('contractorQuestionnaires').get('solucionAntiLavadoDinero')"
         label="Formulario politica Anti-lavado de Dinero/Financiamiento y Terrorismo (AML) - Contratante">
         <mat-accordion #matAccordion="matAccordion" name="matAccordion" class="ww-mat-accordion example-headers-align"

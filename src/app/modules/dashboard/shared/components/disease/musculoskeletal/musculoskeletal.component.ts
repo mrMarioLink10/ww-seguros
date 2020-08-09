@@ -14,6 +14,8 @@ export class MusculoskeletalComponent implements OnInit, DoCheck {
 
   @Input() form: FormGroup;
   @Input() showWarningDot: boolean;
+  @Input() affected: string;
+
   step: number;
 
   yesNo: FieldConfig = {

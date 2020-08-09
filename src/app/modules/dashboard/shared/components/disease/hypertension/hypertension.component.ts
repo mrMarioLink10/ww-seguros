@@ -10,6 +10,7 @@ import { DiseaseService } from '../shared/disease/disease.service';
 export class HypertensionComponent implements OnInit, DoCheck {
   @Input() form: FormGroup;
   @Input() showWarningDot: boolean;
+  @Input() affected: string;
   step: number;
   medicationList: FormArray;
   changedMedicationList: FormArray;

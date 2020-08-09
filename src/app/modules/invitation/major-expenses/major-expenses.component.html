@@ -2216,41 +2216,48 @@
         <mat-accordion #matAccordion="matAccordion" name="matAccordion" class="ww-mat-accordion example-headers-align"
           [togglePosition]="'before'">
           <app-hypertension
+            [affected]="newRequest.get('person').value.firstName+' '+newRequest.get('person').value.lastName"
             [showWarningDot]="showWarningDot(newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudHipertensionArterial'))"
             *ngIf="newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudHipertensionArterial')"
             [form]="newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudHipertensionArterial')">
           </app-hypertension>
           <app-cardiovascular
+            [affected]="newRequest.get('person').value.firstName+' '+newRequest.get('person').value.lastName"
             [showWarningDot]="showWarningDot(newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudCardioVasculares'))"
             *ngIf="newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudCardioVasculares')"
             [form]="newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudCardioVasculares')">
           </app-cardiovascular>
           <app-mellitus-diabetes
+            [affected]="newRequest.get('person').value.firstName+' '+newRequest.get('person').value.lastName"
             [showWarningDot]="showWarningDot(newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudDiabetes'))"
             *ngIf="newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudDiabetes')"
             [form]="newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudDiabetes')">
           </app-mellitus-diabetes>
           <app-arthritis
+            [affected]="newRequest.get('person').value.firstName+' '+newRequest.get('person').value.lastName"
             [showWarningDot]="showWarningDot(newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudArtitris'))"
             *ngIf="newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudArtitris')"
             [form]="newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudArtitris')">
           </app-arthritis>
-          <app-spine
+          <app-spine [affected]="newRequest.get('person').value.firstName+' '+newRequest.get('person').value.lastName"
             [showWarningDot]="showWarningDot(newRequest.get('questionsA').get('questionnairesGastosMayores').get('columnaVertebralColumnaVertebral'))"
             *ngIf="newRequest.get('questionsA').get('questionnairesGastosMayores').get('columnaVertebralColumnaVertebral')"
             [form]="newRequest.get('questionsA').get('questionnairesGastosMayores').get('columnaVertebralColumnaVertebral')">
           </app-spine>
           <app-musculoskeletal
+            [affected]="newRequest.get('person').value.firstName+' '+newRequest.get('person').value.lastName"
             [showWarningDot]="showWarningDot(newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudMusculoesqueleticos'))"
             *ngIf="newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudMusculoesqueleticos')"
             [form]="newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudMusculoesqueleticos')">
           </app-musculoskeletal>
           <app-renal-urinary
+            [affected]="newRequest.get('person').value.firstName+' '+newRequest.get('person').value.lastName"
             [showWarningDot]="showWarningDot(newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudRenales'))"
             *ngIf="newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudRenales')"
             [form]="newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudRenales')">
           </app-renal-urinary>
           <app-prostatic
+            [affected]="newRequest.get('person').value.firstName+' '+newRequest.get('person').value.lastName"
             [showWarningDot]="showWarningDot(newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudProstatica'))"
             *ngIf="newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudProstatica')"
             [form]="newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudProstatica')">
@@ -2260,22 +2267,24 @@
       <mat-tab label="Cuestionarios Actividades" class="mat-tab-forms" *ngIf="isActivityReadyToRender();">>
         <mat-accordion #matAccordion="matAccordion" name="matAccordion" class="ww-mat-accordion example-headers-align"
           [togglePosition]="'before'">
-          <app-diving
+          <app-diving [affected]="newRequest.get('person').value.firstName+' '+newRequest.get('person').value.lastName"
             [showWarningDot]="showWarningDot(newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudBuceo'))"
             *ngIf="newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudBuceo')"
             [form]="newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudBuceo')">
             ></app-diving>
-          <app-racing
+          <app-racing [affected]="newRequest.get('person').value.firstName+' '+newRequest.get('person').value.lastName"
             [showWarningDot]="showWarningDot(newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudMoto'))"
             *ngIf="newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudMoto')"
             [form]="newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudMoto')">
             ></app-racing>
           <app-skydiving
+            [affected]="newRequest.get('person').value.firstName+' '+newRequest.get('person').value.lastName"
             [showWarningDot]="showWarningDot(newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudAviacion'))"
             *ngIf="newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudAviacion')"
             [form]="newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudAviacion')">
             ></app-skydiving>
           <app-mountaineering
+            [affected]="newRequest.get('person').value.firstName+' '+newRequest.get('person').value.lastName"
             [showWarningDot]="showWarningDot(newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudMontanismo'))"
             *ngIf="newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudMontanismo')"
             [form]="newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudMontanismo')">
@@ -2359,61 +2368,73 @@
         <mat-accordion #matAccordion="matAccordion" name="matAccordion" class="ww-mat-accordion example-headers-align"
           [togglePosition]="'before'">
           <app-hypertension
+            [affected]="newRequest.get('dependents').get('allDependents').get(i.toString()).value.name +' '+ newRequest.get('dependents').get('allDependents').get(i.toString()).value.lastName"
             [showWarningDot]="showWarningDot(newRequest.get('dependents').get('allDependents').get(i.toString()).get('solicitudHipertensionArterial'))"
             *ngIf="newRequest.get('dependents').get('allDependents').get(i.toString()).get('solicitudHipertensionArterial')"
             [form]="newRequest.get('dependents').get('allDependents').get(i.toString()).get('solicitudHipertensionArterial')">
           </app-hypertension>
           <app-cardiovascular
+            [affected]="newRequest.get('dependents').get('allDependents').get(i.toString()).value.name +' '+ newRequest.get('dependents').get('allDependents').get(i.toString()).value.lastName"
             [showWarningDot]="showWarningDot(newRequest.get('dependents').get('allDependents').get(i.toString()).get('solicitudCardioVasculares'))"
             *ngIf="newRequest.get('dependents').get('allDependents').get(i.toString()).get('solicitudCardioVasculares')"
             [form]="newRequest.get('dependents').get('allDependents').get(i.toString()).get('solicitudCardioVasculares')">
           </app-cardiovascular>
           <app-mellitus-diabetes
+            [affected]="newRequest.get('dependents').get('allDependents').get(i.toString()).value.name +' '+ newRequest.get('dependents').get('allDependents').get(i.toString()).value.lastName"
             [showWarningDot]="showWarningDot(newRequest.get('dependents').get('allDependents').get(i.toString()).get('solicitudDiabetes'))"
             *ngIf="newRequest.get('dependents').get('allDependents').get(i.toString()).get('solicitudDiabetes')"
             [form]="newRequest.get('dependents').get('allDependents').get(i.toString()).get('solicitudDiabetes')">
           </app-mellitus-diabetes>
           <app-arthritis
+            [affected]="newRequest.get('dependents').get('allDependents').get(i.toString()).value.name +' '+ newRequest.get('dependents').get('allDependents').get(i.toString()).value.lastName"
             [showWarningDot]="showWarningDot(newRequest.get('dependents').get('allDependents').get(i.toString()).get('solicitudArtitris'))"
             *ngIf="newRequest.get('dependents').get('allDependents').get(i.toString()).get('solicitudArtitris')"
             [form]="newRequest.get('dependents').get('allDependents').get(i.toString()).get('solicitudArtitris')">
           </app-arthritis>
           <app-spine
+            [affected]="newRequest.get('dependents').get('allDependents').get(i.toString()).value.name +' '+ newRequest.get('dependents').get('allDependents').get(i.toString()).value.lastName"
             [showWarningDot]="showWarningDot(newRequest.get('dependents').get('allDependents').get(i.toString()).get('columnaVertebralColumnaVertebral'))"
             *ngIf="newRequest.get('dependents').get('allDependents').get(i.toString()).get('columnaVertebralColumnaVertebral')"
             [form]="newRequest.get('dependents').get('allDependents').get(i.toString()).get('columnaVertebralColumnaVertebral')">
           </app-spine>
           <app-musculoskeletal
+            [affected]="newRequest.get('dependents').get('allDependents').get(i.toString()).value.name +' '+ newRequest.get('dependents').get('allDependents').get(i.toString()).value.lastName"
             [showWarningDot]="showWarningDot(newRequest.get('dependents').get('allDependents').get(i.toString()).get('solicitudMusculoesqueleticos'))"
             *ngIf="newRequest.get('dependents').get('allDependents').get(i.toString()).get('solicitudMusculoesqueleticos')"
             [form]="newRequest.get('dependents').get('allDependents').get(i.toString()).get('solicitudMusculoesqueleticos')">
           </app-musculoskeletal>
           <app-renal-urinary
+            [affected]="newRequest.get('dependents').get('allDependents').get(i.toString()).value.name +' '+ newRequest.get('dependents').get('allDependents').get(i.toString()).value.lastName"
             [showWarningDot]="showWarningDot(newRequest.get('dependents').get('allDependents').get(i.toString()).get('solicitudRenales'))"
             *ngIf="newRequest.get('dependents').get('allDependents').get(i.toString()).get('solicitudRenales')"
             [form]="newRequest.get('dependents').get('allDependents').get(i.toString()).get('solicitudRenales')">
           </app-renal-urinary>
           <app-prostatic
+            [affected]="newRequest.get('dependents').get('allDependents').get(i.toString()).value.name +' '+ newRequest.get('dependents').get('allDependents').get(i.toString()).value.lastName"
             [showWarningDot]="showWarningDot(newRequest.get('dependents').get('allDependents').get(i.toString()).get('solicitudProstatica'))"
             *ngIf="newRequest.get('dependents').get('allDependents').get(i.toString()).get('solicitudProstatica')"
             [form]="newRequest.get('dependents').get('allDependents').get(i.toString()).get('solicitudProstatica')">
           </app-prostatic>
           <app-diving
+            [affected]="newRequest.get('dependents').get('allDependents').get(i.toString()).value.name +' '+ newRequest.get('dependents').get('allDependents').get(i.toString()).value.lastName"
             [showWarningDot]="showWarningDot(newRequest.get('dependents').get('allDependents').get(i.toString()).get('solicitudBuceo'))"
             *ngIf="newRequest.get('dependents').get('allDependents').get(i.toString()).get('solicitudBuceo')"
             [form]="newRequest.get('dependents').get('allDependents').get(i.toString()).get('solicitudBuceo')">
             ></app-diving>
           <app-racing
+            [affected]="newRequest.get('dependents').get('allDependents').get(i.toString()).value.name +' '+ newRequest.get('dependents').get('allDependents').get(i.toString()).value.lastName"
             [showWarningDot]="showWarningDot(newRequest.get('dependents').get('allDependents').get(i.toString()).get('solicitudMoto'))"
             *ngIf="newRequest.get('dependents').get('allDependents').get(i.toString()).get('solicitudMoto')"
             [form]="newRequest.get('dependents').get('allDependents').get(i.toString()).get('solicitudMoto')">
             ></app-racing>
           <app-skydiving
+            [affected]="newRequest.get('dependents').get('allDependents').get(i.toString()).value.name +' '+ newRequest.get('dependents').get('allDependents').get(i.toString()).value.lastName"
             [showWarningDot]="showWarningDot(newRequest.get('dependents').get('allDependents').get(i.toString()).get('solicitudAviacion'))"
             *ngIf="newRequest.get('dependents').get('allDependents').get(i.toString()).get('solicitudAviacion')"
             [form]="newRequest.get('dependents').get('allDependents').get(i.toString()).get('solicitudAviacion')">
             ></app-skydiving>
           <app-mountaineering
+            [affected]="newRequest.get('dependents').get('allDependents').get(i.toString()).value.name +' '+ newRequest.get('dependents').get('allDependents').get(i.toString()).value.lastName"
             [showWarningDot]="showWarningDot(newRequest.get('dependents').get('allDependents').get(i.toString()).get('solicitudMontanismo'))"
             *ngIf="newRequest.get('dependents').get('allDependents').get(i.toString()).get('solicitudMontanismo')"
             [form]="newRequest.get('dependents').get('allDependents').get(i.toString()).get('solicitudMontanismo')">

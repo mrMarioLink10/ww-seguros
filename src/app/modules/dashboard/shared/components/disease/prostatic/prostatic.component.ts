@@ -11,6 +11,8 @@ import { FieldConfig } from 'src/app/shared/components/form-components/models/fi
 export class ProstaticComponent implements OnInit {
   @Input() form: FormGroup;
   @Input() showWarningDot: boolean;
+  @Input() affected: string;
+
   step: number;
   treatmentUndergoneList: FormArray;
   studiesList: FormArray;

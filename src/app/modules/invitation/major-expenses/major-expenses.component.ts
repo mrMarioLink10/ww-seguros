@@ -1689,6 +1689,10 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
     } else if (event.valor === 'NO' || event.valor === 'NO') {
       switch (event.name) {
         case 'isContractor':
+          if (this.newRequest.get('conozcaSuClientePersonaContratante')) {
+            formGeneral.removeControl('conozcaSuClientePersonaContratante');
+          }
+
           // formP.addControl('isJuridica', this.fb.control('', Validators.required));
           // formEP.addControl('contractor', this.fb.control('', Validators.required));
 
@@ -1747,9 +1751,9 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
           //     })*/
           //   }));
 
-          if (this.newRequest.get('conozcaSuClientePersona')) {
+         /* if (this.newRequest.get('conozcaSuClientePersona')) {
             formGeneral.removeControl('conozcaSuClientePersona');
-          }
+          }*/
           if (this.newRequest.get('files').get('copyId')) {
             formFiles.removeControl('copyId');
           }
@@ -3143,23 +3147,9 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
       // console.log( this.newRequest);
       if (data !== undefined && data.data !== null &&
         data.data !== undefined) {
-        // this.ID = data.data.id;
-
-        switch (data.data.countryCode) {
-          case 'RD':
-            this.role = 'WWS';
-            break;
-          case 'PM':
-            this.role = 'WMA';
-            break;
-          default:
-            this.role = 'WMA';
-            break;
-        }
-
+        this.ID = data.data.id;
         console.log(data.data);
         this.dataMappingFromApi.iterateThroughtAllObject(data.data, this.newRequest);
-        console.log(this.newRequest);
         this.AddEventOnEachDependentVariable();
 
         const formP = this.newRequest.get('person') as FormGroup;
@@ -3171,6 +3161,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
         const formContractor = this.newRequest.get('contractor') as FormGroup;
         const formFiles = this.newRequest.get('files') as FormGroup;
 
+
         if (this.newRequest.get('questionsB').get('familyWithDiseases') !== undefined && this.newRequest.get('questionsB').get('familyWithDiseases') !== null) {
           this.familyWithDiseasesList = this.newRequest.get('questionsB').get('familyWithDiseases') as FormArray;
         } else {
@@ -3178,11 +3169,12 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
         }
 
         if (formP.get('isContractor').value === 'NO') {
+          // formP.removeControl('isJuridica');
           if (formGeneral.get('contractor')) {
             formGeneral.removeControl('contractor');
           }
-          if (this.newRequest.get('conozcaSuClientePersona')) {
-            formGeneral.removeControl('conozcaSuClientePersona');
+          if (this.newRequest.get('conozcaSuClientePersonaContratante')) {
+            formGeneral.removeControl('conozcaSuClientePersonaContratante');
           }
           if (this.newRequest.get('files').get('copyId')) {
             formFiles.removeControl('copyId');
@@ -3234,9 +3226,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
           this.newRequest.get('person').get('office').get('country').updateValueAndValidity();
           this.newRequest.get('person').get('office').get('country').markAsUntouched();
 
-          if (this.newRequest.get('conozcaSuClientePersona')) {
-            formGeneral.removeControl('conozcaSuClientePersona');
-          }
+
           if (this.newRequest.get('files').get('copyId')) {
             formFiles.removeControl('copyId');
           }
@@ -3258,8 +3248,43 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
         }
 
         if (formP.get('isContractor').value !== 'SI') {
+          formEP.removeControl('contractorExposedInfo');
+          formEP.removeControl('contractor');
+        }
+
+        if (formP.get('heightUnit').value !== 'PIE') {
+          formP.removeControl('inches');
+        }
+
+        if (formP.get('mandatorySubject').value !== 'SI') {
+          formGeneral.removeControl('antiLaundering');
+        }
+
+        if (formP.get('isJuridica')) {
+          if (formP.get('isJuridica').value !== 'SI') {
+            formP.removeControl('mandatorySubject');
+          }
+        } else {
+          //formGeneral.removeControl('conozcaSuClientePersona');
+          formGeneral.removeControl('conozcaSuClientePersonaJuridica');
+          if (formGeneral.get('contractor')) {
+            formGeneral.removeControl('contractor');
+          }
+          if (this.newRequest.get('conozcaSuClientePersonaContratante')) {
+            formGeneral.removeControl('conozcaSuClientePersonaContratante');
+          }
+          if (!(this.newRequest.get('conozcaSuClientePersonaJuridica'))) {
+            formGeneral.addControl('conozcaSuClientePersonaJuridica', this.fb.group({}));
+          }
+          // formContractor.addControl('conozcaSuClientePersonaJuridica', this.fb.group({}));
+
+          if (this.newRequest.get('files').get('copyId')) {
+            formFiles.removeControl('copyId');
+          }
+        }
+
+        if (formP.get('isContractor').value !== 'SI') {
           formGeneral.removeControl('conozcaSuClientePersonaContratante');
-          formGeneral.removeControl('conozcaSuClientePersona');
           formGeneral.removeControl('conozcaSuClientePersonaJuridica');
         }
 
@@ -3281,51 +3306,6 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
             formEP.removeControl('conozcaSuClientePersonaContratante');
           }
         }
-
-        if (formP.get('heightUnit').value !== 'PIE') {
-          formP.removeControl('inches');
-        }
-
-        if (formP.get('mandatorySubject').value !== 'SI') {
-          formGeneral.removeControl('antiLaundering');
-        }
-
-        if (formP.get('isJuridica')) {
-          if (formP.get('isJuridica').value !== 'SI') {
-            formP.removeControl('mandatorySubject');
-          }
-        } else {
-          //formGeneral.removeControl('conozcaSuClientePersona');
-          formGeneral.removeControl('conozcaSuClientePersonaJuridica');if (formGeneral.get('contractor')) {
-            formGeneral.removeControl('contractor');
-          }
-          if (this.newRequest.get('conozcaSuClientePersonaContratante')) {
-            formGeneral.removeControl('conozcaSuClientePersonaContratante');
-          }
-          if (!(this.newRequest.get('conozcaSuClientePersonaJuridica'))) {
-            formGeneral.addControl('conozcaSuClientePersonaJuridica', this.fb.group({}));
-          }
-          // formContractor.addControl('conozcaSuClientePersonaJuridica', this.fb.group({}));
-
-          if (this.newRequest.get('files').get('copyId')) {
-            formFiles.removeControl('copyId');
-          }
-        }
-
-        if (formP.get('isContractor').value !== 'SI') {
-          formGeneral.removeControl('conozcaSuClientePersona');
-          formGeneral.removeControl('conozcaSuClientePersonaJuridica');
-        }
-
-       /* if (formEP.get('headLine').value !== 'SI') {
-          formEP.removeControl('headLineExposedInfo');
-        }
-
-        if (formEP.get('contractor')) {
-          if (formEP.get('contractor').value !== 'SI') {
-            formEP.removeControl('contractorExposedInfo');
-          }
-        }*/
 
         if (formQA.get('haveHighRiskSport').value !== true) {
           formQA.removeControl('highRiskSport');
@@ -3351,8 +3331,6 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
         formQA.removeControl('haveSpine');
         formQB.removeControl('hasFamilyWithHeartKidneyDisease');
 
-        // this.newRequest.removeControl('questionsB');
-
         if (this.newRequest.get('person').get('conozcaSuClientePersona')) {
           formP.removeControl('conozcaSuClientePersona');
         }
@@ -3369,6 +3347,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
           }
         }
 
+
         this.contingentBeneficiaryArray = this.newRequest.get('contingentBeneficiary').get('dependentsC') as FormArray;
         this.primaryBenefitsArray = this.newRequest.get('primaryBenefits').get('dependentsC') as FormArray;
         this.studentDependents = this.newRequest.get('dependents').get('students') as FormArray;
@@ -3379,7 +3358,6 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
           this.informationList = this.newRequest.get('questionsB').get('information') as FormArray;
         }
         this.filesStudiesArray = this.newRequest.get('files').get('studies') as FormArray;
-
 
         this.arrayFilesTitles = data.data.files.studies;
         this.primaryBeneficaryTitles = data.data.primaryBenefits.dependentsC;
@@ -3432,7 +3410,6 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
         this.newRequest.updateValueAndValidity();
 
       }
-
       this.appComponent.showOverlay = false;
 
     });

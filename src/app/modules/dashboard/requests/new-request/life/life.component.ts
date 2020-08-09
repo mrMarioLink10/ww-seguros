@@ -2569,6 +2569,8 @@ export class LifeComponent implements OnInit, DoCheck {
         case 'sameAsContractor':
 
 
+          this.newRequest.removeControl('knowYourCustomerPagador');
+          this.newRequest.removeControl('knowYourCustomerContratante');
           this.newRequest.removeControl('exposedPerson');
 
           if (this.newRequest.get('knowYourCustomerPagador')) {
@@ -2666,8 +2668,8 @@ export class LifeComponent implements OnInit, DoCheck {
           this.newRequest.removeControl('payer');
           this.newRequest.removeControl('contractor');
 
-          formEP.removeControl('knowYourCustomerPagador');
-          formEP.removeControl('knowYourCustomerContratante');
+          this.newRequest.removeControl('knowYourCustomerPagador');
+          this.newRequest.removeControl('knowYourCustomerContratante');
           if (formEP)
           {
           formEP.removeControl('contractor');
@@ -3234,6 +3236,8 @@ const formGeneral = this.newRequest as FormGroup;
           formEP.removeControl('isContractorExposed');
           this.newRequest.removeControl('payer');
           this.newRequest.removeControl('contractor');
+          this.newRequest.removeControl('knowYourCustomerPagador');
+          this.newRequest.removeControl('knowYourCustomerContratante');
           formEP.removeControl('contractor');
           formEP.removeControl('payer');
           formP.removeControl('payerIsLegalEntity');

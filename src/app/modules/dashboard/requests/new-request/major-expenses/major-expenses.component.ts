@@ -1765,6 +1765,10 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
     } else if (event.valor === 'NO' || event.valor === 'NO') {
       switch (event.name) {
         case 'isContractor':
+          if (this.newRequest.get('conozcaSuClientePersonaContratante')) {
+            formGeneral.removeControl('conozcaSuClientePersonaContratante');
+          }
+
           // formP.addControl('isJuridica', this.fb.control('', Validators.required));
           // formEP.addControl('contractor', this.fb.control('', Validators.required));
 
@@ -1823,9 +1827,9 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
           //     })*/
           //   }));
 
-          if (this.newRequest.get('conozcaSuClientePersona')) {
+         /* if (this.newRequest.get('conozcaSuClientePersona')) {
             formGeneral.removeControl('conozcaSuClientePersona');
-          }
+          }*/
           if (this.newRequest.get('files').get('copyId')) {
             formFiles.removeControl('copyId');
           }
@@ -3268,8 +3272,8 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
           if (formGeneral.get('contractor')) {
             formGeneral.removeControl('contractor');
           }
-          if (this.newRequest.get('conozcaSuClientePersona')) {
-            formGeneral.removeControl('conozcaSuClientePersona');
+          if (this.newRequest.get('conozcaSuClientePersonaContratante')) {
+            formGeneral.removeControl('conozcaSuClientePersonaContratante');
           }
           if (this.newRequest.get('files').get('copyId')) {
             formFiles.removeControl('copyId');
@@ -3321,9 +3325,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
           this.newRequest.get('person').get('office').get('country').updateValueAndValidity();
           this.newRequest.get('person').get('office').get('country').markAsUntouched();
 
-          if (this.newRequest.get('conozcaSuClientePersona')) {
-            formGeneral.removeControl('conozcaSuClientePersona');
-          }
+
           if (this.newRequest.get('files').get('copyId')) {
             formFiles.removeControl('copyId');
           }
@@ -3382,7 +3384,6 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
 
         if (formP.get('isContractor').value !== 'SI') {
           formGeneral.removeControl('conozcaSuClientePersonaContratante');
-          formGeneral.removeControl('conozcaSuClientePersona');
           formGeneral.removeControl('conozcaSuClientePersonaJuridica');
         }
 

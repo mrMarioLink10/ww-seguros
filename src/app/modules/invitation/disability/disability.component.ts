@@ -2324,28 +2324,36 @@ export class DisabilityComponent implements OnInit, DoCheck {
           formCB.removeControl('specifyRelationship');
         }
 
+          if (this.disabilityGroup.get('insured_data').get('policyholderKnowClientRadio')) {
         if (this.disabilityGroup.get('insured_data').get('policyholderKnowClientRadio').value != 'NO' ||
         this.disabilityGroup.get('insured_data').get('insuredPolicyholderRadio').value != 'SI') {
           formGeneral.removeControl('knowYourCustomer');
           formGeneral.removeControl('knowYourCustomer');
           formFiles.removeControl('copyId');
         }
+      }
 
-        if (this.disabilityGroup.get('insured_data').get('mandatorySubject').value != 'SI') {
-          formGeneral.removeControl('antiLaundering');
+        if (this.disabilityGroup.get('insured_data').get('mandatorySubject')) {
+          if (this.disabilityGroup.get('insured_data').get('mandatorySubject').value != 'SI') {
+            formGeneral.removeControl('antiLaundering');
+          }
         }
 
-        if (this.disabilityGroup.get('insured_data').get('mandatorySubject').value == '') {
-          formGeneral.removeControl('knowYourClient');
-          formFiles.removeControl('mercantile');
+        if (this.disabilityGroup.get('insured_data').get('mandatorySubject')) {
+          if (this.disabilityGroup.get('insured_data').get('mandatorySubject').value == '') {
+            formGeneral.removeControl('knowYourClient');
+            formFiles.removeControl('mercantile');
+          }
         }
 
-        if (this.disabilityGroup.get('insured_data').get('policyholderKnowClientRadio').value != 'SI' ||
-        this.disabilityGroup.get('insured_data').get('insuredPolicyholderRadio').value != 'SI') {
-          formI.removeControl('mandatorySubject');
-          formGeneral.removeControl('knowYourClient');
-          formFiles.removeControl('mercantile');
-          formGeneral.removeControl('antiLaundering');
+        if (this.disabilityGroup.get('insured_data').get('policyholderKnowClientRadio')) {
+          if (this.disabilityGroup.get('insured_data').get('policyholderKnowClientRadio').value != 'SI' ||
+          this.disabilityGroup.get('insured_data').get('insuredPolicyholderRadio').value != 'SI') {
+            formI.removeControl('mandatorySubject');
+            formGeneral.removeControl('knowYourClient');
+            formFiles.removeControl('mercantile');
+            formGeneral.removeControl('antiLaundering');
+          }
         }
 
         if (this.disabilityGroup.get('insured_data').get('insuredPolicyholderRadio').value != 'SI') {

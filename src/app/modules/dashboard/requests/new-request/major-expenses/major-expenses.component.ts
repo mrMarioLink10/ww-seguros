@@ -1,4 +1,4 @@
-import { Component, OnInit, DoCheck, ViewChild, ChangeDetectorRef, Input } from '@angular/core';
+import { Component, OnInit, DoCheck, ViewChild, ChangeDetectorRef, Input, Inject } from '@angular/core';
 import { FieldConfig } from 'src/app/shared/components/form-components/models/field-config';
 import { FormGroup, FormBuilder, Validators, FormArray, FormControl, AbstractControl } from '@angular/forms';
 import { $sex, $res, $country, $time, $family, $allFamily, $weightTypes, $heightTypes } from '../../../../../core/form/objects';
@@ -20,7 +20,7 @@ import { MajorExpensesService } from './services/major-expenses.service';
 import { QuotesService } from '../../../services/quotes/quotes.service';
 import { environment } from '../../../../../../environments/environment';
 import { FormValidationsConstant } from 'src/app/shared/ShareConstant/shareConstantFile';
-import { CurrencyPipe } from '@angular/common';
+import { CurrencyPipe, DOCUMENT } from '@angular/common';
 import { FormDataFillingService } from 'src/app/modules/dashboard/services/shared/formDataFillingService';
 import { RequestsService } from 'src/app/modules/dashboard/services/requests/requests.service';
 import { elementEventFullName } from '@angular/compiler/src/view_compiler/view_compiler';
@@ -68,7 +68,8 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
     public appComponent: AppComponent,
     private currencyPipe: CurrencyPipe,
     private cd: ChangeDetectorRef,
-    public requestService: RequestsService
+    public requestService: RequestsService,
+    @Inject(DOCUMENT) private document: Document
   ) { }
 
   get allDependents(): FormArray {
@@ -915,7 +916,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
   }
 
   isFormReadyToRender() {
-    let validation = this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudHipertensionArterial') ||
+    const validation = this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudHipertensionArterial') ||
       this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudCardioVasculares') ||
       this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudDiabetes') ||
       this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudArtitris') ||
@@ -925,8 +926,46 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
       this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudProstatica');
     return validation;
   }
+
+  isGoToTopRender() {
+    const validation = this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudHipertensionArterial') ||
+      this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudCardioVasculares') ||
+      this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudDiabetes') ||
+      this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudArtitris') ||
+      this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('columnaVertebralColumnaVertebral') ||
+      this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudMusculoesqueleticos') ||
+      this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudRenales') ||
+      this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudProstatica') ||
+      this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudBuceo') ||
+      this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudMoto') ||
+      this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudAviacion') ||
+      this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudMontanismo');
+
+    let dependentValidation;
+
+    // tslint:disable: forin
+    for (const key in this.allDependents.controls) {
+      const element = this.allDependents.controls[key] as FormGroup;
+
+      dependentValidation = element.get('solicitudHipertensionArterial') ||
+        element.get('solicitudCardioVasculares') ||
+        element.get('solicitudDiabetes') ||
+        element.get('solicitudArtitris') ||
+        element.get('columnaVertebralColumnaVertebral') ||
+        element.get('solicitudMusculoesqueleticos') ||
+        element.get('solicitudRenales') ||
+        element.get('solicitudProstatica') ||
+        element.get('solicitudBuceo') ||
+        element.get('solicitudMoto') ||
+        element.get('solicitudAviacion') ||
+        element.get('solicitudMontanismo');
+    }
+
+    return (validation || dependentValidation);
+  }
+
   isActivityReadyToRender() {
-    let validation = this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudBuceo') ||
+    const validation = this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudBuceo') ||
       this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudMoto') ||
       this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudAviacion') ||
       this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudMontanismo');
@@ -1059,8 +1098,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
               default:
                 break;
             }
-          }
-          else {
+          } else {
             let sexGender = 'MASCULINO';
             switch (element.sexo) {
               case 'M':
@@ -1374,7 +1412,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
     this.AddEventOnEachDependentVariable();
   }
   addInfo(dependentsFormArray, name, lastName, date, gender) {
-    let group = {
+    const group = {
       name: [name, Validators.required],
       lastName: [lastName, Validators.required],
       family: ['', Validators.required],
@@ -1767,7 +1805,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
           }));
           formGeneral.addControl('conozcaSuClientePersonaContratante', this.fb.group({}));
           break;
-// Si
+        // Si
         case 'headLine':
           exposedPersonForm.addControl('headLineExposedInfo', this.fb.group({
             lastPosition: ['', Validators.required],
@@ -1824,12 +1862,11 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
             headLine: ['', Validators.required],
 
           }));
-          if (formContractor)
-          {
+          if (formContractor) {
             const formEP2 = this.newRequest.get('exposedPerson') as FormGroup;
 
             formEP2.addControl('contractor', this.fb.control('', Validators.required));
-        }
+          }
           if (!(this.newRequest.get('files').get('documentsKnowClient'))) {
             formFiles.addControl('documentsKnowClient', this.fb.array([this.createFormArray('filesDocumentsKnowClient')]));
             this.filesDocumentsKnowClientArray = this.newRequest.get('files').get('documentsKnowClient') as FormArray;
@@ -1842,9 +1879,9 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
           break;
 
         case 'mandatorySubject':
-         /* if (!(this.newRequest.get('conozcaSuClientePersonaJuridica'))) {
-            formGeneral.addControl('conozcaSuClientePersonaJuridica', this.fb.group({}));
-          }*/
+          /* if (!(this.newRequest.get('conozcaSuClientePersonaJuridica'))) {
+             formGeneral.addControl('conozcaSuClientePersonaJuridica', this.fb.group({}));
+           }*/
           if (!(this.newRequest.get('files').get('mercantile'))) {
             formFiles.addControl('mercantile', this.fb.array([this.createFormArray('mercantileRegister')]));
             this.mercantileRegisterArray = this.newRequest.get('files').get('mercantile') as FormArray;
@@ -1924,9 +1961,9 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
           //     })*/
           //   }));
 
-         /* if (this.newRequest.get('conozcaSuClientePersona')) {
-            formGeneral.removeControl('conozcaSuClientePersona');
-          }*/
+          /* if (this.newRequest.get('conozcaSuClientePersona')) {
+             formGeneral.removeControl('conozcaSuClientePersona');
+           }*/
           if (this.newRequest.get('files').get('copyId')) {
             formFiles.removeControl('copyId');
           }
@@ -1996,7 +2033,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
           if (this.newRequest.get('files').get('mercantile')) {
             formFiles.removeControl('mercantile');
           }
-          //formGeneral.addControl('conozcaSuClientePersona', this.fb.group({}));
+          // formGeneral.addControl('conozcaSuClientePersona', this.fb.group({}));
           if (!(this.newRequest.get('copyId'))) {
             formFiles.addControl('copyId', this.fb.array([this.createFormArray('filesCopyId')]));
             this.filesCopyIdArray = this.newRequest.get('files').get('copyId') as FormArray;
@@ -2189,7 +2226,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
           questionsBForm.removeControl('familyWithDiseases');
           this.familyWithDiseasesList = undefined;
           break;
-// No
+        // No
         case 'pep_radio_insured':
 
           if (this.newRequest.get('conozcaSuClientePersona')) {
@@ -3243,8 +3280,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
               default:
                 break;
             }
-          }
-          else {
+          } else {
             let sexGender = 'MASCULINO';
             switch (element.sexo) {
               case 'M':
@@ -3461,7 +3497,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
             formP.removeControl('mandatorySubject');
           }
         } else {
-          //formGeneral.removeControl('conozcaSuClientePersona');
+          // formGeneral.removeControl('conozcaSuClientePersona');
           formGeneral.removeControl('conozcaSuClientePersonaJuridica');
           if (formGeneral.get('contractor')) {
             formGeneral.removeControl('contractor');

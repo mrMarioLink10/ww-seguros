@@ -49,4 +49,8 @@ export class RequestsService {
   clearArchives(formName) {
     formName.setValue('');
   }
+
+  goToTop(el: HTMLElement) {
+    el.scrollIntoView();
+  }
 }

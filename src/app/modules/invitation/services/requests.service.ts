@@ -61,4 +61,8 @@ export class RequestsService {
     downloadLink.download = fileName;
     downloadLink.click();
   }
+
+  goToTop(el: HTMLElement) {
+    el.scrollIntoView();
+  }
 }

@@ -1527,9 +1527,7 @@ export class DisabilityComponent implements OnInit, DoCheck {
           // formInsured.addControl('knowYourClient', this.fb.group({}));
           // formFiles.addControl('documentsKnowClient', this.fb.array([]));
           // this.filesDocumentsKnowClientArray = this.disabilityGroup.get('files').get('documentsKnowClient') as FormArray;
-          if (this.disabilityGroup.get('knowYourCustomerContratante')) {
-            formGeneral.removeControl('knowYourCustomerContratante');
-          }
+
           if (this.disabilityGroup.get('policyholder')) {
             formGeneral.removeControl('policyholder');
           }
@@ -1722,8 +1720,8 @@ export class DisabilityComponent implements OnInit, DoCheck {
           if (this.disabilityGroup.get('insured_data').get('policyholderKnowClientRadio')) {
             formInsured.removeControl('policyholderKnowClientRadio');
           }
-          if (this.disabilityGroup.get('KnowYourCustomerContratante')) {
-            formGeneral.removeControl('KnowYourCustomerContratante');
+          if (this.disabilityGroup.get('knowYourCustomerContratante')) {
+            formGeneral.removeControl('knowYourCustomerContratante');
           }
           if (this.disabilityGroup.get('files').get('copyId')) {
             formFiles.removeControl('copyId');
@@ -2238,7 +2236,34 @@ export class DisabilityComponent implements OnInit, DoCheck {
         }
 
         if (formI.get('insuredPolicyholderRadio').value !== 'SI') {
-          formGeneral.removeControl('policyholder');
+          if (this.disabilityGroup.get('insured_data').get('policyholderKnowClientRadio')) {
+            formInsured.removeControl('policyholderKnowClientRadio');
+          }
+          if (this.disabilityGroup.get('knowYourCustomerContratante')) {
+            formGeneral.removeControl('knowYourCustomerContratante');
+          }
+          if (this.disabilityGroup.get('files').get('copyId')) {
+            formFiles.removeControl('copyId');
+          }
+          if ((this.disabilityGroup.get('antiLaundering'))) {
+            formGeneral.removeControl('antiLaundering');
+          }
+          if ((this.disabilityGroup.get('knowYourClient'))) {
+            formGeneral.removeControl('knowYourClient');
+          }
+          if (this.disabilityGroup.get('insured_data').get('mandatorySubject')) {
+            formInsured.removeControl('mandatorySubject');
+          }
+          if (this.disabilityGroup.get('files').get('mercantile')) {
+            formFiles.removeControl('mercantile');
+          }
+          // if (this.disabilityGroup.get('files').get('documentsKnowClient')) {
+          //   formFiles.removeControl('documentsKnowClient');
+          // }
+
+          if (this.disabilityGroup.get('policyholder')) {
+            formGeneral.removeControl('policyholder');
+          }
           if (this.disabilityGroup.get('insured_data').get('policyholderKnowClientRadio')) {
             formInsured.removeControl('policyholderKnowClientRadio');
           }
@@ -2263,7 +2288,9 @@ export class DisabilityComponent implements OnInit, DoCheck {
           // if (this.disabilityGroup.get('files').get('documentsKnowClient')) {
           //   formFiles.removeControl('documentsKnowClient');
           // }
-
+          if (this.disabilityGroup.get('knowYourCustomerContratante')) {
+          formGeneral.removeControl('knowYourCustomerContratante');
+          }
           if (this.disabilityGroup.get('policyholder')) {
             formGeneral.removeControl('policyholder');
           }
@@ -2302,7 +2329,8 @@ export class DisabilityComponent implements OnInit, DoCheck {
 
         if (this.disabilityGroup.get('insured_data').get('policyholderKnowClientRadio').value != 'NO' ||
         this.disabilityGroup.get('insured_data').get('insuredPolicyholderRadio').value != 'SI') {
-          formGeneral.removeControl('KnowYourCustomer');
+          formGeneral.removeControl('knowYourCustomer');
+          formGeneral.removeControl('knowYourCustomer');
           formFiles.removeControl('copyId');
         }
 
@@ -2326,11 +2354,11 @@ export class DisabilityComponent implements OnInit, DoCheck {
         if (this.disabilityGroup.get('insured_data').get('insuredPolicyholderRadio').value != 'SI') {
           formI.removeControl('policyholderKnowClientRadio');
         }
-        if (this.disabilityGroup.get('insured_data').get('insuredPolicyholderRadio').value == 'SI') {
+       /* if (this.disabilityGroup.get('insured_data').get('insuredPolicyholderRadio').value == 'SI') {
           if (this.disabilityGroup.get('policyholder')) {
             formGeneral.removeControl('policyholder');
           }
-        }
+        }*/
 
         if (this.disabilityGroup.get('insured_data').get('pep')) {
           formI.removeControl('pep');

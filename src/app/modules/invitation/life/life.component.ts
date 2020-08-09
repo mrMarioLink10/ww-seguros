@@ -727,6 +727,7 @@ export class LifeComponent implements OnInit, DoCheck {
         officeTel: [''],
         email: ['', [Validators.required, Validators.email]],
         sameAsContractor: ['', Validators.required],
+        contractorIsLegalEntity: ['', Validators.required],
         // sameAsPayer: ['', Validators.required],
       }),
       exposedPerson: this.fb.group({

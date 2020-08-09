@@ -1852,7 +1852,7 @@
                         label="Cantidad en %" name='quantity' min="1" max="100"></app-number-input>
                       <app-file-input class="mr-3"
                         [group]="newRequest.get('primaryBenefits').get('dependentsC').get(index.toString())"
-                        name="id2Attached" label="Adjuntar documento de identidad si es mayor de edad"
+                        name="id2Attached" label="Adjuntar documento de identidad si es mayor de edad - Formato de los documentos: PDF (.pdf), JPG (.jpg) y PNG (.png)"
                         [fileNameWatcher]="id2AttachedViewValue(index, 'primaryBenefits')"
                         (onFileChange)="onBeneficiaryFileChangeOnArray($event, 'id2Attached', index, 'primaryBenefits')">
                       </app-file-input>
@@ -1908,7 +1908,7 @@
                 <app-input class="mr-3" [group]="newRequest.get('primaryBenefits').get('personBenefited')"
                   label="Documento de Identidad" name='id2'></app-input>
                 <app-file-input class="mr-3" [group]="newRequest.get('primaryBenefits').get('personBenefited')"
-                  name="id2Attached" label="Adjuntar documento de identidad"
+                  name="id2Attached" label="Adjuntar documento de identidad - Formato de los documentos: PDF (.pdf), JPG (.jpg) y PNG (.png)"
                   [fileNameWatcher]="id2AttachedViewValue(null, 'primaryBenefits')"
                   (onFileChange)="onBeneficiaryFileChangeOnArray($event, 'id2Attached', null, 'primaryBenefits')">
                 </app-file-input>
@@ -1976,7 +1976,7 @@
                         label="Cantidad en %" name='quantity' min="1" max="100"></app-number-input>
                       <app-file-input class="mr-3"
                         [group]="newRequest.get('contingentBeneficiary').get('dependentsC').get(index.toString())"
-                        name="id2Attached" label="Adjuntar documento de identidad si es mayor de edad"
+                        name="id2Attached" label="Adjuntar documento de identidad si es mayor de edad - Formato de los documentos: PDF (.pdf), JPG (.jpg) y PNG (.png)"
                         [fileNameWatcher]="id2AttachedViewValue(index, 'contingentBeneficiary')"
                         (onFileChange)="onBeneficiaryFileChangeOnArray($event, 'id2Attached', index, 'contingentBeneficiary')">
                       </app-file-input>
@@ -2031,7 +2031,7 @@
                 <app-input class="mr-3" [group]="newRequest.get('contingentBeneficiary').get('personBenefited')"
                   label="Documento de Identidad" name='id2'></app-input>
                 <app-file-input class="mr-3" [group]="newRequest.get('contingentBeneficiary').get('personBenefited')"
-                  name="id2Attached" label="Adjuntar documento de identidad"
+                  name="id2Attached" label="Adjuntar documento de identidad - Formato de los documentos: PDF (.pdf), JPG (.jpg) y PNG (.png)"
                   [fileNameWatcher]="id2AttachedViewValue(null, 'contingentBeneficiary')"
                   (onFileChange)="onBeneficiaryFileChangeOnArray($event, 'id2Attached', null, 'contingentBeneficiary')">
                 </app-file-input>

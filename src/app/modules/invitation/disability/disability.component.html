@@ -1860,7 +1860,7 @@
                         </div>
                         <app-file-input class="mr-3"
                           [group]="disabilityGroup.get('main').get('main_array').get(in.toString())" name="id2Attached"
-                          label="Adjuntar documento de identidad si es mayor de edad"
+                          label="Adjuntar documento de identidad si es mayor de edad - Formato de los documentos: PDF (.pdf), JPG (.jpg) y PNG (.png)"
                           [fileNameWatcher]="id2AttachedViewValue(in, 'primaryBenefits')"
                           (onFileChange)="onBeneficiaryFileChangeOnArray($event, 'id2Attached', in, 'main', 'main_array')">
                         </app-file-input>
@@ -1925,7 +1925,7 @@
                         placeholder="Por ej: 402-0070012-8"> </app-input>
                     </div>
                     <app-file-input class="mr-3" [group]="disabilityGroup.get('main')" name="id2Attached"
-                      label="Adjuntar documento de identidad"
+                      label="Adjuntar documento de identidad - Formato de los documentos: PDF (.pdf), JPG (.jpg) y PNG (.png)"
                       [fileNameWatcher]="id2AttachedViewValue(null, 'primaryBenefits')"
                       (onFileChange)="onBeneficiaryFileChangeOnArray($event, 'id2Attached', null, 'main')">
                     </app-file-input>
@@ -2007,7 +2007,7 @@
                         </div>
                         <app-file-input class="mr-3"
                           [group]="disabilityGroup.get('contingent').get('contingent_array').get(in.toString())"
-                          name="id2Attached" label="Adjuntar documento de identidad si es mayor de edad"
+                          name="id2Attached" label="Adjuntar documento de identidad si es mayor de edad - Formato de los documentos: PDF (.pdf), JPG (.jpg) y PNG (.png)"
                           [fileNameWatcher]="id2AttachedViewValue(in, 'contingent')"
                           (onFileChange)="onBeneficiaryFileChangeOnArray($event, 'id2Attached', in, 'contingent', 'contingent_array')">
                         </app-file-input>
@@ -2069,7 +2069,7 @@
                         placeholder="Por ej: 402-0070012-8"> </app-input>
                     </div>
                     <app-file-input class="mr-3" [group]="disabilityGroup.get('contingent')" name="id2Attached"
-                      label="Adjuntar documento de identidad"
+                      label="Adjuntar documento de identidad - Formato de los documentos: PDF (.pdf), JPG (.jpg) y PNG (.png)"
                       [fileNameWatcher]="id2AttachedViewValue(null, 'contingent')"
                       (onFileChange)="onBeneficiaryFileChangeOnArray($event, 'id2Attached', null, 'contingent')">
                     </app-file-input>

@@ -104,10 +104,11 @@
               </app-input>
               <app-input class="mr-3" [group]="newRequest.get('person')" label="Apellidos" name='lastName'>
               </app-input>
-              <app-date-picker class="mr-3" [group]="newRequest.get('person')" label="Fecha de Nacimiento" name='date'>
+              <app-date-picker class="mr-3" [group]="newRequest.get('person')" [max]="todayDate"
+                label="Fecha de Nacimiento" name='date'>
               </app-date-picker>
-              <app-radio-button (selected)="thereIsAWomenOnTheRequest()" class="mr-3" [group]="newRequest.get('person')"
-                name="sex" [options]="sex">
+              <app-radio-button (selected)="thereIsAWomenOnTheRequest()" (selected)="thereIsAMenOnTheRequest()"
+                class="mr-3" [group]="newRequest.get('person')" name="sex" [options]="sex">
               </app-radio-button>
               <!-- <app-input class="mr-3" [group]="newRequest.get('person')" label="Nacionalidad" name='nationality'>
               </app-input> -->
@@ -510,7 +511,7 @@
               <app-input class="mr-3" [group]="newRequest.get('contractor')" label="Apellidos" name='lastName'>
               </app-input>
               <app-date-picker class="mr-3" [group]="newRequest.get('contractor')" label="Fecha de Nacimiento"
-                name='date'>
+                [max]="todayDate" name='date'>
               </app-date-picker>
               <app-radio-button class="mr-3" [group]="newRequest.get('contractor')" name="sex" [options]="sex">
               </app-radio-button>
@@ -660,10 +661,11 @@
                     </app-select>
                     <app-date-picker class="mr-3"
                       [group]="newRequest.get('dependents').get('allDependents').get(index.toString())"
-                      label="Fecha de Nacimiento" name='date'>
+                      label="Fecha de Nacimiento" name='date' [max]="todayDate">
                     </app-date-picker>
 
                     <app-radio-button class="mr-3" (selected)="thereIsAWomenOnTheRequest()"
+                      (selected)="thereIsAMenOnTheRequest()"
                       [group]="newRequest.get('dependents').get('allDependents').get(index.toString())" name="sex"
                       [options]="sex"></app-radio-button>
                     <app-select class="mr-3 col-span-2"
@@ -1827,7 +1829,7 @@
                         label="Nombres y Apellidos" name='name'></app-input>
                       <app-date-picker class="mr-3" id='date'
                         [group]="newRequest.get('primaryBenefits').get('dependentsC').get(index.toString())"
-                        label="Fecha de Nacimiento" name='date'></app-date-picker>
+                        label="Fecha de Nacimiento" name='date' [max]="todayDate"></app-date-picker>
                       <app-select class="mr-3" [options]="idType"
                         [group]="newRequest.get('primaryBenefits').get('dependentsC').get(index.toString())">
                       </app-select>
@@ -1953,7 +1955,7 @@
                         label="Nombres y Apellidos" name='name'></app-input>
                       <app-date-picker class="mr-3" id='date'
                         [group]="newRequest.get('contingentBeneficiary').get('dependentsC').get(index.toString())"
-                        label="Fecha de Nacimiento" name='date'></app-date-picker>
+                        label="Fecha de Nacimiento" [max]="todayDate" name='date'></app-date-picker>
                       <app-select class="mr-3" [options]="idType"
                         [group]="newRequest.get('contingentBeneficiary').get('dependentsC').get(index.toString())">
                       </app-select>

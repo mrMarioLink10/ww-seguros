@@ -109,6 +109,8 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
   questionsB = questionsB;
   routeSelected = 'gastos mayores';
   isThereAWomen = false;
+  isThereAMen = false;
+
   student = {
     name: ['', Validators.required],
     univercity: ['', Validators.required],
@@ -807,7 +809,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
         haveRespiratorySystem: ['', Validators.required],
         haveDigestiveSystem: ['', Validators.required],
         haveUrinarySystem: ['', Validators.required],
-        haveMaleReproductiveOrgans: ['', Validators.required],
+        haveMaleReproductiveOrgans: [''],
         haveBloodDisorders: ['', Validators.required],
         haveEndocrineDisorders: ['', Validators.required],
         haveAlternateTreatment: ['', Validators.required],
@@ -855,6 +857,9 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
       console.log('noCotizacion esta vacio');
       this.noCotizacion = '';
     }
+
+    this.thereIsAWomenOnTheRequest();
+    this.thereIsAMenOnTheRequest();
   }
 
   getBmiUpdated(Form) {
@@ -933,7 +938,9 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
     this.newRequest.get('person').get('date').valueChanges.subscribe(value => {
       const timeDiff = Math.abs(Date.now() - new Date(value).getTime());
       const age = Math.floor(timeDiff / (1000 * 3600 * 24) / 365.25);
-      this.newRequest.get('person').get('age').setValue(age);
+      if (value !== '' && value !== undefined && value !== null) {
+        this.newRequest.get('person').get('age').setValue(age);
+      }
     });
 
     this.newRequest.get('person').get('age').valueChanges.subscribe(value => {
@@ -1212,6 +1219,8 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
   }
 
   thereIsAWomenOnTheRequest() {
+    console.log('thereIsAMenOnTheRequest');
+
     let womenCount = 0;
     this.cd.detectChanges();
 
@@ -1220,7 +1229,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
         if (this.newRequest.get('dependents').get('allDependents').value.hasOwnProperty(idx)) {
           const element = this.newRequest.get('dependents').get('allDependents').value[idx];
           console.log(element.sex);
-          if (element.sex === 'Femenino') {
+          if (element.sex === 'FEMENINO') {
             womenCount += 1;
           }
         }
@@ -1237,7 +1246,38 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
       } else {
         this.isThereAWomen = false;
       }
-    }, 500);
+    }, 1500);
+
+  }
+
+  thereIsAMenOnTheRequest() {
+    console.log('thereIsAMenOnTheRequest');
+    let menCount = 0;
+    this.cd.detectChanges();
+
+    setTimeout(() => {
+      for (const idx in this.newRequest.get('dependents').get('allDependents').value) {
+        if (this.newRequest.get('dependents').get('allDependents').value.hasOwnProperty(idx)) {
+          const element = this.newRequest.get('dependents').get('allDependents').value[idx];
+          console.log(element.sex);
+          if (element.sex === 'MASCULINO') {
+            menCount += 1;
+          }
+        }
+      }
+
+      console.log(this.newRequest.value.person.sex);
+      if (this.newRequest.get('person').get('sex').value === 'MASCULINO') {
+        menCount += 1;
+      }
+
+      if (menCount > 0) {
+        console.log('Hay men');
+        this.isThereAMen = true;
+      } else {
+        this.isThereAMen = false;
+      }
+    }, 1500);
 
   }
 

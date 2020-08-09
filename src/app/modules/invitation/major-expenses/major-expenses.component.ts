@@ -999,37 +999,61 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
   searchIdNumber(idNumber: string) {
     this.appComponent.showOverlay = true;
 
-    this.userService.getQuotes(idNumber, 'salud')
-      .subscribe((response: any) => {
-        console.log(response);
-        this.appComponent.showOverlay = false;
-        if (response.data !== null) {
-          const dialogRef = this.dialog.open(BaseDialogComponent, {
-            data: this.dialogOption.noCFound(response.data),
-            minWidth: 385,
-          });
-          setTimeout(() => {
-            dialogRef.close();
-          }, 4000);
-          this.newRequest.get('payment').setValue(response.data.formaPago);
-          this.newRequest.get('plans').setValue(response.data.plan);
-          this.newRequest.get('person').get('firstName').setValue(response.data.nombre);
-          this.newRequest.get('person').get('date').setValue(response.data.fecha_nacimiento);
-        } else {
-          this.newRequest.get('payment').reset();
-          this.newRequest.get('plans').reset();
-          this.newRequest.get('person').get('firstName').reset();
-          this.newRequest.get('person').get('date').reset();
-          const dialogRef = this.dialog.open(BaseDialogComponent, {
-            data: this.dialogOption.noCNotFound,
-            minWidth: 385,
-          });
-          setTimeout(() => {
-            dialogRef.close();
-          }, 4000);
+    this.quotesService.returnDataSalud(idNumber).subscribe(data => {
+      this.appComponent.showOverlay = false;
 
+      if (data !== undefined && data.data !== null && data.data !== undefined && data.data.nombre !== undefined) {
+        const dialogRef = this.dialog.open(BaseDialogComponent, {
+          data: this.dialogOption.noCFound(data.data),
+          minWidth: 385,
+        });
+        setTimeout(() => {
+          dialogRef.close();
+        }, 4000);
+        this.isFormValidToFill = true;
+        this.notFoundQuote = false;
+
+        this.newRequest.get('payment').setValue(this.currencyPipe.transform(data.data.monto));
+        this.newRequest.get('plans').setValue(data.data.plan);
+        this.newRequest.get('deducibles').setValue(data.data.deducible);
+        this.newRequest.get('person').get('date').setValue(data.data.fecha_nacimiento);
+        this.newRequest.get('person').get('firstName').setValue(data.data.nombre);
+        this.newRequest.get('person').get('lastName').setValue(data.data.apellidos);
+
+        switch (data.data.sexo) {
+          case 'M':
+            this.newRequest.get('person').get('sex').setValue('MASCULINO');
+            break;
+
+          case 'F':
+            this.newRequest.get('person').get('sex').setValue('FEMENINO');
+            break;
+
+          default:
+            break;
         }
-      });
+
+      } else {
+        this.notFoundQuote = true;
+
+        this.newRequest.get('payment').reset();
+        this.newRequest.get('plans').reset();
+        this.newRequest.get('deducibles').reset();
+        this.newRequest.get('person').get('date').reset();
+        this.newRequest.get('person').get('firstName').reset();
+        this.newRequest.get('person').get('sex').reset();
+
+        const dialogRef = this.dialog.open(BaseDialogComponent, {
+          data: this.dialogOption.noCNotFound,
+          minWidth: 385,
+        });
+        setTimeout(() => {
+          dialogRef.close();
+        }, 4000);
+      }
+    });
+
+
   }
 
   newQuote() {

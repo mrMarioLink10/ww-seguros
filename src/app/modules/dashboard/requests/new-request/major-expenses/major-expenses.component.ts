@@ -1022,7 +1022,104 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
   searchIdNumber(idNumber: string) {
     this.appComponent.showOverlay = true;
 
-    this.userService.getQuotes(idNumber, 'salud')
+    const filterPrincipal = 'titula';
+    this.newRequest.get('requestType').setValue('PÓLIZA NUEVA');
+    this.quotesService.returnDataSaludList(idNumber).subscribe(data => {
+      this.appComponent.showOverlay = false;
+
+      if (data !== undefined && data.data !== null && data.data !== undefined /*&& data.data.nombre !== undefined*/) {
+        const resultPrincipal = data.data.filter(word => word.rol.toLowerCase().includes(filterPrincipal));
+        console.log(resultPrincipal);
+        const dialogRef = this.dialog.open(BaseDialogComponent, {
+          data: this.dialogOption.noCFound(resultPrincipal[0]),
+          minWidth: 385,
+        });
+        setTimeout(() => {
+          dialogRef.close();
+        }, 4000);
+        this.isFormValidToFill = true;
+        this.notFoundQuote = false;
+        data.data.forEach(element => {
+          if (element.rol.toLowerCase().includes(filterPrincipal)) {
+            this.newRequest.get('payment').setValue(this.currencyPipe.transform(element.monto));
+            this.newRequest.get('plans').setValue(element.plan);
+            this.newRequest.get('deducibles').setValue(element.deducible);
+            this.newRequest.get('person').get('date').setValue(element.fecha_nacimiento);
+            this.newRequest.get('person').get('firstName').setValue(element.nombre);
+            this.newRequest.get('person').get('lastName').setValue(element.apellidos);
+            switch (element.sexo) {
+              case 'M':
+                this.newRequest.get('person').get('sex').setValue('MASCULINO');
+                break;
+
+              case 'F':
+                this.newRequest.get('person').get('sex').setValue('FEMENINO');
+                break;
+
+              default:
+                break;
+            }
+          }
+          else {
+            let sexGender = 'MASCULINO';
+            switch (element.sexo) {
+              case 'M':
+                sexGender = 'MASCULINO';
+                break;
+
+              case 'F':
+                sexGender = 'FEMENINO';
+                break;
+
+              default:
+                break;
+            }
+            this.addInfo(this.dependentsFormArray, element.nombre, element.apellidos, element.fecha_nacimiento, sexGender);
+          }
+
+        });
+        /* this.newRequest.get('payment').setValue(this.currencyPipe.transform(data.data.monto));
+         this.newRequest.get('plans').setValue(data.data.plan);
+         this.newRequest.get('deducibles').setValue(data.data.deducible);
+         this.newRequest.get('person').get('date').setValue(data.data.fecha_nacimiento);
+         this.newRequest.get('person').get('firstName').setValue(data.data.nombre);
+         this.newRequest.get('person').get('lastName').setValue(data.data.apellidos);
+
+         switch (data.data.sexo) {
+           case 'M':
+             this.newRequest.get('person').get('sex').setValue('MASCULINO');
+             break;
+
+           case 'F':
+             this.newRequest.get('person').get('sex').setValue('FEMENINO');
+             break;
+
+           default:
+             break;
+         }
+ */
+      } else {
+        this.notFoundQuote = true;
+
+        this.newRequest.get('payment').reset();
+        this.newRequest.get('plans').reset();
+        this.newRequest.get('deducibles').reset();
+        this.newRequest.get('person').get('date').reset();
+        this.newRequest.get('person').get('firstName').reset();
+        this.newRequest.get('person').get('sex').reset();
+
+        const dialogRef = this.dialog.open(BaseDialogComponent, {
+          data: this.dialogOption.noCNotFound,
+          minWidth: 385,
+        });
+        setTimeout(() => {
+          dialogRef.close();
+        }, 4000);
+      }
+    });
+
+
+    /*this.userService.getQuotes(idNumber, 'salud')
       .subscribe((response: any) => {
         console.log(response);
         this.appComponent.showOverlay = false;
@@ -1052,7 +1149,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
           }, 4000);
 
         }
-      });
+      });*/
   }
 
   newQuote() {

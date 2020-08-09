@@ -14,6 +14,8 @@ export class MountaineeringComponent implements OnInit, DoCheck {
 
   @Input() form: FormGroup;
   @Input() showWarningDot: boolean;
+  @Input() affected: string;
+
   step: number;
   // mountaineering:FormGroup;
   c = 0;
@@ -116,26 +118,26 @@ export class MountaineeringComponent implements OnInit, DoCheck {
     //   }
     // }
     if ((formZ.get('africa').value === 'NO' || formZ.get('africa').value === '' ||
-    formZ.get('africa').value === null || formZ.get('africa').value === undefined)
+      formZ.get('africa').value === null || formZ.get('africa').value === undefined)
       && (formZ.get('alpes').value === 'NO' || formZ.get('alpes').value === '' ||
-      formZ.get('alpes').value === null || formZ.get('alpes').value === undefined)
+        formZ.get('alpes').value === null || formZ.get('alpes').value === undefined)
       && (formZ.get('himalaya').value === 'NO' || formZ.get('himalaya').value === '' ||
-      formZ.get('himalaya').value === null || formZ.get('himalaya').value === undefined)
+        formZ.get('himalaya').value === null || formZ.get('himalaya').value === undefined)
       && (formZ.get('andes').value === 'NO' || formZ.get('andes').value === '' ||
-      formZ.get('andes').value === null || formZ.get('andes').value === undefined)
+        formZ.get('andes').value === null || formZ.get('andes').value === undefined)
       && (formZ.get('mcKinley').value === 'NO' || formZ.get('mcKinley').value === '' ||
-      formZ.get('mcKinley').value === null || formZ.get('mcKinley').value === undefined)
+        formZ.get('mcKinley').value === null || formZ.get('mcKinley').value === undefined)
       && (formZ.get('alaska').value === 'NO' || formZ.get('alaska').value === '' ||
-      formZ.get('alaska').value === null || formZ.get('alaska').value === undefined)
+        formZ.get('alaska').value === null || formZ.get('alaska').value === undefined)
       && (formZ.get('mountain_range').value === 'NO' || formZ.get('mountain_range').value === '' ||
-      formZ.get('mountain_range').value === null || formZ.get('mountain_range').value === undefined)
+        formZ.get('mountain_range').value === null || formZ.get('mountain_range').value === undefined)
       && (formZ.get('others').value === 'NO' || formZ.get('others').value === '' ||
-      formZ.get('others').value === null || formZ.get('others').value === undefined)) {
-        formZ.removeControl('area_text');
-      }
-      else {
-        console.log('No se puede eliminar aún.');
-      }
+        formZ.get('others').value === null || formZ.get('others').value === undefined)) {
+      formZ.removeControl('area_text');
+    }
+    else {
+      console.log('No se puede eliminar aún.');
+    }
   }
 
   addBasicControls() {
@@ -301,27 +303,27 @@ export class MountaineeringComponent implements OnInit, DoCheck {
 
           break;
 
-      //   case 'africa':
-      //   case 'alpes':
-      //   case 'himalaya':
-      //   case 'andes':
-      //   case 'mcKinley':
-      //   case 'alaska':
-      //   case 'mountain_range':
-      //   case 'others':
-          // if (this.c === 0) {
-          //   console.log('No se se hara nada porque el valor de c es ' + this.c);
-          // } else if (this.c === 1) {
-          //   this.c--;
-          //   this.dataText = this.form.get('climb_zone').get('area_text').get('info').value;
-          //   console.log('El campo ha sido eliminado. El valor de c ahora es ' + this.c);
-          //   formZ.removeControl('area_text');
+        //   case 'africa':
+        //   case 'alpes':
+        //   case 'himalaya':
+        //   case 'andes':
+        //   case 'mcKinley':
+        //   case 'alaska':
+        //   case 'mountain_range':
+        //   case 'others':
+        // if (this.c === 0) {
+        //   console.log('No se se hara nada porque el valor de c es ' + this.c);
+        // } else if (this.c === 1) {
+        //   this.c--;
+        //   this.dataText = this.form.get('climb_zone').get('area_text').get('info').value;
+        //   console.log('El campo ha sido eliminado. El valor de c ahora es ' + this.c);
+        //   formZ.removeControl('area_text');
 
-          // } else if (this.c > 1) {
-          //   this.c--;
-          //   console.log('No se puede eliminar aún. El nuevo valor de c es ' + this.c);
-          // }
-          // break;
+        // } else if (this.c > 1) {
+        //   this.c--;
+        //   console.log('No se puede eliminar aún. El nuevo valor de c es ' + this.c);
+        // }
+        // break;
 
         case 'radio':
 

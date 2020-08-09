@@ -10,6 +10,8 @@ import { FieldConfig } from 'src/app/shared/components/form-components/models/fi
 export class SpineComponent implements OnInit {
   @Input() form: FormGroup;
   @Input() showWarningDot: boolean;
+  @Input() affected: string;
+
   step: number;
 
   accordionTitle = ['Datos'];

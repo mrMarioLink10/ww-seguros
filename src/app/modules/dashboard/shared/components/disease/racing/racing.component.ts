@@ -10,6 +10,7 @@ import { FieldConfig } from 'src/app/shared/components/form-components/models/fi
 export class RacingComponent implements OnInit {
 
   accordionTitles = ['Cuestionario'];
+  @Input() affected: string;
 
   races = [
     {

@@ -22,20 +22,30 @@
     <app-input class="mr-3" [group]="newRequest.get('questionsA').get(arrayName).get(i.toString())" name="threatment"
       label="Tratamiento">
     </app-input>
-    <app-input class="mr-3" [group]="newRequest.get('questionsA').get(arrayName).get(i.toString())"
-      name="medicCenterName" label="Nombre del proveedor o centro médico">
+    <app-input
+      *ngIf="haveToShowBasedOnAilment(newRequest.get('questionsA').get(arrayName).get(i.toString()).value.ailment)"
+      class="mr-3" [group]="newRequest.get('questionsA').get(arrayName).get(i.toString())" name="medicCenterName"
+      label="Nombre del proveedor o centro médico">
     </app-input>
-    <app-input class="mr-3" [group]="newRequest.get('questionsA').get(arrayName).get(i.toString())"
-      name="medicCenterAddress" label="Dirección del proveedor o centro médico">
+    <app-input
+      *ngIf="haveToShowBasedOnAilment(newRequest.get('questionsA').get(arrayName).get(i.toString()).value.ailment)"
+      class="mr-3" [group]="newRequest.get('questionsA').get(arrayName).get(i.toString())" name="medicCenterAddress"
+      label="Dirección del proveedor o centro médico">
     </app-input>
-    <app-number-input class="mr-3" [group]="newRequest.get('questionsA').get(arrayName).get(i.toString())"
+    <app-number-input
+      *ngIf="haveToShowBasedOnAilment(newRequest.get('questionsA').get(arrayName).get(i.toString()).value.ailment)"
+      class="mr-3" [group]="newRequest.get('questionsA').get(arrayName).get(i.toString())"
       label="Duración del Tratamiento" name='duration' min="1">
     </app-number-input>
     <div class="grid grid-cols-2">
-      <app-select class="mr-3" [options]="year" [group]="newRequest.get('questionsA').get(arrayName).get(i.toString())">
+      <app-select
+        *ngIf="haveToShowBasedOnAilment(newRequest.get('questionsA').get(arrayName).get(i.toString()).value.ailment)"
+        class="mr-3" [options]="year" [group]="newRequest.get('questionsA').get(arrayName).get(i.toString())">
       </app-select>
       <div *ngIf="newRequest.get('questionsA').get(arrayName)['controls'].length > 1"
-        [ngClass]="{'': newRequest.get('questionsA').get(arrayName)['controls'].length === 1, 'col-span-1': newRequest.get('questionsA').get(arrayName)['controls'].length > 1} ">
+        [ngClass]="{'': newRequest.get('questionsA').get(arrayName)['controls'].length === 1, 
+        'col-span-1': newRequest.get('questionsA').get(arrayName)['controls'].length > 1,
+        'mb-3': !haveToShowBasedOnAilment(newRequest.get('questionsA').get(arrayName).get(i.toString()).value.ailment)} ">
         <button mat-mini-fab aria-label=" Eliminar estudio"
           (click)="diseaseService.removeToList(i, newRequest.get('questionsA').get(arrayName))"
           (click)="ailmentSelectedInBlock(arrayName, questionnairesGastosMayores, newRequest.get('questionsA'))"

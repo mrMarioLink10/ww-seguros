@@ -97,7 +97,12 @@ export class DashboardLayoutComponent implements OnInit, OnDestroy {
     this.location.back();
   }
   GetInstrucstivo(){
+    if (this.role === 'WWS') {
     window.open(environment.instructivo, '_blank');
+    }
+    else{
+      window.open(environment.instructivoMedical, '_blank');
+    }
   }
   ngOnDestroy() {
     // tslint:disable-next-line: deprecation

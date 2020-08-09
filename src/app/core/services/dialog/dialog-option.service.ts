@@ -144,7 +144,7 @@ export class DialogOptionService {
 		return {
 			logo: 'check',
 			title: `Cotización encontrada`,
-			text: `Se encontró la cotización asignada a ${data.nombre}`,
+			text: `Se encontró la cotización asignada a ${data.nombre} ${data.apellidos}`,
 			showButtons: false,
 		};
 	}

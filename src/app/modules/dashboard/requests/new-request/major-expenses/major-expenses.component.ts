@@ -3415,7 +3415,11 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
   }
 
   getData(id) {
+    this.appComponent.showOverlay = true;
     this.majorExpensesService.returnData(id).subscribe(data => {
+      /*setTimeout(() => {
+        this.appComponent.showOverlay = true;
+      });*/
       // console.log(data);
       // console.log( this.newRequest);
       if (data !== undefined && data.data !== null &&
@@ -3536,6 +3540,17 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
         if (formP.get('isJuridica')) {
           if (formP.get('isJuridica').value !== 'SI') {
             formP.removeControl('mandatorySubject');
+          }else
+          {
+            if (formGeneral.get('contractor')) {
+              formGeneral.removeControl('contractor');
+            }
+            if (this.newRequest.get('conozcaSuClientePersonaContratante')) {
+              formGeneral.removeControl('conozcaSuClientePersonaContratante');
+            }
+            if (this.newRequest.get('files').get('copyId')) {
+              formFiles.removeControl('copyId');
+            }
           }
         } else {
           // formGeneral.removeControl('conozcaSuClientePersona');
@@ -3684,6 +3699,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
 
       }
 
+      this.appComponent.showOverlay = false;
 
     });
   }

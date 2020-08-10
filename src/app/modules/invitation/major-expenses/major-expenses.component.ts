@@ -3237,9 +3237,10 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
   }
 
   getData(key) {
-    setTimeout(() => {
+    /*setTimeout(() => {
       this.appComponent.showOverlay = true;
-    });
+    });*/
+    this.appComponent.showOverlay = true;
     this.requestService.getRequestData('salud', key).subscribe((data: any) => {
       // console.log(data);
       // console.log( this.newRequest);
@@ -3361,6 +3362,17 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
         if (formP.get('isJuridica')) {
           if (formP.get('isJuridica').value !== 'SI') {
             formP.removeControl('mandatorySubject');
+          }else
+          {
+            if (formGeneral.get('contractor')) {
+              formGeneral.removeControl('contractor');
+            }
+            if (this.newRequest.get('conozcaSuClientePersonaContratante')) {
+              formGeneral.removeControl('conozcaSuClientePersonaContratante');
+            }
+            if (this.newRequest.get('files').get('copyId')) {
+              formFiles.removeControl('copyId');
+            }
           }
         } else {
           // formGeneral.removeControl('conozcaSuClientePersona');

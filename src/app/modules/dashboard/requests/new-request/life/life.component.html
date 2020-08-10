@@ -995,7 +995,7 @@
                           label="Ocupación" name='ocupationBeneficiary'></app-input>
                         <app-select class="mr-3" [options]="familyBeneficiary"
                           [group]="newRequest.get('contingentBeneficiary').get('dependentsC').get(index.toString())"
-                          (selected)="relationWatcher($event, newRequest.get('contingentBeneficiary').get('dependentsC').get(index.toString()))">
+                          (selected)="relationWatcher2($event, newRequest.get('contingentBeneficiary').get('dependentsC').get(index.toString()))">
                         </app-select>
                         <app-input class="mr-3"
                           [group]="newRequest.get('contingentBeneficiary').get('dependentsC').get(index.toString())"
@@ -1049,7 +1049,7 @@
                     label="Nombre" name="nameBeneficiary"></app-input>
                   <app-select class="mr-3" [options]="familyBeneficiary"
                     [group]="newRequest.get('contingentBeneficiary').get('personBenefited')"
-                    (selected)="relationWatcher($event, newRequest.get('contingentBeneficiary').get('personBenefited'))">
+                    (selected)="relationWatcher2($event, newRequest.get('contingentBeneficiary').get('personBenefited'))">
                   </app-select>
                   <app-input class="mr-3" [group]="newRequest.get('contingentBeneficiary').get('personBenefited')"
                     *ngIf="newRequest.get('contingentBeneficiary').get('personBenefited').get('familyBeneficiary').value == 'OTROS'"

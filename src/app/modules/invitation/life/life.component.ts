@@ -1439,6 +1439,16 @@ export class LifeComponent implements OnInit, DoCheck {
     }
   }
 
+  relationWatcher2(event, realForm) {
+    console.log('event: ', event.valor, 'form: ', realForm);
+    const form = realForm as FormGroup;
+    if (event.valor === 'OTROS') {
+      form.addControl('specifyRelationshipBeneficiary', this.fb.control('', Validators.required));
+    } else {
+      form.removeControl('specifyRelationshipBeneficiary');
+    }
+  }
+
   onFileChange(event, formName) {
     const reader = new FileReader();
 

@@ -642,7 +642,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
       person: this.fb.group({
         // conozcaSuClientePersona: this.fb.group({}),
         firstName: ['', Validators.required],
-        secondName: ['', Validators.required],
+        secondName: [''],
         lastName: ['', Validators.required],
         weightUnit: ['', Validators.required],
         heightUnit: ['', Validators.required],
@@ -681,7 +681,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
         // conozcaSuClientePersonaJuridica: this.fb.group({}),
         // conozcaSuClientePersona: this.fb.group({}),
         firstName: ['', Validators.required],
-        secondName: ['', Validators.required],
+        secondName: [''],
         lastName: ['', Validators.required],
         date: ['', Validators.required],
         sex: ['', Validators.required],
@@ -1541,7 +1541,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
               // conozcaSuClientePersonaJuridica: this.fb.group({}),
               // conozcaSuClientePersona: this.fb.group({}),
               firstName: ['', Validators.required],
-              secondName: ['', Validators.required],
+              secondName: [''],
               lastName: ['', Validators.required],
               date: ['', Validators.required],
               sex: ['', Validators.required],
@@ -1893,7 +1893,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
               // conozcaSuClientePersonaJuridica: this.fb.group({}),
               // conozcaSuClientePersona: this.fb.group({}),
               firstName: ['', Validators.required],
-              secondName: ['', Validators.required],
+              secondName: [''],
               lastName: ['', Validators.required],
               date: ['', Validators.required],
               sex: ['', Validators.required],
@@ -3252,6 +3252,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
         this.AddEventOnEachDependentVariable();
 
         const formP = this.newRequest.get('person') as FormGroup;
+        const formPO = this.newRequest.get('person').get('office') as FormGroup;
         const formQA = this.newRequest.get('questionsA') as FormGroup;
         const formQB = this.newRequest.get('questionsB') as FormGroup;
         const formEP = this.newRequest.get('exposedPerson') as FormGroup;
@@ -3355,8 +3356,10 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
           formP.removeControl('inches');
         }
 
-        if (formP.get('mandatorySubject').value !== 'SI') {
-          formGeneral.removeControl('antiLaundering');
+        if (formP.get('mandatorySubject')) {
+          if (formP.get('mandatorySubject').value !== 'SI') {
+            formGeneral.removeControl('antiLaundering');
+          }
         }
 
         if (formP.get('isJuridica')) {
@@ -3510,6 +3513,18 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
             }
 
             element.removeControl('haveSpine');
+          }
+        }
+
+        if (formP.get('isContractor')) {
+          if (formP.get('isContractor').value !== 'NO') {
+            formPO.get('company').setValidators(null);
+            formPO.get('position').setValidators(null);
+            formPO.get('direction').setValidators(null);
+            formPO.get('economicActivity').setValidators(null);
+            formPO.get('sector').setValidators(null);
+            formPO.get('city').setValidators(null);
+            formPO.get('country').setValidators(null);
           }
         }
 

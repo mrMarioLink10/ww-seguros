@@ -1695,7 +1695,7 @@
                 <div
                   *ngFor="let medic of newRequest.get('questionsB').get('specializedTests')['controls']; let i = index"
                   class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
-                  <app-date-picker class="mr-3"
+                  <app-date-picker class="mr-3" [max]="todayDate"
                     [group]="newRequest.get('questionsB').get('specializedTests').get(i.toString())" name="date"
                     label="¿En qué fecha?">
                   </app-date-picker>

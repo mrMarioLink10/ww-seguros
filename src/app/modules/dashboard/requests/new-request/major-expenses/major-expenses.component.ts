@@ -485,7 +485,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
   };
   primaryBenefits = {
     name: ['', Validators.required],
-    date: [new Date(), Validators.required],
+    date: ['', Validators.required],
     id2: ['', Validators.required],
     idType: ['', Validators.required],
     id2Attached: [''],
@@ -497,7 +497,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
 
   contigentBenefits = {
     name: [''],
-    date: [new Date()],
+    date: [''],
     id2: [''],
     idType: [''],
     id2Attached: [''],

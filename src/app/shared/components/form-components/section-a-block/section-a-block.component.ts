@@ -80,6 +80,8 @@ export class SectionABlockComponent implements OnInit {
   }
 
   haveToShowWhichFormComponent(inFormName: string) {
+
+
     if (inFormName === 'havePhysiologicalDisorder' || inFormName === 'haveBloodTransfusion') {
       return false;
     } else {
@@ -87,7 +89,12 @@ export class SectionABlockComponent implements OnInit {
     }
   }
 
-  haveToShowBasedOnAilment(ailment) {
+  haveToShowBasedOnAilment(ailment, index) {
+    this.newRequest.get('questionsA').get(this.arrayName).get(index.toString()).get('medicCenterName').setValidators(null);
+    this.newRequest.get('questionsA').get(this.arrayName).get(index.toString()).get('medicCenterAddress').setValidators(null);
+    this.newRequest.get('questionsA').get(this.arrayName).get(index.toString()).get('duration').setValidators(null);
+    this.newRequest.get('questionsA').get(this.arrayName).get(index.toString()).get('time').setValidators(null);
+
     for (const key in this.haveToShowMoreAilments) {
       if (Object.prototype.hasOwnProperty.call(this.haveToShowMoreAilments, key)) {
         const element = this.haveToShowMoreAilments[key];

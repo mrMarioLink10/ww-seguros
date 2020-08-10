@@ -2018,8 +2018,11 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
             formP.removeControl('mandatorySubject');
           }
           formP.removeControl('isJuridica');
-          formEP.removeControl('contractor');
-          formEP.removeControl('contractorExposedInfo');
+          if (formEP)
+          {
+            formEP.removeControl('contractor');
+            formEP.removeControl('contractorExposedInfo');
+          }
           if (this.newRequest.get('files').get('mercantile')) {
             formFiles.removeControl('mercantile');
           }

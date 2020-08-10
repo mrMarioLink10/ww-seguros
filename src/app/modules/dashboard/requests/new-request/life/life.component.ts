@@ -3240,8 +3240,8 @@ export class LifeComponent implements OnInit, DoCheck {
         const formWI = this.newRequest.get('medicalHistory').get('informations').get('womenInformation') as FormGroup;
         const formQ = this.newRequest.get('questionnaires') as FormGroup;
         const formFiles = this.newRequest.get('files') as FormGroup;
-const formGeneral = this.newRequest as FormGroup;
-        if (formP.get('contractorIsLegalEntity').value === 'NO') {
+        const formGeneral = this.newRequest as FormGroup;
+        if (formP.get('contractorIsLegalEntity').value !== 'SI') {
           formEP.removeControl('isPayerExposed');
           formEP.removeControl('isContractorExposed');
           this.newRequest.removeControl('payer');

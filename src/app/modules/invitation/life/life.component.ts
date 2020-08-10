@@ -3229,15 +3229,52 @@ export class LifeComponent implements OnInit, DoCheck {
         const formHMI = this.newRequest.get('medicalHistory').get('informations') as FormGroup;
         const formMH = this.newRequest.get('medicalHistory') as FormGroup;
         const formWI = this.newRequest.get('medicalHistory').get('informations').get('womenInformation') as FormGroup;
-
-        if (formP.get('contractorIsLegalEntity').value === 'NO') {
+        const formQ = this.newRequest.get('questionnaires') as FormGroup;
+        const formFiles = this.newRequest.get('files') as FormGroup;
+        const formGeneral = this.newRequest as FormGroup;
+        if (formP.get('contractorIsLegalEntity').value !== 'SI') {
           formEP.removeControl('isPayerExposed');
           formEP.removeControl('isContractorExposed');
           this.newRequest.removeControl('payer');
           this.newRequest.removeControl('contractor');
+          this.newRequest.removeControl('knowYourCustomerPagador');
+          this.newRequest.removeControl('knowYourCustomerContratante');
           formEP.removeControl('contractor');
           formEP.removeControl('payer');
           formP.removeControl('payerIsLegalEntity');
+
+          formP.removeControl('sameAsPayer');
+          this.newRequest.removeControl('payer');
+          this.newRequest.removeControl('contractor');
+          if (formEP)
+          {
+          formEP.removeControl('contractor');
+          formEP.removeControl('payer');
+          formEP.removeControl('isPayerExposed');
+          formEP.removeControl('isContractorExposed');
+          }
+          // if (this.newRequest.get('insured_data').get('policyholderKnowClientRadio')) {
+          //   sameAsPayer
+          //   formInsured.removeControl('policyholderKnowClientRadio'); //juridica
+          // }
+          if (formGeneral.get('contractorLegalEntity')) {
+            formGeneral.removeControl('contractorLegalEntity');
+          }
+          if (this.newRequest.get('files').get('copyId')) {
+            formFiles.removeControl('copyId');
+          }
+          if (formQ.get('solucionAntiLavadoDinero')) {
+            formQ.removeControl('solucionAntiLavadoDinero');
+          }
+          if (formGeneral.get('payerLegalEntity')) {
+            formGeneral.removeControl('payerLegalEntity');
+          }
+          if (formP.get('payerIsLegalEntity')) {
+            formP.removeControl('payerIsLegalEntity');
+          }
+          if (this.newRequest.get('files').get('mercantile')) {
+            formFiles.removeControl('mercantile');
+          }
         }
         // if (formP.get('sameAsContractor').value === 'SI') {
         //   formP.removeControl('contractorIsLegalEntity');
@@ -3246,6 +3283,19 @@ export class LifeComponent implements OnInit, DoCheck {
         //   this.newRequest.removeControl('contractor');
         // }
         if (formP.get('sameAsPayer')) {
+          if (formP.get('sameAsPayer').value === 'SI') {
+            if (this.newRequest.get('payer')) {
+              this.newRequest.removeControl('payer');
+            }
+
+            if (this.newRequest.get('files').get('copyId')) {
+              formFiles.removeControl('copyId');
+            }
+            if (!(formGeneral.get('payerLegalEntity'))) {
+              formGeneral.addControl('payerLegalEntity', this.fb.group({}));
+            }
+            formP.addControl('payerIsLegalEntity', this.fb.control('', Validators.required));
+          }
           if (formP.get('sameAsPayer').value === 'NO') {
             //   formP.removeControl('payerIsLegalEntity');
             //   formEP.removeControl('isPayerExposed');
@@ -3254,6 +3304,56 @@ export class LifeComponent implements OnInit, DoCheck {
             if (formP.get('payerIsLegalEntity')) {
               formP.removeControl('payerIsLegalEntity');
             }
+            if (!this.newRequest.get('payer')) {
+              this.newRequest.addControl('payer', this.fb.group({
+                firstName: ['', Validators.required],
+                secondName: ['', Validators.required],
+                lastName: ['', Validators.required],
+                date: ['', Validators.required],
+                sex: ['', Validators.required],
+                nationality: ['', Validators.required],
+                id2Type: ['', Validators.required],
+                id2: ['', Validators.required],
+                countryOfResidence: ['', Validators.required],
+                status: ['', Validators.required],
+                countryOfBirth: ['', Validators.required],
+                direction: ['', Validators.required],
+                tel: ['', Validators.required],
+                cel: ['', Validators.required],
+                officeTel: ['', Validators.required],
+                fax: ['', Validators.required],
+                email: ['', [Validators.required, Validators.email]],
+                company: this.fb.group({
+                  name: ['', Validators.required],
+                  position: ['', Validators.required],
+                  direction: ['', Validators.required],
+                  economicActivity: ['', Validators.required],
+                  city: ['', Validators.required],
+                  country: ['', Validators.required],
+                  kinship: ['', Validators.required],
+                  insurancePurpose: ['', Validators.required],
+                  contractorCountry: ['', Validators.required],
+                })
+              }));
+            }
+            if (formQ.get('solucionAntiLavadoDinero')) {
+              formQ.removeControl('solucionAntiLavadoDinero');
+            }
+            if (formGeneral.get('payerLegalEntity')) {
+              formGeneral.removeControl('payerLegalEntity');
+            }
+            if (formP.get('payerIsLegalEntity')) {
+              formP.removeControl('payerIsLegalEntity');
+            }
+            if (this.newRequest.get('files').get('mercantile')) {
+              formFiles.removeControl('mercantile');
+            }
+
+            if (formQ.get('payerLegalEntity')) {
+              formQ.removeControl('payerLegalEntity');
+            }
+            formFiles.addControl('copyId', this.fb.array([this.createFormArray('filesCopyId')]));
+            this.filesCopyIdArray = this.newRequest.get('files').get('copyId') as FormArray;
           }
         }
 

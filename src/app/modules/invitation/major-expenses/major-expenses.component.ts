@@ -3555,6 +3555,10 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
           }
         }
 
+        if (formContractor) {
+          formContractor.removeControl('isContractor');
+        }
+
         this.isFormValidToFill = true;
 
 

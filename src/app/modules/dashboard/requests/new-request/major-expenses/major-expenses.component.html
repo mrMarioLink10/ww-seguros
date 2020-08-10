@@ -2487,7 +2487,7 @@
       <button mat-button class="save-button" style="margin-right: 7.5px !important;"
         (click)="formHandler.sendForm(newRequest, 'major-expenses', 'save', appComponent)"
         type="submit">Guardar</button>
-      <button mat-button class="send-button" style="margin-right: 7.5px !important;" [disabled]="newRequest.valid"
+      <button mat-button class="send-button" style="margin-right: 7.5px !important;" [disabled]="!newRequest.valid"
         (click)="formHandler.sendForm(newRequest, 'major-expenses', 'send', appComponent)" type="submit">Enviar</button>
       <button mat-button class="send-button"
         (click)="formHandler.sendForm(newRequest, 'major-expenses', 'invitation', this.appComponent)"

@@ -1726,9 +1726,8 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
           // }
 
           formP.addControl('isJuridica', this.fb.control('', Validators.required));
-          if (formEP)
-          {
-          formEP.addControl('contractor', this.fb.control('', Validators.required));
+          if (formEP) {
+            formEP.addControl('contractor', this.fb.control('', Validators.required));
           }
           if (!formGeneral.get('contractor')) {
             formGeneral.addControl('contractor', this.fb.group({
@@ -2021,8 +2020,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
             formP.removeControl('mandatorySubject');
           }
           formP.removeControl('isJuridica');
-          if (formEP)
-          {
+          if (formEP) {
             formEP.removeControl('contractor');
             formEP.removeControl('contractorExposedInfo');
           }
@@ -3473,10 +3471,9 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
             formP.removeControl('mandatorySubject');
           }
           formP.removeControl('isJuridica');
-          if (formEP)
-          {
-          formEP.removeControl('contractor');
-          formEP.removeControl('contractorExposedInfo');
+          if (formEP) {
+            formEP.removeControl('contractor');
+            formEP.removeControl('contractorExposedInfo');
           }
           if (this.newRequest.get('files').get('mercantile')) {
             formFiles.removeControl('mercantile');
@@ -3527,10 +3524,9 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
             formP.removeControl('mandatorySubject');
           }
           formP.removeControl('isJuridica');
-          if (formEP)
-          {
-          formEP.removeControl('contractor');
-          formEP.removeControl('contractorExposedInfo');
+          if (formEP) {
+            formEP.removeControl('contractor');
+            formEP.removeControl('contractorExposedInfo');
           }
           if (this.newRequest.get('files').get('mercantile')) {
             formFiles.removeControl('mercantile');
@@ -3538,10 +3534,9 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
         }
 
         if (formP.get('isContractor').value !== 'SI') {
-          if (formEP)
-          {
-          formEP.removeControl('contractorExposedInfo');
-          formEP.removeControl('contractor');
+          if (formEP) {
+            formEP.removeControl('contractorExposedInfo');
+            formEP.removeControl('contractor');
           }
         }
 
@@ -3558,8 +3553,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
         if (formP.get('isJuridica')) {
           if (formP.get('isJuridica').value !== 'SI') {
             formP.removeControl('mandatorySubject');
-          }else
-          {
+          } else {
             if (formGeneral.get('contractor')) {
               formGeneral.removeControl('contractor');
             }
@@ -3603,7 +3597,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
           }
         }
 
-        if ( formEP && formEP.get('contractor')) {
+        if (formEP && formEP.get('contractor')) {
           if (formEP.get('contractor').value !== 'SI') {
             formEP.removeControl('contractorExposedInfo');
           }
@@ -3706,6 +3700,24 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
             }
 
             element.removeControl('haveSpine');
+          }
+        }
+
+        // tslint:disable: no-string-literal
+        if (formQB.get('specializedTests')) {
+          for (const key in formQB.get('specializedTests')['controls']) {
+            if (Object.prototype.hasOwnProperty.call(formQB.get('specializedTests')['controls'], key)) {
+              const element = formQB.get('specializedTests')['controls'][key] as FormGroup;
+              if (element.value.whichStudy !== 'OTROS') {
+                element.removeControl('specifyStudy');
+              }
+            }
+          }
+        }
+
+        if (formP.get('pep_radio_insured')) {
+          if (formP.get('pep_radio_insured').value !== 'SI') {
+            this.newRequest.removeControl('exposedPerson');
           }
         }
 

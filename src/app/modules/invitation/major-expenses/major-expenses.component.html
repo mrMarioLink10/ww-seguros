@@ -2485,7 +2485,7 @@
       <button mat-button class="save-button" style="margin-right: 7.5px !important;"
         (click)="formHandler.sendForm(newRequest, 'major-expenses', 'save', appComponent, ID,true)"
         type="submit">Guardar</button>
-      <button mat-button class="send-button" [disabled]="newRequest.valid"
+      <button mat-button class="send-button" [disabled]="!newRequest.valid"
         (click)="formHandler.sendForm(newRequest, 'major-expenses', 'send', appComponent, ID,true)"
         type="submit">Enviar</button>
     </div>

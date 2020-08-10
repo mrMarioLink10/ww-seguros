@@ -1726,7 +1726,10 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
           // }
 
           formP.addControl('isJuridica', this.fb.control('', Validators.required));
+          if (formEP)
+          {
           formEP.addControl('contractor', this.fb.control('', Validators.required));
+          }
           if (!formGeneral.get('contractor')) {
             formGeneral.addControl('contractor', this.fb.group({
               // conozcaSuClientePersonaJuridica: this.fb.group({}),
@@ -3470,8 +3473,11 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
             formP.removeControl('mandatorySubject');
           }
           formP.removeControl('isJuridica');
+          if (formEP)
+          {
           formEP.removeControl('contractor');
           formEP.removeControl('contractorExposedInfo');
+          }
           if (this.newRequest.get('files').get('mercantile')) {
             formFiles.removeControl('mercantile');
           }
@@ -3521,16 +3527,22 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
             formP.removeControl('mandatorySubject');
           }
           formP.removeControl('isJuridica');
+          if (formEP)
+          {
           formEP.removeControl('contractor');
           formEP.removeControl('contractorExposedInfo');
+          }
           if (this.newRequest.get('files').get('mercantile')) {
             formFiles.removeControl('mercantile');
           }
         }
 
         if (formP.get('isContractor').value !== 'SI') {
+          if (formEP)
+          {
           formEP.removeControl('contractorExposedInfo');
           formEP.removeControl('contractor');
+          }
         }
 
         if (formP.get('heightUnit').value !== 'PIE') {
@@ -3582,7 +3594,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
           formGeneral.removeControl('conozcaSuClientePersonaJuridica');
         }
 
-        if (formEP.get('headLine').value !== 'SI') {
+        if (formEP && formEP.get('headLine').value !== 'SI') {
           formEP.removeControl('headLineExposedInfo');
           formEP.removeControl('headLineExposedInfo');
 
@@ -3591,7 +3603,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
           }
         }
 
-        if (formEP.get('contractor')) {
+        if ( formEP && formEP.get('contractor')) {
           if (formEP.get('contractor').value !== 'SI') {
             formEP.removeControl('contractorExposedInfo');
           }

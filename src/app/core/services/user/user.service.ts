@@ -43,13 +43,14 @@ export class UserService {
       if (user.resource_access.cotizador.roles.hasOwnProperty(key)) {
         if (  user.resource_access.cotizador.roles[key] === 'WMA') {
           isRD = "false";
+          break;
         }
       }
     }
-      let isNdaReady = true;// (user && user.CodBroker && user.CodBroker === "true");
+      let isNdaReady =  (user && user.nda !== undefined && user.nda !== null);
       if (!isNdaReady)
         {
-          console.log(user);
+          console.log('FUNCIONAAAAA');
           window.location.href=environment.urlNotAccess+isRD;
         }
   }

@@ -8,6 +8,21 @@ import * as Keycloak from 'keycloak-js';
 
 if (environment.production) {
   enableProdMode();
+
+  if (window) {
+    // tslint:disable-next-line: only-arrow-functions
+    window.console.log = window.console.warn = window.console.info = function () {
+      // Don't log anything.
+    };
+  } else if (!window.console) {
+    const console = {
+      log() { },
+      warn() { },
+      error() { },
+      time() { },
+      timeEnd() { }
+    };
+  }
 }
 
 platformBrowserDynamic().bootstrapModule(AppModule)

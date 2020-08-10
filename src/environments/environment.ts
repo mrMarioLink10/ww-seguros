@@ -11,6 +11,7 @@ export const environment = {
   production: false,
   instructivo: "http://wwsdevportalbackend-desadevportalbackend.azurewebsites.net/INSTRUCTIVO_V2.pdf",
   instructivoMedical: "http://wwsdevportalbackend-desadevportalbackend.azurewebsites.net/INSTRUCTIVO_WWM_V2.pdf",
+  terminosCondiciones: "http://wwsdevportalbackend-desadevportalbackend.azurewebsites.net/TERMINOS_DE_USO.pdf",
   fileUrl: 'http://wwsdevportalbackend-desadevportalbackend.azurewebsites.net',
   mailForHelp: "ayuda_wws@wws.com.do",
   mailForHelpPM: "ayuda_wwma@wwmedicalassurance.com",

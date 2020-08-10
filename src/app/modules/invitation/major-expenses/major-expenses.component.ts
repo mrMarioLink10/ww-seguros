@@ -642,7 +642,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
       person: this.fb.group({
         // conozcaSuClientePersona: this.fb.group({}),
         firstName: ['', Validators.required],
-        secondName: [''],
+        secondName: ['', Validators.required],
         lastName: ['', Validators.required],
         weightUnit: ['', Validators.required],
         heightUnit: ['', Validators.required],
@@ -681,7 +681,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
         // conozcaSuClientePersonaJuridica: this.fb.group({}),
         // conozcaSuClientePersona: this.fb.group({}),
         firstName: ['', Validators.required],
-        secondName: [''],
+        secondName: ['', Validators.required],
         lastName: ['', Validators.required],
         date: ['', Validators.required],
         sex: ['', Validators.required],
@@ -1543,7 +1543,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
               // conozcaSuClientePersonaJuridica: this.fb.group({}),
               // conozcaSuClientePersona: this.fb.group({}),
               firstName: ['', Validators.required],
-              secondName: [''],
+              secondName: ['', Validators.required],
               lastName: ['', Validators.required],
               date: ['', Validators.required],
               sex: ['', Validators.required],
@@ -3553,6 +3553,10 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
             formPO.get('city').setValidators(null);
             formPO.get('country').setValidators(null);
           }
+        }
+
+        if (formContractor) {
+          formContractor.removeControl('isContractor');
         }
 
         this.isFormValidToFill = true;

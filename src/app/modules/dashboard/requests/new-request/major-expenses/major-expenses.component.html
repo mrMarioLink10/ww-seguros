@@ -627,7 +627,7 @@
               </button>
             </mat-action-row>
           </mat-expansion-panel>
-          <mat-expansion-panel class="ww-mat-expansion" [expanded]="step === 4" (opened)="setStep(4)">
+          <mat-expansion-panel class="ww-mat-expansion" [expanded]="step === 4" (opened)="setStep(4)" *ngIf="dependentsFormArray.controls.length > 0">
             <mat-expansion-panel-header class="body-13 icon-blue">
               <mat-panel-title>
                 Dependientes
@@ -737,7 +737,7 @@
                   </div>
 
                 </div>
-                <div *ngIf="dependentsFormArray.controls.length === 0">
+               <!-- <div *ngIf="dependentsFormArray.controls.length === 0">
                   <p class='formulary-labels'>Para agregar un dependiente pulse el siguiente boton</p><br>
                 </div>
                 <div *ngIf="dependentsFormArray.controls.length === 0">
@@ -746,7 +746,7 @@
                     class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
                     <mat-icon style="color: #18446B">add</mat-icon>
                   </button>
-                </div>
+                </div>-->
               </div>
 
               <div formArrayName="students" class="pt-20" *ngIf="dependentsFormArray.controls.length > 0">

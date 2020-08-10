@@ -31,6 +31,33 @@ export class SectionABlockComponent implements OnInit {
 
   todayDate = new Date();
 
+  haveToShowMoreAilments = [
+    'ARTRITIS',
+    'LUMBAGO',
+    'HERNIA DISCAL',
+    'ESCOLIOSIS',
+    'OTRO PADECIMIENTOS DE LA COLUMNA VERTEBRAL',
+    'OTRO TRASTORNO MÚSCULO ESQUELÉTICOS',
+    'PRESIÓN ARTERIAL ALTA',
+    'PROBLEMAS DEL CORAZÓN',
+    'SOPLOS',
+    'VALVULOPATÍAS',
+    'FIEBRE REUMÁTICA',
+    'ANGINA',
+    'INFARTO',
+    'VARICES',
+    'FLEBITIS',
+    'PATOLOGÍA CARDIACA',
+    'OTROS PADECIMIENTO DEL SISTEMA CARDIOVASCULAR',
+    'DIABETES',
+    'CÁLCULO RENALES',
+    'NEFRITIS',
+    'INFECCIONES URINARIAS',
+    'SANGRE EN LA ORINA',
+    'PADECIMIENTOS DEL RIÑÓN',
+    'OTROS PADECIMIENTOS DEL SISTEMA URINARIO',
+  ];
+
   year = {
     label: 'Seleccione',
     options: $time,
@@ -58,6 +85,21 @@ export class SectionABlockComponent implements OnInit {
     } else {
       return true;
     }
+  }
+
+  haveToShowBasedOnAilment(ailment) {
+    for (const key in this.haveToShowMoreAilments) {
+      if (Object.prototype.hasOwnProperty.call(this.haveToShowMoreAilments, key)) {
+        const element = this.haveToShowMoreAilments[key];
+
+        if (ailment === element) {
+          return false;
+          break;
+        }
+      }
+    }
+
+    return true;
   }
 
 }

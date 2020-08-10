@@ -69,6 +69,7 @@
         </div> -->
       </div>
     </div>
+    <div #top></div>
     <mat-tab-group *ngIf="isFormValidToFill">
       <mat-tab label="Asegurado">
         <div class="mt-6 p-3 pb-0 info-home">
@@ -103,10 +104,11 @@
               </app-input>
               <app-input class="mr-3" [group]="newRequest.get('person')" label="Apellidos" name='lastName'>
               </app-input>
-              <app-date-picker class="mr-3" [group]="newRequest.get('person')" label="Fecha de Nacimiento" name='date'>
+              <app-date-picker class="mr-3" [group]="newRequest.get('person')" [max]="todayDate"
+                label="Fecha de Nacimiento" name='date'>
               </app-date-picker>
-              <app-radio-button (selected)="thereIsAWomenOnTheRequest()" class="mr-3" [group]="newRequest.get('person')"
-                name="sex" [options]="sex">
+              <app-radio-button (selected)="thereIsAWomenOnTheRequest()" (selected)="thereIsAMenOnTheRequest()"
+                class="mr-3" [group]="newRequest.get('person')" name="sex" [options]="sex">
               </app-radio-button>
               <!-- <app-input class="mr-3" [group]="newRequest.get('person')" label="Nacionalidad" name='nationality'>
               </app-input> -->
@@ -186,7 +188,8 @@
                 newRequest.get('person').get('pep_radio_insured').value == 'NO'">
                   <div *ngIf="newRequest.get('person').get('pep_radio_insured').value == 'SI'"
                     class="radio-button-label" style="font-size: 12px !important; max-width: 63vw;">Adjuntar
-                    documentos "Copia de Cédula" y "Certificación de Ingresos declarados" - Formato de los documentos: PDF (.pdf), JPG (.jpg) y PNG (.png)
+                    documentos "Copia de Cédula" y "Certificación de Ingresos declarados" - Formato de los documentos:
+                    PDF (.pdf), JPG (.jpg) y PNG (.png)
 
                   </div>
                   <div *ngIf="newRequest.get('person').get('pep_radio_insured').value == 'NO'"
@@ -299,7 +302,8 @@
 
                 <div class="mt-2"
                   *ngIf="newRequest.get('person').get('isJuridica') && newRequest.get('person').get('isJuridica').value == 'NO'">
-                  <div class="radio-button-label" style="font-size: 12px !important; max-width: 63vw;">Adjuntar Formato de los documentos: PDF (.pdf), JPG (.jpg) y PNG (.png)
+                  <div class="radio-button-label" style="font-size: 12px !important; max-width: 63vw;">Adjuntar Formato
+                    de los documentos: PDF (.pdf), JPG (.jpg) y PNG (.png)
                   </div>
                   <div *ngIf="newRequest.get('files') && newRequest.get('files').get('copyId')">
                     <div *ngFor="let copies of filesCopyIdArray.controls; let i = index">
@@ -409,7 +413,8 @@
             </mat-action-row>
           </mat-expansion-panel>
 
-          <mat-expansion-panel *ngIf="newRequest.get('exposedPerson')" class="ww-mat-expansion" [expanded]="step === 1" (opened)="setStep(1)">
+          <mat-expansion-panel *ngIf="newRequest.get('exposedPerson')" class="ww-mat-expansion" [expanded]="step === 1"
+            (opened)="setStep(1)">
             <mat-expansion-panel-header class="body-13 icon-blue">
               <mat-panel-title>
                 Persona políticamente expuesta
@@ -420,7 +425,7 @@
               </mat-panel-description>
             </mat-expansion-panel-header>
 
-            <div class="colorb"  >
+            <div class="colorb">
               <p>Las Personas Políticamente Expuestas son aquéllas que desempeñan o han desempeñado funciones
                 públicas
                 destacadas en un país extranjero o en su propio país, ej. Jefes de Estado o de gobierno, políticos
@@ -506,7 +511,7 @@
               <app-input class="mr-3" [group]="newRequest.get('contractor')" label="Apellidos" name='lastName'>
               </app-input>
               <app-date-picker class="mr-3" [group]="newRequest.get('contractor')" label="Fecha de Nacimiento"
-                name='date'>
+                [max]="todayDate" name='date'>
               </app-date-picker>
               <app-radio-button class="mr-3" [group]="newRequest.get('contractor')" name="sex" [options]="sex">
               </app-radio-button>
@@ -656,10 +661,11 @@
                     </app-select>
                     <app-date-picker class="mr-3"
                       [group]="newRequest.get('dependents').get('allDependents').get(index.toString())"
-                      label="Fecha de Nacimiento" name='date'>
+                      label="Fecha de Nacimiento" name='date' [max]="todayDate">
                     </app-date-picker>
 
                     <app-radio-button class="mr-3" (selected)="thereIsAWomenOnTheRequest()"
+                      (selected)="thereIsAMenOnTheRequest()"
                       [group]="newRequest.get('dependents').get('allDependents').get(index.toString())" name="sex"
                       [options]="sex"></app-radio-button>
                     <app-select class="mr-3 col-span-2"
@@ -718,7 +724,7 @@
                     <br>
                   </div>
                   <div>
-               <!--     <button mat-mini-fab aria-label="Agregar reclamacion"
+                    <!--     <button mat-mini-fab aria-label="Agregar reclamacion"
                       (click)="add(dependentsFormArray,dependentFormGroup)" type="button"
                       class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
                       <mat-icon style="color: #18446B">add</mat-icon>
@@ -1823,7 +1829,7 @@
                         label="Nombres y Apellidos" name='name'></app-input>
                       <app-date-picker class="mr-3" id='date'
                         [group]="newRequest.get('primaryBenefits').get('dependentsC').get(index.toString())"
-                        label="Fecha de Nacimiento" name='date'></app-date-picker>
+                        label="Fecha de Nacimiento" name='date' [max]="todayDate"></app-date-picker>
                       <app-select class="mr-3" [options]="idType"
                         [group]="newRequest.get('primaryBenefits').get('dependentsC').get(index.toString())">
                       </app-select>
@@ -1852,7 +1858,8 @@
                         label="Cantidad en %" name='quantity' min="1" max="100"></app-number-input>
                       <app-file-input class="mr-3"
                         [group]="newRequest.get('primaryBenefits').get('dependentsC').get(index.toString())"
-                        name="id2Attached" label="Adjuntar documento de identidad si es mayor de edad - Formato de los documentos: PDF (.pdf), JPG (.jpg) y PNG (.png)"
+                        name="id2Attached"
+                        label="Adjuntar documento de identidad si es mayor de edad - Formato de los documentos: PDF (.pdf), JPG (.jpg) y PNG (.png)"
                         [fileNameWatcher]="id2AttachedViewValue(index, 'primaryBenefits')"
                         (onFileChange)="onBeneficiaryFileChangeOnArray($event, 'id2Attached', index, 'primaryBenefits')">
                       </app-file-input>
@@ -1908,7 +1915,8 @@
                 <app-input class="mr-3" [group]="newRequest.get('primaryBenefits').get('personBenefited')"
                   label="Documento de Identidad" name='id2'></app-input>
                 <app-file-input class="mr-3" [group]="newRequest.get('primaryBenefits').get('personBenefited')"
-                  name="id2Attached" label="Adjuntar documento de identidad - Formato de los documentos: PDF (.pdf), JPG (.jpg) y PNG (.png)"
+                  name="id2Attached"
+                  label="Adjuntar documento de identidad - Formato de los documentos: PDF (.pdf), JPG (.jpg) y PNG (.png)"
                   [fileNameWatcher]="id2AttachedViewValue(null, 'primaryBenefits')"
                   (onFileChange)="onBeneficiaryFileChangeOnArray($event, 'id2Attached', null, 'primaryBenefits')">
                 </app-file-input>
@@ -1947,7 +1955,7 @@
                         label="Nombres y Apellidos" name='name'></app-input>
                       <app-date-picker class="mr-3" id='date'
                         [group]="newRequest.get('contingentBeneficiary').get('dependentsC').get(index.toString())"
-                        label="Fecha de Nacimiento" name='date'></app-date-picker>
+                        label="Fecha de Nacimiento" [max]="todayDate" name='date'></app-date-picker>
                       <app-select class="mr-3" [options]="idType"
                         [group]="newRequest.get('contingentBeneficiary').get('dependentsC').get(index.toString())">
                       </app-select>
@@ -1976,7 +1984,8 @@
                         label="Cantidad en %" name='quantity' min="1" max="100"></app-number-input>
                       <app-file-input class="mr-3"
                         [group]="newRequest.get('contingentBeneficiary').get('dependentsC').get(index.toString())"
-                        name="id2Attached" label="Adjuntar documento de identidad si es mayor de edad - Formato de los documentos: PDF (.pdf), JPG (.jpg) y PNG (.png)"
+                        name="id2Attached"
+                        label="Adjuntar documento de identidad si es mayor de edad - Formato de los documentos: PDF (.pdf), JPG (.jpg) y PNG (.png)"
                         [fileNameWatcher]="id2AttachedViewValue(index, 'contingentBeneficiary')"
                         (onFileChange)="onBeneficiaryFileChangeOnArray($event, 'id2Attached', index, 'contingentBeneficiary')">
                       </app-file-input>
@@ -2031,7 +2040,8 @@
                 <app-input class="mr-3" [group]="newRequest.get('contingentBeneficiary').get('personBenefited')"
                   label="Documento de Identidad" name='id2'></app-input>
                 <app-file-input class="mr-3" [group]="newRequest.get('contingentBeneficiary').get('personBenefited')"
-                  name="id2Attached" label="Adjuntar documento de identidad - Formato de los documentos: PDF (.pdf), JPG (.jpg) y PNG (.png)"
+                  name="id2Attached"
+                  label="Adjuntar documento de identidad - Formato de los documentos: PDF (.pdf), JPG (.jpg) y PNG (.png)"
                   [fileNameWatcher]="id2AttachedViewValue(null, 'contingentBeneficiary')"
                   (onFileChange)="onBeneficiaryFileChangeOnArray($event, 'id2Attached', null, 'contingentBeneficiary')">
                 </app-file-input>
@@ -2264,7 +2274,7 @@
           </app-prostatic>
         </mat-accordion>
       </mat-tab>
-      <mat-tab label="Cuestionarios Actividades" class="mat-tab-forms" *ngIf="isActivityReadyToRender();">>
+      <mat-tab label="Cuestionarios Actividades" class="mat-tab-forms" *ngIf="isActivityReadyToRender();">
         <mat-accordion #matAccordion="matAccordion" name="matAccordion" class="ww-mat-accordion example-headers-align"
           [togglePosition]="'before'">
           <app-diving [affected]="newRequest.get('person').value.firstName+' '+newRequest.get('person').value.lastName"
@@ -2292,8 +2302,7 @@
         </mat-accordion>
       </mat-tab>
       <!-- *ngIf="isContractorPep" -->
-      <mat-tab
-        *ngIf="( this.newRequest.get('conozcaSuClientePersonaJuridica') )"
+      <mat-tab *ngIf="( this.newRequest.get('conozcaSuClientePersonaJuridica') )"
         label="Conozca a su cliente (Persona Jurídica)">
         <mat-accordion #matAccordion="matAccordion" name="matAccordion" class="ww-mat-accordion example-headers-align"
           [togglePosition]="'before'">
@@ -2318,8 +2327,7 @@
         </mat-accordion>
       </mat-tab>
       <!--*ngIf="isSolicitantePep " -->
-      <mat-tab
-        *ngIf="this.newRequest.get('conozcaSuClientePersona') "
+      <mat-tab *ngIf="this.newRequest.get('conozcaSuClientePersona') "
         label="Conozca a su cliente (Persona Física) - Asegurado">
         <mat-accordion #matAccordion="matAccordion" name="matAccordion" class="ww-mat-accordion example-headers-align"
           [togglePosition]="'before'">
@@ -2337,25 +2345,26 @@
           <!-- *ngIf="isContractorPep" -->
         </mat-accordion>
       </mat-tab>
-      <mat-tab
-      *ngIf="this.newRequest.get('conozcaSuClientePersonaContratante') "
-      label="Conozca a su cliente (Persona Física) - Contratante">
-      <mat-accordion #matAccordion="matAccordion" name="matAccordion" class="ww-mat-accordion example-headers-align"
-        [togglePosition]="'before'">
-        <!-- <app-know-your-client
+      <mat-tab *ngIf="this.newRequest.get('conozcaSuClientePersonaContratante') "
+        label="Conozca a su cliente (Persona Física) - Contratante">
+        <mat-accordion #matAccordion="matAccordion" name="matAccordion" class="ww-mat-accordion example-headers-align"
+          [togglePosition]="'before'">
+          <!-- <app-know-your-client
           [showWarningDot]="showWarningDot(newRequest.get('contractor').get('conozcaSuClientePersonaJuridica'))"
           *ngIf="isJuridica" [form]="newRequest.get('contractor').get('conozcaSuClientePersonaJuridica')">
         </app-know-your-client> -->
-        <app-know-your-customer [showWarningDot]="showWarningDot(newRequest.get('conozcaSuClientePersonaContratante'))"
-          *ngIf="this.newRequest.get('conozcaSuClientePersonaContratante')" [form]="newRequest.get('conozcaSuClientePersonaContratante')">
-        </app-know-your-customer>
-        <!-- <app-know-your-customer
+          <app-know-your-customer
+            [showWarningDot]="showWarningDot(newRequest.get('conozcaSuClientePersonaContratante'))"
+            *ngIf="this.newRequest.get('conozcaSuClientePersonaContratante')"
+            [form]="newRequest.get('conozcaSuClientePersonaContratante')">
+          </app-know-your-customer>
+          <!-- <app-know-your-customer
           [showWarningDot]="showWarningDot(newRequest.get('contractor').get('conozcaSuClientePersona'))"
           *ngIf="this.newRequest.get('contractor').get('conozcaSuClientePersona')" [form]="newRequest.get('contractor').get('conozcaSuClientePersona')">
         </app-know-your-customer> -->
-        <!-- *ngIf="isContractorPep" -->
-      </mat-accordion>
-    </mat-tab>
+          <!-- *ngIf="isContractorPep" -->
+        </mat-accordion>
+      </mat-tab>
       <!-- <mat-tab *ngIf="(this.newRequest.get('exposedPerson').get('contractor')
         && this.newRequest.get('exposedPerson').get('contractor').value == 'SI')"
         label="Conozca a su cliente (Persona Física) - Contratante">
@@ -2460,10 +2469,17 @@
         </mat-accordion>
       </mat-tab>
     </mat-tab-group>
-
   </form>
+  <div *ngIf="isGoToTopRender() && isFormValidToFill" class="mt-4" style="color: #da8300;">Por favor revise si hay
+    formularios adicionales
+    necesarios
+    para completar su solicitud,
+    <button style="font-weight: 600; color: #18446B;" (click)="requestService.goToTop(top)"> pulse
+      aqui para subir la
+      vista a la parte superior.</button>
+  </div>
   <form #form="ngForm">
-    <div class="mt-8" *ngIf="isFormValidToFill">
+    <div class="mt-4" *ngIf="isFormValidToFill">
       <!-- <button mat-button class="cancel-form-button" style="margin-right: 7.5px !important;"
         (click)="formHandler.sendForm(newRequest, 'major-expenses', 'cancel')" type="submit">Cancelar</button> -->
       <button mat-button class="save-button" style="margin-right: 7.5px !important;"

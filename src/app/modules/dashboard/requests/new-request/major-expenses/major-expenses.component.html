@@ -627,7 +627,8 @@
               </button>
             </mat-action-row>
           </mat-expansion-panel>
-          <mat-expansion-panel class="ww-mat-expansion" [expanded]="step === 4" (opened)="setStep(4)" *ngIf="dependentsFormArray.controls.length > 0">
+          <mat-expansion-panel class="ww-mat-expansion" [expanded]="step === 4" (opened)="setStep(4)"
+            *ngIf="dependentsFormArray.controls.length > 0">
             <mat-expansion-panel-header class="body-13 icon-blue">
               <mat-panel-title>
                 Dependientes
@@ -737,7 +738,7 @@
                   </div>
 
                 </div>
-               <!-- <div *ngIf="dependentsFormArray.controls.length === 0">
+                <!-- <div *ngIf="dependentsFormArray.controls.length === 0">
                   <p class='formulary-labels'>Para agregar un dependiente pulse el siguiente boton</p><br>
                 </div>
                 <div *ngIf="dependentsFormArray.controls.length === 0">
@@ -1586,7 +1587,7 @@
                   </app-input>
                   <app-date-picker class="mr-3"
                     [group]="newRequest.get('questionsB').get('consultedForUnmentioned').get(i.toString())" name="date"
-                    label="Fecha del Padecimiento">
+                    label="Fecha del Padecimiento" [max]="todayDate">
                   </app-date-picker>
                   <app-input class="mr-3"
                     [group]="newRequest.get('questionsB').get('consultedForUnmentioned').get(i.toString())"
@@ -1650,7 +1651,7 @@
                   </app-input>
                   <app-date-picker class="mr-3"
                     [group]="newRequest.get('questionsB').get('alterationForUnmentioned').get(i.toString())" name="date"
-                    label="Fecha del Padecimiento">
+                    label="Fecha del Padecimiento" [max]="todayDate">
                   </app-date-picker>
                   <app-input class="mr-3"
                     [group]="newRequest.get('questionsB').get('alterationForUnmentioned').get(i.toString())"
@@ -1778,7 +1779,7 @@
                       name="policeType" label="Tipo de Póiza">
                     </app-input>
                     <app-date-picker class="mr-3" [group]=" newRequest.get('questionsB').get('medicalHealthInsurance')"
-                      name="emitionDate" label="Fecha en que se emitió la póliza">
+                      name="emitionDate" label="Fecha en que se emitió la póliza" [max]="todayDate">
                     </app-date-picker>
                     <app-radio-button class="mr-3" [group]=" newRequest.get('questionsB').get('medicalHealthInsurance')"
                       name="isItCurrent" [options]="itIsCurrentOptions">

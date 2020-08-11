@@ -3681,7 +3681,6 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
         for (const dependent in this.dependentsFormArray.controls) {
           if (Object.prototype.hasOwnProperty.call(this.dependentsFormArray.controls, dependent)) {
             const element = this.dependentsFormArray.controls[dependent] as FormGroup;
-            console.log('dependentsFormArray element', element);
 
             if (element.get('haveHighRiskSport').value !== true) {
               element.removeControl('highRiskSport');
@@ -3735,6 +3734,36 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
 
         if (formContractor) {
           formContractor.removeControl('isContractor');
+        }
+
+        if (formQB.get('consultedForUnmentioned')) {
+          for (const key in formQB.get('consultedForUnmentioned')['controls']) {
+            const element = formQB.get('consultedForUnmentioned')['controls'][key] as FormGroup;
+
+            element.get('medicCenterName').setValidators(null);
+            element.get('medicCenterAddress').setValidators(null);
+            element.get('duration').setValidators(null);
+            element.get('time').setValidators(null);
+          }
+        }
+
+        if (formQB.get('alterationForUnmentioned')) {
+          for (const key in formQB.get('alterationForUnmentioned')['controls']) {
+            const element = formQB.get('alterationForUnmentioned')['controls'][key] as FormGroup;
+
+            element.get('medicCenterName').setValidators(null);
+            element.get('medicCenterAddress').setValidators(null);
+            element.get('duration').setValidators(null);
+            element.get('time').setValidators(null);
+          }
+        }
+
+        if (formQB.get('medicalHealthInsurance')) {
+          if (formQB.get('medicalHealthInsurance').value.didReclamation !== 'SI') {
+            const formQBMHI = formQB.get('medicalHealthInsurance') as FormGroup;
+
+            formQBMHI.removeControl('reclamationInfo');
+          }
         }
 
         this.isFormValidToFill = true;

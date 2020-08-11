@@ -3287,7 +3287,12 @@ export class LifeComponent implements OnInit, DoCheck {
             if (this.newRequest.get('payer')) {
               this.newRequest.removeControl('payer');
             }
-
+            if (formEP.get('isPayerExposed')) {
+              formEP.removeControl('isPayerExposed');
+            }
+            if (formEP.get('payer')) {
+              formEP.removeControl('payer');
+            }
             if (this.newRequest.get('files').get('copyId')) {
               formFiles.removeControl('copyId');
             }
@@ -3546,6 +3551,21 @@ export class LifeComponent implements OnInit, DoCheck {
         this.arrayFilesTitlesDocumentsKnowClient = data.data.files.documentsKnowClient;
         this.arrayFilesTitlesCopyId = data.data.files.copyId;
         this.arrayFilesTitlesMercantile = data.data.files.mercantile;
+
+        if (this.hadSpecializedTestsList != undefined || this.hadSpecializedTestsList != null) {
+          // tslint:disable-next-line: prefer-for-of
+          for (let x = 0; x < this.hadSpecializedTestsList.length; x++) {
+            if (this.newRequest.get('medicalHistory').get('informations').get('hadSpecializedTests'
+            ).get(x.toString()).get('whichStudy').value !== 'OTROS') {
+              if (this.newRequest.get('medicalHistory').get('informations').get('hadSpecializedTests'
+              ).get(x.toString()).get('specifyStudy')){
+                (this.newRequest.get('medicalHistory').get('informations').get('hadSpecializedTests'
+                ).get(x.toString()) as FormGroup).removeControl('specifyStudy');
+              }
+            }
+          }
+        }
+
         this.showContent = true;
 
         this.newRequest.markAllAsTouched();

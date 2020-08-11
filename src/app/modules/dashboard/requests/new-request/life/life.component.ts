@@ -705,7 +705,7 @@ export class LifeComponent implements OnInit, DoCheck {
       comentary: [''],
       person: this.fb.group({
         firstName: [{ value: '', disabled: false }, [Validators.required]],
-        secondName: ['', Validators.required],
+        secondName: [''],
         lastName: ['', Validators.required],
         date: [{ value: '', disabled: true }, [Validators.required]],
         sex: [{ value: '', disabled: true }, [Validators.required]],
@@ -1637,15 +1637,15 @@ export class LifeComponent implements OnInit, DoCheck {
   }
 
   addFilesD(form: FormGroup) {
-    form.addControl('urineAnalysis', this.fb.control('', Validators.required));
+    //form.addControl('urineAnalysis', this.fb.control('', Validators.required));
   }
 
   addFilesE(form: FormGroup) {
-    form.addControl('restingElectrocardiogram', this.fb.control('', Validators.required));
+    //form.addControl('restingElectrocardiogram', this.fb.control('', Validators.required));
   }
 
   addFilesF(form: FormGroup) {
-    form.addControl('stressElectrocardiogram', this.fb.control('', Validators.required));
+    //form.addControl('stressElectrocardiogram', this.fb.control('', Validators.required));
   }
 
   deleteFiles(form: FormGroup) {

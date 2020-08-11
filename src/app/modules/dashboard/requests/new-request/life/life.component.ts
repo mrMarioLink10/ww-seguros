@@ -705,7 +705,7 @@ export class LifeComponent implements OnInit, DoCheck {
       comentary: [''],
       person: this.fb.group({
         firstName: [{ value: '', disabled: false }, [Validators.required]],
-        secondName: ['', Validators.required],
+        secondName: [''],
         lastName: ['', Validators.required],
         date: [{ value: '', disabled: true }, [Validators.required]],
         sex: [{ value: '', disabled: true }, [Validators.required]],

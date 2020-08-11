@@ -41,6 +41,7 @@ export class FormDataFillingService {
     'everHospitalized', 'insured', 'contractor', 'policeNo', 'lastName'
   ];
   excludedKeysVida = [
+    'directorioSolicitud','updateDate','status',
     'id2Attached', 'id2AttachedUrl', 'specifyRelationship', 'differentMedic', 'isJuridica', 'name', 'nombre', 'edad', 'age', 'exposed_person',
     'fullname_functionary', 'position_functionary', 'old_current_position', 'request', 'exposed_name', 'createdBy'
     , 'lastChangeBy'
@@ -295,9 +296,11 @@ export class FormDataFillingService {
                 formDataGroup.addControl(key, this.fb.control(valueToSet));
               } else {
                 if (valueToSet === '') {
+                  console.log(key);
                   formDataGroup.addControl(key, this.fb.control(valueToSet, Validators.required));
                 }
                 else {
+                  console.log(key);
                   formDataGroup.addControl(key, this.fb.control(valueToSet, Validators.required));
                 }
               }

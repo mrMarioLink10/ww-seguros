@@ -381,8 +381,9 @@
                   name='profession'></app-input>
                 <app-input class="mr-3" [group]="newRequest.get('employer')" label="Actividad Económica de la empresa"
                   name='economicActivity'></app-input>
-                <app-input class="mr-3" [group]="newRequest.get('employer')" label="Años de empleo en la compañía"
-                  name='years'></app-input>
+
+                  <app-number-input class="mr-3" [group]="newRequest.get('employer')" label="Años de empleo en la compañía"
+                  name='years'></app-number-input>
                 <app-input class="mr-3" [group]="newRequest.get('employer')" label="Deberes (Favor de dar detalles)"
                   name='jobDuties'></app-input>
                 <div class="mr-3">

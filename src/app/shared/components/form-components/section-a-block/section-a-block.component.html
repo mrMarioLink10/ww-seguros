@@ -94,28 +94,30 @@
         name="threatment" label="Tratamiento">
       </app-input>
       <app-input class="mr-3"
-        *ngIf="haveToShowBasedOnAilment(newRequest.get('questionsA').get(arrayName).get(i.toString()).value.ailment, i)"
+        *ngIf="haveToShowBasedOnAilment(newRequest.get('dependents').get('allDependents').get(ixd.toString()).get(arrayName).get(i.toString()).value.ailment, i, ixd)"
         [group]="newRequest.get('dependents').get('allDependents').get(ixd.toString()).get(arrayName).get(i.toString())"
         name="medicCenterName" label="Nombre del proveedor o centro médico">
       </app-input>
       <app-input class="mr-3"
-        *ngIf="haveToShowBasedOnAilment(newRequest.get('questionsA').get(arrayName).get(i.toString()).value.ailment, i)"
+        *ngIf="haveToShowBasedOnAilment(newRequest.get('dependents').get('allDependents').get(ixd.toString()).get(arrayName).get(i.toString()).value.ailment, i, ixd)"
         [group]="newRequest.get('dependents').get('allDependents').get(ixd.toString()).get(arrayName).get(i.toString())"
         name="medicCenterAddress" label="Dirección del proveedor o centro médico">
       </app-input>
       <app-number-input class="mr-3"
-        *ngIf="haveToShowBasedOnAilment(newRequest.get('questionsA').get(arrayName).get(i.toString()).value.ailment, i)"
+        *ngIf="haveToShowBasedOnAilment(newRequest.get('dependents').get('allDependents').get(ixd.toString()).get(arrayName).get(i.toString()).value.ailment, i, ixd)"
         [group]="newRequest.get('dependents').get('allDependents').get(ixd.toString()).get(arrayName).get(i.toString())"
         label="Duración del Tratamiento" name='duration' min="1">
       </app-number-input>
       <div class="grid grid-cols-2">
         <app-select class="mr-3" [options]="year"
-          *ngIf="haveToShowBasedOnAilment(newRequest.get('questionsA').get(arrayName).get(i.toString()).value.ailment, i)"
+          *ngIf="haveToShowBasedOnAilment(newRequest.get('dependents').get('allDependents').get(ixd.toString()).get(arrayName).get(i.toString()).value.ailment, i, ixd)"
           [group]="newRequest.get('dependents').get('allDependents').get(ixd.toString()).get(arrayName).get(i.toString())">
         </app-select>
         <div
           *ngIf="newRequest.get('dependents').get('allDependents').get(ixd.toString()).get(arrayName)['controls'].length > 1"
-          [ngClass]="{'': newRequest.get('dependents').get('allDependents').get(ixd.toString()).get(arrayName)['controls'].length === 1, 'col-span-1': newRequest.get('dependents').get('allDependents').get(ixd.toString()).get(arrayName)['controls'].length > 1} ">
+          [ngClass]="{'': newRequest.get('dependents').get('allDependents').get(ixd.toString()).get(arrayName)['controls'].length === 1, 
+          'col-span-1': newRequest.get('dependents').get('allDependents').get(ixd.toString()).get(arrayName)['controls'].length > 1,
+          'mb-4L': haveToShowBasedOnAilment(newRequest.get('dependents').get('allDependents').get(ixd.toString()).get(arrayName).get(i.toString()).value.ailment, i, ixd) }">
           <button mat-mini-fab aria-label=" Eliminar estudio"
             (click)="diseaseService.removeToList(i, newRequest.get('dependents').get('allDependents').get(ixd.toString()).get(arrayName))"
             (selected)="ailmentSelectedInBlock(arrayName, newRequest.get('dependents').get('allDependents').get(ixd.toString()), newRequest.get('dependents').get('allDependents').get(ixd.toString()))"

@@ -89,11 +89,30 @@ export class SectionABlockComponent implements OnInit {
     }
   }
 
-  haveToShowBasedOnAilment(ailment, index) {
-    this.newRequest.get('questionsA').get(this.arrayName).get(index.toString()).get('medicCenterName').setValidators(null);
-    this.newRequest.get('questionsA').get(this.arrayName).get(index.toString()).get('medicCenterAddress').setValidators(null);
-    this.newRequest.get('questionsA').get(this.arrayName).get(index.toString()).get('duration').setValidators(null);
-    this.newRequest.get('questionsA').get(this.arrayName).get(index.toString()).get('time').setValidators(null);
+  // tslint:disable: max-line-length
+  haveToShowBasedOnAilment(ailment, index, dpdIndex?) {
+    if (this.newRequest.get('questionsA').get(this.arrayName)) {
+      if (this.newRequest.get('questionsA').get(this.arrayName).get(index.toString())) {
+        this.newRequest.get('questionsA').get(this.arrayName).get(index.toString()).get('medicCenterName').setValidators(null);
+        this.newRequest.get('questionsA').get(this.arrayName).get(index.toString()).get('medicCenterAddress').setValidators(null);
+        this.newRequest.get('questionsA').get(this.arrayName).get(index.toString()).get('duration').setValidators(null);
+        this.newRequest.get('questionsA').get(this.arrayName).get(index.toString()).get('time').setValidators(null);
+      }
+    }
+
+
+    if (dpdIndex !== undefined) {
+      if (this.newRequest.get('dependents').get('allDependents').get(dpdIndex.toString())) {
+        if (this.newRequest.get('dependents').get('allDependents').get(dpdIndex.toString()).get(this.arrayName)) {
+          if (this.newRequest.get('dependents').get('allDependents').get(dpdIndex.toString()).get(this.arrayName).get(index.toString())) {
+            this.newRequest.get('dependents').get('allDependents').get(dpdIndex.toString()).get(this.arrayName).get(index.toString()).get('medicCenterName').setValidators(null);
+            this.newRequest.get('dependents').get('allDependents').get(dpdIndex.toString()).get(this.arrayName).get(index.toString()).get('medicCenterAddress').setValidators(null);
+            this.newRequest.get('dependents').get('allDependents').get(dpdIndex.toString()).get(this.arrayName).get(index.toString()).get('duration').setValidators(null);
+            this.newRequest.get('dependents').get('allDependents').get(dpdIndex.toString()).get(this.arrayName).get(index.toString()).get('time').setValidators(null);
+          }
+        }
+      }
+    }
 
     for (const key in this.haveToShowMoreAilments) {
       if (Object.prototype.hasOwnProperty.call(this.haveToShowMoreAilments, key)) {

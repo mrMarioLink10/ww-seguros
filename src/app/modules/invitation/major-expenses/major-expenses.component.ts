@@ -1631,6 +1631,10 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
           if (formGeneral.get('contractor')) {
             formGeneral.removeControl('contractor');
           }
+          if (formEP) {
+            formEP.removeControl('contractor');
+            formEP.removeControl('contractorExposedInfo');
+          }
           if (this.newRequest.get('conozcaSuClientePersonaContratante')) {
             formGeneral.removeControl('conozcaSuClientePersonaContratante');
           }
@@ -1891,6 +1895,9 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
           if (!(this.newRequest.get('copyId'))) {
             formFiles.addControl('copyId', this.fb.array([this.createFormArray('filesCopyId')]));
             this.filesCopyIdArray = this.newRequest.get('files').get('copyId') as FormArray;
+          }
+          if (formEP) {
+            formEP.addControl('contractor', this.fb.control('', Validators.required));
           }
           if (!formGeneral.get('contractor')) {
             formGeneral.addControl('contractor', this.fb.group({
@@ -3378,6 +3385,10 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
           } else {
             if (formGeneral.get('contractor')) {
               formGeneral.removeControl('contractor');
+            }
+            if (formEP) {
+              formEP.removeControl('contractor');
+              formEP.removeControl('contractorExposedInfo');
             }
             if (this.newRequest.get('conozcaSuClientePersonaContratante')) {
               formGeneral.removeControl('conozcaSuClientePersonaContratante');

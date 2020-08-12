@@ -2349,13 +2349,13 @@
           </app-know-your-customer>
         </mat-tab>
       </div> -->
-      <div *ngIf="disabilityGroup.get('knowYourCustomer')">
-        <mat-tab *ngIf="disabilityGroup.get('knowYourCustomer')"
+      <div *ngIf="disabilityGroup.get('KnowYourCustomer')">
+        <mat-tab *ngIf="disabilityGroup.get('KnowYourCustomer')"
           label="Conozca a su cliente (Persona Física) - Asegurado">
           <mat-accordion #matAccordion="matAccordion" name="matAccordion" class="ww-mat-accordion example-headers-align"
             [togglePosition]="'before'">
-            <app-know-your-customer [showWarningDot]="showWarningDot(disabilityGroup.get('knowYourCustomer'))"
-              [form]="disabilityGroup.get('knowYourCustomer')">
+            <app-know-your-customer [showWarningDot]="showWarningDot(disabilityGroup.get('KnowYourCustomer'))"
+              [form]="disabilityGroup.get('KnowYourCustomer')">
             </app-know-your-customer>
           </mat-accordion>
         </mat-tab>

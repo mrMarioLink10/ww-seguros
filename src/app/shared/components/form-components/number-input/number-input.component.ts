@@ -13,6 +13,7 @@ export class NumberInputComponent implements OnInit {
   @Input() max: number;
   @Input() isMoney?: string;
   @Input() isPhone?: string;
+  @Input() isCell?: string;
   @Input() maxInfo?: string;
   @Input() placeholder: string;
   @Input() group: FormGroup;

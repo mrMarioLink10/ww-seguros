@@ -166,7 +166,7 @@ export class MoneyLaunderingComponent implements OnInit {
 		this.form.addControl('postal_address', this.fb.control('', Validators.required));
 		this.form.addControl('telephone', this.fb.control('', Validators.required));
 		this.form.addControl('fax', this.fb.control('', Validators.required));
-		this.form.addControl('email', this.fb.control('', Validators.required));
+		this.form.addControl('email', this.fb.control('', [Validators.required, Validators.email]));
 		this.form.addControl('main_activity', this.fb.control('', Validators.required));
 		this.form.addControl('investigation_status', this.fb.control('', Validators.required));
 		this.form.addControl('prevention_program', this.fb.control('', Validators.required));

@@ -86,13 +86,13 @@
 
           <div class="mr-3 mt-16 sm:mt-10 sm:pt-0 md:mt-12 lg:mt-6 xl:mt-12 xl:pt-1">
 
-            <app-number-input [group]="form" label="Teléfono (s)" name='telephone' placeholder=""></app-number-input>
+            <app-number-input isPhone="true" [group]="form" label="Teléfono (s)" name='telephone' placeholder=""></app-number-input>
 
           </div>
 
           <div class="mr-3 mt-16 sm:mt-10 md:mt-12 lg:mt-6 xl:mt-4">
 
-            <app-input [group]="form" label="Fax" name='fax' placeholder=""></app-input>
+            <app-number-input [group]="form" isPhone="true" label="Fax" name='fax' placeholder=""></app-number-input>
 
           </div>
 

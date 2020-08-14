@@ -117,8 +117,11 @@
               <app-number-input isPhone="true" class="mr-3" [group]="newRequest.get('person')" label="Tel. Residencia"
                 name='tel'>
               </app-number-input>
-              <app-number-input isPhone="true" class="mr-3" [group]="newRequest.get('person')" label="Tel. Celular"
-                name='cel'>
+              <app-number-input *ngIf="role == 'WMA'" isCell="true" class="mr-3" 
+                [group]="newRequest.get('person')" label="Tel. Celular" name='cel'>
+              </app-number-input>
+              <app-number-input *ngIf="role == 'WWS'" isPhone="true" class="mr-3" 
+                [group]="newRequest.get('person')" label="Tel. Celular" name='cel'>
               </app-number-input>
               <app-number-input isPhone="true" class="mr-3" [group]="newRequest.get('person')" label="Tel. Oficina"
                 name='officeTel'>
@@ -461,8 +464,11 @@
                 <app-number-input isPhone="true" class="mr-3 pt-21" [group]="newRequest.get('contractor')"
                   label="Tel. Residencia" name='tel'>
                 </app-number-input>
-                <app-number-input isPhone="true" class="mr-3 pt-21" [group]="newRequest.get('contractor')"
-                  label="Tel. Celular" name='cel'>
+                <app-number-input *ngIf="role == 'WMA'" isCell="true" class="mr-3 pt-21" 
+                  [group]="newRequest.get('contractor')" label="Tel. Celular" name='cel'>
+                </app-number-input>
+                <app-number-input *ngIf="role == 'WWS'" isPhone="true" class="mr-3 pt-21" 
+                  [group]="newRequest.get('contractor')" label="Tel. Celular" name='cel'>
                 </app-number-input>
                 <app-number-input isPhone="true" class="mr-3 pt-21" [group]="newRequest.get('contractor')"
                   label="Tel. Oficina" name='officeTel'>
@@ -569,8 +575,11 @@
                 <app-number-input isPhone="true" class="mr-3 pt-21" [group]="newRequest.get('payer')"
                   label="Tel. Residencia" name='tel'>
                 </app-number-input>
-                <app-number-input isPhone="true" class="mr-3 pt-21" [group]="newRequest.get('payer')"
-                  label="Tel. Celular" name='cel'>
+                <app-number-input *ngIf="role == 'WMA'" isCell="true" class="mr-3 pt-21" 
+                  [group]="newRequest.get('payer')" label="Tel. Celular" name='cel'>
+                </app-number-input>
+                <app-number-input *ngIf="role == 'WWS'" isPhone="true" class="mr-3 pt-21" 
+                  [group]="newRequest.get('payer')" label="Tel. Celular" name='cel'>
                 </app-number-input>
                 <app-number-input isPhone="true" class="mr-3 pt-21" [group]="newRequest.get('payer')"
                   label="Tel. Oficina" name='officeTel'>

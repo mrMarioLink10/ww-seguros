@@ -71,7 +71,24 @@ export class ProstaticComponent implements OnInit {
         label: '¿Mantiene algún tratamiento para enfermedades prostáticas?',
         name: 'hasTreatment',
       },
-    ]
+    ];
+
+    if (this.form.get('firstName')) {
+      this.form.get('firstName').clearValidators();
+      this.form.get('firstName').updateValueAndValidity();
+    }
+    if (this.form.get('lastName')) {
+      this.form.get('lastName').clearValidators();
+      this.form.get('lastName').updateValueAndValidity();
+    }
+    if (this.form.get('birthdate')) {
+      this.form.get('birthdate').clearValidators();
+      this.form.get('birthdate').updateValueAndValidity();
+    }
+    if (this.form.get('policeNo')) {
+      this.form.get('policeNo').clearValidators();
+      this.form.get('policeNo').updateValueAndValidity();
+    }
   }
   setStep(index: number) {
     this.step = index;
@@ -142,10 +159,10 @@ export class ProstaticComponent implements OnInit {
   }
 
   addBasicControls() {
-    this.form.addControl('firstName', this.fb.control('', Validators.required));
-    this.form.addControl('lastName', this.fb.control('', Validators.required));
-    this.form.addControl('birthdate', this.fb.control('', Validators.required));
-    this.form.addControl('policeNo', this.fb.control('', Validators.required));
+    this.form.addControl('firstName', this.fb.control('', ));
+    this.form.addControl('lastName', this.fb.control('', ));
+    this.form.addControl('birthdate', this.fb.control('', ));
+    this.form.addControl('policeNo', this.fb.control('', ));
     this.form.addControl('hasProstateEvaluation', this.fb.control('', Validators.required));
     this.form.addControl('hasPSATotal', this.fb.control('', Validators.required));
     this.form.addControl('hasProstateUltrasound', this.fb.control('', Validators.required));

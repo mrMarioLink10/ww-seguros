@@ -1111,14 +1111,17 @@ export class RefundComponent implements OnInit {
 
 				// if (this.refundForm.get('diagnosticos').get((x + 1).toString())) {
 
-					this.filteredOptionsProveedor.splice(x, 1);
-					this.filterValueArray.splice(x, 1);
-					this.categoriaSubscribe[x].unsubscribe();
-					// this.categoriaSubscribe.splice(x, 1);
 					if ( y == 0) {
+						this.filteredOptionsProveedor.splice(index, 1);
+						this.filterValueArray.splice(index, 1);
+						this.categoriaSubscribe[index].unsubscribe();
+						this.categoriaSubscribe.splice(index, 1);
 						this.diagnosticList.removeAt(index);
 						y++;
 					}
+					this.filteredOptionsProveedor.splice(x, 1);
+					this.filterValueArray.splice(x, 1);
+					this.categoriaSubscribe[x].unsubscribe();
 					this.manageFilters(x);
 					// this.refundForm.get('diagnosticos').get((x).toString()).get('categoria').setValue('');
 					this.refundForm.get('diagnosticos').get((x).toString()).get('categoria').setValue(valuePrueba[x].toUpperCase());

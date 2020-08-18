@@ -1606,6 +1606,29 @@ export class DisabilityComponent implements OnInit, DoCheck {
 
         case 'sicknessType_radio':
           formQ.removeControl('sicknessType');
+          if (questionnaires) {
+            if (questionnaires.get('solicitudHipertensionArterial')) {
+              questionnaires.removeControl('solicitudHipertensionArterial');
+            }
+            if (questionnaires.get('solicitudArtitris')) {
+              questionnaires.removeControl('solicitudArtitris');
+            }
+            if (questionnaires.get('solicitudCardioVasculares')) {
+              questionnaires.removeControl('solicitudCardioVasculares');
+            }
+            if (questionnaires.get('solicitudRenales')) {
+              questionnaires.removeControl('solicitudRenales');
+            }
+            if (questionnaires.get('solicitudDiabetes')) {
+              questionnaires.removeControl('solicitudDiabetes');
+            }
+            if (questionnaires.get('solicitudMusculoesqueleticos')) {
+              questionnaires.removeControl('solicitudMusculoesqueleticos');
+            }
+            if (questionnaires.get('columnaVertebralColumnaVertebral')) {
+              questionnaires.removeControl('columnaVertebralColumnaVertebral');
+            }
+          }
           break;
 
         case 'VIH_radio':
@@ -2165,8 +2188,8 @@ export class DisabilityComponent implements OnInit, DoCheck {
         const formHolder = this.disabilityGroup.get('policyholder') as FormGroup;
         const formFiles = this.disabilityGroup.get('files') as FormGroup;
         const formGeneral = this.disabilityGroup as FormGroup;
-
-    const formInsured = this.disabilityGroup.get('insured_data') as FormGroup;
+        const formInsured = this.disabilityGroup.get('insured_data') as FormGroup;
+        const questionnaires = this.disabilityGroup.get('questionnaires') as FormGroup;
         console.log(this.disabilityGroup);
         console.log(data.data);
 
@@ -2231,6 +2254,29 @@ export class DisabilityComponent implements OnInit, DoCheck {
 
         if (formQQ.get('sicknessType_radio').value !== 'SI') {
           formQQ.removeControl('sicknessType');
+          if (questionnaires) {
+            if (questionnaires.get('solicitudHipertensionArterial')) {
+              questionnaires.removeControl('solicitudHipertensionArterial');
+            }
+            if (questionnaires.get('solicitudArtitris')) {
+              questionnaires.removeControl('solicitudArtitris');
+            }
+            if (questionnaires.get('solicitudCardioVasculares')) {
+              questionnaires.removeControl('solicitudCardioVasculares');
+            }
+            if (questionnaires.get('solicitudRenales')) {
+              questionnaires.removeControl('solicitudRenales');
+            }
+            if (questionnaires.get('solicitudDiabetes')) {
+              questionnaires.removeControl('solicitudDiabetes');
+            }
+            if (questionnaires.get('solicitudMusculoesqueleticos')) {
+              questionnaires.removeControl('solicitudMusculoesqueleticos');
+            }
+            if (questionnaires.get('columnaVertebralColumnaVertebral')) {
+              questionnaires.removeControl('columnaVertebralColumnaVertebral');
+            }
+          }
         }
 
         if (formI.get('insuredPolicyholderRadio').value !== 'SI') {

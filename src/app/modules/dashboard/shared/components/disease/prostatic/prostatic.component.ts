@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, DoCheck } from '@angular/core';
 import { FormArray, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { DiseaseService } from '../shared/disease/disease.service';
 import { FieldConfig } from 'src/app/shared/components/form-components/models/field-config';
@@ -8,7 +8,7 @@ import { FieldConfig } from 'src/app/shared/components/form-components/models/fi
   templateUrl: './prostatic.component.html',
   styles: []
 })
-export class ProstaticComponent implements OnInit {
+export class ProstaticComponent implements OnInit, DoCheck {
   @Input() form: FormGroup;
   @Input() showWarningDot: boolean;
   @Input() affected: string;
@@ -35,7 +35,23 @@ export class ProstaticComponent implements OnInit {
 
   questions: any[];
 
+  xTreatmentValidators = 0;
+
   constructor(private fb: FormBuilder, public diseaseService: DiseaseService) { }
+
+  ngDoCheck() {
+    if (this.xTreatmentValidators == 0) {
+      if (this.form.get('treatments') && ( this.treatmentUndergoneList != null ||
+        this.treatmentUndergoneList != undefined )) {
+        // tslint:disable-next-line: prefer-for-of
+        for (let x = 0; x < this.treatmentUndergoneList.length; x++) {
+          this.form.get('treatments').get(x.toString()).get('name').setValidators(Validators.required);
+          this.form.get('treatments').get(x.toString()).get('name').updateValueAndValidity();
+        }
+      }
+      this.xTreatmentValidators = 1;
+    }
+  }
 
   ngOnInit() {
     this.addBasicControls();

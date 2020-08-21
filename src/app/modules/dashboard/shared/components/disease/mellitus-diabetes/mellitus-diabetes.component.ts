@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, DoCheck } from '@angular/core';
 import { FormArray, FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { FieldConfig } from 'src/app/shared/components/form-components/models/field-config';
 import { DiseaseService } from '../shared/disease/disease.service';
@@ -8,7 +8,7 @@ import { DiseaseService } from '../shared/disease/disease.service';
   templateUrl: './mellitus-diabetes.component.html',
   styles: []
 })
-export class MellitusDiabetesComponent implements OnInit {
+export class MellitusDiabetesComponent implements OnInit, DoCheck {
   @Input() form: FormGroup;
   @Input() showWarningDot: boolean;
   @Input() affected: string;
@@ -58,12 +58,36 @@ export class MellitusDiabetesComponent implements OnInit {
     name: 'diabetesType'
   };
 
+  xDiabetesOther = 0;
+  xDoctorCenterAdress = 0;
+
   informationGroup() {
     return this.fb.group({
       information: ['', Validators.required],
     });
   }
+
   constructor(private fb: FormBuilder, public diseaseService: DiseaseService) { }
+
+  ngDoCheck() {
+
+    if (this.form.get('diabetesType').value === 'OTRA' && this.xDiabetesOther == 0) {
+      if (this.form.get('diabetesOther')) {
+        this.form.get('diabetesOther').setValidators(Validators.required);
+        this.form.get('diabetesOther').updateValueAndValidity();
+        this.xDiabetesOther = 1;
+      }
+    }
+    if (this.form.get('diabetesType').value !== 'OTRA' && this.xDiabetesOther == 1) {
+      this.xDiabetesOther = 0;
+    }
+
+    if (this.xDoctorCenterAdress == 0) {
+      this.form.get('doctorCenterAdress').clearValidators();
+      this.form.get('doctorCenterAdress').updateValueAndValidity();
+      this.xDoctorCenterAdress = 1;
+    }
+  }
 
   ngOnInit() {
     this.addBasicControls();
@@ -197,11 +221,17 @@ export class MellitusDiabetesComponent implements OnInit {
           break;
 
         case 'takeOralMedication':
+          if (this.form.get('oralMedications')) {
+            this.form.removeControl('oralMedications');
+          }
           this.form.addControl('oralMedications', this.fb.array([this.createFormArray('threatment')]));
           this.oralMedicationList = this.form.get('oralMedications') as FormArray;
           break;
 
         case 'useInsulin':
+          if (this.form.get('insulin')) {
+            this.form.removeControl('insulin');
+          }
           this.form.addControl('insulin', this.fb.array([this.createFormArray('threatment')]));
           this.insulinList = this.form.get('insulin') as FormArray;
           break;

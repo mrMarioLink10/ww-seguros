@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, DoCheck } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { FieldConfig } from 'src/app/shared/components/form-components/models/field-config';
 
@@ -7,7 +7,7 @@ import { FieldConfig } from 'src/app/shared/components/form-components/models/fi
   templateUrl: './spine.component.html',
   styles: []
 })
-export class SpineComponent implements OnInit {
+export class SpineComponent implements OnInit, DoCheck {
   @Input() form: FormGroup;
   @Input() showWarningDot: boolean;
   @Input() affected: string;
@@ -79,7 +79,43 @@ export class SpineComponent implements OnInit {
 
   questions: any[];
 
+  xSpineValidator = 0;
+
   constructor(private fb: FormBuilder) { }
+
+  ngDoCheck() {
+
+    if (this.xSpineValidator == 0) {
+      // tslint:disable-next-line: prefer-for-of
+      for (let x = 0; x < this.affectedSegmentList.length; x++) {
+        // tslint:disable-next-line: prefer-for-of
+        for (let y = 0; y < (this.form.get('affectedSegment').get(x.toString()).get('affectedVertebra') as
+        FormArray).length; y++) {
+          (this.form.get('affectedSegment').get(x.toString()).get('affectedVertebra').get(y.toString()) as
+          FormGroup).get('vertebra').clearValidators();
+          (this.form.get('affectedSegment').get(x.toString()).get('affectedVertebra').get(y.toString()) as
+          FormGroup).get('vertebra').updateValueAndValidity();
+        }
+      }
+      if (this.form.get('surgeries') && (this.surgeryList != null || this.surgeryList != undefined)
+      && this.form.get('useSurgery').value == 'SI') {
+        // tslint:disable-next-line: prefer-for-of
+        for (let x = 0; x < this.surgeryList.length; x++) {
+            (this.form.get('surgeries').get(x.toString()) as FormGroup).get('name').setValidators(Validators.required);
+            (this.form.get('surgeries').get(x.toString()) as FormGroup).get('name').updateValueAndValidity();
+        }
+      }
+      if (this.form.get('medications') && (this.medicationList != null || this.medicationList != undefined)
+      && this.form.get('useMedication').value == 'SI') {
+        // tslint:disable-next-line: prefer-for-of
+        for (let x = 0; x < this.medicationList.length; x++) {
+          (this.form.get('medications').get(x.toString()) as FormGroup).get('name').setValidators(Validators.required);
+          (this.form.get('medications').get(x.toString()) as FormGroup).get('name').updateValueAndValidity();
+        }
+      }
+      this.xSpineValidator = 1;
+    }
+  }
 
   ngOnInit() {
     this.addBasicControls();
@@ -228,16 +264,25 @@ export class SpineComponent implements OnInit {
     if (event.valor === 'SI') {
       switch (event.name) {
         case 'useSurgery':
+          if (this.form.get('surgeries')) {
+            this.form.removeControl('surgeries');
+          }
           this.form.addControl('surgeries', this.fb.array([this.createFormArray('surgeries')]));
           this.surgeryList = this.form.get('surgeries') as FormArray;
           break;
 
         case 'usePhysiotherapy':
+          if (this.form.get('physiotherapies')) {
+            this.form.removeControl('physiotherapies');
+          }
           this.form.addControl('physiotherapies', this.fb.array([this.createFormArray('physiotherapies')]));
           this.physiotherapyList = this.form.get('physiotherapies') as FormArray;
           break;
 
         case 'useMedication':
+          if (this.form.get('medications')) {
+            this.form.removeControl('medications');
+          }
           this.form.addControl('medications', this.fb.array([this.createFormArray('medications')]));
           this.medicationList = this.form.get('medications') as FormArray;
           break;

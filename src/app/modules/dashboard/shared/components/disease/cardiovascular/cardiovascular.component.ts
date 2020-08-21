@@ -63,6 +63,7 @@ export class CardiovascularComponent implements OnInit, DoCheck {
 	changedTreatmentList: FormArray;
 	liquidAnomalyList: FormArray;
 
+	xValidatorsCardiovascular = 0;
 
 	diseaseInfoGroup() {
 		return this.fb.group({
@@ -114,11 +115,17 @@ export class CardiovascularComponent implements OnInit, DoCheck {
 					break;
 
 				case 'haveAnotherDisease':
+					if (this.form.get('anotherDiseases')) {
+						this.form.removeControl('anotherDiseases');
+					}
 					this.form.addControl('anotherDiseases', this.fb.array([this.createFormArray('anotherDiseases')]));
 					this.anotherDiseasesList = this.form.get('anotherDiseases') as FormArray;
 					break;
 
 				case 'haveFamilyWithCardio':
+					if (this.form.get('familyWithCardio')) {
+						this.form.removeControl('familyWithCardio');
+					}
 					this.form.addControl('familyWithCardio', this.fb.array([this.createFormArray('familyWithCardio')]));
 					this.familiarWithCardioList = this.form.get('familyWithCardio') as FormArray;
 					break;
@@ -130,6 +137,9 @@ export class CardiovascularComponent implements OnInit, DoCheck {
 					break;
 
 				case 'haveHypertensionStudies':
+					if (this.form.get('hypertensionStudies')) {
+						this.form.removeControl('hypertensionStudies');
+					}
 					this.form.addControl('hypertensionStudies', this.fb.array([this.createFormArray('hypertensionStudies')]));
 					this.hypertensionStudiesList = this.form.get('hypertensionStudies') as FormArray;
 					break;
@@ -142,6 +152,9 @@ export class CardiovascularComponent implements OnInit, DoCheck {
 					break;
 
 				case 'haveLiquidAnomaly':
+					if (this.form.get('liquidAnomaly')) {
+						this.form.removeControl('liquidAnomaly');
+					}
 					this.form.addControl('liquidAnomaly', this.fb.array([this.createFormArray('liquidAnomaly')]));
 					this.liquidAnomalyList = this.form.get('liquidAnomaly') as FormArray;
 					break;
@@ -339,6 +352,36 @@ export class CardiovascularComponent implements OnInit, DoCheck {
 			// console.log('HolAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA liquidAnomaly');
 			this.liquidAnomalyList = this.form.get('liquidAnomaly') as FormArray;
 		}
+
+		if (this.xValidatorsCardiovascular == 0) {
+			if (this.form.get('hypertensionStudies') && ( this.hypertensionStudiesList != null ||
+				this.hypertensionStudiesList != undefined) && this.form.get('haveHypertensionStudies').value == 'SI') {
+					// tslint:disable-next-line: prefer-for-of
+					for (let x = 0; x < this.hypertensionStudiesList.length; x++) {
+						this.form.get('hypertensionStudies').get(x.toString()).get('informacion').clearValidators();
+						this.form.get('hypertensionStudies').get(x.toString()).get('informacion').updateValueAndValidity();
+					}
+			}
+			if (this.form.get('studies') && ( this.studiesList != null ||
+				this.studiesList != undefined)) {
+					// tslint:disable-next-line: prefer-for-of
+					for (let x = 0; x < this.studiesList.length; x++) {
+						this.form.get('studies').get(x.toString()).get('nombre').setValidators(Validators.required);
+						this.form.get('studies').get(x.toString()).get('nombre').updateValueAndValidity();
+					}
+			}
+			if (this.form.get('medicalTreatment') && ( this.medicalTreatmentList != null ||
+				this.medicalTreatmentList != undefined)) {
+					// tslint:disable-next-line: prefer-for-of
+					for (let x = 0; x < this.medicalTreatmentList.length; x++) {
+						this.form.get('medicalTreatment').get(x.toString()).get('nombre').setValidators(Validators.required);
+						this.form.get('medicalTreatment').get(x.toString()).get('nombre').updateValueAndValidity();
+					}
+			}
+			this.xValidatorsCardiovascular = 1;
+		}
+
+
 	}
 
 	addBasicControls() {

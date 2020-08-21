@@ -174,6 +174,7 @@ export class KnowYourCustomerComponent implements OnInit, DoCheck {
   };
 
   xGeneralData = 0;
+  xPersonalValidators = 0;
 
   constructor(private fb: FormBuilder, public formMethods: FormArrayGeneratorService, private life: LifeService) { }
 
@@ -364,6 +365,20 @@ export class KnowYourCustomerComponent implements OnInit, DoCheck {
       this.form.get('general_data').get('email').clearValidators();
       this.form.get('general_data').get('email').updateValueAndValidity();
       this.xGeneralData = 1;
+    }
+
+    if (this.xPersonalValidators <= 10) {
+      if (this.form.get('questions')) {
+        if (this.form.get('questions').get('personal').get('personal_array') && ( this.personalFormArray != null ||
+          this.personalFormArray != undefined)) {
+            // tslint:disable-next-line: prefer-for-of
+            for (let x = 0; x < this.personalFormArray.length; x++) {
+              this.form.get('questions').get('personal').get('personal_array').get(x.toString()).get('name').setValidators(Validators.required);
+              this.form.get('questions').get('personal').get('personal_array').get(x.toString()).get('name').updateValueAndValidity();
+            }
+        }
+      }
+      this.xPersonalValidators++;
     }
   }
 

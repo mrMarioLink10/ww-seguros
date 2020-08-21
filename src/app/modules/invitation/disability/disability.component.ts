@@ -431,7 +431,7 @@ export class DisabilityComponent implements OnInit, DoCheck {
   primaryBeneficaryTitles = [];
   contigentBeneficaryTitles = [];
   primaryAnotherTitle: any;
-  contigentAnotherTitle: any
+  contigentAnotherTitle: any;
 
   money_laundering: FormGroup;
   know_client: FormGroup;
@@ -1020,84 +1020,84 @@ export class DisabilityComponent implements OnInit, DoCheck {
       // }
     }
 
-    if (this.disabilityGroup.get('questions').get('questionnaire').get('therapy_radio').value == 'NO' &&
+    if (this.disabilityGroup.get('questions').get('questionnaire').get('therapy_radio').value != 'SI' &&
       this.disabilityGroup.get('questions').get('questionnaire').get('therapy_array')) {
 
       const formQDoCheck = this.disabilityGroup.get('questions').get('questionnaire') as FormGroup;
       formQDoCheck.removeControl('therapy_array');
     }
 
-    if (this.disabilityGroup.get('questions').get('questionnaire').get('sick_pay_radio').value == 'NO' &&
+    if (this.disabilityGroup.get('questions').get('questionnaire').get('sick_pay_radio').value != 'SI' &&
       this.disabilityGroup.get('questions').get('questionnaire').get('sick_pay_array')) {
 
       const formQDoCheck = this.disabilityGroup.get('questions').get('questionnaire') as FormGroup;
       formQDoCheck.removeControl('sick_pay_array');
     }
 
-    if (this.disabilityGroup.get('questions').get('questionnaire').get('analysis_radio').value == 'NO' &&
+    if (this.disabilityGroup.get('questions').get('questionnaire').get('analysis_radio').value != 'SI' &&
       this.disabilityGroup.get('questions').get('questionnaire').get('analysis_array')) {
 
       const formQDoCheck = this.disabilityGroup.get('questions').get('questionnaire') as FormGroup;
       formQDoCheck.removeControl('analysis_array');
     }
 
-    if (this.disabilityGroup.get('questions').get('questionnaire').get('other_analysis_radio').value == 'NO' &&
+    if (this.disabilityGroup.get('questions').get('questionnaire').get('other_analysis_radio').value != 'SI' &&
       this.disabilityGroup.get('questions').get('questionnaire').get('other_analysis_array')) {
 
       const formQDoCheck = this.disabilityGroup.get('questions').get('questionnaire') as FormGroup;
       formQDoCheck.removeControl('other_analysis_array');
     }
 
-    if (this.disabilityGroup.get('questions').get('questionnaire').get('inpatientCare_radio').value == 'NO' &&
+    if (this.disabilityGroup.get('questions').get('questionnaire').get('inpatientCare_radio').value != 'SI' &&
       this.disabilityGroup.get('questions').get('questionnaire').get('inpatientCare_array')) {
 
       const formQDoCheck = this.disabilityGroup.get('questions').get('questionnaire') as FormGroup;
       formQDoCheck.removeControl('inpatientCare_array');
     }
 
-    if (this.disabilityGroup.get('questions').get('questionnaire').get('hospitalization_radio').value == 'NO' &&
+    if (this.disabilityGroup.get('questions').get('questionnaire').get('hospitalization_radio').value != 'SI' &&
       this.disabilityGroup.get('questions').get('questionnaire').get('hospitalization_array')) {
 
       const formQDoCheck = this.disabilityGroup.get('questions').get('questionnaire') as FormGroup;
       formQDoCheck.removeControl('hospitalization_array');
     }
 
-    if (this.disabilityGroup.get('questions').get('questionnaire').get('bloodSick_radio').value == 'NO' &&
+    if (this.disabilityGroup.get('questions').get('questionnaire').get('bloodSick_radio').value != 'SI' &&
       this.disabilityGroup.get('questions').get('questionnaire').get('bloodSick_array')) {
 
       const formQDoCheck = this.disabilityGroup.get('questions').get('questionnaire') as FormGroup;
       formQDoCheck.removeControl('bloodSick_array');
     }
 
-    if (this.disabilityGroup.get('questions').get('questionnaire').get('VIH_radio').value == 'NO' &&
+    if (this.disabilityGroup.get('questions').get('questionnaire').get('VIH_radio').value != 'SI' &&
       this.disabilityGroup.get('questions').get('questionnaire').get('VIH_array')) {
 
       const formQDoCheck = this.disabilityGroup.get('questions').get('questionnaire') as FormGroup;
       formQDoCheck.removeControl('VIH_array');
     }
 
-    if (this.disabilityGroup.get('questions').get('questionnaire').get('specialTherapy_radio').value == 'NO' &&
+    if (this.disabilityGroup.get('questions').get('questionnaire').get('specialTherapy_radio').value != 'SI' &&
       this.disabilityGroup.get('questions').get('questionnaire').get('specialTherapy_array')) {
 
       const formQDoCheck = this.disabilityGroup.get('questions').get('questionnaire') as FormGroup;
       formQDoCheck.removeControl('specialTherapy_array');
     }
 
-    if (this.disabilityGroup.get('questions').get('questionnaire').get('accident_radio').value == 'NO' &&
+    if (this.disabilityGroup.get('questions').get('questionnaire').get('accident_radio').value != 'SI' &&
       this.disabilityGroup.get('questions').get('questionnaire').get('accident_array')) {
 
       const formQDoCheck = this.disabilityGroup.get('questions').get('questionnaire') as FormGroup;
       formQDoCheck.removeControl('accident_array');
     }
 
-    if (this.disabilityGroup.get('questions').get('questionnaire').get('deny_radio').value == 'NO' &&
+    if (this.disabilityGroup.get('questions').get('questionnaire').get('deny_radio').value != 'SI' &&
       this.disabilityGroup.get('questions').get('questionnaire').get('deny_array')) {
 
       const formQDoCheck = this.disabilityGroup.get('questions').get('questionnaire') as FormGroup;
       formQDoCheck.removeControl('deny_array');
     }
 
-    if (this.disabilityGroup.get('questions').get('questionnaire').get('insurance_radio').value == 'NO' &&
+    if (this.disabilityGroup.get('questions').get('questionnaire').get('insurance_radio').value != 'SI' &&
       this.disabilityGroup.get('questions').get('questionnaire').get('insurance_array')) {
 
       const formQDoCheck = this.disabilityGroup.get('questions').get('questionnaire') as FormGroup;
@@ -1126,7 +1126,7 @@ export class DisabilityComponent implements OnInit, DoCheck {
       }
     }
 
-    if (this.disabilityGroup.get('contingent').get('hasAnotherCoverage').value == 'NO' &&
+    if (this.disabilityGroup.get('contingent').get('hasAnotherCoverage').value != 'SI' &&
       this.disabilityGroup.get('contingent').get('anotherCoverages')) {
 
       const formCBDoCheck = this.disabilityGroup.get('contingent') as FormGroup;
@@ -2345,6 +2345,67 @@ export class DisabilityComponent implements OnInit, DoCheck {
           formGeneral.removeControl('knowYourCustomerContratante');
         }
 
+        if (this.disabilityGroup.get('questions').get('inches') &&
+          this.disabilityGroup.get('questions').get('heightUnit').value === 'PIE') {
+          this.disabilityGroup.get('questions').get('inches').setValidators([Validators.required, Validators.min(0), Validators.max(11)])
+          this.disabilityGroup.get('questions').get('inches').updateValueAndValidity();
+        }
+
+        if (this.disabilityGroup.get('questions').get('questionnaire').get('therapy_array') &&
+        this.therapyArray != null || this.therapyArray != undefined) {
+          // tslint:disable-next-line: prefer-for-of
+          for (let x = 0; x < this.therapyArray.length; x++) {
+            const therapyArrayGroup = this.disabilityGroup.get('questions').get('questionnaire').get('therapy_array').get(x.toString()) as FormGroup;
+
+            therapyArrayGroup.get('diagnosis').setValidators(Validators.required);
+            therapyArrayGroup.get('diagnosis').updateValueAndValidity();
+          }
+        }
+
+        if (this.disabilityGroup.get('questions').get('questionnaire').get('bloodSick_array') &&
+        this.bloodSickArray != null || this.bloodSickArray != undefined) {
+          // tslint:disable-next-line: prefer-for-of
+          for (let x = 0; x < this.bloodSickArray.length; x++) {
+            const bloodSickArrayGroup = this.disabilityGroup.get('questions').get('questionnaire').get('bloodSick_array').get(x.toString()) as FormGroup;
+
+            bloodSickArrayGroup.get('name').setValidators(Validators.required);
+            bloodSickArrayGroup.get('name').updateValueAndValidity();
+          }
+        }
+
+        if (this.disabilityGroup.get('questions').get('questionnaire').get('VIH_array') &&
+        this.VIHArray != null || this.VIHArray != undefined) {
+          // tslint:disable-next-line: prefer-for-of
+          for (let x = 0; x < this.VIHArray.length; x++) {
+            const VIHArrayGroup = this.disabilityGroup.get('questions').get('questionnaire').get('VIH_array').get(x.toString()) as FormGroup;
+
+            VIHArrayGroup.get('name').setValidators(Validators.required);
+            VIHArrayGroup.get('name').updateValueAndValidity();
+          }
+        }
+
+        if (this.disabilityGroup.get('questions').get('questionnaire').get('specialTherapy_array') &&
+        this.specialTherapyArray != null || this.specialTherapyArray != undefined) {
+          // tslint:disable-next-line: prefer-for-of
+          for (let x = 0; x < this.specialTherapyArray.length; x++) {
+            const specialTherapyArrayGroup = this.disabilityGroup.get('questions').get('questionnaire').get('specialTherapy_array').get(x.toString()) as FormGroup;
+
+            specialTherapyArrayGroup.get('name').setValidators(Validators.required);
+            specialTherapyArrayGroup.get('name').updateValueAndValidity();
+          }
+        }
+
+        if (this.disabilityGroup.get('questions').get('questionnaire').get('insurance_array') &&
+        this.insuranceArray != null || this.insuranceArray != undefined) {
+          // tslint:disable-next-line: prefer-for-of
+          for (let x = 0; x < this.insuranceArray.length; x++) {
+            const insuranceArrayGroup = this.disabilityGroup.get('questions').get('questionnaire').get('insurance_array').get(x.toString()) as FormGroup;
+
+            insuranceArrayGroup.get('name').setValidators(Validators.required);
+            insuranceArrayGroup.get('name').updateValueAndValidity();
+          }
+        }
+
         // tslint:disable-next-line: prefer-for-of
         for (let x = 0; x < this.mainFormArray.length; x++) {
           const mainArrayGroup = this.disabilityGroup.get('main').get('main_array').get(x.toString()) as FormGroup;
@@ -2364,6 +2425,71 @@ export class DisabilityComponent implements OnInit, DoCheck {
 
           if (this.disabilityGroup.get('contingent').get('contingent_array').get(x.toString()).get('family').value != 'OTROS') {
             mainContingentGroup.removeControl('specifyRelationship');
+          }
+        }
+
+        // tslint:disable-next-line: prefer-for-of
+        for (let x = 0; x < this.contingentFormArray.length; x++) {
+          const mainContingentGroup = this.disabilityGroup.get('contingent').get('contingent_array').get(x.toString()) as FormGroup;
+
+          mainContingentGroup.get('full_name').clearValidators();
+          mainContingentGroup.get('full_name').updateValueAndValidity();
+          mainContingentGroup.get('id2').clearValidators();
+          mainContingentGroup.get('id2').updateValueAndValidity();
+          mainContingentGroup.get('id2Type').clearValidators();
+          mainContingentGroup.get('id2Type').updateValueAndValidity();
+          mainContingentGroup.get('id2Attached').clearValidators();
+          mainContingentGroup.get('id2Attached').updateValueAndValidity();
+          mainContingentGroup.get('nationality').clearValidators();
+          mainContingentGroup.get('nationality').updateValueAndValidity();
+          mainContingentGroup.get('ocupation').clearValidators();
+          mainContingentGroup.get('ocupation').updateValueAndValidity();
+          mainContingentGroup.get('family').clearValidators();
+          mainContingentGroup.get('family').updateValueAndValidity();
+          mainContingentGroup.get('percentage').clearValidators();
+          mainContingentGroup.get('percentage').updateValueAndValidity();
+          // if (this.disabilityGroup.get('contingent').get('contingent_array').get(x.toString()).get('family').value == 'OTROS') {
+          //   mainContingentGroup.get('specifyRelationship').clearValidators();
+          //   mainContingentGroup.get('specifyRelationship').updateValueAndValidity();
+          // }
+        }
+
+        if (this.disabilityGroup.get('contingent').get('anotherCoverages') &&
+        this.existingCoveragesList != null || this.existingCoveragesList != undefined) {
+          // tslint:disable-next-line: prefer-for-of
+          for (let x = 0; x < this.existingCoveragesList.length; x++) {
+            const existingCoveragesGroup = this.disabilityGroup.get('contingent').get('anotherCoverages').get(x.toString()) as FormGroup;
+
+            existingCoveragesGroup.get('name').setValidators(Validators.required);
+            existingCoveragesGroup.get('name').updateValueAndValidity();
+            existingCoveragesGroup.get('amount').setValidators(Validators.required);
+            existingCoveragesGroup.get('amount').updateValueAndValidity();
+            existingCoveragesGroup.get('policeNo').setValidators([Validators.required, Validators.min(1)]);
+            existingCoveragesGroup.get('policeNo').updateValueAndValidity();
+            existingCoveragesGroup.get('adbQuantity').setValidators([Validators.required, Validators.min(0)]);
+            existingCoveragesGroup.get('adbQuantity').updateValueAndValidity();
+            existingCoveragesGroup.get('date').setValidators(Validators.required);
+            existingCoveragesGroup.get('date').updateValueAndValidity();
+
+          }
+        }
+
+        if (this.disabilityGroup.get('contingent').get('changingCoverages') &&
+        this.changingCoveragesList != null || this.changingCoveragesList != undefined) {
+          // tslint:disable-next-line: prefer-for-of
+          for (let x = 0; x < this.changingCoveragesList.length; x++) {
+            const changingCoveragesGroup = this.disabilityGroup.get('contingent').get('changingCoverages').get(x.toString()) as FormGroup;
+
+            changingCoveragesGroup.get('name').setValidators(Validators.required);
+            changingCoveragesGroup.get('name').updateValueAndValidity();
+            changingCoveragesGroup.get('amount').setValidators(Validators.required);
+            changingCoveragesGroup.get('amount').updateValueAndValidity();
+            changingCoveragesGroup.get('policeNo').setValidators([Validators.required, Validators.min(1)]);
+            changingCoveragesGroup.get('policeNo').updateValueAndValidity();
+            changingCoveragesGroup.get('adbQuantity').setValidators([Validators.required, Validators.min(0)]);
+            changingCoveragesGroup.get('adbQuantity').updateValueAndValidity();
+            changingCoveragesGroup.get('date').setValidators(Validators.required);
+            changingCoveragesGroup.get('date').updateValueAndValidity();
           }
         }
 

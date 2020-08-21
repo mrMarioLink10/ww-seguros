@@ -61,12 +61,18 @@ export class RenalUrinaryComponent implements OnInit {
           break;
 
         case 'analysis_radio':
+          if (this.form.get('data').get('analysis').get('analysis_array')) {
+            (this.form.get('data').get('analysis') as FormGroup).removeControl('analysis_array');
+          }
           form.addControl('analysis_array', this.fb.array([this.createFormArray('analysis_array')]));
           this.analysisFormArray = this.form.get('data').get('analysis').get('analysis_array') as FormArray;
           console.log(JSON.stringify(this.form.value));
           break;
 
         case 'medication_radio':
+          if (this.form.get('data').get('medicine').get('medicine_array')) {
+            (this.form.get('data').get('medicine') as FormGroup).removeControl('medicine_array');
+          }
           formM.addControl('medicine_array', this.fb.array([this.createFormArray('medicine_array')]));
           this.medicineOperationFormArray = this.form.get('data').get('medicine').get('medicine_array') as FormArray;
           console.log(JSON.stringify(this.form.value));
@@ -154,17 +160,17 @@ export class RenalUrinaryComponent implements OnInit {
         date: [new Date(), Validators.required]
       }),
 
-      analysis_radio: [''],
+      analysis_radio: ['', Validators.required],
       analysis: this.fb.group({
 
       }),
 
-      medication_radio: [''],
+      medication_radio: ['', Validators.required],
       medicine: this.fb.group({
 
       }),
 
-      medical_consultation_radio: ['']
+      medical_consultation_radio: ['', Validators.required]
 
     })
 

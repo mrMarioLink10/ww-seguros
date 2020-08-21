@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, DoCheck } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { FieldConfig } from 'src/app/shared/components/form-components/models/field-config';
 import { DiseaseService } from '../shared/disease/disease.service';
@@ -8,9 +8,11 @@ import { DiseaseService } from '../shared/disease/disease.service';
   templateUrl: './arthritis.component.html',
   styles: []
 })
-export class ArthritisComponent implements OnInit {
+export class ArthritisComponent implements OnInit, DoCheck {
   @Input() form: FormGroup;
   @Input() affected: string;
+
+  xValidators = 0;
 
   constructor(private fb: FormBuilder, public diseaseService: DiseaseService) { }
 
@@ -20,6 +22,25 @@ export class ArthritisComponent implements OnInit {
 
   threatmentList: FormArray;
   surgeriesList: FormArray;
+
+  ngDoCheck() {
+
+    // if (this.form.get('threatments') && (this.threatmentList != null || this.threatmentList != undefined)) {
+      if (this.xValidators == 0) {
+        // tslint:disable-next-line: prefer-for-of
+        for (let x = 0; x < this.threatmentList.length; x++) {
+          (this.form.get('threatments').get(x.toString()) as FormGroup).get('name').setValidators(Validators.required);
+          (this.form.get('threatments').get(x.toString()) as FormGroup).get('name').updateValueAndValidity();
+
+          (this.form.get('threatments').get(x.toString()) as FormGroup).get('info').clearValidators();
+          (this.form.get('threatments').get(x.toString()) as FormGroup).get('info').updateValueAndValidity();
+        }
+        this.form.get('symptons').clearValidators();
+        this.form.get('symptons').updateValueAndValidity();
+        this.xValidators = 1;
+      }
+    // }
+  }
 
   ngOnInit() {
     this.addBasicControls();
@@ -74,6 +95,9 @@ export class ArthritisComponent implements OnInit {
           }));
           break;
         case 'hasBeenOperated':
+          if (this.form.get('surgeries')) {
+            this.form.removeControl('surgeries');
+          }
           this.form.addControl('surgeries', this.fb.array([this.createFormArray('surgeries')]));
           this.surgeriesList = this.form.get('surgeries') as FormArray;
           break;

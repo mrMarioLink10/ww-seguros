@@ -53,6 +53,8 @@ export class MusculoskeletalComponent implements OnInit, DoCheck {
 
   accordionTitles = ['Datos'];
 
+  xValidatorsMusculo = 0;
+
   selectChange(event: any) {
 
     const formE = this.form.get('data').get('episode') as FormGroup;
@@ -63,11 +65,17 @@ export class MusculoskeletalComponent implements OnInit, DoCheck {
     if (event.valor === 'SI') {
       switch (event.name) {
         case 'episode_radio':
+          if (this.form.get('data').get('episode').get('episode_array')) {
+            (this.form.get('data').get('episode') as FormGroup).removeControl('episode_array');
+          }
           formE.addControl('episode_array', this.fb.array([this.createFormArray('episode_array')]));
           this.episodeFormArray = this.form.get('data').get('episode').get('episode_array') as FormArray;
           break;
 
         case 'surgery_radio':
+          if (this.form.get('data').get('surgery').get('surgery_array')) {
+            (this.form.get('data').get('surgery') as FormGroup).removeControl('surgery_array');
+          }
           formS.addControl('surgery_array', this.fb.array([this.createFormArray('surgery_array')]));
           this.surgeryFormArray = this.form.get('data').get('surgery').get('surgery_array') as FormArray;
           break;
@@ -194,12 +202,35 @@ export class MusculoskeletalComponent implements OnInit, DoCheck {
 
   ngDoCheck() {
 
-    if (this.form.get('data').get('recovered_radio').value == 'NO') {
+    if (this.form.get('data').get('recovered_radio').value != 'SI') {
       if (this.form.get('data').get('date')) {
         (this.form.get('data') as FormGroup).removeControl('date');
       }
     }
 
+    if (this.xValidatorsMusculo == 0) {
+      if (this.form.get('data').get('surgery').get('surgery_array') && (this.surgeryFormArray != null ||
+        this.surgeryFormArray != undefined) && this.form.get('data').get('surgery_radio').value == 'SI') {
+          // tslint:disable-next-line: prefer-for-of
+          for (let x = 0; x < this.surgeryFormArray.length; x++) {
+            (this.form.get('data').get('surgery').get('surgery_array').get(x.toString()) as
+            FormGroup).get('name').setValidators(Validators.required);
+            (this.form.get('data').get('surgery').get('surgery_array').get(x.toString()) as
+            FormGroup).get('name').updateValueAndValidity();
+          }
+      }
+      if (this.form.get('data').get('therapy').get('therapy_array') && (this.therapyFormArray != null ||
+        this.therapyFormArray != undefined)) {
+          // tslint:disable-next-line: prefer-for-of
+          for (let x = 0; x < this.therapyFormArray.length; x++) {
+            (this.form.get('data').get('therapy').get('therapy_array').get(x.toString()) as
+            FormGroup).get('name').setValidators(Validators.required);
+            (this.form.get('data').get('therapy').get('therapy_array').get(x.toString()) as
+            FormGroup).get('name').updateValueAndValidity();
+          }
+      }
+      this.xValidatorsMusculo = 1;
+    }
   }
 
   IssurgeryFormArray() {

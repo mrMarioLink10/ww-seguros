@@ -84,10 +84,12 @@
           </button>
         </div>
       </div>
-      <div
-        (click)="addToList(returnAsFormArray(form.get('affectedSegment').get(i.toString()).get('affectedVertebra')), 'affectedVertebra')"
-        class="mb-2" style="color: #18446B; font-weight: bold;
+      <div class="mr-12">
+        <div
+          (click)="addToList(returnAsFormArray(form.get('affectedSegment').get(i.toString()).get('affectedVertebra')), 'affectedVertebra')"
+          class="mb-2 mr-64" style="color: #18446B; font-weight: bold;
           margin-left: 10px; cursor: context-menu;"> Agregar vértebra </div>
+      </div>
       <!-- AQUI ES EL CAMPO DE VERTEBRA -->
       <div *ngIf="affectedSegmentList.length > 1"
         [ngClass]="{'': affectedSegmentList.length === 1, 'col-span-1': affectedSegmentList.length > 1} ">

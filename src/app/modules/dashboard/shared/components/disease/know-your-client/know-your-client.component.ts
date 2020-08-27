@@ -161,6 +161,8 @@ export class KnowYourClientComponent implements OnInit {
     this.minDate = d;
 	}
 
+	xBodyMembersValidators = 0;
+
 	selectChangeText(event: any) {
 
 		const form = this.form.get('exposed') as FormGroup;
@@ -207,7 +209,9 @@ export class KnowYourClientComponent implements OnInit {
 		const form = this.form.get('exposed').get('branch_office') as FormGroup;
 
 		if (event.valor === 'SI') {
-
+			if (this.form.get('exposed').get('branch_office').get('allBranch_office')) {
+				(this.form.get('exposed').get('branch_office') as FormGroup).removeControl('allBranch_office');
+			}
 			form.addControl('allBranch_office', this.fb.array([this.createFormArray()]));
 			this.branchOfficeFormArray = this.form.get('exposed').get('branch_office').get('allBranch_office') as FormArray;
 		}
@@ -355,6 +359,19 @@ export class KnowYourClientComponent implements OnInit {
 	// 		this.selectChangeText(varInvestigated);
 	// 		console.log("HolAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
 	// 	}
+		if (this.xBodyMembersValidators == 0) {
+			if (this.form.get('management_body_composition').get('allMembers') && (this.bodyMembersFormArray != null ||
+			this.bodyMembersFormArray != undefined)) {
+				// tslint:disable-next-line: prefer-for-of
+				for (let x = 0; x < this.bodyMembersFormArray.length; x++) {
+					this.form.get('management_body_composition').get('allMembers').get(
+						x.toString()).get('position').setValidators(Validators.required);
+					this.form.get('management_body_composition').get('allMembers').get(
+						x.toString()).get('position').updateValueAndValidity();
+				}
+			}
+			this.xBodyMembersValidators = 1;
+		}
 	}
 
   	addBasicControls() {
@@ -399,18 +416,18 @@ export class KnowYourClientComponent implements OnInit {
 		this.form.addControl('exposed', this.fb.group({
 			// exposed_person: [''],
 			stock_Exchange: ['', Validators.required],
-			branch_office_radio: [''],
+			branch_office_radio: ['', Validators.required],
 			branch_office: this.fb.group({
 				// allBranch_office: this.fb.array([this.createFormArray()])
 			}),
-			investigated_representative: [''],
+			investigated_representative: ['', Validators.required],
 
 		}));
 
 		this.form.addControl('finance', this.fb.group({
 
-			main_annual_income: ['' ],
-			annual_income_others: ['' ],
+			main_annual_income: ['', Validators.required],
+			annual_income_others: ['', Validators.required],
 			documents: this.fb.group({
 				mercantile_register_document: [false],
 				id_shareholder_document: [false],

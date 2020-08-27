@@ -173,6 +173,9 @@ export class KnowYourCustomerComponent implements OnInit, DoCheck {
     ]
   };
 
+  xGeneralData = 0;
+  xPersonalValidators = 0;
+
   constructor(private fb: FormBuilder, public formMethods: FormArrayGeneratorService, private life: LifeService) { }
 
   ngOnInit() {
@@ -252,6 +255,7 @@ export class KnowYourCustomerComponent implements OnInit, DoCheck {
 
   // x = 0;
   // iD;
+
   ngDoCheck(): void {
 
 
@@ -329,6 +333,52 @@ export class KnowYourCustomerComponent implements OnInit, DoCheck {
       else if ( this.personalFormArray == null || this.personalFormArray == undefined ) {
         this.personalFormArray = this.form.get('questions').get('personal').get('personal_array') as FormArray;
       }
+    }
+
+    if (this.form.get('general_data') && this.xGeneralData == 0) {
+      this.form.get('general_data').get('first_name').clearValidators();
+      this.form.get('general_data').get('first_name').updateValueAndValidity();
+      this.form.get('general_data').get('middle_name').clearValidators();
+      this.form.get('general_data').get('middle_name').updateValueAndValidity();
+      this.form.get('general_data').get('last_names').clearValidators();
+      this.form.get('general_data').get('last_names').updateValueAndValidity();
+      this.form.get('general_data').get('birthdate').clearValidators();
+      this.form.get('general_data').get('birthdate').updateValueAndValidity();
+      this.form.get('general_data').get('gender').clearValidators();
+      this.form.get('general_data').get('gender').updateValueAndValidity();
+      this.form.get('general_data').get('id_passport').clearValidators();
+      this.form.get('general_data').get('id_passport').updateValueAndValidity();
+      this.form.get('general_data').get('marital_status').clearValidators();
+      this.form.get('general_data').get('marital_status').updateValueAndValidity();
+      this.form.get('general_data').get('nationality').clearValidators();
+      this.form.get('general_data').get('nationality').updateValueAndValidity();
+      this.form.get('general_data').get('country').clearValidators();
+      this.form.get('general_data').get('country').updateValueAndValidity();
+      this.form.get('general_data').get('post_office_box').clearValidators();
+      this.form.get('general_data').get('post_office_box').updateValueAndValidity();
+      this.form.get('general_data').get('address').clearValidators();
+      this.form.get('general_data').get('address').updateValueAndValidity();
+      this.form.get('general_data').get('telephone').clearValidators();
+      this.form.get('general_data').get('telephone').updateValueAndValidity();
+      this.form.get('general_data').get('cellphone').clearValidators();
+      this.form.get('general_data').get('cellphone').updateValueAndValidity();
+      this.form.get('general_data').get('email').clearValidators();
+      this.form.get('general_data').get('email').updateValueAndValidity();
+      this.xGeneralData = 1;
+    }
+
+    if (this.xPersonalValidators <= 10) {
+      if (this.form.get('questions')) {
+        if (this.form.get('questions').get('personal').get('personal_array') && ( this.personalFormArray != null ||
+          this.personalFormArray != undefined)) {
+            // tslint:disable-next-line: prefer-for-of
+            for (let x = 0; x < this.personalFormArray.length; x++) {
+              this.form.get('questions').get('personal').get('personal_array').get(x.toString()).get('name').setValidators(Validators.required);
+              this.form.get('questions').get('personal').get('personal_array').get(x.toString()).get('name').updateValueAndValidity();
+            }
+        }
+      }
+      this.xPersonalValidators++;
     }
   }
 

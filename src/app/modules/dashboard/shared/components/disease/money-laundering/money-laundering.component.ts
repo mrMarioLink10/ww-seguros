@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, DoCheck } from '@angular/core';
 import { FieldConfig } from '../../../../../../shared/components/form-components/models/field-config'
 import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
 import { FormHandlerService } from '../../../../../../core/services/forms/form-handler.service';
@@ -8,7 +8,7 @@ import { FormHandlerService } from '../../../../../../core/services/forms/form-h
 	templateUrl: './money-laundering.component.html',
 	styles: []
 })
-export class MoneyLaunderingComponent implements OnInit {
+export class MoneyLaunderingComponent implements OnInit, DoCheck {
 
 	@Input() form: FormGroup;
 	@Input() showWarningDot: boolean;
@@ -68,6 +68,8 @@ export class MoneyLaunderingComponent implements OnInit {
 		]
 	};
 
+	xNameValidator = 0;
+
 	selectChangeInvestigated(event: any) {
 
 		const form = this.form as FormGroup;
@@ -89,6 +91,14 @@ export class MoneyLaunderingComponent implements OnInit {
 	// anti_laundering: FormGroup;
 
 	constructor(private fb: FormBuilder, public formHandler: FormHandlerService) { }
+
+	ngDoCheck() {
+		if (this.xNameValidator == 0) {
+			this.form.get('name').setValidators(Validators.required);
+			this.form.get('name').updateValueAndValidity();
+			this.xNameValidator = 1;
+		}
+	}
 
 	ngOnInit() {
 

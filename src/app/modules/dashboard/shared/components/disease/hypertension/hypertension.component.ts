@@ -95,6 +95,7 @@ export class HypertensionComponent implements OnInit, DoCheck {
 
   }
   x = 0;
+  xOther = 0;
   ngDoCheck(): void {
 
     if (this.form.get('diseaseInfo').get('changedMedicationInLast12Months').value == 'si' &&
@@ -222,6 +223,16 @@ export class HypertensionComponent implements OnInit, DoCheck {
       this.selectChange(vardiagnosticStudies5);
       console.log('HolAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA otherInfo2');
     }
+
+    if (this.form.get('diagnosticStudies').get('otherInfo') && this.xOther == 0 &&
+    this.form.get('diagnosticStudies').get('other').value == 'SI') {
+      this.form.get('diagnosticStudies').get('otherInfo').get('name').setValidators(Validators.required);
+      this.form.get('diagnosticStudies').get('otherInfo').get('name').updateValueAndValidity();
+      this.xOther = 1;
+    }
+    if (this.xOther == 1 && this.form.get('diagnosticStudies').get('other').value == 'NO') {
+      this.xOther = 0;
+    }
   }
   setStep(index: number) {
     this.step = index;
@@ -281,6 +292,10 @@ export class HypertensionComponent implements OnInit, DoCheck {
     if (event.valor === 'SI') {
       switch (event.name) {
         case 'changedMedicationInLast12Months':
+          if (this.getDIAsFormGroup().get('changedMedications')) {
+            this.getDIAsFormGroup().removeControl('changedMedications');
+            // this.changedMedicationList = undefined;
+          }
           this.getDIAsFormGroup().addControl('changedMedications', this.fb.array([this.createFormArray('medication')]));
           this.changedMedicationList = this.getDIAsFormGroup().get('changedMedications') as FormArray;
           break;

@@ -585,6 +585,74 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
     haveReproductiveOrganDisorders: '',
   };
 
+  holderGroup = {
+    // conozcaSuClientePersonaJuridica: this.fb.group({}),
+    // conozcaSuClientePersona: this.fb.group({}),
+    firstName: ['', Validators.required],
+    secondName: [''],
+    lastName: ['', Validators.required],
+    date: ['', Validators.required],
+    sex: ['', Validators.required],
+    nationality: ['', Validators.required],
+    idType: ['', Validators.required],
+    id2: ['', Validators.required],
+    age: [{ value: '', disabled: false }, Validators.required],
+    weight: ['', Validators.required],
+    height: ['', Validators.required],
+    weightUnit: ['', Validators.required],
+    heightUnit: ['', Validators.required],
+    bmi: [{ value: '', disabled: true }, Validators.required],
+    status: ['', Validators.required],
+    country: ['', Validators.required],
+    city: ['', Validators.required],
+    direction: ['', Validators.required],
+    tel: [''],
+    cel: ['', Validators.required],
+    officeTel: [''],
+    fax: [''],
+    id2Attached: [''],
+    email: ['', [Validators.required, Validators.email]],
+    office: this.fb.group({
+      company: [''],
+      position: [''],
+      direction: [''],
+      economicActivity: [''],
+      sector: [''],
+      city: [''],
+      country: [''],
+    })
+    /*societyName: ['', Validators.required],
+    commercialName: [''],
+    taxpayerNumber: ['', Validators.required],
+    socialHome: [''],
+    tel: ['', Validators.required],
+    email: ['', Validators.required],
+    commercialActivity: ['', Validators.required],
+    // requestType: ['', Validators.required],
+    legalRepresentation: this.fb.group({
+      name: ['', Validators.required],
+      position: ['', Validators.required],
+      nationality: ['', Validators.required],
+      idType: ['', Validators.required],
+      id2: ['', Validators.required],
+      policy: [''],
+      email: ['', Validators.required]
+    })*/
+  };
+
+  juridicalGroup = {
+    businessName: ['', Validators.required],
+    rnc: ['', Validators.required],
+    family: ['', Validators.required],
+    purpose: ['', Validators.required],
+    taxCountry: ['', Validators.required],
+  };
+
+  countryTaxing: FieldConfig = {
+    label: 'País donde tributa por sus ingresos',
+    options: $country
+  };
+
   ID = null;
   noCotizacion = null;
   policy: FormGroup;
@@ -605,6 +673,9 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
   mercantileRegisterArray: FormArray;
   arrayFilesTitlesMercantile = [];
 
+  juridicalObligatoryOptions: any;
+  physicalObligatoryOptions: any;
+
   @ViewChild('form', { static: false }) ogForm;
   step: number;
 
@@ -620,6 +691,33 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
     //   });
 
     // this.role = this.userService.getRoleCotizador();
+
+    this.requestService.getJuridicalObligatoryOptions().subscribe((res: any) => {
+      const Options = [];
+      for (const key in res.data) {
+        if (Object.prototype.hasOwnProperty.call(res.data, key)) {
+          const element = res.data[key];
+          Options.push({ value: element.descripcion, viewValue: element.descripcion, obligatory: element.sujeto_obligado });
+        }
+      }
+      this.juridicalObligatoryOptions = {
+        options: Options
+      };
+    });
+
+    this.requestService.getPhysicalObligatoryOptions().subscribe((res: any) => {
+      const Options = [];
+      for (const key in res.data) {
+        if (Object.prototype.hasOwnProperty.call(res.data, key)) {
+          const element = res.data[key];
+          Options.push({ value: element.descripcion, viewValue: element.descripcion, obligatory: element.sujeto_obligado });
+        }
+      }
+      this.physicalObligatoryOptions = {
+        options: Options
+      };
+    });
+
     this.isFormValidToFill = false;
     this.route.params.subscribe(res => {
       this.ID = res.key;
@@ -650,11 +748,12 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
         sex: [{ value: '', disabled: false }, Validators.required],
         pep_radio_insured: ['', Validators.required],
         isContractor: ['', Validators.required],
+        isPayer: ['', Validators.required],
         // isJuridica: ['', Validators.required],
         nationality: ['', Validators.required],
         idType: ['', Validators.required],
         id2: ['', Validators.required],
-        age: [{ value: '', disabled: false }, Validators.required],
+        age: [{ value: '', disabled: true }, Validators.required],
         weight: ['', Validators.required],
         height: ['', Validators.required],
         bmi: [{ value: '', disabled: true }, Validators.required],
@@ -666,6 +765,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
         tel: [''],
         cel: ['', Validators.required],
         officeTel: [''],
+        id2Attached: [''],
         email: ['', [Validators.required, Validators.email]],
         office: this.fb.group({
           company: [''],
@@ -677,59 +777,40 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
           country: [''],
         })
       }),
-      contractor: this.fb.group({
-        // conozcaSuClientePersonaJuridica: this.fb.group({}),
-        // conozcaSuClientePersona: this.fb.group({}),
-        firstName: ['', Validators.required],
-        secondName: ['', Validators.required],
-        lastName: ['', Validators.required],
-        date: ['', Validators.required],
-        sex: ['', Validators.required],
-        nationality: ['', Validators.required],
-        idType: ['', Validators.required],
-        id2: ['', Validators.required],
-        age: [{ value: '', disabled: false }, Validators.required],
-        weight: ['', Validators.required],
-        height: ['', Validators.required],
-        weightUnit: ['', Validators.required],
-        heightUnit: ['', Validators.required],
-        bmi: [{ value: '', disabled: true }, Validators.required],
-        status: ['', Validators.required],
-        country: ['', Validators.required],
-        city: ['', Validators.required],
-        direction: ['', Validators.required],
-        tel: [''],
-        cel: ['', Validators.required],
-        officeTel: [''],
-        fax: [''],
-        email: ['', [Validators.required, Validators.email]],
-        office: this.fb.group({
-          company: [''],
-          position: [''],
-          direction: [''],
-          economicActivity: [''],
-          sector: [''],
-          city: [''],
-          country: [''],
-        })
-        /*societyName: ['', Validators.required],
-        commercialName: [''],
-        taxpayerNumber: ['', Validators.required],
-        socialHome: [''],
-        tel: ['', Validators.required],
-        email: ['', Validators.required],
-        commercialActivity: ['', Validators.required],
-        // requestType: ['', Validators.required],
-        legalRepresentation: this.fb.group({
-          name: ['', Validators.required],
-          position: ['', Validators.required],
-          nationality: ['', Validators.required],
-          idType: ['', Validators.required],
-          id2: ['', Validators.required],
-          policy: [''],
-          email: ['', Validators.required]
-        })*/
-      }),
+      // contractor: this.fb.group({
+      //   firstName: ['', Validators.required],
+      //   secondName: ['', Validators.required],
+      //   lastName: ['', Validators.required],
+      //   date: ['', Validators.required],
+      //   sex: ['', Validators.required],
+      //   nationality: ['', Validators.required],
+      //   idType: ['', Validators.required],
+      //   id2: ['', Validators.required],
+      //   age: [{ value: '', disabled: false }, Validators.required],
+      //   weight: ['', Validators.required],
+      //   height: ['', Validators.required],
+      //   weightUnit: ['', Validators.required],
+      //   heightUnit: ['', Validators.required],
+      //   bmi: [{ value: '', disabled: true }, Validators.required],
+      //   status: ['', Validators.required],
+      //   country: ['', Validators.required],
+      //   city: ['', Validators.required],
+      //   direction: ['', Validators.required],
+      //   tel: [''],
+      //   cel: ['', Validators.required],
+      //   officeTel: [''],
+      //   fax: [''],
+      //   email: ['', [Validators.required, Validators.email]],
+      //   office: this.fb.group({
+      //     company: [''],
+      //     position: [''],
+      //     direction: [''],
+      //     economicActivity: [''],
+      //     sector: [''],
+      //     city: [''],
+      //     country: [''],
+      //   })
+      // }),
       exposedPerson: this.fb.group({
         headLine: ['', Validators.required],
 
@@ -1518,82 +1599,70 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
     console.log(event);
     this.isJuridica = false;
 
+    if (event.name === 'mandatorySubject') {
+      if (formP.get('contractorIsJuridical').value === 'SI') {
+        if (this.juridicalObligatoryOptions.options[this.juridicalObligatoryOptions.options.map((e) => e.value).indexOf(event.valor)].obligatory === '1') {
+          formGeneral.addControl('antiLaundering', this.fb.group({}));
+        } else {
+          formGeneral.removeControl('antiLaundering');
+        }
+      } else if (formP.get('contractorIsJuridical').value === 'NO') {
+        if (this.physicalObligatoryOptions.options[this.physicalObligatoryOptions.options.map((e) => e.value).indexOf(event.valor)].obligatory === '1') {
+          formGeneral.addControl('antiLaundering', this.fb.group({}));
+        } else {
+          formGeneral.removeControl('antiLaundering');
+        }
+      }
+    }
+
+    if (event.name === 'mandatorySubjectPayer') {
+      if (formP.get('payerIsJuridical').value === 'SI') {
+        if (this.juridicalObligatoryOptions.options[this.juridicalObligatoryOptions.options.map((e) => e.value).indexOf(event.valor)].obligatory === '1') {
+          formGeneral.addControl('antiLaunderingPayer', this.fb.group({}));
+        } else {
+          formGeneral.removeControl('antiLaunderingPayer');
+        }
+      } else if (formP.get('payerIsJuridical').value === 'NO') {
+        if (this.physicalObligatoryOptions.options[this.physicalObligatoryOptions.options.map((e) => e.value).indexOf(event.valor)].obligatory === '1') {
+          formGeneral.addControl('antiLaunderingPayer', this.fb.group({}));
+        } else {
+          formGeneral.removeControl('antiLaunderingPayer');
+        }
+      }
+    }
+
     if (event.valor === 'SI' || event.valor === 'SI') {
       switch (event.name) {
         case 'isContractor':
-          // formP.removeControl('isJuridica');
-          // formEP.removeControl('contractor');
+          formP.removeControl('contractorIsJuridical');
+          formP.removeControl('mandatorySubject');
 
-          // if (formContractor.get('conozcaSuClientePersona')) {
-          //   formContractor.removeControl('conozcaSuClientePersona');
-          // }
-          // if (formGeneral.get('contractor')) {
-          //   formGeneral.removeControl('contractor');
-          // }
-          // if (formContractor.get('conozcaSuClientePersonaJuridica')) {
-          //   formContractor.removeControl('conozcaSuClientePersonaJuridica');
-          // }
-
-          formP.addControl('isJuridica', this.fb.control('', Validators.required));
-          if (formEP) {
-            formEP.addControl('contractor', this.fb.control('', Validators.required));
+          if (this.newRequest.get('files').get('copyId')) {
+            formFiles.removeControl('copyId');
           }
-          if (!formGeneral.get('contractor')) {
-            formGeneral.addControl('contractor', this.fb.group({
-              // conozcaSuClientePersonaJuridica: this.fb.group({}),
-              // conozcaSuClientePersona: this.fb.group({}),
-              firstName: ['', Validators.required],
-              secondName: ['', Validators.required],
-              lastName: ['', Validators.required],
-              date: ['', Validators.required],
-              sex: ['', Validators.required],
-              nationality: ['', Validators.required],
-              idType: ['', Validators.required],
-              id2: ['', Validators.required],
-              age: [{ value: '', disabled: false }, Validators.required],
-              weight: ['', Validators.required],
-              height: ['', Validators.required],
-              weightUnit: ['', Validators.required],
-              heightUnit: ['', Validators.required],
-              bmi: [{ value: '', disabled: true }, Validators.required],
-              status: ['', Validators.required],
-              country: ['', Validators.required],
-              city: ['', Validators.required],
-              direction: ['', Validators.required],
-              tel: [''],
-              cel: ['', Validators.required],
-              officeTel: [''],
-              fax: [''],
-              email: ['', [Validators.required, Validators.email]],
-              office: this.fb.group({
-                company: [''],
-                position: [''],
-                direction: [''],
-                economicActivity: [''],
-                sector: [''],
-                city: [''],
-                country: [''],
-              })
-              /*societyName: ['', Validators.required],
-              commercialName: [''],
-              taxpayerNumber: ['', Validators.required],
-              socialHome: [''],
-              tel: ['', Validators.required],
-              email: ['', Validators.required],
-              commercialActivity: ['', Validators.required],
-              // requestType: ['', Validators.required],
-              legalRepresentation: this.fb.group({
-                name: ['', Validators.required],
-                position: ['', Validators.required],
-                nationality: ['', Validators.required],
-                idType: ['', Validators.required],
-                id2: ['', Validators.required],
-                policy: [''],
-                email: ['', Validators.required]
-              })*/
-            }));
-          } else {
-            console.log('Ya existe, por tanto no hay que crear a contractor de nuevo.');
+          if ((this.newRequest.get('antiLaundering'))) {
+            formGeneral.removeControl('antiLaundering');
+          }
+          if ((this.newRequest.get('conozcaSuClientePersonaJuridica'))) {
+            formGeneral.removeControl('conozcaSuClientePersonaJuridica');
+          }
+          if (this.newRequest.get('person').get('mandatorySubject')) {
+            formP.removeControl('mandatorySubject');
+          }
+          formP.removeControl('isJuridica');
+          if (formEP) {
+            formEP.removeControl('contractor');
+            formEP.removeControl('contractorExposedInfo');
+          }
+          if (this.newRequest.get('files').get('mercantile')) {
+            formFiles.removeControl('mercantile');
+          }
+          if (formGeneral.get('contractor')) {
+            formGeneral.removeControl('contractor');
+          }
+
+          if (formGeneral.get('contractorJuridical')) {
+            formGeneral.removeControl('contractorJuridical');
           }
 
           this.newRequest.get('person').get('office').get('company').clearValidators();
@@ -1623,8 +1692,90 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
           this.newRequest.get('person').get('office').get('country').clearValidators();
           this.newRequest.get('person').get('office').get('country').updateValueAndValidity();
           this.newRequest.get('person').get('office').get('country').markAsUntouched();
-
           break;
+
+        case 'contractorIsJuridical':
+
+          formEP.removeControl('contractor');
+          formGeneral.removeControl('contractor');
+          formGeneral.addControl('contractorJuridical', this.fb.group(this.juridicalGroup));
+
+          formGeneral.addControl('conozcaSuClientePersonaJuridica', this.fb.group({}));
+          formP.get('mandatorySubject').reset();
+          break;
+
+        case 'isPayer':
+          formP.removeControl('payerIsJuridical');
+          formP.removeControl('mandatorySubjectPayer');
+
+
+          if ((this.newRequest.get('antiLaunderingPayer'))) {
+            formGeneral.removeControl('antiLaunderingPayer');
+          }
+          if ((this.newRequest.get('conozcaSuClientePersonaJuridicaPayer'))) {
+            formGeneral.removeControl('conozcaSuClientePersonaJuridicaPayer');
+          }
+
+          formP.removeControl('isJuridica');
+          if (formEP) {
+            formEP.removeControl('payer');
+            formEP.removeControl('payerExposedInfo');
+          }
+
+          formEP.removeControl('incomesCertified');
+
+
+          if (formGeneral.get('payer')) {
+            formGeneral.removeControl('payer');
+          }
+
+          if (formGeneral.get('payerJuridical')) {
+            formGeneral.removeControl('payerJuridical');
+          }
+
+          this.newRequest.get('person').get('office').get('company').clearValidators();
+          this.newRequest.get('person').get('office').get('company').updateValueAndValidity();
+          this.newRequest.get('person').get('office').get('company').markAsUntouched();
+
+          this.newRequest.get('person').get('office').get('position').clearValidators();
+          this.newRequest.get('person').get('office').get('position').updateValueAndValidity();
+          this.newRequest.get('person').get('office').get('position').markAsUntouched();
+
+          this.newRequest.get('person').get('office').get('direction').clearValidators();
+          this.newRequest.get('person').get('office').get('direction').updateValueAndValidity();
+          this.newRequest.get('person').get('office').get('direction').markAsUntouched();
+
+          this.newRequest.get('person').get('office').get('economicActivity').clearValidators();
+          this.newRequest.get('person').get('office').get('economicActivity').updateValueAndValidity();
+          this.newRequest.get('person').get('office').get('economicActivity').markAsUntouched();
+
+          this.newRequest.get('person').get('office').get('sector').clearValidators();
+          this.newRequest.get('person').get('office').get('sector').updateValueAndValidity();
+          this.newRequest.get('person').get('office').get('sector').markAsUntouched();
+
+          this.newRequest.get('person').get('office').get('city').clearValidators();
+          this.newRequest.get('person').get('office').get('city').updateValueAndValidity();
+          this.newRequest.get('person').get('office').get('city').markAsUntouched();
+
+          this.newRequest.get('person').get('office').get('country').clearValidators();
+          this.newRequest.get('person').get('office').get('country').updateValueAndValidity();
+          this.newRequest.get('person').get('office').get('country').markAsUntouched();
+          break;
+
+        case 'payerIsJuridical':
+
+          formEP.removeControl('payer');
+          formEP.removeControl('payerExposedInfo');
+          formEP.removeControl('incomesCertified');
+
+          formP.get('mandatorySubjectPayer').reset();
+
+          formGeneral.removeControl('payer');
+          formGeneral.addControl('payerJuridical', this.fb.group(this.juridicalGroup));
+
+          formGeneral.addControl('conozcaSuClientePersonaJuridicaPayer', this.fb.group({}));
+          break;
+
 
         case 'isJuridica':
 
@@ -1659,7 +1810,13 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
             time: ['', Validators.required],
             timeNumber: ['', [Validators.required, Validators.min(1)]]
           }));
-          formGeneral.addControl('conozcaSuClientePersonaContratante', this.fb.group({}));
+
+          if (!formEP.get('payer')) {
+            if (!formEP.get('incomesCertified')) {
+              formEP.addControl('incomesCertified', this.fb.control('', Validators.required));
+            }
+          }
+          // formGeneral.addControl('conozcaSuClientePersonaContratante', this.fb.group({}));
           break;
         // Si
         case 'headLine':
@@ -1669,7 +1826,25 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
             timeNumber: ['', [Validators.required, Validators.min(1)]]
           }));
 
-          formGeneral.addControl('conozcaSuClientePersona', this.fb.group({}));
+          if (!formEP.get('payer')) {
+            if (!formEP.get('incomesCertified')) {
+              formEP.addControl('incomesCertified', this.fb.control('', Validators.required));
+            }
+          }
+
+          // formGeneral.addControl('conozcaSuClientePersona', this.fb.group({}));
+          break;
+
+        case 'payer':
+          exposedPersonForm.addControl('payerExposedInfo', this.fb.group({
+            lastPosition: ['', Validators.required],
+            time: ['', Validators.required],
+            timeNumber: ['', [Validators.required, Validators.min(1)]]
+          }));
+
+          formEP.addControl('incomesCertified', this.fb.control('', Validators.required));
+
+          // formGeneral.addControl('conozcaSuClientePersona', this.fb.group({}));
           break;
 
         case 'hasDeclinedInsuranceCompany':
@@ -1738,15 +1913,19 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
           /* if (!(this.newRequest.get('conozcaSuClientePersonaJuridica'))) {
              formGeneral.addControl('conozcaSuClientePersonaJuridica', this.fb.group({}));
            }*/
-          if (!(this.newRequest.get('files').get('mercantile'))) {
-            formFiles.addControl('mercantile', this.fb.array([this.createFormArray('mercantileRegister')]));
-            this.mercantileRegisterArray = this.newRequest.get('files').get('mercantile') as FormArray;
-          } else if (this.newRequest.get('files').get('mercantile')) {
-            formFiles.removeControl('mercantile');
-            formFiles.addControl('mercantile', this.fb.array([this.createFormArray('mercantileRegister')]));
-            this.mercantileRegisterArray = this.newRequest.get('files').get('mercantile') as FormArray;
-          }
+          // if (!(this.newRequest.get('files').get('mercantile'))) {
+          //   formFiles.addControl('mercantile', this.fb.array([this.createFormArray('mercantileRegister')]));
+          //   this.mercantileRegisterArray = this.newRequest.get('files').get('mercantile') as FormArray;
+          // } else if (this.newRequest.get('files').get('mercantile')) {
+          //   formFiles.removeControl('mercantile');
+          //   formFiles.addControl('mercantile', this.fb.array([this.createFormArray('mercantileRegister')]));
+          //   this.mercantileRegisterArray = this.newRequest.get('files').get('mercantile') as FormArray;
+          // }
           formGeneral.addControl('antiLaundering', this.fb.group({}));
+          break;
+
+        case 'mandatorySubjectPayer':
+          formGeneral.addControl('antiLaunderingPayer', this.fb.group({}));
           break;
 
         default:
@@ -1755,94 +1934,21 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
     } else if (event.valor === 'NO' || event.valor === 'NO') {
       switch (event.name) {
         case 'isContractor':
-          if (this.newRequest.get('conozcaSuClientePersonaContratante')) {
-            formGeneral.removeControl('conozcaSuClientePersonaContratante');
-          }
+          // if (this.newRequest.get('conozcaSuClientePersonaContratante')) {
+          //   formGeneral.removeControl('conozcaSuClientePersonaContratante');
+          // }
+
+          formP.addControl('contractorIsJuridical', this.fb.control('', Validators.required));
+          formP.addControl('mandatorySubject', this.fb.control('', Validators.required));
 
           // formP.addControl('isJuridica', this.fb.control('', Validators.required));
           // formEP.addControl('contractor', this.fb.control('', Validators.required));
 
-          // if (!formGeneral.get('contractor')) {
-          //   formGeneral.addControl('contractor', this.fb.group({
-          //     // conozcaSuClientePersonaJuridica: this.fb.group({}),
-          //     // conozcaSuClientePersona: this.fb.group({}),
-          //     firstName: ['', Validators.required],
-          //     secondName: [''],
-          //     lastName: ['', Validators.required],
-          //     date: ['', Validators.required],
-          //     sex: ['', Validators.required],
-          //     nationality: ['', Validators.required],
-          //     idType: ['', Validators.required],
-          //     id2: ['', Validators.required],
-          //     age: [{ value: '', disabled: false }, Validators.required],
-          //     weight: ['', Validators.required],
-          //     height: ['', Validators.required],
-          //     weightUnit: ['', Validators.required],
-          //     heightUnit: ['', Validators.required],
-          //     bmi: [{ value: '', disabled: true }, Validators.required],
-          //     status: ['', Validators.required],
-          //     country: ['', Validators.required],
-          //     city: ['', Validators.required],
-          //     direction: ['', Validators.required],
-          //     tel: [''],
-          //     cel: ['', Validators.required],
-          //     officeTel: [''],
-          //     fax: [''],
-          //     email: ['', [Validators.required, Validators.email]],
-          //     office: this.fb.group({
-          //       company: [''],
-          //       position: [''],
-          //       direction: [''],
-          //       economicActivity: [''],
-          //       sector: [''],
-          //       city: [''],
-          //       country: [''],
-          //     })
-          //     /*societyName: ['', Validators.required],
-          //     commercialName: [''],
-          //     taxpayerNumber: ['', Validators.required],
-          //     socialHome: [''],
-          //     tel: ['', Validators.required],
-          //     email: ['', Validators.required],
-          //     commercialActivity: ['', Validators.required],
-          //     // requestType: ['', Validators.required],
-          //     legalRepresentation: this.fb.group({
-          //       name: ['', Validators.required],
-          //       position: ['', Validators.required],
-          //       nationality: ['', Validators.required],
-          //       idType: ['', Validators.required],
-          //       id2: ['', Validators.required],
-          //       policy: [''],
-          //       email: ['', Validators.required]
-          //     })*/
-          //   }));
+          // 
 
           /* if (this.newRequest.get('conozcaSuClientePersona')) {
              formGeneral.removeControl('conozcaSuClientePersona');
            }*/
-          if (this.newRequest.get('files').get('copyId')) {
-            formFiles.removeControl('copyId');
-          }
-          if ((this.newRequest.get('antiLaundering'))) {
-            formGeneral.removeControl('antiLaundering');
-          }
-          if ((this.newRequest.get('conozcaSuClientePersonaJuridica'))) {
-            formGeneral.removeControl('conozcaSuClientePersonaJuridica');
-          }
-          if (this.newRequest.get('person').get('mandatorySubject')) {
-            formP.removeControl('mandatorySubject');
-          }
-          formP.removeControl('isJuridica');
-          if (formEP) {
-            formEP.removeControl('contractor');
-            formEP.removeControl('contractorExposedInfo');
-          }
-          if (this.newRequest.get('files').get('mercantile')) {
-            formFiles.removeControl('mercantile');
-          }
-          if (formGeneral.get('contractor')) {
-            formGeneral.removeControl('contractor');
-          }
 
           this.newRequest.get('person').get('office').get('company').setValidators(Validators.required);
           this.newRequest.get('person').get('office').get('company').updateValueAndValidity();
@@ -1872,6 +1978,78 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
           this.newRequest.get('person').get('office').get('country').updateValueAndValidity();
           this.newRequest.get('person').get('office').get('country').markAsUntouched();
 
+          break;
+
+        case 'contractorIsJuridical':
+          formGeneral.removeControl('conozcaSuClientePersonaJuridica');
+          formGeneral.removeControl('antiLaundering');
+          formGeneral.removeControl('contractorJuridical');
+          formP.get('mandatorySubject').reset();
+
+          if (formEP) {
+            formEP.addControl('contractor', this.fb.control('', Validators.required));
+          }
+          formGeneral.addControl('contractor', this.fb.group(this.holderGroup));
+          break;
+
+        case 'isPayer':
+          // if (this.newRequest.get('conozcaSuClientePersonaContratante')) {
+          //   formGeneral.removeControl('conozcaSuClientePersonaContratante');
+          // }
+
+          formP.addControl('payerIsJuridical', this.fb.control('', Validators.required));
+          formP.addControl('mandatorySubjectPayer', this.fb.control('', Validators.required));
+
+          // formP.addControl('isJuridica', this.fb.control('', Validators.required));
+          // formEP.addControl('contractor', this.fb.control('', Validators.required));
+
+          // 
+
+          /* if (this.newRequest.get('conozcaSuClientePersona')) {
+             formGeneral.removeControl('conozcaSuClientePersona');
+           }*/
+
+          this.newRequest.get('person').get('office').get('company').setValidators(Validators.required);
+          this.newRequest.get('person').get('office').get('company').updateValueAndValidity();
+          this.newRequest.get('person').get('office').get('company').markAsUntouched();
+
+          this.newRequest.get('person').get('office').get('position').setValidators(Validators.required);
+          this.newRequest.get('person').get('office').get('position').updateValueAndValidity();
+          this.newRequest.get('person').get('office').get('position').markAsUntouched();
+
+          this.newRequest.get('person').get('office').get('direction').setValidators(Validators.required);
+          this.newRequest.get('person').get('office').get('direction').updateValueAndValidity();
+          this.newRequest.get('person').get('office').get('direction').markAsUntouched();
+
+          this.newRequest.get('person').get('office').get('economicActivity').setValidators(Validators.required);
+          this.newRequest.get('person').get('office').get('economicActivity').updateValueAndValidity();
+          this.newRequest.get('person').get('office').get('economicActivity').markAsUntouched();
+
+          this.newRequest.get('person').get('office').get('sector').setValidators(Validators.required);
+          this.newRequest.get('person').get('office').get('sector').updateValueAndValidity();
+          this.newRequest.get('person').get('office').get('sector').markAsUntouched();
+
+          this.newRequest.get('person').get('office').get('city').setValidators(Validators.required);
+          this.newRequest.get('person').get('office').get('city').updateValueAndValidity();
+          this.newRequest.get('person').get('office').get('city').markAsUntouched();
+
+          this.newRequest.get('person').get('office').get('country').setValidators(Validators.required);
+          this.newRequest.get('person').get('office').get('country').updateValueAndValidity();
+          this.newRequest.get('person').get('office').get('country').markAsUntouched();
+
+          break;
+
+        case 'payerIsJuridical':
+          formGeneral.removeControl('conozcaSuClientePersonaJuridicaPayer');
+          formGeneral.removeControl('antiLaunderingPayer');
+          formGeneral.removeControl('payerJuridical');
+          formP.get('mandatorySubjectPayer').reset();
+
+          if (formEP) {
+            formEP.removeControl('incomesCertified');
+            formEP.addControl('payer', this.fb.control('', Validators.required));
+          }
+          formGeneral.addControl('payer', this.fb.group(this.holderGroup));
           break;
 
         case 'isJuridica':
@@ -1904,7 +2082,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
               // conozcaSuClientePersonaJuridica: this.fb.group({}),
               // conozcaSuClientePersona: this.fb.group({}),
               firstName: ['', Validators.required],
-              secondName: [''],
+              secondName: ['', Validators.required],
               lastName: ['', Validators.required],
               date: ['', Validators.required],
               sex: ['', Validators.required],
@@ -1969,17 +2147,31 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
 
         case 'contractor':
           exposedPersonForm.removeControl('contractorExposedInfo');
-          if (this.newRequest.get('conozcaSuClientePersonaContratante')) {
-            formGeneral.removeControl('conozcaSuClientePersonaContratante');
+          // if (this.newRequest.get('conozcaSuClientePersonaContratante')) {
+          //   formGeneral.removeControl('conozcaSuClientePersonaContratante');
+          // }
+
+          if (!formEP.get('payer')) {
+            if (formEP.get('incomesCertified')) {
+              formEP.removeControl('incomesCertified');
+            }
           }
           break;
 
         case 'headLine':
           exposedPersonForm.removeControl('headLineExposedInfo');
-
-          if (this.newRequest.get('conozcaSuClientePersona')) {
-            formGeneral.removeControl('conozcaSuClientePersona');
+          if (!formEP.get('payer')) {
+            if (formEP.get('incomesCertified')) {
+              formEP.removeControl('incomesCertified');
+            }
           }
+
+          break;
+
+        case 'payer':
+          formEP.removeControl('incomesCertified');
+          exposedPersonForm.removeControl('payerExposedInfo');
+
           break;
 
         case 'hasDeclinedInsuranceCompany':
@@ -2109,17 +2301,22 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
 
         case 'mandatorySubject':
 
-          if (!(this.newRequest.get('files').get('mercantile'))) {
-            formFiles.addControl('mercantile', this.fb.array([this.createFormArray('mercantileRegister')]));
-            this.mercantileRegisterArray = this.newRequest.get('files').get('mercantile') as FormArray;
-          } else if (this.newRequest.get('files').get('mercantile')) {
-            formFiles.removeControl('mercantile');
-            formFiles.addControl('mercantile', this.fb.array([this.createFormArray('mercantileRegister')]));
-            this.mercantileRegisterArray = this.newRequest.get('files').get('mercantile') as FormArray;
-          }
+          // if (!(this.newRequest.get('files').get('mercantile'))) {
+          //   formFiles.addControl('mercantile', this.fb.array([this.createFormArray('mercantileRegister')]));
+          //   this.mercantileRegisterArray = this.newRequest.get('files').get('mercantile') as FormArray;
+          // } else if (this.newRequest.get('files').get('mercantile')) {
+          //   formFiles.removeControl('mercantile');
+          //   formFiles.addControl('mercantile', this.fb.array([this.createFormArray('mercantileRegister')]));
+          //   this.mercantileRegisterArray = this.newRequest.get('files').get('mercantile') as FormArray;
+          // }
           if ((this.newRequest.get('antiLaundering'))) {
             formGeneral.removeControl('antiLaundering');
           }
+
+          break;
+
+        case 'mandatorySubjectPayer':
+          formGeneral.removeControl('antiLaunderingPayer');
 
           break;
 

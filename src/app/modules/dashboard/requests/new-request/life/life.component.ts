@@ -105,6 +105,19 @@ export class LifeComponent implements OnInit, DoCheck {
   todayDate = new Date();
   maxDate = new Date();
 
+  juridicalGroup = {
+    businessName: ['', Validators.required],
+    rnc: ['', Validators.required],
+    family: ['', Validators.required],
+    purpose: ['', Validators.required],
+    taxCountry: ['', Validators.required],
+  };
+
+  countryTaxing: FieldConfig = {
+    label: 'País donde tributa por sus ingresos',
+    options: $country
+  };
+
   primaryBeneficaryTitles = [];
   contigentBeneficaryTitles = [];
   primaryAnotherTitle: any;
@@ -681,6 +694,9 @@ export class LifeComponent implements OnInit, DoCheck {
   mercantileRegisterArray: FormArray;
   arrayFilesTitlesMercantile = [];
 
+  juridicalObligatoryOptions: any;
+  physicalObligatoryOptions: any;
+
   @ViewChild('form', { static: false }) form;
   @ViewChild('matAccordion', { static: false }) matAccordion;
 
@@ -689,6 +705,35 @@ export class LifeComponent implements OnInit, DoCheck {
        .subscribe(res => {
          console.log(res);
        });*/
+    this.requestService.getJuridicalObligatoryOptions().subscribe((res: any) => {
+      const Options = [];
+      for (const key in res.data) {
+        if (Object.prototype.hasOwnProperty.call(res.data, key)) {
+          const element = res.data[key];
+          Options.push({ value: element.descripcion, viewValue: element.descripcion, obligatory: element.sujeto_obligado });
+        }
+      }
+      console.log(Options);
+      this.juridicalObligatoryOptions = {
+        options: Options
+      };
+
+    });
+
+    this.requestService.getPhysicalObligatoryOptions().subscribe((res: any) => {
+      const Options = [];
+      for (const key in res.data) {
+        if (Object.prototype.hasOwnProperty.call(res.data, key)) {
+          const element = res.data[key];
+          Options.push({ value: element.descripcion, viewValue: element.descripcion, obligatory: element.sujeto_obligado });
+        }
+      }
+      console.log(Options);
+      this.physicalObligatoryOptions = {
+        options: Options
+      };
+    });
+
     this.route.params.subscribe(res => {
       this.ID = res.id;
     });
@@ -725,11 +770,11 @@ export class LifeComponent implements OnInit, DoCheck {
         direction: ['', Validators.required],
         tel: [''],
         cel: ['', Validators.required],
+        id2Attached: ['', Validators.required],
         officeTel: [''],
         email: ['', [Validators.required, Validators.email]],
         sameAsContractor: ['', Validators.required],
-        contractorIsLegalEntity: ['', Validators.required],
-        // sameAsPayer: ['', Validators.required],
+        sameAsPayer: ['', Validators.required],
       }),
       exposedPerson: this.fb.group({
         isExposed: ['', Validators.required],
@@ -1130,7 +1175,7 @@ export class LifeComponent implements OnInit, DoCheck {
       form.removeControl('disability');
       form.removeControl('seriousIllnesses');
       form.removeControl('waiverPremiumPayment');
-
+    
       if (age >= 18 && age <= 70) {
         form.addControl('advancePaymentOfCapital', this.fb.control('', [Validators.required, Validators.max(300000)]));
         form.addControl('accidentalDeathDismemberment', this.fb.control('', [Validators.required, Validators.max(400000)]));
@@ -1500,10 +1545,9 @@ export class LifeComponent implements OnInit, DoCheck {
   }
 
   onStudiesChange2(event, i, name) {
+    const reader = new FileReader();
 
     if (name == 'documentsKnowClient') {
-      const reader = new FileReader();
-
       if (event.target.files && event.target.files.length) {
         const [file] = event.target.files;
         reader.readAsDataURL(file);
@@ -1518,8 +1562,6 @@ export class LifeComponent implements OnInit, DoCheck {
       }
     }
     else if (name == 'copyId') {
-      const reader = new FileReader();
-
       if (event.target.files && event.target.files.length) {
         const [file] = event.target.files;
         reader.readAsDataURL(file);
@@ -1534,8 +1576,6 @@ export class LifeComponent implements OnInit, DoCheck {
       }
     }
     else if (name == 'mercantile') {
-      const reader = new FileReader();
-
       if (event.target.files && event.target.files.length) {
         const [file] = event.target.files;
         reader.readAsDataURL(file);
@@ -1543,6 +1583,45 @@ export class LifeComponent implements OnInit, DoCheck {
         reader.onload = () => {
           this.newRequest.get('files').get('mercantile').get(i.toString()).patchValue({
             ['register']: reader.result
+          });
+
+          //this.markForCheck();
+        };
+      }
+    } else if (name === 'contractor') {
+      if (event.target.files && event.target.files.length) {
+        const [file] = event.target.files;
+        reader.readAsDataURL(file);
+
+        reader.onload = () => {
+          this.newRequest.get(name).patchValue({
+            ['id2Attached']: reader.result
+          });
+
+          //this.markForCheck();
+        };
+      }
+    } else if (name === 'payer') {
+      if (event.target.files && event.target.files.length) {
+        const [file] = event.target.files;
+        reader.readAsDataURL(file);
+
+        reader.onload = () => {
+          this.newRequest.get(name).patchValue({
+            ['id2Attached']: reader.result
+          });
+
+          //this.markForCheck();
+        };
+      }
+    } else if (name === 'person') {
+      if (event.target.files && event.target.files.length) {
+        const [file] = event.target.files;
+        reader.readAsDataURL(file);
+
+        reader.onload = () => {
+          this.newRequest.get(name).patchValue({
+            ['id2Attached']: reader.result
           });
 
           //this.markForCheck();
@@ -1932,8 +2011,6 @@ export class LifeComponent implements OnInit, DoCheck {
     const formFiles = this.newRequest.get('files') as FormGroup;
     const formGeneral = this.newRequest as FormGroup;
 
-    console.log('SELECT CHANGE EVENT: ', event);
-
     if (event.name === 'connectionType') {
       switch (event.valor) {
         case 'FAMILIA':
@@ -1987,6 +2064,54 @@ export class LifeComponent implements OnInit, DoCheck {
       }
     }
 
+    // case 'contractorMandatory':
+    //       formGeneral.addControl('antiLaunderingContractor', this.fb.group({}));
+    //       break;
+
+    //     case 'payerMandatory':
+    //       formGeneral.addControl('antiLaunderingPayer', this.fb.group({}));
+    //       break;
+
+    //       case 'contractorMandatory':
+    //       formGeneral.removeControl('antiLaunderingContractor');
+    //       break;
+
+    //     case 'payerMandatory':
+    //       formGeneral.removeControl('antiLaunderingPayer');
+    //       break;
+
+    if (event.name === 'contractorMandatory') {
+      if (formP.get('contractorIsLegalEntity').value === 'SI') {
+        if (this.juridicalObligatoryOptions.options[this.juridicalObligatoryOptions.options.map((e) => e.value).indexOf(event.valor)].obligatory === '1') {
+          formGeneral.addControl('antiLaunderingContractor', this.fb.group({}));
+        } else {
+          formGeneral.removeControl('antiLaunderingContractor');
+        }
+      } else if (formP.get('contractorIsLegalEntity').value === 'NO') {
+        if (this.physicalObligatoryOptions.options[this.physicalObligatoryOptions.options.map((e) => e.value).indexOf(event.valor)].obligatory === '1') {
+          formGeneral.addControl('antiLaunderingContractor', this.fb.group({}));
+        } else {
+          formGeneral.removeControl('antiLaunderingContractor');
+        }
+      }
+    }
+
+    if (event.name === 'payerMandatory') {
+      if (formP.get('payerIsLegalEntity').value === 'SI') {
+        if (this.juridicalObligatoryOptions.options[this.juridicalObligatoryOptions.options.map((e) => e.value).indexOf(event.valor)].obligatory === '1') {
+          formGeneral.addControl('antiLaunderingPayer', this.fb.group({}));
+        } else {
+          formGeneral.removeControl('antiLaunderingPayer');
+        }
+      } else if (formP.get('payerIsLegalEntity').value === 'NO') {
+        if (this.physicalObligatoryOptions.options[this.physicalObligatoryOptions.options.map((e) => e.value).indexOf(event.valor)].obligatory === '1') {
+          formGeneral.addControl('antiLaunderingPayer', this.fb.group({}));
+        } else {
+          formGeneral.removeControl('antiLaunderingPayer');
+        }
+      }
+    }
+
     if (event.valor === 'SI') {
       //console.log(`aqui estoy yo '${event.name}'`);
       switch (event.name) {
@@ -2011,7 +2136,13 @@ export class LifeComponent implements OnInit, DoCheck {
             lastPosition: ['', Validators.required],
             timeNumber: ['', Validators.required]
           }));
-          formGeneral.addControl('knowYourCustomer', this.fb.group({}));
+
+          if (!formEP.get('isPayerExposed')) {
+            if (!formEP.get('incomesCertified')) {
+              formEP.addControl('incomesCertified', this.fb.control('', Validators.required));
+            }
+          }
+          // formGeneral.addControl('knowYourCustomer', this.fb.group({}));
           // if (!formQ.get('money-laundering')) {
           //   formQ.addControl('solucionAntiLavadoDinero', this.fb.group({}));
           // }
@@ -2022,7 +2153,10 @@ export class LifeComponent implements OnInit, DoCheck {
             lastPosition: ['', Validators.required],
             timeNumber: ['', Validators.required]
           }));
-          formGeneral.addControl('knowYourCustomerPagador', this.fb.group({}));
+
+          formEP.addControl('incomesCertified', this.fb.control('', Validators.required));
+
+          // formGeneral.addControl('knowYourCustomerPagador', this.fb.group({}));
           // if (!formPQ.get('money-laundering')) {
           //   formPQ.addControl('solucionAntiLavadoDinero', this.fb.group({}));
           // }
@@ -2033,7 +2167,13 @@ export class LifeComponent implements OnInit, DoCheck {
             lastPosition: ['', Validators.required],
             timeNumber: ['', Validators.required]
           }));
-          formGeneral.addControl('knowYourCustomerContratante', this.fb.group({}));
+
+          if (!formEP.get('isPayerExposed')) {
+            if (!formEP.get('incomesCertified')) {
+              formEP.addControl('incomesCertified', this.fb.control('', Validators.required));
+            }
+          }
+          // formGeneral.addControl('knowYourCustomerContratante', this.fb.group({}));
           // if (!formCQ.get('money-laundering')) {
           //   formCQ.addControl('solucionAntiLavadoDinero', this.fb.group({}));
           // }
@@ -2047,156 +2187,178 @@ export class LifeComponent implements OnInit, DoCheck {
           // formP.removeControl('payerIsLegalEntity');
           // formP.removeControl('payerLegalEntity');
           // formPQ.removeControl('solucionAntiLavadoDinero');
-          if (this.newRequest.get('payer')) {
-            this.newRequest.removeControl('payer');
+          this.newRequest.removeControl('payer');
+
+          formEP.removeControl('payer');
+          formEP.removeControl('isPayerExposed');
+
+          if (formGeneral.get('payerLegalEntity')) {
+            formGeneral.removeControl('payerLegalEntity');
           }
-          if (this.newRequest.get('exposedPerson') ) {
-            formEP.removeControl('payer');
+
+          if (formGeneral.get('payerJuridical')) {
+            formGeneral.removeControl('payerJuridical');
           }
-          if (this.newRequest.get('knowYourCustomerPagador')) {
-          this.newRequest.removeControl('knowYourCustomerPagador');
+
+          formEP.removeControl('incomesCertified');
+          formGeneral.removeControl('antiLaunderingContractor');
+          formGeneral.removeControl('antiLaunderingPayer');
+
+          if (formP.get('payerMandatory')) {
+            formP.removeControl('payerMandatory');
           }
-          if (this.newRequest.get('files').get('copyId')) {
-            formFiles.removeControl('copyId');
-          }
-          if (!(formGeneral.get('payerLegalEntity'))) {
-            formGeneral.addControl('payerLegalEntity', this.fb.group({}));
-          }
-          formP.addControl('payerIsLegalEntity', this.fb.control('', Validators.required));
+          // if (this.newRequest.get('knowYourCustomerPagador')) {
+          //   this.newRequest.removeControl('knowYourCustomerPagador');
+          // }
+          // if (this.newRequest.get('files').get('copyId')) {
+          //   formFiles.removeControl('copyId');
+          // }
+          // if (!(formGeneral.get('payerLegalEntity'))) {
+          //   formGeneral.addControl('payerLegalEntity', this.fb.group({}));
+          // }
+          formP.removeControl('payerIsLegalEntity');
           break;
 
         case 'payerIsLegalEntity':
-          // this.newRequest.removeControl('payer');
+          this.newRequest.removeControl('payer');
           // formP.addControl('payerLegalEntity', this.fb.group({}));
-          if (!formQ.get('solucionAntiLavadoDinero')) {
-            formQ.addControl('solucionAntiLavadoDinero', this.fb.group({}));
+          // if (!formQ.get('solucionAntiLavadoDinero')) {
+          //   formQ.addControl('solucionAntiLavadoDinero', this.fb.group({}));
+          // }
+
+          if (!(formGeneral.get('payerLegalEntity'))) {
+            formGeneral.addControl('payerLegalEntity', this.fb.group({}));
           }
 
+          if (!(formGeneral.get('payerJuridical'))) {
+            formGeneral.addControl('payerJuridical', this.fb.group(this.juridicalGroup));
+          }
 
-          if (!(this.newRequest.get('files').get('mercantile'))) {
-            formFiles.addControl('mercantile', this.fb.array([this.createFormArray('mercantileRegister')]));
-            this.mercantileRegisterArray = this.newRequest.get('files').get('mercantile') as FormArray;
-          }
-          else if (this.newRequest.get('files').get('mercantile')) {
-            formFiles.removeControl('mercantile');
-            formFiles.addControl('mercantile', this.fb.array([this.createFormArray('mercantileRegister')]));
-            this.mercantileRegisterArray = this.newRequest.get('files').get('mercantile') as FormArray;
-          }
+          formP.get('payerMandatory').reset();
+
+
+          formEP.removeControl('incomesCertified');
+          formEP.removeControl('isPayerExposed');
+          formEP.removeControl('payer');
+
+          // if (!(this.newRequest.get('files').get('mercantile'))) {
+          //   formFiles.addControl('mercantile', this.fb.array([this.createFormArray('mercantileRegister')]));
+          //   this.mercantileRegisterArray = this.newRequest.get('files').get('mercantile') as FormArray;
+          // }
+          // else if (this.newRequest.get('files').get('mercantile')) {
+          //   formFiles.removeControl('mercantile');
+          //   formFiles.addControl('mercantile', this.fb.array([this.createFormArray('mercantileRegister')]));
+          //   this.mercantileRegisterArray = this.newRequest.get('files').get('mercantile') as FormArray;
+          // }
           // formInsured.addControl('antiLaundering', this.fb.group({}));
           break;
-// SI
+        // SI
         case 'sameAsContractor':
           // formEP.removeControl('contractor');
-          // this.newRequest.removeControl('contractor');
+          this.newRequest.removeControl('contractor');
           // formEP.removeControl('isContractorExposed');
-          // formP.removeControl('contractorIsLegalEntity');
+          formP.removeControl('contractorIsLegalEntity');
+          formEP.removeControl('contractor');
+          formEP.removeControl('isContractorExposed');
+
+          if (this.newRequest.get('contractorLegalEntity')) {
+            this.newRequest.removeControl('contractorLegalEntity');
+          }
+
+          if (this.newRequest.get('contractorJuridical')) {
+            this.newRequest.removeControl('contractorJuridical');
+          }
+
+          formGeneral.removeControl('antiLaunderingContractor');
+          formGeneral.removeControl('antiLaunderingPayer');
+
+          if (formP.get('contractorMandatory')) {
+            formP.removeControl('contractorMandatory');
+          }
           // formP.removeControl('contractorLegalEntity');
           // formCQ.removeControl('solucionAntiLavadoDinero');
 
-          if (!(this.newRequest.get('exposedPerson'))) {
-          this.newRequest.addControl('exposedPerson', this.fb.group({
-            isExposed: ['', Validators.required],
-          }));
-        }
-        const formEP3 = this.newRequest.get('exposedPerson') as FormGroup;
-        if (this.newRequest.get('contractor') && formEP3) {
-          formEP3.addControl('isPayerExposed', this.fb.control('', Validators.required));
-        }
-        if (this.newRequest.get('contractor')) {
-          formEP3.addControl('isContractorExposed', this.fb.control('', Validators.required));
-        }
-          if (!(this.newRequest.get('files').get('documentsKnowClient'))) {
-            formFiles.addControl('documentsKnowClient', this.fb.array([this.createFormArray('filesDocumentsKnowClient')]));
-            this.filesDocumentsKnowClientArray = this.newRequest.get('files').get('documentsKnowClient') as FormArray;
-          }
-          else if (this.newRequest.get('files').get('documentsKnowClient')) {
-            formFiles.removeControl('documentsKnowClient');
-            formFiles.addControl('documentsKnowClient', this.fb.array([this.createFormArray('filesDocumentsKnowClient')]));
-            this.filesDocumentsKnowClientArray = this.newRequest.get('files').get('documentsKnowClient') as FormArray;
-          }
+          // if (!(this.newRequest.get('exposedPerson'))) {
+          //   this.newRequest.addControl('exposedPerson', this.fb.group({
+          //     isExposed: ['', Validators.required],
+          //   }));
+          // }
+          // const formEP3 = this.newRequest.get('exposedPerson') as FormGroup;
+          // if (this.newRequest.get('contractor') && formEP3) {
+          //   formEP3.addControl('isPayerExposed', this.fb.control('', Validators.required));
+          // }
+          // if (this.newRequest.get('contractor')) {
+          //   formEP3.addControl('isContractorExposed', this.fb.control('', Validators.required));
+          // }
+          // if (!(this.newRequest.get('files').get('documentsKnowClient'))) {
+          //   formFiles.addControl('documentsKnowClient', this.fb.array([this.createFormArray('filesDocumentsKnowClient')]));
+          //   this.filesDocumentsKnowClientArray = this.newRequest.get('files').get('documentsKnowClient') as FormArray;
+          // }
+          // else if (this.newRequest.get('files').get('documentsKnowClient')) {
+          //   formFiles.removeControl('documentsKnowClient');
+          //   formFiles.addControl('documentsKnowClient', this.fb.array([this.createFormArray('filesDocumentsKnowClient')]));
+          //   this.filesDocumentsKnowClientArray = this.newRequest.get('files').get('documentsKnowClient') as FormArray;
+          // }
           break;
 
         case 'contractorIsLegalEntity':
-          // this.newRequest.removeControl('contractor');
-          // formP.addControl('contractorLegalEntity', this.fb.group({}));
+          this.newRequest.removeControl('contractor');
+          this.newRequest.addControl('contractorLegalEntity', this.fb.group({}));
+          formEP.removeControl('contractor');
+          formEP.removeControl('isContractorExposed');
           // if (!formCQ.get('money-laundering')) {
           //   formCQ.addControl('solucionAntiLavadoDinero', this.fb.group({}));
           // }
 
-          formP.addControl('sameAsPayer', this.fb.control('', Validators.required));
-
-          if (!this.newRequest.get('contractor')) {
-            this.newRequest.addControl('contractor', this.fb.group({
-              firstName: ['', Validators.required],
-              secondName: ['', Validators.required],
-              lastName: ['', Validators.required],
-              date: ['', Validators.required],
-              sex: ['', Validators.required],
-              nationality: ['', Validators.required],
-              id2Type: ['', Validators.required],
-              id2: ['', Validators.required],
-              countryOfResidence: ['', Validators.required],
-              status: ['', Validators.required],
-              countryOfBirth: ['', Validators.required],
-              direction: ['', Validators.required],
-              tel: ['', Validators.required],
-              cel: ['', Validators.required],
-              officeTel: ['', Validators.required],
-              fax: ['', Validators.required],
-              email: ['', [Validators.required, Validators.email]],
-              company: this.fb.group({
-                name: ['', Validators.required],
-                position: ['', Validators.required],
-                direction: ['', Validators.required],
-                economicActivity: ['', Validators.required],
-                city: ['', Validators.required],
-                country: ['', Validators.required],
-                kinship: ['', Validators.required],
-                insurancePurpose: ['', Validators.required],
-                contractorCountry: ['', Validators.required],
-              }),
-            }));
+          if (!(formGeneral.get('contractorJuridical'))) {
+            formGeneral.addControl('contractorJuridical', this.fb.group(this.juridicalGroup));
           }
 
-          if (!this.newRequest.get('payer')) {
-            this.newRequest.addControl('payer', this.fb.group({
-              firstName: ['', Validators.required],
-              secondName: ['', Validators.required],
-              lastName: ['', Validators.required],
-              date: ['', Validators.required],
-              sex: ['', Validators.required],
-              nationality: ['', Validators.required],
-              id2Type: ['', Validators.required],
-              id2: ['', Validators.required],
-              countryOfResidence: ['', Validators.required],
-              status: ['', Validators.required],
-              countryOfBirth: ['', Validators.required],
-              direction: ['', Validators.required],
-              tel: ['', Validators.required],
-              cel: ['', Validators.required],
-              officeTel: ['', Validators.required],
-              fax: ['', Validators.required],
-              email: ['', [Validators.required, Validators.email]],
-              company: this.fb.group({
-                name: ['', Validators.required],
-                position: ['', Validators.required],
-                direction: ['', Validators.required],
-                economicActivity: ['', Validators.required],
-                city: ['', Validators.required],
-                country: ['', Validators.required],
-                kinship: ['', Validators.required],
-                insurancePurpose: ['', Validators.required],
-                contractorCountry: ['', Validators.required],
-              })
-            }));
-          }
-          const formEP2 = this.newRequest.get('exposedPerson') as FormGroup;
-          if (this.newRequest.get('contractor') && formEP2) {
-            formEP2.addControl('isPayerExposed', this.fb.control('', Validators.required));
-          }
-          if (this.newRequest.get('contractor') && formEP2) {
-            formEP2.addControl('isContractorExposed', this.fb.control('', Validators.required));
-          }
+          formP.get('contractorMandatory').reset();
+
+
+
+          // formP.addControl('sameAsPayer', this.fb.control('', Validators.required));
+
+          // if (!this.newRequest.get('payer')) {
+          //   this.newRequest.addControl('payer', this.fb.group({
+          //     firstName: ['', Validators.required],
+          //     secondName: ['', Validators.required],
+          //     lastName: ['', Validators.required],
+          //     date: ['', Validators.required],
+          //     sex: ['', Validators.required],
+          //     nationality: ['', Validators.required],
+          //     id2Type: ['', Validators.required],
+          //     id2: ['', Validators.required],
+          //     countryOfResidence: ['', Validators.required],
+          //     status: ['', Validators.required],
+          //     countryOfBirth: ['', Validators.required],
+          //     direction: ['', Validators.required],
+          //     tel: ['', Validators.required],
+          //     cel: ['', Validators.required],
+          //     officeTel: ['', Validators.required],
+          //     fax: ['', Validators.required],
+          //     email: ['', [Validators.required, Validators.email]],
+          //     company: this.fb.group({
+          //       name: ['', Validators.required],
+          //       position: ['', Validators.required],
+          //       direction: ['', Validators.required],
+          //       economicActivity: ['', Validators.required],
+          //       city: ['', Validators.required],
+          //       country: ['', Validators.required],
+          //       kinship: ['', Validators.required],
+          //       insurancePurpose: ['', Validators.required],
+          //       contractorCountry: ['', Validators.required],
+          //     })
+          //   }));
+          // }
+          // const formEP2 = this.newRequest.get('exposedPerson') as FormGroup;
+          // if (this.newRequest.get('contractor') && formEP2) {
+          //   formEP2.addControl('isPayerExposed', this.fb.control('', Validators.required));
+          // }
+          // if (this.newRequest.get('contractor') && formEP2) {
+          //   formEP2.addControl('isContractorExposed', this.fb.control('', Validators.required));
+          // }
           break;
 
         case 'isMarried':
@@ -2437,7 +2599,13 @@ export class LifeComponent implements OnInit, DoCheck {
           formEP.removeControl('insured');
           if (this.newRequest.get('knowYourCustomer')) {
             this.newRequest.removeControl('knowYourCustomer');
+          }
+
+          if (!formEP.get('isPayerExposed')) {
+            if (formEP.get('incomesCertified')) {
+              formEP.removeControl('incomesCertified');
             }
+          }
           // if ((formP.get('countryOfResidence').value === 'REPÚBLICA DOMINICANA' || formP.get('countryOfResidence').value === '') || formP.get('countryOfBirth').value === 'REPÚBLICA DOMINICANA' || formP.get('countryOfResidence').value === '') {
           //   formQ.removeControl('solucionAntiLavadoDinero');
           // }
@@ -2447,7 +2615,10 @@ export class LifeComponent implements OnInit, DoCheck {
           formEP.removeControl('payer');
           if (this.newRequest.get('knowYourCustomerPagador')) {
             this.newRequest.removeControl('knowYourCustomerPagador');
-            }
+          }
+
+          formEP.removeControl('incomesCertified');
+
           // this.newRequest.removeControl('payer');
           // if (formPA) {
           //   if (this.role === 'WWS') {
@@ -2465,9 +2636,15 @@ export class LifeComponent implements OnInit, DoCheck {
 
         case 'isContractorExposed':
           formEP.removeControl('contractor');
-           if (this.newRequest.get('knowYourCustomerContratante')) {
+          if (this.newRequest.get('knowYourCustomerContratante')) {
             this.newRequest.removeControl('knowYourCustomerContratante');
+          }
+
+          if (!formEP.get('isPayerExposed')) {
+            if (formEP.get('incomesCertified')) {
+              formEP.removeControl('incomesCertified');
             }
+          }
           // this.newRequest.removeControl('contractor');
           // if (this.role === 'WWS') {
           //   if (formC) {
@@ -2486,43 +2663,175 @@ export class LifeComponent implements OnInit, DoCheck {
 
         case 'sameAsPayer':
           // formEP.addControl('isPayerExposed', this.fb.control('', Validators.required));
-          // formP.addControl('payerIsLegalEntity', this.fb.control('', Validators.required));
+          formP.addControl('payerIsLegalEntity', this.fb.control('', Validators.required));
 
-          // this.newRequest.addControl('payer', this.fb.group({
-          //   firstName: ['', Validators.required],
-          //   secondName: [''],
-          //   lastName: ['', Validators.required],
-          //   date: ['', Validators.required],
-          //   sex: ['', Validators.required],
-          //   nationality: ['', Validators.required],
-          //   id2: ['', Validators.required],
-          //   countryOfResidence: ['', Validators.required],
-          //   status: ['', Validators.required],
-          //   countryOfBirth: ['', Validators.required],
-          //   direction: ['', Validators.required],
-          //   tel: [''],
-          //   cel: [''],
-          //   officeTel: [''],
-          //   fax: [''],
-          //   email: ['', [Validators.required, Validators.email]],
-          //   company: this.fb.group({
-          //     name: ['', Validators.required],
-          //     position: ['', Validators.required],
-          //     direction: ['', Validators.required],
-          //     economicActivity: ['', Validators.required],
-          //     city: ['', Validators.required],
-          //     country: ['', Validators.required],
-          //     kinship: ['', Validators.required],
-          //     insurancePurpose: ['', Validators.required],
-          //     contractorCountry: ['', Validators.required],
-          //   })
-          // }));
+          if (!(formP.get('payerMandatory'))) {
+            formP.addControl('payerMandatory', this.fb.control('', Validators.required));
+          }
           // if ((this.newRequest.get('insured_data').get('knowYourClient'))) {
           //   formInsured.removeControl('knowYourClient');
           // }
           // if ((this.newRequest.get('insured_data').get('antiLaundering'))) {
           //   formInsured.removeControl('antiLaundering');
           // }
+
+          // if (formQ.get('solucionAntiLavadoDinero')) {
+          //   formQ.removeControl('solucionAntiLavadoDinero');
+          // }
+          // if (formGeneral.get('payerLegalEntity')) {
+          //   formGeneral.removeControl('payerLegalEntity');
+          // }
+          // if (formP.get('payerIsLegalEntity')) {
+          //   formP.removeControl('payerIsLegalEntity');
+          // }
+          // if (this.newRequest.get('files').get('mercantile')) {
+          //   formFiles.removeControl('mercantile');
+          // }
+
+          // if (formQ.get('payerLegalEntity')) {
+          //   formQ.removeControl('payerLegalEntity');
+          // }
+          // formFiles.addControl('copyId', this.fb.array([this.createFormArray('filesCopyId')]));
+          // this.filesCopyIdArray = this.newRequest.get('files').get('copyId') as FormArray;
+          break;
+
+        case 'sameAsContractor':
+          // this.newRequest.removeControl('knowYourCustomerPagador');
+          // this.newRequest.removeControl('knowYourCustomerContratante');
+          // this.newRequest.removeControl('exposedPerson');
+
+          // if (this.newRequest.get('knowYourCustomerPagador')) {
+          //   this.newRequest.removeControl('knowYourCustomerPagador');
+          // }
+
+          // if (this.newRequest.get('knowYourCustomer')) {
+          //   this.newRequest.removeControl('knowYourCustomer');
+          // }
+
+          // if (this.newRequest.get('knowYourCustomerContratante')) {
+          //   this.newRequest.removeControl('knowYourCustomerContratante');
+          // }
+          // if (!(this.newRequest.get('files').get('documentsKnowClient'))) {
+          //   formFiles.addControl('documentsKnowClient', this.fb.array([this.createFormArray('filesDocumentsKnowClient')]));
+          //   this.filesDocumentsKnowClientArray = this.newRequest.get('files').get('documentsKnowClient') as FormArray;
+          // }
+          // else if (this.newRequest.get('files').get('documentsKnowClient')) {
+          //   formFiles.removeControl('documentsKnowClient');
+          //   formFiles.addControl('documentsKnowClient', this.fb.array([this.createFormArray('filesDocumentsKnowClient')]));
+          //   this.filesDocumentsKnowClientArray = this.newRequest.get('files').get('documentsKnowClient') as FormArray;
+          // }
+          // formEP.addControl('isContractorExposed', this.fb.control('', Validators.required));
+          formP.addControl('contractorIsLegalEntity', this.fb.control('', Validators.required));
+
+          if (!(formP.get('contractorMandatory'))) {
+            formP.addControl('contractorMandatory', this.fb.control('', Validators.required));
+          }
+
+          break;
+
+        case 'contractorIsLegalEntity':
+
+          // formP.removeControl('contractorLegalEntity');
+          // if (formEP.get('isContractorExposed').value !== 'SI') {
+          //   formCQ.removeControl('solucionAntiLavadoDinero');
+          // }
+          // formP.removeControl('sameAsPayer');
+          // this.newRequest.removeControl('payer');
+          // this.newRequest.removeControl('contractor');
+
+          // this.newRequest.removeControl('knowYourCustomerPagador');
+          // this.newRequest.removeControl('knowYourCustomerContratante');
+
+          // if (this.newRequest.get('insured_data').get('policyholderKnowClientRadio')) {
+          //   sameAsPayer
+          //   formInsured.removeControl('policyholderKnowClientRadio'); //juridica
+          // }
+          if (this.newRequest.get('contractorLegalEntity')) {
+            this.newRequest.removeControl('contractorLegalEntity');
+          }
+
+          if (this.newRequest.get('contractorJuridical')) {
+            this.newRequest.removeControl('contractorJuridical');
+          }
+
+          formP.get('contractorMandatory').reset();
+
+          // if (this.newRequest.get('files').get('copyId')) {
+          //   formFiles.removeControl('copyId');
+          // }
+          // if (formQ.get('solucionAntiLavadoDinero')) {
+          //   formQ.removeControl('solucionAntiLavadoDinero');
+          // }
+          // if (formGeneral.get('payerLegalEntity')) {
+          //   formGeneral.removeControl('payerLegalEntity');
+          // }
+          // if (formP.get('payerIsLegalEntity')) {
+          //   formP.removeControl('payerIsLegalEntity');
+          // }
+          // if (this.newRequest.get('files').get('mercantile')) {
+          //   formFiles.removeControl('mercantile');
+          // }
+
+          formGeneral.removeControl('antiLaunderingContractor');
+          formGeneral.removeControl('antiLaunderingPayer');
+
+          formEP.addControl('isContractorExposed', this.fb.control('', Validators.required));
+
+          if (!this.newRequest.get('contractor')) {
+            this.newRequest.addControl('contractor', this.fb.group({
+              firstName: ['', Validators.required],
+              secondName: ['', Validators.required],
+              lastName: ['', Validators.required],
+              date: ['', Validators.required],
+              sex: ['', Validators.required],
+              nationality: ['', Validators.required],
+              id2Type: ['', Validators.required],
+              id2: ['', Validators.required],
+              countryOfResidence: ['', Validators.required],
+              status: ['', Validators.required],
+              countryOfBirth: ['', Validators.required],
+              direction: ['', Validators.required],
+              tel: ['', Validators.required],
+              cel: ['', Validators.required],
+              officeTel: ['', Validators.required],
+              fax: ['', Validators.required],
+              id2Attached: ['', Validators.required],
+              email: ['', [Validators.required, Validators.email]],
+              company: this.fb.group({
+                name: ['', Validators.required],
+                position: ['', Validators.required],
+                direction: ['', Validators.required],
+                economicActivity: ['', Validators.required],
+                city: ['', Validators.required],
+                country: ['', Validators.required],
+                kinship: ['', Validators.required],
+                insurancePurpose: ['', Validators.required],
+                contractorCountry: ['', Validators.required],
+              }),
+            }));
+          }
+          break;
+
+        case 'payerIsLegalEntity':
+
+          // formP.removeControl('payerLegalEntity');
+          // if (formEP.get('isPayerExposed').value !== 'SI') {
+          //   formPQ.removeControl('solucionAntiLavadoDinero');
+          // }
+          if (formGeneral.get('payerLegalEntity')) {
+            formGeneral.removeControl('payerLegalEntity');
+          }
+
+          if (this.newRequest.get('payerJuridical')) {
+            this.newRequest.removeControl('payerJuridical');
+          }
+
+          formP.get('payerMandatory').reset();
+
+          formGeneral.removeControl('antiLaunderingContractor');
+          formGeneral.removeControl('antiLaunderingPayer');
+
+          formEP.addControl('isPayerExposed', this.fb.control('', Validators.required));
 
           if (!this.newRequest.get('payer')) {
             this.newRequest.addControl('payer', this.fb.group({
@@ -2541,6 +2850,7 @@ export class LifeComponent implements OnInit, DoCheck {
               tel: ['', Validators.required],
               cel: ['', Validators.required],
               officeTel: ['', Validators.required],
+              id2Attached: ['', Validators.required],
               fax: ['', Validators.required],
               email: ['', [Validators.required, Validators.email]],
               company: this.fb.group({
@@ -2556,218 +2866,22 @@ export class LifeComponent implements OnInit, DoCheck {
               })
             }));
           }
-          if (formQ.get('solucionAntiLavadoDinero')) {
-            formQ.removeControl('solucionAntiLavadoDinero');
-          }
-          if (formGeneral.get('payerLegalEntity')) {
-            formGeneral.removeControl('payerLegalEntity');
-          }
-          if (formP.get('payerIsLegalEntity')) {
-            formP.removeControl('payerIsLegalEntity');
-          }
-          if (this.newRequest.get('files').get('mercantile')) {
-            formFiles.removeControl('mercantile');
-          }
-
-          if (formQ.get('payerLegalEntity')) {
-            formQ.removeControl('payerLegalEntity');
-          }
-          formFiles.addControl('copyId', this.fb.array([this.createFormArray('filesCopyId')]));
-          this.filesCopyIdArray = this.newRequest.get('files').get('copyId') as FormArray;
-          break;
-
-        case 'sameAsContractor':
-
-
-          this.newRequest.removeControl('knowYourCustomerPagador');
-          this.newRequest.removeControl('knowYourCustomerContratante');
-          this.newRequest.removeControl('exposedPerson');
-
-          if (this.newRequest.get('knowYourCustomerPagador')) {
-            this.newRequest.removeControl('knowYourCustomerPagador');
-            }
-
-           if (this.newRequest.get('knowYourCustomer')) {
-            this.newRequest.removeControl('knowYourCustomer');
-            }
-
-           if (this.newRequest.get('knowYourCustomerContratante')) {
-            this.newRequest.removeControl('knowYourCustomerContratante');
-            }
-          if (!(this.newRequest.get('files').get('documentsKnowClient'))) {
-            formFiles.addControl('documentsKnowClient', this.fb.array([this.createFormArray('filesDocumentsKnowClient')]));
-            this.filesDocumentsKnowClientArray = this.newRequest.get('files').get('documentsKnowClient') as FormArray;
-          }
-          else if (this.newRequest.get('files').get('documentsKnowClient')) {
-            formFiles.removeControl('documentsKnowClient');
-            formFiles.addControl('documentsKnowClient', this.fb.array([this.createFormArray('filesDocumentsKnowClient')]));
-            this.filesDocumentsKnowClientArray = this.newRequest.get('files').get('documentsKnowClient') as FormArray;
-          }
-          // formEP.addControl('isContractorExposed', this.fb.control('', Validators.required));
-          // formP.addControl('contractorIsLegalEntity', this.fb.control('', Validators.required));
-
-          // this.newRequest.addControl('contractor', this.fb.group({
-          //   firstName: ['', Validators.required],
-          //   secondName: [''],
-          //   lastName: ['', Validators.required],
-          //   date: ['', Validators.required],
-          //   sex: ['', Validators.required],
-          //   nationality: ['', Validators.required],
-          //   id2: ['', Validators.required],
-          //   countryOfResidence: ['', Validators.required],
-          //   status: ['', Validators.required],
-          //   countryOfBirth: ['', Validators.required],
-          //   direction: ['', Validators.required],
-          //   tel: [''],
-          //   cel: ['', Validators.required],
-          //   officeTel: [''],
-          //   fax: [''],
-          //   email: ['', [Validators.required, Validators.email]],
-          //   company: this.fb.group({
-          //     name: ['', Validators.required],
-          //     position: ['', Validators.required],
-          //     direction: ['', Validators.required],
-          //     economicActivity: ['', Validators.required],
-          //     city: ['', Validators.required],
-          //     country: ['', Validators.required],
-          //     kinship: ['', Validators.required],
-          //     insurancePurpose: ['', Validators.required],
-          //     contractorCountry: ['', Validators.required],
-          //   }),
-          // }));
-          break;
-
-        case 'contractorIsLegalEntity':
-          // if (!this.newRequest.get('contractor')) {
-          //   this.newRequest.addControl('contractor', this.fb.group({
-          //     firstName: ['', Validators.required],
-          //     secondName: ['', Validators.required],
-          //     lastName: ['', Validators.required],
-          //     date: ['', Validators.required],
-          //     sex: ['', Validators.required],
-          //     nationality: ['', Validators.required],
-          //     id2: ['', Validators.required],
-          //     countryOfResidence: ['', Validators.required],
-          //     status: ['', Validators.required],
-          //     countryOfBirth: ['', Validators.required],
-          //     direction: ['', Validators.required],
-          //     tel: ['', Validators.required],
-          //     cel: ['', Validators.required],
-          //     officeTel: ['', Validators.required],
-          //     fax: ['', Validators.required],
-          //     email: ['', [Validators.required, Validators.email]],
-          //     company: this.fb.group({
-          //       name: ['', Validators.required],
-          //       position: ['', Validators.required],
-          //       direction: ['', Validators.required],
-          //       economicActivity: ['', Validators.required],
-          //       city: ['', Validators.required],
-          //       country: ['', Validators.required],
-          //       kinship: ['', Validators.required],
-          //       insurancePurpose: ['', Validators.required],
-          //       contractorCountry: ['', Validators.required],
-          //     }),
-          //   }));
+          // if (!(this.newRequest.get('files').get('mercantile'))) {
+          //   formFiles.addControl('mercantile', this.fb.array([this.createFormArray('mercantileRegister')]));
+          //   this.mercantileRegisterArray = this.newRequest.get('files').get('mercantile') as FormArray;
           // }
-
-          // formP.removeControl('contractorLegalEntity');
-          // if (formEP.get('isContractorExposed').value !== 'SI') {
-          //   formCQ.removeControl('solucionAntiLavadoDinero');
+          // else if (this.newRequest.get('files').get('mercantile')) {
+          //   formFiles.removeControl('mercantile');
+          //   formFiles.addControl('mercantile', this.fb.array([this.createFormArray('mercantileRegister')]));
+          //   this.mercantileRegisterArray = this.newRequest.get('files').get('mercantile') as FormArray;
           // }
-          formP.removeControl('sameAsPayer');
-          this.newRequest.removeControl('payer');
-          this.newRequest.removeControl('contractor');
-
-          this.newRequest.removeControl('knowYourCustomerPagador');
-          this.newRequest.removeControl('knowYourCustomerContratante');
-          if (formEP)
-          {
-          formEP.removeControl('contractor');
-          formEP.removeControl('payer');
-          formEP.removeControl('isPayerExposed');
-          formEP.removeControl('isContractorExposed');
-          }
-          // if (this.newRequest.get('insured_data').get('policyholderKnowClientRadio')) {
-          //   sameAsPayer
-          //   formInsured.removeControl('policyholderKnowClientRadio'); //juridica
+          // if (formQ.get('solucionAntiLavadoDinero')) {
+          //   formQ.removeControl('solucionAntiLavadoDinero');
           // }
-          if (formGeneral.get('contractorLegalEntity')) {
-            formGeneral.removeControl('contractorLegalEntity');
-          }
-          if (this.newRequest.get('files').get('copyId')) {
-            formFiles.removeControl('copyId');
-          }
-          if (formQ.get('solucionAntiLavadoDinero')) {
-            formQ.removeControl('solucionAntiLavadoDinero');
-          }
-          if (formGeneral.get('payerLegalEntity')) {
-            formGeneral.removeControl('payerLegalEntity');
-          }
-          if (formP.get('payerIsLegalEntity')) {
-            formP.removeControl('payerIsLegalEntity');
-          }
-          if (this.newRequest.get('files').get('mercantile')) {
-            formFiles.removeControl('mercantile');
-          }
-          break;
-
-        case 'payerIsLegalEntity':
-          // if (!this.newRequest.get('payer')) {
-          //   this.newRequest.addControl('payer', this.fb.group({
-          //     firstName: ['', Validators.required],
-          //     secondName: ['', Validators.required],
-          //     lastName: ['', Validators.required],
-          //     date: ['', Validators.required],
-          //     sex: ['', Validators.required],
-          //     nationality: ['', Validators.required],
-          //     id2: ['', Validators.required],
-          //     countryOfResidence: ['', Validators.required],
-          //     status: ['', Validators.required],
-          //     countryOfBirth: ['', Validators.required],
-          //     direction: ['', Validators.required],
-          //     tel: ['', Validators.required],
-          //     cel: ['', Validators.required],
-          //     officeTel: ['', Validators.required],
-          //     fax: ['', Validators.required],
-          //     email: ['', [Validators.required, Validators.email]],
-          //     company: this.fb.group({
-          //       name: ['', Validators.required],
-          //       position: ['', Validators.required],
-          //       direction: ['', Validators.required],
-          //       economicActivity: ['', Validators.required],
-          //       city: ['', Validators.required],
-          //       country: ['', Validators.required],
-          //       kinship: ['', Validators.required],
-          //       insurancePurpose: ['', Validators.required],
-          //       contractorCountry: ['', Validators.required],
-          //     })
-          //   }));
-          // }
-
-          // formP.removeControl('payerLegalEntity');
-          // if (formEP.get('isPayerExposed').value !== 'SI') {
-          //   formPQ.removeControl('solucionAntiLavadoDinero');
-          // }
-          /*if (!(formGeneral.get('payerLegalEntity'))) {
-            formGeneral.addControl('payerLegalEntity', this.fb.group({}));
-          }*/
-          if (!(this.newRequest.get('files').get('mercantile'))) {
-            formFiles.addControl('mercantile', this.fb.array([this.createFormArray('mercantileRegister')]));
-            this.mercantileRegisterArray = this.newRequest.get('files').get('mercantile') as FormArray;
-          }
-          else if (this.newRequest.get('files').get('mercantile')) {
-            formFiles.removeControl('mercantile');
-            formFiles.addControl('mercantile', this.fb.array([this.createFormArray('mercantileRegister')]));
-            this.mercantileRegisterArray = this.newRequest.get('files').get('mercantile') as FormArray;
-          }
-          if (formQ.get('solucionAntiLavadoDinero')) {
-            formQ.removeControl('solucionAntiLavadoDinero');
-          }
           // if ((this.newRequest.get('insured_data').get('antiLaundering'))) {
           //   formInsured.removeControl('antiLaundering');
           // }
           break;
-
 
         case 'isMarried':
           formAR.removeControl('marriedInformation');
@@ -3255,12 +3369,11 @@ export class LifeComponent implements OnInit, DoCheck {
           formP.removeControl('sameAsPayer');
           this.newRequest.removeControl('payer');
           this.newRequest.removeControl('contractor');
-          if (formEP)
-          {
-          formEP.removeControl('contractor');
-          formEP.removeControl('payer');
-          formEP.removeControl('isPayerExposed');
-          formEP.removeControl('isContractorExposed');
+          if (formEP) {
+            formEP.removeControl('contractor');
+            formEP.removeControl('payer');
+            formEP.removeControl('isPayerExposed');
+            formEP.removeControl('isContractorExposed');
           }
           // if (this.newRequest.get('insured_data').get('policyholderKnowClientRadio')) {
           //   sameAsPayer
@@ -3570,7 +3683,7 @@ export class LifeComponent implements OnInit, DoCheck {
             if (this.newRequest.get('medicalHistory').get('informations').get('hadSpecializedTests'
             ).get(x.toString()).get('whichStudy').value !== 'OTROS') {
               if (this.newRequest.get('medicalHistory').get('informations').get('hadSpecializedTests'
-              ).get(x.toString()).get('specifyStudy')){
+              ).get(x.toString()).get('specifyStudy')) {
                 (this.newRequest.get('medicalHistory').get('informations').get('hadSpecializedTests'
                 ).get(x.toString()) as FormGroup).removeControl('specifyStudy');
               }

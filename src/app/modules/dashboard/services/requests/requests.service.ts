@@ -8,10 +8,10 @@ export class RequestsService {
 
   BASE_URL: any = `${environment.apiUrl}/api/Solicitudes`;
 
-  constructor(private _http: HttpClient) { }
+  constructor(private http: HttpClient) { }
 
   getRequests(params: HttpParams) {
-    return (this._http.get(this.BASE_URL, { params }));
+    return (this.http.get(this.BASE_URL, { params }));
   }
 
   downloadArchives(event, control: string) {
@@ -52,5 +52,13 @@ export class RequestsService {
 
   goToTop(el: HTMLElement) {
     el.scrollIntoView();
+  }
+
+  getPhysicalObligatoryOptions() {
+    return this.http.get(`${environment.apiUrl}/api/DatosEmpresa/ActividadesPersonaFisica`);
+  }
+
+  getJuridicalObligatoryOptions() {
+    return this.http.get(`${environment.apiUrl}/api/DatosEmpresa/ActividadesPersonaJuridica`);
   }
 }

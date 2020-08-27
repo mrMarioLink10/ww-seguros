@@ -17,4 +17,5 @@ export interface FieldConfig {
 export interface FieldConfigOptions {
 	value: any;
 	viewValue: any;
+	obligatory?: any;
 }

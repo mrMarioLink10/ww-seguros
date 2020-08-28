@@ -73,7 +73,7 @@
               <app-select class="mr-3" [options]="idType" [group]="newRequest.get('person')"></app-select>
               <app-input class="mr-3" [group]="newRequest.get('person')" label="Numero de documento" name='id2'>
               </app-input>
-              <div class="mr-3 grid col-span-4 grid-cols-1 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-6 xl:grid-cols-6">
+              <div class="mr-3 grid col-span-4 grid-cols-1 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-5 xl:grid-cols-5">
                 <app-number-input class="mr-3" [group]="newRequest.get('person')" label="Edad" name='age' min="1">
                 </app-number-input>
                 <app-select class="mr-3" [options]="weightUnit" (selected)="onWeightUnitChange()"
@@ -117,219 +117,52 @@
               <app-number-input isPhone="true" class="mr-3" [group]="newRequest.get('person')" label="Tel. Residencia"
                 name='tel'>
               </app-number-input>
-              <app-number-input *ngIf="role == 'WMA'" isCell="true" class="mr-3" 
-                [group]="newRequest.get('person')" label="Tel. Celular" name='cel'>
+              <app-number-input *ngIf="role == 'WMA'" isCell="true" class="mr-3" [group]="newRequest.get('person')"
+                label="Tel. Celular" name='cel'>
               </app-number-input>
-              <app-number-input *ngIf="role == 'WWS'" isPhone="true" class="mr-3" 
-                [group]="newRequest.get('person')" label="Tel. Celular" name='cel'>
+              <app-number-input *ngIf="role == 'WWS'" isPhone="true" class="mr-3" [group]="newRequest.get('person')"
+                label="Tel. Celular" name='cel'>
               </app-number-input>
               <app-number-input isPhone="true" class="mr-3" [group]="newRequest.get('person')" label="Tel. Oficina"
                 name='officeTel'>
               </app-number-input>
-              <div class="mr-3">
-                <div>
-                  <app-radio-button (selected)="selectChange($event)" [group]="newRequest.get('person')"
-                    name="sameAsContractor" title="¿Es usted una PEP o tiene usted una prima mayor de US$10,000?"
-                    [options]="diseaseService.yesOrNoOriginal">
-                  </app-radio-button>
-                </div>
-
-                <div class="mt-2" *ngIf="newRequest.get('person').get('sameAsContractor').value == 'SI'
-                || newRequest.get('person').get('sameAsContractor').value == 'NO'">
-                  <div *ngIf="newRequest.get('person').get('sameAsContractor').value == 'SI'" class="radio-button-label"
-                    style="font-size: 12px !important; max-width: 63vw;">Adjuntar
-                    documentos "Copia de Cédula" y "Certificación de Ingresos declarados"
-                  </div>
-                  <div *ngIf="newRequest.get('person').get('sameAsContractor').value == 'NO'" class="radio-button-label"
-                    style="font-size: 12px !important; max-width: 63vw;">Adjuntar
-                    documentos "Copia de Cédula"
-                  </div>
-                  <div *ngIf="newRequest.get('files') && newRequest.get('files').get('documentsKnowClient')">
-                    <div *ngFor="let studies of filesDocumentsKnowClientArray.controls; let i = index">
-                      <div class="grid grid-cols-6">
-                        <!-- <mat-form-field class="mr-3" appearance="outline"
-                          [ngClass]="{'file-input': newRequest.get('files').get('documentsKnowClient').get(i.toString()).get('document').value !== ''}">
-                          <mat-label> Copia de Cédula / Certificación de Ingresos declarados </mat-label>
-                          <ngx-mat-file-input #removableInputdocumentsKnowClient
-                            [valuePlaceholder]="arrayDocumentsKnowClientWatcher(i)"
-                            (change)="onStudiesChange2($event, i, 'documentsKnowClient')">
-                          </ngx-mat-file-input>
-                          <mat-icon style="color: #e2e2e2;" matSuffix
-                            *ngIf="newRequest.get('files').get('documentsKnowClient').get(i.toString()).get('document').value === ''">
-                            publish</mat-icon>
-                          <button mat-icon-button matSuffix
-                            *ngIf="newRequest.get('files').get('documentsKnowClient').get(i.toString()).get('document').value !== ''"
-                            (click)="this.requestService.clearArchives(newRequest.get('files').get('documentsKnowClient').get(i.toString()).get('document'))"
-                            (click)="removableInputdocumentsKnowClient.clear($event)">
-                            <mat-icon style="color: #e2e2e2;">clear</mat-icon>
-                          </button><button mat-icon-button matSuffix
-                            *ngIf="newRequest.get('files').get('documentsKnowClient').get(i.toString()).get('document').value !== ''"
-                            (click)="this.requestService.downloadArchives($event, newRequest.get('files').get('documentsKnowClient').get(i.toString()).get('document').value)">
-                            <mat-icon style="color: #e2e2e2;">get_app</mat-icon>
-                          </button>
-                          <mat-error
-                            *ngIf="newRequest.get('files').get('documentsKnowClient').get(i.toString()).get('document').touched && !newRequest.get('files').get('documentsKnowClient').get(i.toString()).get('document').valid">
-                            Este campo es
-                            obligatorio
-                          </mat-error>
-                        </mat-form-field> -->
-                        <app-file-input
-                          [ngClass]="{'col-span-6': filesDocumentsKnowClientArray.length === 1, 'col-span-5': filesDocumentsKnowClientArray.length > 1}"
-                          class="mr-3" [group]="newRequest.get('files').get('documentsKnowClient').get(i.toString())"
-                          name="document" label="Documento" [fileNameWatcher]="arrayDocumentsKnowClientWatcher(i)"
-                          (onFileChange)="onStudiesChange2($event, i, 'documentsKnowClient')">
-                        </app-file-input>
-                        <div *ngIf="filesDocumentsKnowClientArray.length > 1"
-                          [ngClass]="{'': filesDocumentsKnowClientArray.length === 1, 'col-span-1': filesDocumentsKnowClientArray.length > 1} ">
-                          <button mat-mini-fab aria-label=" Eliminar estudio"
-                            (click)="diseaseService.removeToList(i, filesDocumentsKnowClientArray)" type="button"
-                            class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
-                            <mat-icon style="color: #18446B">remove</mat-icon>
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="">
-                    <button mat-mini-fab aria-label="Agregar estudio"
-                      (click)="addToList(filesDocumentsKnowClientArray, 'filesDocumentsKnowClient')" type="button"
-                      class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
-                      <mat-icon style="color: #18446B">add</mat-icon>
-                    </button>
-                  </div>
-                </div>
-                <!-- <div class="mt-2" *ngIf="newRequest.get('person').get('sameAsContractor').value == 'NO'">
-                  <div class="radio-button-label" style="font-size: 12px !important; max-width: 63vw;">Adjuntar
-                    documentos "Copia de Cédula"
-                  </div>
-                  <div *ngIf="newRequest.get('files') && newRequest.get('files').get('documentsKnowClient')">
-                    <div *ngFor="let studies of filesDocumentsKnowClientArray.controls; let i = index">
-                      <div class="grid grid-cols-6">
-                        <app-file-input
-                          [ngClass]="{'col-span-6': filesDocumentsKnowClientArray.length === 1, 'col-span-5': filesDocumentsKnowClientArray.length > 1}"
-                          class="mr-3" [group]="newRequest.get('files').get('documentsKnowClient').get(i.toString())"
-                          name="document" label="Copia de Cédula" [fileNameWatcher]="arrayDocumentsKnowClientWatcher(i)"
-                          (onFileChange)="onStudiesChange2($event, i, 'documentsKnowClient')">
-                        </app-file-input>
-                        <div *ngIf="filesDocumentsKnowClientArray.length > 1"
-                          [ngClass]="{'': filesDocumentsKnowClientArray.length === 1, 'col-span-1': filesDocumentsKnowClientArray.length > 1} ">
-                          <button mat-mini-fab aria-label=" Eliminar estudio"
-                            (click)="diseaseService.removeToList(i, filesDocumentsKnowClientArray)" type="button"
-                            class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
-                            <mat-icon style="color: #18446B">remove</mat-icon>
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="">
-                    <button mat-mini-fab aria-label="Agregar estudio"
-                      (click)="addToList(filesDocumentsKnowClientArray, 'filesDocumentsKnowClient')" type="button"
-                      class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
-                      <mat-icon style="color: #18446B">add</mat-icon>
-                    </button>
-                  </div>
-                </div> -->
-
-              </div>
-              <app-radio-button *ngIf="newRequest.get('person').get('contractorIsLegalEntity') &&
-              (newRequest.get('person').get('sameAsContractor').value == 'NO' ||
-              newRequest.get('person').get('sameAsContractor').value == 'SI')" class="mr-3"
-                (selected)="selectChange($event)" [group]="newRequest.get('person')" name="contractorIsLegalEntity"
-                title="¿El asegurador y el contratante/pagador son distintos?"
+              <app-file-input class="mr-3" [group]="newRequest.get('person')" name="id2Attached" label="Copia de cedula"
+                [fileNameWatcher]="fileNameWatcher('person')" (onFileChange)="onStudiesChange2($event, null, 'person')">
+              </app-file-input>
+              <app-radio-button (selected)="selectChange($event)" class="mr-3" [group]="newRequest.get('person')"
+                name="sameAsContractor" title="¿El asegurado es el contratante?"
                 [options]="diseaseService.yesOrNoOriginal">
               </app-radio-button>
-              <div class="mr-3">
-                <div>
-                  <app-radio-button *ngIf="newRequest.get('person').get('sameAsPayer') &&
-                  newRequest.get('person').get('contractorIsLegalEntity').value == 'SI'"
-                    (selected)="selectChange($event)" [group]="newRequest.get('person')" name="sameAsPayer"
-                    title="¿Pagador Es una persona jurídica?" [options]="diseaseService.yesOrNoOriginal">
-                  </app-radio-button>
-                </div>
-
-                <div *ngIf="newRequest.get('person').get('sameAsPayer')">
-                  <div *ngIf="newRequest.get('person').get('sameAsPayer').value == 'NO'">
-                    <div class="radio-button-label" style="font-size: 12px !important; max-width: 63vw;">Adjuntar
-                      documentos
-                    </div>
-                    <div *ngIf="newRequest.get('files') && newRequest.get('files').get('copyId')">
-                      <div *ngFor="let copies of filesCopyIdArray.controls; let i = index">
-                        <div class="grid grid-cols-6">
-                          <app-file-input
-                            [ngClass]="{'col-span-6': filesCopyIdArray.length === 1, 'col-span-5': filesCopyIdArray.length > 1}"
-                            class="mr-3" [group]="newRequest.get('files').get('copyId').get(i.toString())" name="copyId"
-                            label="Copia de Cédula" [fileNameWatcher]="arrayCopyIdWatcher(i)"
-                            (onFileChange)="onStudiesChange2($event, i, 'copyId')">
-                          </app-file-input>
-                          <div *ngIf="filesCopyIdArray.length > 1"
-                            [ngClass]="{'': filesCopyIdArray.length === 1, 'col-span-1': filesCopyIdArray.length > 1} ">
-                            <button mat-mini-fab aria-label=" Eliminar estudio"
-                              (click)="diseaseService.removeToList(i, filesCopyIdArray)" type="button"
-                              class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
-                              <mat-icon style="color: #18446B">remove</mat-icon>
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="">
-                      <button mat-mini-fab aria-label="Agregar estudio"
-                        (click)="addToList(filesCopyIdArray, 'filesCopyId')" type="button"
-                        class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
-                        <mat-icon style="color: #18446B">add</mat-icon>
-                      </button>
-                    </div>
-                  </div>
-                </div>
-
+              <app-radio-button *ngIf="newRequest.get('person').get('contractorIsLegalEntity')" class="mr-3"
+                (selected)="selectChange($event)" [group]="newRequest.get('person')" name="contractorIsLegalEntity"
+                title="¿El contratante es persona juridica?" [options]="diseaseService.yesOrNoOriginal">
+              </app-radio-button>
+              <div *ngIf="juridicalObligatoryOptions && physicalObligatoryOptions" class="mr-3">
+                <app-select *ngIf="newRequest.get('person').get('contractorMandatory')"
+                  (selected)="selectChange($event)" [group]="newRequest.get('person')" name="contractorMandatory"
+                  label="Actividad economica del contratante"
+                  [options]="newRequest.get('person').get('contractorIsLegalEntity').value == 'SI' ? juridicalObligatoryOptions : physicalObligatoryOptions">
+                </app-select>
               </div>
-              <div class="mr-3">
-                <div *ngIf="newRequest.get('person').get('sameAsPayer')">
-                  <app-radio-button *ngIf="newRequest.get('person').get('payerIsLegalEntity') &&
-                  newRequest.get('person').get('sameAsPayer').value == 'SI'" class="mr-3"
-                    (selected)="selectChange($event)" [group]="newRequest.get('person')" name="payerIsLegalEntity"
-                    title="¿Pagador Es un sujeto obligado?" [options]="diseaseService.yesOrNoOriginal">
-                  </app-radio-button>
-                </div>
-
-                <div *ngIf="newRequest.get('person').get('payerIsLegalEntity')">
-                  <div
-                    *ngIf="newRequest.get('person').get('payerIsLegalEntity').value == 'SI' || newRequest.get('person').get('payerIsLegalEntity').value == 'NO'">
-                    <div class="radio-button-label" style="font-size: 12px !important; max-width: 63vw;">Adjuntar
-                      documentos
-                    </div>
-                    <div *ngIf="newRequest.get('files') && newRequest.get('files').get('mercantile')">
-                      <div *ngFor="let registers of mercantileRegisterArray.controls; let i = index">
-                        <div class="grid grid-cols-6">
-                          <app-file-input
-                            [ngClass]="{'col-span-6': mercantileRegisterArray.length === 1, 'col-span-5': mercantileRegisterArray.length > 1}"
-                            class="mr-3" [group]="newRequest.get('files').get('mercantile').get(i.toString())"
-                            name="register" label="Registro Mercantil" [fileNameWatcher]="arrayRegisterWatcher(i)"
-                            (onFileChange)="onStudiesChange2($event, i, 'mercantile')">
-                          </app-file-input>
-                          <div *ngIf="mercantileRegisterArray.length > 1"
-                            [ngClass]="{'': mercantileRegisterArray.length === 1, 'col-span-1': mercantileRegisterArray.length > 1} ">
-                            <button mat-mini-fab aria-label=" Eliminar estudio"
-                              (click)="diseaseService.removeToList(i, mercantileRegisterArray)" type="button"
-                              class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
-                              <mat-icon style="color: #18446B">remove</mat-icon>
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="">
-                      <button mat-mini-fab aria-label="Agregar estudio"
-                        (click)="addToList(mercantileRegisterArray, 'mercantileRegister')" type="button"
-                        class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
-                        <mat-icon style="color: #18446B">add</mat-icon>
-                      </button>
-                    </div>
-                  </div>
-                </div>
-
+              <app-radio-button (selected)="selectChange($event)" [group]="newRequest.get('person')" name="sameAsPayer"
+                [title]="newRequest.get('person').get('sameAsContractor').value == 'NO' ? '¿El asegurado o contratante es el pagador?' : '¿El asegurado es el pagador?'"
+                [options]="diseaseService.yesOrNoOriginal">
+              </app-radio-button>
+              <app-radio-button *ngIf="newRequest.get('person').get('payerIsLegalEntity')"
+                (selected)="selectChange($event)" [group]="newRequest.get('person')" name="payerIsLegalEntity"
+                title="¿El pagador es persona juridica?" [options]="diseaseService.yesOrNoOriginal">
+              </app-radio-button>
+              <div *ngIf="juridicalObligatoryOptions && physicalObligatoryOptions">
+                <app-select *ngIf="newRequest.get('person').get('payerMandatory')" (selected)="selectChange($event)"
+                  [group]="newRequest.get('person')" name="payerMandatory" label="Actividad economica del pagador"
+                  class="mr-3"
+                  [options]="newRequest.get('person').get('payerIsLegalEntity').value == 'SI' ? juridicalObligatoryOptions : physicalObligatoryOptions">
+                </app-select>
               </div>
+              <!-- <app-radio-button *ngIf="newRequest.get('person').get('payerMandatory')" class="mr-3"
+                (selected)="selectChange($event)" [group]="newRequest.get('person')" name="payerMandatory"
+                title="¿El pagador es sujeto obligado?" [options]="diseaseService.yesOrNoOriginal">
+              </app-radio-button> -->
             </div>
             <mat-action-row class="action-row">
               <button mat-button class="next-button" (click)="nextStep()" type="button">
@@ -385,8 +218,8 @@
                 <app-input class="mr-3" [group]="newRequest.get('employer')" label="Actividad Económica de la empresa"
                   name='economicActivity'></app-input>
 
-                  <app-number-input class="mr-3" [group]="newRequest.get('employer')" label="Años de empleo en la compañía"
-                  name='years'></app-number-input>
+                <app-number-input class="mr-3" [group]="newRequest.get('employer')"
+                  label="Años de empleo en la compañía" name='years'></app-number-input>
                 <app-input class="mr-3" [group]="newRequest.get('employer')" label="Deberes (Favor de dar detalles)"
                   name='jobDuties'></app-input>
                 <div class="mr-3">
@@ -415,68 +248,57 @@
             </mat-expansion-panel-header>
             <div>
               <div class="mt-3 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-4">
-                <app-input class="mr-3 pt-21" [group]="newRequest.get('contractor')" label="Primer Nombre"
-                  name='firstName'>
+                <app-input class="mr-3" [group]="newRequest.get('contractor')" label="Primer Nombre" name='firstName'>
                 </app-input>
-                <app-input class="mr-3 pt-21" [group]="newRequest.get('contractor')" label="Segundo Nombre"
-                  name='secondName'>
+                <app-input class="mr-3" [group]="newRequest.get('contractor')" label="Segundo Nombre" name='secondName'>
                 </app-input>
-                <app-input id='date' class="mr-3 pt-21" [group]="newRequest.get('contractor')"
+                <app-input id='date' class="mr-3" [group]="newRequest.get('contractor')"
                   label="Apellidos / Apellido de Casada" name='lastName'></app-input>
-                <div class="mr-3 pt-21">
-                  <app-date-picker class="mr-3 " label="Fecha de Nacimiento" [max]="todayDate"
-                    [group]="newRequest.get('contractor')" name='date'>
-                  </app-date-picker>
-                </div>
-                <app-radio-button class="mr-3 pt-21" [group]="newRequest.get('contractor')" name="sex" [options]="sex">
+                <app-date-picker class="mr-3 " label="Fecha de Nacimiento" [max]="todayDate"
+                  [group]="newRequest.get('contractor')" name='date'>
+                </app-date-picker>
+                <app-radio-button class="mr-3" [group]="newRequest.get('contractor')" name="sex" [options]="sex">
                 </app-radio-button>
-                <app-input class="mr-3 pt-21" [group]="newRequest.get('contractor')" label="Nacionalidad"
-                  name='nationality'>
+                <app-input class="mr-3" [group]="newRequest.get('contractor')" label="Nacionalidad" name='nationality'>
                 </app-input>
-                <app-select class="mr-3 pt-21" [options]="idType" [group]="newRequest.get('contractor')"></app-select>
-                <app-input class="mr-3 pt-21" [group]="newRequest.get('contractor')" label="Cédula/Pasaporte"
-                  name='id2'>
+                <app-select class="mr-3" [options]="idType" [group]="newRequest.get('contractor')"></app-select>
+                <app-input class="mr-3" [group]="newRequest.get('contractor')" label="Cédula/Pasaporte" name='id2'>
                 </app-input>
-
-
                 <div class="mr-3">
-
                   <app-select class="mr-3" [options]="countryOfBirth" [group]="newRequest.get('contractor')">
                   </app-select>
                 </div>
-
                 <div class="mr-3">
-
                   <app-select class="mr-3" id="status" [options]="status" [group]="newRequest.get('contractor')">
                   </app-select>
                 </div>
-                <div class="mr-3">
-                  <label for="">País de Residencia</label>
-                  <app-select class="mr-3" [options]=" countryOfResidence" [group]="newRequest.get('contractor')">
-                  </app-select>
-                </div>
+                <app-select class="mr-3" [options]=" countryOfResidence" [group]="newRequest.get('contractor')">
+                </app-select>
+                <app-input class="mr-3" [group]="newRequest.get('contractor')" label="Correo" name='email'>
+                </app-input>
                 <div class="mr-3 col-span-2">
-
                   <app-input class="mr-3" [group]="newRequest.get('contractor')"
                     label='Provincia/Distrito/Corregimiento/Urbanización/Calle/Casa o Apto./Edificio.' name='direction'>
                   </app-input>
                 </div>
-                <app-number-input isPhone="true" class="mr-3 pt-21" [group]="newRequest.get('contractor')"
+                <app-number-input isPhone="true" class="mr-3" [group]="newRequest.get('contractor')"
                   label="Tel. Residencia" name='tel'>
                 </app-number-input>
-                <app-number-input *ngIf="role == 'WMA'" isCell="true" class="mr-3 pt-21" 
+                <app-number-input *ngIf="role == 'WMA'" isCell="true" class="mr-3"
                   [group]="newRequest.get('contractor')" label="Tel. Celular" name='cel'>
                 </app-number-input>
-                <app-number-input *ngIf="role == 'WWS'" isPhone="true" class="mr-3 pt-21" 
+                <app-number-input *ngIf="role == 'WWS'" isPhone="true" class="mr-3"
                   [group]="newRequest.get('contractor')" label="Tel. Celular" name='cel'>
                 </app-number-input>
-                <app-number-input isPhone="true" class="mr-3 pt-21" [group]="newRequest.get('contractor')"
+                <app-number-input isPhone="true" class="mr-3" [group]="newRequest.get('contractor')"
                   label="Tel. Oficina" name='officeTel'>
                 </app-number-input>
-                <app-number-input class="mr-3 pt-21" [group]="newRequest.get('contractor')" label="Fax" name='fax'
+                <app-number-input class="mr-3" [group]="newRequest.get('contractor')" label="Fax" name='fax'
                   isPhone="true"></app-number-input>
-                <app-input class="mr-3 pt-21" [group]="newRequest.get('contractor')" label="Correo" name='email'>
-                </app-input>
+                <app-file-input class="mr-3" [group]="newRequest.get('contractor')" name="id2Attached"
+                  label="Copia de cedula" [fileNameWatcher]="fileNameWatcher('contractor')"
+                  (onFileChange)="onStudiesChange2($event, null, 'contractor')">
+                </app-file-input>
               </div>
               <mat-divider></mat-divider>
               <div class="mt-3 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-4">
@@ -490,7 +312,6 @@
                     label='Provincia/Distrito/Corregimiento/Urbanización/Calle/Casa o Apto./Edificio.' name='direction'>
                   </app-input>
                 </div>
-
                 <app-input class="mr-3" [group]="newRequest.get('contractor').get('company')"
                   label="Actividad Económica de la Empresa" name='economicActivity'></app-input>
                 <app-input class="mr-3" [group]="newRequest.get('contractor').get('company')" label="Ciudad"
@@ -504,11 +325,8 @@
                 <app-select class="mr-3" [options]="parentescoAsegurado"
                   [group]="newRequest.get('contractor').get('company')" name="kinship">
                 </app-select>
-                <div class="mr-3">
-                  <label for="">País(es) donde el contratante tributa por sus ingresos</label>
-                  <app-select class="mr-3" [options]="country" name='contractorCountry'
-                    [group]="newRequest.get('contractor').get('company')"></app-select>
-                </div>
+                <app-select label="País(es) donde tributa sus ingresos" class="mr-3" [options]="country"
+                  name='contractorCountry' [group]="newRequest.get('contractor').get('company')"></app-select>
               </div>
             </div>
             <mat-action-row class="action-row">
@@ -530,63 +348,59 @@
             </mat-expansion-panel-header>
             <div>
               <div class="mt-3 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-4">
-                <app-input class="mr-3 pt-21" [group]="newRequest.get('payer')" label="Primer Nombre" name='firstName'>
+                <app-input class="mr-3 " [group]="newRequest.get('payer')" label="Primer Nombre" name='firstName'>
                 </app-input>
-                <app-input class="mr-3 pt-21" [group]="newRequest.get('payer')" label="Segundo Nombre"
-                  name='secondName'>
+                <app-input class="mr-3 " [group]="newRequest.get('payer')" label="Segundo Nombre" name='secondName'>
                 </app-input>
-                <app-input id='date' class="mr-3 pt-21" [group]="newRequest.get('payer')"
+                <app-input id='date' class="mr-3" [group]="newRequest.get('payer')"
                   label="Apellidos / Apellido de Casada" name='lastName'></app-input>
                 <div class="mr-3">
                   <app-date-picker [max]="maxDate" label="Fecha de Nacimiento" class="mr-3"
                     [group]="newRequest.get('payer')" name='date'>
                   </app-date-picker>
                 </div>
-                <app-radio-button class="mr-3 pt-21" [group]="newRequest.get('payer')" name="sex" [options]="sex">
+                <app-radio-button class="mr-3" [group]="newRequest.get('payer')" name="sex" [options]="sex">
                 </app-radio-button>
-                <app-input class="mr-3 pt-21" [group]="newRequest.get('payer')" label="Nacionalidad" name='nationality'>
+                <app-input class="mr-3" [group]="newRequest.get('payer')" label="Nacionalidad" name='nationality'>
                 </app-input>
-                <app-select class="mr-3 pt-21" [options]="idType" [group]="newRequest.get('payer')"></app-select>
-                <app-input class="mr-3 pt-21" [group]="newRequest.get('payer')" label="Cédula/Pasaporte" name='id2'>
+                <app-select class="mr-3" [options]="idType" [group]="newRequest.get('payer')"></app-select>
+                <app-input class="mr-3" [group]="newRequest.get('payer')" label="Cédula/Pasaporte" name='id2'>
                 </app-input>
-
-
                 <div class="mr-3">
-
                   <app-select class="mr-3" [options]="countryOfBirth" [group]="newRequest.get('payer')"></app-select>
                 </div>
-
                 <div class="mr-3">
-
-                  <app-select class="mr-3" id="status" [options]="status" [group]="newRequest.get('payer')">
-                  </app-select>
-                </div>
-                <div class="mr-3">
-
                   <app-select class="mr-3" [options]=" countryOfResidence" [group]="newRequest.get('payer')">
                   </app-select>
                 </div>
                 <div class="mr-3 col-span-2">
-
                   <app-input class="mr-3" [group]="newRequest.get('payer')"
                     label='Provincia/Distrito/Corregimiento/Urbanización/Calle/Casa o Apto./Edificio.' name='direction'>
                   </app-input>
                 </div>
-                <app-number-input isPhone="true" class="mr-3 pt-21" [group]="newRequest.get('payer')"
-                  label="Tel. Residencia" name='tel'>
+                <div class="mr-3">
+                  <app-select class="mr-3" id="status" [options]="status" [group]="newRequest.get('payer')">
+                  </app-select>
+                </div>
+                <app-number-input isPhone="true" class="mr-3" [group]="newRequest.get('payer')" label="Tel. Residencia"
+                  name='tel'>
                 </app-number-input>
-                <app-number-input *ngIf="role == 'WMA'" isCell="true" class="mr-3 pt-21" 
-                  [group]="newRequest.get('payer')" label="Tel. Celular" name='cel'>
+                <app-number-input *ngIf="role == 'WMA'" isCell="true" class="mr-3" [group]="newRequest.get('payer')"
+                  label="Tel. Celular" name='cel'>
                 </app-number-input>
-                <app-number-input *ngIf="role == 'WWS'" isPhone="true" class="mr-3 pt-21" 
-                  [group]="newRequest.get('payer')" label="Tel. Celular" name='cel'>
+                <app-number-input *ngIf="role == 'WWS'" isPhone="true" class="mr-3" [group]="newRequest.get('payer')"
+                  label="Tel. Celular" name='cel'>
                 </app-number-input>
-                <app-number-input isPhone="true" class="mr-3 pt-21" [group]="newRequest.get('payer')"
-                  label="Tel. Oficina" name='officeTel'>
+                <app-number-input isPhone="true" class="mr-3" [group]="newRequest.get('payer')" label="Tel. Oficina"
+                  name='officeTel'>
                 </app-number-input>
-                <app-number-input class="mr-3 pt-21" [group]="newRequest.get('payer')" label="Fax" name='fax'
-                  isPhone="true"></app-number-input>
-                <app-input class="mr-3 pt-21" [group]="newRequest.get('payer')" label="Correo" name='email'></app-input>
+                <app-number-input class="mr-3" [group]="newRequest.get('payer')" label="Fax" name='fax' isPhone="true">
+                </app-number-input>
+                <app-input class="mr-3" [group]="newRequest.get('payer')" label="Correo" name='email'></app-input>
+                <app-file-input class="mr-3" [group]="newRequest.get('payer')" name="id2Attached"
+                  label="Copia de cedula" [fileNameWatcher]="fileNameWatcher('payer')"
+                  (onFileChange)="onStudiesChange2($event, null, 'payer')">
+                </app-file-input>
               </div>
               <mat-divider></mat-divider>
               <div class="mt-3 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-4">
@@ -613,9 +427,8 @@
                 <!-- <app-input class="mr-3 pt-21" [group]="newRequest.get('payer').get('company')"
                   label="Parentesco con el asegurado" name='kinship'></app-input>-->
                 <div class="mr-3">
-                  <label for="">País(es) donde el pagador tributa por sus ingresos</label>
-                  <app-select class="mr-3" [options]="country" name='contractorCountry'
-                    [group]="newRequest.get('payer').get('company')"></app-select>
+                  <app-select class="mr-3" label="País(es) donde tributa por sus ingresos" [options]="country"
+                    name='contractorCountry' [group]="newRequest.get('payer').get('company')"></app-select>
                 </div>
               </div>
             </div>
@@ -625,8 +438,68 @@
               </button>
             </mat-action-row>
           </mat-expansion-panel>
-          <mat-expansion-panel class="ww-mat-expansion" [expanded]="step === 5" (opened)="setStep(5)"
-          *ngIf="newRequest.get('exposedPerson')">
+
+          <mat-expansion-panel [expanded]="step === 3" (opened)="setStep(3)"
+            *ngIf="newRequest.get('contractorJuridical')" class="ww-mat-expansion">
+            <mat-expansion-panel-header class="body-13 icon-blue">
+              <mat-panel-title>
+                Contratante
+              </mat-panel-title>
+              <mat-panel-description>
+                <div></div>
+                <div *ngIf="showWarningDot(newRequest.get('contractorJuridical'))" class="warning-accordion-dot"></div>
+              </mat-panel-description>
+            </mat-expansion-panel-header>
+            <div class="ml-3 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+              <app-input class="mr-3" [group]="newRequest.get('contractorJuridical')" label="Razón Social"
+                name="businessName"></app-input>
+              <app-number-input class="mr-3" [group]="newRequest.get('contractorJuridical')" label="RNC / RUC"
+                name="rnc"></app-number-input>
+              <app-select [options]="family" class="mr-3" [group]="newRequest.get('contractorJuridical')"
+                label="Parentesco con el asegurado" name="family"></app-select>
+              <app-input class="mr-3" [group]="newRequest.get('contractorJuridical')" label="Propósito del Seguro"
+                name="purpose"></app-input>
+              <app-select [options]="countryTaxing" class="mr-3" [group]="newRequest.get('contractorJuridical')"
+                name="taxCountry"></app-select>
+            </div>
+            <mat-action-row class="action-row">
+              <button mat-button class="next-button" (click)="nextStep()" type="button">
+                Siguiente
+              </button>
+            </mat-action-row>
+          </mat-expansion-panel>
+
+          <mat-expansion-panel [expanded]="step === 4" (opened)="setStep(4)" *ngIf="newRequest.get('payerJuridical')"
+            class="ww-mat-expansion">
+            <mat-expansion-panel-header class="body-13 icon-blue">
+              <mat-panel-title>
+                Pagador
+              </mat-panel-title>
+              <mat-panel-description>
+                <div></div>
+                <div *ngIf="showWarningDot(newRequest.get('payerJuridical'))" class="warning-accordion-dot"></div>
+              </mat-panel-description>
+            </mat-expansion-panel-header>
+            <div class="ml-3 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+              <app-input class="mr-3" [group]="newRequest.get('payerJuridical')" label="Razón Social"
+                name="businessName"></app-input>
+              <app-number-input class="mr-3" [group]="newRequest.get('payerJuridical')" label="RNC / RUC" name="rnc">
+              </app-number-input>
+              <app-select [options]="family" class="mr-3" [group]="newRequest.get('payerJuridical')"
+                label="Parentesco con el asegurado" name="family"></app-select>
+              <app-input class="mr-3" [group]="newRequest.get('payerJuridical')" label="Propósito del Seguro"
+                name="purpose"></app-input>
+              <app-select [options]="countryTaxing" class="mr-3" [group]="newRequest.get('payerJuridical')"
+                name="taxCountry"></app-select>
+            </div>
+            <mat-action-row class="action-row">
+              <button mat-button class="next-button" (click)="nextStep()" type="button">
+                Siguiente
+              </button>
+            </mat-action-row>
+          </mat-expansion-panel>
+
+          <mat-expansion-panel class="ww-mat-expansion" [expanded]="step === 5" (opened)="setStep(5)">
             <mat-expansion-panel-header class="body-13 icon-blue">
               <mat-panel-title>
                 Persona políticamente expuesta
@@ -668,7 +541,7 @@
                   </div>
                 </div>
 
-                <div *ngIf="newRequest.get('payer')">
+                <div *ngIf="newRequest.get('exposedPerson').get('isPayerExposed')">
                   <hr class="w-full ww-divider">
                   <div
                     class="w-full mt-8 xl:flex xl:justify-between lg:flex lg:justify-between md:flex md:justify-between sm:flex sm:justify-between">
@@ -680,18 +553,16 @@
                       [options]="diseaseService.yesOrNoOriginal" (selected)="selectChange($event)">
                     </app-radio-button>
                   </div>
-                  <div *ngIf="newRequest.get('exposedPerson').value.isPayerExposed === 'SI'"
+                  <div *ngIf="newRequest.get('exposedPerson').get('payer')"
                     class="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-5 xl:grid-cols-5">
                     <app-input class="mr-3" [group]="newRequest.get('exposedPerson').get('payer')"
                       label="Cargo actual o anterior" name='lastPosition'></app-input>
-                    <div class="">
-                      <app-number-input class="mr-3" [group]="newRequest.get('exposedPerson').get('payer')"
-                        label="Tiempo en meses" name="timeNumber">
-                      </app-number-input>
-                    </div>
+                    <app-number-input class="mr-3" [group]="newRequest.get('exposedPerson').get('payer')"
+                      label="Tiempo en meses" name="timeNumber">
+                    </app-number-input>
                   </div>
                 </div>
-                <div *ngIf="newRequest.get('contractor')">
+                <div *ngIf="newRequest.get('exposedPerson').get('isContractorExposed')">
                   <hr class="w-full ww-divider">
                   <div
                     class="w-full mt-8 xl:flex xl:justify-between lg:flex lg:justify-between md:flex md:justify-between sm:flex sm:justify-between">
@@ -703,16 +574,24 @@
                       [options]="diseaseService.yesOrNoOriginal" (selected)="selectChange($event)">
                     </app-radio-button>
                   </div>
-                  <div *ngIf="newRequest.get('exposedPerson').value.isContractorExposed === 'SI'"
+                  <div *ngIf="newRequest.get('exposedPerson').get('contractor')"
                     class="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-5 xl:grid-cols-5">
                     <app-input class="mr-3" [group]="newRequest.get('exposedPerson').get('contractor')"
                       label="Cargo actual o anterior" name='lastPosition'></app-input>
-                    <div class="">
-                      <app-number-input class="mr-3" [group]="newRequest.get('exposedPerson').get('contractor')"
-                        label="Tiempo en meses" name="timeNumber">
-                      </app-number-input>
-                    </div>
+                    <app-number-input class="mr-3" [group]="newRequest.get('exposedPerson').get('contractor')"
+                      label="Tiempo en meses" name="timeNumber">
+                    </app-number-input>
                   </div>
+                </div>
+                <hr class="w-full ww-divider mb-2">
+                <div *ngIf="newRequest.get('exposedPerson').get('incomesCertified')" class="radio-button-label">Adjunte
+                  la certificación de ingresos del pagador</div>
+                <div class="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-4">
+                  <app-file-input *ngIf="newRequest.get('exposedPerson').get('incomesCertified')" class="mr-3"
+                    [group]="newRequest.get('exposedPerson')" name="incomesCertified" label="Certificación de ingresos"
+                    [fileNameWatcher]="fileNameWatcher('incomesCertified')"
+                    (onFileChange)="onStudiesChange2($event, null, 'incomesCertified')">
+                  </app-file-input>
                 </div>
               </div>
             </div>
@@ -901,7 +780,8 @@
                           label="Cant. en %" name='quantity'></app-number-input>
                         <app-file-input class="mr-3"
                           [group]="newRequest.get('primaryBenefits').get('dependentsC').get(index.toString())"
-                          name="id2Attached" label="Adjuntar documento de identidad si es mayor de edad - Formato de los documentos: PDF (.pdf), JPG (.jpg) y PNG (.png)"
+                          name="id2Attached"
+                          label="Adjuntar documento de identidad si es mayor de edad - Formato de los documentos: PDF (.pdf), JPG (.jpg) y PNG (.png)"
                           [fileNameWatcher]="id2AttachedViewValue(index, 'primaryBenefits')"
                           (onFileChange)="onFileChangeOnArray($event, 'id2Attached', index, 'primaryBenefits')">
                         </app-file-input>
@@ -957,7 +837,8 @@
                   <app-input class="mr-3" [group]="newRequest.get('primaryBenefits').get('personBenefited')"
                     label="Cédula/Pasaporte" name='id2'></app-input>
                   <app-file-input class="mr-3" [group]="newRequest.get('primaryBenefits').get('personBenefited')"
-                    name="id2Attached" label="Adjuntar documento de identidad - Formato de los documentos: PDF (.pdf), JPG (.jpg) y PNG (.png)"
+                    name="id2Attached"
+                    label="Adjuntar documento de identidad - Formato de los documentos: PDF (.pdf), JPG (.jpg) y PNG (.png)"
                     [fileNameWatcher]="id2AttachedViewValue(null, 'primaryBenefits')"
                     (onFileChange)="onFileChangeOnArray($event, 'id2Attached', null, 'primaryBenefits')">
                   </app-file-input>
@@ -1016,7 +897,8 @@
                           label="Cant. en %" name='quantityBeneficiary'></app-number-input>
                         <app-file-input class="mr-3"
                           [group]="newRequest.get('contingentBeneficiary').get('dependentsC').get(index.toString())"
-                          name="id2AttachedBeneficiary" label="Adjuntar documento de identidad si es mayor de edad - Formato de los documentos: PDF (.pdf), JPG (.jpg) y PNG (.png)"
+                          name="id2AttachedBeneficiary"
+                          label="Adjuntar documento de identidad si es mayor de edad - Formato de los documentos: PDF (.pdf), JPG (.jpg) y PNG (.png)"
                           [fileNameWatcher]="id2AttachedViewValue(index, 'contingentBeneficiary')"
                           (onFileChange)="onFileChangeOnArray($event, 'id2AttachedBeneficiary', index, 'contingentBeneficiary')">
                         </app-file-input>
@@ -1067,7 +949,8 @@
                   <app-input class="mr-3" [group]="newRequest.get('contingentBeneficiary').get('personBenefited')"
                     label="Cédula/Pasaporte" name='id2Beneficiary'></app-input>
                   <app-file-input class="mr-3" [group]="newRequest.get('contingentBeneficiary').get('personBenefited')"
-                    name="id2AttachedBeneficiary" label="Adjuntar documento de identidad - Formato de los documentos: PDF (.pdf), JPG (.jpg) y PNG (.png)"
+                    name="id2AttachedBeneficiary"
+                    label="Adjuntar documento de identidad - Formato de los documentos: PDF (.pdf), JPG (.jpg) y PNG (.png)"
                     [fileNameWatcher]="id2AttachedViewValue(null, 'contingentBeneficiary')"
                     (onFileChange)="onFileChangeOnArray($event, 'id2AttachedBeneficiary', null, 'contingentBeneficiary')">
                   </app-file-input>
@@ -1978,15 +1861,15 @@
                   [fileNameWatcher]="fileNameWatcher('healthDeclaration')"
                   (onFileChange)="onFileChange($event, 'healthDeclaration')">
                 </app-file-input>
-                <app-file-input class="mr-3" [group]="newRequest.get('files')" name="id2"
+                <!-- <app-file-input class="mr-3" [group]="newRequest.get('files')" name="id2"
                   *ngIf="newRequest.get('files').get('id2')" label="Documento de Identificación"
                   [fileNameWatcher]="fileNameWatcher('id2')" (onFileChange)="onFileChange($event, 'id2')">
-                </app-file-input>
+                </app-file-input> -->
                 <app-file-input class="mr-3" [group]="newRequest.get('files')" name="medicExam"
                   *ngIf="newRequest.get('files').get('medicExam')" label="Examen médico"
                   [fileNameWatcher]="fileNameWatcher('medicExam')" (onFileChange)="onFileChange($event, 'medicExam')">
                 </app-file-input>
-               <!-- <app-file-input class="mr-3" [group]="newRequest.get('files')" name="glycemia"
+                <!-- <app-file-input class="mr-3" [group]="newRequest.get('files')" name="glycemia"
                   *ngIf="newRequest.get('files').get('glycemia')" label="Glicemia"
                   [fileNameWatcher]="fileNameWatcher('glycemia')" (onFileChange)="onFileChange($event, 'glycemia')">
                 </app-file-input>
@@ -2082,7 +1965,8 @@
                   </mat-error>
                 </mat-form-field> -->
               </div>
-              <div class="radio-button-label" style="font-size: 12px !important; max-width: 63vw;">Adjuntar otros documentos
+              <div class="radio-button-label" style="font-size: 12px !important; max-width: 63vw;">Adjuntar otros
+                documentos
               </div>
               <div *ngFor="let studies of filesStudiesArray.controls; let i = index">
                 <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
@@ -2134,7 +2018,9 @@
             [form]="newRequest.get('activitiesQuestionnaires').get('solicitudMontanismo')"></app-mountaineering>
         </mat-accordion>
       </mat-tab>
-      <mat-tab label="Cuestionarios Adicionales" *ngIf="newRequest.get('questionnaires').get('solicitudDiabetes') || newRequest.get('questionnaires').get('solicitudHipertensionArterial')" class="mat-tab-forms">
+      <mat-tab label="Cuestionarios Adicionales"
+        *ngIf="newRequest.get('questionnaires').get('solicitudDiabetes') || newRequest.get('questionnaires').get('solicitudHipertensionArterial')"
+        class="mat-tab-forms">
         <mat-accordion #matAccordion="matAccordion" name="matAccordion" class="ww-mat-accordion example-headers-align"
           [togglePosition]="'before'">
           <app-hypertension
@@ -2173,102 +2059,97 @@
         </mat-accordion>
 
       </mat-tab> -->
-      <mat-tab *ngIf="this.newRequest.get('knowYourCustomerPagador')"
-      label="Conozca a su cliente (Persona Física) - Pagador">
-      <mat-accordion #matAccordion="matAccordion" name="matAccordion" class="ww-mat-accordion example-headers-align"
-      [togglePosition]="'before'">
-      <!-- <app-know-your-client [showWarningDot]="showWarningDot(newRequest.get('contractorLegalEntity'))"
+      <!-- <mat-tab *ngIf="this.newRequest.get('knowYourCustomerPagador')"
+        label="Conozca a su cliente (Persona Física) - Pagador">
+        <mat-accordion #matAccordion="matAccordion" name="matAccordion" class="ww-mat-accordion example-headers-align"
+          [togglePosition]="'before'">
+          <app-know-your-client [showWarningDot]="showWarningDot(newRequest.get('contractorLegalEntity'))"
         *ngIf="this.role === 'WMA'" [form]="newRequest.get('contractorLegalEntity')">
-      </app-know-your-client> -->
-      <app-know-your-customer
-        [showWarningDot]="showWarningDot(newRequest.get('knowYourCustomerPagador'))"
-        [form]="newRequest.get('knowYourCustomerPagador')">
-      </app-know-your-customer>
-    </mat-accordion>
-  </mat-tab>
-    <mat-tab *ngIf="this.newRequest.get('knowYourCustomerContratante')"
-    label="Conozca a su cliente (Persona Física) - Contratante">
-    <mat-accordion #matAccordion="matAccordion" name="matAccordion" class="ww-mat-accordion example-headers-align"
-      [togglePosition]="'before'">
-      <!-- <app-know-your-client [showWarningDot]="showWarningDot(newRequest.get('contractorLegalEntity'))"
+      </app-know-your-client>
+          <app-know-your-customer [showWarningDot]="showWarningDot(newRequest.get('knowYourCustomerPagador'))"
+            [form]="newRequest.get('knowYourCustomerPagador')">
+          </app-know-your-customer>
+        </mat-accordion>
+      </mat-tab>
+      <mat-tab *ngIf="this.newRequest.get('knowYourCustomerContratante')"
+        label="Conozca a su cliente (Persona Física) - Contratante">
+        <mat-accordion #matAccordion="matAccordion" name="matAccordion" class="ww-mat-accordion example-headers-align"
+          [togglePosition]="'before'">
+          <app-know-your-client [showWarningDot]="showWarningDot(newRequest.get('contractorLegalEntity'))"
         *ngIf="this.role === 'WMA'" [form]="newRequest.get('contractorLegalEntity')">
-      </app-know-your-client> -->
-      <app-know-your-customer
-        [showWarningDot]="showWarningDot(newRequest.get('knowYourCustomerContratante'))"
-        [form]="newRequest.get('knowYourCustomerContratante')">
-      </app-know-your-customer>
-    </mat-accordion>
+      </app-know-your-client>
+          <app-know-your-customer [showWarningDot]="showWarningDot(newRequest.get('knowYourCustomerContratante'))"
+            [form]="newRequest.get('knowYourCustomerContratante')">
+          </app-know-your-customer>
+        </mat-accordion>
 
-  </mat-tab>
-    <mat-tab *ngIf="this.newRequest.get('knowYourCustomer')"
-      label="Conozca a su cliente (Persona Física) - Asegurado">
-      <mat-accordion #matAccordion="matAccordion" name="matAccordion" class="ww-mat-accordion example-headers-align"
-        [togglePosition]="'before'">
-        <!-- <app-know-your-client [showWarningDot]="showWarningDot(newRequest.get('contractorLegalEntity'))"
+      </mat-tab>
+      <mat-tab *ngIf="this.newRequest.get('knowYourCustomer')"
+        label="Conozca a su cliente (Persona Física) - Asegurado">
+        <mat-accordion #matAccordion="matAccordion" name="matAccordion" class="ww-mat-accordion example-headers-align"
+          [togglePosition]="'before'">
+          <app-know-your-client [showWarningDot]="showWarningDot(newRequest.get('contractorLegalEntity'))"
           *ngIf="this.role === 'WMA'" [form]="newRequest.get('contractorLegalEntity')">
-        </app-know-your-client> -->
-        <app-know-your-customer
-          [showWarningDot]="showWarningDot(newRequest.get('knowYourCustomer'))"
-          [form]="newRequest.get('knowYourCustomer')">
-        </app-know-your-customer>
-      </mat-accordion>
-
-    </mat-tab>
-    <mat-tab *ngIf="this.newRequest.get('contractorLegalEntity')"
-      label="Conozca a su cliente (Persona jurídica) - Contratante">
-      <mat-accordion #matAccordion="matAccordion" name="matAccordion" class="ww-mat-accordion example-headers-align"
-        [togglePosition]="'before'">
-        <app-know-your-client [showWarningDot]="showWarningDot(newRequest.get('contractorLegalEntity'))"
-          [form]="newRequest.get('contractorLegalEntity')">
         </app-know-your-client>
-        <!-- <app-know-your-customer [showWarningDot]="showWarningDot(newRequest.get('person').get('payerLegalEntity'))"
+          <app-know-your-customer [showWarningDot]="showWarningDot(newRequest.get('knowYourCustomer'))"
+            [form]="newRequest.get('knowYourCustomer')">
+          </app-know-your-customer>
+        </mat-accordion>
+
+      </mat-tab> -->
+      <mat-tab *ngIf="this.newRequest.get('contractorLegalEntity')"
+        label="Contratante - Conozca a su cliente (Persona jurídica)">
+        <mat-accordion #matAccordion="matAccordion" name="matAccordion" class="ww-mat-accordion example-headers-align"
+          [togglePosition]="'before'">
+          <app-know-your-client [showWarningDot]="showWarningDot(newRequest.get('contractorLegalEntity'))"
+            [form]="newRequest.get('contractorLegalEntity')">
+          </app-know-your-client>
+          <!-- <app-know-your-customer [showWarningDot]="showWarningDot(newRequest.get('person').get('payerLegalEntity'))"
           *ngIf="this.role === 'WWS'" [form]="newRequest.get('person').get('payerLegalEntity')">
         </app-know-your-customer> -->
-      </mat-accordion>
+        </mat-accordion>
 
-    </mat-tab>
-    <mat-tab *ngIf="this.newRequest.get('payerLegalEntity')"
-      label="Conozca a su cliente (Persona jurídica) - Pagador">
-      <mat-accordion #matAccordion="matAccordion" name="matAccordion" class="ww-mat-accordion example-headers-align"
-        [togglePosition]="'before'">
-        <app-know-your-client [showWarningDot]="showWarningDot(newRequest.get('payerLegalEntity'))"
-          [form]="newRequest.get('payerLegalEntity')">
-        </app-know-your-client>
-        <!-- <app-know-your-customer [showWarningDot]="showWarningDot(newRequest.get('person').get('payerLegalEntity'))"
+      </mat-tab>
+      <mat-tab *ngIf="this.newRequest.get('payerLegalEntity')"
+        label="Pagador - Conozca a su cliente (Persona jurídica)">
+        <mat-accordion #matAccordion="matAccordion" name="matAccordion" class="ww-mat-accordion example-headers-align"
+          [togglePosition]="'before'">
+          <app-know-your-client [showWarningDot]="showWarningDot(newRequest.get('payerLegalEntity'))"
+            [form]="newRequest.get('payerLegalEntity')">
+          </app-know-your-client>
+          <!-- <app-know-your-customer [showWarningDot]="showWarningDot(newRequest.get('person').get('payerLegalEntity'))"
           *ngIf="this.role === 'WWS'" [form]="newRequest.get('person').get('payerLegalEntity')">
         </app-know-your-customer> -->
-      </mat-accordion>
+        </mat-accordion>
 
-    </mat-tab>
-    <mat-tab *ngIf="newRequest.get('questionnaires').get('solucionAntiLavadoDinero')"
-      label="Formulario politica Anti-lavado de Dinero/Financiamiento y Terrorismo (AML)">
-      <mat-accordion #matAccordion="matAccordion" name="matAccordion" class="ww-mat-accordion example-headers-align"
-        [togglePosition]="'before'">
-        <app-money-laundering
-          [showWarningDot]="showWarningDot(newRequest.get('questionnaires').get('solucionAntiLavadoDinero'))"
-          [form]="newRequest.get('questionnaires').get('solucionAntiLavadoDinero')">
-        </app-money-laundering>
-      </mat-accordion>
-
-    </mat-tab>
-      <mat-tab *ngIf="newRequest.get('contractorQuestionnaires').get('solucionAntiLavadoDinero')"
-        label="Formulario politica Anti-lavado de Dinero/Financiamiento y Terrorismo (AML) - Contratante">
+      </mat-tab>
+      <mat-tab *ngIf="newRequest.get('questionnaires').get('solucionAntiLavadoDinero')"
+        label="Formulario politica Anti-lavado de Dinero/Financiamiento y Terrorismo (AML)">
         <mat-accordion #matAccordion="matAccordion" name="matAccordion" class="ww-mat-accordion example-headers-align"
           [togglePosition]="'before'">
           <app-money-laundering
-            [showWarningDot]="showWarningDot(newRequest.get('contractorQuestionnaires').get('solucionAntiLavadoDinero'))"
-            [form]="newRequest.get('contractorQuestionnaires').get('solucionAntiLavadoDinero')">
+            [showWarningDot]="showWarningDot(newRequest.get('questionnaires').get('solucionAntiLavadoDinero'))"
+            [form]="newRequest.get('questionnaires').get('solucionAntiLavadoDinero')">
           </app-money-laundering>
         </mat-accordion>
 
       </mat-tab>
-      <mat-tab *ngIf="newRequest.get('payerQuestionnaires').get('solucionAntiLavadoDinero')"
-        label="Formulario politica Anti-lavado de Dinero/Financiamiento y Terrorismo (AML) - Pagador">
+      <mat-tab *ngIf="newRequest.get('antiLaunderingContractor')"
+        label="Contratante - Formulario politica Anti-lavado de Dinero/Financiamiento y Terrorismo (AML)">
         <mat-accordion #matAccordion="matAccordion" name="matAccordion" class="ww-mat-accordion example-headers-align"
           [togglePosition]="'before'">
-          <app-money-laundering
-            [showWarningDot]="showWarningDot(newRequest.get('payerQuestionnaires').get('solucionAntiLavadoDinero'))"
-            [form]="newRequest.get('payerQuestionnaires').get('solucionAntiLavadoDinero')">
+          <app-money-laundering [showWarningDot]="showWarningDot(newRequest.get('antiLaunderingContractor'))"
+            [form]="newRequest.get('antiLaunderingContractor')">
+          </app-money-laundering>
+        </mat-accordion>
+
+      </mat-tab>
+      <mat-tab *ngIf="newRequest.get('antiLaunderingPayer')"
+        label="Pagador - Formulario politica Anti-lavado de Dinero/Financiamiento y Terrorismo (AML)">
+        <mat-accordion #matAccordion="matAccordion" name="matAccordion" class="ww-mat-accordion example-headers-align"
+          [togglePosition]="'before'">
+          <app-money-laundering [showWarningDot]="showWarningDot(newRequest.get('antiLaunderingPayer'))"
+            [form]="newRequest.get('antiLaunderingPayer')">
           </app-money-laundering>
         </mat-accordion>
 

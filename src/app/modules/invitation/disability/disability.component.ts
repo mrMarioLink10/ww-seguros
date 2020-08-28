@@ -67,35 +67,35 @@ export class DisabilityComponent implements OnInit, DoCheck {
     ]
   };
   idTypeRepre: FieldConfig =
-  {
-    label: 'Tipo de documento de identidad',
-    options: [
-      {
-        value: 'CÉDULA',
-        viewValue: 'CÉDULA',
-      },
-      {
-        value: 'PASAPORTE',
-        viewValue: 'PASAPORTE',
-      }
-    ],
-    name: 'idTypeRepre',
-  };
+    {
+      label: 'Tipo de documento de identidad',
+      options: [
+        {
+          value: 'CÉDULA',
+          viewValue: 'CÉDULA',
+        },
+        {
+          value: 'PASAPORTE',
+          viewValue: 'PASAPORTE',
+        }
+      ],
+      name: 'idTypeRepre',
+    };
   idType: FieldConfig =
-  {
-    label: 'Tipo de documento de identidad',
-    options: [
-      {
-        value: 'CÉDULA',
-        viewValue: 'CÉDULA',
-      },
-      {
-        value: 'PASAPORTE',
-        viewValue: 'PASAPORTE',
-      }
-    ],
-    name: 'id2Type',
-  };
+    {
+      label: 'Tipo de documento de identidad',
+      options: [
+        {
+          value: 'CÉDULA',
+          viewValue: 'CÉDULA',
+        },
+        {
+          value: 'PASAPORTE',
+          viewValue: 'PASAPORTE',
+        }
+      ],
+      name: 'id2Type',
+    };
   contractOPtions: FieldConfig = {
     label: '',
     options: [
@@ -188,6 +188,12 @@ export class DisabilityComponent implements OnInit, DoCheck {
     label: 'País de Nacimiento',
     options: $country
   };
+
+  countryTaxing: FieldConfig = {
+    label: 'País donde tributa por sus ingresos',
+    options: $country
+  };
+
 
   heightList: FieldConfig = {
     label: 'Unidad',
@@ -451,7 +457,7 @@ export class DisabilityComponent implements OnInit, DoCheck {
   contingentGroup = {
     full_name: [''],
     id2: [''],
-    id2Type: ['' ],
+    id2Type: [''],
     id2Attached: [''],
     nationality: [''],
     ocupation: [''],
@@ -484,9 +490,9 @@ export class DisabilityComponent implements OnInit, DoCheck {
 
   policyHolderGroup = {
     name: ['', Validators.required],
+    id_passport: ['', Validators.required],
     id2Type: ['', Validators.required],
     idTypeRepre: ['', Validators.required],
-    id_passport: ['', Validators.required],
     marital_status: ['', Validators.required],
     nationality: ['', Validators.required],
     telephone: ['', Validators.required],
@@ -502,7 +508,41 @@ export class DisabilityComponent implements OnInit, DoCheck {
     relationship: ['', Validators.required],
     pep_radio_holder: ['', Validators.required],
     representative: ['', Validators.required],
-    passport_id: ['', Validators.required]
+    passport_id: ['', Validators.required],
+    id2Attached: ['', Validators.required],
+  };
+
+  policyPayerGroup = {
+    name: ['', Validators.required],
+    id_passport: ['', Validators.required],
+    id2Type: ['', Validators.required],
+    idTypeRepre: ['', Validators.required],
+    marital_status: ['', Validators.required],
+    nationality: ['', Validators.required],
+    telephone: ['', Validators.required],
+    cell: ['', Validators.required],
+    email: ['', [Validators.required, Validators.email]],
+    annual_income: ['', [Validators.required, Validators.min(1)]],
+    currency: ['', Validators.required],
+    address: ['', Validators.required],
+    country: ['', Validators.required],
+    city: ['', Validators.required],
+    postal_address: [''],
+    country_residence: ['', Validators.required],
+    relationship: ['', Validators.required],
+    pep_radio_payer: ['', Validators.required],
+    representative: ['', Validators.required],
+    passport_id: ['', Validators.required],
+    id2Attached: ['', Validators.required],
+  };
+
+
+  juridicalGroup = {
+    businessName: ['', Validators.required],
+    rnc: ['', Validators.required],
+    family: ['', Validators.required],
+    purpose: ['', Validators.required],
+    taxCountry: ['', Validators.required],
   };
 
   inpatientCareGroup = {
@@ -557,6 +597,9 @@ export class DisabilityComponent implements OnInit, DoCheck {
   noCotizacion;
   age;
 
+  juridicalObligatoryOptions: any;
+  physicalObligatoryOptions: any;
+
   @ViewChild('form', { static: false }) form;
 
   constructor(
@@ -581,6 +624,35 @@ export class DisabilityComponent implements OnInit, DoCheck {
   ngOnInit() {
 
     //this.ID = this.disabilityService.id;
+
+    this.requestService.getJuridicalObligatoryOptions().subscribe((res: any) => {
+      const Options = [];
+      for (const key in res.data) {
+        if (Object.prototype.hasOwnProperty.call(res.data, key)) {
+          const element = res.data[key];
+          Options.push({ value: element.descripcion, viewValue: element.descripcion, obligatory: element.sujeto_obligado });
+        }
+      }
+      console.log(Options);
+      this.juridicalObligatoryOptions = {
+        options: Options
+      };
+    });
+
+    this.requestService.getPhysicalObligatoryOptions().subscribe((res: any) => {
+      const Options = [];
+      for (const key in res.data) {
+        if (Object.prototype.hasOwnProperty.call(res.data, key)) {
+          const element = res.data[key];
+          Options.push({ value: element.descripcion, viewValue: element.descripcion, obligatory: element.sujeto_obligado });
+        }
+      }
+      console.log(Options);
+      this.physicalObligatoryOptions = {
+        options: Options
+      };
+    });
+
 
     this.route.params.subscribe(res => {
       this.ID = res.key;
@@ -705,8 +777,9 @@ export class DisabilityComponent implements OnInit, DoCheck {
         gender: ['', Validators.required],
         job: ['', Validators.required],
         nationality: ['', Validators.required],
-        id2Type: ['', Validators.required],
         id_passport: ['', Validators.required],
+        id2Type: ['', Validators.required],
+        id2Attached: [''],
         contract: ['', Validators.required],
         date_since: ['', Validators.required],
         date_until: ['', Validators.required],
@@ -727,9 +800,10 @@ export class DisabilityComponent implements OnInit, DoCheck {
         outside_hours: ['', [Validators.required, Validators.min(0)]],
         pension_radio: ['', Validators.required],
         pep_radio_insured: ['', Validators.required],
-        insuredPolicyholderRadio: ['', Validators.required]
+        insuredPolicyholderRadio: ['', Validators.required],
+        insuredPayerRadio: ['', Validators.required],
       }),
-      policyholder: this.fb.group(this.policyHolderGroup),
+      // policyholder: this.fb.group(this.policyHolderGroup),
       questions: this.fb.group({
         smoker_radio: ['', Validators.required],
         alcohol_radio: ['', Validators.required],
@@ -763,7 +837,7 @@ export class DisabilityComponent implements OnInit, DoCheck {
       main: this.fb.group({
         full_name: [''],
         family: [''],
-        id2Type: ['' ],
+        id2Type: [''],
         id_passport: [''],
         id2Attached: [''],
         main_array: this.fb.array([this.formMethods.createItem(this.mainGroup)])
@@ -771,7 +845,7 @@ export class DisabilityComponent implements OnInit, DoCheck {
       contingent: this.fb.group({
         full_name: [''],
         family: [''],
-        id2Type: ['' ],
+        id2Type: [''],
         id_passport: [''],
         id2Attached: [''],
         contingent_array: this.fb.array([this.formMethods.createItem(this.contingentGroup)]),
@@ -1197,10 +1271,11 @@ export class DisabilityComponent implements OnInit, DoCheck {
   }
 
   onStudiesChange(event, i, name) {
+    const reader = new FileReader();
+
+    console.log(event);
 
     if (name == 'studies') {
-      const reader = new FileReader();
-
       if (event.target.files && event.target.files.length) {
         const [file] = event.target.files;
         reader.readAsDataURL(file);
@@ -1215,8 +1290,6 @@ export class DisabilityComponent implements OnInit, DoCheck {
       }
     }
     else if (name == 'documentsKnowClient') {
-      const reader = new FileReader();
-
       if (event.target.files && event.target.files.length) {
         const [file] = event.target.files;
         reader.readAsDataURL(file);
@@ -1231,8 +1304,6 @@ export class DisabilityComponent implements OnInit, DoCheck {
       }
     }
     else if (name == 'copyId') {
-      const reader = new FileReader();
-
       if (event.target.files && event.target.files.length) {
         const [file] = event.target.files;
         reader.readAsDataURL(file);
@@ -1247,8 +1318,6 @@ export class DisabilityComponent implements OnInit, DoCheck {
       }
     }
     else if (name == 'mercantile') {
-      const reader = new FileReader();
-
       if (event.target.files && event.target.files.length) {
         const [file] = event.target.files;
         reader.readAsDataURL(file);
@@ -1261,14 +1330,67 @@ export class DisabilityComponent implements OnInit, DoCheck {
           //this.markForCheck();
         };
       }
+    } else if (name === 'policyholder') {
+      if (event.target.files && event.target.files.length) {
+        const [file] = event.target.files;
+        reader.readAsDataURL(file);
+
+        reader.onload = () => {
+          this.disabilityGroup.get(name).patchValue({
+            ['id2Attached']: reader.result
+          });
+
+          //this.markForCheck();
+        };
+      }
+    } else if (name === 'payer') {
+      if (event.target.files && event.target.files.length) {
+        const [file] = event.target.files;
+        reader.readAsDataURL(file);
+
+        reader.onload = () => {
+          this.disabilityGroup.get(name).patchValue({
+            ['id2Attached']: reader.result
+          });
+
+          //this.markForCheck();
+        };
+      }
+    } else if (name === 'insured_data') {
+      if (event.target.files && event.target.files.length) {
+        const [file] = event.target.files;
+        reader.readAsDataURL(file);
+
+        reader.onload = () => {
+          this.disabilityGroup.get(name).patchValue({
+            ['id2Attached']: reader.result
+          });
+
+          //this.markForCheck();
+        };
+      }
+    } else if (name === 'incomesCertified') {
+      if (event.target.files && event.target.files.length) {
+        const [file] = event.target.files;
+        reader.readAsDataURL(file);
+
+        reader.onload = () => {
+          this.disabilityGroup.get('files').patchValue({
+            ['incomesCertified']: reader.result
+          });
+
+          //this.markForCheck();
+        };
+      }
     }
   }
 
-
   selectChange(event, position?) {
     const form = this.disabilityGroup.get('questions') as FormGroup;
+    const formP = this.disabilityGroup.get('insured_data') as FormGroup;
     const formInsured = this.disabilityGroup.get('insured_data') as FormGroup;
     const formHolder = this.disabilityGroup.get('policyholder') as FormGroup;
+    const formPayer = this.disabilityGroup.get('payer') as FormGroup;
     const questionnaires = this.disabilityGroup.get('questionnaires') as FormGroup;
     const formQ = this.disabilityGroup.get('questions').get('questionnaire') as FormGroup;
     let formC;
@@ -1280,6 +1402,38 @@ export class DisabilityComponent implements OnInit, DoCheck {
     const formFiles = this.disabilityGroup.get('files') as FormGroup;
 
     console.log(event);
+
+    if (event.name === 'mandatorySubject') {
+      if (formP.get('policyholderKnowClientRadio').value === 'SI') {
+        if (this.juridicalObligatoryOptions.options[this.juridicalObligatoryOptions.options.map((e) => e.value).indexOf(event.valor)].obligatory === '1') {
+          formGeneral.addControl('antiLaundering', this.fb.group({}));
+        } else {
+          formGeneral.removeControl('antiLaundering');
+        }
+      } else if (formP.get('policyholderKnowClientRadio').value === 'NO') {
+        if (this.physicalObligatoryOptions.options[this.physicalObligatoryOptions.options.map((e) => e.value).indexOf(event.valor)].obligatory === '1') {
+          formGeneral.addControl('antiLaundering', this.fb.group({}));
+        } else {
+          formGeneral.removeControl('antiLaundering');
+        }
+      }
+    }
+
+    if (event.name === 'payerMandatorySubject') {
+      if (formP.get('payerKnowClientRadio').value === 'SI') {
+        if (this.juridicalObligatoryOptions.options[this.juridicalObligatoryOptions.options.map((e) => e.value).indexOf(event.valor)].obligatory === '1') {
+          formGeneral.addControl('antiLaunderingPayer', this.fb.group({}));
+        } else {
+          formGeneral.removeControl('antiLaunderingPayer');
+        }
+      } else if (formP.get('payerKnowClientRadio').value === 'NO') {
+        if (this.physicalObligatoryOptions.options[this.physicalObligatoryOptions.options.map((e) => e.value).indexOf(event.valor)].obligatory === '1') {
+          formGeneral.addControl('antiLaunderingPayer', this.fb.group({}));
+        } else {
+          formGeneral.removeControl('antiLaunderingPayer');
+        }
+      }
+    }
 
     if (event.valor === 'SI') {
       // console.log(JSON.stringify(this.disabilityGroup.value));
@@ -1374,6 +1528,18 @@ export class DisabilityComponent implements OnInit, DoCheck {
         case 'pep_radio_insured':
           console.log(this.role);
 
+          if (formPayer) {
+            if (!formPayer.get('pep')) {
+              if (!formFiles.get('incomesCertified')) {
+                formFiles.addControl('incomesCertified', this.fb.control(''));
+              }
+            }
+          } else {
+            if (!formFiles.get('incomesCertified')) {
+              formFiles.addControl('incomesCertified', this.fb.control(''));
+            }
+          }
+
           // formInsured.addControl('pep', this.fb.group({
           //   // contractor: ['', Validators.required],
           //   payer: ['', Validators.required],
@@ -1385,28 +1551,21 @@ export class DisabilityComponent implements OnInit, DoCheck {
 
           // if (this.role === 'WMA') { formInsured.addControl('knowYourClient', this.fb.group({})); }
           // else if (this.role === 'WWS') { formInsured.addControl('knowYourCustomer', this.fb.group({})); }
-          if (!(this.disabilityGroup.get('files').get('documentsKnowClient'))) {
-            formFiles.addControl('documentsKnowClient', this.fb.array([this.createFormArray('filesDocumentsKnowClient')]));
-            this.filesDocumentsKnowClientArray = this.disabilityGroup.get('files').get('documentsKnowClient') as FormArray;
-          }
-          else if (this.disabilityGroup.get('files').get('documentsKnowClient')) {
-            // for (let x = 0; x < this.filesDocumentsKnowClientArray.length; x++){
-            //   if (x != 0) {
-            //     this.filesDocumentsKnowClientArray.removeAt(x);
-            //   }
-            //   else if (x == 0){
+          // if (!(this.disabilityGroup.get('files').get('documentsKnowClient'))) {
+          //   formFiles.addControl('documentsKnowClient', this.fb.array([this.createFormArray('filesDocumentsKnowClient')]));
+          //   this.filesDocumentsKnowClientArray = this.disabilityGroup.get('files').get('documentsKnowClient') as FormArray;
+          // }
+          // else if (this.disabilityGroup.get('files').get('documentsKnowClient')) {
 
-            //   }
-            // }
-            formFiles.removeControl('documentsKnowClient');
-            formFiles.addControl('documentsKnowClient', this.fb.array([this.createFormArray('filesDocumentsKnowClient')]));
-            this.filesDocumentsKnowClientArray = this.disabilityGroup.get('files').get('documentsKnowClient') as FormArray;
-          }
-          if (!(this.disabilityGroup.get('KnowYourCustomer') )) {
-            this.disabilityGroup.addControl('KnowYourCustomer', this.fb.group({}));
-            console.log('foroooooo');
+          //   formFiles.removeControl('documentsKnowClient');
+          //   formFiles.addControl('documentsKnowClient', this.fb.array([this.createFormArray('filesDocumentsKnowClient')]));
+          //   this.filesDocumentsKnowClientArray = this.disabilityGroup.get('files').get('documentsKnowClient') as FormArray;
+          // }
+          // if (!(this.disabilityGroup.get('KnowYourCustomer'))) {
+          //   this.disabilityGroup.addControl('KnowYourCustomer', this.fb.group({}));
+          //   console.log('foroooooo');
 
-          }
+          // }
           break;
 
         case 'pep_radio_holder':
@@ -1414,16 +1573,47 @@ export class DisabilityComponent implements OnInit, DoCheck {
 
           formHolder.addControl('pep', this.fb.group({
             // contractor: ['', Validators.required],
-            payer: ['', Validators.required],
+            // payer: ['', Validators.required],
             // insured: ['', Validators.required],
             lastPosition: ['', Validators.required],
             time: ['', Validators.required],
             timeNumber: ['', [Validators.required, Validators.min(1)]]
           }));
 
+          if (formPayer) {
+            if (!formPayer.get('pep')) {
+              if (!formFiles.get('incomesCertified')) {
+                formFiles.addControl('incomesCertified', this.fb.control(''));
+              }
+            }
+          } else {
+            if (!formFiles.get('incomesCertified')) {
+              formFiles.addControl('incomesCertified', this.fb.control(''));
+            }
+          }
+
           // if (this.role === 'WMA') { formHolder.addControl('knowYourClient', this.fb.group({})); }
           // else if (this.role === 'WWS') { formHolder.addControl('KnowYourCustomer', this.fb.group({})); }
-          formGeneral.addControl('knowYourCustomerContratante', this.fb.group({}));
+          // formGeneral.addControl('knowYourCustomerContratante', this.fb.group({}));
+          break;
+
+        case 'pep_radio_payer':
+          console.log(this.role);
+
+          formPayer.addControl('pep', this.fb.group({
+            // contractor: ['', Validators.required],
+            // payer: ['', Validators.required],
+            // insured: ['', Validators.required],
+            lastPosition: ['', Validators.required],
+            time: ['', Validators.required],
+            timeNumber: ['', [Validators.required, Validators.min(1)]]
+          }));
+
+          formFiles.addControl('incomesCertified', this.fb.control(''));
+
+          // if (this.role === 'WMA') { formHolder.addControl('knowYourClient', this.fb.group({})); }
+          // else if (this.role === 'WWS') { formHolder.addControl('KnowYourCustomer', this.fb.group({})); }
+          // formGeneral.addControl('knowYourCustomerContratante', this.fb.group({}));
           break;
 
         case 'haveArthritis':
@@ -1488,43 +1678,23 @@ export class DisabilityComponent implements OnInit, DoCheck {
 
         case 'insuredPolicyholderRadio':
 
-          formInsured.addControl('policyholderKnowClientRadio', this.fb.control('', Validators.required));
-          if (!this.disabilityGroup.get('policyholder')) {
-            formGeneral.addControl('policyholder', this.fb.group(this.policyHolderGroup));
-            this.accordionTitles = [
-              'Sección A. Datos del propuesto Asegurado y Estatus laboral',
-              'Sección B. Datos del Contratante', 'Sección C. Cuestionario Médico',
-              'Sección D. Opción del Plan', 'Sección E. Beneficiarios Primarios',
-              'Beneficiario(s) Contigente(s)', 'Archivos Adjuntos'];
-          }
-          else {
-            console.log('Ya existe, por tanto no hay que crear a policyholder de nuevo.');
-          }
+          formInsured.removeControl('policyholderKnowClientRadio');
+          formGeneral.removeControl('policyholder');
+          formGeneral.removeControl('policyholderJuridical');
+          formGeneral.removeControl('knowYourClient');
+          formGeneral.removeControl('antiLaundering');
 
-          // if (this.disabilityGroup.get('insured_data').get('policyholderKnowClientRadio')) {
-          //   formInsured.removeControl('policyholderKnowClientRadio');
-          // }
+          // formInsured.addControl('mandatorySubject', this.fb.control('', Validators.required));
+
+
           // // if (this.disabilityGroup.get('files').get('documentsKnowClient')) {
           // //   formFiles.removeControl('documentsKnowClient');
           // // }
-          // this.accordionTitles = [
-          //   'Sección A. Datos del propuesto Asegurado y Estatus laboral', 'Sección C. Cuestionario Médico',
-          //   'Sección D. Opción del Plan', 'Sección E. Beneficiarios Primarios',
-          //   'Beneficiario(s) Contigente(s)', 'Archivos Adjuntos'];
-          // formGeneral.removeControl('policyholder');
+
           break;
-// Si
+
+        // Si
         case 'policyholderKnowClientRadio':
-          // if (this.disabilityGroup.get('insured_data').get('policyholderKnowClientRadio')){
-          //   formInsured.removeControl('policyholderKnowClientRadio');
-          // }
-          // this.accordionTitles = [
-          //   'Sección A. Datos del propuesto Asegurado y Estatus laboral', 'Sección C. Cuestionario Médico',
-          //   'Sección D. Opción del Plan', 'Sección E. Beneficiarios Primarios',
-          //   'Beneficiario(s) Contigente(s)', 'Archivos Adjuntos'];
-          // formGeneral.removeControl('policyholder');
-          // formInsured.addControl('knowYourClientSecond', this.fb.group({}));
-          // formInsured.addControl('knowYourClient', this.fb.group({}));
           // formFiles.addControl('documentsKnowClient', this.fb.array([]));
           // this.filesDocumentsKnowClientArray = this.disabilityGroup.get('files').get('documentsKnowClient') as FormArray;
 
@@ -1535,6 +1705,9 @@ export class DisabilityComponent implements OnInit, DoCheck {
           if (!(this.disabilityGroup.get('knowYourClient'))) {
             formGeneral.addControl('knowYourClient', this.fb.group({}));
           }
+          if (!(this.disabilityGroup.get('policyholderJuridical'))) {
+            formGeneral.addControl('policyholderJuridical', this.fb.group(this.juridicalGroup));
+          }
           if (this.disabilityGroup.get('files').get('copyId')) {
             formFiles.removeControl('copyId');
           }
@@ -1542,7 +1715,59 @@ export class DisabilityComponent implements OnInit, DoCheck {
           if (!(this.disabilityGroup.get('knowYourClient'))) {
             formGeneral.addControl('knowYourClient', this.fb.group({}));
           }
-          formInsured.addControl('mandatorySubject', this.fb.control('', Validators.required));
+
+          formInsured.get('mandatorySubject').reset();
+
+          break;
+
+        case 'insuredPayerRadio':
+
+          if (this.disabilityGroup.get('insured_data').get('payerKnowClientRadio')) {
+            formInsured.removeControl('payerKnowClientRadio');
+          }
+
+          if (this.disabilityGroup.get('payer')) {
+            formGeneral.removeControl('payer');
+          }
+
+          formGeneral.removeControl('knowYourClientPayer');
+          formGeneral.removeControl('antiLaunderingPayer');
+
+          if (this.disabilityGroup.get('payerJuridical')) {
+            formGeneral.removeControl('payerJuridical');
+          }
+
+          if (this.disabilityGroup.get('insured_data').get('payerMandatorySubject')) {
+            formInsured.removeControl('payerMandatorySubject');
+          }
+
+          // // if (this.disabilityGroup.get('files').get('documentsKnowClient')) {
+          // //   formFiles.removeControl('documentsKnowClient');
+          // // }
+
+          break;
+
+        case 'payerKnowClientRadio':
+          // formFiles.addControl('documentsKnowClient', this.fb.array([]));
+          // this.filesDocumentsKnowClientArray = this.disabilityGroup.get('files').get('documentsKnowClient') as FormArray;
+
+          if (this.disabilityGroup.get('payer')) {
+            formGeneral.removeControl('payer');
+            formGeneral.removeControl('knowYourCustomerPagador');
+          }
+          if (!(this.disabilityGroup.get('knowYourClientPayer'))) {
+            formGeneral.addControl('knowYourClientPayer', this.fb.group({}));
+          }
+
+          if (!(this.disabilityGroup.get('payerJuridical'))) {
+            formGeneral.addControl('payerJuridical', this.fb.group(this.juridicalGroup));
+          }
+          // if (this.disabilityGroup.get('files').get('copyId')) {
+          //   formFiles.removeControl('copyId');
+          // }
+
+          formInsured.get('payerMandatorySubject').reset();
+
           break;
 
         case 'hasAnotherCoverage':
@@ -1557,16 +1782,29 @@ export class DisabilityComponent implements OnInit, DoCheck {
           break;
 
         case 'mandatorySubject':
-          if (!(this.disabilityGroup.get('files').get('mercantile'))) {
-            formFiles.addControl('mercantile', this.fb.array([this.createFormArray('mercantileRegister')]));
-            this.mercantileRegisterArray = this.disabilityGroup.get('files').get('mercantile') as FormArray;
-          }
-          else if (this.disabilityGroup.get('files').get('mercantile')) {
-            formFiles.removeControl('mercantile');
-            formFiles.addControl('mercantile', this.fb.array([this.createFormArray('mercantileRegister')]));
-            this.mercantileRegisterArray = this.disabilityGroup.get('files').get('mercantile') as FormArray;
-          }
+          // if (!(this.disabilityGroup.get('files').get('mercantile'))) {
+          //   formFiles.addControl('mercantile', this.fb.array([this.createFormArray('mercantileRegister')]));
+          //   this.mercantileRegisterArray = this.disabilityGroup.get('files').get('mercantile') as FormArray;
+          // }
+          // else if (this.disabilityGroup.get('files').get('mercantile')) {
+          //   formFiles.removeControl('mercantile');
+          //   formFiles.addControl('mercantile', this.fb.array([this.createFormArray('mercantileRegister')]));
+          //   this.mercantileRegisterArray = this.disabilityGroup.get('files').get('mercantile') as FormArray;
+          // }
           formGeneral.addControl('antiLaundering', this.fb.group({}));
+          break;
+
+        case 'payerMandatorySubject':
+          // if (!(this.disabilityGroup.get('files').get('mercantilePayer'))) {
+          //   formFiles.addControl('mercantilePayer', this.fb.array([this.createFormArray('mercantileRegister')]));
+          //   this.mercantileRegisterArray = this.disabilityGroup.get('files').get('mercantilePayer') as FormArray;
+          // }
+          // else if (this.disabilityGroup.get('files').get('mercantilePayer')) {
+          //   formFiles.removeControl('mercantilePayer');
+          //   formFiles.addControl('mercantilePayer', this.fb.array([this.createFormArray('mercantileRegister')]));
+          //   this.mercantileRegisterArray = this.disabilityGroup.get('files').get('mercantilePayer') as FormArray;
+          // }
+          formGeneral.addControl('antiLaunderingPayer', this.fb.group({}));
           break;
 
       }
@@ -1698,98 +1936,82 @@ export class DisabilityComponent implements OnInit, DoCheck {
         case 'pep_radio_insured':
           // formInsured.removeControl('pep');
           // formInsured.removeControl('knowYourClient');
-          if (!(this.disabilityGroup.get('files').get('documentsKnowClient'))) {
-            formFiles.addControl('documentsKnowClient', this.fb.array([this.createFormArray('filesDocumentsKnowClient')]));
-            this.filesDocumentsKnowClientArray = this.disabilityGroup.get('files').get('documentsKnowClient') as FormArray;
-          }
-          else if (this.disabilityGroup.get('files').get('documentsKnowClient')) {
-            // for (let x = 0; x < this.filesDocumentsKnowClientArray.length; x++){
-            //   if (x != 0) {
-            //     this.filesDocumentsKnowClientArray.removeAt(x);
-            //   }
-            //   else if (x == 0){
+          // if (!(this.disabilityGroup.get('files').get('documentsKnowClient'))) {
+          //   formFiles.addControl('documentsKnowClient', this.fb.array([this.createFormArray('filesDocumentsKnowClient')]));
+          //   this.filesDocumentsKnowClientArray = this.disabilityGroup.get('files').get('documentsKnowClient') as FormArray;
+          // }
+          // else if (this.disabilityGroup.get('files').get('documentsKnowClient')) {
 
-            //   }
-            // }
-           // formFiles.removeControl('documentsKnowClient');
-            formFiles.addControl('documentsKnowClient', this.fb.array([this.createFormArray('filesDocumentsKnowClient')]));
-            this.filesDocumentsKnowClientArray = this.disabilityGroup.get('files').get('documentsKnowClient') as FormArray;
-          }
+          //   formFiles.addControl('documentsKnowClient', this.fb.array([this.createFormArray('filesDocumentsKnowClient')]));
+          //   this.filesDocumentsKnowClientArray = this.disabilityGroup.get('files').get('documentsKnowClient') as FormArray;
+          // }
 
-          this.disabilityGroup.removeControl('KnowYourCustomer');
+          // this.disabilityGroup.removeControl('KnowYourCustomer');
+          if (formPayer) {
+            if (!formPayer.get('pep')) {
+              formFiles.removeControl('incomesCertified');
+            }
+          } else {
+            formFiles.removeControl('incomesCertified');
+          }
           break;
 
 
         case 'pep_radio_holder':
           formHolder.removeControl('pep');
-          formGeneral.removeControl('knowYourCustomerContratante');
+          // formGeneral.removeControl('knowYourCustomerContratante');
+          // formHolder.removeControl('knowYourClient');
+          //formHolder.removeControl('KnowYourCustomer');
+
+          if (formPayer) {
+            if (!formPayer.get('pep')) {
+              formFiles.removeControl('incomesCertified');
+            }
+          } else {
+            formFiles.removeControl('incomesCertified');
+          }
+
+          break;
+
+        case 'pep_radio_payer':
+          formPayer.removeControl('pep');
+          formFiles.removeControl('incomesCertified');
+
+          // formGeneral.removeControl('knowYourCustomerContratante');
           // formHolder.removeControl('knowYourClient');
           //formHolder.removeControl('KnowYourCustomer');
           break;
 
         case 'insuredPolicyholderRadio':
-
-          // formInsured.addControl('policyholderKnowClientRadio', this.fb.control('', Validators.required));
-          // if (!this.disabilityGroup.get('policyholder')) {
-          //   formGeneral.addControl('policyholder', this.fb.group(this.policyHolderGroup));
-          //   this.accordionTitles = [
-          //     'Sección A. Datos del propuesto Asegurado y Estatus laboral',
-          //     'Sección B. Datos del Contratante', 'Sección C. Cuestionario Médico',
-          //     'Sección D. Opción del Plan', 'Sección E. Beneficiarios Primarios',
-          //     'Beneficiario(s) Contigente(s)', 'Archivos Adjuntos'];
-          // }
-          // else {
-          //   console.log('Ya existe, por tanto no hay que crear a policyholder de nuevo.');
-          // }
-          if (this.disabilityGroup.get('insured_data').get('policyholderKnowClientRadio')) {
-            formInsured.removeControl('policyholderKnowClientRadio');
-          }
-          if (this.disabilityGroup.get('knowYourCustomerContratante')) {
-            formGeneral.removeControl('knowYourCustomerContratante');
-          }
           if (this.disabilityGroup.get('files').get('copyId')) {
             formFiles.removeControl('copyId');
           }
           if ((this.disabilityGroup.get('antiLaundering'))) {
             formGeneral.removeControl('antiLaundering');
           }
-          if ((this.disabilityGroup.get('knowYourClient'))) {
-            formGeneral.removeControl('knowYourClient');
-          }
+
           if (this.disabilityGroup.get('insured_data').get('mandatorySubject')) {
             formInsured.removeControl('mandatorySubject');
           }
           if (this.disabilityGroup.get('files').get('mercantile')) {
             formFiles.removeControl('mercantile');
           }
+
+          // if (!this.disabilityGroup.get('policyholder')) {
+          //   formGeneral.addControl('policyholder', this.fb.group(this.policyHolderGroup));
+          // }
+
           // if (this.disabilityGroup.get('files').get('documentsKnowClient')) {
           //   formFiles.removeControl('documentsKnowClient');
           // }
 
-          if (this.disabilityGroup.get('policyholder')) {
-            formGeneral.removeControl('policyholder');
-          }
-          this.accordionTitles = [
-            'Sección A. Datos del propuesto Asegurado y Estatus laboral', 'Sección C. Cuestionario Médico',
-            'Sección D. Opción del Plan', 'Sección E. Beneficiarios Primarios',
-            'Beneficiario(s) Contigente(s)', 'Archivos Adjuntos'];
-          //formGeneral.removeControl('policyholder');
+          formInsured.addControl('policyholderKnowClientRadio', this.fb.control('', Validators.required));
+          formInsured.addControl('mandatorySubject', this.fb.control('', Validators.required));
           break;
 
-        case 'policyholderKnowClientRadio':
-          // formInsured.addControl('policyholderKnowClientRadio', this.fb.control('', Validators.required));
-          // if (!this.disabilityGroup.get('policyholder')) {
-          //   formGeneral.addControl('policyholder', this.fb.group(this.policyHolderGroup));
-          //   this.accordionTitles = [
-          //     'Sección A. Datos del propuesto Asegurado y Estatus laboral',
-          //     'Sección B. Datos del Contratante', 'Sección C. Cuestionario Médico',
-          //     'Sección D. Opción del Plan', 'Sección E. Beneficiarios Primarios',
-          //     'Beneficiario(s) Contigente(s)', 'Archivos Adjuntos'];
-          // }
-          // else {
-          //   console.log('Ya existe, por tanto no hay que crear a policyholder de nuevo.');
-          // }
 
+
+        case 'policyholderKnowClientRadio':
           // if (this.disabilityGroup.get('insured_data').get('knowYourClient')) {
           //   formInsured.removeControl('knowYourClient');
           // }
@@ -1801,22 +2023,81 @@ export class DisabilityComponent implements OnInit, DoCheck {
 
           if (!this.disabilityGroup.get('policyholder')) {
             formGeneral.addControl('policyholder', this.fb.group(this.policyHolderGroup));
-            this.accordionTitles = [
-              'Sección A. Datos del propuesto Asegurado y Estatus laboral',
-              'Sección B. Datos del Contratante', 'Sección C. Cuestionario Médico',
-              'Sección D. Opción del Plan', 'Sección E. Beneficiarios Primarios',
-              'Beneficiario(s) Contigente(s)', 'Archivos Adjuntos'];
           }
+
+          if (this.disabilityGroup.get('policyholderJuridical')) {
+            formGeneral.removeControl('policyholderJuridical');
+          }
+
           if ((this.disabilityGroup.get('antiLaundering'))) {
             formGeneral.removeControl('antiLaundering');
           }
-          if (this.disabilityGroup.get('insured_data').get('mandatorySubject')) {
-            formInsured.removeControl('mandatorySubject');
-          }
+
+          formInsured.get('mandatorySubject').reset();
+
           if (this.disabilityGroup.get('files').get('mercantile')) {
             formFiles.removeControl('mercantile');
           }
-          //formGeneral.addControl('KnowYourCustomer', this.fb.group({}));
+
+          // formFiles.addControl('copyId', this.fb.array([this.createFormArray('filesCopyId')]));
+          // this.filesCopyIdArray = this.disabilityGroup.get('files').get('copyId') as FormArray;
+
+          break;
+
+        case 'insuredPayerRadio':
+          if (this.disabilityGroup.get('files').get('copyId')) {
+            formFiles.removeControl('copyId');
+          }
+          if ((this.disabilityGroup.get('antiLaunderingPayer'))) {
+            formGeneral.removeControl('antiLaunderingPayer');
+          }
+
+
+
+          if (this.disabilityGroup.get('files').get('mercantilePayer')) {
+            formFiles.removeControl('mercantilePayer');
+          }
+
+          formInsured.addControl('payerMandatorySubject', this.fb.control('', Validators.required));
+
+
+          // if (!this.disabilityGroup.get('payer')) {
+          //   formGeneral.addControl('payer', this.fb.group(this.policyHolderGroup));
+          // }
+
+          // if (this.disabilityGroup.get('files').get('documentsKnowClient')) {
+          //   formFiles.removeControl('documentsKnowClient');
+          // }
+
+          formInsured.addControl('payerKnowClientRadio', this.fb.control('', Validators.required));
+          break;
+
+        case 'payerKnowClientRadio':
+          // if (this.disabilityGroup.get('insured_data').get('knowYourClient')) {
+          //   formInsured.removeControl('knowYourClient');
+          // }
+          // formFiles.removeControl('documentsKnowClient');
+          // this.filesDocumentsArray = undefined;
+          if ((this.disabilityGroup.get('knowYourClientPayer'))) {
+            formGeneral.removeControl('knowYourClientPayer');
+          }
+
+          if (!this.disabilityGroup.get('payer')) {
+            formGeneral.addControl('payer', this.fb.group(this.policyPayerGroup));
+          }
+          if ((this.disabilityGroup.get('antiLaunderingPayer'))) {
+            formGeneral.removeControl('antiLaunderingPayer');
+          }
+
+          if (this.disabilityGroup.get('payerJuridical')) {
+            formGeneral.removeControl('payerJuridical');
+          }
+
+          formInsured.get('payerMandatorySubject').reset();
+
+          if (this.disabilityGroup.get('files').get('mercantilePayer')) {
+            formFiles.removeControl('mercantilePayer');
+          }
 
           formFiles.addControl('copyId', this.fb.array([this.createFormArray('filesCopyId')]));
           this.filesCopyIdArray = this.disabilityGroup.get('files').get('copyId') as FormArray;
@@ -1837,18 +2118,21 @@ export class DisabilityComponent implements OnInit, DoCheck {
           break;
 
         case 'mandatorySubject':
-
-          if (!(this.disabilityGroup.get('files').get('mercantile'))) {
-            formFiles.addControl('mercantile', this.fb.array([this.createFormArray('mercantileRegister')]));
-            this.mercantileRegisterArray = this.disabilityGroup.get('files').get('mercantile') as FormArray;
-          }
-          else if (this.disabilityGroup.get('files').get('mercantile')) {
+          if (this.disabilityGroup.get('files').get('mercantile')) {
             formFiles.removeControl('mercantile');
-            formFiles.addControl('mercantile', this.fb.array([this.createFormArray('mercantileRegister')]));
-            this.mercantileRegisterArray = this.disabilityGroup.get('files').get('mercantile') as FormArray;
+            this.mercantileRegisterArray = undefined;
           }
           if ((this.disabilityGroup.get('antiLaundering'))) {
             formGeneral.removeControl('antiLaundering');
+          }
+
+        case 'payerMandatorySubject':
+          if (this.disabilityGroup.get('files').get('mercantilePayer')) {
+            formFiles.removeControl('mercantilePayer');
+            this.mercantileRegisterArray = undefined;
+          }
+          if ((this.disabilityGroup.get('antiLaunderingPayer'))) {
+            formGeneral.removeControl('antiLaunderingPayer');
           }
 
           break;
@@ -1873,6 +2157,7 @@ export class DisabilityComponent implements OnInit, DoCheck {
     //   }
     // }
   }
+
   createFormArray(name: string) {
     const formP = this.disabilityGroup.get('main') as FormGroup;
     const formC = this.disabilityGroup.get('contingent') as FormGroup;
@@ -2333,7 +2618,7 @@ export class DisabilityComponent implements OnInit, DoCheck {
           //   formFiles.removeControl('documentsKnowClient');
           // }
           if (this.disabilityGroup.get('knowYourCustomerContratante')) {
-          formGeneral.removeControl('knowYourCustomerContratante');
+            formGeneral.removeControl('knowYourCustomerContratante');
           }
           // if (this.disabilityGroup.get('policyholder')) {
           //   formGeneral.removeControl('policyholder');
@@ -2352,7 +2637,7 @@ export class DisabilityComponent implements OnInit, DoCheck {
         }
 
         if (this.disabilityGroup.get('questions').get('questionnaire').get('therapy_array') &&
-        this.therapyArray != null || this.therapyArray != undefined) {
+          this.therapyArray != null || this.therapyArray != undefined) {
           // tslint:disable-next-line: prefer-for-of
           for (let x = 0; x < this.therapyArray.length; x++) {
             const therapyArrayGroup = this.disabilityGroup.get('questions').get('questionnaire').get('therapy_array').get(x.toString()) as FormGroup;
@@ -2363,7 +2648,7 @@ export class DisabilityComponent implements OnInit, DoCheck {
         }
 
         if (this.disabilityGroup.get('questions').get('questionnaire').get('bloodSick_array') &&
-        this.bloodSickArray != null || this.bloodSickArray != undefined) {
+          this.bloodSickArray != null || this.bloodSickArray != undefined) {
           // tslint:disable-next-line: prefer-for-of
           for (let x = 0; x < this.bloodSickArray.length; x++) {
             const bloodSickArrayGroup = this.disabilityGroup.get('questions').get('questionnaire').get('bloodSick_array').get(x.toString()) as FormGroup;
@@ -2374,7 +2659,7 @@ export class DisabilityComponent implements OnInit, DoCheck {
         }
 
         if (this.disabilityGroup.get('questions').get('questionnaire').get('VIH_array') &&
-        this.VIHArray != null || this.VIHArray != undefined) {
+          this.VIHArray != null || this.VIHArray != undefined) {
           // tslint:disable-next-line: prefer-for-of
           for (let x = 0; x < this.VIHArray.length; x++) {
             const VIHArrayGroup = this.disabilityGroup.get('questions').get('questionnaire').get('VIH_array').get(x.toString()) as FormGroup;
@@ -2385,7 +2670,7 @@ export class DisabilityComponent implements OnInit, DoCheck {
         }
 
         if (this.disabilityGroup.get('questions').get('questionnaire').get('specialTherapy_array') &&
-        this.specialTherapyArray != null || this.specialTherapyArray != undefined) {
+          this.specialTherapyArray != null || this.specialTherapyArray != undefined) {
           // tslint:disable-next-line: prefer-for-of
           for (let x = 0; x < this.specialTherapyArray.length; x++) {
             const specialTherapyArrayGroup = this.disabilityGroup.get('questions').get('questionnaire').get('specialTherapy_array').get(x.toString()) as FormGroup;
@@ -2396,7 +2681,7 @@ export class DisabilityComponent implements OnInit, DoCheck {
         }
 
         if (this.disabilityGroup.get('questions').get('questionnaire').get('insurance_array') &&
-        this.insuranceArray != null || this.insuranceArray != undefined) {
+          this.insuranceArray != null || this.insuranceArray != undefined) {
           // tslint:disable-next-line: prefer-for-of
           for (let x = 0; x < this.insuranceArray.length; x++) {
             const insuranceArrayGroup = this.disabilityGroup.get('questions').get('questionnaire').get('insurance_array').get(x.toString()) as FormGroup;
@@ -2455,7 +2740,7 @@ export class DisabilityComponent implements OnInit, DoCheck {
         }
 
         if (this.disabilityGroup.get('contingent').get('anotherCoverages') &&
-        this.existingCoveragesList != null || this.existingCoveragesList != undefined) {
+          this.existingCoveragesList != null || this.existingCoveragesList != undefined) {
           // tslint:disable-next-line: prefer-for-of
           for (let x = 0; x < this.existingCoveragesList.length; x++) {
             const existingCoveragesGroup = this.disabilityGroup.get('contingent').get('anotherCoverages').get(x.toString()) as FormGroup;
@@ -2475,7 +2760,7 @@ export class DisabilityComponent implements OnInit, DoCheck {
         }
 
         if (this.disabilityGroup.get('contingent').get('changingCoverages') &&
-        this.changingCoveragesList != null || this.changingCoveragesList != undefined) {
+          this.changingCoveragesList != null || this.changingCoveragesList != undefined) {
           // tslint:disable-next-line: prefer-for-of
           for (let x = 0; x < this.changingCoveragesList.length; x++) {
             const changingCoveragesGroup = this.disabilityGroup.get('contingent').get('changingCoverages').get(x.toString()) as FormGroup;
@@ -2499,15 +2784,15 @@ export class DisabilityComponent implements OnInit, DoCheck {
 
         if (this.disabilityGroup.get('insured_data').get('policyholderKnowClientRadio')) {
           if (this.disabilityGroup.get('insured_data').get('policyholderKnowClientRadio').value != 'NO' ||
-          this.disabilityGroup.get('insured_data').get('insuredPolicyholderRadio').value != 'SI') {
+            this.disabilityGroup.get('insured_data').get('insuredPolicyholderRadio').value != 'SI') {
             // formGeneral.removeControl('KnowYourCustomer');
             // formGeneral.removeControl('KnowYourCustomer');
             formFiles.removeControl('copyId');
             if (this.disabilityGroup.get('policyholder')) {
               formGeneral.removeControl('policyholder');
             }
+          }
         }
-      }
 
         if (this.disabilityGroup.get('insured_data').get('mandatorySubject')) {
           if (this.disabilityGroup.get('insured_data').get('mandatorySubject').value != 'SI') {
@@ -2524,7 +2809,7 @@ export class DisabilityComponent implements OnInit, DoCheck {
 
         if (this.disabilityGroup.get('insured_data').get('policyholderKnowClientRadio')) {
           if (this.disabilityGroup.get('insured_data').get('policyholderKnowClientRadio').value != 'SI' ||
-          this.disabilityGroup.get('insured_data').get('insuredPolicyholderRadio').value != 'SI') {
+            this.disabilityGroup.get('insured_data').get('insuredPolicyholderRadio').value != 'SI') {
             formI.removeControl('mandatorySubject');
             formGeneral.removeControl('knowYourClient');
             formFiles.removeControl('mercantile');
@@ -2535,11 +2820,11 @@ export class DisabilityComponent implements OnInit, DoCheck {
         if (this.disabilityGroup.get('insured_data').get('insuredPolicyholderRadio').value != 'SI') {
           formI.removeControl('policyholderKnowClientRadio');
         }
-       /* if (this.disabilityGroup.get('insured_data').get('insuredPolicyholderRadio').value == 'SI') {
-          if (this.disabilityGroup.get('policyholder')) {
-            formGeneral.removeControl('policyholder');
-          }
-        }*/
+        /* if (this.disabilityGroup.get('insured_data').get('insuredPolicyholderRadio').value == 'SI') {
+           if (this.disabilityGroup.get('policyholder')) {
+             formGeneral.removeControl('policyholder');
+           }
+         }*/
 
         if (this.disabilityGroup.get('insured_data').get('pep')) {
           formI.removeControl('pep');

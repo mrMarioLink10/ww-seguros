@@ -21,7 +21,8 @@ export class FormDataFillingService {
     'idId', 'middle_name',
     'marital_status', 'post_office_box', 'creationDate',
     'diabetesOther',
-    'everHospitalized', 'lastTimeSmoked'
+    'everHospitalized', 'lastTimeSmoked',
+    'healthDeclaration'
   ];
   excludedKeysDisability = [
     'id2Attached', 'id2AttachedUrl', 'specifyRelationship', 'differentMedic', 'isJuridica', 'name', 'nombre', 'edad', 'age', 'exposed_person',
@@ -38,10 +39,11 @@ export class FormDataFillingService {
     'idId', 'middle_name',
     'marital_status', 'post_office_box', 'creationDate',
     'diabetesOther',
-    'everHospitalized', 'insured', 'contractor', 'policeNo', 'lastName'
+    'everHospitalized', 'insured', 'contractor', 'policeNo', 'lastName',
+    'healthDeclaration'
   ];
   excludedKeysVida = [
-    'directorioSolicitud','updateDate','status',
+    'directorioSolicitud', 'updateDate', 'status',
     'id2Attached', 'id2AttachedUrl', 'specifyRelationship', 'differentMedic', 'isJuridica', 'name', 'nombre', 'edad', 'age', 'exposed_person',
     'fullname_functionary', 'position_functionary', 'old_current_position', 'request', 'exposed_name', 'createdBy'
     , 'lastChangeBy'
@@ -78,7 +80,8 @@ export class FormDataFillingService {
     'specifyRelationshipBeneficiary',
     'nationalityBeneficiary',
     'ocupationBeneficiary',
-    'quantityBeneficiary'
+    'quantityBeneficiary',
+    'healthDeclaration'
   ];
   constructor(
     private fb: FormBuilder
@@ -296,11 +299,9 @@ export class FormDataFillingService {
                 formDataGroup.addControl(key, this.fb.control(valueToSet));
               } else {
                 if (valueToSet === '') {
-                  console.log(key);
                   formDataGroup.addControl(key, this.fb.control(valueToSet, Validators.required));
                 }
                 else {
-                  console.log(key);
                   formDataGroup.addControl(key, this.fb.control(valueToSet, Validators.required));
                 }
               }
@@ -393,6 +394,9 @@ export class FormDataFillingService {
   controlIsNotRequiredVida(key) {
     for (const idx in this.excludedKeysVida) {
       if (Object.prototype.hasOwnProperty.call(this.excludedKeysVida, idx)) {
+        if (key === 'healthDeclaration') {
+          console.log(key, this.excludedKeysVida[idx], key === this.excludedKeysVida[idx]);
+        }
         if (key === this.excludedKeysVida[idx]) {
           return true;
         } else if ((key.charAt(key.length - 3) + key.charAt(key.length - 2) + key.charAt(key.length - 1)) === 'Url') {

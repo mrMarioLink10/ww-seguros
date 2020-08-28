@@ -65,4 +65,12 @@ export class RequestsService {
   goToTop(el: HTMLElement) {
     el.scrollIntoView();
   }
+
+  getPhysicalObligatoryOptions() {
+    return this.http.get(`${environment.apiUrl}/api/DatosEmpresa/ActividadesPersonaFisica`);
+  }
+
+  getJuridicalObligatoryOptions() {
+    return this.http.get(`${environment.apiUrl}/api/DatosEmpresa/ActividadesPersonaJuridica`);
+  }
 }

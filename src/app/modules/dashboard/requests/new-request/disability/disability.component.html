@@ -32,7 +32,7 @@
             <mat-expansion-panel class="ww-mat-expansion" [expanded]="step === 0" (opened)="setStep(0)">
               <mat-expansion-panel-header class="body-13 icon-blue">
                 <mat-panel-title>
-                   Datos del propuesto Asegurado y Estatus laboral
+                  Datos del propuesto Asegurado y Estatus laboral
                 </mat-panel-title>
                 <mat-panel-description>
                   <div></div>
@@ -88,10 +88,14 @@
                     <app-select class="mr-3 pt-21" [options]="idType" [group]="disabilityGroup.get('insured_data')">
                     </app-select>
                   </div>
+                  <app-file-input class="mr-3" [group]="disabilityGroup.get('insured_data')" name="id2Attached"
+                    label="Copia de cedula" [fileNameWatcher]=""
+                    (onFileChange)="onStudiesChange($event, null, 'insured_data')">
+                  </app-file-input>
                   <div
                     class="col-span-1 mt-2 sm:mt-0 md:col-span-2 md:mt-3 md:mt-0 lg:col-span-3 lg:mt-0 xl:mt-0 xl:col-span-2 mr-3">
-                    <app-input [group]="disabilityGroup.get('insured_data')" label="Cédula/Pasaporte" name="id_passport"
-                      placeholder="Jose de la Cruz"></app-input>
+                    <app-input [group]="disabilityGroup.get('insured_data')" label="Cédula/Pasaporte"
+                      name="id_passport"></app-input>
                   </div>
 
                 </div>
@@ -303,28 +307,13 @@
                     </div>
 
                     <div class="mt-3 lg:mt-3 xl:mt-3">
-                      <div>
-                        <label class="radio-button-label"> ¿Es usted una PEP o tiene usted una prima mayor de US$10,000?
-                        </label>
-                      </div>
-                      <div class="mr-3">
-                        <app-radio-button [group]="disabilityGroup.get('insured_data')" [options]="YesNo"
-                          name='pep_radio_insured' (selected)="selectChange($event)">
-                        </app-radio-button>
-                        <div style="max-width: 85%;"
-                          *ngIf="!disabilityGroup.get('insured_data').get('pep_radio_insured').valid && !disabilityGroup.get('insured_data').get('pep_radio_insured').touched || disabilityGroup.get('insured_data').get('pep_radio_insured').valid && disabilityGroup.get('insured_data').get('pep_radio_insured').touched || disabilityGroup.get('insured_data').get('pep_radio_insured').valid && !disabilityGroup.get('insured_data').get('pep_radio_insured').touched"
-                          class="-mt-8">
-                          <small> (Sí la respuesta es si, favor completar formulario "Conozca a su Cliente") </small>
-                        </div>
-                        <div style="max-width: 85%;"
-                          *ngIf="!disabilityGroup.get('insured_data').get('pep_radio_insured').valid && disabilityGroup.get('insured_data').get('pep_radio_insured').touched"
-                          class="-mt-2">
-                          <small> (Sí la respuesta es si, favor completar formulario "Conozca a su Cliente") </small>
-                        </div>
-                      </div>
+                      <app-radio-button class="mr-3" title="¿Es usted una PEP"
+                        [group]="disabilityGroup.get('insured_data')" [options]="YesNo" name='pep_radio_insured'
+                        (selected)="selectChange($event)">
+                      </app-radio-button>
                     </div>
 
-                    <div class="mt-2"
+                    <!-- <div class="mt-2"
                       *ngIf="disabilityGroup.get('insured_data').get('pep_radio_insured').value == 'SI' ||
                       disabilityGroup.get('insured_data').get('pep_radio_insured').value == 'NO'">
                       <div *ngIf="disabilityGroup.get('insured_data').get('pep_radio_insured').value == 'SI'" class="radio-button-label" style="font-size: 12px !important; max-width: 63vw;">Adjuntar
@@ -337,73 +326,11 @@
                         *ngIf="disabilityGroup.get('files') && disabilityGroup.get('files').get('documentsKnowClient')">
                         <div *ngFor="let studies of filesDocumentsKnowClientArray.controls; let i = index">
                           <div class="grid grid-cols-6">
-                            <!-- <mat-form-field class="mr-3" appearance="outline"
-                              [ngClass]="{'file-input': disabilityGroup.get('files').get('documentsKnowClient').get(i.toString()).get('document').value !== ''}">
-                              <mat-label> Copia de Cédula / Certificación de Ingresos declarados </mat-label>
-                              <ngx-mat-file-input #removableInputdocumentsKnowClient
-                                [valuePlaceholder]="arrayDocumentsKnowClientWatcher(i)"
-                                (change)="onStudiesChange($event, i, 'documentsKnowClient')">
-                              </ngx-mat-file-input>
-                              <mat-icon style="color: #e2e2e2;" matSuffix
-                                *ngIf="disabilityGroup.get('files').get('documentsKnowClient').get(i.toString()).get('document').value === ''">
-                                publish</mat-icon>
-                              <button mat-icon-button matSuffix
-                                *ngIf="disabilityGroup.get('files').get('documentsKnowClient').get(i.toString()).get('document').value !== ''"
-                                (click)="this.requestService.clearArchives(disabilityGroup.get('files').get('documentsKnowClient').get(i.toString()).get('document'))"
-                                (click)="removableInputdocumentsKnowClient.clear($event)">
-                                <mat-icon style="color: #e2e2e2;">clear</mat-icon>
-                              </button><button mat-icon-button matSuffix
-                                *ngIf="disabilityGroup.get('files').get('documentsKnowClient').get(i.toString()).get('document').value !== ''"
-                                (click)="this.requestService.downloadArchives($event, disabilityGroup.get('files').get('documentsKnowClient').get(i.toString()).get('document').value)">
-                                <mat-icon style="color: #e2e2e2;">get_app</mat-icon>
-                              </button>
-                              <mat-error
-                                *ngIf="disabilityGroup.get('files').get('documentsKnowClient').get(i.toString()).get('document').touched && !disabilityGroup.get('files').get('documentsKnowClient').get(i.toString()).get('document').valid">
-                                Este campo es
-                                obligatorio
-                              </mat-error>
-                            </mat-form-field> -->
                             <app-file-input
                               [ngClass]="{'col-span-6': filesDocumentsKnowClientArray.length === 1, 'col-span-5': filesDocumentsKnowClientArray.length > 1}"
                               class="mr-3"
                               [group]="disabilityGroup.get('files').get('documentsKnowClient').get(i.toString())"
                               name="document" label="Documento"
-                              [fileNameWatcher]="arrayDocumentsKnowClientWatcher(i)"
-                              (onFileChange)="onStudiesChange($event, i, 'documentsKnowClient')">
-                            </app-file-input>
-                            <div *ngIf="filesDocumentsKnowClientArray.length > 1"
-                              [ngClass]="{'': filesDocumentsKnowClientArray.length === 1, 'col-span-1': filesDocumentsKnowClientArray.length > 1} ">
-                              <button mat-mini-fab aria-label=" Eliminar estudio"
-                                (click)="diseaseService.removeToList(i, filesDocumentsKnowClientArray)" type="button"
-                                class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
-                                <mat-icon style="color: #18446B">remove</mat-icon>
-                              </button>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="">
-                        <button mat-mini-fab aria-label="Agregar estudio"
-                          (click)="addToList(filesDocumentsKnowClientArray, 'filesDocumentsKnowClient')" type="button"
-                          class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
-                          <mat-icon style="color: #18446B">add</mat-icon>
-                        </button>
-                      </div>
-                    </div>
-                    <!-- <div class="mt-2"
-                      *ngIf="disabilityGroup.get('insured_data').get('pep_radio_insured').value == 'NO'">
-                      <div class="radio-button-label" style="font-size: 12px !important; max-width: 63vw;">Adjuntar
-                        documentos "Copia de Cédula"
-                      </div>
-                      <div
-                        *ngIf="disabilityGroup.get('files') && disabilityGroup.get('files').get('documentsKnowClient')">
-                        <div *ngFor="let studies of filesDocumentsKnowClientArray.controls; let i = index">
-                          <div class="grid grid-cols-6">
-                            <app-file-input
-                              [ngClass]="{'col-span-6': filesDocumentsKnowClientArray.length === 1, 'col-span-5': filesDocumentsKnowClientArray.length > 1}"
-                              class="mr-3"
-                              [group]="disabilityGroup.get('files').get('documentsKnowClient').get(i.toString())"
-                              name="document" label="Copia de Cédula"
                               [fileNameWatcher]="arrayDocumentsKnowClientWatcher(i)"
                               (onFileChange)="onStudiesChange($event, i, 'documentsKnowClient')">
                             </app-file-input>
@@ -439,20 +366,6 @@
                       </div>
                     </div> -->
                   </div>
-
-                  <!-- Columna 4 -->
-                  <!--
-                  <div class="mt-4 lg:mt-24 xl:mt-24">
-
-                    <div>
-
-                    </div>
-                    <div>
-
-                    </div>
-
-
-                  </div> -->
 
                 </div>
 
@@ -499,30 +412,56 @@
                     </div>
                   </div>
 
-                  <div
-                    *ngIf="disabilityGroup.get('insured_data').get('pep_radio_insured').value == 'SI' || disabilityGroup.get('insured_data').get('pep_radio_insured').value == 'NO'"
-                    class="mt-4">
-                    <div>
-                      <label class="radio-button-label"> ¿El asegurador y el contratante/pagador son distintos? </label>
-                    </div>
-                    <div class="mr-3">
-                      <app-radio-button [group]="disabilityGroup.get('insured_data')" [options]="YesNo"
-                        name='insuredPolicyholderRadio' (selected)="selectChange($event)">
-                      </app-radio-button>
-                    </div>
-                  </div>
 
-                  <div *ngIf="disabilityGroup.get('insured_data').get('insuredPolicyholderRadio').value == 'SI' &&
-                  disabilityGroup.get('insured_data').get('policyholderKnowClientRadio')" class="mt-4 lg:mt-3 xl:mt-3">
-                    <div>
-                      <label class="radio-button-label"> ¿Es una persona jurídica? </label>
-                    </div>
-                    <div class="mr-3">
-                      <app-radio-button [group]="disabilityGroup.get('insured_data')" [options]="YesNo"
-                        name='policyholderKnowClientRadio' (selected)="selectChange($event)">
-                      </app-radio-button>
-                    </div>
+                </div>
 
+                <hr class="ww-divider mt-6 mb-4">
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
+                  <app-radio-button class="mr-3" [group]="disabilityGroup.get('insured_data')" [options]="YesNo"
+                    name='insuredPolicyholderRadio' (selected)="selectChange($event)"
+                    title="¿El asegurado es el contratante?">
+                  </app-radio-button>
+                  <app-radio-button *ngIf="disabilityGroup.get('insured_data').get('policyholderKnowClientRadio')"
+                    [group]="disabilityGroup.get('insured_data')" class="mr-3" [options]="YesNo"
+                    name='policyholderKnowClientRadio' title="¿El contratante es una persona jurídica?"
+                    (selected)="selectChange($event)">
+                  </app-radio-button>
+                  <!-- <app-radio-button *ngIf="disabilityGroup.get('insured_data').get('mandatorySubject')"
+                    title="¿El contratante es un sujeto obligado?" class="mr-3"
+                    [group]="disabilityGroup.get('insured_data')" [options]="YesNo" name='mandatorySubject'
+                    (selected)="selectChange($event)">
+                  </app-radio-button> -->
+                  <app-select *ngIf="disabilityGroup.get('insured_data').get('policyholderKnowClientRadio')"
+                    (selected)="selectChange($event)" [group]="disabilityGroup.get('insured_data')"
+                    name="mandatorySubject" label="Actividad economica del contratante" class="mr-3"
+                    [options]="disabilityGroup.get('insured_data').get('policyholderKnowClientRadio').value == 'SI' ? juridicalObligatoryOptions : physicalObligatoryOptions">
+                  </app-select>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
+                  <app-radio-button class="mr-3" [group]="disabilityGroup.get('insured_data')" [options]="YesNo"
+                    name='insuredPayerRadio' (selected)="selectChange($event)" title="¿El asegurado es el pagador?">
+                  </app-radio-button>
+                  <app-radio-button *ngIf="disabilityGroup.get('insured_data').get('payerKnowClientRadio')"
+                    [group]="disabilityGroup.get('insured_data')" class="mr-3" [options]="YesNo"
+                    name='payerKnowClientRadio' title="¿El pagador es una persona jurídica?"
+                    (selected)="selectChange($event)">
+                  </app-radio-button>
+                  <!-- <app-radio-button *ngIf="disabilityGroup.get('insured_data').get('payerMandatorySubject')"
+                    title="¿El pagador es un sujeto obligado?" class="mr-3"
+                    [group]="disabilityGroup.get('insured_data')" [options]="YesNo" name='payerMandatorySubject'
+                    (selected)="selectChange($event)">
+                  </app-radio-button> -->
+                  <app-select *ngIf="disabilityGroup.get('insured_data').get('payerKnowClientRadio')"
+                    (selected)="selectChange($event)" [group]="disabilityGroup.get('insured_data')"
+                    name="payerMandatorySubject" label="Actividad economica del pagador" class="mr-3"
+                    [options]="disabilityGroup.get('insured_data').get('payerKnowClientRadio').value == 'SI' ? juridicalObligatoryOptions : physicalObligatoryOptions">
+                  </app-select>
+                </div>
+                <hr class="ww-divider mt-1 mb-2">
+
+                <!-- <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
+                  <div *ngIf="disabilityGroup.get('insured_data').get('policyholderKnowClientRadio')">
                     <div *ngIf="disabilityGroup.get('insured_data').get('policyholderKnowClientRadio').value == 'NO'">
                       <div class="radio-button-label" style="font-size: 12px !important; max-width: 63vw;">Adjuntar
                         documentos
@@ -555,61 +494,42 @@
                         </button>
                       </div>
                     </div>
-
                   </div>
-
-                  <div *ngIf="disabilityGroup.get('insured_data').get('policyholderKnowClientRadio')">
-                    <div *ngIf="disabilityGroup.get('insured_data').get('policyholderKnowClientRadio').value == 'SI'"
-                      class="mt-4 lg:mt-3 xl:mt-3">
-                      <div>
-                        <label class="radio-button-label"> ¿Es un sujeto obligado? </label>
+                  <div *ngIf="disabilityGroup.get('insured_data').get('mandatorySubject')">
+                    <div *ngIf="disabilityGroup.get('insured_data').get('mandatorySubject').value == 'SI'">
+                      <div class="radio-button-label" style="font-size: 12px !important; max-width: 63vw;">Adjuntar
+                        documentos
                       </div>
-                      <div *ngIf="disabilityGroup.get('insured_data').get('mandatorySubject')" class="mr-3">
-                        <app-radio-button [group]="disabilityGroup.get('insured_data')" [options]="YesNo"
-                          name='mandatorySubject' (selected)="selectChange($event)">
-                        </app-radio-button>
-                      </div>
-
-                      <div
-                        *ngIf="disabilityGroup.get('insured_data').get('mandatorySubject').value == 'SI' || disabilityGroup.get('insured_data').get('mandatorySubject').value == 'NO'">
-                        <div class="radio-button-label" style="font-size: 12px !important; max-width: 63vw;">Adjuntar
-                          documentos
-                        </div>
-                        <div *ngIf="disabilityGroup.get('files') && disabilityGroup.get('files').get('mercantile')">
-                          <div *ngFor="let registers of mercantileRegisterArray.controls; let i = index">
-                            <div class="grid grid-cols-6">
-                              <app-file-input
-                                [ngClass]="{'col-span-6': mercantileRegisterArray.length === 1, 'col-span-5': mercantileRegisterArray.length > 1}"
-                                class="mr-3" [group]="disabilityGroup.get('files').get('mercantile').get(i.toString())"
-                                name="register" label="Registro Mercantil" [fileNameWatcher]="arrayRegisterWatcher(i)"
-                                (onFileChange)="onStudiesChange($event, i, 'mercantile')">
-                              </app-file-input>
-                              <div *ngIf="mercantileRegisterArray.length > 1"
-                                [ngClass]="{'': mercantileRegisterArray.length === 1, 'col-span-1': mercantileRegisterArray.length > 1} ">
-                                <button mat-mini-fab aria-label=" Eliminar estudio"
-                                  (click)="diseaseService.removeToList(i, mercantileRegisterArray)" type="button"
-                                  class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
-                                  <mat-icon style="color: #18446B">remove</mat-icon>
-                                </button>
-                              </div>
+                      <div *ngIf="disabilityGroup.get('files') && disabilityGroup.get('files').get('mercantile')">
+                        <div *ngFor="let registers of mercantileRegisterArray.controls; let i = index">
+                          <div class="grid grid-cols-6">
+                            <app-file-input
+                              [ngClass]="{'col-span-6': mercantileRegisterArray.length === 1, 'col-span-5': mercantileRegisterArray.length > 1}"
+                              class="mr-3" [group]="disabilityGroup.get('files').get('mercantile').get(i.toString())"
+                              name="register" label="Registro Mercantil" [fileNameWatcher]="arrayRegisterWatcher(i)"
+                              (onFileChange)="onStudiesChange($event, i, 'mercantile')">
+                            </app-file-input>
+                            <div *ngIf="mercantileRegisterArray.length > 1"
+                              [ngClass]="{'': mercantileRegisterArray.length === 1, 'col-span-1': mercantileRegisterArray.length > 1} ">
+                              <button mat-mini-fab aria-label=" Eliminar estudio"
+                                (click)="diseaseService.removeToList(i, mercantileRegisterArray)" type="button"
+                                class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
+                                <mat-icon style="color: #18446B">remove</mat-icon>
+                              </button>
                             </div>
                           </div>
                         </div>
-                        <div class="">
-                          <button mat-mini-fab aria-label="Agregar estudio"
-                            (click)="addToList(mercantileRegisterArray, 'mercantileRegister')" type="button"
-                            class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
-                            <mat-icon style="color: #18446B">add</mat-icon>
-                          </button>
-                        </div>
                       </div>
-
+                      <div class="">
+                        <button mat-mini-fab aria-label="Agregar estudio"
+                          (click)="addToList(mercantileRegisterArray, 'mercantileRegister')" type="button"
+                          class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
+                          <mat-icon style="color: #18446B">add</mat-icon>
+                        </button>
+                      </div>
                     </div>
                   </div>
-
-
-                </div>
-
+                </div> -->
                 <!-- <div *ngIf="disabilityGroup.get('insured_data').get('pep_radio_insured').value == 'SI'"
                   class="mt-4 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
                   <app-input class="mr-3" [group]="disabilityGroup.get('insured_data').get('pep')"
@@ -641,11 +561,11 @@
               </mat-action-row>
             </mat-expansion-panel>
 
-            <mat-expansion-panel *ngIf="this.disabilityGroup.get('policyholder')" class="ww-mat-expansion"
-              [expanded]="step === 1" (opened)="setStep(1)">
+            <mat-expansion-panel [expanded]="step === 1" (opened)="setStep(1)"
+              *ngIf="this.disabilityGroup.get('policyholder')" class="ww-mat-expansion">
               <mat-expansion-panel-header class="body-13 icon-blue">
                 <mat-panel-title>
-                    Datos del Contratante
+                  Contratante
                 </mat-panel-title>
                 <mat-panel-description>
                   <div></div>
@@ -658,41 +578,41 @@
                   <app-input [group]="disabilityGroup.get('policyholder')" label="Nombre Completo o Razón Social"
                     name="name" placeholder="Por ej: Ramón Pérez de los Santos"></app-input>
                 </div>
-                <div class="mr-3 mt-2 sm:mt-0 md:mt-0 lg:mt-0 xl:mt-0">
+                <div class="mr-3">
                   <app-select class="mr-3 pt-21" [options]="idType" [group]="disabilityGroup.get('policyholder')">
                   </app-select>
                 </div>
-                <div class="mr-3 mt-8 sm:mt-5 md:mt-0 lg:mt-0 xl:mt-0">
+                <div class="mr-3">
                   <app-input [group]="disabilityGroup.get('policyholder')" label="Cédula, Pasaporte o RUC"
                     name="id_passport" placeholder="Por ej: 402-0070002-8"></app-input>
                 </div>
 
-                <div class="mr-3 mt-8 sm:mt-5 md:mt-10 lg:mt-0 xl:mt-0">
+                <div class="mr-3">
                   <app-select name="marital_status" [options]="status" [group]="disabilityGroup.get('policyholder')">
                   </app-select>
                 </div>
 
-                <div class="mr-3 mt-6 sm:mt-1 md:mt-10 lg:pt-1 lg:mt-4 xl:pt-1 xl:mt-3">
+                <div class="mr-3">
                   <app-input [group]="disabilityGroup.get('policyholder')" label="Nacionalidad(es)" name="nationality"
                     placeholder="Por ej: Estadounidense"></app-input>
                 </div>
 
-                <div class="mr-3 mt-8 sm:mt-5 md:mt-6 md:pt-1 lg:pt-1 lg:mt-4 xl:pt-1 xl:mt-3">
+                <div class="mr-3">
                   <app-number-input isPhone="true" [group]="disabilityGroup.get('policyholder')" label="Tel. Res."
                     name="telephone" placeholder="Por ej: 809-002-0034"></app-number-input>
                 </div>
 
-                <div class="mr-3 mt-8 sm:mt-5 md:mt-6 md:pt-1 lg:pt-1 lg:mt-4 xl:pt-1 xl:mt-3">
+                <div class="mr-3">
                   <app-number-input isPhone="true" [group]="disabilityGroup.get('policyholder')" label="Celular"
                     name="cell" placeholder="Por ej: 829-318-0000"></app-number-input>
                 </div>
 
-                <div class="mr-3 mt-8 sm:mt-5 md:mt-8 md:pt-2 lg:pt-0 lg:mt-8 xl:pt-1 xl:mt-3">
+                <div class="mr-3">
                   <app-input [group]="disabilityGroup.get('policyholder')" label="Email personal" name="email"
                     placeholder="Por ej: ramonPrueba@gmail.com"></app-input>
                 </div>
 
-                <div class="grid grid-cols-2 mt-8 sm:mt-5 md:mt-8 md:pt-2 lg:pt-0 lg:mt-8 xl:pt-0 xl:mt-6">
+                <div class="grid grid-cols-2">
 
                   <div class="-mr-6">
                     <app-number-input [group]="disabilityGroup.get('policyholder')" label="Ingreso Anual"
@@ -707,80 +627,74 @@
 
                 </div>
 
-                <div
-                  class=" mt-6 lg:col-span-1 xl:col-span-2 mr-3 sm:mt-3 md:mt-6 md:pt-1 lg:pt-0 lg:mt-8 xl:pt-0 xl:mt-6">
+                <div class="lg:col-span-1 xl:col-span-2 mr-3">
                   <app-input label="Dirección Residencial" [group]="disabilityGroup.get('policyholder')" name="address"
                     placeholder="Por ej: Calle 3, Casa #22, avenida..."> </app-input>
                 </div>
 
-                <div class="mr-3 mt-8 sm:mt-6 md:mt-6 md:pt-1 lg:mt-5 lg:pt-0 xl:pt-0 xl:mt-6">
+                <div class="mr-3">
                   <app-select [group]="disabilityGroup.get('policyholder')" name="country" [options]='countryList'>
                   </app-select>
                 </div>
 
-                <div class="mr-3 mt-6 sm:mt-3 md:mt-6 md:pt-1 lg:pt-0 lg:mt-5 xl:pt-0 xl:mt-3">
+                <div class="mr-3">
                   <!-- <app-select [group]="disabilityGroup.get('policyholder')" name="city" [options]='cityList'>
                   </app-select> -->
                   <app-input label="Ciudad" [group]="disabilityGroup.get('policyholder')" name="city"
                     placeholder="Nueva York"> </app-input>
                 </div>
 
-                <div class="mr-3 mt-6 sm:mt-3 md:mt-6 md:pt-1 lg:pt-0 lg:mt-5 xl:pt-0 xl:mt-3">
+                <div class="mr-3">
                   <app-input label="Apdo. Postal" [group]="disabilityGroup.get('policyholder')" name="postal_address"
                     placeholder="Por ej: 11512"> </app-input>
                 </div>
 
-                <div class="mr-3 mt-8 sm:mt-6 md:mt-6 md:pt-1 lg:mt-4 lg:pt-0 xl:mt-3 xl:pt-0">
+                <div class="mr-3">
                   <app-select [group]="disabilityGroup.get('policyholder')" name="country_residence"
                     [options]='countryList2'> </app-select>
                 </div>
 
-                <div class="mr-3 mt-6 sm:mt-3 md:mt-6 md:pt-1 lg:pt-0 lg:mt-4 xl:pt-0 xl:mt-3">
+                <div class="mr-3">
                   <app-input label="Parentesco con el asegurado" [group]="disabilityGroup.get('policyholder')"
                     name="relationship" placeholder="Por ej: Su padre, su hijo, etc."> </app-input>
                 </div>
 
-                <div class="mt-6 sm:mt-5 md:mt-6 md:pt-1 lg:mt-4 lg:pt-0 xl:pt-0 xl:mt-0">
-
-                  <div>
-                    <label class="radio-button-label"> ¿Es usted una PEP? </label>
-                  </div>
-
-                  <div class="mr-3 xl:mt-3">
-                    <app-radio-button [group]="disabilityGroup.get('policyholder')" (selected)="selectChange($event)"
-                      [options]="YesNo" name='pep_radio_holder'>
-                    </app-radio-button>
-                    <!-- <div style="max-width: 85%;"
-                      *ngIf="!disabilityGroup.get('policyholder').get('pep_radio_holder').valid && !disabilityGroup.get('policyholder').get('pep_radio_holder').touched || disabilityGroup.get('policyholder').get('pep_radio_holder').valid && disabilityGroup.get('policyholder').get('pep_radio_holder').touched || disabilityGroup.get('policyholder').get('pep_radio_holder').valid && !disabilityGroup.get('policyholder').get('pep_radio_holder').touched"
-                      class="-mt-8">
-                      <small> (Sí la respuesta es si, favor completar formulario "Conozca a su Cliente") </small>
-                    </div>
-                    <div style="max-width: 85%;"
-                      *ngIf="!disabilityGroup.get('policyholder').get('pep_radio_holder').valid && disabilityGroup.get('policyholder').get('pep_radio_holder').touched"
-                      class="-mt-2">
-                      <small> (Sí la respuesta es si, favor completar formulario "Conozca a su Cliente") </small>
-                    </div> -->
-                  </div>
-
+                <!-- <div style="max-width: 85%;"
+                  *ngIf="!disabilityGroup.get('policyholder').get('pep_radio_holder').valid && !disabilityGroup.get('policyholder').get('pep_radio_holder').touched || disabilityGroup.get('policyholder').get('pep_radio_holder').valid && disabilityGroup.get('policyholder').get('pep_radio_holder').touched || disabilityGroup.get('policyholder').get('pep_radio_holder').valid && !disabilityGroup.get('policyholder').get('pep_radio_holder').touched"
+                  class="-mt-8">
+                  <small> (Sí la respuesta es si, favor completar formulario "Conozca a su Cliente") </small>
                 </div>
+                <div style="max-width: 85%;"
+                *ngIf="!disabilityGroup.get('policyholder').get('pep_radio_holder').valid && disabilityGroup.get('policyholder').get('pep_radio_holder').touched"
+                class="-mt-2">
+                <small> (Sí la respuesta es si, favor completar formulario "Conozca a su Cliente") </small>
+              </div> -->
 
-                <div class="mr-3 mt-8 sm:mt-6 md:mt-6 md:pt-1 lg:col-span-2 lg:mt-4 lg:pt-0 xl:pt-0 xl:mt-3">
+
+                <div class="mr-3">
                   <app-input label="Representante Legal" [group]="disabilityGroup.get('policyholder')"
                     name="representative" placeholder="Manuel de los Santos Ramírez"> </app-input>
                 </div>
-                <div class="mr-3 mt-8 sm:mt-6 md:mt-6 md:col-span-2 lg:col-span-1 xl:col-span-1 lg:mt-4 xl:mt-3">
+                <div class="mr-3">
                   <app-select class="mr-3 pt-21" [options]="idTypeRepre" [group]="disabilityGroup.get('policyholder')">
                   </app-select>
                 </div>
-                <div class="mr-3 mt-8 sm:mt-6 md:mt-6 md:col-span-2 lg:col-span-1 xl:col-span-1 lg:mt-4 xl:mt-3">
+                <div class="mr-3">
                   <app-input label="Cédula o Pasaporte del representante legal"
                     [group]="disabilityGroup.get('policyholder')" name="passport_id" placeholder="402-0070000-8">
                   </app-input>
                 </div>
+                <app-file-input class="mr-3" [group]="disabilityGroup.get('policyholder')" name="id2Attached"
+                  label="Copia de cedula" [fileNameWatcher]=""
+                  (onFileChange)="onStudiesChange($event, null, 'policyholder')">
+                </app-file-input>
 
+                <app-radio-button title="¿Es usted una PEP?" class="mr-3" [group]="disabilityGroup.get('policyholder')"
+                  (selected)="selectChange($event)" [options]="YesNo" name='pep_radio_holder'>
+                </app-radio-button>
               </div>
               <div *ngIf="disabilityGroup.get('policyholder').get('pep_radio_holder').value =='SI'"
-                class="mt-4 ml-3 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
+                class="ml-3 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
                 <app-input class="mr-3" [group]="disabilityGroup.get('policyholder').get('pep')"
                   label="Cargo actual o anterior" name='lastPosition'></app-input>
                 <div class="grid grid-cols-2">
@@ -798,8 +712,230 @@
                 <app-radio-button class="mr-3" title="Contratante"
                   [group]="disabilityGroup.get('policyholder').get('pep')" name="contractor" [options]="YesNo">
                 </app-radio-button> -->
-                <app-radio-button class="mr-3" title="Pagador" [group]="disabilityGroup.get('policyholder').get('pep')"
-                  name="payer" [options]="YesNo"></app-radio-button>
+              </div>
+              <mat-action-row class="action-row">
+                <button mat-button class="next-button" (click)="nextStep()" type="button">
+                  Siguiente
+                </button>
+              </mat-action-row>
+            </mat-expansion-panel>
+
+            <mat-expansion-panel [expanded]="step === 1" (opened)="setStep(1)"
+              *ngIf="this.disabilityGroup.get('policyholderJuridical')" class="ww-mat-expansion">
+              <mat-expansion-panel-header class="body-13 icon-blue">
+                <mat-panel-title>
+                  Contratante
+                </mat-panel-title>
+                <mat-panel-description>
+                  <div></div>
+                  <div *ngIf="showWarningDot(disabilityGroup.get('policyholderJuridical'))"
+                    class="warning-accordion-dot"></div>
+                </mat-panel-description>
+              </mat-expansion-panel-header>
+              <div class="ml-3 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+
+
+                <app-input class="mr-3" [group]="disabilityGroup.get('policyholderJuridical')" label="Razón Social"
+                  name="businessName"></app-input>
+                <app-number-input class="mr-3" [group]="disabilityGroup.get('policyholderJuridical')" label="RNC / RUC"
+                  name="rnc"></app-number-input>
+                <app-select [options]="family" class="mr-3" [group]="disabilityGroup.get('policyholderJuridical')"
+                  label="Parentesco con el asegurado" name="family"></app-select>
+                <app-input class="mr-3" [group]="disabilityGroup.get('policyholderJuridical')"
+                  label="Propósito del Seguro" name="purpose"></app-input>
+                <app-select [options]="countryTaxing" class="mr-3"
+                  [group]="disabilityGroup.get('policyholderJuridical')" name="taxCountry"></app-select>
+              </div>
+              <mat-action-row class="action-row">
+                <button mat-button class="next-button" (click)="nextStep()" type="button">
+                  Siguiente
+                </button>
+              </mat-action-row>
+            </mat-expansion-panel>
+
+            <mat-expansion-panel [expanded]="step === 2" (opened)="setStep(2)" *ngIf="this.disabilityGroup.get('payer')"
+              class="ww-mat-expansion">
+              <mat-expansion-panel-header class="body-13 icon-blue">
+                <mat-panel-title>
+                  Pagador
+                </mat-panel-title>
+                <mat-panel-description>
+                  <div></div>
+                  <div *ngIf="showWarningDot(disabilityGroup.get('payer'))" class="warning-accordion-dot"></div>
+                </mat-panel-description>
+              </mat-expansion-panel-header>
+              <div class="ml-3 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+
+                <div class="lg:col-span-1 xl:col-span-2 mr-3">
+                  <app-input [group]="disabilityGroup.get('payer')" label="Nombre Completo o Razón Social" name="name"
+                    placeholder="Por ej: Ramón Pérez de los Santos"></app-input>
+                </div>
+                <div class="mr-3">
+                  <app-select class="mr-3 pt-21" [options]="idType" [group]="disabilityGroup.get('payer')">
+                  </app-select>
+                </div>
+                <div class="mr-3">
+                  <app-input [group]="disabilityGroup.get('payer')" label="Cédula, Pasaporte o RUC" name="id_passport"
+                    placeholder="Por ej: 402-0070002-8"></app-input>
+                </div>
+
+                <div class="mr-3">
+                  <app-select name="marital_status" [options]="status" [group]="disabilityGroup.get('payer')">
+                  </app-select>
+                </div>
+
+                <div class="mr-3">
+                  <app-input [group]="disabilityGroup.get('payer')" label="Nacionalidad(es)" name="nationality"
+                    placeholder="Por ej: Estadounidense"></app-input>
+                </div>
+
+                <div class="mr-3">
+                  <app-number-input isPhone="true" [group]="disabilityGroup.get('payer')" label="Tel. Res."
+                    name="telephone" placeholder="Por ej: 809-002-0034"></app-number-input>
+                </div>
+
+                <div class="mr-3">
+                  <app-number-input isPhone="true" [group]="disabilityGroup.get('payer')" label="Celular" name="cell"
+                    placeholder="Por ej: 829-318-0000"></app-number-input>
+                </div>
+
+                <div class="mr-3">
+                  <app-input [group]="disabilityGroup.get('payer')" label="Email personal" name="email"
+                    placeholder="Por ej: ramonPrueba@gmail.com"></app-input>
+                </div>
+
+                <div class="grid grid-cols-2">
+
+                  <div class="-mr-6">
+                    <app-number-input [group]="disabilityGroup.get('payer')" label="Ingreso Anual" name="annual_income"
+                      placeholder="Por ej: 360000" min="1"></app-number-input>
+                  </div>
+
+                  <div class="ml-8 mr-3">
+                    <app-select [group]="disabilityGroup.get('payer')" name="currency" [options]='currencyOptions'>
+                    </app-select>
+                  </div>
+
+                </div>
+
+                <div class="mr-3">
+                  <app-input label="Dirección Residencial" [group]="disabilityGroup.get('payer')" name="address"
+                    placeholder="Por ej: Calle 3, Casa #22, avenida..."> </app-input>
+                </div>
+
+                <div class="mr-3">
+                  <app-select [group]="disabilityGroup.get('payer')" name="country" [options]='countryList'>
+                  </app-select>
+                </div>
+
+                <div class="mr-3">
+                  <!-- <app-select [group]="disabilityGroup.get('payer')" name="city" [options]='cityList'>
+                  </app-select> -->
+                  <app-input label="Ciudad" [group]="disabilityGroup.get('payer')" name="city" placeholder="Nueva York">
+                  </app-input>
+                </div>
+
+                <div class="mr-3">
+                  <app-input label="Apdo. Postal" [group]="disabilityGroup.get('payer')" name="postal_address"
+                    placeholder="Por ej: 11512"> </app-input>
+                </div>
+                <div class="mr-3">
+                  <app-select [group]="disabilityGroup.get('payer')" name="country_residence" [options]='countryList2'>
+                  </app-select>
+                </div>
+
+                <div class="mr-3">
+                  <app-input label="Parentesco con el asegurado" [group]="disabilityGroup.get('payer')"
+                    name="relationship" placeholder="Por ej: Su padre, su hijo, etc."> </app-input>
+                </div>
+
+
+                <!-- <div style="max-width: 85%;"
+                      *ngIf="!disabilityGroup.get('payer').get('pep_radio_holder').valid && !disabilityGroup.get('payer').get('pep_radio_holder').touched || disabilityGroup.get('payer').get('pep_radio_holder').valid && disabilityGroup.get('payer').get('pep_radio_holder').touched || disabilityGroup.get('payer').get('pep_radio_holder').valid && !disabilityGroup.get('payer').get('pep_radio_holder').touched"
+                      class="-mt-8">
+                      <small> (Sí la respuesta es si, favor completar formulario "Conozca a su Cliente") </small>
+                    </div>
+                    <div style="max-width: 85%;"
+                      *ngIf="!disabilityGroup.get('payer').get('pep_radio_holder').valid && disabilityGroup.get('payer').get('pep_radio_holder').touched"
+                      class="-mt-2">
+                      <small> (Sí la respuesta es si, favor completar formulario "Conozca a su Cliente") </small>
+                    </div> -->
+
+
+                <div class="mr-3">
+                  <app-input label="Representante Legal" [group]="disabilityGroup.get('payer')" name="representative"
+                    placeholder="Manuel de los Santos Ramírez"> </app-input>
+                </div>
+                <div class="mr-3">
+                  <app-select class="mr-3" [options]="idTypeRepre" [group]="disabilityGroup.get('payer')">
+                  </app-select>
+                </div>
+                <div class="mr-3">
+                  <app-input label="Cédula o Pasaporte del representante legal" [group]="disabilityGroup.get('payer')"
+                    name="passport_id" placeholder="402-0070000-8">
+                  </app-input>
+                </div>
+                <app-file-input class="mr-3" [group]="disabilityGroup.get('payer')" name="id2Attached"
+                  label="Copia de cedula" [fileNameWatcher]="" (onFileChange)="onStudiesChange($event, null, 'payer')">
+                </app-file-input>
+                <app-radio-button class="mr-3" title="¿Es usted una PEP?" [group]="disabilityGroup.get('payer')"
+                  (selected)="selectChange($event)" [options]="YesNo" name='pep_radio_payer'>
+                </app-radio-button>
+              </div>
+              <div *ngIf="disabilityGroup.get('payer').get('pep_radio_payer').value =='SI'"
+                class="ml-3 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
+                <app-input class="mr-3" [group]="disabilityGroup.get('payer').get('pep')"
+                  label="Cargo actual o anterior" name='lastPosition'></app-input>
+                <div class="grid grid-cols-2">
+                  <app-number-input class="mr-3" [group]="disabilityGroup.get('payer').get('pep')" label="Tiempo"
+                    name="timeNumber" min="1">
+                  </app-number-input>
+                  <app-select class="mr-3" [options]="year" [group]="disabilityGroup.get('payer').get('pep')">
+                  </app-select>
+                </div>
+                <!-- <div>
+                </div>
+                <app-radio-button class="mr-3" title="Asegurado"
+                  [group]="disabilityGroup.get('payer').get('pep')" name="insured" [options]="YesNo">
+                </app-radio-button>
+                <app-radio-button class="mr-3" title="Contratante"
+                  [group]="disabilityGroup.get('payer').get('pep')" name="contractor" [options]="YesNo">
+                </app-radio-button> -->
+                <!-- <app-radio-button class="mr-3" title="Pagador" [group]="disabilityGroup.get('payer').get('pep')"
+                  name="payer" [options]="YesNo"></app-radio-button> -->
+              </div>
+              <mat-action-row class="action-row">
+                <button mat-button class="next-button" (click)="nextStep()" type="button">
+                  Siguiente
+                </button>
+              </mat-action-row>
+            </mat-expansion-panel>
+
+            <mat-expansion-panel [expanded]="step === 2" (opened)="setStep(2)"
+              *ngIf="this.disabilityGroup.get('payerJuridical')" class="ww-mat-expansion">
+              <mat-expansion-panel-header class="body-13 icon-blue">
+                <mat-panel-title>
+                  Pagador
+                </mat-panel-title>
+                <mat-panel-description>
+                  <div></div>
+                  <div *ngIf="showWarningDot(disabilityGroup.get('payerJuridical'))" class="warning-accordion-dot">
+                  </div>
+                </mat-panel-description>
+              </mat-expansion-panel-header>
+              <div class="ml-3 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+
+
+                <app-input class="mr-3" [group]="disabilityGroup.get('payerJuridical')" label="Razón Social"
+                  name="businessName"></app-input>
+                <app-number-input class="mr-3" [group]="disabilityGroup.get('payerJuridical')" label="RNC / RUC"
+                  name="rnc"></app-number-input>
+                <app-select [options]="family" class="mr-3" [group]="disabilityGroup.get('payerJuridical')"
+                  label="Parentesco con el asegurado" name="family"></app-select>
+                <app-input class="mr-3" [group]="disabilityGroup.get('payerJuridical')" label="Propósito del Seguro"
+                  name="purpose"></app-input>
+                <app-select [options]="countryTaxing" class="mr-3" [group]="disabilityGroup.get('payerJuridical')"
+                  name="taxCountry"></app-select>
               </div>
               <mat-action-row class="action-row">
                 <button mat-button class="next-button" (click)="nextStep()" type="button">
@@ -811,7 +947,7 @@
             <mat-expansion-panel class="ww-mat-expansion" [expanded]="step === 2" (opened)="setStep(2)">
               <mat-expansion-panel-header class="body-13 icon-blue">
                 <mat-panel-title>
-                 Cuestionario Médico
+                  Cuestionario Médico
                 </mat-panel-title>
                 <mat-panel-description>
                   <div></div>
@@ -1739,7 +1875,7 @@
             <mat-expansion-panel class="ww-mat-expansion" [expanded]="step === 3" (opened)="setStep(3)">
               <mat-expansion-panel-header class="body-13 icon-blue">
                 <mat-panel-title>
-                    Opción del Plan
+                  Opción del Plan
                 </mat-panel-title>
                 <mat-panel-description>
                   <div></div>
@@ -1803,7 +1939,7 @@
             <mat-expansion-panel class="ww-mat-expansion" [expanded]="step === 4" (opened)="setStep(4)">
               <mat-expansion-panel-header class="body-13 icon-blue">
                 <mat-panel-title>
-                   Beneficiarios Primarios
+                  Beneficiarios Primarios
                 </mat-panel-title>
                 <mat-panel-description>
                   <div></div>
@@ -2007,7 +2143,8 @@
                         </div>
                         <app-file-input class="mr-3"
                           [group]="disabilityGroup.get('contingent').get('contingent_array').get(in.toString())"
-                          name="id2Attached" label="Adjuntar documento de identidad si es mayor de edad - Formato de los documentos: PDF (.pdf), JPG (.jpg) y PNG (.png)"
+                          name="id2Attached"
+                          label="Adjuntar documento de identidad si es mayor de edad - Formato de los documentos: PDF (.pdf), JPG (.jpg) y PNG (.png)"
                           [fileNameWatcher]="id2AttachedViewValue(in, 'contingent')"
                           (onFileChange)="onBeneficiaryFileChangeOnArray($event, 'id2Attached', in, 'contingent', 'contingent_array')">
                         </app-file-input>
@@ -2276,6 +2413,13 @@
                   <mat-icon style="color: #18446B">add</mat-icon>
                 </button>
               </div>
+              <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
+                <app-file-input *ngIf="disabilityGroup.get('files').get('incomesCertified')" class="mr-3"
+                  [group]="disabilityGroup.get('files')" name="incomesCertified"
+                  label="Certificación de ingresos del pagador" [fileNameWatcher]=""
+                  (onFileChange)="onStudiesChange($event, null, 'incomesCertified')">
+                </app-file-input>
+              </div>
               <mat-action-row class="action-row">
                 <button mat-button class="next-button" (click)="nextStep()" type="button">
                   Siguiente
@@ -2366,13 +2510,14 @@
           label="Conozca a su cliente (Persona Física) - Contratante">
           <mat-accordion #matAccordion="matAccordion" name="matAccordion" class="ww-mat-accordion example-headers-align"
             [togglePosition]="'before'">
-            <app-know-your-customer [showWarningDot]="showWarningDot(disabilityGroup.get('knowYourCustomerContratante'))"
+            <app-know-your-customer
+              [showWarningDot]="showWarningDot(disabilityGroup.get('knowYourCustomerContratante'))"
               [form]="disabilityGroup.get('knowYourCustomerContratante')">
             </app-know-your-customer>
           </mat-accordion>
         </mat-tab>
       </div>
-    <!--  <div *ngIf="disabilityGroup.get('policyholder')">
+      <!--  <div *ngIf="disabilityGroup.get('policyholder')">
         <mat-tab
           *ngIf="this.disabilityGroup.get('policyholder').get('pep_radio_holder').value == 'SI' && disabilityGroup.get('policyholder').get('KnowYourCustomer')"
           label="Conozca a su cliente (Persona Física) - Contratante">
@@ -2394,34 +2539,46 @@
         </app-know-your-client>
       </mat-tab>
       </div> -->
-      <div *ngIf="disabilityGroup.get('knowYourClient')">
-        <div *ngIf="disabilityGroup.get('knowYourClient')">
-          <div *ngIf="disabilityGroup.get('insured_data').get('mandatorySubject')">
-            <mat-tab *ngIf="disabilityGroup.get('knowYourClient')"
-              label="Conozca a su cliente (Persona Jurídica)">
-              <mat-accordion #matAccordion="matAccordion" name="matAccordion"
-                class="ww-mat-accordion example-headers-align" [togglePosition]="'before'">
-                <app-know-your-client [showWarningDot]="showWarningDot(disabilityGroup.get('knowYourClient'))"
-                  [form]="disabilityGroup.get('knowYourClient')">
-                </app-know-your-client>
-              </mat-accordion>
-            </mat-tab>
-          </div>
-        </div>
-      </div>
-      <div *ngIf="disabilityGroup.get('antiLaundering')">
-        <div *ngIf="disabilityGroup.get('antiLaundering')">
-          <mat-tab *ngIf="disabilityGroup.get('antiLaundering')"
-            label="Formulario politica Anti-lavado de Dinero/Financiamiento y Terrorismo (AML)">
-            <mat-accordion #matAccordion="matAccordion" name="matAccordion"
-              class="ww-mat-accordion example-headers-align" [togglePosition]="'before'">
-              <app-money-laundering [showWarningDot]="showWarningDot(disabilityGroup.get('antiLaundering'))"
-                [form]="disabilityGroup.get('antiLaundering')">
-              </app-money-laundering>
-            </mat-accordion>
-          </mat-tab>
-        </div>
-      </div>
+
+      <mat-tab *ngIf="disabilityGroup.get('knowYourClient')"
+        label="Contratante - Conozca a su cliente (Persona Jurídica)">
+        <mat-accordion #matAccordion="matAccordion" name="matAccordion" class="ww-mat-accordion example-headers-align"
+          [togglePosition]="'before'">
+          <app-know-your-client [showWarningDot]="showWarningDot(disabilityGroup.get('knowYourClient'))"
+            [form]="disabilityGroup.get('knowYourClient')">
+          </app-know-your-client>
+        </mat-accordion>
+      </mat-tab>
+
+      <mat-tab *ngIf="disabilityGroup.get('antiLaundering')"
+        label="Contratante - Formulario politica Anti-lavado de Dinero/Financiamiento y Terrorismo (AML)">
+        <mat-accordion #matAccordion="matAccordion" name="matAccordion" class="ww-mat-accordion example-headers-align"
+          [togglePosition]="'before'">
+          <app-money-laundering [showWarningDot]="showWarningDot(disabilityGroup.get('antiLaundering'))"
+            [form]="disabilityGroup.get('antiLaundering')">
+          </app-money-laundering>
+        </mat-accordion>
+      </mat-tab>
+
+      <mat-tab *ngIf="disabilityGroup.get('knowYourClientPayer')"
+        label="Pagador - Conozca a su cliente (Persona Jurídica)">
+        <mat-accordion #matAccordion="matAccordion" name="matAccordion" class="ww-mat-accordion example-headers-align"
+          [togglePosition]="'before'">
+          <app-know-your-client [showWarningDot]="showWarningDot(disabilityGroup.get('knowYourClientPayer'))"
+            [form]="disabilityGroup.get('knowYourClientPayer')">
+          </app-know-your-client>
+        </mat-accordion>
+      </mat-tab>
+
+      <mat-tab *ngIf="disabilityGroup.get('antiLaunderingPayer')"
+        label="Pagador - Formulario politica Anti-lavado de Dinero/Financiamiento y Terrorismo (AML)">
+        <mat-accordion #matAccordion="matAccordion" name="matAccordion" class="ww-mat-accordion example-headers-align"
+          [togglePosition]="'before'">
+          <app-money-laundering [showWarningDot]="showWarningDot(disabilityGroup.get('antiLaunderingPayer'))"
+            [form]="disabilityGroup.get('antiLaunderingPayer')">
+          </app-money-laundering>
+        </mat-accordion>
+      </mat-tab>
     </mat-tab-group>
   </form>
   <form #form="ngForm">

@@ -32,7 +32,9 @@ export class MajorExpensesService {
   sendRequest(id): Observable<any> {
     return this.http.post(`${environment.apiUrl}/api/Solicitudes/salud/confirm/${id}`, id);
   }
-
+  returnCotizacionData(id): Observable<any> {
+    return this.http.get(`${environment.apiUrl}/api/Solicitudes/salud/cotizacion/${id}`);
+  }
   getID(id) {
     this.id = id;
     // return this.returnData(id);

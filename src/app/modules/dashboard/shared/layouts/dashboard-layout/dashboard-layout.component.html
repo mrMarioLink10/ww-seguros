@@ -49,14 +49,14 @@
             style="color: white; max-height: 35px !important;" class="my-3">
             <img style="max-height: 35px !important;"
               [src]="activeRoute.includes('/dashboard/consult') ? '../../../../../../assets/iconos/user_search_icon_filled.svg' : '../../../../../../assets/iconos/user_search_icon.svg'"
-              height="24px" width="24px" class="mr-1 ml-3">
+              height="24px" width="24px" class="mr-3 ml-3">
             <div style="max-height: 35px !important;" class="text-xs uppercase">Consulta</div>
           </mat-list-item>
           <mat-list-item [routerLink]="['quotes']" routerLinkActive="router-link-active"
             style="color: white; max-height: 35px !important;" class="my-3">
             <img style="max-height: 35px !important;"
               [src]="!activeRoute.includes('/dashboard/quotes') ? '../../../../../../assets/iconos/library_books-24px.svg' : '../../../../../../assets/iconos/library_books-24px-b.svg'"
-              height="24px" width="24px" class="mr-1 ml-3">
+              height="24px" width="24px" class="mr-3 ml-3">
             <!-- <img *ngIf="!activeRoute" style="max-height: 35px !important;"
               src="../../../../../../assets/iconos/library_books-24px.svg" height="24px" width="24px" class="mr-1 ml-3"> -->
             <div style="max-height: 35px !important;" class="text-xs uppercase">Cotizaciones</div>
@@ -65,7 +65,7 @@
             style="color: white; max-height: 35px !important;" class="my-3">
             <img style="max-height: 35px !important;"
               [src]="!activeRoute.includes('/dashboard/requests') ? '../../../../../../assets/iconos/library_add-24px.svg' : '../../../../../../assets/iconos/library_add-24px-b.svg'"
-              height="24px" width="24px" class="mr-1 ml-3">
+              height="24px" width="24px" class="mr-3 ml-3">
             <!-- <img *ngIf="!activeRoute" style="max-height: 35px !important;"
               src="../../../../../../assets/iconos/library_add-24px.svg" height="24px" width="24px" class="mr-1 ml-3"> -->
             <div style="max-height: 35px !important;" class="text-xs uppercase">Solicitudes</div>
@@ -74,7 +74,7 @@
             style="color: white; max-height: 35px !important;" class="my-3">
             <img style="max-height: 35px !important;"
               [src]="!activeRoute.includes('/dashboard/claims') ? '../../../../../../assets/iconos/announcement-24px.svg' : '../../../../../../assets/iconos/announcement-24px-b.svg'"
-              height="24px" width="24px" class="mr-1 ml-3">
+              height="24px" width="24px" class="mr-3 ml-3">
             <!-- <img *ngIf="!activeRoute" style="max-height: 35px !important;"
               src="../../../../../../assets/iconos/announcement-24px.svg" height="24px" width="24px" class="mr-1 ml-3"> -->
             <div style="max-height: 35px !important;" class="text-xs uppercase">Reembolsos</div>
@@ -83,28 +83,28 @@
             routerLinkActive="router-link-active" style="color: white; max-height: 35px !important;" class="my-3">
             <img style="max-height: 35px !important;"
               [src]="!activeRoute.includes('/dashboard/authorizations') ? '../../../../../../assets/iconos/autorizacion2.svg' : '../../../../../../assets/iconos/autorizacion1.svg'"
-              height="24px" width="24px" class="mr-1 ml-3">
+              height="24px" width="24px" class="mr-3 ml-3">
             <!-- <img *ngIf="!activeRoute" style="max-height: 35px !important;"
               src="../../../../../../assets/iconos/autorizacion2.svg" height="24px" width="24px" class="mr-1 ml-3"> -->
             <div style="max-height: 35px !important;" class="text-xs uppercase">PRE - Autorizaciones</div>
           </mat-list-item>
           <mat-list-item (click)="sendEmail();" style="color: white; max-height: 35px !important;" class="my-3">
-            <img style="max-height: 35px !important;" src="../../../../../../assets/iconos/work_outline-24px.svg"
-              height="24px" width="24px" class="mr-1 ml-3">
+            <img style="max-height: 35px !important;" src="../../../../../../assets/iconos/ayuda-icon.svg" height="24px"
+              width="24px" class="mr-3 ml-3">
             <!-- <img *ngIf="!activeRoute" style="max-height: 35px !important;"
               src="../../../../../../assets/iconos/autorizacion2.svg" height="24px" width="24px" class="mr-1 ml-3"> -->
             <div style="max-height: 35px !important;" class="text-xs uppercase">Ayuda</div>
           </mat-list-item>
           <mat-list-item (click)="GetInstrucstivo();" style="color: white; max-height: 35px !important;" class="my-3">
-            <img style="max-height: 35px !important;" src="../../../../../../assets/iconos/work_outline-24px.svg"
-              height="24px" width="24px" class="mr-1 ml-3">
+            <img style="max-height: 35px !important;" src="../../../../../../assets/iconos/instructivo-icon.svg"
+              height="24px" width="24px" class="mr-3 ml-3">
             <!-- <img *ngIf="!activeRoute" style="max-height: 35px !important;"
               src="../../../../../../assets/iconos/autorizacion2.svg" height="24px" width="24px" class="mr-1 ml-3"> -->
             <div style="max-height: 35px !important;" class="text-xs uppercase">Instructivo </div>
           </mat-list-item>
           <mat-list-item (click)="GetTerminos();" style="color: white; max-height: 35px !important;" class="my-3">
             <img style="max-height: 35px !important;" src="../../../../../../assets/iconos/work_outline-24px.svg"
-              height="24px" width="24px" class="mr-1 ml-3">
+              height="24px" width="24px" class="mr-3 ml-3">
             <!-- <img *ngIf="!activeRoute" style="max-height: 35px !important;"
               src="../../../../../../assets/iconos/autorizacion2.svg" height="24px" width="24px" class="mr-1 ml-3"> -->
             <div style="max-height: 35px !important;" class="text-xs uppercase">Términos de Uso </div>
@@ -116,8 +116,7 @@
               height="24px" width="24px" class="mr-1 ml-3">
             <div style="max-height: 35px !important;" class="text-xs uppercase">Datos</div>
           </mat-list-item> -->
-          <mat-list-item style="color: white; max-height: 35px !important; padding-left: 0.75rem"
-            class="mt-10">
+          <mat-list-item style="color: white; max-height: 35px !important; padding-left: 0.75rem" class="mt-10">
             <button class="text-xs uppercase h-full w-full text-left" (click)="logOut()">Salir</button>
           </mat-list-item>
 

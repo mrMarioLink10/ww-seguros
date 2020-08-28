@@ -7,6 +7,8 @@ import { FormGroup } from '@angular/forms';
 	templateUrl: './input.component.html',
 	styleUrls: ['./input.component.scss']
 })
+
+// tslint:disable: triple-equals
 export class InputComponent implements OnInit, AfterViewChecked {
 	@Input() label: string;
 	@Input() name: string;
@@ -26,7 +28,12 @@ export class InputComponent implements OnInit, AfterViewChecked {
 		}
 	}
 	ngAfterViewChecked() {
-
 		this.cdr.detectChanges();
+	}
+
+	omitSpecialChar(event) {
+		let k;
+		k = event.charCode;
+		return ((k > 64 && k < 91) || (k > 96 && k < 123) || k == 8 || k == 32 || (k >= 48 && k <= 57) || k == 44 || k == 46 || k == 64);
 	}
 }

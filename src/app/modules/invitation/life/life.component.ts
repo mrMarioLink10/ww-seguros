@@ -2925,6 +2925,7 @@ export class LifeComponent implements OnInit, DoCheck {
         case 'haveSmoked':
           formGI.removeControl('smoked');
           formGI.removeControl('isActualSmoker');
+          formGI.removeControl('lastTimeSmoked');
           break;
 
         case 'isActualSmoker':

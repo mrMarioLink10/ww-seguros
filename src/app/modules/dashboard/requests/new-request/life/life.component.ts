@@ -3540,16 +3540,20 @@ export class LifeComponent implements OnInit, DoCheck {
           formEP.removeControl('payer');
         }
 
-        if (formP.get('contractorIsLegalEntity').value !== 'NO') {
-          formEP.removeControl('isContractorExposed');
-          formEP.removeControl('contractor');
-          formGeneral.removeControl('contractor');
+        if (formP.get('contractorIsLegalEntity')) {
+          if (formP.get('contractorIsLegalEntity').value !== 'NO') {
+            formEP.removeControl('isContractorExposed');
+            formEP.removeControl('contractor');
+            formGeneral.removeControl('contractor');
+          }
         }
 
-        if (formP.get('payerIsLegalEntity').value !== 'NO') {
-          formEP.removeControl('isPayerExposed');
-          formEP.removeControl('payer');
-          formGeneral.removeControl('payer');
+        if (formP.get('payerIsLegalEntity')) {
+          if (formP.get('payerIsLegalEntity').value !== 'NO') {
+            formEP.removeControl('isPayerExposed');
+            formEP.removeControl('payer');
+            formGeneral.removeControl('payer');
+          }
         }
 
         if (formEP.get('isExposed').value !== 'SI') {

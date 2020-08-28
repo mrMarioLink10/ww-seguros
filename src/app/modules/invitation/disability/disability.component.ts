@@ -1154,8 +1154,8 @@ export class DisabilityComponent implements OnInit, DoCheck {
     // if (this.disabilityGroup.get('insured_data').get('job_hours').valueChanges) {
     //   totalJobHours = this.disabilityGroup.get('insured_data').get('job_hours').value;
     // }
-    insideHours = this.disabilityGroup.get('insured_data').get('office_hours').value;
-    outsideHours = this.disabilityGroup.get('insured_data').get('outside_hours').value;
+    insideHours = Number.parseFloat(this.disabilityGroup.get('insured_data').get('office_hours').value);
+    outsideHours = Number.parseFloat(this.disabilityGroup.get('insured_data').get('outside_hours').value);
     // if (insideHours == null || insideHours == undefined) {
     //   insideHours = 0;
     // }

@@ -1,5 +1,5 @@
-<mat-form-field color="accent" appearance="outline" class="w-full bg-transparente" style="font-size: small !important;"
-  [formGroup]="group">
+<mat-form-field *ngIf="group" color="accent" appearance="outline" class="w-full bg-transparente"
+  style="font-size: small !important;" [formGroup]="group">
   <mat-label>{{label}}</mat-label>
   <input [formControlName]="name" matInput class="" [type]="type" [min]="min" [max]="max" [placeholder]="placeholder"
     #input (input)="input.value=$event.target.value.toUpperCase()" (keypress)="omitSpecialChar($event)">
@@ -8,3 +8,4 @@
   </mat-error>
   <mat-error *ngIf="group.get(name).errors?.email"> El formato de correo no es correcto .</mat-error>
 </mat-form-field>
+<div *ngIf="!group" class="text-color-red">No tiene group. [Debuggin]</div>

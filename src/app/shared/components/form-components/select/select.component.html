@@ -1,4 +1,4 @@
-<mat-form-field color="accent" appearance="outline" class="w-full" style="font-size: small !important;"
+<mat-form-field *ngIf="group" color="accent" appearance="outline" class="w-full" style="font-size: small !important;"
   [formGroup]="group">
   <mat-label>{{options.label ? options.label : label}}</mat-label>
   <mat-select [formControlName]="name" (selectionChange)="emitter($event)">
@@ -8,3 +8,4 @@
   <mat-error *ngIf="group.get(name).touched && !group.get(name).valid ">Este campo es obligatorio.
   </mat-error>
 </mat-form-field>
+<div *ngIf="!group" class="text-color-red">No tiene group. [Debuggin]</div>

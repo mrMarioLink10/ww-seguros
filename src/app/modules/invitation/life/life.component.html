@@ -127,7 +127,7 @@
                 name='officeTel'>
               </app-number-input>
               <app-file-input class="mr-3" [group]="newRequest.get('person')" name="id2Attached" label="Copia de cedula"
-                [fileNameWatcher]="" (onFileChange)="onStudiesChange2($event, null, 'person')">
+                [fileNameWatcher]="fileNameWatcher('person')" (onFileChange)="onStudiesChange2($event, null, 'person')">
               </app-file-input>
               <app-radio-button (selected)="selectChange($event)" class="mr-3" [group]="newRequest.get('person')"
                 name="sameAsContractor" title="¿El asegurado es el contratante?"
@@ -137,11 +137,13 @@
                 (selected)="selectChange($event)" [group]="newRequest.get('person')" name="contractorIsLegalEntity"
                 title="¿El contratante es persona juridica?" [options]="diseaseService.yesOrNoOriginal">
               </app-radio-button>
-              <app-select *ngIf="newRequest.get('person').get('contractorMandatory')" (selected)="selectChange($event)"
-                [group]="newRequest.get('person')" name="contractorMandatory"
-                label="Actividad economica del contratante" class="mr-3"
-                [options]="newRequest.get('person').get('contractorIsLegalEntity').value == 'SI' ? juridicalObligatoryOptions : physicalObligatoryOptions">
-              </app-select>
+              <div *ngIf="juridicalObligatoryOptions && physicalObligatoryOptions" class="mr-3">
+                <app-select *ngIf="newRequest.get('person').get('contractorMandatory')"
+                  (selected)="selectChange($event)" [group]="newRequest.get('person')" name="contractorMandatory"
+                  label="Actividad economica del contratante"
+                  [options]="newRequest.get('person').get('contractorIsLegalEntity').value == 'SI' ? juridicalObligatoryOptions : physicalObligatoryOptions">
+                </app-select>
+              </div>
               <app-radio-button (selected)="selectChange($event)" [group]="newRequest.get('person')" name="sameAsPayer"
                 [title]="newRequest.get('person').get('sameAsContractor').value == 'NO' ? '¿El asegurado o contratante es el pagador?' : '¿El asegurado es el pagador?'"
                 [options]="diseaseService.yesOrNoOriginal">
@@ -150,11 +152,13 @@
                 (selected)="selectChange($event)" [group]="newRequest.get('person')" name="payerIsLegalEntity"
                 title="¿El pagador es persona juridica?" [options]="diseaseService.yesOrNoOriginal">
               </app-radio-button>
-              <app-select *ngIf="newRequest.get('person').get('payerMandatory')" (selected)="selectChange($event)"
-                [group]="newRequest.get('person')" name="payerMandatory" label="Actividad economica del pagador"
-                class="mr-3"
-                [options]="newRequest.get('person').get('payerIsLegalEntity').value == 'SI' ? juridicalObligatoryOptions : physicalObligatoryOptions">
-              </app-select>
+              <div *ngIf="juridicalObligatoryOptions && physicalObligatoryOptions">
+                <app-select *ngIf="newRequest.get('person').get('payerMandatory')" (selected)="selectChange($event)"
+                  [group]="newRequest.get('person')" name="payerMandatory" label="Actividad economica del pagador"
+                  class="mr-3"
+                  [options]="newRequest.get('person').get('payerIsLegalEntity').value == 'SI' ? juridicalObligatoryOptions : physicalObligatoryOptions">
+                </app-select>
+              </div>
               <!-- <app-radio-button *ngIf="newRequest.get('person').get('payerMandatory')" class="mr-3"
                 (selected)="selectChange($event)" [group]="newRequest.get('person')" name="payerMandatory"
                 title="¿El pagador es sujeto obligado?" [options]="diseaseService.yesOrNoOriginal">
@@ -292,7 +296,7 @@
                 <app-number-input class="mr-3" [group]="newRequest.get('contractor')" label="Fax" name='fax'
                   isPhone="true"></app-number-input>
                 <app-file-input class="mr-3" [group]="newRequest.get('contractor')" name="id2Attached"
-                  label="Copia de cedula" [fileNameWatcher]=""
+                  label="Copia de cedula" [fileNameWatcher]="fileNameWatcher('contractor')"
                   (onFileChange)="onStudiesChange2($event, null, 'contractor')">
                 </app-file-input>
               </div>
@@ -394,7 +398,8 @@
                 </app-number-input>
                 <app-input class="mr-3" [group]="newRequest.get('payer')" label="Correo" name='email'></app-input>
                 <app-file-input class="mr-3" [group]="newRequest.get('payer')" name="id2Attached"
-                  label="Copia de cedula" [fileNameWatcher]="" (onFileChange)="onStudiesChange2($event, null, 'payer')">
+                  label="Copia de cedula" [fileNameWatcher]="fileNameWatcher('payer')"
+                  (onFileChange)="onStudiesChange2($event, null, 'payer')">
                 </app-file-input>
               </div>
               <mat-divider></mat-divider>
@@ -584,7 +589,8 @@
                 <div class="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-4">
                   <app-file-input *ngIf="newRequest.get('exposedPerson').get('incomesCertified')" class="mr-3"
                     [group]="newRequest.get('exposedPerson')" name="incomesCertified" label="Certificación de ingresos"
-                    [fileNameWatcher]="" onFileChange="">
+                    [fileNameWatcher]="fileNameWatcher('incomesCertified')"
+                    (onFileChange)="onStudiesChange2($event, null, 'incomesCertified')">
                   </app-file-input>
                 </div>
               </div>
@@ -1855,10 +1861,10 @@
                   [fileNameWatcher]="fileNameWatcher('healthDeclaration')"
                   (onFileChange)="onFileChange($event, 'healthDeclaration')">
                 </app-file-input>
-                <app-file-input class="mr-3" [group]="newRequest.get('files')" name="id2"
+                <!-- <app-file-input class="mr-3" [group]="newRequest.get('files')" name="id2"
                   *ngIf="newRequest.get('files').get('id2')" label="Documento de Identificación"
                   [fileNameWatcher]="fileNameWatcher('id2')" (onFileChange)="onFileChange($event, 'id2')">
-                </app-file-input>
+                </app-file-input> -->
                 <app-file-input class="mr-3" [group]="newRequest.get('files')" name="medicExam"
                   *ngIf="newRequest.get('files').get('medicExam')" label="Examen médico"
                   [fileNameWatcher]="fileNameWatcher('medicExam')" (onFileChange)="onFileChange($event, 'medicExam')">
@@ -2092,7 +2098,7 @@
 
       </mat-tab> -->
       <mat-tab *ngIf="this.newRequest.get('contractorLegalEntity')"
-        label="Conozca a su cliente (Persona jurídica) - Contratante">
+        label="Contratante - Conozca a su cliente (Persona jurídica)">
         <mat-accordion #matAccordion="matAccordion" name="matAccordion" class="ww-mat-accordion example-headers-align"
           [togglePosition]="'before'">
           <app-know-your-client [showWarningDot]="showWarningDot(newRequest.get('contractorLegalEntity'))"
@@ -2105,7 +2111,7 @@
 
       </mat-tab>
       <mat-tab *ngIf="this.newRequest.get('payerLegalEntity')"
-        label="Conozca a su cliente (Persona jurídica) - Pagador">
+        label="Pagador - Conozca a su cliente (Persona jurídica)">
         <mat-accordion #matAccordion="matAccordion" name="matAccordion" class="ww-mat-accordion example-headers-align"
           [togglePosition]="'before'">
           <app-know-your-client [showWarningDot]="showWarningDot(newRequest.get('payerLegalEntity'))"

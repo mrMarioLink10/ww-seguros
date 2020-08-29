@@ -2134,7 +2134,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
           // formP.addControl('isJuridica', this.fb.control('', Validators.required));
           // formEP.addControl('contractor', this.fb.control('', Validators.required));
 
-          // 
+          //
 
           /* if (this.newRequest.get('conozcaSuClientePersona')) {
              formGeneral.removeControl('conozcaSuClientePersona');
@@ -2193,7 +2193,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
           // formP.addControl('isJuridica', this.fb.control('', Validators.required));
           // formEP.addControl('contractor', this.fb.control('', Validators.required));
 
-          // 
+          //
 
           /* if (this.newRequest.get('conozcaSuClientePersona')) {
              formGeneral.removeControl('conozcaSuClientePersona');
@@ -3492,6 +3492,10 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
     this.formHandler.sendForm(newRequestReq, 'major-expenses', 'send');
   }
   getDataCotizaciones(id) {
+    this.majorExpensesService.returnCotizacionData(id)
+    .subscribe(response => {
+      if (response === null || response === undefined)
+      {
     const filterPrincipal = 'titula';
     this.newRequest.get('requestType').setValue('PÓLIZA NUEVA');
     this.quotesService.returnDataSaludList(id).subscribe(data => {
@@ -3585,7 +3589,12 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
         }, 4000);
       }
     });
-
+  }
+  else
+  {
+    this.processingDataToForm(response);
+  }
+  });
   }
 
   arrayDocumentsKnowClientWatcher(i: number) {
@@ -3620,7 +3629,361 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
       }
     }
   }
+processingDataToForm(data)
+{
+  if (data !== undefined && data.data !== null &&
+    data.data !== undefined) {
+    this.ID = data.data.id;
+    console.log(data.data);
+    this.dataMappingFromApi.iterateThroughtAllObject(data.data, this.newRequest);
+    this.AddEventOnEachDependentVariable();
 
+    const formP = this.newRequest.get('person') as FormGroup;
+    const formPO = this.newRequest.get('person').get('office') as FormGroup;
+    const formQA = this.newRequest.get('questionsA') as FormGroup;
+    const formQB = this.newRequest.get('questionsB') as FormGroup;
+    const formEP = this.newRequest.get('exposedPerson') as FormGroup;
+    const formSAH = this.newRequest.get('sectionAHelper') as FormGroup;
+    const formGeneral = this.newRequest as FormGroup;
+    const formContractor = this.newRequest.get('contractor') as FormGroup;
+    const formFiles = this.newRequest.get('files') as FormGroup;
+
+
+    if (this.newRequest.get('questionsB').get('familyWithDiseases') !== undefined && this.newRequest.get('questionsB').get('familyWithDiseases') !== null) {
+      this.familyWithDiseasesList = this.newRequest.get('questionsB').get('familyWithDiseases') as FormArray;
+    } else {
+      this.familyWithDiseasesList = undefined;
+    }
+
+    if (formP.get('isContractor').value === 'NO') {
+      // formP.removeControl('isJuridica');
+      if (formGeneral.get('contractor')) {
+        formGeneral.removeControl('contractor');
+      }
+      if (this.newRequest.get('conozcaSuClientePersonaContratante')) {
+        formGeneral.removeControl('conozcaSuClientePersonaContratante');
+      }
+      if (this.newRequest.get('files').get('copyId')) {
+        formFiles.removeControl('copyId');
+      }
+      if ((this.newRequest.get('antiLaundering'))) {
+        formGeneral.removeControl('antiLaundering');
+      }
+      if ((this.newRequest.get('conozcaSuClientePersonaJuridica'))) {
+        formGeneral.removeControl('conozcaSuClientePersonaJuridica');
+      }
+      if (this.newRequest.get('person').get('mandatorySubject')) {
+        formP.removeControl('mandatorySubject');
+      }
+      formP.removeControl('isJuridica');
+      if (formEP) {
+        formEP.removeControl('contractor');
+        formEP.removeControl('contractorExposedInfo');
+      }
+      if (this.newRequest.get('files').get('mercantile')) {
+        formFiles.removeControl('mercantile');
+      }
+      if (formGeneral.get('contractor')) {
+        formGeneral.removeControl('contractor');
+      }
+
+      this.newRequest.get('person').get('office').get('company').setValidators(Validators.required);
+      this.newRequest.get('person').get('office').get('company').updateValueAndValidity();
+      this.newRequest.get('person').get('office').get('company').markAsUntouched();
+
+      this.newRequest.get('person').get('office').get('position').setValidators(Validators.required);
+      this.newRequest.get('person').get('office').get('position').updateValueAndValidity();
+      this.newRequest.get('person').get('office').get('position').markAsUntouched();
+
+      this.newRequest.get('person').get('office').get('direction').setValidators(Validators.required);
+      this.newRequest.get('person').get('office').get('direction').updateValueAndValidity();
+      this.newRequest.get('person').get('office').get('direction').markAsUntouched();
+
+      this.newRequest.get('person').get('office').get('economicActivity').setValidators(Validators.required);
+      this.newRequest.get('person').get('office').get('economicActivity').updateValueAndValidity();
+      this.newRequest.get('person').get('office').get('economicActivity').markAsUntouched();
+
+      this.newRequest.get('person').get('office').get('sector').setValidators(Validators.required);
+      this.newRequest.get('person').get('office').get('sector').updateValueAndValidity();
+      this.newRequest.get('person').get('office').get('sector').markAsUntouched();
+
+      this.newRequest.get('person').get('office').get('city').setValidators(Validators.required);
+      this.newRequest.get('person').get('office').get('city').updateValueAndValidity();
+      this.newRequest.get('person').get('office').get('city').markAsUntouched();
+
+      this.newRequest.get('person').get('office').get('country').setValidators(Validators.required);
+      this.newRequest.get('person').get('office').get('country').updateValueAndValidity();
+      this.newRequest.get('person').get('office').get('country').markAsUntouched();
+
+
+      if (this.newRequest.get('files').get('copyId')) {
+        formFiles.removeControl('copyId');
+      }
+      if ((this.newRequest.get('antiLaundering'))) {
+        formGeneral.removeControl('antiLaundering');
+      }
+      if ((this.newRequest.get('conozcaSuClientePersonaJuridica'))) {
+        formGeneral.removeControl('conozcaSuClientePersonaJuridica');
+      }
+      if (this.newRequest.get('person').get('mandatorySubject')) {
+        formP.removeControl('mandatorySubject');
+      }
+      formP.removeControl('isJuridica');
+      if (formEP) {
+        formEP.removeControl('contractor');
+        formEP.removeControl('contractorExposedInfo');
+      }
+      if (this.newRequest.get('files').get('mercantile')) {
+        formFiles.removeControl('mercantile');
+      }
+    }
+
+    if (formP.get('isContractor').value !== 'SI') {
+      if (formEP) {
+        formEP.removeControl('contractorExposedInfo');
+        formEP.removeControl('contractor');
+      }
+    }
+
+    if (formP.get('heightUnit').value !== 'PIE') {
+      formP.removeControl('inches');
+    }
+
+    if (formP.get('mandatorySubject')) {
+      if (formP.get('mandatorySubject').value !== 'SI') {
+        formGeneral.removeControl('antiLaundering');
+      }
+    }
+
+    if (formP.get('isJuridica')) {
+      if (formP.get('isJuridica').value !== 'SI') {
+        formP.removeControl('mandatorySubject');
+      } else {
+        if (formGeneral.get('contractor')) {
+          formGeneral.removeControl('contractor');
+        }
+        if (formEP) {
+          formEP.removeControl('contractor');
+          formEP.removeControl('contractorExposedInfo');
+        }
+        if (this.newRequest.get('conozcaSuClientePersonaContratante')) {
+          formGeneral.removeControl('conozcaSuClientePersonaContratante');
+        }
+        if (this.newRequest.get('files').get('copyId')) {
+          formFiles.removeControl('copyId');
+        }
+      }
+    } else {
+      // formGeneral.removeControl('conozcaSuClientePersona');
+      formGeneral.removeControl('conozcaSuClientePersonaJuridica');
+      if (formGeneral.get('contractor')) {
+        formGeneral.removeControl('contractor');
+      }
+      if (this.newRequest.get('conozcaSuClientePersonaContratante')) {
+        formGeneral.removeControl('conozcaSuClientePersonaContratante');
+      }
+      if (!(this.newRequest.get('conozcaSuClientePersonaJuridica'))) {
+        formGeneral.addControl('conozcaSuClientePersonaJuridica', this.fb.group({}));
+      }
+      // formContractor.addControl('conozcaSuClientePersonaJuridica', this.fb.group({}));
+
+      if (this.newRequest.get('files').get('copyId')) {
+        formFiles.removeControl('copyId');
+      }
+    }
+
+    if (formP.get('isContractor').value !== 'SI') {
+      formGeneral.removeControl('conozcaSuClientePersonaContratante');
+      formGeneral.removeControl('conozcaSuClientePersonaJuridica');
+    }
+
+    if (formEP && formEP.get('headLine').value !== 'SI') {
+      formEP.removeControl('headLineExposedInfo');
+      formEP.removeControl('headLineExposedInfo');
+
+      if (this.newRequest.get('conozcaSuClientePersona')) {
+        formGeneral.removeControl('conozcaSuClientePersona');
+      }
+    }
+
+    if (formEP && formEP.get('contractor')) {
+      if (formEP.get('contractor').value !== 'SI') {
+        formEP.removeControl('contractorExposedInfo');
+      }
+      formEP.removeControl('contractorExposedInfo');
+      if (this.newRequest.get('conozcaSuClientePersonaContratante')) {
+        formEP.removeControl('conozcaSuClientePersonaContratante');
+      }
+    }
+
+    if (formQA.get('haveHighRiskSport').value !== true) {
+      formQA.removeControl('highRiskSport');
+    }
+
+    if (formQA.get('haveNicotine').value !== true) {
+      formQA.removeControl('nicotine');
+    }
+
+    if (formQA.get('nicotine')) {
+      if (formQA.get('nicotine').get('isActualSmoker').value !== 'EX-FUMADOR') {
+        const formQAC = formQA.get('nicotine') as FormGroup;
+
+        formQAC.removeControl('lastTimeSmoked');
+      }
+    }
+
+    if (formQA.get('havePregnant').value !== true) {
+      formQA.removeControl('pregnant');
+    }
+
+    formSAH.removeControl('haveSpine');
+    formQA.removeControl('haveSpine');
+    formQB.removeControl('hasFamilyWithHeartKidneyDisease');
+
+    if (this.newRequest.get('person').get('conozcaSuClientePersona')) {
+      formP.removeControl('conozcaSuClientePersona');
+    }
+    if ((this.newRequest.get('person').get('antiLaundering'))) {
+      formP.removeControl('antiLaundering');
+    }
+    if ((this.newRequest.get('person').get('conozcaSuClientePersonaJuridica'))) {
+      formP.removeControl('conozcaSuClientePersonaJuridica');
+    }
+
+    if (this.newRequest.get('contractor')) {
+      if (this.newRequest.get('contractor').get('conozcaSuClientePersona')) {
+        formContractor.removeControl('conozcaSuClientePersona');
+      }
+    }
+
+
+    this.contingentBeneficiaryArray = this.newRequest.get('contingentBeneficiary').get('dependentsC') as FormArray;
+    this.primaryBenefitsArray = this.newRequest.get('primaryBenefits').get('dependentsC') as FormArray;
+    this.studentDependents = this.newRequest.get('dependents').get('students') as FormArray;
+    this.dependentsFormArray = this.newRequest.get('dependents').get('allDependents') as FormArray;
+    this.questionsFormArray = this.newRequest.get('questionsA') as FormArray;
+    this.questionsBFormArray = this.newRequest.get('questionsB') as FormArray;
+    if (this.newRequest.get('questionsB')) {
+      this.informationList = this.newRequest.get('questionsB').get('information') as FormArray;
+    }
+    this.filesStudiesArray = this.newRequest.get('files').get('studies') as FormArray;
+
+    this.arrayFilesTitles = data.data.files.studies;
+    this.primaryBeneficaryTitles = data.data.primaryBenefits.dependentsC;
+    this.contigentBeneficaryTitles = data.data.contingentBeneficiary.dependentsC;
+    this.primaryAnotherTitle = data.data.primaryBenefits.personBenefited;
+    this.contigentAnotherTitle = data.data.contingentBeneficiary.personBenefited;
+
+    if (this.newRequest.get('files') && this.newRequest.get('files').get('documentsKnowClient')) {
+      this.filesDocumentsKnowClientArray = this.newRequest.get('files').get('documentsKnowClient') as FormArray;
+    }
+    if (this.newRequest.get('files') && this.newRequest.get('files').get('copyId')) {
+      this.filesCopyIdArray = this.newRequest.get('files').get('copyId') as FormArray;
+    }
+    if (this.newRequest.get('files') && this.newRequest.get('files').get('mercantile')) {
+      this.mercantileRegisterArray = this.newRequest.get('files').get('mercantile') as FormArray;
+    }
+    this.arrayFilesTitlesDocumentsKnowClient = data.data.files.documentsKnowClient;
+    this.arrayFilesTitlesCopyId = data.data.files.copyId;
+    this.arrayFilesTitlesMercantile = data.data.files.mercantile;
+
+    for (const dependent in this.dependentsFormArray.controls) {
+      if (Object.prototype.hasOwnProperty.call(this.dependentsFormArray.controls, dependent)) {
+        const element = this.dependentsFormArray.controls[dependent] as FormGroup;
+
+        if (element.get('haveHighRiskSport').value !== true) {
+          element.removeControl('highRiskSport');
+        }
+
+        if (element.get('haveNicotine').value !== true) {
+          element.removeControl('nicotine');
+        }
+
+        if (element.get('havePregnant').value !== true) {
+          element.removeControl('pregnant');
+        }
+
+        if (element.get('heightUnit').value !== 'PIE') {
+          element.removeControl('inches');
+        }
+
+        element.removeControl('haveSpine');
+      }
+    }
+
+    // tslint:disable: no-string-literal
+    if (formQB.get('specializedTests')) {
+      for (const key in formQB.get('specializedTests')['controls']) {
+        if (Object.prototype.hasOwnProperty.call(formQB.get('specializedTests')['controls'], key)) {
+          const element = formQB.get('specializedTests')['controls'][key] as FormGroup;
+          if (element.value.whichStudy !== 'OTROS') {
+            element.removeControl('specifyStudy');
+          }
+        }
+      }
+    }
+
+    if (formP.get('pep_radio_insured')) {
+      if (formP.get('pep_radio_insured').value !== 'SI') {
+        this.newRequest.removeControl('exposedPerson');
+      }
+    }
+
+    if (formP.get('isContractor')) {
+      if (formP.get('isContractor').value !== 'NO') {
+        formPO.get('company').setValidators(null);
+        formPO.get('position').setValidators(null);
+        formPO.get('direction').setValidators(null);
+        formPO.get('economicActivity').setValidators(null);
+        formPO.get('sector').setValidators(null);
+        formPO.get('city').setValidators(null);
+        formPO.get('country').setValidators(null);
+      }
+    }
+
+    if (formContractor) {
+      formContractor.removeControl('isContractor');
+    }
+
+    if (formQB.get('consultedForUnmentioned')) {
+      for (const key in formQB.get('consultedForUnmentioned')['controls']) {
+        const element = formQB.get('consultedForUnmentioned')['controls'][key] as FormGroup;
+
+        element.get('medicCenterName').setValidators(null);
+        element.get('medicCenterAddress').setValidators(null);
+        element.get('duration').setValidators(null);
+        element.get('time').setValidators(null);
+      }
+    }
+
+    if (formQB.get('alterationForUnmentioned')) {
+      for (const key in formQB.get('alterationForUnmentioned')['controls']) {
+        const element = formQB.get('alterationForUnmentioned')['controls'][key] as FormGroup;
+
+        element.get('medicCenterName').setValidators(null);
+        element.get('medicCenterAddress').setValidators(null);
+        element.get('duration').setValidators(null);
+        element.get('time').setValidators(null);
+      }
+    }
+
+    if (formQB.get('medicalHealthInsurance')) {
+      if (formQB.get('medicalHealthInsurance').value.didReclamation !== 'SI') {
+        const formQBMHI = formQB.get('medicalHealthInsurance') as FormGroup;
+
+        formQBMHI.removeControl('reclamationInfo');
+      }
+    }
+
+    this.isFormValidToFill = true;
+
+
+    this.newRequest.markAllAsTouched();
+    this.newRequest.updateValueAndValidity();
+
+  }
+
+}
   getData(id) {
     this.appComponent.showOverlay = true;
     this.majorExpensesService.returnData(id).subscribe(data => {
@@ -3629,358 +3992,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
       });*/
       // console.log(data);
       // console.log( this.newRequest);
-      if (data !== undefined && data.data !== null &&
-        data.data !== undefined) {
-        this.ID = data.data.id;
-        console.log(data.data);
-        this.dataMappingFromApi.iterateThroughtAllObject(data.data, this.newRequest);
-        this.AddEventOnEachDependentVariable();
-
-        const formP = this.newRequest.get('person') as FormGroup;
-        const formPO = this.newRequest.get('person').get('office') as FormGroup;
-        const formQA = this.newRequest.get('questionsA') as FormGroup;
-        const formQB = this.newRequest.get('questionsB') as FormGroup;
-        const formEP = this.newRequest.get('exposedPerson') as FormGroup;
-        const formSAH = this.newRequest.get('sectionAHelper') as FormGroup;
-        const formGeneral = this.newRequest as FormGroup;
-        const formContractor = this.newRequest.get('contractor') as FormGroup;
-        const formFiles = this.newRequest.get('files') as FormGroup;
-
-
-        if (this.newRequest.get('questionsB').get('familyWithDiseases') !== undefined && this.newRequest.get('questionsB').get('familyWithDiseases') !== null) {
-          this.familyWithDiseasesList = this.newRequest.get('questionsB').get('familyWithDiseases') as FormArray;
-        } else {
-          this.familyWithDiseasesList = undefined;
-        }
-
-        if (formP.get('isContractor').value === 'NO') {
-          // formP.removeControl('isJuridica');
-          if (formGeneral.get('contractor')) {
-            formGeneral.removeControl('contractor');
-          }
-          if (this.newRequest.get('conozcaSuClientePersonaContratante')) {
-            formGeneral.removeControl('conozcaSuClientePersonaContratante');
-          }
-          if (this.newRequest.get('files').get('copyId')) {
-            formFiles.removeControl('copyId');
-          }
-          if ((this.newRequest.get('antiLaundering'))) {
-            formGeneral.removeControl('antiLaundering');
-          }
-          if ((this.newRequest.get('conozcaSuClientePersonaJuridica'))) {
-            formGeneral.removeControl('conozcaSuClientePersonaJuridica');
-          }
-          if (this.newRequest.get('person').get('mandatorySubject')) {
-            formP.removeControl('mandatorySubject');
-          }
-          formP.removeControl('isJuridica');
-          if (formEP) {
-            formEP.removeControl('contractor');
-            formEP.removeControl('contractorExposedInfo');
-          }
-          if (this.newRequest.get('files').get('mercantile')) {
-            formFiles.removeControl('mercantile');
-          }
-          if (formGeneral.get('contractor')) {
-            formGeneral.removeControl('contractor');
-          }
-
-          this.newRequest.get('person').get('office').get('company').setValidators(Validators.required);
-          this.newRequest.get('person').get('office').get('company').updateValueAndValidity();
-          this.newRequest.get('person').get('office').get('company').markAsUntouched();
-
-          this.newRequest.get('person').get('office').get('position').setValidators(Validators.required);
-          this.newRequest.get('person').get('office').get('position').updateValueAndValidity();
-          this.newRequest.get('person').get('office').get('position').markAsUntouched();
-
-          this.newRequest.get('person').get('office').get('direction').setValidators(Validators.required);
-          this.newRequest.get('person').get('office').get('direction').updateValueAndValidity();
-          this.newRequest.get('person').get('office').get('direction').markAsUntouched();
-
-          this.newRequest.get('person').get('office').get('economicActivity').setValidators(Validators.required);
-          this.newRequest.get('person').get('office').get('economicActivity').updateValueAndValidity();
-          this.newRequest.get('person').get('office').get('economicActivity').markAsUntouched();
-
-          this.newRequest.get('person').get('office').get('sector').setValidators(Validators.required);
-          this.newRequest.get('person').get('office').get('sector').updateValueAndValidity();
-          this.newRequest.get('person').get('office').get('sector').markAsUntouched();
-
-          this.newRequest.get('person').get('office').get('city').setValidators(Validators.required);
-          this.newRequest.get('person').get('office').get('city').updateValueAndValidity();
-          this.newRequest.get('person').get('office').get('city').markAsUntouched();
-
-          this.newRequest.get('person').get('office').get('country').setValidators(Validators.required);
-          this.newRequest.get('person').get('office').get('country').updateValueAndValidity();
-          this.newRequest.get('person').get('office').get('country').markAsUntouched();
-
-
-          if (this.newRequest.get('files').get('copyId')) {
-            formFiles.removeControl('copyId');
-          }
-          if ((this.newRequest.get('antiLaundering'))) {
-            formGeneral.removeControl('antiLaundering');
-          }
-          if ((this.newRequest.get('conozcaSuClientePersonaJuridica'))) {
-            formGeneral.removeControl('conozcaSuClientePersonaJuridica');
-          }
-          if (this.newRequest.get('person').get('mandatorySubject')) {
-            formP.removeControl('mandatorySubject');
-          }
-          formP.removeControl('isJuridica');
-          if (formEP) {
-            formEP.removeControl('contractor');
-            formEP.removeControl('contractorExposedInfo');
-          }
-          if (this.newRequest.get('files').get('mercantile')) {
-            formFiles.removeControl('mercantile');
-          }
-        }
-
-        if (formP.get('isContractor').value !== 'SI') {
-          if (formEP) {
-            formEP.removeControl('contractorExposedInfo');
-            formEP.removeControl('contractor');
-          }
-        }
-
-        if (formP.get('heightUnit').value !== 'PIE') {
-          formP.removeControl('inches');
-        }
-
-        if (formP.get('mandatorySubject')) {
-          if (formP.get('mandatorySubject').value !== 'SI') {
-            formGeneral.removeControl('antiLaundering');
-          }
-        }
-
-        if (formP.get('isJuridica')) {
-          if (formP.get('isJuridica').value !== 'SI') {
-            formP.removeControl('mandatorySubject');
-          } else {
-            if (formGeneral.get('contractor')) {
-              formGeneral.removeControl('contractor');
-            }
-            if (formEP) {
-              formEP.removeControl('contractor');
-              formEP.removeControl('contractorExposedInfo');
-            }
-            if (this.newRequest.get('conozcaSuClientePersonaContratante')) {
-              formGeneral.removeControl('conozcaSuClientePersonaContratante');
-            }
-            if (this.newRequest.get('files').get('copyId')) {
-              formFiles.removeControl('copyId');
-            }
-          }
-        } else {
-          // formGeneral.removeControl('conozcaSuClientePersona');
-          formGeneral.removeControl('conozcaSuClientePersonaJuridica');
-          if (formGeneral.get('contractor')) {
-            formGeneral.removeControl('contractor');
-          }
-          if (this.newRequest.get('conozcaSuClientePersonaContratante')) {
-            formGeneral.removeControl('conozcaSuClientePersonaContratante');
-          }
-          if (!(this.newRequest.get('conozcaSuClientePersonaJuridica'))) {
-            formGeneral.addControl('conozcaSuClientePersonaJuridica', this.fb.group({}));
-          }
-          // formContractor.addControl('conozcaSuClientePersonaJuridica', this.fb.group({}));
-
-          if (this.newRequest.get('files').get('copyId')) {
-            formFiles.removeControl('copyId');
-          }
-        }
-
-        if (formP.get('isContractor').value !== 'SI') {
-          formGeneral.removeControl('conozcaSuClientePersonaContratante');
-          formGeneral.removeControl('conozcaSuClientePersonaJuridica');
-        }
-
-        if (formEP && formEP.get('headLine').value !== 'SI') {
-          formEP.removeControl('headLineExposedInfo');
-          formEP.removeControl('headLineExposedInfo');
-
-          if (this.newRequest.get('conozcaSuClientePersona')) {
-            formGeneral.removeControl('conozcaSuClientePersona');
-          }
-        }
-
-        if (formEP && formEP.get('contractor')) {
-          if (formEP.get('contractor').value !== 'SI') {
-            formEP.removeControl('contractorExposedInfo');
-          }
-          formEP.removeControl('contractorExposedInfo');
-          if (this.newRequest.get('conozcaSuClientePersonaContratante')) {
-            formEP.removeControl('conozcaSuClientePersonaContratante');
-          }
-        }
-
-        if (formQA.get('haveHighRiskSport').value !== true) {
-          formQA.removeControl('highRiskSport');
-        }
-
-        if (formQA.get('haveNicotine').value !== true) {
-          formQA.removeControl('nicotine');
-        }
-
-        if (formQA.get('nicotine')) {
-          if (formQA.get('nicotine').get('isActualSmoker').value !== 'EX-FUMADOR') {
-            const formQAC = formQA.get('nicotine') as FormGroup;
-
-            formQAC.removeControl('lastTimeSmoked');
-          }
-        }
-
-        if (formQA.get('havePregnant').value !== true) {
-          formQA.removeControl('pregnant');
-        }
-
-        formSAH.removeControl('haveSpine');
-        formQA.removeControl('haveSpine');
-        formQB.removeControl('hasFamilyWithHeartKidneyDisease');
-
-        if (this.newRequest.get('person').get('conozcaSuClientePersona')) {
-          formP.removeControl('conozcaSuClientePersona');
-        }
-        if ((this.newRequest.get('person').get('antiLaundering'))) {
-          formP.removeControl('antiLaundering');
-        }
-        if ((this.newRequest.get('person').get('conozcaSuClientePersonaJuridica'))) {
-          formP.removeControl('conozcaSuClientePersonaJuridica');
-        }
-
-        if (this.newRequest.get('contractor')) {
-          if (this.newRequest.get('contractor').get('conozcaSuClientePersona')) {
-            formContractor.removeControl('conozcaSuClientePersona');
-          }
-        }
-
-
-        this.contingentBeneficiaryArray = this.newRequest.get('contingentBeneficiary').get('dependentsC') as FormArray;
-        this.primaryBenefitsArray = this.newRequest.get('primaryBenefits').get('dependentsC') as FormArray;
-        this.studentDependents = this.newRequest.get('dependents').get('students') as FormArray;
-        this.dependentsFormArray = this.newRequest.get('dependents').get('allDependents') as FormArray;
-        this.questionsFormArray = this.newRequest.get('questionsA') as FormArray;
-        this.questionsBFormArray = this.newRequest.get('questionsB') as FormArray;
-        if (this.newRequest.get('questionsB')) {
-          this.informationList = this.newRequest.get('questionsB').get('information') as FormArray;
-        }
-        this.filesStudiesArray = this.newRequest.get('files').get('studies') as FormArray;
-
-        this.arrayFilesTitles = data.data.files.studies;
-        this.primaryBeneficaryTitles = data.data.primaryBenefits.dependentsC;
-        this.contigentBeneficaryTitles = data.data.contingentBeneficiary.dependentsC;
-        this.primaryAnotherTitle = data.data.primaryBenefits.personBenefited;
-        this.contigentAnotherTitle = data.data.contingentBeneficiary.personBenefited;
-
-        if (this.newRequest.get('files') && this.newRequest.get('files').get('documentsKnowClient')) {
-          this.filesDocumentsKnowClientArray = this.newRequest.get('files').get('documentsKnowClient') as FormArray;
-        }
-        if (this.newRequest.get('files') && this.newRequest.get('files').get('copyId')) {
-          this.filesCopyIdArray = this.newRequest.get('files').get('copyId') as FormArray;
-        }
-        if (this.newRequest.get('files') && this.newRequest.get('files').get('mercantile')) {
-          this.mercantileRegisterArray = this.newRequest.get('files').get('mercantile') as FormArray;
-        }
-        this.arrayFilesTitlesDocumentsKnowClient = data.data.files.documentsKnowClient;
-        this.arrayFilesTitlesCopyId = data.data.files.copyId;
-        this.arrayFilesTitlesMercantile = data.data.files.mercantile;
-
-        for (const dependent in this.dependentsFormArray.controls) {
-          if (Object.prototype.hasOwnProperty.call(this.dependentsFormArray.controls, dependent)) {
-            const element = this.dependentsFormArray.controls[dependent] as FormGroup;
-
-            if (element.get('haveHighRiskSport').value !== true) {
-              element.removeControl('highRiskSport');
-            }
-
-            if (element.get('haveNicotine').value !== true) {
-              element.removeControl('nicotine');
-            }
-
-            if (element.get('havePregnant').value !== true) {
-              element.removeControl('pregnant');
-            }
-
-            if (element.get('heightUnit').value !== 'PIE') {
-              element.removeControl('inches');
-            }
-
-            element.removeControl('haveSpine');
-          }
-        }
-
-        // tslint:disable: no-string-literal
-        if (formQB.get('specializedTests')) {
-          for (const key in formQB.get('specializedTests')['controls']) {
-            if (Object.prototype.hasOwnProperty.call(formQB.get('specializedTests')['controls'], key)) {
-              const element = formQB.get('specializedTests')['controls'][key] as FormGroup;
-              if (element.value.whichStudy !== 'OTROS') {
-                element.removeControl('specifyStudy');
-              }
-            }
-          }
-        }
-
-        if (formP.get('pep_radio_insured')) {
-          if (formP.get('pep_radio_insured').value !== 'SI') {
-            this.newRequest.removeControl('exposedPerson');
-          }
-        }
-
-        if (formP.get('isContractor')) {
-          if (formP.get('isContractor').value !== 'NO') {
-            formPO.get('company').setValidators(null);
-            formPO.get('position').setValidators(null);
-            formPO.get('direction').setValidators(null);
-            formPO.get('economicActivity').setValidators(null);
-            formPO.get('sector').setValidators(null);
-            formPO.get('city').setValidators(null);
-            formPO.get('country').setValidators(null);
-          }
-        }
-
-        if (formContractor) {
-          formContractor.removeControl('isContractor');
-        }
-
-        if (formQB.get('consultedForUnmentioned')) {
-          for (const key in formQB.get('consultedForUnmentioned')['controls']) {
-            const element = formQB.get('consultedForUnmentioned')['controls'][key] as FormGroup;
-
-            element.get('medicCenterName').setValidators(null);
-            element.get('medicCenterAddress').setValidators(null);
-            element.get('duration').setValidators(null);
-            element.get('time').setValidators(null);
-          }
-        }
-
-        if (formQB.get('alterationForUnmentioned')) {
-          for (const key in formQB.get('alterationForUnmentioned')['controls']) {
-            const element = formQB.get('alterationForUnmentioned')['controls'][key] as FormGroup;
-
-            element.get('medicCenterName').setValidators(null);
-            element.get('medicCenterAddress').setValidators(null);
-            element.get('duration').setValidators(null);
-            element.get('time').setValidators(null);
-          }
-        }
-
-        if (formQB.get('medicalHealthInsurance')) {
-          if (formQB.get('medicalHealthInsurance').value.didReclamation !== 'SI') {
-            const formQBMHI = formQB.get('medicalHealthInsurance') as FormGroup;
-
-            formQBMHI.removeControl('reclamationInfo');
-          }
-        }
-
-        this.isFormValidToFill = true;
-
-
-        this.newRequest.markAllAsTouched();
-        this.newRequest.updateValueAndValidity();
-
-      }
-
+      this.processingDataToForm(data);
       this.appComponent.showOverlay = false;
 
     });

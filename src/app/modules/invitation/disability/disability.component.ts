@@ -2565,69 +2565,103 @@ export class DisabilityComponent implements OnInit, DoCheck {
         }
 
         if (formI.get('insuredPolicyholderRadio').value !== 'SI') {
-          if (this.disabilityGroup.get('insured_data').get('policyholderKnowClientRadio')) {
-            formInsured.removeControl('policyholderKnowClientRadio');
-          }
-          if (this.disabilityGroup.get('knowYourCustomerContratante')) {
-            formGeneral.removeControl('knowYourCustomerContratante');
-          }
-          if (this.disabilityGroup.get('files').get('copyId')) {
-            formFiles.removeControl('copyId');
-          }
-          if ((this.disabilityGroup.get('antiLaundering'))) {
-            formGeneral.removeControl('antiLaundering');
-          }
-          if ((this.disabilityGroup.get('knowYourClient'))) {
-            formGeneral.removeControl('knowYourClient');
-          }
-          if (this.disabilityGroup.get('insured_data').get('mandatorySubject')) {
-            formInsured.removeControl('mandatorySubject');
-          }
-          if (this.disabilityGroup.get('files').get('mercantile')) {
-            formFiles.removeControl('mercantile');
-          }
+          // if (this.disabilityGroup.get('insured_data').get('policyholderKnowClientRadio')) {
+          //   formInsured.removeControl('policyholderKnowClientRadio');
+          // }
+          // if (this.disabilityGroup.get('knowYourCustomerContratante')) {
+          //   formGeneral.removeControl('knowYourCustomerContratante');
+          // }
+          // if (this.disabilityGroup.get('files').get('copyId')) {
+          //   formFiles.removeControl('copyId');
+          // }
+          // if ((this.disabilityGroup.get('antiLaundering'))) {
+          //   formGeneral.removeControl('antiLaundering');
+          // }
+          // if ((this.disabilityGroup.get('knowYourClient'))) {
+          //   formGeneral.removeControl('knowYourClient');
+          // }
+          // if (this.disabilityGroup.get('insured_data').get('mandatorySubject')) {
+          //   formInsured.removeControl('mandatorySubject');
+          // }
+          // if (this.disabilityGroup.get('files').get('mercantile')) {
+          //   formFiles.removeControl('mercantile');
+          // }
           // if (this.disabilityGroup.get('files').get('documentsKnowClient')) {
           //   formFiles.removeControl('documentsKnowClient');
           // }
 
-          if (this.disabilityGroup.get('policyholder')) {
-            formGeneral.removeControl('policyholder');
-          }
-          if (this.disabilityGroup.get('insured_data').get('policyholderKnowClientRadio')) {
-            formInsured.removeControl('policyholderKnowClientRadio');
-          }
-          if (this.disabilityGroup.get('KnowYourCustomerContratante')) {
-            formGeneral.removeControl('KnowYourCustomerContratante');
-          }
-          if (this.disabilityGroup.get('files').get('copyId')) {
-            formFiles.removeControl('copyId');
-          }
-          if ((this.disabilityGroup.get('antiLaundering'))) {
-            formGeneral.removeControl('antiLaundering');
-          }
-          if ((this.disabilityGroup.get('knowYourClient'))) {
-            formGeneral.removeControl('knowYourClient');
-          }
-          if (this.disabilityGroup.get('insured_data').get('mandatorySubject')) {
-            formInsured.removeControl('mandatorySubject');
-          }
-          if (this.disabilityGroup.get('files').get('mercantile')) {
-            formFiles.removeControl('mercantile');
-          }
+          // if (this.disabilityGroup.get('policyholder')) {
+          //   formGeneral.removeControl('policyholder');
+          // }
+          // if (this.disabilityGroup.get('insured_data').get('policyholderKnowClientRadio')) {
+          //   formInsured.removeControl('policyholderKnowClientRadio');
+          // }
+          // if (this.disabilityGroup.get('KnowYourCustomerContratante')) {
+          //   formGeneral.removeControl('KnowYourCustomerContratante');
+          // }
+          // if (this.disabilityGroup.get('files').get('copyId')) {
+          //   formFiles.removeControl('copyId');
+          // }
+          // if ((this.disabilityGroup.get('antiLaundering'))) {
+          //   formGeneral.removeControl('antiLaundering');
+          // }
+          // if ((this.disabilityGroup.get('knowYourClient'))) {
+          //   formGeneral.removeControl('knowYourClient');
+          // }
+          // if (this.disabilityGroup.get('insured_data').get('mandatorySubject')) {
+          //   formInsured.removeControl('mandatorySubject');
+          // }
+          // if (this.disabilityGroup.get('files').get('mercantile')) {
+          //   formFiles.removeControl('mercantile');
+          // }
           // if (this.disabilityGroup.get('files').get('documentsKnowClient')) {
           //   formFiles.removeControl('documentsKnowClient');
           // }
-          if (this.disabilityGroup.get('knowYourCustomerContratante')) {
-            formGeneral.removeControl('knowYourCustomerContratante');
-          }
+          // if (this.disabilityGroup.get('knowYourCustomerContratante')) {
+          //   formGeneral.removeControl('knowYourCustomerContratante');
+          // }
           // if (this.disabilityGroup.get('policyholder')) {
           //   formGeneral.removeControl('policyholder');
           // }
         }
 
-        if (formHolder.get('pep_radio_holder').value != 'SI') {
-          formHolder.removeControl('pep');
-          formGeneral.removeControl('knowYourCustomerContratante');
+        if (formInsured.get('insuredPolicyholderRadio').value !== 'NO') {
+          formGeneral.removeControl('policyholder');
+          formGeneral.removeControl('policyholderJuridical');
+          formInsured.removeControl('mandatorySubject');
+          formInsured.removeControl('policyholderKnowClientRadio');
+        }
+
+        if (formInsured.get('insuredPayerRadio').value !== 'NO') {
+          formGeneral.removeControl('payer');
+          formGeneral.removeControl('payerJuridical');
+          formInsured.removeControl('payerMandatorySubject');
+          formInsured.removeControl('payerIsJuridical');
+        }
+
+        if (formInsured.get('policyholderKnowClientRadio')) {
+          if (formInsured.get('policyholderKnowClientRadio').value !== 'NO') {
+            formGeneral.removeControl('policyholder');
+          }
+        }
+
+        if (formInsured.get('payerKnowClientRadio')) {
+          if (formInsured.get('payerKnowClientRadio').value !== 'NO') {
+            formGeneral.removeControl('payer');
+          }
+        }
+
+        if (formInsured.get('heightUnit')) {
+          if (formInsured.get('heightUnit').value !== 'PIE') {
+            formInsured.removeControl('inches');
+          }
+        }
+
+        if (formHolder) {
+          if (formHolder.get('pep_radio_holder').value != 'SI') {
+            formHolder.removeControl('pep');
+            // formGeneral.removeControl('knowYourCustomerContratante');
+          }
         }
 
         if (this.disabilityGroup.get('questions').get('inches') &&
@@ -2782,44 +2816,44 @@ export class DisabilityComponent implements OnInit, DoCheck {
           formCB.removeControl('specifyRelationship');
         }
 
-        if (this.disabilityGroup.get('insured_data').get('policyholderKnowClientRadio')) {
-          if (this.disabilityGroup.get('insured_data').get('policyholderKnowClientRadio').value != 'NO' ||
-            this.disabilityGroup.get('insured_data').get('insuredPolicyholderRadio').value != 'SI') {
-            // formGeneral.removeControl('KnowYourCustomer');
-            // formGeneral.removeControl('KnowYourCustomer');
-            formFiles.removeControl('copyId');
-            if (this.disabilityGroup.get('policyholder')) {
-              formGeneral.removeControl('policyholder');
-            }
-          }
-        }
+        // if (this.disabilityGroup.get('insured_data').get('policyholderKnowClientRadio')) {
+        //   if (this.disabilityGroup.get('insured_data').get('policyholderKnowClientRadio').value != 'NO' ||
+        //     this.disabilityGroup.get('insured_data').get('insuredPolicyholderRadio').value != 'SI') {
+        //     // formGeneral.removeControl('KnowYourCustomer');
+        //     // formGeneral.removeControl('KnowYourCustomer');
+        //     formFiles.removeControl('copyId');
+        //     if (this.disabilityGroup.get('policyholder')) {
+        //       formGeneral.removeControl('policyholder');
+        //     }
+        //   }
+        // }
 
-        if (this.disabilityGroup.get('insured_data').get('mandatorySubject')) {
-          if (this.disabilityGroup.get('insured_data').get('mandatorySubject').value != 'SI') {
-            formGeneral.removeControl('antiLaundering');
-          }
-        }
+        // if (this.disabilityGroup.get('insured_data').get('mandatorySubject')) {
+        //   if (this.disabilityGroup.get('insured_data').get('mandatorySubject').value != 'SI') {
+        //     formGeneral.removeControl('antiLaundering');
+        //   }
+        // }
 
-        if (this.disabilityGroup.get('insured_data').get('mandatorySubject')) {
-          if (this.disabilityGroup.get('insured_data').get('mandatorySubject').value == '') {
-            formGeneral.removeControl('knowYourClient');
-            formFiles.removeControl('mercantile');
-          }
-        }
+        // if (this.disabilityGroup.get('insured_data').get('mandatorySubject')) {
+        //   if (this.disabilityGroup.get('insured_data').get('mandatorySubject').value == '') {
+        //     formGeneral.removeControl('knowYourClient');
+        //     formFiles.removeControl('mercantile');
+        //   }
+        // }
 
-        if (this.disabilityGroup.get('insured_data').get('policyholderKnowClientRadio')) {
-          if (this.disabilityGroup.get('insured_data').get('policyholderKnowClientRadio').value != 'SI' ||
-            this.disabilityGroup.get('insured_data').get('insuredPolicyholderRadio').value != 'SI') {
-            formI.removeControl('mandatorySubject');
-            formGeneral.removeControl('knowYourClient');
-            formFiles.removeControl('mercantile');
-            formGeneral.removeControl('antiLaundering');
-          }
-        }
+        // if (this.disabilityGroup.get('insured_data').get('policyholderKnowClientRadio')) {
+        //   if (this.disabilityGroup.get('insured_data').get('policyholderKnowClientRadio').value != 'SI' ||
+        //     this.disabilityGroup.get('insured_data').get('insuredPolicyholderRadio').value != 'SI') {
+        //     formI.removeControl('mandatorySubject');
+        //     formGeneral.removeControl('knowYourClient');
+        //     formFiles.removeControl('mercantile');
+        //     formGeneral.removeControl('antiLaundering');
+        //   }
+        // }
 
-        if (this.disabilityGroup.get('insured_data').get('insuredPolicyholderRadio').value != 'SI') {
-          formI.removeControl('policyholderKnowClientRadio');
-        }
+        // if (this.disabilityGroup.get('insured_data').get('insuredPolicyholderRadio').value != 'SI') {
+        //   formI.removeControl('policyholderKnowClientRadio');
+        // }
         /* if (this.disabilityGroup.get('insured_data').get('insuredPolicyholderRadio').value == 'SI') {
            if (this.disabilityGroup.get('policyholder')) {
              formGeneral.removeControl('policyholder');

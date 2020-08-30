@@ -432,7 +432,7 @@
                     [group]="disabilityGroup.get('insured_data')" [options]="YesNo" name='mandatorySubject'
                     (selected)="selectChange($event)">
                   </app-radio-button> -->
-                  <app-select *ngIf="disabilityGroup.get('insured_data').get('policyholderKnowClientRadio')"
+                  <app-select *ngIf="disabilityGroup.get('insured_data').get('mandatorySubject')"
                     (selected)="selectChange($event)" [group]="disabilityGroup.get('insured_data')"
                     name="mandatorySubject" label="Actividad economica del contratante" class="mr-3"
                     [options]="disabilityGroup.get('insured_data').get('policyholderKnowClientRadio').value == 'SI' ? juridicalObligatoryOptions : physicalObligatoryOptions">
@@ -452,7 +452,7 @@
                     [group]="disabilityGroup.get('insured_data')" [options]="YesNo" name='payerMandatorySubject'
                     (selected)="selectChange($event)">
                   </app-radio-button> -->
-                  <app-select *ngIf="disabilityGroup.get('insured_data').get('payerKnowClientRadio')"
+                  <app-select *ngIf="disabilityGroup.get('insured_data').get('payerMandatorySubject')"
                     (selected)="selectChange($event)" [group]="disabilityGroup.get('insured_data')"
                     name="payerMandatorySubject" label="Actividad economica del pagador" class="mr-3"
                     [options]="disabilityGroup.get('insured_data').get('payerKnowClientRadio').value == 'SI' ? juridicalObligatoryOptions : physicalObligatoryOptions">

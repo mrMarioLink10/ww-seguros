@@ -633,7 +633,6 @@ export class DisabilityComponent implements OnInit, DoCheck {
           Options.push({ value: element.descripcion, viewValue: element.descripcion, obligatory: element.sujeto_obligado });
         }
       }
-      console.log(Options);
       this.juridicalObligatoryOptions = {
         options: Options
       };
@@ -647,7 +646,6 @@ export class DisabilityComponent implements OnInit, DoCheck {
           Options.push({ value: element.descripcion, viewValue: element.descripcion, obligatory: element.sujeto_obligado });
         }
       }
-      console.log(Options);
       this.physicalObligatoryOptions = {
         options: Options
       };
@@ -871,7 +869,6 @@ export class DisabilityComponent implements OnInit, DoCheck {
       const timeDiff = Math.abs(Date.now() - new Date(value).getTime());
       this.age = Math.floor(timeDiff / (1000 * 3600 * 24) / 365.25);
       // this.disabilityGroup.get('person').get('this.age').setValue(this.age);
-      console.log('La persona tiene ' + this.age + ' de edad');
     });
 
   }
@@ -1679,6 +1676,7 @@ export class DisabilityComponent implements OnInit, DoCheck {
         case 'insuredPolicyholderRadio':
 
           formInsured.removeControl('policyholderKnowClientRadio');
+          formInsured.removeControl('mandatorySubject');
           formGeneral.removeControl('policyholder');
           formGeneral.removeControl('policyholderJuridical');
           formGeneral.removeControl('knowYourClient');
@@ -2461,8 +2459,7 @@ export class DisabilityComponent implements OnInit, DoCheck {
 
     this.disabilityService.returnData(id).subscribe(data => {
       // console.log(data.data.asegurado.documentoIdentidad)
-      console.log(data)
-      console.log(data)
+      console.log(data.data);
       if (data !== undefined && data.data !== null &&
         data.data != undefined) {
         this.ID = data.data.id;
@@ -2474,12 +2471,12 @@ export class DisabilityComponent implements OnInit, DoCheck {
         const formQ = this.disabilityGroup.get('questions') as FormGroup;
         const formQQ = this.disabilityGroup.get('questions').get('questionnaire') as FormGroup;
         const formHolder = this.disabilityGroup.get('policyholder') as FormGroup;
+        const formPayer = this.disabilityGroup.get('payer') as FormGroup;
         const formFiles = this.disabilityGroup.get('files') as FormGroup;
         const formGeneral = this.disabilityGroup as FormGroup;
         const formInsured = this.disabilityGroup.get('insured_data') as FormGroup;
         const questionnaires = this.disabilityGroup.get('questionnaires') as FormGroup;
         console.log(this.disabilityGroup);
-        console.log(data.data);
 
 
 
@@ -2568,69 +2565,103 @@ export class DisabilityComponent implements OnInit, DoCheck {
         }
 
         if (formI.get('insuredPolicyholderRadio').value !== 'SI') {
-          if (this.disabilityGroup.get('insured_data').get('policyholderKnowClientRadio')) {
-            formInsured.removeControl('policyholderKnowClientRadio');
-          }
-          if (this.disabilityGroup.get('knowYourCustomerContratante')) {
-            formGeneral.removeControl('knowYourCustomerContratante');
-          }
-          if (this.disabilityGroup.get('files').get('copyId')) {
-            formFiles.removeControl('copyId');
-          }
-          if ((this.disabilityGroup.get('antiLaundering'))) {
-            formGeneral.removeControl('antiLaundering');
-          }
-          if ((this.disabilityGroup.get('knowYourClient'))) {
-            formGeneral.removeControl('knowYourClient');
-          }
-          if (this.disabilityGroup.get('insured_data').get('mandatorySubject')) {
-            formInsured.removeControl('mandatorySubject');
-          }
-          if (this.disabilityGroup.get('files').get('mercantile')) {
-            formFiles.removeControl('mercantile');
-          }
+          // if (this.disabilityGroup.get('insured_data').get('policyholderKnowClientRadio')) {
+          //   formInsured.removeControl('policyholderKnowClientRadio');
+          // }
+          // if (this.disabilityGroup.get('knowYourCustomerContratante')) {
+          //   formGeneral.removeControl('knowYourCustomerContratante');
+          // }
+          // if (this.disabilityGroup.get('files').get('copyId')) {
+          //   formFiles.removeControl('copyId');
+          // }
+          // if ((this.disabilityGroup.get('antiLaundering'))) {
+          //   formGeneral.removeControl('antiLaundering');
+          // }
+          // if ((this.disabilityGroup.get('knowYourClient'))) {
+          //   formGeneral.removeControl('knowYourClient');
+          // }
+          // if (this.disabilityGroup.get('insured_data').get('mandatorySubject')) {
+          //   formInsured.removeControl('mandatorySubject');
+          // }
+          // if (this.disabilityGroup.get('files').get('mercantile')) {
+          //   formFiles.removeControl('mercantile');
+          // }
           // if (this.disabilityGroup.get('files').get('documentsKnowClient')) {
           //   formFiles.removeControl('documentsKnowClient');
           // }
 
-          if (this.disabilityGroup.get('policyholder')) {
-            formGeneral.removeControl('policyholder');
-          }
-          if (this.disabilityGroup.get('insured_data').get('policyholderKnowClientRadio')) {
-            formInsured.removeControl('policyholderKnowClientRadio');
-          }
-          if (this.disabilityGroup.get('KnowYourCustomerContratante')) {
-            formGeneral.removeControl('KnowYourCustomerContratante');
-          }
-          if (this.disabilityGroup.get('files').get('copyId')) {
-            formFiles.removeControl('copyId');
-          }
-          if ((this.disabilityGroup.get('antiLaundering'))) {
-            formGeneral.removeControl('antiLaundering');
-          }
-          if ((this.disabilityGroup.get('knowYourClient'))) {
-            formGeneral.removeControl('knowYourClient');
-          }
-          if (this.disabilityGroup.get('insured_data').get('mandatorySubject')) {
-            formInsured.removeControl('mandatorySubject');
-          }
-          if (this.disabilityGroup.get('files').get('mercantile')) {
-            formFiles.removeControl('mercantile');
-          }
+          // if (this.disabilityGroup.get('policyholder')) {
+          //   formGeneral.removeControl('policyholder');
+          // }
+          // if (this.disabilityGroup.get('insured_data').get('policyholderKnowClientRadio')) {
+          //   formInsured.removeControl('policyholderKnowClientRadio');
+          // }
+          // if (this.disabilityGroup.get('KnowYourCustomerContratante')) {
+          //   formGeneral.removeControl('KnowYourCustomerContratante');
+          // }
+          // if (this.disabilityGroup.get('files').get('copyId')) {
+          //   formFiles.removeControl('copyId');
+          // }
+          // if ((this.disabilityGroup.get('antiLaundering'))) {
+          //   formGeneral.removeControl('antiLaundering');
+          // }
+          // if ((this.disabilityGroup.get('knowYourClient'))) {
+          //   formGeneral.removeControl('knowYourClient');
+          // }
+          // if (this.disabilityGroup.get('insured_data').get('mandatorySubject')) {
+          //   formInsured.removeControl('mandatorySubject');
+          // }
+          // if (this.disabilityGroup.get('files').get('mercantile')) {
+          //   formFiles.removeControl('mercantile');
+          // }
           // if (this.disabilityGroup.get('files').get('documentsKnowClient')) {
           //   formFiles.removeControl('documentsKnowClient');
           // }
-          if (this.disabilityGroup.get('knowYourCustomerContratante')) {
-            formGeneral.removeControl('knowYourCustomerContratante');
-          }
+          // if (this.disabilityGroup.get('knowYourCustomerContratante')) {
+          //   formGeneral.removeControl('knowYourCustomerContratante');
+          // }
           // if (this.disabilityGroup.get('policyholder')) {
           //   formGeneral.removeControl('policyholder');
           // }
         }
 
-        if (formHolder.get('pep_radio_holder').value != 'SI') {
-          formHolder.removeControl('pep');
-          formGeneral.removeControl('knowYourCustomerContratante');
+        if (formInsured.get('insuredPolicyholderRadio').value !== 'NO') {
+          formGeneral.removeControl('policyholder');
+          formGeneral.removeControl('policyholderJuridical');
+          formInsured.removeControl('mandatorySubject');
+          formInsured.removeControl('policyholderKnowClientRadio');
+        }
+
+        if (formInsured.get('insuredPayerRadio').value !== 'NO') {
+          formGeneral.removeControl('payer');
+          formGeneral.removeControl('payerJuridical');
+          formInsured.removeControl('payerMandatorySubject');
+          formInsured.removeControl('payerIsJuridical');
+        }
+
+        if (formInsured.get('policyholderKnowClientRadio')) {
+          if (formInsured.get('policyholderKnowClientRadio').value !== 'NO') {
+            formGeneral.removeControl('policyholder');
+          }
+        }
+
+        if (formInsured.get('payerKnowClientRadio')) {
+          if (formInsured.get('payerKnowClientRadio').value !== 'NO') {
+            formGeneral.removeControl('payer');
+          }
+        }
+
+        if (formInsured.get('heightUnit')) {
+          if (formInsured.get('heightUnit').value !== 'PIE') {
+            formInsured.removeControl('inches');
+          }
+        }
+
+        if (formHolder) {
+          if (formHolder.get('pep_radio_holder').value != 'SI') {
+            formHolder.removeControl('pep');
+            // formGeneral.removeControl('knowYourCustomerContratante');
+          }
         }
 
         if (this.disabilityGroup.get('questions').get('inches') &&
@@ -2785,44 +2816,44 @@ export class DisabilityComponent implements OnInit, DoCheck {
           formCB.removeControl('specifyRelationship');
         }
 
-        if (this.disabilityGroup.get('insured_data').get('policyholderKnowClientRadio')) {
-          if (this.disabilityGroup.get('insured_data').get('policyholderKnowClientRadio').value != 'NO' ||
-            this.disabilityGroup.get('insured_data').get('insuredPolicyholderRadio').value != 'SI') {
-            // formGeneral.removeControl('KnowYourCustomer');
-            // formGeneral.removeControl('KnowYourCustomer');
-            formFiles.removeControl('copyId');
-            if (this.disabilityGroup.get('policyholder')) {
-              formGeneral.removeControl('policyholder');
-            }
-          }
-        }
+        // if (this.disabilityGroup.get('insured_data').get('policyholderKnowClientRadio')) {
+        //   if (this.disabilityGroup.get('insured_data').get('policyholderKnowClientRadio').value != 'NO' ||
+        //     this.disabilityGroup.get('insured_data').get('insuredPolicyholderRadio').value != 'SI') {
+        //     // formGeneral.removeControl('KnowYourCustomer');
+        //     // formGeneral.removeControl('KnowYourCustomer');
+        //     formFiles.removeControl('copyId');
+        //     if (this.disabilityGroup.get('policyholder')) {
+        //       formGeneral.removeControl('policyholder');
+        //     }
+        //   }
+        // }
 
-        if (this.disabilityGroup.get('insured_data').get('mandatorySubject')) {
-          if (this.disabilityGroup.get('insured_data').get('mandatorySubject').value != 'SI') {
-            formGeneral.removeControl('antiLaundering');
-          }
-        }
+        // if (this.disabilityGroup.get('insured_data').get('mandatorySubject')) {
+        //   if (this.disabilityGroup.get('insured_data').get('mandatorySubject').value != 'SI') {
+        //     formGeneral.removeControl('antiLaundering');
+        //   }
+        // }
 
-        if (this.disabilityGroup.get('insured_data').get('mandatorySubject')) {
-          if (this.disabilityGroup.get('insured_data').get('mandatorySubject').value == '') {
-            formGeneral.removeControl('knowYourClient');
-            formFiles.removeControl('mercantile');
-          }
-        }
+        // if (this.disabilityGroup.get('insured_data').get('mandatorySubject')) {
+        //   if (this.disabilityGroup.get('insured_data').get('mandatorySubject').value == '') {
+        //     formGeneral.removeControl('knowYourClient');
+        //     formFiles.removeControl('mercantile');
+        //   }
+        // }
 
-        if (this.disabilityGroup.get('insured_data').get('policyholderKnowClientRadio')) {
-          if (this.disabilityGroup.get('insured_data').get('policyholderKnowClientRadio').value != 'SI' ||
-            this.disabilityGroup.get('insured_data').get('insuredPolicyholderRadio').value != 'SI') {
-            formI.removeControl('mandatorySubject');
-            formGeneral.removeControl('knowYourClient');
-            formFiles.removeControl('mercantile');
-            formGeneral.removeControl('antiLaundering');
-          }
-        }
+        // if (this.disabilityGroup.get('insured_data').get('policyholderKnowClientRadio')) {
+        //   if (this.disabilityGroup.get('insured_data').get('policyholderKnowClientRadio').value != 'SI' ||
+        //     this.disabilityGroup.get('insured_data').get('insuredPolicyholderRadio').value != 'SI') {
+        //     formI.removeControl('mandatorySubject');
+        //     formGeneral.removeControl('knowYourClient');
+        //     formFiles.removeControl('mercantile');
+        //     formGeneral.removeControl('antiLaundering');
+        //   }
+        // }
 
-        if (this.disabilityGroup.get('insured_data').get('insuredPolicyholderRadio').value != 'SI') {
-          formI.removeControl('policyholderKnowClientRadio');
-        }
+        // if (this.disabilityGroup.get('insured_data').get('insuredPolicyholderRadio').value != 'SI') {
+        //   formI.removeControl('policyholderKnowClientRadio');
+        // }
         /* if (this.disabilityGroup.get('insured_data').get('insuredPolicyholderRadio').value == 'SI') {
            if (this.disabilityGroup.get('policyholder')) {
              formGeneral.removeControl('policyholder');
@@ -2865,9 +2896,6 @@ export class DisabilityComponent implements OnInit, DoCheck {
       setTimeout(() => {
         this.appComponent.showOverlay = false;
       });
-      console.log(JSON.stringify(this.disabilityGroup.value));
-
-
     });
   }
 

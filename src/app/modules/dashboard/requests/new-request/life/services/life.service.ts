@@ -24,9 +24,11 @@ export class LifeService {
   }
 
   returnData(id): Observable<any> {
-    return this.http.get(`${environment.apiUrl}/api/Solicitudes/vida/${id}`)
+    return this.http.get(`${environment.apiUrl}/api/Solicitudes/vida/${id}`);
   }
-
+  returnCotizacionData(id): Observable<any> {
+    return this.http.get(`${environment.apiUrl}/api/Solicitudes/vida/cotizacion/${id}`);
+  }
   sendRequest(id): Observable<any> {
     return this.http.post(`${environment.apiUrl}/api/Solicitudes/vida/confirm/${id}`, id);
   }

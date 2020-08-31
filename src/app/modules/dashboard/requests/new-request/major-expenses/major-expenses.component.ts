@@ -3794,16 +3794,32 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
         formEP.removeControl('payerExposedInfo');
       }
 
-      if (formP.get('contractorIsJuridical').value !== 'NO') {
-        formEP.removeControl('contractor');
-        formEP.removeControl('contractorExposedInfo');
-        formGeneral.removeControl('contractor');
+      if (formP.get('contractorIsJuridical')) {
+        if (formP.get('contractorIsJuridical').value !== 'NO') {
+          formEP.removeControl('contractor');
+          formEP.removeControl('contractorExposedInfo');
+          formGeneral.removeControl('contractor');
+        }
       }
 
-      if (formP.get('payerIsJuridical').value !== 'NO') {
-        formEP.removeControl('payer');
-        formEP.removeControl('payerExposedInfo');
-        formGeneral.removeControl('payer');
+      if (formP.get('contractorIsJuridical')) {
+        if (formP.get('contractorIsJuridical').value === 'NO') {
+          formGeneral.removeControl('contractorJuridical');
+        }
+      }
+
+      if (formP.get('payerIsJuridical')) {
+        if (formP.get('payerIsJuridical').value !== 'NO') {
+          formEP.removeControl('payer');
+          formEP.removeControl('payerExposedInfo');
+          formGeneral.removeControl('payer');
+        }
+      }
+
+      if (formP.get('payerIsJuridical')) {
+        if (formP.get('payerIsJuridical').value === 'NO') {
+          formGeneral.removeControl('payerJuridical');
+        }
       }
 
       if (formP.get('heightUnit').value !== 'PIE') {

@@ -1571,26 +1571,7 @@ export class DisabilityComponent implements OnInit, DoCheck {
         case 'pep_radio_holder':
           console.log(this.role);
 
-          formHolder.addControl('pep', this.fb.group({
-            // contractor: ['', Validators.required],
-            // payer: ['', Validators.required],
-            // insured: ['', Validators.required],
-            lastPosition: ['', Validators.required],
-            time: ['', Validators.required],
-            timeNumber: ['', [Validators.required, Validators.min(1)]]
-          }));
 
-          if (formPayer) {
-            if (!formPayer.get('pep')) {
-              if (!formFiles.get('incomesCertified')) {
-                formFiles.addControl('incomesCertified', this.fb.control(''));
-              }
-            }
-          } else {
-            if (!formFiles.get('incomesCertified')) {
-              formFiles.addControl('incomesCertified', this.fb.control(''));
-            }
-          }
 
           // if (this.role === 'WMA') { formHolder.addControl('knowYourClient', this.fb.group({})); }
           // else if (this.role === 'WWS') { formHolder.addControl('KnowYourCustomer', this.fb.group({})); }
@@ -1600,21 +1581,39 @@ export class DisabilityComponent implements OnInit, DoCheck {
         case 'pep_radio_payer':
           console.log(this.role);
 
-          formPayer.addControl('pep', this.fb.group({
-            // contractor: ['', Validators.required],
-            // payer: ['', Validators.required],
-            // insured: ['', Validators.required],
-            lastPosition: ['', Validators.required],
-            time: ['', Validators.required],
-            timeNumber: ['', [Validators.required, Validators.min(1)]]
-          }));
+          if (position === 'payer') {
+            formPayer.addControl('pep', this.fb.group({
+              // contractor: ['', Validators.required],
+              // payer: ['', Validators.required],
+              // insured: ['', Validators.required],
+              lastPosition: ['', Validators.required],
+              time: ['', Validators.required],
+              timeNumber: ['', [Validators.required, Validators.min(1)]]
+            }));
 
-          formFiles.addControl('incomesCertified', this.fb.control(''));
+            formFiles.addControl('incomesCertified', this.fb.control(''));
+          } else {
+            formHolder.addControl('pep', this.fb.group({
+              // contractor: ['', Validators.required],
+              // payer: ['', Validators.required],
+              // insured: ['', Validators.required],
+              lastPosition: ['', Validators.required],
+              time: ['', Validators.required],
+              timeNumber: ['', [Validators.required, Validators.min(1)]]
+            }));
 
-          // if (this.role === 'WMA') { formHolder.addControl('knowYourClient', this.fb.group({})); }
-          // else if (this.role === 'WWS') { formHolder.addControl('KnowYourCustomer', this.fb.group({})); }
-          // formGeneral.addControl('knowYourCustomerContratante', this.fb.group({}));
-          break;
+            if (formPayer) {
+              if (!formPayer.get('pep')) {
+                if (!formFiles.get('incomesCertified')) {
+                  formFiles.addControl('incomesCertified', this.fb.control(''));
+                }
+              }
+            } else {
+              if (!formFiles.get('incomesCertified')) {
+                formFiles.addControl('incomesCertified', this.fb.control(''));
+              }
+            }
+          }
 
         case 'haveArthritis':
           questionnaires.addControl('solicitudArtitris', this.fb.group({}));
@@ -1958,30 +1957,33 @@ export class DisabilityComponent implements OnInit, DoCheck {
 
 
         case 'pep_radio_holder':
-          formHolder.removeControl('pep');
-          // formGeneral.removeControl('knowYourCustomerContratante');
-          // formHolder.removeControl('knowYourClient');
-          //formHolder.removeControl('KnowYourCustomer');
 
-          if (formPayer) {
-            if (!formPayer.get('pep')) {
-              formFiles.removeControl('incomesCertified');
-            }
-          } else {
-            formFiles.removeControl('incomesCertified');
-          }
 
           break;
 
         case 'pep_radio_payer':
-          formPayer.removeControl('pep');
-          formFiles.removeControl('incomesCertified');
+          if (position === 'payer') {
+            formPayer.removeControl('pep');
+            formFiles.removeControl('incomesCertified');
+          } else {
+            formHolder.removeControl('pep');
+            // formGeneral.removeControl('knowYourCustomerContratante');
+            // formHolder.removeControl('knowYourClient');
+            //formHolder.removeControl('KnowYourCustomer');
+
+            if (formPayer) {
+              if (!formPayer.get('pep')) {
+                formFiles.removeControl('incomesCertified');
+              }
+            } else {
+              formFiles.removeControl('incomesCertified');
+            }
+          }
 
           // formGeneral.removeControl('knowYourCustomerContratante');
           // formHolder.removeControl('knowYourClient');
           //formHolder.removeControl('KnowYourCustomer');
           break;
-
         case 'insuredPolicyholderRadio':
           if (this.disabilityGroup.get('files').get('copyId')) {
             formFiles.removeControl('copyId');
@@ -2474,6 +2476,7 @@ export class DisabilityComponent implements OnInit, DoCheck {
         const formFiles = this.disabilityGroup.get('files') as FormGroup;
         const formGeneral = this.disabilityGroup as FormGroup;
         const formInsured = this.disabilityGroup.get('insured_data') as FormGroup;
+        const formPayer = this.disabilityGroup.get('payer') as FormGroup;
         const questionnaires = this.disabilityGroup.get('questionnaires') as FormGroup;
         console.log(this.disabilityGroup);
         console.log(data.data);
@@ -2658,8 +2661,15 @@ export class DisabilityComponent implements OnInit, DoCheck {
         }
 
         if (formHolder) {
-          if (formHolder.get('pep_radio_holder').value != 'SI') {
+          if (formHolder.get('pep_radio_payer').value !== 'SI') {
             formHolder.removeControl('pep');
+            // formGeneral.removeControl('knowYourCustomerContratante');
+          }
+        }
+
+        if (formPayer) {
+          if (formPayer.get('pep_radio_payer').value !== 'SI') {
+            formPayer.removeControl('pep');
             // formGeneral.removeControl('knowYourCustomerContratante');
           }
         }

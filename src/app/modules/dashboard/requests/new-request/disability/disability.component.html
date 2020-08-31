@@ -432,7 +432,8 @@
                     [group]="disabilityGroup.get('insured_data')" [options]="YesNo" name='mandatorySubject'
                     (selected)="selectChange($event)">
                   </app-radio-button> -->
-                  <app-select *ngIf="disabilityGroup.get('insured_data').get('mandatorySubject')"
+                  <app-select
+                    *ngIf="disabilityGroup.get('insured_data').get('mandatorySubject') && juridicalObligatoryOptions && physicalObligatoryOptions"
                     (selected)="selectChange($event)" [group]="disabilityGroup.get('insured_data')"
                     name="mandatorySubject" label="Actividad economica del contratante" class="mr-3"
                     [options]="disabilityGroup.get('insured_data').get('policyholderKnowClientRadio').value == 'SI' ? juridicalObligatoryOptions : physicalObligatoryOptions">
@@ -452,7 +453,8 @@
                     [group]="disabilityGroup.get('insured_data')" [options]="YesNo" name='payerMandatorySubject'
                     (selected)="selectChange($event)">
                   </app-radio-button> -->
-                  <app-select *ngIf="disabilityGroup.get('insured_data').get('payerMandatorySubject')"
+                  <app-select
+                    *ngIf="disabilityGroup.get('insured_data').get('payerMandatorySubject') && juridicalObligatoryOptions && physicalObligatoryOptions"
                     (selected)="selectChange($event)" [group]="disabilityGroup.get('insured_data')"
                     name="payerMandatorySubject" label="Actividad economica del pagador" class="mr-3"
                     [options]="disabilityGroup.get('insured_data').get('payerKnowClientRadio').value == 'SI' ? juridicalObligatoryOptions : physicalObligatoryOptions">
@@ -690,10 +692,10 @@
                 </app-file-input>
 
                 <app-radio-button title="¿Es usted una PEP?" class="mr-3" [group]="disabilityGroup.get('policyholder')"
-                  (selected)="selectChange($event)" [options]="YesNo" name='pep_radio_holder'>
+                  (selected)="selectChange($event, 'holder')" [options]="YesNo" name='pep_radio_payer'>
                 </app-radio-button>
               </div>
-              <div *ngIf="disabilityGroup.get('policyholder').get('pep_radio_holder').value =='SI'"
+              <div *ngIf="disabilityGroup.get('policyholder').get('pep_radio_payer').value =='SI'"
                 class="ml-3 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
                 <app-input class="mr-3" [group]="disabilityGroup.get('policyholder').get('pep')"
                   label="Cargo actual o anterior" name='lastPosition'></app-input>
@@ -879,7 +881,7 @@
                   label="Copia de cedula" [fileNameWatcher]="" (onFileChange)="onStudiesChange($event, null, 'payer')">
                 </app-file-input>
                 <app-radio-button class="mr-3" title="¿Es usted una PEP?" [group]="disabilityGroup.get('payer')"
-                  (selected)="selectChange($event)" [options]="YesNo" name='pep_radio_payer'>
+                  (selected)="selectChange($event, 'payer')" [options]="YesNo" name='pep_radio_payer'>
                 </app-radio-button>
               </div>
               <div *ngIf="disabilityGroup.get('payer').get('pep_radio_payer').value =='SI'"

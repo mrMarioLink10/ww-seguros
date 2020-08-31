@@ -3693,10 +3693,10 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
         //   }
         // }
 
-        if (formP.get('isContractor').value !== 'SI') {
-          formGeneral.removeControl('conozcaSuClientePersonaContratante');
-          formGeneral.removeControl('conozcaSuClientePersonaJuridica');
-        }
+        // if (formP.get('isContractor').value !== 'SI') {
+        //   formGeneral.removeControl('conozcaSuClientePersonaContratante');
+        //   formGeneral.removeControl('conozcaSuClientePersonaJuridica');
+        // }
 
         if (formEP && formEP.get('headLine').value !== 'SI') {
           formEP.removeControl('headLineExposedInfo');
@@ -3741,21 +3741,21 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
         formQA.removeControl('haveSpine');
         formQB.removeControl('hasFamilyWithHeartKidneyDisease');
 
-        if (this.newRequest.get('person').get('conozcaSuClientePersona')) {
-          formP.removeControl('conozcaSuClientePersona');
-        }
-        if ((this.newRequest.get('person').get('antiLaundering'))) {
-          formP.removeControl('antiLaundering');
-        }
-        if ((this.newRequest.get('person').get('conozcaSuClientePersonaJuridica'))) {
-          formP.removeControl('conozcaSuClientePersonaJuridica');
-        }
+        // if (this.newRequest.get('person').get('conozcaSuClientePersona')) {
+        //   formP.removeControl('conozcaSuClientePersona');
+        // }
+        // if ((this.newRequest.get('person').get('antiLaundering'))) {
+        //   formP.removeControl('antiLaundering');
+        // }
+        // if ((this.newRequest.get('person').get('conozcaSuClientePersonaJuridica'))) {
+        //   formP.removeControl('conozcaSuClientePersonaJuridica');
+        // }
 
-        if (this.newRequest.get('contractor')) {
-          if (this.newRequest.get('contractor').get('conozcaSuClientePersona')) {
-            formContractor.removeControl('conozcaSuClientePersona');
-          }
-        }
+        // if (this.newRequest.get('contractor')) {
+        //   if (this.newRequest.get('contractor').get('conozcaSuClientePersona')) {
+        //     formContractor.removeControl('conozcaSuClientePersona');
+        //   }
+        // }
 
 
         this.contingentBeneficiaryArray = this.newRequest.get('contingentBeneficiary').get('dependentsC') as FormArray;
@@ -3824,11 +3824,11 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
           }
         }
 
-        if (formP.get('pep_radio_insured')) {
-          if (formP.get('pep_radio_insured').value !== 'SI') {
-            this.newRequest.removeControl('exposedPerson');
-          }
-        }
+        // if (formP.get('pep_radio_insured')) {
+        //   if (formP.get('pep_radio_insured').value !== 'SI') {
+        //     this.newRequest.removeControl('exposedPerson');
+        //   }
+        // }
 
         if (formP.get('isContractor')) {
           if (formP.get('isContractor').value !== 'NO') {

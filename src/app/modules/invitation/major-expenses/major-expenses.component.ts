@@ -721,6 +721,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
     this.isFormValidToFill = false;
     this.route.params.subscribe(res => {
       this.ID = res.key;
+      console.log(this.ID);
     });
     this.route.params.subscribe(res => {
       this.noCotizacion = res.noCotizacion;
@@ -3521,7 +3522,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
       // console.log( this.newRequest);
       if (data !== undefined && data.data !== null &&
         data.data !== undefined) {
-        this.ID = data.data.id;
+        // this.ID = data.data.id;
         console.log(data.data);
         this.dataMappingFromApi.iterateThroughtAllObject(data.data, this.newRequest);
         this.AddEventOnEachDependentVariable();

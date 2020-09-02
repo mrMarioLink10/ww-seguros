@@ -89,7 +89,7 @@
                     </app-select>
                   </div>
                   <app-file-input class="mr-3" [group]="disabilityGroup.get('insured_data')" name="id2Attached"
-                    label="Copia de cedula" [fileNameWatcher]=""
+                    label="Copia de cedula" [fileNameWatcher]="arrayStudiesWatcher(null, 'insured_data')"
                     (onFileChange)="onStudiesChange($event, null, 'insured_data')">
                   </app-file-input>
                   <div
@@ -588,7 +588,10 @@
                   <app-input [group]="disabilityGroup.get('policyholder')" label="Cédula, Pasaporte o RUC"
                     name="id_passport" placeholder="Por ej: 402-0070002-8"></app-input>
                 </div>
-
+                <app-file-input class="mr-3" [group]="disabilityGroup.get('policyholder')" name="id2Attached"
+                  label="Copia de cedula" [fileNameWatcher]="arrayStudiesWatcher(null, 'policyholder')"
+                  (onFileChange)="onStudiesChange($event, null, 'policyholder')">
+                </app-file-input>
                 <div class="mr-3">
                   <app-select name="marital_status" [options]="status" [group]="disabilityGroup.get('policyholder')">
                   </app-select>
@@ -628,16 +631,16 @@
                   </div>
 
                 </div>
+                <div class="mr-3">
+                  <app-select [group]="disabilityGroup.get('policyholder')" name="country" [options]='countryList'>
+                  </app-select>
+                </div>
 
                 <div class="lg:col-span-1 xl:col-span-2 mr-3">
                   <app-input label="Dirección Residencial" [group]="disabilityGroup.get('policyholder')" name="address"
                     placeholder="Por ej: Calle 3, Casa #22, avenida..."> </app-input>
                 </div>
 
-                <div class="mr-3">
-                  <app-select [group]="disabilityGroup.get('policyholder')" name="country" [options]='countryList'>
-                  </app-select>
-                </div>
 
                 <div class="mr-3">
                   <!-- <app-select [group]="disabilityGroup.get('policyholder')" name="city" [options]='cityList'>
@@ -686,11 +689,6 @@
                     [group]="disabilityGroup.get('policyholder')" name="passport_id" placeholder="402-0070000-8">
                   </app-input>
                 </div>
-                <app-file-input class="mr-3" [group]="disabilityGroup.get('policyholder')" name="id2Attached"
-                  label="Copia de cedula" [fileNameWatcher]=""
-                  (onFileChange)="onStudiesChange($event, null, 'policyholder')">
-                </app-file-input>
-
                 <app-radio-button title="¿Es usted una PEP?" class="mr-3" [group]="disabilityGroup.get('policyholder')"
                   (selected)="selectChange($event, 'holder')" [options]="YesNo" name='pep_radio_payer'>
                 </app-radio-button>
@@ -780,7 +778,10 @@
                   <app-input [group]="disabilityGroup.get('payer')" label="Cédula, Pasaporte o RUC" name="id_passport"
                     placeholder="Por ej: 402-0070002-8"></app-input>
                 </div>
-
+                <app-file-input class="mr-3" [group]="disabilityGroup.get('payer')" name="id2Attached"
+                  label="Copia de cedula" [fileNameWatcher]="arrayStudiesWatcher(null, 'payer')"
+                  (onFileChange)="onStudiesChange($event, null, 'payer')">
+                </app-file-input>
                 <div class="mr-3">
                   <app-select name="marital_status" [options]="status" [group]="disabilityGroup.get('payer')">
                   </app-select>
@@ -819,16 +820,16 @@
                   </div>
 
                 </div>
-
-                <div class="mr-3">
-                  <app-input label="Dirección Residencial" [group]="disabilityGroup.get('payer')" name="address"
-                    placeholder="Por ej: Calle 3, Casa #22, avenida..."> </app-input>
-                </div>
-
                 <div class="mr-3">
                   <app-select [group]="disabilityGroup.get('payer')" name="country" [options]='countryList'>
                   </app-select>
                 </div>
+
+                <div class="mr-3 col-span-2">
+                  <app-input label="Dirección Residencial" [group]="disabilityGroup.get('payer')" name="address"
+                    placeholder="Por ej: Calle 3, Casa #22, avenida..."> </app-input>
+                </div>
+
 
                 <div class="mr-3">
                   <!-- <app-select [group]="disabilityGroup.get('payer')" name="city" [options]='cityList'>
@@ -877,14 +878,11 @@
                     name="passport_id" placeholder="402-0070000-8">
                   </app-input>
                 </div>
-                <app-file-input class="mr-3" [group]="disabilityGroup.get('payer')" name="id2Attached"
-                  label="Copia de cedula" [fileNameWatcher]="" (onFileChange)="onStudiesChange($event, null, 'payer')">
-                </app-file-input>
                 <app-radio-button class="mr-3" title="¿Es usted una PEP?" [group]="disabilityGroup.get('payer')"
                   (selected)="selectChange($event, 'payer')" [options]="YesNo" name='pep_radio_payer'>
                 </app-radio-button>
               </div>
-              <div *ngIf="disabilityGroup.get('payer').get('pep_radio_payer').value =='SI'"
+              <div *ngIf="disabilityGroup.get('payer').get('pep')"
                 class="ml-3 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
                 <app-input class="mr-3" [group]="disabilityGroup.get('payer').get('pep')"
                   label="Cargo actual o anterior" name='lastPosition'></app-input>
@@ -2418,7 +2416,8 @@
               <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
                 <app-file-input *ngIf="disabilityGroup.get('files').get('incomesCertified')" class="mr-3"
                   [group]="disabilityGroup.get('files')" name="incomesCertified"
-                  label="Certificación de ingresos del pagador" [fileNameWatcher]=""
+                  label="Certificación de ingresos del pagador"
+                  [fileNameWatcher]="arrayStudiesWatcher(null, 'incomesCertified')"
                   (onFileChange)="onStudiesChange($event, null, 'incomesCertified')">
                 </app-file-input>
               </div>

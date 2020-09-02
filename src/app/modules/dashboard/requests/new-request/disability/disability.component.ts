@@ -2352,11 +2352,31 @@ export class DisabilityComponent implements OnInit, DoCheck {
     }
   }
 
-  arrayStudiesWatcher(i: number) {
+  arrayStudiesWatcher(i: number, type?: string) {
     if (this.arrayFilesTitles) {
       if (this.arrayFilesTitles[i] && this.disabilityGroup.get('files').get('studies').get(i.toString()).value.study !== '') {
         return this.arrayFilesTitles[i].studyUrl;
       }
+    }
+
+    if (type === 'insured_data') {
+      const formP = this.disabilityGroup.get('insured_data') as FormGroup;
+      if (formP.value.id2AttachedUrl && formP.value.id2Attached !== '') { return formP.value.id2AttachedUrl; }
+    }
+
+    if (type === 'policyholder') {
+      const formP = this.disabilityGroup.get('policyholder') as FormGroup;
+      if (formP.value.id2AttachedUrl && formP.value.id2Attached !== '') { return formP.value.id2AttachedUrl; }
+    }
+
+    if (type === 'payer') {
+      const formP = this.disabilityGroup.get('payer') as FormGroup;
+      if (formP.value.id2AttachedUrl && formP.value.id2Attached !== '') { return formP.value.id2AttachedUrl; }
+    }
+
+    if (type === 'incomesCertified') {
+      const formP = this.disabilityGroup.get('files') as FormGroup;
+      if (formP.value.incomesCertifiedUrl && formP.value.incomesCertified !== '') { return formP.value.incomesCertifiedUrl; }
     }
   }
 
@@ -2484,7 +2504,7 @@ export class DisabilityComponent implements OnInit, DoCheck {
         const formGeneral = this.disabilityGroup as FormGroup;
         const formInsured = this.disabilityGroup.get('insured_data') as FormGroup;
         const questionnaires = this.disabilityGroup.get('questionnaires') as FormGroup;
-        console.log(this.disabilityGroup);
+        console.log(this.disabilityGroup.value);
 
 
 
@@ -2644,7 +2664,7 @@ export class DisabilityComponent implements OnInit, DoCheck {
           formGeneral.removeControl('payer');
           formGeneral.removeControl('payerJuridical');
           formInsured.removeControl('payerMandatorySubject');
-          formInsured.removeControl('payerIsJuridical');
+          formInsured.removeControl('payerKnowClientRadio');
         }
 
         if (formInsured.get('policyholderKnowClientRadio')) {
@@ -2665,17 +2685,53 @@ export class DisabilityComponent implements OnInit, DoCheck {
           }
         }
 
+        if (this.disabilityGroup.get('insured_data').get('pep_radio_insured').value !== 'SI') {
+          formI.removeControl('pep');
+
+          if (!formPayer) {
+            if (formI.get('pep_radio_payer').value !== 'SI') {
+              formF.removeControl('incomesCertified');
+            }
+          } else {
+            if (formPayer.get('pep_radio_payer').value !== 'SI') {
+              formF.removeControl('incomesCertified');
+            }
+          }
+        }
+
         if (formHolder) {
           if (formHolder.get('pep_radio_payer').value !== 'SI') {
             formHolder.removeControl('pep');
-            // formGeneral.removeControl('knowYourCustomerContratante');
+
+            if (!formPayer) {
+              if (formI.get('pep_radio_insured').value !== 'SI') {
+                formF.removeControl('incomesCertified');
+              }
+            } else {
+              if (formPayer.get('pep_radio_payer').value !== 'SI') {
+                formF.removeControl('incomesCertified');
+              }
+            }
+          } else if (formHolder.get('pep_radio_payer').value === 'SI') {
+            const formPP = formHolder.get('pep') as FormGroup;
+            formPP.removeControl('payer');
+            formPP.removeControl('insured');
+            formPP.removeControl('conctractor');
           }
         }
 
         if (formPayer) {
           if (formPayer.get('pep_radio_payer').value !== 'SI') {
             formPayer.removeControl('pep');
+            formF.removeControl('incomesCertified');
             // formGeneral.removeControl('knowYourCustomerContratante');
+          } else if (formPayer.get('pep_radio_payer').value === 'SI') {
+            const formPP = formPayer.get('pep') as FormGroup;
+            if (formPP) {
+              formPP.removeControl('payer');
+              formPP.removeControl('insured');
+              formPP.removeControl('conctractor');
+            }
           }
         }
 
@@ -2874,10 +2930,6 @@ export class DisabilityComponent implements OnInit, DoCheck {
              formGeneral.removeControl('policyholder');
            }
          }*/
-
-        if (this.disabilityGroup.get('insured_data').get('pep')) {
-          formI.removeControl('pep');
-        }
 
         if (this.disabilityGroup.get('insured_data').get('knowYourClient')) {
           formI.removeControl('knowYourClient');

@@ -295,9 +295,10 @@
                 (selected)="selectChange($event)" title="¿Es el contratante un sujeto obligado?"
                 [group]="newRequest.get('person')" name="mandatorySubject" [options]="diseaseService.yesOrNoOriginal">
               </app-radio-button> -->
-              <app-select *ngIf="newRequest.get('person').get('mandatorySubject')" (selected)="selectChange($event)"
-                [group]="newRequest.get('person')" name="mandatorySubject" label="Actividad economica del contratante"
-                class="mr-3"
+              <app-select
+                *ngIf="newRequest.get('person').get('mandatorySubject') && physicalObligatoryOptions && juridicalObligatoryOptions"
+                (selected)="selectChange($event)" [group]="newRequest.get('person')" name="mandatorySubject"
+                label="Actividad economica del contratante" class="mr-3"
                 [options]="newRequest.get('person').get('contractorIsJuridical').value == 'SI' ? juridicalObligatoryOptions : physicalObligatoryOptions">
               </app-select>
               <app-radio-button class="mr-3" (selected)="selectChange($event)" [group]="newRequest.get('person')"
@@ -312,7 +313,8 @@
                 [group]="newRequest.get('person')" name="mandatorySubjectPayer"
                 [options]="diseaseService.yesOrNoOriginal">
               </app-radio-button> -->
-              <app-select *ngIf="newRequest.get('person').get('mandatorySubjectPayer')"
+              <app-select
+                *ngIf="newRequest.get('person').get('mandatorySubjectPayer') && physicalObligatoryOptions && juridicalObligatoryOptions"
                 (selected)="selectChange($event)" [group]="newRequest.get('person')" name="mandatorySubjectPayer"
                 label="Actividad economica del pagador" class="mr-3"
                 [options]="newRequest.get('person').get('payerIsJuridical').value == 'SI' ? juridicalObligatoryOptions : physicalObligatoryOptions">

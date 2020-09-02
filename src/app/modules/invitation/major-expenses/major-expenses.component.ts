@@ -3527,6 +3527,18 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
         this.dataMappingFromApi.iterateThroughtAllObject(data.data, this.newRequest);
         this.AddEventOnEachDependentVariable();
 
+        switch (data.data.countryCode) {
+          case 'RD':
+            this.role = 'WWS';
+            break;
+          case 'PM':
+            this.role = 'WMA';
+            break;
+          default:
+            this.role = 'WMA';
+            break;
+        }
+
         const formP = this.newRequest.get('person') as FormGroup;
         const formPO = this.newRequest.get('person').get('office') as FormGroup;
         const formQA = this.newRequest.get('questionsA') as FormGroup;

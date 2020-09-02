@@ -3718,65 +3718,37 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
           }
         }
 
-        // if (formP.get('isJuridica')) {
-        //   if (formP.get('isJuridica').value !== 'SI') {
-        //     formP.removeControl('mandatorySubject');
-        //   } else {
-        //     if (formGeneral.get('contractor')) {
-        //       formGeneral.removeControl('contractor');
-        //     }
-        //     if (formEP) {
-        //       formEP.removeControl('contractor');
-        //       formEP.removeControl('contractorExposedInfo');
-        //     }
-        //     if (this.newRequest.get('conozcaSuClientePersonaContratante')) {
-        //       formGeneral.removeControl('conozcaSuClientePersonaContratante');
-        //     }
-        //     if (this.newRequest.get('files').get('copyId')) {
-        //       formFiles.removeControl('copyId');
-        //     }
-        //   }
-        // } else {
-        //   formGeneral.removeControl('conozcaSuClientePersona');
-        //   formGeneral.removeControl('conozcaSuClientePersonaJuridica');
-        //   if (formGeneral.get('contractor')) {
-        //     formGeneral.removeControl('contractor');
-        //   }
-        //   if (this.newRequest.get('conozcaSuClientePersonaContratante')) {
-        //     formGeneral.removeControl('conozcaSuClientePersonaContratante');
-        //   }
-        //   if (!(this.newRequest.get('conozcaSuClientePersonaJuridica'))) {
-        //     formGeneral.addControl('conozcaSuClientePersonaJuridica', this.fb.group({}));
-        //   }
-        //   formContractor.addControl('conozcaSuClientePersonaJuridica', this.fb.group({}));
-
-        //   if (this.newRequest.get('files').get('copyId')) {
-        //     formFiles.removeControl('copyId');
-        //   }
-        // }
-
-        // if (formP.get('isContractor').value !== 'SI') {
-        //   formGeneral.removeControl('conozcaSuClientePersonaContratante');
-        //   formGeneral.removeControl('conozcaSuClientePersonaJuridica');
-        // }
-
         if (formEP && formEP.get('headLine').value !== 'SI') {
           formEP.removeControl('headLineExposedInfo');
-          formEP.removeControl('headLineExposedInfo');
 
-          // if (this.newRequest.get('conozcaSuClientePersona')) {
-          //   formGeneral.removeControl('conozcaSuClientePersona');
-          // }
+          if (!formEP.get('payer')) {
+            if (formEP.get('contractor').value !== 'SI') {
+              formEP.removeControl('incomesCertified');
+            }
+          } else if (formEP.get('payer').value !== 'SI') {
+            formEP.removeControl('incomesCertified');
+          }
         }
 
-        if (formEP && formEP.get('contractor')) {
+        if (formEP.get('contractor')) {
           if (formEP.get('contractor').value !== 'SI') {
             formEP.removeControl('contractorExposedInfo');
           }
-          // formEP.removeControl('contractorExposedInfo');
-          // if (this.newRequest.get('conozcaSuClientePersonaContratante')) {
-          //   formEP.removeControl('conozcaSuClientePersonaContratante');
-          // }
+
+          if (!formEP.get('payer')) {
+            if (formEP.get('headline').value !== 'SI') {
+              formEP.removeControl('incomesCertified');
+            }
+          } else if (formEP.get('payer').value !== 'SI') {
+            formEP.removeControl('incomesCertified');
+          }
+        }
+
+        if (formEP.get('payer')) {
+          if (formEP.get('payer').value !== 'SI') {
+            formEP.removeControl('payerExposedInfo');
+            formEP.removeControl('incomesCertified');
+          }
         }
 
         if (formQA.get('haveHighRiskSport').value !== true) {

@@ -3773,7 +3773,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
           if (formEP.get('contractor').value !== 'SI') {
             formEP.removeControl('contractorExposedInfo');
           }
-          formEP.removeControl('contractorExposedInfo');
+          // formEP.removeControl('contractorExposedInfo');
           // if (this.newRequest.get('conozcaSuClientePersonaContratante')) {
           //   formEP.removeControl('conozcaSuClientePersonaContratante');
           // }

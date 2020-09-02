@@ -1400,6 +1400,19 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
           // this.markForCheck();
         };
       }
+    } else if (name === 'incomesCertified') {
+      if (event.target.files && event.target.files.length) {
+        const [file] = event.target.files;
+        reader.readAsDataURL(file);
+
+        reader.onload = () => {
+          this.newRequest.get('exposedPerson').patchValue({
+            ['incomesCertified']: reader.result
+          });
+
+          // this.markForCheck();
+        };
+      }
     }
   }
 
@@ -3413,11 +3426,31 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
     console.log('dependientes: ', this.newRequest.get('dependents').value.allDependents);
   }
 
-  arrayStudiesWatcher(i: number) {
+  arrayStudiesWatcher(i: number, type?: string) {
     if (this.arrayFilesTitles) {
       if (this.arrayFilesTitles[i] && this.newRequest.get('files').get('studies').get(i.toString()).value.study !== '') {
         return this.arrayFilesTitles[i].studyUrl;
       }
+    }
+
+    if (type === 'person') {
+      const formP = this.newRequest.get('person') as FormGroup;
+      if (formP.value.id2AttachedUrl && formP.value.id2Attached !== '') { return formP.value.id2AttachedUrl; }
+    }
+
+    if (type === 'contractor') {
+      const formP = this.newRequest.get('contractor') as FormGroup;
+      if (formP.value.id2AttachedUrl && formP.value.id2Attached !== '') { return formP.value.id2AttachedUrl; }
+    }
+
+    if (type === 'payer') {
+      const formP = this.newRequest.get('payer') as FormGroup;
+      if (formP.value.id2AttachedUrl && formP.value.id2Attached !== '') { return formP.value.id2AttachedUrl; }
+    }
+
+    if (type === 'incomesCertified') {
+      const formP = this.newRequest.get('exposedPerson') as FormGroup;
+      if (formP.value.incomesCertifiedUrl && formP.value.incomesCertified !== '') { return formP.value.incomesCertifiedUrl; }
     }
   }
 
@@ -3679,8 +3712,16 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
       const formSAH = this.newRequest.get('sectionAHelper') as FormGroup;
       const formGeneral = this.newRequest as FormGroup;
       const formContractor = this.newRequest.get('contractor') as FormGroup;
+      const formPayer = this.newRequest.get('payer') as FormGroup;
       const formFiles = this.newRequest.get('files') as FormGroup;
 
+      formP.removeControl('contractorIsLegalEntity');
+      formP.removeControl('contractorMandatory');
+      formP.removeControl('payerMandatory');
+      formP.removeControl('pep_radio_insured');
+      formP.removeControl('sameAsContractor');
+      formP.removeControl('sameAsPayer');
+      formFiles.removeControl('incomesCertified');
 
       if (this.newRequest.get('questionsB').get('familyWithDiseases') !== undefined && this.newRequest.get('questionsB').get('familyWithDiseases') !== null) {
         this.familyWithDiseasesList = this.newRequest.get('questionsB').get('familyWithDiseases') as FormArray;
@@ -3807,6 +3848,9 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
       if (formP.get('contractorIsJuridical')) {
         if (formP.get('contractorIsJuridical').value === 'NO') {
           formGeneral.removeControl('contractorJuridical');
+          formContractor.removeControl('pepRadioInsured');
+          formContractor.removeControl('countryOfResidence');
+          formContractor.removeControl('countryOfBirth');
         }
       }
 
@@ -3821,6 +3865,10 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
       if (formP.get('payerIsJuridical')) {
         if (formP.get('payerIsJuridical').value === 'NO') {
           formGeneral.removeControl('payerJuridical');
+          formPayer.removeControl('pepRadioInsured');
+          formPayer.removeControl('countryOfResidence');
+          formPayer.removeControl('countryOfBirth');
+          formPayer.removeControl('isContractor');
         }
       }
 

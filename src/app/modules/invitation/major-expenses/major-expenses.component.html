@@ -117,7 +117,8 @@
               <app-input class="mr-3" [group]="newRequest.get('person')" label="Documento de identidad" name='id2'>
               </app-input>
               <app-file-input class="mr-3" [group]="newRequest.get('person')" name="id2Attached" label="Copia de cedula"
-                [fileNameWatcher]="" (onFileChange)="onStudiesChange2($event, null, 'person')">
+                [fileNameWatcher]="arrayStudiesWatcher(null, 'person')"
+                (onFileChange)="onStudiesChange2($event, null, 'person')">
               </app-file-input>
               <div class="mr-3 grid col-span-3 grid-cols-1 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-5 xl:grid-cols-5">
                 <app-number-input class="mr-3" [group]="newRequest.get('person')" label="Edad" name='age' min="1">
@@ -530,7 +531,8 @@
             <div class="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-4">
               <app-file-input *ngIf="newRequest.get('exposedPerson').get('incomesCertified')" class="mr-3"
                 [group]="newRequest.get('exposedPerson')" name="incomesCertified" label="Certificación de ingresos"
-                [fileNameWatcher]="" onFileChange="">
+                [fileNameWatcher]="arrayStudiesWatcher(null, 'incomesCertified')"
+                (onFileChange)="onStudiesChange2($event, null, 'incomesCertified')">
               </app-file-input>
             </div>
             <mat-action-row class="action-row">
@@ -571,7 +573,7 @@
               <app-input class="mr-3" [group]="newRequest.get('contractor')" label="Documento de identidad" name='id2'>
               </app-input>
               <app-file-input class="mr-3" [group]="newRequest.get('contractor')" name="id2Attached"
-                label="Copia de cedula" [fileNameWatcher]=""
+                label="Copia de cedula" [fileNameWatcher]="arrayStudiesWatcher(null, 'contractor')"
                 (onFileChange)="onStudiesChange2($event, null, 'contractor')">
               </app-file-input>
               <app-input class="mr-3" [group]="newRequest.get('contractor')" label="Edad" name='age'></app-input>
@@ -692,7 +694,8 @@
               <app-input class="mr-3" [group]="newRequest.get('payer')" label="Documento de identidad" name='id2'>
               </app-input>
               <app-file-input class="mr-3" [group]="newRequest.get('payer')" name="id2Attached" label="Copia de cedula"
-                [fileNameWatcher]="" (onFileChange)="onStudiesChange2($event, null, 'payer')">
+                [fileNameWatcher]="arrayStudiesWatcher(null, 'payer')"
+                (onFileChange)="onStudiesChange2($event, null, 'payer')">
               </app-file-input>
               <app-input class="mr-3" [group]="newRequest.get('payer')" label="Edad" name='age'></app-input>
               <!-- <div class="grid grid-cols-3 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3">

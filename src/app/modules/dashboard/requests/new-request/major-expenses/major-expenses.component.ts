@@ -3927,7 +3927,11 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
         formEP.removeControl('headLineExposedInfo');
 
         if (!formEP.get('payer')) {
-          if (formEP.get('contractor').value !== 'SI') {
+          if (formEP.get('contractor')){
+            if (formEP.get('contractor').value !== 'SI') {
+              formEP.removeControl('incomesCertified');
+            }
+          } else {
             formEP.removeControl('incomesCertified');
           }
         } else if (formEP.get('payer').value !== 'SI') {

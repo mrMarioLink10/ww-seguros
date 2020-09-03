@@ -1913,85 +1913,83 @@ export class LifeComponent implements OnInit, DoCheck {
 
   searchIdNumber(idNumber: string) {
     this.life.returnCotizacionData(idNumber)
-    .subscribe((response: any) => {
-      console.log(response);
-if (response === null || response === undefined)
-{
-    // this.appComponent.showOverlay = true;
-    this.userService.getQuotes(idNumber, 'vida')
       .subscribe((response: any) => {
-        console.log(response);
-        // this.appComponent.showOverlay = false;
-        if (response.data !== null && response.data !== undefined) {
-          this.showContent = true;
+        console.log('response para validar searchIdNumber', response);
+        if (response.data === null || response.data === undefined) {
+          // this.appComponent.showOverlay = true;
+          this.userService.getQuotes(idNumber, 'vida')
+            .subscribe((response: any) => {
+              console.log(response);
+              // this.appComponent.showOverlay = false;
+              if (response.data !== null && response.data !== undefined) {
+                this.showContent = true;
 
-          const dialogRef = this.dialog.open(BaseDialogComponent, {
-            data: this.dialogOption.noCFound(response.data),
-            minWidth: 385,
-          });
-          setTimeout(() => {
-            dialogRef.close();
-          }, 4000);
-          this.newRequest.get('person').get('firstName').setValue(response.data.nombre);
-          this.newRequest.get('person').get('lastName').setValue(response.data.apellidos);
-          this.newRequest.get('person').get('date').setValue(response.data.fecha_nacimiento);
-          this.newRequest.get('relevantPaymentInformation').get('method').setValue(response.data.formaPago);
-          this.newRequest.get('releventPlanInformation').get('coverages').get('basicLife').setValue(response.data.suma_asegurada);
-          this.newRequest.get('releventPlanInformation').get('coverages').get('survival').setValue(response.data.suma_asegurada_supervivencia);
+                const dialogRef = this.dialog.open(BaseDialogComponent, {
+                  data: this.dialogOption.noCFound(response.data),
+                  minWidth: 385,
+                });
+                setTimeout(() => {
+                  dialogRef.close();
+                }, 4000);
+                this.newRequest.get('person').get('firstName').setValue(response.data.nombre);
+                this.newRequest.get('person').get('lastName').setValue(response.data.apellidos);
+                this.newRequest.get('person').get('date').setValue(response.data.fecha_nacimiento);
+                this.newRequest.get('relevantPaymentInformation').get('method').setValue(response.data.formaPago);
+                this.newRequest.get('releventPlanInformation').get('coverages').get('basicLife').setValue(response.data.suma_asegurada);
+                this.newRequest.get('releventPlanInformation').get('coverages').get('survival').setValue(response.data.suma_asegurada_supervivencia);
 
-          this.newRequest.get('releventPlanInformation').get('coverages').get('accidentalDeathDismemberment').setValue(response.data.desmembramientos);
-          this.newRequest.get('releventPlanInformation').get('coverages').get('disability').setValue(response.data.invalidez);
-          this.newRequest.get('releventPlanInformation').get('coverages').get('seriousIllnesses').setValue(response.data.enfermedades_graves);
-          this.newRequest.get('releventPlanInformation').get('coverages').get('waiverPremiumPayment').setValue(response.data.exoneracion);
-          this.newRequest.get('releventPlanInformation').get('coverages').get('advancePaymentOfCapital').setValue(response.data.pago_anticipado);
+                this.newRequest.get('releventPlanInformation').get('coverages').get('accidentalDeathDismemberment').setValue(response.data.desmembramientos);
+                this.newRequest.get('releventPlanInformation').get('coverages').get('disability').setValue(response.data.invalidez);
+                this.newRequest.get('releventPlanInformation').get('coverages').get('seriousIllnesses').setValue(response.data.enfermedades_graves);
+                this.newRequest.get('releventPlanInformation').get('coverages').get('waiverPremiumPayment').setValue(response.data.exoneracion);
+                this.newRequest.get('releventPlanInformation').get('coverages').get('advancePaymentOfCapital').setValue(response.data.pago_anticipado);
 
-          this.newRequest.get('releventPlanInformation').get('coverages').get('basicLife').setValue(response.data.suma_asegurada);
-          this.newRequest.get('releventPlanInformation').get('coverages').get('basicLife').setValue(response.data.suma_asegurada);
-          this.newRequest.get('releventPlanInformation').get('coverages').get('basicLife').setValue(response.data.suma_asegurada);
-          this.newRequest.get('releventPlanInformation').get('coverages').get('basicLife').setValue(response.data.suma_asegurada);
-          this.newRequest.get('releventPlanInformation').get('coverages').get('basicLife').setValue(response.data.suma_asegurada);
+                this.newRequest.get('releventPlanInformation').get('coverages').get('basicLife').setValue(response.data.suma_asegurada);
+                this.newRequest.get('releventPlanInformation').get('coverages').get('basicLife').setValue(response.data.suma_asegurada);
+                this.newRequest.get('releventPlanInformation').get('coverages').get('basicLife').setValue(response.data.suma_asegurada);
+                this.newRequest.get('releventPlanInformation').get('coverages').get('basicLife').setValue(response.data.suma_asegurada);
+                this.newRequest.get('releventPlanInformation').get('coverages').get('basicLife').setValue(response.data.suma_asegurada);
 
 
-          this.newRequest.get('releventPlanInformation').get('type').setValue(response.data.plan);
-          this.newRequest.get('releventPlanInformation').get('bonus').setValue(response.data.prima);
-          this.newRequest.get('releventPlanInformation').get('nicotineEstandar').setValue(response.data.nicotineStandar);
-          this.newRequest.get('releventPlanInformation').get('timeAmount').setValue(response.data.periodo_cobertura);
-          switch (response.data.sexo) {
-            case 'M':
-              this.newRequest.get('person').get('sex').setValue('MASCULINO');
-              break;
+                this.newRequest.get('releventPlanInformation').get('type').setValue(response.data.plan);
+                this.newRequest.get('releventPlanInformation').get('bonus').setValue(response.data.prima);
+                this.newRequest.get('releventPlanInformation').get('nicotineEstandar').setValue(response.data.nicotineStandar);
+                this.newRequest.get('releventPlanInformation').get('timeAmount').setValue(response.data.periodo_cobertura);
+                switch (response.data.sexo) {
+                  case 'M':
+                    this.newRequest.get('person').get('sex').setValue('MASCULINO');
+                    break;
 
-            case 'F':
-              this.newRequest.get('person').get('sex').setValue('FEMENINO');
-              break;
+                  case 'F':
+                    this.newRequest.get('person').get('sex').setValue('FEMENINO');
+                    break;
 
-            default:
-              break;
-          }
-        } else {
-          this.showContent = false;
+                  default:
+                    break;
+                }
+              } else {
+                this.showContent = false;
 
-          this.newRequest.get('person').get('firstName').reset();
-          this.newRequest.get('person').get('date').reset();
-          this.newRequest.get('relevantPaymentInformation').get('method').reset();
-          this.newRequest.get('releventPlanInformation').get('type').reset();
+                this.newRequest.get('person').get('firstName').reset();
+                this.newRequest.get('person').get('date').reset();
+                this.newRequest.get('relevantPaymentInformation').get('method').reset();
+                this.newRequest.get('releventPlanInformation').get('type').reset();
 
-          const dialogRef = this.dialog.open(BaseDialogComponent, {
-            data: this.dialogOption.noCNotFound,
-            minWidth: 385,
-          });
-          setTimeout(() => {
-            dialogRef.close();
-          }, 4000);
+                const dialogRef = this.dialog.open(BaseDialogComponent, {
+                  data: this.dialogOption.noCNotFound,
+                  minWidth: 385,
+                });
+                setTimeout(() => {
+                  dialogRef.close();
+                }, 4000);
 
+              }
+            });
+        }
+        else {
+          this.processiingDataToForm(response);
         }
       });
-    }
-    else
-    {
-      this.processiingDataToForm(response);
-    }
-    });
 
   }
 
@@ -3365,405 +3363,404 @@ if (response === null || response === undefined)
     console.log(this.newRequest);
     console.log('json', JSON.stringify(this.newRequest.get('releventPlanInformation').value));
   }
-processiingDataToForm(data)
-{
-  if (data !== undefined && data.data !== null &&
-    data.data != undefined) {
-    this.ID = data.data.id;
-    console.log(data.data);
-    this.dataMappingFromApi.iterateThroughtAllObjectVida(data.data, this.newRequest);
+  processiingDataToForm(data) {
+    if (data !== undefined && data.data !== null &&
+      data.data != undefined) {
+      this.ID = data.data.id;
+      console.log(data.data);
+      this.dataMappingFromApi.iterateThroughtAllObjectVida(data.data, this.newRequest);
 
-    console.log(this.newRequest);
-    console.log(data.data);
+      console.log(this.newRequest);
+      console.log(data.data);
 
-    this.primaryBenefitsArray = this.newRequest.get('primaryBenefits').get('dependentsC') as FormArray;
-    this.contingentBeneficiaryArray = this.newRequest.get('contingentBeneficiary').get('dependentsC') as FormArray;
-    this.dependentsFormArray = this.newRequest.get('dependents') as FormArray;
+      this.primaryBenefitsArray = this.newRequest.get('primaryBenefits').get('dependentsC') as FormArray;
+      this.contingentBeneficiaryArray = this.newRequest.get('contingentBeneficiary').get('dependentsC') as FormArray;
+      this.dependentsFormArray = this.newRequest.get('dependents') as FormArray;
 
-    const formCB = this.newRequest.get('contingentBeneficiary') as FormGroup;
-    const formGI = this.newRequest.get('generalInformation') as FormGroup;
-    const formF = this.newRequest.get('files') as FormGroup;
-    const formP = this.newRequest.get('person') as FormGroup;
-    const formEP = this.newRequest.get('exposedPerson') as FormGroup;
-    const formAR = this.newRequest.get('agentReport') as FormGroup;
-    const formARCTI = this.newRequest.get('agentReport').get('connectionTypeInfo') as FormGroup;
-    const formHMI = this.newRequest.get('medicalHistory').get('informations') as FormGroup;
-    const formMH = this.newRequest.get('medicalHistory') as FormGroup;
-    const formWI = this.newRequest.get('medicalHistory').get('informations').get('womenInformation') as FormGroup;
-    const formQ = this.newRequest.get('questionnaires') as FormGroup;
-    const formFiles = this.newRequest.get('files') as FormGroup;
-    const formGeneral = this.newRequest as FormGroup;
+      const formCB = this.newRequest.get('contingentBeneficiary') as FormGroup;
+      const formGI = this.newRequest.get('generalInformation') as FormGroup;
+      const formF = this.newRequest.get('files') as FormGroup;
+      const formP = this.newRequest.get('person') as FormGroup;
+      const formEP = this.newRequest.get('exposedPerson') as FormGroup;
+      const formAR = this.newRequest.get('agentReport') as FormGroup;
+      const formARCTI = this.newRequest.get('agentReport').get('connectionTypeInfo') as FormGroup;
+      const formHMI = this.newRequest.get('medicalHistory').get('informations') as FormGroup;
+      const formMH = this.newRequest.get('medicalHistory') as FormGroup;
+      const formWI = this.newRequest.get('medicalHistory').get('informations').get('womenInformation') as FormGroup;
+      const formQ = this.newRequest.get('questionnaires') as FormGroup;
+      const formFiles = this.newRequest.get('files') as FormGroup;
+      const formGeneral = this.newRequest as FormGroup;
 
-    formFiles.get('healthDeclaration').setValidators(null);
-    formFiles.removeControl('id2');
-    formFiles.removeControl('id2Url');
+      formFiles.get('healthDeclaration').setValidators(null);
+      formFiles.removeControl('id2');
+      formFiles.removeControl('id2Url');
 
-    if (formP.get('contractorIsLegalEntity').value !== 'SI') {
-      // formEP.removeControl('isPayerExposed');
-      // formEP.removeControl('isContractorExposed');
-      // this.newRequest.removeControl('payer');
-      // this.newRequest.removeControl('contractor');
-      // this.newRequest.removeControl('knowYourCustomerPagador');
-      // this.newRequest.removeControl('knowYourCustomerContratante');
-      // formEP.removeControl('contractor');
-      // formEP.removeControl('payer');
-      // formP.removeControl('payerIsLegalEntity');
+      if (formP.get('contractorIsLegalEntity').value !== 'SI') {
+        // formEP.removeControl('isPayerExposed');
+        // formEP.removeControl('isContractorExposed');
+        // this.newRequest.removeControl('payer');
+        // this.newRequest.removeControl('contractor');
+        // this.newRequest.removeControl('knowYourCustomerPagador');
+        // this.newRequest.removeControl('knowYourCustomerContratante');
+        // formEP.removeControl('contractor');
+        // formEP.removeControl('payer');
+        // formP.removeControl('payerIsLegalEntity');
 
-      // formP.removeControl('sameAsPayer');
-      // this.newRequest.removeControl('payer');
-      // this.newRequest.removeControl('contractor');
-      // if (formEP) {
-      //   formEP.removeControl('contractor');
-      //   formEP.removeControl('payer');
-      //   formEP.removeControl('isPayerExposed');
-      //   formEP.removeControl('isContractorExposed');
-      // }
-      // if (this.newRequest.get('insured_data').get('policyholderKnowClientRadio')) {
-      //   sameAsPayer
-      //   formInsured.removeControl('policyholderKnowClientRadio'); //juridica
-      // }
-      //   if (formGeneral.get('contractorLegalEntity')) {
-      //     formGeneral.removeControl('contractorLegalEntity');
-      //   }
-      //   if (this.newRequest.get('files').get('copyId')) {
-      //     formFiles.removeControl('copyId');
-      //   }
-      //   if (formQ.get('solucionAntiLavadoDinero')) {
-      //     formQ.removeControl('solucionAntiLavadoDinero');
-      //   }
-      //   if (formGeneral.get('payerLegalEntity')) {
-      //     formGeneral.removeControl('payerLegalEntity');
-      //   }
-      //   if (formP.get('payerIsLegalEntity')) {
-      //     formP.removeControl('payerIsLegalEntity');
-      //   }
-      //   if (this.newRequest.get('files').get('mercantile')) {
-      //     formFiles.removeControl('mercantile');
-      //   }
-      // }
-      // if (formP.get('sameAsContractor').value === 'SI') {
-      //   formP.removeControl('contractorIsLegalEntity');
-      //   formEP.removeControl('isContractorExposed');
-      //   formEP.removeControl('contractor');
-      //   this.newRequest.removeControl('contractor');
-    }
-    if (formP.get('sameAsPayer')) {
-      // if (formP.get('sameAsPayer').value === 'SI') {
-      //   if (this.newRequest.get('payer')) {
-      //     this.newRequest.removeControl('payer');
-      //   }
-      //   if (formEP.get('isPayerExposed')) {
-      //     formEP.removeControl('isPayerExposed');
-      //   }
-      //   if (formEP.get('payer')) {
-      //     formEP.removeControl('payer');
-      //   }
-      //   if (this.newRequest.get('files').get('copyId')) {
-      //     formFiles.removeControl('copyId');
-      //   }
-      //   if (!(formGeneral.get('payerLegalEntity'))) {
-      //     formGeneral.addControl('payerLegalEntity', this.fb.group({}));
-      //   }
-      //   formP.addControl('payerIsLegalEntity', this.fb.control('', Validators.required));
-      // }
-      // if (formP.get('sameAsPayer').value === 'NO') {
-      //     formP.removeControl('payerIsLegalEntity');
-      //     formEP.removeControl('isPayerExposed');
-      //     formEP.removeControl('payer');
-      //     this.newRequest.removeControl('payer');
-      //   if (formP.get('payerIsLegalEntity')) {
-      //     formP.removeControl('payerIsLegalEntity');
-      //   }
-      //   if (!this.newRequest.get('payer')) {
-      //     this.newRequest.addControl('payer', this.fb.group({
-      //       firstName: ['', Validators.required],
-      //       secondName: ['', Validators.required],
-      //       lastName: ['', Validators.required],
-      //       date: ['', Validators.required],
-      //       sex: ['', Validators.required],
-      //       nationality: ['', Validators.required],
-      //       id2Type: ['', Validators.required],
-      //       id2: ['', Validators.required],
-      //       countryOfResidence: ['', Validators.required],
-      //       status: ['', Validators.required],
-      //       countryOfBirth: ['', Validators.required],
-      //       direction: ['', Validators.required],
-      //       tel: ['', Validators.required],
-      //       cel: ['', Validators.required],
-      //       officeTel: ['', Validators.required],
-      //       fax: ['', Validators.required],
-      //       email: ['', [Validators.required, Validators.email]],
-      //       company: this.fb.group({
-      //         name: ['', Validators.required],
-      //         position: ['', Validators.required],
-      //         direction: ['', Validators.required],
-      //         economicActivity: ['', Validators.required],
-      //         city: ['', Validators.required],
-      //         country: ['', Validators.required],
-      //         kinship: ['', Validators.required],
-      //         insurancePurpose: ['', Validators.required],
-      //         contractorCountry: ['', Validators.required],
-      //       })
-      //     }));
-      //   }
-      //   if (formQ.get('solucionAntiLavadoDinero')) {
-      //     formQ.removeControl('solucionAntiLavadoDinero');
-      //   }
-      //   if (formGeneral.get('payerLegalEntity')) {
-      //     formGeneral.removeControl('payerLegalEntity');
-      //   }
-      //   if (formP.get('payerIsLegalEntity')) {
-      //     formP.removeControl('payerIsLegalEntity');
-      //   }
-      //   if (this.newRequest.get('files').get('mercantile')) {
-      //     formFiles.removeControl('mercantile');
-      //   }
+        // formP.removeControl('sameAsPayer');
+        // this.newRequest.removeControl('payer');
+        // this.newRequest.removeControl('contractor');
+        // if (formEP) {
+        //   formEP.removeControl('contractor');
+        //   formEP.removeControl('payer');
+        //   formEP.removeControl('isPayerExposed');
+        //   formEP.removeControl('isContractorExposed');
+        // }
+        // if (this.newRequest.get('insured_data').get('policyholderKnowClientRadio')) {
+        //   sameAsPayer
+        //   formInsured.removeControl('policyholderKnowClientRadio'); //juridica
+        // }
+        //   if (formGeneral.get('contractorLegalEntity')) {
+        //     formGeneral.removeControl('contractorLegalEntity');
+        //   }
+        //   if (this.newRequest.get('files').get('copyId')) {
+        //     formFiles.removeControl('copyId');
+        //   }
+        //   if (formQ.get('solucionAntiLavadoDinero')) {
+        //     formQ.removeControl('solucionAntiLavadoDinero');
+        //   }
+        //   if (formGeneral.get('payerLegalEntity')) {
+        //     formGeneral.removeControl('payerLegalEntity');
+        //   }
+        //   if (formP.get('payerIsLegalEntity')) {
+        //     formP.removeControl('payerIsLegalEntity');
+        //   }
+        //   if (this.newRequest.get('files').get('mercantile')) {
+        //     formFiles.removeControl('mercantile');
+        //   }
+        // }
+        // if (formP.get('sameAsContractor').value === 'SI') {
+        //   formP.removeControl('contractorIsLegalEntity');
+        //   formEP.removeControl('isContractorExposed');
+        //   formEP.removeControl('contractor');
+        //   this.newRequest.removeControl('contractor');
+      }
+      if (formP.get('sameAsPayer')) {
+        // if (formP.get('sameAsPayer').value === 'SI') {
+        //   if (this.newRequest.get('payer')) {
+        //     this.newRequest.removeControl('payer');
+        //   }
+        //   if (formEP.get('isPayerExposed')) {
+        //     formEP.removeControl('isPayerExposed');
+        //   }
+        //   if (formEP.get('payer')) {
+        //     formEP.removeControl('payer');
+        //   }
+        //   if (this.newRequest.get('files').get('copyId')) {
+        //     formFiles.removeControl('copyId');
+        //   }
+        //   if (!(formGeneral.get('payerLegalEntity'))) {
+        //     formGeneral.addControl('payerLegalEntity', this.fb.group({}));
+        //   }
+        //   formP.addControl('payerIsLegalEntity', this.fb.control('', Validators.required));
+        // }
+        // if (formP.get('sameAsPayer').value === 'NO') {
+        //     formP.removeControl('payerIsLegalEntity');
+        //     formEP.removeControl('isPayerExposed');
+        //     formEP.removeControl('payer');
+        //     this.newRequest.removeControl('payer');
+        //   if (formP.get('payerIsLegalEntity')) {
+        //     formP.removeControl('payerIsLegalEntity');
+        //   }
+        //   if (!this.newRequest.get('payer')) {
+        //     this.newRequest.addControl('payer', this.fb.group({
+        //       firstName: ['', Validators.required],
+        //       secondName: ['', Validators.required],
+        //       lastName: ['', Validators.required],
+        //       date: ['', Validators.required],
+        //       sex: ['', Validators.required],
+        //       nationality: ['', Validators.required],
+        //       id2Type: ['', Validators.required],
+        //       id2: ['', Validators.required],
+        //       countryOfResidence: ['', Validators.required],
+        //       status: ['', Validators.required],
+        //       countryOfBirth: ['', Validators.required],
+        //       direction: ['', Validators.required],
+        //       tel: ['', Validators.required],
+        //       cel: ['', Validators.required],
+        //       officeTel: ['', Validators.required],
+        //       fax: ['', Validators.required],
+        //       email: ['', [Validators.required, Validators.email]],
+        //       company: this.fb.group({
+        //         name: ['', Validators.required],
+        //         position: ['', Validators.required],
+        //         direction: ['', Validators.required],
+        //         economicActivity: ['', Validators.required],
+        //         city: ['', Validators.required],
+        //         country: ['', Validators.required],
+        //         kinship: ['', Validators.required],
+        //         insurancePurpose: ['', Validators.required],
+        //         contractorCountry: ['', Validators.required],
+        //       })
+        //     }));
+        //   }
+        //   if (formQ.get('solucionAntiLavadoDinero')) {
+        //     formQ.removeControl('solucionAntiLavadoDinero');
+        //   }
+        //   if (formGeneral.get('payerLegalEntity')) {
+        //     formGeneral.removeControl('payerLegalEntity');
+        //   }
+        //   if (formP.get('payerIsLegalEntity')) {
+        //     formP.removeControl('payerIsLegalEntity');
+        //   }
+        //   if (this.newRequest.get('files').get('mercantile')) {
+        //     formFiles.removeControl('mercantile');
+        //   }
 
-      //   if (formQ.get('payerLegalEntity')) {
-      //     formQ.removeControl('payerLegalEntity');
-      //   }
-      //   formFiles.addControl('copyId', this.fb.array([this.createFormArray('filesCopyId')]));
-      //   this.filesCopyIdArray = this.newRequest.get('files').get('copyId') as FormArray;
-      // }
-    }
+        //   if (formQ.get('payerLegalEntity')) {
+        //     formQ.removeControl('payerLegalEntity');
+        //   }
+        //   formFiles.addControl('copyId', this.fb.array([this.createFormArray('filesCopyId')]));
+        //   this.filesCopyIdArray = this.newRequest.get('files').get('copyId') as FormArray;
+        // }
+      }
 
-    if (formP.get('sameAsContractor').value !== 'NO') {
-      formGeneral.removeControl('contractor');
-      formGeneral.removeControl('contractorJuridical');
-      formP.removeControl('contractorMandatory');
-      formP.removeControl('contractorIsLegalEntity');
-      formEP.removeControl('isContractorExposed');
-      formEP.removeControl('contractor');
-    }
-
-    if (formP.get('sameAsPayer').value !== 'NO') {
-      formGeneral.removeControl('payer');
-      formGeneral.removeControl('payerJuridical');
-      formP.removeControl('payerIsLegalEntity');
-      formP.removeControl('payerMandatory');
-      formEP.removeControl('isPayerExposed');
-      formEP.removeControl('payer');
-    }
-
-    if (formP.get('contractorIsLegalEntity')) {
-      if (formP.get('contractorIsLegalEntity').value !== 'NO') {
+      if (formP.get('sameAsContractor').value !== 'NO') {
+        formGeneral.removeControl('contractor');
+        formGeneral.removeControl('contractorJuridical');
+        formP.removeControl('contractorMandatory');
+        formP.removeControl('contractorIsLegalEntity');
         formEP.removeControl('isContractorExposed');
         formEP.removeControl('contractor');
-        formGeneral.removeControl('contractor');
       }
-    }
 
-    if (formP.get('payerIsLegalEntity')) {
-      if (formP.get('payerIsLegalEntity').value !== 'NO') {
+      if (formP.get('sameAsPayer').value !== 'NO') {
+        formGeneral.removeControl('payer');
+        formGeneral.removeControl('payerJuridical');
+        formP.removeControl('payerIsLegalEntity');
+        formP.removeControl('payerMandatory');
         formEP.removeControl('isPayerExposed');
         formEP.removeControl('payer');
-        formGeneral.removeControl('payer');
       }
-    }
 
-    if (formEP.get('isExposed').value !== 'SI') {
-      formEP.removeControl('insured');
-    }
-
-    if (formEP.get('isPayerExposed')) {
-      if (formEP.get('isPayerExposed').value !== 'SI') {
-        formEP.removeControl('payer');
+      if (formP.get('contractorIsLegalEntity')) {
+        if (formP.get('contractorIsLegalEntity').value !== 'NO') {
+          formEP.removeControl('isContractorExposed');
+          formEP.removeControl('contractor');
+          formGeneral.removeControl('contractor');
+        }
       }
-    }
 
-    if (formEP.get('isContractorExposed')) {
-      if (formEP.get('isContractorExposed').value !== 'SI') {
-        formEP.removeControl('contractor');
+      if (formP.get('payerIsLegalEntity')) {
+        if (formP.get('payerIsLegalEntity').value !== 'NO') {
+          formEP.removeControl('isPayerExposed');
+          formEP.removeControl('payer');
+          formGeneral.removeControl('payer');
+        }
       }
-    }
 
-    if (formP.get('heightUnit').value !== 'PIE') {
-      formP.removeControl('inches');
-    }
+      if (formEP.get('isExposed').value !== 'SI') {
+        formEP.removeControl('insured');
+      }
 
-    if (formGI.get('doXtremeSport').value !== 'SI') {
-      formGI.removeControl('xtremeSports');
-    }
+      if (formEP.get('isPayerExposed')) {
+        if (formEP.get('isPayerExposed').value !== 'SI') {
+          formEP.removeControl('payer');
+        }
+      }
 
-    if (formGI.get('hasAnotherCoverage').value !== 'SI') {
-      formGI.removeControl('changeAnotherCoverage');
-      formGI.removeControl('changingCoverages');
-    }
+      if (formEP.get('isContractorExposed')) {
+        if (formEP.get('isContractorExposed').value !== 'SI') {
+          formEP.removeControl('contractor');
+        }
+      }
 
-    if (formGI.get('changeAnotherCoverage')) {
-      if (formGI.get('changeAnotherCoverage').value !== 'SI') {
+      if (formP.get('heightUnit').value !== 'PIE') {
+        formP.removeControl('inches');
+      }
+
+      if (formGI.get('doXtremeSport').value !== 'SI') {
+        formGI.removeControl('xtremeSports');
+      }
+
+      if (formGI.get('hasAnotherCoverage').value !== 'SI') {
+        formGI.removeControl('changeAnotherCoverage');
         formGI.removeControl('changingCoverages');
       }
-    }
 
-    if (formGI.get('thinkTravel').value !== 'SI') {
-      formGI.removeControl('travelInformation');
-    }
+      if (formGI.get('changeAnotherCoverage')) {
+        if (formGI.get('changeAnotherCoverage').value !== 'SI') {
+          formGI.removeControl('changingCoverages');
+        }
+      }
 
-    if (formGI.get('haveBeenArrestedBecauseNarcotics').value !== 'SI') {
-      formGI.removeControl('arrestedInformation');
-    }
+      if (formGI.get('thinkTravel').value !== 'SI') {
+        formGI.removeControl('travelInformation');
+      }
 
-    if (formGI.get('consumeAlcohol').value !== 'SI') {
-      formGI.removeControl('alcohol');
-    }
+      if (formGI.get('haveBeenArrestedBecauseNarcotics').value !== 'SI') {
+        formGI.removeControl('arrestedInformation');
+      }
 
-    if (formGI.get('haveSmoked').value !== 'SI') {
-      formGI.removeControl('smoked');
-      formGI.removeControl('isActualSmoker');
-      formGI.removeControl('lastTimeSmoked');
-    }
+      if (formGI.get('consumeAlcohol').value !== 'SI') {
+        formGI.removeControl('alcohol');
+      }
 
-    if (formGI.get('isActualSmoker')) {
-      if (formGI.get('isActualSmoker').value !== 'EX-FUMADOR') {
+      if (formGI.get('haveSmoked').value !== 'SI') {
+        formGI.removeControl('smoked');
+        formGI.removeControl('isActualSmoker');
         formGI.removeControl('lastTimeSmoked');
       }
-    }
 
-    if (formGI.get('haveAlcoholTreatment').value !== 'SI') {
-      formGI.removeControl('alcoholTreatment');
-    }
-
-    if (formGI.get('infoDiseaseCoverage').value !== 'SI') {
-      formGI.removeControl('diseaseCoverageInformation');
-    }
-
-    if (formMH.get('haveHadWeightChanges').value !== 'SI') {
-      formHMI.removeControl('weightChanges');
-    }
-
-    if (formMH.get('isWomen').value !== 'SI') {
-      formHMI.removeControl('womenInformation');
-    }
-
-    if (formAR.get('isMarried').value !== 'SI') {
-      formAR.removeControl('marriedInformation');
-    }
-
-    // if (formAR.get('infoDiseaseCoverage').value !== 'SI') {
-    //   formAR.removeControl('connectionTypeInfo');
-    // }
-
-    const stay = [];
-    switch (formAR.get('connectionType').value) {
-      case 'FAMILIA':
-        stay.push('relationship');
-        break;
-
-      case 'AMIGO':
-        stay.push('friendship', 'amount', 'time');
-        break;
-
-      case 'CLIENTE':
-        stay.push('amount', 'time');
-        break;
-
-      case '¿LO ACABA DE CONOCER?':
-        stay.push('how');
-        break;
-
-      default:
-        break;
-    }
-
-    if (formAR.get('connectionType').value !== '') {
-      const stableCTIObject = Object.getOwnPropertyNames(formAR.get('connectionTypeInfo').value);
-      // tslint:disable: forin
-      for (const key in stay) {
-        const stayElement = stay[key];
-        const i = stableCTIObject.indexOf(stayElement);
-        stableCTIObject.splice(i, 1);
+      if (formGI.get('isActualSmoker')) {
+        if (formGI.get('isActualSmoker').value !== 'EX-FUMADOR') {
+          formGI.removeControl('lastTimeSmoked');
+        }
       }
-      for (const idx in stay) {
-        const stayElement = stay[idx];
-        for (const key in stableCTIObject) {
-          const existingName = stableCTIObject[key];
-          if (stayElement !== existingName && existingName !== 'id') {
-            formARCTI.removeControl(existingName);
+
+      if (formGI.get('haveAlcoholTreatment').value !== 'SI') {
+        formGI.removeControl('alcoholTreatment');
+      }
+
+      if (formGI.get('infoDiseaseCoverage').value !== 'SI') {
+        formGI.removeControl('diseaseCoverageInformation');
+      }
+
+      if (formMH.get('haveHadWeightChanges').value !== 'SI') {
+        formHMI.removeControl('weightChanges');
+      }
+
+      if (formMH.get('isWomen').value !== 'SI') {
+        formHMI.removeControl('womenInformation');
+      }
+
+      if (formAR.get('isMarried').value !== 'SI') {
+        formAR.removeControl('marriedInformation');
+      }
+
+      // if (formAR.get('infoDiseaseCoverage').value !== 'SI') {
+      //   formAR.removeControl('connectionTypeInfo');
+      // }
+
+      const stay = [];
+      switch (formAR.get('connectionType').value) {
+        case 'FAMILIA':
+          stay.push('relationship');
+          break;
+
+        case 'AMIGO':
+          stay.push('friendship', 'amount', 'time');
+          break;
+
+        case 'CLIENTE':
+          stay.push('amount', 'time');
+          break;
+
+        case '¿LO ACABA DE CONOCER?':
+          stay.push('how');
+          break;
+
+        default:
+          break;
+      }
+
+      if (formAR.get('connectionType').value !== '') {
+        const stableCTIObject = Object.getOwnPropertyNames(formAR.get('connectionTypeInfo').value);
+        // tslint:disable: forin
+        for (const key in stay) {
+          const stayElement = stay[key];
+          const i = stableCTIObject.indexOf(stayElement);
+          stableCTIObject.splice(i, 1);
+        }
+        for (const idx in stay) {
+          const stayElement = stay[idx];
+          for (const key in stableCTIObject) {
+            const existingName = stableCTIObject[key];
+            if (stayElement !== existingName && existingName !== 'id') {
+              formARCTI.removeControl(existingName);
+            }
           }
         }
       }
-    }
 
-    formP.removeControl('isExposed');
-    formP.removeControl('city');
-    formP.removeControl('currency');
+      formP.removeControl('isExposed');
+      formP.removeControl('city');
+      formP.removeControl('currency');
 
-    this.familyRelationshipInsurances = formAR.get('familyInsurances') as FormArray;
-    this.existingCoveragesList = formGI.get('anotherCoverages') as FormArray;
-    this.changingCoveragesList = formGI.get('changingCoverages') as FormArray;
+      this.familyRelationshipInsurances = formAR.get('familyInsurances') as FormArray;
+      this.existingCoveragesList = formGI.get('anotherCoverages') as FormArray;
+      this.changingCoveragesList = formGI.get('changingCoverages') as FormArray;
 
-    if (formWI) {
-      this.womenDisordersList = formWI.get('disorders') as FormArray;
-    }
+      if (formWI) {
+        this.womenDisordersList = formWI.get('disorders') as FormArray;
+      }
 
-    this.heartPainList = formHMI.get('heartPain') as FormArray;
-    this.hypertensionList = formHMI.get('hypertensionVida') as FormArray;
-    this.lostDriveLicenseList = formGI.get('lostDriveLicense') as FormArray;
-    this.respiratoryDisorderList = formHMI.get('respiratoryDisorder') as FormArray;
-    this.mentalNervousDisorderList = formHMI.get('mentalNervousDisorder') as FormArray;
-    this.stomachDisorderList = formHMI.get('stomachDisorder') as FormArray;
-    this.endocrineDisorderList = formHMI.get('endocrineDisorder') as FormArray;
-    this.diabetesList = formHMI.get('diabetesVida') as FormArray;
-    this.spineDisorderList = formHMI.get('spineDisorder') as FormArray;
-    this.unexplainedDiseaseList = formHMI.get('unexplainedDisease') as FormArray;
-    this.renalDisorderList = formHMI.get('renalDisorder') as FormArray;
-    this.eyesNoseThroatProblemList = formHMI.get('eyesNoseThroatProblem') as FormArray;
-    this.bloodDisorderList = formHMI.get('bloodDisorder') as FormArray;
-    this.birthDefectList = formHMI.get('birthDefect') as FormArray;
-    this.medicalProceduresList = formHMI.get('medicalProcedures') as FormArray;
-    this.beenAPatientList = formHMI.get('beenAPatient') as FormArray;
-    this.hadSpecializedTestsList = formHMI.get('hadSpecializedTests') as FormArray;
-    this.notCarriedOutList = formHMI.get('notCarriedOut2') as FormArray;
-    this.takenInLast12MonthsList = formHMI.get('takenInLast12Months') as FormArray;
-    this.planToObtainMedicalTreatmentList = formHMI.get('planToObtainMedicalTreatment') as FormArray;
-    this.testedPositiveForHIVList = formHMI.get('testedPositiveForHiv') as FormArray;
-    this.diabetesDiagnosisList = formHMI.get('diabetesDiagnosis') as FormArray;
-    this.doctorList = formHMI.get('doctors') as FormArray;
-    this.filesStudiesArray = formF.get('studies') as FormArray;
-    this.lostDriveLicenseList = this.newRequest.get('generalInformation').get('lostDriveLicense') as FormArray;
+      this.heartPainList = formHMI.get('heartPain') as FormArray;
+      this.hypertensionList = formHMI.get('hypertensionVida') as FormArray;
+      this.lostDriveLicenseList = formGI.get('lostDriveLicense') as FormArray;
+      this.respiratoryDisorderList = formHMI.get('respiratoryDisorder') as FormArray;
+      this.mentalNervousDisorderList = formHMI.get('mentalNervousDisorder') as FormArray;
+      this.stomachDisorderList = formHMI.get('stomachDisorder') as FormArray;
+      this.endocrineDisorderList = formHMI.get('endocrineDisorder') as FormArray;
+      this.diabetesList = formHMI.get('diabetesVida') as FormArray;
+      this.spineDisorderList = formHMI.get('spineDisorder') as FormArray;
+      this.unexplainedDiseaseList = formHMI.get('unexplainedDisease') as FormArray;
+      this.renalDisorderList = formHMI.get('renalDisorder') as FormArray;
+      this.eyesNoseThroatProblemList = formHMI.get('eyesNoseThroatProblem') as FormArray;
+      this.bloodDisorderList = formHMI.get('bloodDisorder') as FormArray;
+      this.birthDefectList = formHMI.get('birthDefect') as FormArray;
+      this.medicalProceduresList = formHMI.get('medicalProcedures') as FormArray;
+      this.beenAPatientList = formHMI.get('beenAPatient') as FormArray;
+      this.hadSpecializedTestsList = formHMI.get('hadSpecializedTests') as FormArray;
+      this.notCarriedOutList = formHMI.get('notCarriedOut2') as FormArray;
+      this.takenInLast12MonthsList = formHMI.get('takenInLast12Months') as FormArray;
+      this.planToObtainMedicalTreatmentList = formHMI.get('planToObtainMedicalTreatment') as FormArray;
+      this.testedPositiveForHIVList = formHMI.get('testedPositiveForHiv') as FormArray;
+      this.diabetesDiagnosisList = formHMI.get('diabetesDiagnosis') as FormArray;
+      this.doctorList = formHMI.get('doctors') as FormArray;
+      this.filesStudiesArray = formF.get('studies') as FormArray;
+      this.lostDriveLicenseList = this.newRequest.get('generalInformation').get('lostDriveLicense') as FormArray;
 
-    this.insuranceProposedList = this.newRequest.get('generalInformation').get('insuranceProposed') as FormArray;
-    this.arrayFilesTitles = data.data.files.studies;
-    this.primaryBeneficaryTitles = data.data.primaryBenefits.dependentsC;
-    this.contigentBeneficaryTitles = data.data.contingentBeneficiary.dependentsC;
-    this.primaryAnotherTitle = data.data.primaryBenefits.personBenefited;
-    this.contigentAnotherTitle = data.data.contingentBeneficiary.personBenefited;
+      this.insuranceProposedList = this.newRequest.get('generalInformation').get('insuranceProposed') as FormArray;
+      this.arrayFilesTitles = data.data.files.studies;
+      this.primaryBeneficaryTitles = data.data.primaryBenefits.dependentsC;
+      this.contigentBeneficaryTitles = data.data.contingentBeneficiary.dependentsC;
+      this.primaryAnotherTitle = data.data.primaryBenefits.personBenefited;
+      this.contigentAnotherTitle = data.data.contingentBeneficiary.personBenefited;
 
-    if (this.newRequest.get('files') && this.newRequest.get('files').get('documentsKnowClient')) {
-      this.filesDocumentsKnowClientArray = this.newRequest.get('files').get('documentsKnowClient') as FormArray;
-    }
-    if (this.newRequest.get('files') && this.newRequest.get('files').get('copyId')) {
-      this.filesCopyIdArray = this.newRequest.get('files').get('copyId') as FormArray;
-    }
-    if (this.newRequest.get('files') && this.newRequest.get('files').get('mercantile')) {
-      this.mercantileRegisterArray = this.newRequest.get('files').get('mercantile') as FormArray;
-    }
+      if (this.newRequest.get('files') && this.newRequest.get('files').get('documentsKnowClient')) {
+        this.filesDocumentsKnowClientArray = this.newRequest.get('files').get('documentsKnowClient') as FormArray;
+      }
+      if (this.newRequest.get('files') && this.newRequest.get('files').get('copyId')) {
+        this.filesCopyIdArray = this.newRequest.get('files').get('copyId') as FormArray;
+      }
+      if (this.newRequest.get('files') && this.newRequest.get('files').get('mercantile')) {
+        this.mercantileRegisterArray = this.newRequest.get('files').get('mercantile') as FormArray;
+      }
 
-    this.arrayFilesTitlesDocumentsKnowClient = data.data.files.documentsKnowClient;
-    this.arrayFilesTitlesCopyId = data.data.files.copyId;
-    this.arrayFilesTitlesMercantile = data.data.files.mercantile;
+      this.arrayFilesTitlesDocumentsKnowClient = data.data.files.documentsKnowClient;
+      this.arrayFilesTitlesCopyId = data.data.files.copyId;
+      this.arrayFilesTitlesMercantile = data.data.files.mercantile;
 
-    if (this.hadSpecializedTestsList != undefined || this.hadSpecializedTestsList != null) {
-      // tslint:disable-next-line: prefer-for-of
-      for (let x = 0; x < this.hadSpecializedTestsList.length; x++) {
-        if (this.newRequest.get('medicalHistory').get('informations').get('hadSpecializedTests'
-        ).get(x.toString()).get('whichStudy').value !== 'OTROS') {
+      if (this.hadSpecializedTestsList != undefined || this.hadSpecializedTestsList != null) {
+        // tslint:disable-next-line: prefer-for-of
+        for (let x = 0; x < this.hadSpecializedTestsList.length; x++) {
           if (this.newRequest.get('medicalHistory').get('informations').get('hadSpecializedTests'
-          ).get(x.toString()).get('specifyStudy')) {
-            (this.newRequest.get('medicalHistory').get('informations').get('hadSpecializedTests'
-            ).get(x.toString()) as FormGroup).removeControl('specifyStudy');
+          ).get(x.toString()).get('whichStudy').value !== 'OTROS') {
+            if (this.newRequest.get('medicalHistory').get('informations').get('hadSpecializedTests'
+            ).get(x.toString()).get('specifyStudy')) {
+              (this.newRequest.get('medicalHistory').get('informations').get('hadSpecializedTests'
+              ).get(x.toString()) as FormGroup).removeControl('specifyStudy');
+            }
           }
         }
       }
+
+      this.showContent = true;
+
+      this.newRequest.markAllAsTouched();
+      this.newRequest.updateValueAndValidity();
     }
-
-    this.showContent = true;
-
-    this.newRequest.markAllAsTouched();
-    this.newRequest.updateValueAndValidity();
   }
-}
   getData(id) {
     setTimeout(() => {
       this.appComponent.showOverlay = true;

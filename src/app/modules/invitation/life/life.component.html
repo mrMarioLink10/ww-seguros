@@ -1685,7 +1685,8 @@
                 <app-radio-button [group]="newRequest.get('agentReport')" name="connectionType"
                   [options]="connectionType" (selected)="selectChange($event)">
                 </app-radio-button>
-                <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
+                <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4"
+                  *ngIf="newRequest.get('agentReport').get('connectionTypeInfo')">
                   <!-- <app-input *ngIf="newRequest.get('agentReport').value.connectionType === 'FAMILIA'"
                     [group]="newRequest.get('agentReport').get('connectionTypeInfo')" name="relationship"
                     label="Parentesco">

@@ -3664,19 +3664,22 @@ export class LifeComponent implements OnInit, DoCheck {
       }
 
       if (formAR.get('connectionType').value !== '') {
-        const stableCTIObject = Object.getOwnPropertyNames(formAR.get('connectionTypeInfo').value);
-        // tslint:disable: forin
-        for (const key in stay) {
-          const stayElement = stay[key];
-          const i = stableCTIObject.indexOf(stayElement);
-          stableCTIObject.splice(i, 1);
-        }
-        for (const idx in stay) {
-          const stayElement = stay[idx];
-          for (const key in stableCTIObject) {
-            const existingName = stableCTIObject[key];
-            if (stayElement !== existingName && existingName !== 'id') {
-              formARCTI.removeControl(existingName);
+        /** ELIMINAR CUANDO EL LIDER LO ARREGLE */
+        if (formAR.get('connectionTypeInfo')) {
+          const stableCTIObject = Object.getOwnPropertyNames(formAR.get('connectionTypeInfo').value);
+          // tslint:disable: forin
+          for (const key in stay) {
+            const stayElement = stay[key];
+            const i = stableCTIObject.indexOf(stayElement);
+            stableCTIObject.splice(i, 1);
+          }
+          for (const idx in stay) {
+            const stayElement = stay[idx];
+            for (const key in stableCTIObject) {
+              const existingName = stableCTIObject[key];
+              if (stayElement !== existingName && existingName !== 'id') {
+                formARCTI.removeControl(existingName);
+              }
             }
           }
         }

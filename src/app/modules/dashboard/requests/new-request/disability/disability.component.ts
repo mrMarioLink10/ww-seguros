@@ -2689,8 +2689,10 @@ export class DisabilityComponent implements OnInit, DoCheck {
           formI.removeControl('pep');
 
           if (!formPayer) {
-            if (formI.get('pep_radio_payer').value !== 'SI') {
-              formF.removeControl('incomesCertified');
+            if (formHolder) {
+              if (formHolder.get('pep_radio_payer').value !== 'SI') {
+                formF.removeControl('incomesCertified');
+              }
             }
           } else {
             if (formPayer.get('pep_radio_payer').value !== 'SI') {

@@ -3561,12 +3561,13 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
   getDataCotizaciones(id) {
     this.majorExpensesService.returnCotizacionData(id)
       .subscribe(response => {
-        if (response === null || response === undefined) {
+        console.log('response', response);
+        if (response.data === null || response.data === undefined) {
           const filterPrincipal = 'titula';
           this.newRequest.get('requestType').setValue('PÓLIZA NUEVA');
           this.quotesService.returnDataSaludList(id).subscribe(data => {
 
-            if (data !== undefined && data.data !== null && data.data !== undefined /*&& data.data.nombre !== undefined*/) {
+            if (data !== undefined && data.data !== null && data.data !== undefined && data.data.length > 0 /*&& data.data.nombre !== undefined*/) {
               const resultPrincipal = data.data.filter(word => word.rol.toLowerCase().includes(filterPrincipal));
               console.log(resultPrincipal);
               const dialogRef = this.dialog.open(BaseDialogComponent, {

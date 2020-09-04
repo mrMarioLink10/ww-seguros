@@ -99,9 +99,63 @@ export class RacingComponent implements OnInit {
   constructor(private fb: FormBuilder) { }
 
   ngOnInit() {
-
     this.addBasicControls();
 
+    // if (this.form.get('past_months').get('speed').value == 'FALSE') {
+    //   this.form.get('past_months').get('speed').setValue(false);
+    // }
+    // if (this.form.get('past_months').get('enduro').value == 'FALSE') {
+    //   this.form.get('past_months').get('enduro').setValue(false);
+    // }
+    // if (this.form.get('past_months').get('motocross').value == 'FALSE') {
+    //   this.form.get('past_months').get('motocross').setValue(false);
+    // }
+    // if (this.form.get('past_months').get('race').value == 'FALSE') {
+    //   this.form.get('past_months').get('race').setValue(false);
+    // }
+    // if (this.form.get('past_months').get('rally').value == 'FALSE') {
+    //   this.form.get('past_months').get('rally').setValue(false);
+    // }
+    // if (this.form.get('past_months').get('marathon').value == 'FALSE') {
+    //   this.form.get('past_months').get('marathon').setValue(false);
+    // }
+    // if (this.form.get('past_months').get('trial').value == 'FALSE') {
+    //   this.form.get('past_months').get('trial').setValue(false);
+    // }
+    // if (this.form.get('past_months').get('iceRace').value == 'FALSE') {
+    //   this.form.get('past_months').get('iceRace').setValue(false);
+    // }
+    // if (this.form.get('past_months').get('others').value == 'FALSE') {
+    //   this.form.get('past_months').get('others').setValue(false);
+    // }
+
+    // if (this.form.get('future_months').get('speed').value == 'FALSE') {
+    //   this.form.get('future_months').get('speed').setValue(false);
+    // }
+    // if (this.form.get('future_months').get('enduro').value == 'FALSE') {
+    //   this.form.get('future_months').get('enduro').setValue(false);
+    // }
+    // if (this.form.get('future_months').get('motocross').value == 'FALSE') {
+    //   this.form.get('future_months').get('motocross').setValue(false);
+    // }
+    // if (this.form.get('future_months').get('race').value == 'FALSE') {
+    //   this.form.get('future_months').get('race').setValue(false);
+    // }
+    // if (this.form.get('future_months').get('rally').value == 'FALSE') {
+    //   this.form.get('future_months').get('rally').setValue(false);
+    // }
+    // if (this.form.get('future_months').get('marathon').value == 'FALSE') {
+    //   this.form.get('future_months').get('marathon').setValue(false);
+    // }
+    // if (this.form.get('future_months').get('trial').value == 'FALSE') {
+    //   this.form.get('future_months').get('trial').setValue(false);
+    // }
+    // if (this.form.get('future_months').get('iceRace').value == 'FALSE') {
+    //   this.form.get('future_months').get('iceRace').setValue(false);
+    // }
+    // if (this.form.get('future_months').get('others').value == 'FALSE') {
+    //   this.form.get('future_months').get('others').setValue(false);
+    // }
     // this.racing= this.fb.group({
 
     //   last_names:['', Validators.required],

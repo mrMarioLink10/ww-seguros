@@ -361,11 +361,11 @@ export class RefundComponent implements OnInit {
 
 		console.log('diagnosticos', this.refundForm.get('diagnosticos').value);
 
-		// this.refundForm.get('haveAditionalComentary').valueChanges.subscribe( (valueAditional) => {
-		// 	if (valueAditional == '' || valueAditional == false) {
-		// 		this.refundForm.get('comentary').setValue('');
-		// 	}
-		// });
+		this.refundForm.get('haveAditionalComentary').valueChanges.subscribe( (valueAditional) => {
+			if (valueAditional == '' || valueAditional == false) {
+				this.refundForm.get('comentary').setValue('');
+			}
+		});
 
 		if (!this.ID) {
 			this.refundForm.get('diagnosticos').valueChanges.subscribe((value) => {

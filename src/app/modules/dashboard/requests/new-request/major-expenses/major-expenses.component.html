@@ -2348,8 +2348,26 @@
                 <div></div>
               </mat-panel-description>
             </mat-expansion-panel-header>
-            <app-text-area label='Descripcion' style='height: 142px!important;' [group]="newRequest" label="texto"
+            <app-text-area label='Descripcion' style='height: 142px!important;' [group]="newRequest" label="Comentario"
               name='comentary'></app-text-area>
+            <mat-action-row class="action-row">
+              <button mat-button class="next-button" (click)="nextStep()" type="button">
+                Siguiente
+              </button>
+            </mat-action-row>
+          </mat-expansion-panel>
+          <mat-expansion-panel class="ww-mat-expansion" [expanded]="step === 11" (opened)="setStep(11)">
+            <mat-expansion-panel-header class="body-13 icon-blue">
+              <mat-panel-title>
+                Autorización y firmas
+              </mat-panel-title>
+              <mat-panel-description>
+                <div></div>
+                <div></div>
+              </mat-panel-description>
+            </mat-expansion-panel-header>
+            <!-- <app-text-area label='Descripcion' style='height: 142px!important;' [group]="newRequest" label="texto"
+              name='comentary'></app-text-area> -->
             <div *ngIf="role !== 'WWS'" class="declaraciones px-4 sm:px-4 md:px-14 lg:px-12 xl:px-12">
               En la medida de mis conocimientos, las declaraciones y respuestas suministradas en esta declaración son
               verdaderas, completas y correctamente

@@ -1426,14 +1426,21 @@ export class RefundComponent implements OnInit {
 					).setValue(valueProveedorArray + ' ');
 					console.log('yaaaaaaaaaaaaaa proveedor ' + x);
 				},
-				1000);
+				500);
 
 				setTimeout(() => {
 					this.refundForm.get('diagnosticos').get((x).toString()).get('proveedor'
 					).setValue(valueProveedorArray);
 					console.log('yaaaaaaaaaaaaaa proveedor ' + x + ', parte 2');
 				},
-				2000);
+				1000);
+
+				setTimeout(() => {
+					if (this.refundForm.get('diagnosticos').get(x.toString()).get('proveedor').value == '') {
+						this.refundForm.get('diagnosticos').get(x.toString()).get('proveedor').markAsTouched();
+					}
+				},
+				1000);
 
 				if (this.refundForm.get('informacion').get('tipoReclamo').value == 'INTERNACIONAL') {
 					// for (let x = 0; x < this.diagnosticList.length; x++) {

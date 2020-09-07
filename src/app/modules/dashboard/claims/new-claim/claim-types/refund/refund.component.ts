@@ -361,6 +361,12 @@ export class RefundComponent implements OnInit {
 
 		console.log('diagnosticos', this.refundForm.get('diagnosticos').value);
 
+		this.refundForm.get('haveAditionalComentary').valueChanges.subscribe( (valueAditional) => {
+			if (valueAditional == '' || valueAditional == false) {
+				this.refundForm.get('comentary').setValue('');
+			}
+		});
+
 		if (!this.ID) {
 			this.refundForm.get('diagnosticos').valueChanges.subscribe((value) => {
 				this.validDatesCounter = 0;
@@ -1246,7 +1252,12 @@ export class RefundComponent implements OnInit {
 			if (data.data.agreeWithDeclaration === 'true' || data.data.agreeWithDeclaration === 'TRUE') {
 				this.refundForm.get('agreeWithDeclaration').setValue(true);
 			}
-
+			// if (this.refundForm.get('haveAditionalComentary').value === 'FALSE') {
+			// 	this.refundForm.get('haveAditionalComentary').setValue('');
+			// }
+			// if (this.refundForm.get('agreeWithDeclaration').value === 'FALSE') {
+			// 	this.refundForm.get('agreeWithDeclaration').setValue('');
+			// }
 			this.showContent = true;
 			this.refundForm.markAllAsTouched();
 			this.refundForm.updateValueAndValidity();
@@ -1267,11 +1278,11 @@ export class RefundComponent implements OnInit {
 								if (this.refundForm.get('diagnosticos').get(element.toString()).get(
 									'tipoReclamoMoneda').value === 'DOLARES') {
 									console.log('total', this.refundForm.get('diagnosticos').get(element.toString()).value.monto);
-									total += this.refundForm.get('diagnosticos').get(element.toString()).value.monto;
+									total += Number.parseFloat(this.refundForm.get('diagnosticos').get(element.toString()).value.monto);
 								}
 								if (this.refundForm.get('diagnosticos').get(element.toString()).get(
 									'tipoReclamoMoneda').value === 'PESOS') {
-									totalPesos += this.refundForm.get('diagnosticos').get(element.toString()).value.monto;
+									totalPesos += Number.parseFloat(this.refundForm.get('diagnosticos').get(element.toString()).value.monto);
 								}
 							}
 						}

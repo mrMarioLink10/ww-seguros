@@ -98,6 +98,9 @@ export class MoneyLaunderingComponent implements OnInit, DoCheck {
 			this.form.get('name').updateValueAndValidity();
 			this.xNameValidator = 1;
 		}
+		if (this.form.get('investigation_status').value == 'NO' && this.form.get('specify_investigation')) {
+			this.form.removeControl('specify_investigation');
+		}
 	}
 
 	ngOnInit() {

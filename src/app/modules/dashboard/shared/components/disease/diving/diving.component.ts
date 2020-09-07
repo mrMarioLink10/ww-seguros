@@ -101,6 +101,27 @@ export class DivingComponent implements OnInit {
 
     this.addBasicControls();
 
+    // if (this.form.get('activities').get('snorkel').value == 'FALSE') {
+    //   this.form.get('activities').get('snorkel').setValue(false);
+    // }
+    // if (this.form.get('activities').get('record').value == 'FALSE') {
+    //   this.form.get('activities').get('record').setValue(false);
+    // }
+    // if (this.form.get('activities').get('scuba').value == 'FALSE') {
+    //   this.form.get('activities').get('scuba').setValue(false);
+    // }
+    // if (this.form.get('activities').get('exploration').value == 'FALSE') {
+    //   this.form.get('activities').get('exploration').setValue(false);
+    // }
+    // if (this.form.get('activities').get('bells').value == 'FALSE') {
+    //   this.form.get('activities').get('bells').setValue(false);
+    // }
+    // if (this.form.get('activities').get('treasures').value == 'FALSE') {
+    //   this.form.get('activities').get('treasures').setValue(false);
+    // }
+    // if (this.form.get('activities').get('caves').value == 'FALSE') {
+    //   this.form.get('activities').get('caves').setValue(false);
+    // }
     // this.diving= this.fb.group({
 
     //   name:['', Validators.required],

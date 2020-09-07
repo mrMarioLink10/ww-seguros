@@ -772,7 +772,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
           company: [''],
           position: [''],
           direction: [''],
-          // economicActivity: [''],
+          economicActivity: [''],
           sector: [''],
           city: [''],
           country: [''],

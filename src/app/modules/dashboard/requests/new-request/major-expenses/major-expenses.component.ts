@@ -636,7 +636,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
       company: [''],
       position: [''],
       direction: [''],
-      economicActivity: [''],
+      // economicActivity: [''],
       sector: [''],
       city: [''],
       country: [''],
@@ -789,7 +789,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
           company: [''],
           position: [''],
           direction: [''],
-          economicActivity: [''],
+          // economicActivity: [''],
           sector: [''],
           city: [''],
           country: [''],
@@ -1914,9 +1914,9 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
           this.newRequest.get('person').get('office').get('direction').updateValueAndValidity();
           this.newRequest.get('person').get('office').get('direction').markAsUntouched();
 
-          this.newRequest.get('person').get('office').get('economicActivity').clearValidators();
-          this.newRequest.get('person').get('office').get('economicActivity').updateValueAndValidity();
-          this.newRequest.get('person').get('office').get('economicActivity').markAsUntouched();
+          // this.newRequest.get('person').get('office').get('economicActivity').clearValidators();
+          // this.newRequest.get('person').get('office').get('economicActivity').updateValueAndValidity();
+          // this.newRequest.get('person').get('office').get('economicActivity').markAsUntouched();
 
           this.newRequest.get('person').get('office').get('sector').clearValidators();
           this.newRequest.get('person').get('office').get('sector').updateValueAndValidity();
@@ -1982,9 +1982,9 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
           this.newRequest.get('person').get('office').get('direction').updateValueAndValidity();
           this.newRequest.get('person').get('office').get('direction').markAsUntouched();
 
-          this.newRequest.get('person').get('office').get('economicActivity').clearValidators();
-          this.newRequest.get('person').get('office').get('economicActivity').updateValueAndValidity();
-          this.newRequest.get('person').get('office').get('economicActivity').markAsUntouched();
+          // this.newRequest.get('person').get('office').get('economicActivity').clearValidators();
+          // this.newRequest.get('person').get('office').get('economicActivity').updateValueAndValidity();
+          // this.newRequest.get('person').get('office').get('economicActivity').markAsUntouched();
 
           this.newRequest.get('person').get('office').get('sector').clearValidators();
           this.newRequest.get('person').get('office').get('sector').updateValueAndValidity();
@@ -2199,9 +2199,9 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
           this.newRequest.get('person').get('office').get('direction').updateValueAndValidity();
           this.newRequest.get('person').get('office').get('direction').markAsUntouched();
 
-          this.newRequest.get('person').get('office').get('economicActivity').setValidators(Validators.required);
-          this.newRequest.get('person').get('office').get('economicActivity').updateValueAndValidity();
-          this.newRequest.get('person').get('office').get('economicActivity').markAsUntouched();
+          // this.newRequest.get('person').get('office').get('economicActivity').setValidators(Validators.required);
+          // this.newRequest.get('person').get('office').get('economicActivity').updateValueAndValidity();
+          // this.newRequest.get('person').get('office').get('economicActivity').markAsUntouched();
 
           this.newRequest.get('person').get('office').get('sector').setValidators(Validators.required);
           this.newRequest.get('person').get('office').get('sector').updateValueAndValidity();
@@ -2258,9 +2258,9 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
           this.newRequest.get('person').get('office').get('direction').updateValueAndValidity();
           this.newRequest.get('person').get('office').get('direction').markAsUntouched();
 
-          this.newRequest.get('person').get('office').get('economicActivity').setValidators(Validators.required);
-          this.newRequest.get('person').get('office').get('economicActivity').updateValueAndValidity();
-          this.newRequest.get('person').get('office').get('economicActivity').markAsUntouched();
+          // this.newRequest.get('person').get('office').get('economicActivity').setValidators(Validators.required);
+          // this.newRequest.get('person').get('office').get('economicActivity').updateValueAndValidity();
+          // this.newRequest.get('person').get('office').get('economicActivity').markAsUntouched();
 
           this.newRequest.get('person').get('office').get('sector').setValidators(Validators.required);
           this.newRequest.get('person').get('office').get('sector').updateValueAndValidity();
@@ -2345,7 +2345,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
                 company: [''],
                 position: [''],
                 direction: [''],
-                economicActivity: [''],
+                // economicActivity: [''],
                 sector: [''],
                 city: [''],
                 country: [''],
@@ -3774,9 +3774,9 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
         this.newRequest.get('person').get('office').get('direction').updateValueAndValidity();
         this.newRequest.get('person').get('office').get('direction').markAsUntouched();
 
-        this.newRequest.get('person').get('office').get('economicActivity').setValidators(Validators.required);
-        this.newRequest.get('person').get('office').get('economicActivity').updateValueAndValidity();
-        this.newRequest.get('person').get('office').get('economicActivity').markAsUntouched();
+        // this.newRequest.get('person').get('office').get('economicActivity').setValidators(Validators.required);
+        // this.newRequest.get('person').get('office').get('economicActivity').updateValueAndValidity();
+        // this.newRequest.get('person').get('office').get('economicActivity').markAsUntouched();
 
         this.newRequest.get('person').get('office').get('sector').setValidators(Validators.required);
         this.newRequest.get('person').get('office').get('sector').updateValueAndValidity();
@@ -3852,6 +3852,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
           formContractor.removeControl('pepRadioInsured');
           formContractor.removeControl('countryOfResidence');
           formContractor.removeControl('countryOfBirth');
+          formContractor.removeControl('economicActivity');
         }
       }
 
@@ -3870,6 +3871,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
           formPayer.removeControl('countryOfResidence');
           formPayer.removeControl('countryOfBirth');
           formPayer.removeControl('isContractor');
+          formPayer.removeControl('economicActivity');
         }
       }
 
@@ -3927,7 +3929,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
         formEP.removeControl('headLineExposedInfo');
 
         if (!formEP.get('payer')) {
-          if (formEP.get('contractor')){
+          if (formEP.get('contractor')) {
             if (formEP.get('contractor').value !== 'SI') {
               formEP.removeControl('incomesCertified');
             }
@@ -4078,7 +4080,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
           formPO.get('company').setValidators(null);
           formPO.get('position').setValidators(null);
           formPO.get('direction').setValidators(null);
-          formPO.get('economicActivity').setValidators(null);
+          // formPO.get('economicActivity').setValidators(null);
           formPO.get('sector').setValidators(null);
           formPO.get('city').setValidators(null);
           formPO.get('country').setValidators(null);

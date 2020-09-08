@@ -720,7 +720,7 @@
                         [ngClass]="{'col-span-3': disabilityGroup.get('policyholderJuridical').get('commercialRegister')['controls'].length > 1,
                       'col-span-4': disabilityGroup.get('policyholderJuridical').get('commercialRegister')['controls'].length === 1}"
                         [group]="disabilityGroup.get('policyholderJuridical').get('commercialRegister').get(i.toString())"
-                        name="commercialRegister" label="Registo mercantil / aviso de operación"
+                        name="commercialRegisters" label="Registo mercantil / aviso de operación"
                         [fileNameWatcher]="arrayStudiesWatcher(i, 'commercialRegister', 'policyholderJuridical')"
                         (onFileChange)="onStudiesChange($event, i, 'commercialRegister', 'policyholderJuridical')">
                       </app-file-input>
@@ -752,7 +752,7 @@
                         [ngClass]="{'col-span-3': disabilityGroup.get('policyholderJuridical').get('legalRepresentativeId2')['controls'].length > 1,
                       'col-span-4': disabilityGroup.get('policyholderJuridical').get('legalRepresentativeId2')['controls'].length === 1}"
                         [group]="disabilityGroup.get('policyholderJuridical').get('legalRepresentativeId2').get(i.toString())"
-                        name="legalRepresentativeId2" label="Identificación de los representantes legales"
+                        name="legalRepresentativeId2s" label="Identificación de los representantes legales"
                         [fileNameWatcher]="arrayStudiesWatcher(i, 'legalRepresentativeId2', 'policyholderJuridical')"
                         (onFileChange)="onStudiesChange($event, i, 'legalRepresentativeId2', 'policyholderJuridical')">
                       </app-file-input>
@@ -939,7 +939,7 @@
                         [ngClass]="{'col-span-3': disabilityGroup.get('payerJuridical').get('commercialRegister')['controls'].length > 1,
                       'col-span-4': disabilityGroup.get('payerJuridical').get('commercialRegister')['controls'].length === 1}"
                         [group]="disabilityGroup.get('payerJuridical').get('commercialRegister').get(i.toString())"
-                        name="commercialRegister" label="Registo mercantil / aviso de operación"
+                        name="commercialRegisters" label="Registo mercantil / aviso de operación"
                         [fileNameWatcher]="arrayStudiesWatcher(i, 'commercialRegister', 'payerJuridical')"
                         (onFileChange)="onStudiesChange($event, i, 'commercialRegister', 'payerJuridical')">
                       </app-file-input>
@@ -971,7 +971,7 @@
                         [ngClass]="{'col-span-3': disabilityGroup.get('payerJuridical').get('legalRepresentativeId2')['controls'].length > 1,
                       'col-span-4': disabilityGroup.get('payerJuridical').get('legalRepresentativeId2')['controls'].length === 1}"
                         [group]="disabilityGroup.get('payerJuridical').get('legalRepresentativeId2').get(i.toString())"
-                        name="legalRepresentativeId2" label="Identificación de los representantes legales"
+                        name="legalRepresentativeId2s" label="Identificación de los representantes legales"
                         [fileNameWatcher]="arrayStudiesWatcher(i, 'legalRepresentativeId2', 'payerJuridical')"
                         (onFileChange)="onStudiesChange($event, i, 'legalRepresentativeId2', 'payerJuridical')">
                       </app-file-input>

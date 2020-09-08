@@ -1359,7 +1359,7 @@ export class DisabilityComponent implements OnInit, DoCheck {
         reader.readAsDataURL(file);
         reader.onload = () => {
           this.disabilityGroup.get(group).get(name).get(i.toString()).patchValue({
-            [name]: reader.result
+            [name + 's']: reader.result
           });
         };
       }
@@ -1370,7 +1370,7 @@ export class DisabilityComponent implements OnInit, DoCheck {
         reader.readAsDataURL(file);
         reader.onload = () => {
           this.disabilityGroup.get(group).get(name).get(i.toString()).patchValue({
-            [name]: reader.result
+            [name + 's']: reader.result
           });
         };
       }
@@ -2437,13 +2437,13 @@ export class DisabilityComponent implements OnInit, DoCheck {
       if (formP.value.incomesCertifiedUrl && formP.value.incomesCertified !== '') { return formP.value.incomesCertifiedUrl; }
     } else if (type === 'commercialRegister') {
       if (this.disabilityGroup.get(group).get(type).get(i.toString())) {
-        if (this.disabilityGroup.get(group).get(type).get(i.toString()) && this.disabilityGroup.get(group).get(type).get(i.toString()).value[type] !== '') {
+        if (this.disabilityGroup.get(group).get(type).get(i.toString()) && this.disabilityGroup.get(group).get(type).get(i.toString()).value[type + 's'] !== '') {
           return this.disabilityGroup.get(group).get(type).get(i.toString()).value[type + 'Url'];
         }
       }
     } else if (type === 'legalRepresentativeId2') {
       if (this.disabilityGroup.get(group).get(type).get(i.toString())) {
-        if (this.disabilityGroup.get(group).get(type).get(i.toString()) && this.disabilityGroup.get(group).get(type).get(i.toString()).value[type] !== '') {
+        if (this.disabilityGroup.get(group).get(type).get(i.toString()) && this.disabilityGroup.get(group).get(type).get(i.toString()).value[type + 's'] !== '') {
           return this.disabilityGroup.get(group).get(type).get(i.toString()).value[type + 'Url'];
         }
       }

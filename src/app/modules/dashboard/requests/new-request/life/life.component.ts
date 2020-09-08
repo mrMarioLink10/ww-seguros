@@ -1499,14 +1499,14 @@ export class LifeComponent implements OnInit, DoCheck {
       switch (group) {
         case 'contractorJuridical':
           if (this.newRequest.get('contractorJuridical').get(type).get(i.toString())) {
-            if (this.newRequest.get('contractorJuridical').get(type).get(i.toString()) && this.newRequest.get('contractorJuridical').get(type).get(i.toString()).value[type] !== '') {
+            if (this.newRequest.get('contractorJuridical').get(type).get(i.toString()) && this.newRequest.get('contractorJuridical').get(type).get(i.toString()).value[type + 's'] !== '') {
               return this.newRequest.get('contractorJuridical').get(type).get(i.toString()).value[type + 'Url'];
             }
           }
           break;
         case 'payerJuridical':
           if (this.newRequest.get('payerJuridical').get(type).get(i.toString())) {
-            if (this.newRequest.get('payerJuridical').get(type).get(i.toString()) && this.newRequest.get('payerJuridical').get(type).get(i.toString()).value[type] !== '') {
+            if (this.newRequest.get('payerJuridical').get(type).get(i.toString()) && this.newRequest.get('payerJuridical').get(type).get(i.toString()).value[type + 's'] !== '') {
               return this.newRequest.get('payerJuridical').get(type).get(i.toString()).value[type + 'Url'];
             }
           }
@@ -1569,7 +1569,7 @@ export class LifeComponent implements OnInit, DoCheck {
             reader.readAsDataURL(file);
             reader.onload = () => {
               this.newRequest.get(group).get(type).get(i.toString()).patchValue({
-                [type]: reader.result
+                [type + 's']: reader.result
               });
               this.cd.markForCheck();
             };
@@ -1582,7 +1582,7 @@ export class LifeComponent implements OnInit, DoCheck {
             reader.readAsDataURL(file);
             reader.onload = () => {
               this.newRequest.get(group).get(type).get(i.toString()).patchValue({
-                [type]: reader.result
+                [type + 's']: reader.result
               });
               this.cd.markForCheck();
             };

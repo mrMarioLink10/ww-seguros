@@ -1174,7 +1174,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
             reader.readAsDataURL(file);
             reader.onload = () => {
               this.newRequest.get(group).get(type).get(i.toString()).patchValue({
-                [type]: reader.result
+                [type + 's']: reader.result
               });
               this.cd.markForCheck();
             };
@@ -1187,7 +1187,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
             reader.readAsDataURL(file);
             reader.onload = () => {
               this.newRequest.get(group).get(type).get(i.toString()).patchValue({
-                [type]: reader.result
+                [type + 's']: reader.result
               });
               this.cd.markForCheck();
             };
@@ -3341,13 +3341,13 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
       if (formP.value.incomesCertifiedUrl && formP.value.incomesCertified !== '') { return formP.value.incomesCertifiedUrl; }
     } else if (type === 'commercialRegister') {
       if (this.newRequest.get(group).get(type).get(i.toString())) {
-        if (this.newRequest.get(group).get(type).get(i.toString()) && this.newRequest.get(group).get(type).get(i.toString()).value[type] !== '') {
+        if (this.newRequest.get(group).get(type).get(i.toString()) && this.newRequest.get(group).get(type).get(i.toString()).value[type + 's'] !== '') {
           return this.newRequest.get(group).get(type).get(i.toString()).value[type + 'Url'];
         }
       }
     } else if (type === 'legalRepresentativeId2') {
       if (this.newRequest.get(group).get(type).get(i.toString())) {
-        if (this.newRequest.get(group).get(type).get(i.toString()) && this.newRequest.get(group).get(type).get(i.toString()).value[type] !== '') {
+        if (this.newRequest.get(group).get(type).get(i.toString()) && this.newRequest.get(group).get(type).get(i.toString()).value[type + 's'] !== '') {
           return this.newRequest.get(group).get(type).get(i.toString()).value[type + 'Url'];
         }
       }

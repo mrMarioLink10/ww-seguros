@@ -116,6 +116,8 @@ export class LifeComponent implements OnInit, DoCheck {
     family: ['', Validators.required],
     purpose: ['', Validators.required],
     taxCountry: ['', Validators.required],
+    commercialRegister: this.fb.array([this.createFormArray('commercialRegister')]),
+    legalRepresentativeId2: this.fb.array([this.createFormArray('legalRepresentativeId2')]),
   };
 
   countryTaxing: FieldConfig = {
@@ -1486,10 +1488,29 @@ export class LifeComponent implements OnInit, DoCheck {
     }
   }
 
-  arrayStudiesWatcher(i: number) {
-    if (this.arrayFilesTitles) {
-      if (this.arrayFilesTitles[i] && this.newRequest.get('files').get('studies').get(i.toString()).value.study !== '') {
-        return this.arrayFilesTitles[i].studyUrl;
+  arrayStudiesWatcher(i: number, type?: string, group?: string) {
+    if (type) {
+      switch (group) {
+        case 'contractorJuridical':
+          if (this.newRequest.get('contractorJuridical').get(type).get(i.toString())) {
+            if (this.newRequest.get('contractorJuridical').get(type).get(i.toString()) && this.newRequest.get('contractorJuridical').get(type).get(i.toString()).value[type] !== '') {
+              return this.newRequest.get('contractorJuridical').get(type).get(i.toString()).value[type + 'Url'];
+            }
+          }
+          break;
+        case 'payerJuridical':
+          if (this.newRequest.get('payerJuridical').get(type).get(i.toString())) {
+            if (this.newRequest.get('payerJuridical').get(type).get(i.toString()) && this.newRequest.get('payerJuridical').get(type).get(i.toString()).value[type] !== '') {
+              return this.newRequest.get('payerJuridical').get(type).get(i.toString()).value[type + 'Url'];
+            }
+          }
+          break;
+      }
+    } else {
+      if (this.arrayFilesTitles) {
+        if (this.arrayFilesTitles[i] && this.newRequest.get('files').get('studies').get(i.toString()).value.study !== '') {
+          return this.arrayFilesTitles[i].studyUrl;
+        }
       }
     }
   }
@@ -1531,22 +1552,53 @@ export class LifeComponent implements OnInit, DoCheck {
     }
   }
 
-  onStudiesChange(event, i) {
+  onStudiesChange(event, i, type?: string, group?: string) {
     const reader = new FileReader();
 
-    if (event.target.files && event.target.files.length) {
-      const [file] = event.target.files;
-      reader.readAsDataURL(file);
+    if (type) {
+      switch (type) {
+        case 'legalRepresentativeId2':
+          if (event.target.files && event.target.files.length) {
+            const [file] = event.target.files;
+            reader.readAsDataURL(file);
+            reader.onload = () => {
+              this.newRequest.get(group).get(type).get(i.toString()).patchValue({
+                [type]: reader.result
+              });
+              this.cd.markForCheck();
+            };
+          }
+          break;
 
-      reader.onload = () => {
-        this.newRequest.get('files').get('studies').get(i.toString()).patchValue({
-          ['study']: reader.result
-        });
+        case 'commercialRegister':
+          if (event.target.files && event.target.files.length) {
+            const [file] = event.target.files;
+            reader.readAsDataURL(file);
+            reader.onload = () => {
+              this.newRequest.get(group).get(type).get(i.toString()).patchValue({
+                [type]: reader.result
+              });
+              this.cd.markForCheck();
+            };
+          }
+          break;
+      }
+    } else {
+      if (event.target.files && event.target.files.length) {
+        const [file] = event.target.files;
+        reader.readAsDataURL(file);
 
-        this.cd.markForCheck();
-      };
+        reader.onload = () => {
+          this.newRequest.get('files').get('studies').get(i.toString()).patchValue({
+            ['study']: reader.result
+          });
+
+          this.cd.markForCheck();
+        };
+      }
     }
   }
+
 
   onStudiesChange2(event, i, name) {
     const reader = new FileReader();
@@ -2804,10 +2856,10 @@ export class LifeComponent implements OnInit, DoCheck {
               status: ['', Validators.required],
               countryOfBirth: ['', Validators.required],
               direction: ['', Validators.required],
-              tel: ['', Validators.required],
+              tel: [''],
               cel: ['', Validators.required],
-              officeTel: ['', Validators.required],
-              fax: ['', Validators.required],
+              officeTel: [''],
+              fax: [''],
               id2Attached: ['', Validators.required],
               email: ['', [Validators.required, Validators.email]],
               company: this.fb.group({
@@ -2860,11 +2912,11 @@ export class LifeComponent implements OnInit, DoCheck {
               status: ['', Validators.required],
               countryOfBirth: ['', Validators.required],
               direction: ['', Validators.required],
-              tel: ['', Validators.required],
+              tel: [''],
               cel: ['', Validators.required],
-              officeTel: ['', Validators.required],
+              officeTel: [''],
               id2Attached: ['', Validators.required],
-              fax: ['', Validators.required],
+              fax: [''],
               email: ['', [Validators.required, Validators.email]],
               company: this.fb.group({
                 name: ['', Validators.required],
@@ -3137,7 +3189,7 @@ export class LifeComponent implements OnInit, DoCheck {
     }
   }
 
-  createFormArray(type: string): FormGroup {
+  createFormArray(type: string): any {
     switch (type) {
       case 'coverages':
         return this.fb.group({
@@ -3215,15 +3267,22 @@ export class LifeComponent implements OnInit, DoCheck {
           copyId: ['', Validators.required],
         });
 
-      case 'mercantileRegister':
+      case 'commercialRegister':
         return this.fb.group({
-          register: ['', Validators.required],
+          commercialRegister: [''],
         });
+
+      case 'legalRepresentativeId2':
+        return this.fb.group({
+          legalRepresentativeId2: [''],
+        });
+      // return this.fb.control('');
 
       default:
         break;
     }
   }
+
 
   arrayDocumentsKnowClientWatcher(i: number) {
     if (this.arrayFilesTitlesDocumentsKnowClient) {
@@ -3265,7 +3324,6 @@ export class LifeComponent implements OnInit, DoCheck {
 
   addToList(list: any, type: string) {
     list.push(this.createFormArray(type));
-    console.log('json', JSON.stringify(this.newRequest.value));
   }
 
   questionsLength() {

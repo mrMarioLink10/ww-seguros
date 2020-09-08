@@ -648,8 +648,8 @@
               <app-input class="mr-3" [group]="newRequest.get('contractor').get('office')" label="Dirección"
                 name='direction'>
               </app-input>
-              <app-input class="mr-3" [group]="newRequest.get('contractor').get('office')"
-                label="Actividad Económica de la Empresa" name='economicActivity'></app-input>
+              <!-- <app-input class="mr-3" [group]="newRequest.get('contractor').get('office')"
+                label="Actividad Económica de la Empresa" name='economicActivity'></app-input> -->
               <app-input class="mr-3" [group]="newRequest.get('contractor').get('office')" label="Sector" name='sector'>
               </app-input>
               <app-input class="mr-3" [group]="newRequest.get('contractor').get('office')" label="Ciudad" name='city'>
@@ -768,8 +768,8 @@
               <app-input class="mr-3" [group]="newRequest.get('payer').get('office')" label="Dirección"
                 name='direction'>
               </app-input>
-              <app-input class="mr-3" [group]="newRequest.get('payer').get('office')"
-                label="Actividad Económica de la Empresa" name='economicActivity'></app-input>
+              <!-- <app-input class="mr-3" [group]="newRequest.get('payer').get('office')"
+                label="Actividad Económica de la Empresa" name='economicActivity'></app-input> -->
               <app-input class="mr-3" [group]="newRequest.get('payer').get('office')" label="Sector" name='sector'>
               </app-input>
               <app-input class="mr-3" [group]="newRequest.get('payer').get('office')" label="Ciudad" name='city'>
@@ -807,6 +807,70 @@
                 name="purpose"></app-input>
               <app-select [options]="countryTaxing" class="mr-3" [group]="newRequest.get('contractorJuridical')"
                 name="taxCountry"></app-select>
+              <!-- REGISTRO MERCANTIL -->
+              <div>
+                <div
+                  *ngFor="let studies of newRequest.get('contractorJuridical').get('commercialRegister')['controls']; let i = index">
+                  <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
+                    <app-file-input class="mr-3"
+                      [ngClass]="{'col-span-3': newRequest.get('contractorJuridical').get('commercialRegister')['controls'].length > 1,
+                      'col-span-4': newRequest.get('contractorJuridical').get('commercialRegister')['controls'].length === 1}"
+                      [group]="newRequest.get('contractorJuridical').get('commercialRegister').get(i.toString())"
+                      name="commercialRegister" label="Registo mercantil / aviso de operación"
+                      [fileNameWatcher]="arrayStudiesWatcher(i, 'commercialRegister', 'contractorJuridical')"
+                      (onFileChange)="onStudiesChange($event, i, 'commercialRegister', 'contractorJuridical')">
+                    </app-file-input>
+                    <div
+                      [ngClass]="{'col-span-1': newRequest.get('contractorJuridical').get('commercialRegister')['controls'].length > 1}"
+                      *ngIf="newRequest.get('contractorJuridical').get('commercialRegister')['controls'].length > 1">
+                      <button mat-mini-fab aria-label=" Eliminar estudio"
+                        (click)="diseaseService.removeToList(i, newRequest.get('contractorJuridical').get('commercialRegister'))"
+                        type="button" class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
+                        <mat-icon style="color: #18446B">remove</mat-icon>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                <div class="mb-6">
+                  <button mat-mini-fab aria-label="Agregar estudio"
+                    (click)="addToList(newRequest.get('contractorJuridical').get('commercialRegister'), 'commercialRegister')"
+                    type="button" class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
+                    <mat-icon style="color: #18446B">add</mat-icon>
+                  </button>
+                </div>
+              </div>
+              <!-- LA OTRA VAINA -->
+              <div>
+                <div
+                  *ngFor="let studies of newRequest.get('contractorJuridical').get('legalRepresentativeId2')['controls']; let i = index">
+                  <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
+                    <app-file-input class="mr-3"
+                      [ngClass]="{'col-span-3': newRequest.get('contractorJuridical').get('legalRepresentativeId2')['controls'].length > 1,
+                      'col-span-4': newRequest.get('contractorJuridical').get('legalRepresentativeId2')['controls'].length === 1}"
+                      [group]="newRequest.get('contractorJuridical').get('legalRepresentativeId2').get(i.toString())"
+                      name="legalRepresentativeId2" label="Identificación de los representantes legales"
+                      [fileNameWatcher]="arrayStudiesWatcher(i, 'legalRepresentativeId2', 'contractorJuridical')"
+                      (onFileChange)="onStudiesChange($event, i, 'legalRepresentativeId2', 'contractorJuridical')">
+                    </app-file-input>
+                    <div
+                      [ngClass]="{'col-span-1': newRequest.get('contractorJuridical').get('legalRepresentativeId2')['controls'].length > 1}"
+                      *ngIf="newRequest.get('contractorJuridical').get('legalRepresentativeId2')['controls'].length > 1">
+                      <button mat-mini-fab aria-label=" Eliminar estudio"
+                        (click)="diseaseService.removeToList(i, newRequest.get('contractorJuridical').get('legalRepresentativeId2'))"
+                        type="button" class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
+                        <mat-icon style="color: #18446B">remove</mat-icon>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                <div class="mb-6">
+                  <button mat-mini-fab aria-label="Agregar estudio"
+                    (click)="addToList(newRequest.get('contractorJuridical').get('legalRepresentativeId2'), 'legalRepresentativeId2')"
+                    type="button" class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
+                    <mat-icon style="color: #18446B">add</mat-icon>
+                  </button>
+                </div>
+              </div>
             </div>
             <mat-action-row class="action-row">
               <button mat-button class="next-button" (click)="nextStep()" type="button">
@@ -837,6 +901,70 @@
                 name="purpose"></app-input>
               <app-select [options]="countryTaxing" class="mr-3" [group]="newRequest.get('payerJuridical')"
                 name="taxCountry"></app-select>
+              <!-- REGISTRO MERCANTIL -->
+              <div>
+                <div
+                  *ngFor="let studies of newRequest.get('payerJuridical').get('commercialRegister')['controls']; let i = index">
+                  <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
+                    <app-file-input class="mr-3"
+                      [ngClass]="{'col-span-3': newRequest.get('payerJuridical').get('commercialRegister')['controls'].length > 1,
+                      'col-span-4': newRequest.get('payerJuridical').get('commercialRegister')['controls'].length === 1}"
+                      [group]="newRequest.get('payerJuridical').get('commercialRegister').get(i.toString())"
+                      name="commercialRegister" label="Registo mercantil / aviso de operación"
+                      [fileNameWatcher]="arrayStudiesWatcher(i, 'commercialRegister', 'payerJuridical')"
+                      (onFileChange)="onStudiesChange($event, i, 'commercialRegister', 'payerJuridical')">
+                    </app-file-input>
+                    <div
+                      [ngClass]="{'col-span-1': newRequest.get('payerJuridical').get('commercialRegister')['controls'].length > 1}"
+                      *ngIf="newRequest.get('payerJuridical').get('commercialRegister')['controls'].length > 1">
+                      <button mat-mini-fab aria-label=" Eliminar estudio"
+                        (click)="diseaseService.removeToList(i, newRequest.get('payerJuridical').get('commercialRegister'))"
+                        type="button" class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
+                        <mat-icon style="color: #18446B">remove</mat-icon>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                <div class="mb-6">
+                  <button mat-mini-fab aria-label="Agregar estudio"
+                    (click)="addToList(newRequest.get('payerJuridical').get('commercialRegister'), 'commercialRegister')"
+                    type="button" class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
+                    <mat-icon style="color: #18446B">add</mat-icon>
+                  </button>
+                </div>
+              </div>
+              <!-- LA OTRA VAINA -->
+              <div>
+                <div
+                  *ngFor="let studies of newRequest.get('payerJuridical').get('legalRepresentativeId2')['controls']; let i = index">
+                  <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
+                    <app-file-input class="mr-3"
+                      [ngClass]="{'col-span-3': newRequest.get('payerJuridical').get('legalRepresentativeId2')['controls'].length > 1,
+                      'col-span-4': newRequest.get('payerJuridical').get('legalRepresentativeId2')['controls'].length === 1}"
+                      [group]="newRequest.get('payerJuridical').get('legalRepresentativeId2').get(i.toString())"
+                      name="legalRepresentativeId2" label="Identificación de los representantes legales"
+                      [fileNameWatcher]="arrayStudiesWatcher(i, 'legalRepresentativeId2', 'payerJuridical')"
+                      (onFileChange)="onStudiesChange($event, i, 'legalRepresentativeId2', 'payerJuridical')">
+                    </app-file-input>
+                    <div
+                      [ngClass]="{'col-span-1': newRequest.get('payerJuridical').get('legalRepresentativeId2')['controls'].length > 1}"
+                      *ngIf="newRequest.get('payerJuridical').get('legalRepresentativeId2')['controls'].length > 1">
+                      <button mat-mini-fab aria-label=" Eliminar estudio"
+                        (click)="diseaseService.removeToList(i, newRequest.get('payerJuridical').get('legalRepresentativeId2'))"
+                        type="button" class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
+                        <mat-icon style="color: #18446B">remove</mat-icon>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                <div class="mb-6">
+                  <button mat-mini-fab aria-label="Agregar estudio"
+                    (click)="addToList(newRequest.get('payerJuridical').get('legalRepresentativeId2'), 'legalRepresentativeId2')"
+                    type="button" class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
+                    <mat-icon style="color: #18446B">add</mat-icon>
+                  </button>
+                </div>
+              </div>
             </div>
             <mat-action-row class="action-row">
               <button mat-button class="next-button" (click)="nextStep()" type="button">
@@ -2348,8 +2476,26 @@
                 <div></div>
               </mat-panel-description>
             </mat-expansion-panel-header>
-            <app-text-area label='Descripcion' style='height: 142px!important;' [group]="newRequest" label="texto"
+            <app-text-area label='Descripcion' style='height: 142px!important;' [group]="newRequest" label="Comentario"
               name='comentary'></app-text-area>
+            <mat-action-row class="action-row">
+              <button mat-button class="next-button" (click)="nextStep()" type="button">
+                Siguiente
+              </button>
+            </mat-action-row>
+          </mat-expansion-panel>
+          <mat-expansion-panel class="ww-mat-expansion" [expanded]="step === 11" (opened)="setStep(11)">
+            <mat-expansion-panel-header class="body-13 icon-blue">
+              <mat-panel-title>
+                Autorización y firmas
+              </mat-panel-title>
+              <mat-panel-description>
+                <div></div>
+                <div></div>
+              </mat-panel-description>
+            </mat-expansion-panel-header>
+            <!-- <app-text-area label='Descripcion' style='height: 142px!important;' [group]="newRequest" label="texto"
+              name='comentary'></app-text-area> -->
             <div *ngIf="role !== 'WWS'" class="declaraciones px-4 sm:px-4 md:px-14 lg:px-12 xl:px-12">
               En la medida de mis conocimientos, las declaraciones y respuestas suministradas en esta declaración son
               verdaderas, completas y correctamente
@@ -2431,7 +2577,7 @@
               (s) proporcionado(s) a mí y/o a mis dependientes, sin limitación a información relacionada con
               enfermedades mentales o el uso de drogas o alcohol. Esta es una manifestación libre y voluntaria.
               Por lo
-              anteriormente manifestado, relevo (relevamos)y libero (liberamos) a todas esas personas,
+              anteriormente manifestado, relevo (relevamos) y libero (liberamos) a todas esas personas,
               instituciones
               privadas y/o públicas, nacionales o extranjeras, de toda responsabilidad que le pueda comprometer
               por

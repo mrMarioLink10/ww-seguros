@@ -636,7 +636,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
       company: [''],
       position: [''],
       direction: [''],
-      economicActivity: [''],
+      // economicActivity: [''],
       sector: [''],
       city: [''],
       country: [''],
@@ -658,14 +658,6 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
       policy: [''],
       email: ['', Validators.required]
     })*/
-  };
-
-  juridicalGroup = {
-    businessName: ['', Validators.required],
-    rnc: ['', Validators.required],
-    family: ['', Validators.required],
-    purpose: ['', Validators.required],
-    taxCountry: ['', Validators.required],
   };
 
   countryTaxing: FieldConfig = {
@@ -1302,22 +1294,53 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
     return true;
   }
 
-  onStudiesChange(event, i) {
+  onStudiesChange(event, i, type?: string, group?: string) {
     const reader = new FileReader();
 
-    if (event.target.files && event.target.files.length) {
-      const [file] = event.target.files;
-      reader.readAsDataURL(file);
+    if (type) {
+      switch (type) {
+        case 'legalRepresentativeId2':
+          if (event.target.files && event.target.files.length) {
+            const [file] = event.target.files;
+            reader.readAsDataURL(file);
+            reader.onload = () => {
+              this.newRequest.get(group).get(type).get(i.toString()).patchValue({
+                [type]: reader.result
+              });
+              this.cd.markForCheck();
+            };
+          }
+          break;
 
-      reader.onload = () => {
-        this.newRequest.get('files').get('studies').get(i.toString()).patchValue({
-          ['study']: reader.result
-        });
+        case 'commercialRegister':
+          if (event.target.files && event.target.files.length) {
+            const [file] = event.target.files;
+            reader.readAsDataURL(file);
+            reader.onload = () => {
+              this.newRequest.get(group).get(type).get(i.toString()).patchValue({
+                [type]: reader.result
+              });
+              this.cd.markForCheck();
+            };
+          }
+          break;
+      }
+    } else {
+      if (event.target.files && event.target.files.length) {
+        const [file] = event.target.files;
+        reader.readAsDataURL(file);
 
-        this.cd.markForCheck();
-      };
+        reader.onload = () => {
+          this.newRequest.get('files').get('studies').get(i.toString()).patchValue({
+            ['study']: reader.result
+          });
+
+          this.cd.markForCheck();
+        };
+      }
     }
   }
+
 
   onStudiesChange2(event, i, name) {
     const reader = new FileReader();
@@ -1823,6 +1846,18 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
     }
   }
 
+  juridicalGroup() {
+    return this.fb.group({
+      businessName: ['', Validators.required],
+      rnc: ['', Validators.required],
+      family: ['', Validators.required],
+      purpose: ['', Validators.required],
+      taxCountry: ['', Validators.required],
+      commercialRegister: this.fb.array([this.createFormArray('commercialRegister')]),
+      legalRepresentativeId2: this.fb.array([this.createFormArray('legalRepresentativeId2')]),
+    });
+  }
+
   selectChange(event) {
     const formGeneral = this.newRequest as FormGroup;
     const formContractor = this.newRequest.get('contractor') as FormGroup;
@@ -1914,9 +1949,9 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
           this.newRequest.get('person').get('office').get('direction').updateValueAndValidity();
           this.newRequest.get('person').get('office').get('direction').markAsUntouched();
 
-          this.newRequest.get('person').get('office').get('economicActivity').clearValidators();
-          this.newRequest.get('person').get('office').get('economicActivity').updateValueAndValidity();
-          this.newRequest.get('person').get('office').get('economicActivity').markAsUntouched();
+          // this.newRequest.get('person').get('office').get('economicActivity').clearValidators();
+          // this.newRequest.get('person').get('office').get('economicActivity').updateValueAndValidity();
+          // this.newRequest.get('person').get('office').get('economicActivity').markAsUntouched();
 
           this.newRequest.get('person').get('office').get('sector').clearValidators();
           this.newRequest.get('person').get('office').get('sector').updateValueAndValidity();
@@ -1935,7 +1970,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
 
           formEP.removeControl('contractor');
           formGeneral.removeControl('contractor');
-          formGeneral.addControl('contractorJuridical', this.fb.group(this.juridicalGroup));
+          formGeneral.addControl('contractorJuridical', this.juridicalGroup());
 
           formGeneral.addControl('conozcaSuClientePersonaJuridica', this.fb.group({}));
           formP.get('mandatorySubject').reset();
@@ -1982,9 +2017,9 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
           this.newRequest.get('person').get('office').get('direction').updateValueAndValidity();
           this.newRequest.get('person').get('office').get('direction').markAsUntouched();
 
-          this.newRequest.get('person').get('office').get('economicActivity').clearValidators();
-          this.newRequest.get('person').get('office').get('economicActivity').updateValueAndValidity();
-          this.newRequest.get('person').get('office').get('economicActivity').markAsUntouched();
+          // this.newRequest.get('person').get('office').get('economicActivity').clearValidators();
+          // this.newRequest.get('person').get('office').get('economicActivity').updateValueAndValidity();
+          // this.newRequest.get('person').get('office').get('economicActivity').markAsUntouched();
 
           this.newRequest.get('person').get('office').get('sector').clearValidators();
           this.newRequest.get('person').get('office').get('sector').updateValueAndValidity();
@@ -2008,7 +2043,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
           formP.get('mandatorySubjectPayer').reset();
 
           formGeneral.removeControl('payer');
-          formGeneral.addControl('payerJuridical', this.fb.group(this.juridicalGroup));
+          formGeneral.addControl('payerJuridical', this.juridicalGroup());
 
           formGeneral.addControl('conozcaSuClientePersonaJuridicaPayer', this.fb.group({}));
           break;
@@ -2199,9 +2234,9 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
           this.newRequest.get('person').get('office').get('direction').updateValueAndValidity();
           this.newRequest.get('person').get('office').get('direction').markAsUntouched();
 
-          this.newRequest.get('person').get('office').get('economicActivity').setValidators(Validators.required);
-          this.newRequest.get('person').get('office').get('economicActivity').updateValueAndValidity();
-          this.newRequest.get('person').get('office').get('economicActivity').markAsUntouched();
+          // this.newRequest.get('person').get('office').get('economicActivity').setValidators(Validators.required);
+          // this.newRequest.get('person').get('office').get('economicActivity').updateValueAndValidity();
+          // this.newRequest.get('person').get('office').get('economicActivity').markAsUntouched();
 
           this.newRequest.get('person').get('office').get('sector').setValidators(Validators.required);
           this.newRequest.get('person').get('office').get('sector').updateValueAndValidity();
@@ -2258,9 +2293,9 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
           this.newRequest.get('person').get('office').get('direction').updateValueAndValidity();
           this.newRequest.get('person').get('office').get('direction').markAsUntouched();
 
-          this.newRequest.get('person').get('office').get('economicActivity').setValidators(Validators.required);
-          this.newRequest.get('person').get('office').get('economicActivity').updateValueAndValidity();
-          this.newRequest.get('person').get('office').get('economicActivity').markAsUntouched();
+          // this.newRequest.get('person').get('office').get('economicActivity').setValidators(Validators.required);
+          // this.newRequest.get('person').get('office').get('economicActivity').updateValueAndValidity();
+          // this.newRequest.get('person').get('office').get('economicActivity').markAsUntouched();
 
           this.newRequest.get('person').get('office').get('sector').setValidators(Validators.required);
           this.newRequest.get('person').get('office').get('sector').updateValueAndValidity();
@@ -2345,7 +2380,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
                 company: [''],
                 position: [''],
                 direction: [''],
-                economicActivity: [''],
+                // economicActivity: [''],
                 sector: [''],
                 city: [''],
                 country: [''],
@@ -3426,31 +3461,37 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
     console.log('dependientes: ', this.newRequest.get('dependents').value.allDependents);
   }
 
-  arrayStudiesWatcher(i: number, type?: string) {
-    if (this.arrayFilesTitles) {
-      if (this.arrayFilesTitles[i] && this.newRequest.get('files').get('studies').get(i.toString()).value.study !== '') {
-        return this.arrayFilesTitles[i].studyUrl;
-      }
-    }
-
+  arrayStudiesWatcher(i: number, type?: string, group?: string) {
     if (type === 'person') {
       const formP = this.newRequest.get('person') as FormGroup;
       if (formP.value.id2AttachedUrl && formP.value.id2Attached !== '') { return formP.value.id2AttachedUrl; }
-    }
-
-    if (type === 'contractor') {
+    } else if (type === 'contractor') {
       const formP = this.newRequest.get('contractor') as FormGroup;
       if (formP.value.id2AttachedUrl && formP.value.id2Attached !== '') { return formP.value.id2AttachedUrl; }
-    }
-
-    if (type === 'payer') {
+    } else if (type === 'payer') {
       const formP = this.newRequest.get('payer') as FormGroup;
       if (formP.value.id2AttachedUrl && formP.value.id2Attached !== '') { return formP.value.id2AttachedUrl; }
-    }
-
-    if (type === 'incomesCertified') {
+    } else if (type === 'incomesCertified') {
       const formP = this.newRequest.get('exposedPerson') as FormGroup;
       if (formP.value.incomesCertifiedUrl && formP.value.incomesCertified !== '') { return formP.value.incomesCertifiedUrl; }
+    } else if (type === 'commercialRegister') {
+      if (this.newRequest.get(group).get(type).get(i.toString())) {
+        if (this.newRequest.get(group).get(type).get(i.toString()) && this.newRequest.get(group).get(type).get(i.toString()).value[type] !== '') {
+          return this.newRequest.get(group).get(type).get(i.toString()).value[type + 'Url'];
+        }
+      }
+    } else if (type === 'legalRepresentativeId2') {
+      if (this.newRequest.get(group).get(type).get(i.toString())) {
+        if (this.newRequest.get(group).get(type).get(i.toString()) && this.newRequest.get(group).get(type).get(i.toString()).value[type] !== '') {
+          return this.newRequest.get(group).get(type).get(i.toString()).value[type + 'Url'];
+        }
+      }
+    } else {
+      if (this.arrayFilesTitles) {
+        if (this.arrayFilesTitles[i] && this.newRequest.get('files').get('studies').get(i.toString()).value.study !== '') {
+          return this.arrayFilesTitles[i].studyUrl;
+        }
+      }
     }
   }
 
@@ -3544,6 +3585,16 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
       case 'mercantileRegister':
         return this.fb.group({
           register: ['', Validators.required],
+        });
+
+      case 'commercialRegister':
+        return this.fb.group({
+          commercialRegister: [''],
+        });
+
+      case 'legalRepresentativeId2':
+        return this.fb.group({
+          legalRepresentativeId2: [''],
         });
       default:
         break;
@@ -3774,9 +3825,9 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
         this.newRequest.get('person').get('office').get('direction').updateValueAndValidity();
         this.newRequest.get('person').get('office').get('direction').markAsUntouched();
 
-        this.newRequest.get('person').get('office').get('economicActivity').setValidators(Validators.required);
-        this.newRequest.get('person').get('office').get('economicActivity').updateValueAndValidity();
-        this.newRequest.get('person').get('office').get('economicActivity').markAsUntouched();
+        // this.newRequest.get('person').get('office').get('economicActivity').setValidators(Validators.required);
+        // this.newRequest.get('person').get('office').get('economicActivity').updateValueAndValidity();
+        // this.newRequest.get('person').get('office').get('economicActivity').markAsUntouched();
 
         this.newRequest.get('person').get('office').get('sector').setValidators(Validators.required);
         this.newRequest.get('person').get('office').get('sector').updateValueAndValidity();
@@ -3852,6 +3903,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
           formContractor.removeControl('pepRadioInsured');
           formContractor.removeControl('countryOfResidence');
           formContractor.removeControl('countryOfBirth');
+          formContractor.removeControl('economicActivity');
         }
       }
 
@@ -3870,6 +3922,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
           formPayer.removeControl('countryOfResidence');
           formPayer.removeControl('countryOfBirth');
           formPayer.removeControl('isContractor');
+          formPayer.removeControl('economicActivity');
         }
       }
 
@@ -3927,7 +3980,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
         formEP.removeControl('headLineExposedInfo');
 
         if (!formEP.get('payer')) {
-          if (formEP.get('contractor')){
+          if (formEP.get('contractor')) {
             if (formEP.get('contractor').value !== 'SI') {
               formEP.removeControl('incomesCertified');
             }
@@ -4078,7 +4131,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
           formPO.get('company').setValidators(null);
           formPO.get('position').setValidators(null);
           formPO.get('direction').setValidators(null);
-          formPO.get('economicActivity').setValidators(null);
+          // formPO.get('economicActivity').setValidators(null);
           formPO.get('sector').setValidators(null);
           formPO.get('city').setValidators(null);
           formPO.get('country').setValidators(null);

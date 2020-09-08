@@ -3,7 +3,7 @@ import { FormGroup, FormBuilder, Validators, FormArray, FormControl } from '@ang
 import { FormArrayGeneratorService } from 'src/app/core/services/forms/form-array-generator.service';
 import { FieldConfig } from 'src/app/shared/components/form-components/models/field-config';
 import { DisabilityService } from '../disability/services/disability.service';
-import { $country, $weightTypes, $heightTypes, $time, $family } from 'src/app/core/form/objects';
+import { $country, $weightTypes, $heightTypes, $time, $family, $sex } from 'src/app/core/form/objects';
 import { FormHandlerService } from 'src/app/core/services/forms/form-handler.service';
 import { DiseaseService } from '../../../shared/components/disease/shared/disease/disease.service';
 import { UserService } from '../../../../../core/services/user/user.service';
@@ -186,6 +186,11 @@ export class DisabilityComponent implements OnInit, DoCheck {
 
   countryList: FieldConfig = {
     label: 'País de Nacimiento',
+    options: $country
+  };
+
+  country: FieldConfig = {
+    label: 'País',
     options: $country
   };
 
@@ -487,61 +492,82 @@ export class DisabilityComponent implements OnInit, DoCheck {
     reason: ['', Validators.required],
   };
 
+  sex = $sex;
+
+  parentescoAsegurado = {
+    label: 'Parentesco con el asegurado',
+    name: 'relationship',
+    options: $family.options
+  };
+
   policyHolderGroup = {
     name: ['', Validators.required],
+    secondName: [''],
+    lastName: ['', Validators.required],
+    birthdate: ['', Validators.required],
+    sex: ['', Validators.required],
     id_passport: ['', Validators.required],
     id2Type: ['', Validators.required],
-    idTypeRepre: ['', Validators.required],
+    // idTypeRepre: ['', Validators.required],
     marital_status: ['', Validators.required],
     nationality: ['', Validators.required],
-    telephone: ['', Validators.required],
+    telephone: [''],
+    officeTel: [''],
+    fax: [''],
     cell: ['', Validators.required],
     email: ['', [Validators.required, Validators.email]],
-    annual_income: ['', [Validators.required, Validators.min(1)]],
-    currency: ['', Validators.required],
+    // annual_income: ['', [Validators.required, Validators.min(1)]],
+    // currency: ['', Validators.required],
     address: ['', Validators.required],
-    country: ['', Validators.required],
     city: ['', Validators.required],
-    postal_address: [''],
+    country: ['', Validators.required],
     country_residence: ['', Validators.required],
     relationship: ['', Validators.required],
     pep_radio_payer: ['', Validators.required],
-    representative: ['', Validators.required],
-    passport_id: ['', Validators.required],
+    // representative: ['', Validators.required],
+    // passport_id: ['', Validators.required],
     id2Attached: ['', Validators.required],
+    businessName: ['', Validators.required],
+    businessOcupation: ['', Validators.required],
+    businessAddress: ['', Validators.required],
+    businessCountry: ['', Validators.required],
+    businessInsurancePurpose: ['', Validators.required],
+    policyHolderTaxCountry: ['', Validators.required],
   };
 
   policyPayerGroup = {
     name: ['', Validators.required],
+    secondName: [''],
+    lastName: ['', Validators.required],
+    birthdate: ['', Validators.required],
+    sex: ['', Validators.required],
     id_passport: ['', Validators.required],
     id2Type: ['', Validators.required],
-    idTypeRepre: ['', Validators.required],
+    // idTypeRepre: ['', Validators.required],
     marital_status: ['', Validators.required],
     nationality: ['', Validators.required],
-    telephone: ['', Validators.required],
+    telephone: [''],
+    officeTel: [''],
+    fax: [''],
     cell: ['', Validators.required],
     email: ['', [Validators.required, Validators.email]],
-    annual_income: ['', [Validators.required, Validators.min(1)]],
-    currency: ['', Validators.required],
+    // annual_income: ['', [Validators.required, Validators.min(1)]],
+    // currency: ['', Validators.required],
     address: ['', Validators.required],
-    country: ['', Validators.required],
     city: ['', Validators.required],
-    postal_address: [''],
+    country: ['', Validators.required],
     country_residence: ['', Validators.required],
     relationship: ['', Validators.required],
     pep_radio_payer: ['', Validators.required],
-    representative: ['', Validators.required],
-    passport_id: ['', Validators.required],
+    // representative: ['', Validators.required],
+    // passport_id: ['', Validators.required],
     id2Attached: ['', Validators.required],
-  };
-
-
-  juridicalGroup = {
     businessName: ['', Validators.required],
-    rnc: ['', Validators.required],
-    family: ['', Validators.required],
-    purpose: ['', Validators.required],
-    taxCountry: ['', Validators.required],
+    businessOcupation: ['', Validators.required],
+    businessAddress: ['', Validators.required],
+    businessCountry: ['', Validators.required],
+    businessInsurancePurpose: ['', Validators.required],
+    policyHolderTaxCountry: ['', Validators.required],
   };
 
   inpatientCareGroup = {
@@ -1267,7 +1293,7 @@ export class DisabilityComponent implements OnInit, DoCheck {
     }
   }
 
-  onStudiesChange(event, i, name) {
+  onStudiesChange(event, i, name, group?: string) {
     const reader = new FileReader();
 
     console.log(event);
@@ -1313,8 +1339,7 @@ export class DisabilityComponent implements OnInit, DoCheck {
           //this.markForCheck();
         };
       }
-    }
-    else if (name == 'mercantile') {
+    } else if (name == 'mercantile') {
       if (event.target.files && event.target.files.length) {
         const [file] = event.target.files;
         reader.readAsDataURL(file);
@@ -1325,6 +1350,28 @@ export class DisabilityComponent implements OnInit, DoCheck {
           });
 
           //this.markForCheck();
+        };
+      }
+    } else if (name == 'commercialRegister') {
+      console.log(name, group);
+      if (event.target.files && event.target.files.length) {
+        const [file] = event.target.files;
+        reader.readAsDataURL(file);
+        reader.onload = () => {
+          this.disabilityGroup.get(group).get(name).get(i.toString()).patchValue({
+            [name]: reader.result
+          });
+        };
+      }
+    } else if (name == 'legalRepresentativeId2') {
+      console.log(name, group);
+      if (event.target.files && event.target.files.length) {
+        const [file] = event.target.files;
+        reader.readAsDataURL(file);
+        reader.onload = () => {
+          this.disabilityGroup.get(group).get(name).get(i.toString()).patchValue({
+            [name]: reader.result
+          });
         };
       }
     } else if (name === 'policyholder') {
@@ -1380,6 +1427,18 @@ export class DisabilityComponent implements OnInit, DoCheck {
         };
       }
     }
+  }
+
+  juridicalGroup() {
+    return this.fb.group({
+      businessName: ['', Validators.required],
+      rnc: ['', Validators.required],
+      family: ['', Validators.required],
+      purpose: ['', Validators.required],
+      taxCountry: ['', Validators.required],
+      commercialRegister: this.fb.array([this.createFormArray('commercialRegister')]),
+      legalRepresentativeId2: this.fb.array([this.createFormArray('legalRepresentativeId2')]),
+    });
   }
 
   selectChange(event, position?) {
@@ -1708,7 +1767,7 @@ export class DisabilityComponent implements OnInit, DoCheck {
             formGeneral.addControl('knowYourClient', this.fb.group({}));
           }
           if (!(this.disabilityGroup.get('policyholderJuridical'))) {
-            formGeneral.addControl('policyholderJuridical', this.fb.group(this.juridicalGroup));
+            formGeneral.addControl('policyholderJuridical', this.juridicalGroup());
           }
           if (this.disabilityGroup.get('files').get('copyId')) {
             formFiles.removeControl('copyId');
@@ -1762,7 +1821,7 @@ export class DisabilityComponent implements OnInit, DoCheck {
           }
 
           if (!(this.disabilityGroup.get('payerJuridical'))) {
-            formGeneral.addControl('payerJuridical', this.fb.group(this.juridicalGroup));
+            formGeneral.addControl('payerJuridical', this.juridicalGroup());
           }
           // if (this.disabilityGroup.get('files').get('copyId')) {
           //   formFiles.removeControl('copyId');
@@ -2165,9 +2224,9 @@ export class DisabilityComponent implements OnInit, DoCheck {
   }
 
   createFormArray(name: string) {
-    const formP = this.disabilityGroup.get('main') as FormGroup;
-    const formC = this.disabilityGroup.get('contingent') as FormGroup;
-    const formQ = this.disabilityGroup.get('questions').get('questionnaire') as FormGroup;
+    // const formP = this.disabilityGroup.get('main') as FormGroup;
+    // const formC = this.disabilityGroup.get('contingent') as FormGroup;
+    // const formQ = this.disabilityGroup.get('questions').get('questionnaire') as FormGroup;
     // const formS = this.disabilityGroup.get('questions').get('questionnaire') as FormGroup;
 
     // formP.addControl('main_array', this.mainProperty);
@@ -2272,10 +2331,21 @@ export class DisabilityComponent implements OnInit, DoCheck {
         return this.fb.group({
           register: ['', Validators.required],
         });
+
+      case 'commercialRegister':
+        return this.fb.group({
+          commercialRegister: [''],
+        });
+
+      case 'legalRepresentativeId2':
+        return this.fb.group({
+          legalRepresentativeId2: [''],
+        });
     }
   }
 
   addToList(list: any, type: string) {
+    console.warn('list', list);
     list.push(this.createFormArray(type));
   }
 
@@ -2352,31 +2422,37 @@ export class DisabilityComponent implements OnInit, DoCheck {
     }
   }
 
-  arrayStudiesWatcher(i: number, type?: string) {
-    if (this.arrayFilesTitles) {
-      if (this.arrayFilesTitles[i] && this.disabilityGroup.get('files').get('studies').get(i.toString()).value.study !== '') {
-        return this.arrayFilesTitles[i].studyUrl;
-      }
-    }
-
+  arrayStudiesWatcher(i: number, type?: string, group?: string) {
     if (type === 'insured_data') {
       const formP = this.disabilityGroup.get('insured_data') as FormGroup;
       if (formP.value.id2AttachedUrl && formP.value.id2Attached !== '') { return formP.value.id2AttachedUrl; }
-    }
-
-    if (type === 'policyholder') {
+    } else if (type === 'policyholder') {
       const formP = this.disabilityGroup.get('policyholder') as FormGroup;
       if (formP.value.id2AttachedUrl && formP.value.id2Attached !== '') { return formP.value.id2AttachedUrl; }
-    }
-
-    if (type === 'payer') {
+    } else if (type === 'payer') {
       const formP = this.disabilityGroup.get('payer') as FormGroup;
       if (formP.value.id2AttachedUrl && formP.value.id2Attached !== '') { return formP.value.id2AttachedUrl; }
-    }
-
-    if (type === 'incomesCertified') {
+    } else if (type === 'incomesCertified') {
       const formP = this.disabilityGroup.get('files') as FormGroup;
       if (formP.value.incomesCertifiedUrl && formP.value.incomesCertified !== '') { return formP.value.incomesCertifiedUrl; }
+    } else if (type === 'commercialRegister') {
+      if (this.disabilityGroup.get(group).get(type).get(i.toString())) {
+        if (this.disabilityGroup.get(group).get(type).get(i.toString()) && this.disabilityGroup.get(group).get(type).get(i.toString()).value[type] !== '') {
+          return this.disabilityGroup.get(group).get(type).get(i.toString()).value[type + 'Url'];
+        }
+      }
+    } else if (type === 'legalRepresentativeId2') {
+      if (this.disabilityGroup.get(group).get(type).get(i.toString())) {
+        if (this.disabilityGroup.get(group).get(type).get(i.toString()) && this.disabilityGroup.get(group).get(type).get(i.toString()).value[type] !== '') {
+          return this.disabilityGroup.get(group).get(type).get(i.toString()).value[type + 'Url'];
+        }
+      }
+    } else {
+      if (this.arrayFilesTitles) {
+        if (this.arrayFilesTitles[i] && this.disabilityGroup.get('files').get('studies').get(i.toString()).value.study !== '') {
+          return this.arrayFilesTitles[i].studyUrl;
+        }
+      }
     }
   }
 

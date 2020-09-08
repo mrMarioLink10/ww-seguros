@@ -37,6 +37,13 @@ export class ArthritisComponent implements OnInit, DoCheck {
         }
         this.form.get('symptons').clearValidators();
         this.form.get('symptons').updateValueAndValidity();
+
+        this.form.get('name').clearValidators();
+        this.form.get('name').updateValueAndValidity();
+
+        this.form.get('age').clearValidators();
+        this.form.get('age').setValidators(Validators.min(1));
+        this.form.get('age').updateValueAndValidity();
         this.xValidators = 1;
       }
     // }
@@ -66,8 +73,8 @@ export class ArthritisComponent implements OnInit, DoCheck {
   }
 
   addBasicControls() {
-    this.form.addControl('name', this.fb.control('', Validators.required));
-    this.form.addControl('age', this.fb.control('', [Validators.required, Validators.min(1)]));
+    this.form.addControl('name', this.fb.control(''));
+    this.form.addControl('age', this.fb.control('', [Validators.min(1)]));
     this.form.addControl('doctorName', this.fb.control('', Validators.required));
     this.form.addControl('healthCenter', this.fb.control('', Validators.required));
     this.form.addControl('hcNumber', this.fb.control('', Validators.required));

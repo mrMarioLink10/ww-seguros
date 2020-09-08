@@ -378,6 +378,16 @@ export class CardiovascularComponent implements OnInit, DoCheck {
 						this.form.get('medicalTreatment').get(x.toString()).get('nombre').updateValueAndValidity();
 					}
 			}
+			// tslint:disable-next-line: align
+			this.form.get('nombre').clearValidators();
+   // tslint:disable-next-line: align
+        	this.form.get('nombre').updateValueAndValidity();
+
+        	// tslint:disable-next-line: align
+			this.form.get('edad').clearValidators();
+			this.form.get('edad').setValidators(Validators.min(1));
+        	// tslint:disable-next-line: align
+        	this.form.get('edad').updateValueAndValidity();
 			this.xValidatorsCardiovascular = 1;
 		}
 
@@ -385,8 +395,8 @@ export class CardiovascularComponent implements OnInit, DoCheck {
 	}
 
 	addBasicControls() {
-		this.form.addControl('nombre', this.fb.control('', Validators.required));
-		this.form.addControl('edad', this.fb.control('', [Validators.required, Validators.min(1)]));
+		this.form.addControl('nombre', this.fb.control(''));
+		this.form.addControl('edad', this.fb.control('', [Validators.min(1)]));
 		this.form.addControl('nombreMedico', this.fb.control('', Validators.required));
 		this.form.addControl('centroSalud', this.fb.control('', Validators.required));
 		this.form.addControl('telefonoCentro', this.fb.control('', Validators.required));

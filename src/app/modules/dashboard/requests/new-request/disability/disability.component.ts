@@ -2746,12 +2746,22 @@ export class DisabilityComponent implements OnInit, DoCheck {
         if (formInsured.get('policyholderKnowClientRadio')) {
           if (formInsured.get('policyholderKnowClientRadio').value !== 'NO') {
             formGeneral.removeControl('policyholder');
+          } else if (formInsured.get('policyholderKnowClientRadio').value === 'NO') {
+            formHolder.get('officeTel').setValidators(null);
+            formHolder.get('fax').setValidators(null);
+            formHolder.get('secondName').setValidators(null);
+            formHolder.get('telephone').setValidators(null);
           }
         }
 
         if (formInsured.get('payerKnowClientRadio')) {
           if (formInsured.get('payerKnowClientRadio').value !== 'NO') {
             formGeneral.removeControl('payer');
+          } else if (formInsured.get('payerKnowClientRadio').value === 'NO') {
+            formPayer.get('officeTel').setValidators(null);
+            formPayer.get('fax').setValidators(null);
+            formPayer.get('secondName').setValidators(null);
+            formPayer.get('telephone').setValidators(null);
           }
         }
 

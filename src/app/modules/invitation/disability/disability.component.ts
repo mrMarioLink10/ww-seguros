@@ -2,7 +2,7 @@ import { Component, OnInit, Output, EventEmitter, Input, DoCheck, ViewChild, Cha
 import { FormGroup, FormBuilder, Validators, FormArray, FormControl } from '@angular/forms';
 import { FormArrayGeneratorService } from 'src/app/core/services/forms/form-array-generator.service';
 import { FieldConfig } from 'src/app/shared/components/form-components/models/field-config';
-import { $country, $weightTypes, $heightTypes, $time, $family } from 'src/app/core/form/objects';
+import { $country, $weightTypes, $heightTypes, $time, $family, $sex } from 'src/app/core/form/objects';
 import { FormHandlerService } from 'src/app/core/services/forms/form-handler.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { DialogService } from 'src/app/core/services/dialog/dialog.service';
@@ -189,11 +189,15 @@ export class DisabilityComponent implements OnInit, DoCheck {
     options: $country
   };
 
+  country: FieldConfig = {
+    label: 'País',
+    options: $country
+  };
+
   countryTaxing: FieldConfig = {
     label: 'País donde tributa por sus ingresos',
     options: $country
   };
-
 
   heightList: FieldConfig = {
     label: 'Unidad',
@@ -488,54 +492,83 @@ export class DisabilityComponent implements OnInit, DoCheck {
     reason: ['', Validators.required],
   };
 
+  sex = $sex;
+
+  parentescoAsegurado = {
+    label: 'Parentesco con el asegurado',
+    name: 'relationship',
+    options: $family.options
+  };
+
   policyHolderGroup = {
     name: ['', Validators.required],
+    secondName: [''],
+    lastName: ['', Validators.required],
+    birthdate: ['', Validators.required],
+    sex: ['', Validators.required],
     id_passport: ['', Validators.required],
     id2Type: ['', Validators.required],
-    idTypeRepre: ['', Validators.required],
+    // idTypeRepre: ['', Validators.required],
     marital_status: ['', Validators.required],
     nationality: ['', Validators.required],
-    telephone: ['', Validators.required],
+    telephone: [''],
+    officeTel: [''],
+    fax: [''],
     cell: ['', Validators.required],
     email: ['', [Validators.required, Validators.email]],
-    annual_income: ['', [Validators.required, Validators.min(1)]],
-    currency: ['', Validators.required],
+    // annual_income: ['', [Validators.required, Validators.min(1)]],
+    // currency: ['', Validators.required],
     address: ['', Validators.required],
-    country: ['', Validators.required],
     city: ['', Validators.required],
-    postal_address: [''],
+    country: ['', Validators.required],
     country_residence: ['', Validators.required],
     relationship: ['', Validators.required],
-    pep_radio_holder: ['', Validators.required],
-    representative: ['', Validators.required],
-    passport_id: ['', Validators.required],
+    pep_radio_payer: ['', Validators.required],
+    // representative: ['', Validators.required],
+    // passport_id: ['', Validators.required],
     id2Attached: ['', Validators.required],
+    businessName: ['', Validators.required],
+    businessOcupation: ['', Validators.required],
+    businessAddress: ['', Validators.required],
+    businessCountry: ['', Validators.required],
+    businessInsurancePurpose: ['', Validators.required],
+    policyHolderTaxCountry: ['', Validators.required],
   };
 
   policyPayerGroup = {
     name: ['', Validators.required],
+    secondName: [''],
+    lastName: ['', Validators.required],
+    birthdate: ['', Validators.required],
+    sex: ['', Validators.required],
     id_passport: ['', Validators.required],
     id2Type: ['', Validators.required],
-    idTypeRepre: ['', Validators.required],
+    // idTypeRepre: ['', Validators.required],
     marital_status: ['', Validators.required],
     nationality: ['', Validators.required],
-    telephone: ['', Validators.required],
+    telephone: [''],
+    officeTel: [''],
+    fax: [''],
     cell: ['', Validators.required],
     email: ['', [Validators.required, Validators.email]],
-    annual_income: ['', [Validators.required, Validators.min(1)]],
-    currency: ['', Validators.required],
+    // annual_income: ['', [Validators.required, Validators.min(1)]],
+    // currency: ['', Validators.required],
     address: ['', Validators.required],
-    country: ['', Validators.required],
     city: ['', Validators.required],
-    postal_address: [''],
+    country: ['', Validators.required],
     country_residence: ['', Validators.required],
     relationship: ['', Validators.required],
     pep_radio_payer: ['', Validators.required],
-    representative: ['', Validators.required],
-    passport_id: ['', Validators.required],
+    // representative: ['', Validators.required],
+    // passport_id: ['', Validators.required],
     id2Attached: ['', Validators.required],
+    businessName: ['', Validators.required],
+    businessOcupation: ['', Validators.required],
+    businessAddress: ['', Validators.required],
+    businessCountry: ['', Validators.required],
+    businessInsurancePurpose: ['', Validators.required],
+    policyHolderTaxCountry: ['', Validators.required],
   };
-
 
   juridicalGroup = {
     businessName: ['', Validators.required],

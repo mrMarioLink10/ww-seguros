@@ -105,16 +105,6 @@ export class LifeComponent implements OnInit, DoCheck {
   todayDate = new Date();
   maxDate = new Date();
 
-  juridicalGroup = {
-    businessName: ['', Validators.required],
-    rnc: ['', Validators.required],
-    family: ['', Validators.required],
-    purpose: ['', Validators.required],
-    taxCountry: ['', Validators.required],
-    commercialRegister: this.fb.array([this.createFormArray('commercialRegister')]),
-    legalRepresentativeId2: this.fb.array([this.createFormArray('legalRepresentativeId2')]),
-  };
-
   countryTaxing: FieldConfig = {
     label: 'País donde tributa por sus ingresos',
     options: $country
@@ -2087,6 +2077,17 @@ export class LifeComponent implements OnInit, DoCheck {
     return true;
   }
 
+  juridicalGroup() {
+    return this.fb.group({
+      businessName: ['', Validators.required],
+      rnc: ['', Validators.required],
+      family: ['', Validators.required],
+      purpose: ['', Validators.required],
+      taxCountry: ['', Validators.required],
+      commercialRegister: this.fb.array([this.createFormArray('commercialRegister')]),
+      legalRepresentativeId2: this.fb.array([this.createFormArray('legalRepresentativeId2')]),
+    });
+  }
 
   selectChange(event) {
     const formCB = this.newRequest.get('contingentBeneficiary') as FormGroup;
@@ -2325,7 +2326,7 @@ export class LifeComponent implements OnInit, DoCheck {
           }
 
           if (!(formGeneral.get('payerJuridical'))) {
-            formGeneral.addControl('payerJuridical', this.fb.group(this.juridicalGroup));
+            formGeneral.addControl('payerJuridical', this.juridicalGroup());
           }
 
           formP.get('payerMandatory').reset();
@@ -2405,7 +2406,7 @@ export class LifeComponent implements OnInit, DoCheck {
           // }
 
           if (!(formGeneral.get('contractorJuridical'))) {
-            formGeneral.addControl('contractorJuridical', this.fb.group(this.juridicalGroup));
+            formGeneral.addControl('contractorJuridical', this.juridicalGroup());
           }
 
           formP.get('contractorMandatory').reset();

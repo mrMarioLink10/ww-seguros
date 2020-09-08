@@ -660,16 +660,6 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
     })*/
   };
 
-  juridicalGroup = {
-    businessName: ['', Validators.required],
-    rnc: ['', Validators.required],
-    family: ['', Validators.required],
-    purpose: ['', Validators.required],
-    taxCountry: ['', Validators.required],
-    commercialRegister: this.fb.array([this.createFormArray('commercialRegister')]),
-    legalRepresentativeId2: this.fb.array([this.createFormArray('legalRepresentativeId2')]),
-  };
-
   countryTaxing: FieldConfig = {
     label: 'País donde tributa por sus ingresos',
     options: $country
@@ -1856,6 +1846,18 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
     }
   }
 
+  juridicalGroup() {
+    return this.fb.group({
+      businessName: ['', Validators.required],
+      rnc: ['', Validators.required],
+      family: ['', Validators.required],
+      purpose: ['', Validators.required],
+      taxCountry: ['', Validators.required],
+      commercialRegister: this.fb.array([this.createFormArray('commercialRegister')]),
+      legalRepresentativeId2: this.fb.array([this.createFormArray('legalRepresentativeId2')]),
+    });
+  }
+
   selectChange(event) {
     const formGeneral = this.newRequest as FormGroup;
     const formContractor = this.newRequest.get('contractor') as FormGroup;
@@ -1968,7 +1970,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
 
           formEP.removeControl('contractor');
           formGeneral.removeControl('contractor');
-          formGeneral.addControl('contractorJuridical', this.fb.group(this.juridicalGroup));
+          formGeneral.addControl('contractorJuridical', this.juridicalGroup());
 
           formGeneral.addControl('conozcaSuClientePersonaJuridica', this.fb.group({}));
           formP.get('mandatorySubject').reset();
@@ -2041,7 +2043,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
           formP.get('mandatorySubjectPayer').reset();
 
           formGeneral.removeControl('payer');
-          formGeneral.addControl('payerJuridical', this.fb.group(this.juridicalGroup));
+          formGeneral.addControl('payerJuridical', this.juridicalGroup());
 
           formGeneral.addControl('conozcaSuClientePersonaJuridicaPayer', this.fb.group({}));
           break;

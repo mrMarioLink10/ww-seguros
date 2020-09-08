@@ -570,17 +570,6 @@ export class DisabilityComponent implements OnInit, DoCheck {
     policyHolderTaxCountry: ['', Validators.required],
   };
 
-
-  juridicalGroup = {
-    businessName: ['', Validators.required],
-    rnc: ['', Validators.required],
-    family: ['', Validators.required],
-    purpose: ['', Validators.required],
-    taxCountry: ['', Validators.required],
-    commercialRegister: this.fb.array([this.createFormArray('commercialRegister')]),
-    legalRepresentativeId2: this.fb.array([this.createFormArray('legalRepresentativeId2')]),
-  };
-
   inpatientCareGroup = {
     date: ['', Validators.required],
     reason: ['', Validators.required],
@@ -1440,6 +1429,18 @@ export class DisabilityComponent implements OnInit, DoCheck {
     }
   }
 
+  juridicalGroup() {
+    return this.fb.group({
+      businessName: ['', Validators.required],
+      rnc: ['', Validators.required],
+      family: ['', Validators.required],
+      purpose: ['', Validators.required],
+      taxCountry: ['', Validators.required],
+      commercialRegister: this.fb.array([this.createFormArray('commercialRegister')]),
+      legalRepresentativeId2: this.fb.array([this.createFormArray('legalRepresentativeId2')]),
+    });
+  }
+
   selectChange(event, position?) {
     const form = this.disabilityGroup.get('questions') as FormGroup;
     const formP = this.disabilityGroup.get('insured_data') as FormGroup;
@@ -1766,7 +1767,7 @@ export class DisabilityComponent implements OnInit, DoCheck {
             formGeneral.addControl('knowYourClient', this.fb.group({}));
           }
           if (!(this.disabilityGroup.get('policyholderJuridical'))) {
-            formGeneral.addControl('policyholderJuridical', this.fb.group(this.juridicalGroup));
+            formGeneral.addControl('policyholderJuridical', this.juridicalGroup());
           }
           if (this.disabilityGroup.get('files').get('copyId')) {
             formFiles.removeControl('copyId');
@@ -1820,7 +1821,7 @@ export class DisabilityComponent implements OnInit, DoCheck {
           }
 
           if (!(this.disabilityGroup.get('payerJuridical'))) {
-            formGeneral.addControl('payerJuridical', this.fb.group(this.juridicalGroup));
+            formGeneral.addControl('payerJuridical', this.juridicalGroup());
           }
           // if (this.disabilityGroup.get('files').get('copyId')) {
           //   formFiles.removeControl('copyId');

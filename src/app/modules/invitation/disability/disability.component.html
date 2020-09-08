@@ -745,6 +745,71 @@
                   label="Propósito del Seguro" name="purpose"></app-input>
                 <app-select [options]="countryTaxing" class="mr-3"
                   [group]="disabilityGroup.get('policyholderJuridical')" name="taxCountry"></app-select>
+                <!-- REGISTRO MERCANTIL -->
+                <div>
+                  <div
+                    *ngFor="let studies of disabilityGroup.get('policyholderJuridical').get('commercialRegister')['controls']; let i = index">
+                    <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
+                      <app-file-input class="mr-3"
+                        [ngClass]="{'col-span-3': disabilityGroup.get('policyholderJuridical').get('commercialRegister')['controls'].length > 1,
+                      'col-span-4': disabilityGroup.get('policyholderJuridical').get('commercialRegister')['controls'].length === 1}"
+                        [group]="disabilityGroup.get('policyholderJuridical').get('commercialRegister').get(i.toString())"
+                        name="commercialRegister" label="Registo mercantil / aviso de operación"
+                        [fileNameWatcher]="arrayStudiesWatcher(i, 'commercialRegister', 'policyholderJuridical')"
+                        (onFileChange)="onStudiesChange($event, i, 'commercialRegister', 'policyholderJuridical')">
+                      </app-file-input>
+                      <div
+                        [ngClass]="{'col-span-1': disabilityGroup.get('policyholderJuridical').get('commercialRegister')['controls'].length > 1}"
+                        *ngIf="disabilityGroup.get('policyholderJuridical').get('commercialRegister')['controls'].length > 1">
+                        <button mat-mini-fab aria-label=" Eliminar estudio"
+                          (click)="diseaseService.removeToList(i, disabilityGroup.get('policyholderJuridical').get('commercialRegister'))"
+                          type="button" class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
+                          <mat-icon style="color: #18446B">remove</mat-icon>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="mb-6">
+                    <button mat-mini-fab aria-label="Agregar estudio"
+                      (click)="addToList(disabilityGroup.get('policyholderJuridical').get('commercialRegister'), 'commercialRegister')"
+                      type="button" class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
+                      <mat-icon style="color: #18446B">add</mat-icon>
+                    </button>
+                  </div>
+                </div>
+                <!-- LA OTRA VAINA -->
+                <div>
+                  <div
+                    *ngFor="let studies of disabilityGroup.get('policyholderJuridical').get('legalRepresentativeId2')['controls']; let i = index">
+                    <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
+                      <app-file-input class="mr-3"
+                        [ngClass]="{'col-span-3': disabilityGroup.get('policyholderJuridical').get('legalRepresentativeId2')['controls'].length > 1,
+                      'col-span-4': disabilityGroup.get('policyholderJuridical').get('legalRepresentativeId2')['controls'].length === 1}"
+                        [group]="disabilityGroup.get('policyholderJuridical').get('legalRepresentativeId2').get(i.toString())"
+                        name="legalRepresentativeId2" label="Identificación de los representantes legales"
+                        [fileNameWatcher]="arrayStudiesWatcher(i, 'legalRepresentativeId2', 'policyholderJuridical')"
+                        (onFileChange)="onStudiesChange($event, i, 'legalRepresentativeId2', 'policyholderJuridical')">
+                      </app-file-input>
+                      <div
+                        [ngClass]="{'col-span-1': disabilityGroup.get('policyholderJuridical').get('legalRepresentativeId2')['controls'].length > 1}"
+                        *ngIf="disabilityGroup.get('policyholderJuridical').get('legalRepresentativeId2')['controls'].length > 1">
+                        <button mat-mini-fab aria-label=" Eliminar estudio"
+                          (click)="diseaseService.removeToList(i, disabilityGroup.get('policyholderJuridical').get('legalRepresentativeId2'))"
+                          type="button" class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
+                          <mat-icon style="color: #18446B">remove</mat-icon>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="mb-6">
+                    <button mat-mini-fab aria-label="Agregar estudio"
+                      (click)="addToList(disabilityGroup.get('policyholderJuridical').get('legalRepresentativeId2'), 'legalRepresentativeId2')"
+                      type="button" class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
+                      <mat-icon style="color: #18446B">add</mat-icon>
+                    </button>
+                  </div>
+                </div>
+
               </div>
               <mat-action-row class="action-row">
                 <button mat-button class="next-button" (click)="nextStep()" type="button">
@@ -924,8 +989,6 @@
                 </mat-panel-description>
               </mat-expansion-panel-header>
               <div class="ml-3 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-
-
                 <app-input class="mr-3" [group]="disabilityGroup.get('payerJuridical')" label="Razón Social"
                   name="businessName"></app-input>
                 <app-number-input class="mr-3" [group]="disabilityGroup.get('payerJuridical')" label="RNC / RUC"
@@ -936,6 +999,70 @@
                   name="purpose"></app-input>
                 <app-select [options]="countryTaxing" class="mr-3" [group]="disabilityGroup.get('payerJuridical')"
                   name="taxCountry"></app-select>
+                <!-- REGISTRO MERCANTIL -->
+                <div>
+                  <div
+                    *ngFor="let studies of disabilityGroup.get('payerJuridical').get('commercialRegister')['controls']; let i = index">
+                    <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
+                      <app-file-input class="mr-3"
+                        [ngClass]="{'col-span-3': disabilityGroup.get('payerJuridical').get('commercialRegister')['controls'].length > 1,
+                      'col-span-4': disabilityGroup.get('payerJuridical').get('commercialRegister')['controls'].length === 1}"
+                        [group]="disabilityGroup.get('payerJuridical').get('commercialRegister').get(i.toString())"
+                        name="commercialRegister" label="Registo mercantil / aviso de operación"
+                        [fileNameWatcher]="arrayStudiesWatcher(i, 'commercialRegister', 'payerJuridical')"
+                        (onFileChange)="onStudiesChange($event, i, 'commercialRegister', 'payerJuridical')">
+                      </app-file-input>
+                      <div
+                        [ngClass]="{'col-span-1': disabilityGroup.get('payerJuridical').get('commercialRegister')['controls'].length > 1}"
+                        *ngIf="disabilityGroup.get('payerJuridical').get('commercialRegister')['controls'].length > 1">
+                        <button mat-mini-fab aria-label=" Eliminar estudio"
+                          (click)="diseaseService.removeToList(i, disabilityGroup.get('payerJuridical').get('commercialRegister'))"
+                          type="button" class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
+                          <mat-icon style="color: #18446B">remove</mat-icon>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="mb-6">
+                    <button mat-mini-fab aria-label="Agregar estudio"
+                      (click)="addToList(disabilityGroup.get('payerJuridical').get('commercialRegister'), 'commercialRegister')"
+                      type="button" class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
+                      <mat-icon style="color: #18446B">add</mat-icon>
+                    </button>
+                  </div>
+                </div>
+                <!-- LA OTRA VAINA -->
+                <div>
+                  <div
+                    *ngFor="let studies of disabilityGroup.get('payerJuridical').get('legalRepresentativeId2')['controls']; let i = index">
+                    <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
+                      <app-file-input class="mr-3"
+                        [ngClass]="{'col-span-3': disabilityGroup.get('payerJuridical').get('legalRepresentativeId2')['controls'].length > 1,
+                      'col-span-4': disabilityGroup.get('payerJuridical').get('legalRepresentativeId2')['controls'].length === 1}"
+                        [group]="disabilityGroup.get('payerJuridical').get('legalRepresentativeId2').get(i.toString())"
+                        name="legalRepresentativeId2" label="Identificación de los representantes legales"
+                        [fileNameWatcher]="arrayStudiesWatcher(i, 'legalRepresentativeId2', 'payerJuridical')"
+                        (onFileChange)="onStudiesChange($event, i, 'legalRepresentativeId2', 'payerJuridical')">
+                      </app-file-input>
+                      <div
+                        [ngClass]="{'col-span-1': disabilityGroup.get('payerJuridical').get('legalRepresentativeId2')['controls'].length > 1}"
+                        *ngIf="disabilityGroup.get('payerJuridical').get('legalRepresentativeId2')['controls'].length > 1">
+                        <button mat-mini-fab aria-label=" Eliminar estudio"
+                          (click)="diseaseService.removeToList(i, disabilityGroup.get('payerJuridical').get('legalRepresentativeId2'))"
+                          type="button" class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
+                          <mat-icon style="color: #18446B">remove</mat-icon>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="mb-6">
+                    <button mat-mini-fab aria-label="Agregar estudio"
+                      (click)="addToList(disabilityGroup.get('payerJuridical').get('legalRepresentativeId2'), 'legalRepresentativeId2')"
+                      type="button" class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
+                      <mat-icon style="color: #18446B">add</mat-icon>
+                    </button>
+                  </div>
+                </div>
               </div>
               <mat-action-row class="action-row">
                 <button mat-button class="next-button" (click)="nextStep()" type="button">

@@ -543,6 +543,8 @@ export class DisabilityComponent implements OnInit, DoCheck {
     family: ['', Validators.required],
     purpose: ['', Validators.required],
     taxCountry: ['', Validators.required],
+    commercialRegister: this.fb.array([this.createFormArray('commercialRegister')]),
+    legalRepresentativeId2: this.fb.array([this.createFormArray('legalRepresentativeId2')]),
   };
 
   inpatientCareGroup = {
@@ -1270,7 +1272,7 @@ export class DisabilityComponent implements OnInit, DoCheck {
     }
   }
 
-  onStudiesChange(event, i, name) {
+  onStudiesChange(event, i, name, group?: string) {
     const reader = new FileReader();
 
     console.log(event);
@@ -1316,8 +1318,7 @@ export class DisabilityComponent implements OnInit, DoCheck {
           //this.markForCheck();
         };
       }
-    }
-    else if (name == 'mercantile') {
+    } else if (name == 'mercantile') {
       if (event.target.files && event.target.files.length) {
         const [file] = event.target.files;
         reader.readAsDataURL(file);
@@ -1328,6 +1329,28 @@ export class DisabilityComponent implements OnInit, DoCheck {
           });
 
           //this.markForCheck();
+        };
+      }
+    } else if (name == 'commercialRegister') {
+      console.log(name, group);
+      if (event.target.files && event.target.files.length) {
+        const [file] = event.target.files;
+        reader.readAsDataURL(file);
+        reader.onload = () => {
+          this.disabilityGroup.get(group).get(name).get(i.toString()).patchValue({
+            [name]: reader.result
+          });
+        };
+      }
+    } else if (name == 'legalRepresentativeId2') {
+      console.log(name, group);
+      if (event.target.files && event.target.files.length) {
+        const [file] = event.target.files;
+        reader.readAsDataURL(file);
+        reader.onload = () => {
+          this.disabilityGroup.get(group).get(name).get(i.toString()).patchValue({
+            [name]: reader.result
+          });
         };
       }
     } else if (name === 'policyholder') {
@@ -2161,9 +2184,9 @@ export class DisabilityComponent implements OnInit, DoCheck {
   }
 
   createFormArray(name: string) {
-    const formP = this.disabilityGroup.get('main') as FormGroup;
-    const formC = this.disabilityGroup.get('contingent') as FormGroup;
-    const formQ = this.disabilityGroup.get('questions').get('questionnaire') as FormGroup;
+    // const formP = this.disabilityGroup.get('main') as FormGroup;
+    // const formC = this.disabilityGroup.get('contingent') as FormGroup;
+    // const formQ = this.disabilityGroup.get('questions').get('questionnaire') as FormGroup;
     // const formS = this.disabilityGroup.get('questions').get('questionnaire') as FormGroup;
 
     // formP.addControl('main_array', this.mainProperty);
@@ -2268,6 +2291,16 @@ export class DisabilityComponent implements OnInit, DoCheck {
         return this.fb.group({
           register: ['', Validators.required],
         });
+
+      case 'commercialRegister':
+        return this.fb.group({
+          commercialRegister: [''],
+        });
+
+      case 'legalRepresentativeId2':
+        return this.fb.group({
+          legalRepresentativeId2: [''],
+        });
     }
   }
 
@@ -2348,31 +2381,37 @@ export class DisabilityComponent implements OnInit, DoCheck {
     }
   }
 
-  arrayStudiesWatcher(i: number, type?: string) {
-    if (this.arrayFilesTitles) {
-      if (this.arrayFilesTitles[i] && this.disabilityGroup.get('files').get('studies').get(i.toString()).value.study !== '') {
-        return this.arrayFilesTitles[i].studyUrl;
-      }
-    }
-
+  arrayStudiesWatcher(i: number, type?: string, group?: string) {
     if (type === 'insured_data') {
       const formP = this.disabilityGroup.get('insured_data') as FormGroup;
       if (formP.value.id2AttachedUrl && formP.value.id2Attached !== '') { return formP.value.id2AttachedUrl; }
-    }
-
-    if (type === 'policyholder') {
+    } else if (type === 'policyholder') {
       const formP = this.disabilityGroup.get('policyholder') as FormGroup;
       if (formP.value.id2AttachedUrl && formP.value.id2Attached !== '') { return formP.value.id2AttachedUrl; }
-    }
-
-    if (type === 'payer') {
+    } else if (type === 'payer') {
       const formP = this.disabilityGroup.get('payer') as FormGroup;
       if (formP.value.id2AttachedUrl && formP.value.id2Attached !== '') { return formP.value.id2AttachedUrl; }
-    }
-
-    if (type === 'incomesCertified') {
+    } else if (type === 'incomesCertified') {
       const formP = this.disabilityGroup.get('files') as FormGroup;
       if (formP.value.incomesCertifiedUrl && formP.value.incomesCertified !== '') { return formP.value.incomesCertifiedUrl; }
+    } else if (type === 'commercialRegister') {
+      if (this.disabilityGroup.get(group).get(type).get(i.toString())) {
+        if (this.disabilityGroup.get(group).get(type).get(i.toString()) && this.disabilityGroup.get(group).get(type).get(i.toString()).value[type] !== '') {
+          return this.disabilityGroup.get(group).get(type).get(i.toString()).value[type + 'Url'];
+        }
+      }
+    } else if (type === 'legalRepresentativeId2') {
+      if (this.disabilityGroup.get(group).get(type).get(i.toString())) {
+        if (this.disabilityGroup.get(group).get(type).get(i.toString()) && this.disabilityGroup.get(group).get(type).get(i.toString()).value[type] !== '') {
+          return this.disabilityGroup.get(group).get(type).get(i.toString()).value[type + 'Url'];
+        }
+      }
+    } else {
+      if (this.arrayFilesTitles) {
+        if (this.arrayFilesTitles[i] && this.disabilityGroup.get('files').get('studies').get(i.toString()).value.study !== '') {
+          return this.arrayFilesTitles[i].studyUrl;
+        }
+      }
     }
   }
 

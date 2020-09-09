@@ -1444,6 +1444,16 @@ export class LifeComponent implements OnInit, DoCheck {
       const formP = this.newRequest.get('exposedPerson') as FormGroup;
       if (formP.value.incomesCertifiedUrl && formP.value.incomesCertified !== '') { return formP.value.incomesCertifiedUrl; }
     }
+
+    if (type === 'healthDeclaration') {
+      const formP = this.newRequest.get('files') as FormGroup;
+      if (formP.value.healthDeclarationUrl && formP.value.healthDeclaration !== '') { return formP.value.healthDeclarationUrl; }
+    }
+
+    if (type === 'medicExam') {
+      const formP = this.newRequest.get('files') as FormGroup;
+      if (formP.value.medicExamUrl && formP.value.medicExam !== '') { return formP.value.medicExamUrl; }
+    }
   }
 
   id2AttachedViewValue(i: number, group: string) {
@@ -3567,6 +3577,7 @@ export class LifeComponent implements OnInit, DoCheck {
         if (formP.get('sameAsContractor').value !== 'NO') {
           formGeneral.removeControl('contractor');
           formGeneral.removeControl('contractorJuridical');
+          formGeneral.removeControl('contractorLegalEntity');
           formP.removeControl('contractorMandatory');
           formP.removeControl('contractorIsLegalEntity');
           formEP.removeControl('isContractorExposed');
@@ -3576,6 +3587,7 @@ export class LifeComponent implements OnInit, DoCheck {
         if (formP.get('sameAsPayer').value !== 'NO') {
           formGeneral.removeControl('payer');
           formGeneral.removeControl('payerJuridical');
+          formGeneral.removeControl('payerLegalEntity');
           formP.removeControl('payerIsLegalEntity');
           formP.removeControl('payerMandatory');
           formEP.removeControl('isPayerExposed');
@@ -3588,6 +3600,7 @@ export class LifeComponent implements OnInit, DoCheck {
             formEP.removeControl('contractor');
             formGeneral.removeControl('contractor');
           } else if (formP.get('contractorIsLegalEntity').value === 'NO') {
+            formGeneral.removeControl('contractorJuridical');
             formC.get('tel').setValidators(null);
             formC.get('officeTel').setValidators(null);
             formC.get('secondName').setValidators(null);
@@ -3603,6 +3616,7 @@ export class LifeComponent implements OnInit, DoCheck {
             formEP.removeControl('payer');
             formGeneral.removeControl('payer');
           } else if (formP.get('payerIsLegalEntity').value === 'NO') {
+            formGeneral.removeControl('payerJuridical');
             formPA.get('tel').setValidators(null);
             formPA.get('officeTel').setValidators(null);
             formPA.get('secondName').setValidators(null);

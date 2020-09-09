@@ -3439,6 +3439,8 @@ export class LifeComponent implements OnInit, DoCheck {
       const formGI = this.newRequest.get('generalInformation') as FormGroup;
       const formF = this.newRequest.get('files') as FormGroup;
       const formP = this.newRequest.get('person') as FormGroup;
+      const formC = this.newRequest.get('contractor') as FormGroup;
+      const formPA = this.newRequest.get('payer') as FormGroup;
       const formEP = this.newRequest.get('exposedPerson') as FormGroup;
       const formAR = this.newRequest.get('agentReport') as FormGroup;
       const formARCTI = this.newRequest.get('agentReport').get('connectionTypeInfo') as FormGroup;
@@ -3605,6 +3607,13 @@ export class LifeComponent implements OnInit, DoCheck {
           formEP.removeControl('isContractorExposed');
           formEP.removeControl('contractor');
           formGeneral.removeControl('contractor');
+        } else if (formP.get('contractorIsLegalEntity').value === 'NO') {
+          formC.get('tel').setValidators(null);
+          formC.get('officeTel').setValidators(null);
+          formC.get('secondName').setValidators(null);
+          formC.get('fax').setValidators(null);
+          const formCompany = formC.get('company') as FormGroup;
+          formCompany.removeControl('economicActivity');
         }
       }
 
@@ -3613,6 +3622,13 @@ export class LifeComponent implements OnInit, DoCheck {
           formEP.removeControl('isPayerExposed');
           formEP.removeControl('payer');
           formGeneral.removeControl('payer');
+        } else if (formP.get('payerIsLegalEntity').value === 'NO') {
+          formPA.get('tel').setValidators(null);
+          formPA.get('officeTel').setValidators(null);
+          formPA.get('secondName').setValidators(null);
+          formPA.get('fax').setValidators(null);
+          const formCompany = formPA.get('company') as FormGroup;
+          formCompany.removeControl('economicActivity');
         }
       }
 

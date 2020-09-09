@@ -3589,12 +3589,12 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
 
       case 'commercialRegister':
         return this.fb.group({
-          commercialRegister: [''],
+          commercialRegisters: [''],
         });
 
       case 'legalRepresentativeId2':
         return this.fb.group({
-          legalRepresentativeId2: [''],
+          legalRepresentativeId2s: [''],
         });
       default:
         break;

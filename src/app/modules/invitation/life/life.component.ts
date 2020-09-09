@@ -3268,12 +3268,12 @@ export class LifeComponent implements OnInit, DoCheck {
 
       case 'commercialRegister':
         return this.fb.group({
-          commercialRegister: [''],
+          commercialRegisters: [''],
         });
 
       case 'legalRepresentativeId2':
         return this.fb.group({
-          legalRepresentativeId2: [''],
+          legalRepresentativeId2s: [''],
         });
       // return this.fb.control('');
 
@@ -3429,7 +3429,7 @@ export class LifeComponent implements OnInit, DoCheck {
         const formF = this.newRequest.get('files') as FormGroup;
         const formP = this.newRequest.get('person') as FormGroup;
         const formC = this.newRequest.get('contractor') as FormGroup;
-      const formPA = this.newRequest.get('payer') as FormGroup;
+        const formPA = this.newRequest.get('payer') as FormGroup;
         const formEP = this.newRequest.get('exposedPerson') as FormGroup;
         const formAR = this.newRequest.get('agentReport') as FormGroup;
         const formARCTI = this.newRequest.get('agentReport').get('connectionTypeInfo') as FormGroup;
@@ -3596,7 +3596,7 @@ export class LifeComponent implements OnInit, DoCheck {
             formCompany.removeControl('economicActivity');
           }
         }
-  
+
         if (formP.get('payerIsLegalEntity')) {
           if (formP.get('payerIsLegalEntity').value !== 'NO') {
             formEP.removeControl('isPayerExposed');

@@ -3634,11 +3634,17 @@ export class LifeComponent implements OnInit, DoCheck {
 
       if (formEP.get('isExposed').value !== 'SI') {
         formEP.removeControl('insured');
-      }
 
-      if (formEP.get('isPayerExposed')) {
-        if (formEP.get('isPayerExposed').value !== 'SI') {
-          formEP.removeControl('payer');
+        if (!formEP.get('payer')) {
+          if (formEP.get('isContractorExposed')) {
+            if (formEP.get('isContractorExposed').value !== 'SI') {
+              formEP.removeControl('incomesCertified');
+            }
+          } else {
+            formEP.removeControl('incomesCertified');
+          }
+        } else if (formEP.get('isPayerExposed').value !== 'SI') {
+          formEP.removeControl('incomesCertified');
         }
       }
 
@@ -3646,7 +3652,23 @@ export class LifeComponent implements OnInit, DoCheck {
         if (formEP.get('isContractorExposed').value !== 'SI') {
           formEP.removeControl('contractor');
         }
+
+        if (!formEP.get('payer')) {
+          if (formEP.get('isExposed').value !== 'SI') {
+            formEP.removeControl('incomesCertified');
+          }
+        } else if (formEP.get('isPayerExposed').value !== 'SI') {
+          formEP.removeControl('incomesCertified');
+        }
       }
+
+      if (formEP.get('isPayerExposed')) {
+        if (formEP.get('isPayerExposed').value !== 'SI') {
+          formEP.removeControl('payer');
+          formEP.removeControl('incomesCertified');
+        }
+      }
+
 
       if (formP.get('heightUnit').value !== 'PIE') {
         formP.removeControl('inches');

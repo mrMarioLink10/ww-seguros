@@ -1150,9 +1150,9 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy, DoCheck {
 			this.authorization['controls'].informacionMedica['controls'].isMedicalEqual.setValue(data.data.informacionMedica.isMedicalEqual);
 			this.authorization['controls'].informacionMedica['controls'].autorizacion.setValue(data.data.informacionMedica.autorizacion);
 
-			// if (this.authorization.get('informacionMedica').get('isMedicalEqual').value == 'FALSE') {
-			// 	this.authorization.get('informacionMedica').get('isMedicalEqual').setValue('');
-			// }
+			if (this.authorization.get('informacionMedica').get('isMedicalEqual').value == 'false') {
+				this.authorization.get('informacionMedica').get('isMedicalEqual').setValue('');
+			}
 
 			// this.authorization['controls'].files['controls'].medicReport.setValue(data.data.files.medicReport);
 			this.documentsArray = this.authorization.get('files') as FormArray;

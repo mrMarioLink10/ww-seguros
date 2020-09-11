@@ -2596,8 +2596,12 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
           questionsBForm.removeControl('consultedForUnmentioned');
           break;
 
+        case 'haveAlterationForUnmentioned':
+          questionsBForm.removeControl('alterationForUnmentioned');
+          break;
+
         case 'haveHadExamStudiesTests':
-          questionsBForm.removeControl('medicalHealthInsurance');
+          questionsBForm.removeControl('specializedTests');
           break;
 
 

@@ -3750,10 +3750,12 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
     if (data !== undefined && data.data !== null &&
       data.data !== undefined) {
       this.ID = data.data.id;
-      console.log(data.data);
+      // console.log(data.data);
+      console.log(data.data.antiLaundering);
       this.dataMappingFromApi.iterateThroughtAllObject(data.data, this.newRequest);
+      console.log(this.newRequest.value.antiLaundering);
       this.AddEventOnEachDependentVariable();
-      console.log(this.newRequest);
+      // console.log(this.newRequest);
 
 
       const formP = this.newRequest.get('person') as FormGroup;
@@ -3932,7 +3934,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
 
       if (formP.get('mandatorySubject')) {
         if (formP.get('mandatorySubject').value !== 'SI') {
-          formGeneral.removeControl('antiLaundering');
+          // formGeneral.removeControl('antiLaundering');
         }
       }
 

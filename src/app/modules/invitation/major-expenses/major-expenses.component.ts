@@ -3765,7 +3765,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
 
         if (formP.get('mandatorySubject')) {
           if (formP.get('mandatorySubject').value !== 'SI') {
-            formGeneral.removeControl('antiLaundering');
+            // formGeneral.removeControl('antiLaundering');
           }
         }
 

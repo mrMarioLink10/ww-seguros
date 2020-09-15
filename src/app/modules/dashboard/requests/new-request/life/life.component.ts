@@ -1776,7 +1776,7 @@ export class LifeComponent implements OnInit, DoCheck {
   }
 
   addFilesA(form: FormGroup) {
-    form.addControl('healthDeclaration', this.fb.control(''));
+    // form.addControl('healthDeclaration', this.fb.control(''));
     // form.addControl('id2', this.fb.control('', Validators.required));
   }
 
@@ -3461,7 +3461,10 @@ export class LifeComponent implements OnInit, DoCheck {
       const formFiles = this.newRequest.get('files') as FormGroup;
       const formGeneral = this.newRequest as FormGroup;
 
-      formFiles.get('healthDeclaration').setValidators(null);
+      formFiles.removeControl('healthDeclaration');
+      formFiles.removeControl('healthDeclarationUrl');
+      formFiles.removeControl('medicExam');
+      formFiles.removeControl('medicExamUrl');
       formFiles.removeControl('id2');
       formFiles.removeControl('id2Url');
 

@@ -2460,6 +2460,24 @@
             <mat-expansion-panel class="ww-mat-expansion" [expanded]="step === 7" (opened)="setStep(7)">
               <mat-expansion-panel-header class="body-13 icon-blue">
                 <mat-panel-title>
+                  Comentarios adicionales
+                </mat-panel-title>
+                <mat-panel-description>
+                  <div></div>
+                  <div></div>
+                </mat-panel-description>
+              </mat-expansion-panel-header>
+              <app-text-area label='Descripcion' style='height: 142px!important;' [group]="disabilityGroup"
+                label="Comentario" name='comentary'></app-text-area>
+              <mat-action-row class="action-row">
+                <button mat-button class="next-button" (click)="nextStep()" type="button">
+                  Siguiente
+                </button>
+              </mat-action-row>
+            </mat-expansion-panel>
+            <mat-expansion-panel class="ww-mat-expansion" [expanded]="step === 8" (opened)="setStep(8)">
+              <mat-expansion-panel-header class="body-13 icon-blue">
+                <mat-panel-title>
                   Autorización y firmas
                 </mat-panel-title>
                 <mat-panel-description>

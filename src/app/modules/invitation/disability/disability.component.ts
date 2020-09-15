@@ -793,7 +793,7 @@ export class DisabilityComponent implements OnInit, DoCheck {
 
       num_financial_quote: [{ value: '', disabled: true }, Validators.required],
       isComplete: [false, Validators.required],
-
+      comentary: [''],
       // typeRequest:[''],
       insured_data: this.fb.group({
         name: ['', Validators.required],
@@ -2612,6 +2612,10 @@ export class DisabilityComponent implements OnInit, DoCheck {
           formCB.get('changeAnotherCoverage').reset();
           formCB.removeControl('changeAnotherCoverage');
           this.changingCoveragesList = undefined;
+        }
+
+        if (this.disabilityGroup.get('comentary')) {
+          this.disabilityGroup.get('comentary').setValidators(null);
         }
 
         if (formQ.get('alcohol_radio').value !== 'SI') {

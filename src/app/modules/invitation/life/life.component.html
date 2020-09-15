@@ -1698,103 +1698,6 @@
           </mat-expansion-panel>
           <mat-expansion-panel class="ww-mat-expansion" [expanded]="step === 13" (opened)="setStep(13)">
             <mat-expansion-panel-header class="body-13 icon-blue">
-              Firmas
-            </mat-expansion-panel-header>
-            <div>
-              <div class="px-6">
-                <app-text-area label='Descripcion' style='height: 142px!important;' [group]="newRequest"
-                  label="Cometarios adicionales" name='comentary'></app-text-area>
-                <div *ngIf="role !== 'WWS'" class="declaraciones px-4 sm:px-4 md:px-14 lg:px-12 xl:px-12">
-                  En la medida de mis conocimientos, las declaraciones y respuestas suministradas en esta declaración
-                  son
-                  verdaderas, completas y correctamente anotadas. ADVERTENCIA: cualquier persona que a sabiendas y con
-                  la
-                  intención de dañar, defraudar o engañar a cualquier asegurador, presente un reclamo por beneficios de
-                  una póliza de seguro que contenga información falsa, incompleta o engañosa, o que conscientemente
-                  presente información falsa en una solicitud de seguros, podría ser hallado culpable de fraude de
-                  seguros.
-                  <br>
-                  <br>
-                  Queda entendido y convenido que:
-                  <br>
-                  <br>
-                  a. Worldwide Medical Assurance Ltd. Corp., (en adelante “La
-                  Compañía”), se reserva el derecho de rechazar o aceptar cualquier solicitud. La cobertura provista por
-                  La Compañía no entrará en vigor hasta que la solicitud sea recibida, aprobada y notificada por La
-                  Compañía.
-                  <br>
-                  b. Usted está de acuerdo que todas las respuestas mencionadas son completas y verdaderas. Si
-                  hubiera alguna(s) respuesta(s) falsa(s), inexacta(s), incompleta(s), fraude u omisión en esta
-                  solicitud,
-                  entonces el contrato podrá ser dado por terminado por La Compañía.
-                  <br>
-                  c. Con presentar una fotocopia o el
-                  original de este documento, autorizo voluntaria, libre y expresamente, durante toda la vigencia de la
-                  póliza, aún después de mi fallecimiento; a cualquier médico, profesional, hospital público o privado,
-                  clínica, Caja de Seguro Social u otra entidad o agencia gubernamental u otra persona médica o
-                  relacionada médicamente, proveedor de servicio de salud, empleador, asegurador o tenedor de pólizas de
-                  grupo, todos estos ya sea que estén ubicados en el territorio de la República de Panamá o en el
-                  extranjero; para proveer a La Compañía o representantes autorizados, de copia del expediente clínico,
-                  de
-                  toda información que ésta requiera en relación con mi salud de cualquier naturaleza y en cualquier
-                  etapa
-                  de mi vida, registrada en cualquier medio, incluyendo, pero sin limitarse, registros respecto a
-                  consejos, indicaciones, cuidado (s) o tratamiento (s) proporcionado (s) a mi y/o a mis dependientes,
-                  sin
-                  limitación a información relacionada con enfermedades mentales o el uso de drogas o alcohol. Esta es
-                  una
-                  manifestación libre y voluntaria, en pleno conocimiento de la Ley 68 de 20 de noviembre de 2003, y
-                  demás
-                  normas afines. Por lo anteriormente manifestado, relevo (relevamos) y libero (liberamos) a todas esas
-                  personas, instituciones privadas y/o públicas, nacionales o extranjeras, de toda responsabilidad que
-                  le
-                  pueda comprometer por revelar, suministrar, mostrar o entregar copias simples o autenticadas de la
-                  información o documentación descrita anteriormente. Con la información o documentación facilitada, La
-                  Compañía puede realizar una evaluación adecuada sobre mi salud y la de mis dependientes, para
-                  determinar
-                  la cobertura de la póliza.
-                  <br>
-
-                  d. Autorizo a Worldwide Medical Assurance Ltd. Corp., La Compañía, a
-                  solicitar, gestionar y obtener ante cualquiera entidad de intermediación financiera y crediticia
-                  nacional o internacional, toda la información que sea considerada sobre mi historial de crédito,
-                  incluyendo de manera enunciativa y sin limitación alguna, a las obligaciones y transacciones
-                  comerciales
-                  que sean llevadas o pudiesen ser llevadas a cabo con cualquier entidad económica.
-                </div>
-                <div *ngIf="role === 'WWS'" class="declaraciones px-4 sm:px-4 md:px-14 lg:px-12 xl:px-12">
-                  En la medida de mis conocimientos, las declaraciones y respuestas suministradas en esta declaración
-                  son verdaderas, completas y correctamente
-                  anotadas. ADVERTENCIA: cualquier persona que a sabiendas y con la intención de dañar, defraudar o
-                  engañar a cualquier asegurador, presente un
-                  reclamo por beneficios de una póliza de seguro que contenga información falsa, incompleta o engañosa,
-                  o que conscientemente presente
-                  información falsa en una solicitud de seguros, podría ser hallado culpable de fraude de seguros.
-                  <br>
-                  Autorizo a WorldWide Seguros S.A. (WORLDWIDE), a solicitar, gestionar y obtener ante cualesquiera
-                  entidades de intermediación financiera y
-                  crediticias nacional o internacional, toda la información que sea considerada conveniente sobre mi
-                  historial de crédito, incluyendo de manera
-                  enunciativa sin limitación alguna, a las obligaciones y transacciones comerciales que sean llevadas o
-                  pudieren ser llevadas a cabo con cualquier
-                  entidad económica. De igual forma, con presentar copia fotostática o el original de esta solicitud,
-                  autorizo expresamente a cualquier médico,
-                  profesional, hospital, clínica u otra entidad, agencia gubernamental o persona física o jurídica
-                  relacionada para proveer a WORLDWIDE todo informe,
-                  declaración, análisis, diagnóstico, registro profesional que requiera respecto al asegurado. Renuncio
-                  y me obligo a mantener indemne a cualesquiera
-                  de los mencionados más arriba por la provisión de la información médica requerida.
-                </div>
-              </div>
-            </div>
-            <mat-action-row class="action-row">
-              <button mat-button class="next-button" (click)="nextStep()" type="button">
-                Siguiente
-              </button>
-            </mat-action-row>
-          </mat-expansion-panel>
-          <mat-expansion-panel class="ww-mat-expansion" [expanded]="step === 14" (opened)="setStep(14)">
-            <mat-expansion-panel-header class="body-13 icon-blue">
               <mat-panel-title>
                 Reporte del agente
               </mat-panel-title>
@@ -1972,7 +1875,7 @@
               </button>
             </mat-action-row>
           </mat-expansion-panel>
-          <mat-expansion-panel class="ww-mat-expansion" [expanded]="step === 15" (opened)="setStep(15)">
+          <mat-expansion-panel class="ww-mat-expansion" [expanded]="step === 14" (opened)="setStep(14)">
             <mat-expansion-panel-header class="body-13 icon-blue">
               <mat-panel-title>
                 Archivos adjuntos - Formato de los documentos: PDF (.pdf), JPG (.jpg) y PNG (.png)
@@ -2119,6 +2022,117 @@
                   type="button" class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
                   <mat-icon style="color: #18446B">add</mat-icon>
                 </button>
+              </div>
+            </div>
+            <mat-action-row class="action-row">
+              <button mat-button class="next-button" (click)="nextStep()" type="button">
+                Siguiente
+              </button>
+            </mat-action-row>
+          </mat-expansion-panel>
+          <mat-expansion-panel class="ww-mat-expansion" [expanded]="step === 15" (opened)="setStep(15)">
+            <mat-expansion-panel-header class="body-13 icon-blue">
+              Comentarios adicionales
+            </mat-expansion-panel-header>
+            <div>
+              <div class="px-6">
+                <app-text-area label='Descripcion' style='height: 142px!important;' [group]="newRequest"
+                  label="Cometarios adicionales" name='comentary'></app-text-area>
+              </div>
+            </div>
+            <mat-action-row class="action-row">
+              <button mat-button class="next-button" (click)="nextStep()" type="button">
+                Siguiente
+              </button>
+            </mat-action-row>
+          </mat-expansion-panel>
+          <mat-expansion-panel class="ww-mat-expansion" [expanded]="step === 16" (opened)="setStep(16)">
+            <mat-expansion-panel-header class="body-13 icon-blue">
+              Autorización y firmas
+            </mat-expansion-panel-header>
+            <div>
+              <div class="px-6">
+                <div *ngIf="role !== 'WWS'" class="declaraciones px-4 sm:px-4 md:px-14 lg:px-12 xl:px-12">
+                  En la medida de mis conocimientos, las declaraciones y respuestas suministradas en esta declaración
+                  son
+                  verdaderas, completas y correctamente anotadas. ADVERTENCIA: cualquier persona que a sabiendas y con
+                  la
+                  intención de dañar, defraudar o engañar a cualquier asegurador, presente un reclamo por beneficios de
+                  una póliza de seguro que contenga información falsa, incompleta o engañosa, o que conscientemente
+                  presente información falsa en una solicitud de seguros, podría ser hallado culpable de fraude de
+                  seguros.
+                  <br>
+                  <br>
+                  Queda entendido y convenido que:
+                  <br>
+                  <br>
+                  a. Worldwide Medical Assurance Ltd. Corp., (en adelante “La
+                  Compañía”), se reserva el derecho de rechazar o aceptar cualquier solicitud. La cobertura provista por
+                  La Compañía no entrará en vigor hasta que la solicitud sea recibida, aprobada y notificada por La
+                  Compañía.
+                  <br>
+                  b. Usted está de acuerdo que todas las respuestas mencionadas son completas y verdaderas. Si
+                  hubiera alguna(s) respuesta(s) falsa(s), inexacta(s), incompleta(s), fraude u omisión en esta
+                  solicitud,
+                  entonces el contrato podrá ser dado por terminado por La Compañía.
+                  <br>
+                  c. Con presentar una fotocopia o el
+                  original de este documento, autorizo voluntaria, libre y expresamente, durante toda la vigencia de la
+                  póliza, aún después de mi fallecimiento; a cualquier médico, profesional, hospital público o privado,
+                  clínica, Caja de Seguro Social u otra entidad o agencia gubernamental u otra persona médica o
+                  relacionada médicamente, proveedor de servicio de salud, empleador, asegurador o tenedor de pólizas de
+                  grupo, todos estos ya sea que estén ubicados en el territorio de la República de Panamá o en el
+                  extranjero; para proveer a La Compañía o representantes autorizados, de copia del expediente clínico,
+                  de
+                  toda información que ésta requiera en relación con mi salud de cualquier naturaleza y en cualquier
+                  etapa
+                  de mi vida, registrada en cualquier medio, incluyendo, pero sin limitarse, registros respecto a
+                  consejos, indicaciones, cuidado (s) o tratamiento (s) proporcionado (s) a mi y/o a mis dependientes,
+                  sin
+                  limitación a información relacionada con enfermedades mentales o el uso de drogas o alcohol. Esta es
+                  una
+                  manifestación libre y voluntaria, en pleno conocimiento de la Ley 68 de 20 de noviembre de 2003, y
+                  demás
+                  normas afines. Por lo anteriormente manifestado, relevo (relevamos) y libero (liberamos) a todas esas
+                  personas, instituciones privadas y/o públicas, nacionales o extranjeras, de toda responsabilidad que
+                  le
+                  pueda comprometer por revelar, suministrar, mostrar o entregar copias simples o autenticadas de la
+                  información o documentación descrita anteriormente. Con la información o documentación facilitada, La
+                  Compañía puede realizar una evaluación adecuada sobre mi salud y la de mis dependientes, para
+                  determinar
+                  la cobertura de la póliza.
+                  <br>
+
+                  d. Autorizo a Worldwide Medical Assurance Ltd. Corp., La Compañía, a
+                  solicitar, gestionar y obtener ante cualquiera entidad de intermediación financiera y crediticia
+                  nacional o internacional, toda la información que sea considerada sobre mi historial de crédito,
+                  incluyendo de manera enunciativa y sin limitación alguna, a las obligaciones y transacciones
+                  comerciales
+                  que sean llevadas o pudiesen ser llevadas a cabo con cualquier entidad económica.
+                </div>
+                <div *ngIf="role === 'WWS'" class="declaraciones px-4 sm:px-4 md:px-14 lg:px-12 xl:px-12">
+                  En la medida de mis conocimientos, las declaraciones y respuestas suministradas en esta declaración
+                  son verdaderas, completas y correctamente
+                  anotadas. ADVERTENCIA: cualquier persona que a sabiendas y con la intención de dañar, defraudar o
+                  engañar a cualquier asegurador, presente un
+                  reclamo por beneficios de una póliza de seguro que contenga información falsa, incompleta o engañosa,
+                  o que conscientemente presente
+                  información falsa en una solicitud de seguros, podría ser hallado culpable de fraude de seguros.
+                  <br>
+                  Autorizo a WorldWide Seguros S.A. (WORLDWIDE), a solicitar, gestionar y obtener ante cualesquiera
+                  entidades de intermediación financiera y
+                  crediticias nacional o internacional, toda la información que sea considerada conveniente sobre mi
+                  historial de crédito, incluyendo de manera
+                  enunciativa sin limitación alguna, a las obligaciones y transacciones comerciales que sean llevadas o
+                  pudieren ser llevadas a cabo con cualquier
+                  entidad económica. De igual forma, con presentar copia fotostática o el original de esta solicitud,
+                  autorizo expresamente a cualquier médico,
+                  profesional, hospital, clínica u otra entidad, agencia gubernamental o persona física o jurídica
+                  relacionada para proveer a WORLDWIDE todo informe,
+                  declaración, análisis, diagnóstico, registro profesional que requiera respecto al asegurado. Renuncio
+                  y me obligo a mantener indemne a cualesquiera
+                  de los mencionados más arriba por la provisión de la información médica requerida.
+                </div>
               </div>
             </div>
             <mat-action-row class="action-row">

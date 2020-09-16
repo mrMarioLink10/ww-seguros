@@ -209,9 +209,9 @@ export class RacingComponent implements OnInit {
 
   }
 
-  selectChangeP(event) {
+  selectChangeP(event, name) {
 
-    const nameCB = event.source._elementRef.nativeElement.attributes[2].nodeValue;
+    const nameCB = name;
 
     const formP = this.form.get('past_months') as FormGroup;
 

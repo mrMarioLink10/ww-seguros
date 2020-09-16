@@ -409,9 +409,9 @@ export class RacingComponent implements OnInit {
   nextStep(panel?: string) {
     this.step++;
   }
-  selectChangeF(event) {
+  selectChangeF(event, name) {
 
-    const nameCB = event.source._elementRef.nativeElement.attributes[2].nodeValue;
+    const nameCB = name;
 
     const formP = this.form.get('future_months') as FormGroup;
 

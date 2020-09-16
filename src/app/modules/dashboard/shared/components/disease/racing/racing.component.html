@@ -137,7 +137,7 @@
           <div>
             <form [formGroup]="form.get('future_months')">
               <div class="mr-3 grid grid-cols-1">
-                <mat-checkbox style="margin-top: 18px;" class="radio-button-label" (change)="selectChangeF($event)"
+                <mat-checkbox style="margin-top: 18px;" class="radio-button-label" (change)="selectChangeF($event, option.name)"
                   [formControlName]="option.name"> <span style="white-space: normal;"> {{option.label}} </span>
                 </mat-checkbox>
               </div>

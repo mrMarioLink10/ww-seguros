@@ -1,7 +1,10 @@
 import { Injectable } from '@angular/core';
-import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router, CanLoad, Route, UrlSegment, Data } from '@angular/router';
+import { MatDialog } from '@angular/material';
+import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router, CanLoad, Route, UrlSegment, Data, ActivatedRoute } from '@angular/router';
 import { KeycloakAuthGuard, KeycloakService } from 'keycloak-angular';
 import { Observable } from 'rxjs';
+import { BaseDialogComponent } from 'src/app/shared/components/base-dialog/base-dialog.component';
+import { DialogOptionService } from '../services/dialog/dialog-option.service';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +12,13 @@ import { Observable } from 'rxjs';
 @Injectable()
 export class AppAuthGuard extends KeycloakAuthGuard implements CanLoad {
 
-  constructor(protected router: Router, protected keycloakAngular: KeycloakService) {
+  constructor(
+    protected router: Router,
+    protected keycloakAngular: KeycloakService,
+    private dialog: MatDialog,
+    private dialogOption: DialogOptionService,
+    private route: ActivatedRoute,
+  ) {
     super(router, keycloakAngular);
   }
 
@@ -18,9 +27,9 @@ export class AppAuthGuard extends KeycloakAuthGuard implements CanLoad {
       try {
         this.authenticated = await this.keycloakAngular.isLoggedIn();
         this.roles = await this.keycloakAngular.getUserRoles(true);
-        console.log(this.keycloakAngular.getUserRoles(true));
-
-        const result = await this.checkAccessAllowed(route.data);
+        console.log('roles:', this.keycloakAngular.getUserRoles(true));
+        console.log('acceso permitido a: ', route.data.accessRoles)
+        const result = await this.checkAccessAllowed(route.data.accessRoles);
         resolve(result);
       } catch (error) {
         console.error(error);
@@ -30,7 +39,7 @@ export class AppAuthGuard extends KeycloakAuthGuard implements CanLoad {
   }
 
   isAccessAllowed(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<boolean> {
-    return this.checkAccessAllowed(route.data);
+    return this.checkAccessAllowed(route.data.accessRoles);
   }
 
   checkAccessAllowed(data: Data): Promise<boolean> {
@@ -52,6 +61,10 @@ export class AppAuthGuard extends KeycloakAuthGuard implements CanLoad {
             granted = true;
             break;
           }
+        }
+        if (granted === false) {
+          console.error('No tienes acceso.');
+          this.router.navigate(['not-found'], { relativeTo: this.route });
         }
         resolve(granted);
       }

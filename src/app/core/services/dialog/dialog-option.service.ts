@@ -69,6 +69,13 @@ export class DialogOptionService {
 		showButtons: false,
 	};
 
+	noAccess: BaseDialog = {
+		logo: 'warning',
+		title: 'Acceso invalido',
+		text: `Usted no tiene los permisos para acceder a esta sección del portal`,
+		showButtons: false,
+	};
+
 	sendInvitationLink: BaseDialog = {
 		logo: 'warning',
 		title: 'Introducir correo electrónico',

@@ -18,13 +18,16 @@ const routes: Routes = [
 				path: 'claims',
 				loadChildren: () => import('./claims/claims.module').then((m) => m.ClaimsModule),
 				canLoad: [AppAuthGuard],
-				canActivate: [WwmAccessGuard]
+				canActivate: [WwmAccessGuard],
+				data: { accessRoles: ['intermediario', 'intermediario_admin', 'usuario'] }
+
 			},
 			{
 				path: 'authorizations',
+				loadChildren: () => import('./authorizations/authorizations.module').then((m) => m.AuthorizationsModule),
 				canLoad: [AppAuthGuard],
 				canActivate: [WwmAccessGuard],
-				loadChildren: () => import('./authorizations/authorizations.module').then((m) => m.AuthorizationsModule)
+				data: { accessRoles: ['intermediario', 'intermediario_admin', 'usuario'] }
 			},
 			// {
 			//   path: 'dashboard-view',
@@ -39,20 +42,21 @@ const routes: Routes = [
 				path: 'quotes',
 				loadChildren: () => import('./quotes/quotes.module').then((m) => m.QuotesModule),
 				canLoad: [AppAuthGuard],
+				data: { accessRoles: ['intermediario', 'intermediario_admin', 'wws_intermediario_admin', 'wws_interno'] }
 			},
-			// {
-			//   path: 'request-management',
-			//   loadChildren: () => import('./request-management/request-management.module').then(m => m.RequestManagementModule),
-			// },
 			{
 				path: 'requests',
 				loadChildren: () => import('./requests/requests.module').then((m) => m.RequestsModule),
 				canLoad: [AppAuthGuard],
+				data: { accessRoles: ['intermediario', 'intermediario_admin', 'wws_intermediario_admin'] }
+
 			},
 			{
 				path: 'consult',
 				loadChildren: () => import('./consultation/consultation.module').then((m) => m.ConsultationModule),
 				canLoad: [AppAuthGuard],
+				data: { accessRoles: ['intermediario_admin', 'usuario'] }
+
 			}
 		]
 	}

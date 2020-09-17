@@ -35,24 +35,29 @@ export class UserService {
     }
   }
 
-  checkValidAccess()
-  {
+  getRoles() {
+    this.checkValidAccess();
+    const user = this.getUserInformation();
+
+    return user.resource_access.cotizador.roles;
+  }
+
+  checkValidAccess() {
     let isRD = "true";
     const user = this.getUserInformation();
     for (const key in user.resource_access.cotizador.roles) {
       if (user.resource_access.cotizador.roles.hasOwnProperty(key)) {
-        if (  user.resource_access.cotizador.roles[key] === 'WMA') {
+        if (user.resource_access.cotizador.roles[key] === 'WMA') {
           isRD = "false";
           break;
         }
       }
     }
-      let isNdaReady =  (user && user.nda !== undefined && user.nda !== null);
-      if (!isNdaReady)
-        {
-          console.log('FUNCIONAAAAA');
-          window.location.href=environment.urlNotAccess+isRD;
-        }
+    let isNdaReady = (user && user.nda !== undefined && user.nda !== null);
+    if (!isNdaReady) {
+      console.log('FUNCIONAAAAA');
+      window.location.href = environment.urlNotAccess + isRD;
+    }
   }
 
   getInsurancePeople(idNumber: string) {

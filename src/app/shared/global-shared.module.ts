@@ -6,9 +6,10 @@ import { MatDialogModule } from '@angular/material';
 import { FormComponentsModule } from './components/form-components/form-components.module';
 import { FormsModule } from '@angular/forms';
 import { NgxMaskModule } from 'ngx-mask';
+import { NotFoundComponent } from './components/not-found/not-found.component';
 
 @NgModule({
-	declarations: [BaseDialogComponent],
+	declarations: [BaseDialogComponent, NotFoundComponent],
 	imports: [CommonModule, MaterialModule, FormComponentsModule, MatDialogModule, FormsModule, NgxMaskModule],
 	exports: [FormComponentsModule, MaterialModule],
 	entryComponents: [BaseDialogComponent]

@@ -23,8 +23,10 @@ export class DashboardLayoutComponent implements OnInit, OnDestroy {
   userName: string;
   userEmail: string;
   role: string;
+  roles: any;
 
   watchRouter: Subscription;
+
   newNotification = [
     {
       title: 'Solicitud - 356453',
@@ -37,6 +39,7 @@ export class DashboardLayoutComponent implements OnInit, OnDestroy {
       date: 'Hace 3 horas'
     }
   ];
+
   oldNotification = [
     {
       title: 'Solicitud - 356453',
@@ -55,7 +58,8 @@ export class DashboardLayoutComponent implements OnInit, OnDestroy {
     public keycloakService: KeycloakService,
     private dialog: MatDialog,
     private dialogOption: DialogOptionService,
-    private location: Location
+    private location: Location,
+    protected keycloakAngular: KeycloakService,
   ) {
     this.role = this.userService.getRoleCotizador();
     this.mobileQuery = media.matchMedia('(max-width: 600px)');
@@ -76,6 +80,15 @@ export class DashboardLayoutComponent implements OnInit, OnDestroy {
     this.userName = this.userService.getUserInformation().name;
     this.userEmail = this.userService.getUserInformation().email;
     this.role = this.userService.getRoleCotizador();
+    this.roles = this.userService.getRoles();
+  }
+
+  showMatListen(permittedRoles: any[]) {
+    for (const permittedRole of permittedRoles) {
+      if (this.roles.indexOf(permittedRole) > -1) {
+        return true;
+      }
+    }
   }
 
   navigationInterceptor(event: RouterEvent): string {
@@ -83,36 +96,35 @@ export class DashboardLayoutComponent implements OnInit, OnDestroy {
       return event.url;
     }
   }
-  sendEmail()
-  {
+
+  sendEmail() {
     if (this.role === 'WWS') {
       window.location.href = `mailto:${environment.mailForHelp}`;
-    }
-    else
-    {
+    } else {
       window.location.href = `mailto:${environment.mailForHelpPM}`;
     }
   }
+
   navigateBack() {
     this.location.back();
   }
-  GetInstrucstivo(){
+
+  GetInstrucstivo() {
     if (this.role === 'WWS') {
-    window.open(environment.instructivo, '_blank');
-    }
-    else{
+      window.open(environment.instructivo, '_blank');
+    } else {
       window.open(environment.instructivoMedical, '_blank');
     }
   }
-  GetTerminos()
-  {
+
+  GetTerminos() {
     if (this.role === 'WWS') {
-    window.open(environment.terminosCondiciones, '_blank');
-    }
-    else{
+      window.open(environment.terminosCondiciones, '_blank');
+    } else {
       window.open(environment.terminosCondiciones, '_blank');
     }
   }
+
   ngOnDestroy() {
     // tslint:disable-next-line: deprecation
     this.mobileQuery.removeListener(this.mobileQueryListener);

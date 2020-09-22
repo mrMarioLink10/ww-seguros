@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { DashboardLayoutComponent } from './shared/layouts/dashboard-layout/dashboard-layout.component';
 import { AppAuthGuard } from 'src/app/core/guards/app-auth.guard';
 import { WwmAccessGuard } from '../../core/guards/wwm-access.guard';
+import { NotFoundComponent } from 'src/app/shared/components/not-found/not-found.component';
 
 const routes: Routes = [
 	{
@@ -20,7 +21,6 @@ const routes: Routes = [
 				canLoad: [AppAuthGuard],
 				canActivate: [WwmAccessGuard],
 				data: { accessRoles: ['intermediario', 'intermediario_admin', 'usuario'] }
-
 			},
 			{
 				path: 'authorizations',
@@ -28,15 +28,6 @@ const routes: Routes = [
 				canLoad: [AppAuthGuard],
 				canActivate: [WwmAccessGuard],
 				data: { accessRoles: ['intermediario', 'intermediario_admin', 'usuario'] }
-			},
-			// {
-			//   path: 'dashboard-view',
-			//   loadChildren: () => import('./dashboard-view/dashboard-view.module').then(m => m.DashboardViewModule),
-			// },
-			{
-				path: 'information',
-				loadChildren: () => import('./information/information.module').then((m) => m.InformationModule),
-				canLoad: [AppAuthGuard],
 			},
 			{
 				path: 'quotes',
@@ -56,10 +47,14 @@ const routes: Routes = [
 				loadChildren: () => import('./consultation/consultation.module').then((m) => m.ConsultationModule),
 				canLoad: [AppAuthGuard],
 				data: { accessRoles: ['intermediario_admin', 'usuario'] }
-
 			}
 		]
-	}
+	},
+	{
+		path: 'not-found',
+		component: NotFoundComponent,
+	},
+	// { path: '**', redirectTo: '/not-found' }
 ];
 
 @NgModule({

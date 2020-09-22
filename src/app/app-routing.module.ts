@@ -1,10 +1,8 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { DashboardLayoutComponent } from './modules/dashboard/shared/layouts/dashboard-layout/dashboard-layout.component';
-import { LoginComponent } from './modules/auth/login/login.component';
 import { AppAuthGuard } from './core/guards/app-auth.guard';
 import { CanExitGuard } from './core/guards/can-exit.guard';
-import { NotFoundComponent } from './shared/components/not-found/not-found.component';
+import { UserService } from './core/services/user/user.service';
 
 const routes: Routes = [
 	{
@@ -23,13 +21,7 @@ const routes: Routes = [
 		loadChildren: () => import('./modules/invitation/invitation.module').then((m) => m.InvitationModule),
 		// canActivate: [AppAuthGuard],
 		// data: { roles: ['WWS', 'WWA'] }
-	},
-	{
-		path: 'not-found',
-		component: NotFoundComponent,
-		pathMatch: 'full'
-	},
-	// { path: '**', redirectTo: 'not-found' }
+	}
 ];
 
 @NgModule({

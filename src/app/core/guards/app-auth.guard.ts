@@ -63,8 +63,17 @@ export class AppAuthGuard extends KeycloakAuthGuard implements CanLoad {
           }
         }
         if (granted === false) {
-          console.error('No tienes acceso.');
-          this.router.navigate(['not-found'], { relativeTo: this.route });
+          const quotesAccessRoles = ['intermediario', 'intermediario_admin', 'wws_intermediario_admin', 'wws_interno'];
+
+          let target = 'not-found';
+
+          for (const requiredRole of quotesAccessRoles) {
+            if (this.roles.indexOf(requiredRole) > -1) {
+              target = 'dashboard/quotes';
+              break;
+            }
+          }
+          this.router.navigate([target], { relativeTo: this.route });
         }
         resolve(granted);
       }

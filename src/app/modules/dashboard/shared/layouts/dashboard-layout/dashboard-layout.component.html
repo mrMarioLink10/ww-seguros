@@ -30,7 +30,7 @@
         </div>
         <mat-list class="dashboard-background-color-gradient pr-3" style="height: 100vh !important">
 
-          <mat-list-item *ngIf="showMatListen(['intermediario', 'usuario'])" [routerLink]="['consult']"
+          <mat-list-item *ngIf="showMatListen(['intermediario_admin', 'usuario'])" [routerLink]="['consult']"
             routerLinkActive="router-link-active" style="color: white; max-height: 35px !important;" class="my-3">
             <img style="max-height: 35px !important;"
               [src]="activeRoute.includes('/dashboard/consult') ? '../../../../../../assets/iconos/user_search_icon_filled.svg' : '../../../../../../assets/iconos/user_search_icon.svg'"
@@ -39,7 +39,7 @@
           </mat-list-item>
 
           <mat-list-item
-            *ngIf="showMatListen(['Intermediario_basico', 'intermediario', 'wws_intermediario_admin', 'wws_interno'])"
+            *ngIf="showMatListen(['intermediario', 'intermediario_admin', 'wws_intermediario_admin', 'wws_interno'])"
             [routerLink]="['quotes']" routerLinkActive="router-link-active"
             style="color: white; max-height: 35px !important;" class="my-3">
             <img style="max-height: 35px !important;"
@@ -48,7 +48,7 @@
             <div style="max-height: 35px !important;" class="text-xs uppercase">Cotizaciones</div>
           </mat-list-item>
 
-          <mat-list-item *ngIf="showMatListen(['Intermediario_basico', 'intermediario', 'wws_intermediario_admin'])"
+          <mat-list-item *ngIf="showMatListen(['intermediario', 'intermediario_admin', 'wws_intermediario_admin'])"
             [routerLink]="['requests']" routerLinkActive="router-link-active"
             style="color: white; max-height: 35px !important;" class="my-3">
             <img style="max-height: 35px !important;"
@@ -58,7 +58,7 @@
           </mat-list-item>
 
           <mat-list-item
-            *ngIf="this.role === 'WWS' && showMatListen(['Intermediario_basico', 'intermediario', 'usuario'])"
+            *ngIf="this.role === 'WWS' && showMatListen(['intermediario', 'intermediario_admin', 'usuario'])"
             [routerLink]="['claims']" routerLinkActive="router-link-active"
             style="color: white; max-height: 35px !important;" class="my-3">
             <img style="max-height: 35px !important;"
@@ -68,7 +68,7 @@
           </mat-list-item>
 
           <mat-list-item
-            *ngIf="this.role === 'WWS' && showMatListen(['Intermediario_basico', 'intermediario', 'usuario'])"
+            *ngIf="this.role === 'WWS' && showMatListen(['intermediario', 'intermediario_admin', 'usuario'])"
             [routerLink]="['authorizations']" routerLinkActive="router-link-active"
             style="color: white; max-height: 35px !important;" class="my-3">
             <img style="max-height: 35px !important;"

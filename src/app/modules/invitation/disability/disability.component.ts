@@ -1113,6 +1113,9 @@ export class DisabilityComponent implements OnInit, DoCheck {
         //   this.xx++;
         // }
       }
+      if (this.disabilityGroup.get('questionnaires').get('solicitudProstatica') && this.ID != null) {
+        this.x = 1;
+      }
       // if (!this.disabilityGroup.get('questionnaires').get('solicitudProstatica') &&
       //   !this.disabilityGroup.get('questions').get('questionnaire').get('sicknessType')) {
       //   this.x = 0;

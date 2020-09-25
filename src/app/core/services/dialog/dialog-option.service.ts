@@ -124,7 +124,7 @@ export class DialogOptionService {
 		return {
 			logo: 'check',
 			title: 'Confirmación',
-			text: `La solicitud de ${form} ha sido enviada`,
+			text: `Hemos recibido su solicitud`,
 			showButtons: false,
 		};
 	}

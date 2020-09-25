@@ -1,4 +1,5 @@
 .text-404 {
+  position: relative;
   text-align: left;
   font-weight: bold;
   letter-spacing: 0px;
@@ -52,10 +53,11 @@
 }
 
 .circle-404 {
-  top: 41%;
-  width: 95px;
-  left: 46.5%;
-  height: 95px;
+  position: absolute;
+  left: 84%;
+  height: 35px;
+  width: 35px;
+  top: 51.5%;
 }
 
 .circle-down-right {
@@ -70,4 +72,17 @@
   width: 707px;
   left: 57.5%;
   height: 707px;
+}
+
+.bg {
+  /* The image used */
+  background-image: url("../../../../assets/404background.svg");
+
+  /* Full height */
+  height: 100%;
+
+  /* Center and scale the image nicely */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
 }

@@ -30,7 +30,7 @@
         </div>
         <mat-list class="dashboard-background-color-gradient pr-3" style="height: 100vh !important">
 
-          <mat-list-item *ngIf="showMatListen(['intermediario_admin', 'usuario'])" [routerLink]="['consult']"
+          <mat-list-item *ngIf="showMatListen(['intermediario_admin'])" [routerLink]="['consult']"
             routerLinkActive="router-link-active" style="color: white; max-height: 35px !important;" class="my-3">
             <img style="max-height: 35px !important;"
               [src]="activeRoute.includes('/dashboard/consult') ? '../../../../../../assets/iconos/user_search_icon_filled.svg' : '../../../../../../assets/iconos/user_search_icon.svg'"

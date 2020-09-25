@@ -63,7 +63,8 @@ export class AppAuthGuard extends KeycloakAuthGuard implements CanLoad {
           }
         }
         if (granted === false) {
-          const quotesAccessRoles = ['intermediario', 'intermediario_admin', 'wws_intermediario_admin', 'wws_interno'];
+          const quotesAccessRoles = ['intermediario', 'intermediario_admin', 'wws_intermediario_admin', 'wws_interno', 'usuario'];
+          const userAccessRoles = ['usuario'];
 
           let target = 'not-found';
 
@@ -73,6 +74,14 @@ export class AppAuthGuard extends KeycloakAuthGuard implements CanLoad {
               break;
             }
           }
+
+          for (const requiredRole of userAccessRoles) {
+            if (this.roles.indexOf(requiredRole) > -1) {
+              target = 'dashboard/claims';
+              break;
+            }
+          }
+
           this.router.navigate([target], { relativeTo: this.route });
         }
         resolve(granted);

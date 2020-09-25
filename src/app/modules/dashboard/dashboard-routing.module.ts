@@ -46,7 +46,7 @@ const routes: Routes = [
 				path: 'consult',
 				loadChildren: () => import('./consultation/consultation.module').then((m) => m.ConsultationModule),
 				canLoad: [AppAuthGuard],
-				data: { accessRoles: ['intermediario_admin', 'usuario'] }
+				data: { accessRoles: ['intermediario_admin'] }
 			}
 		]
 	},

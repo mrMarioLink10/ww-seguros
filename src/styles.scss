@@ -531,6 +531,67 @@ body {
   font-weight: bold;
 }
 
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+  @responsive {
+    .tx4-xl {
+      font-size: 485px !important;
+      line-height: 525px !important;
+    }
+
+    .tx4-lg {
+      font-size: 385px !important;
+      line-height: 395px !important;
+    }
+
+    .tx4-md {
+      font-size: 285px !important;
+      line-height: 325px !important;
+    }
+
+    .tx4-sm {
+      font-size: 245px !important;
+      line-height: 325px !important;
+    }
+
+    .t-xl {
+      font-size: 80px !important;
+    }
+
+    .t-lg {
+      font-size: 60px !important;
+    }
+
+    .t-md {
+      font-size: 40px !important;
+    }
+
+    .t-sm {
+      font-size: 40px !important;
+    }
+
+    .i-xl {
+      font-size: 30px !important;
+    }
+
+    .i-lg {
+      font-size: 22px !important;
+    }
+
+    .i-md {
+      font-size: 17px !important;
+    }
+
+    .i-sm {
+      font-size: 14px !important;
+    }
+
+  }
+}
+
 /** OVERWRITING ANOTHER CLASSES */
 /** OVERWRITING ANOTHER CLASSES */
 /** OVERWRITING ANOTHER CLASSES */

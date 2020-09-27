@@ -739,7 +739,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
         heightUnit: ['', Validators.required],
         date: [{ value: '', disabled: false }, Validators.required],
         sex: [{ value: '', disabled: false }, Validators.required],
-        pep_radio_insured: ['', Validators.required],
+        // pep_radio_insured: ['', Validators.required],
         isContractor: ['', Validators.required],
         isPayer: ['', Validators.required],
         // isJuridica: ['', Validators.required],

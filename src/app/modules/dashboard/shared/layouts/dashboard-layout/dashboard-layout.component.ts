@@ -24,6 +24,7 @@ export class DashboardLayoutComponent implements OnInit, OnDestroy {
   userEmail: string;
   role: string;
   roles: any;
+  public country = 'rd';
 
   watchRouter: Subscription;
 
@@ -81,6 +82,10 @@ export class DashboardLayoutComponent implements OnInit, OnDestroy {
     this.userEmail = this.userService.getUserInformation().email;
     this.role = this.userService.getRoleCotizador();
     this.roles = this.userService.getRoles();
+  }
+
+  getCountry(): string {
+    return this.country;
   }
 
   showMatListen(permittedRoles: any[]) {

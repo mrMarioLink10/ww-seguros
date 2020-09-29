@@ -94,7 +94,15 @@
               height="24px" width="24px" class="mr-3 ml-3">
             <div style="max-height: 35px !important;" class="text-xs uppercase">Términos de Uso </div>
           </mat-list-item>
-
+          <mat-list-item *ngIf="showMatListen(['WWS']) && showMatListen(['WMA'])"
+            style="color: white; max-height: 35px !important; padding-left: 0.75rem" class="mt-10">
+            <mat-form-field color="accent" appearance="outline" class="w-full" style="font-size: small !important;">
+              <mat-select [(ngModel)]="country">
+                <mat-option value="rd">RD</mat-option>
+                <mat-option value="pn">PN</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </mat-list-item>
           <mat-list-item style="color: white; max-height: 35px !important; padding-left: 0.75rem" class="mt-10">
             <button class="text-xs uppercase h-full w-full text-left" (click)="logOut()">Salir</button>
           </mat-list-item>

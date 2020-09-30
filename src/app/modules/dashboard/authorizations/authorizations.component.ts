@@ -30,7 +30,7 @@ export interface Claims {
 })
 export class AuthorizationsComponent implements OnInit {
 
-  BASE_URL: any = `${environment.fileUrl}`;
+	BASE_URL: any = `${environment.fileUrl}`;
 	statusTypes = [
 		{ value: 0, view: 'Incompleto' },
 		{ value: 1, view: 'Completo' },
@@ -61,7 +61,7 @@ export class AuthorizationsComponent implements OnInit {
 		customClass: 'dashboard-button'
 	};
 
-	displayedColumns: string[] = ['noPoliza', 'nombres', 'apellidos','tipoReclamo', 'procedimiento', 'nombreServicio', 'condicion', 'status', 'acciones'];
+	displayedColumns: string[] = ['noPoliza', 'nombres', 'apellidos', 'tipoReclamo', 'procedimiento', 'nombreServicio', 'condicion', 'status', 'acciones'];
 
 	dataSource;
 	authorizations: any[];
@@ -87,6 +87,11 @@ export class AuthorizationsComponent implements OnInit {
 		setTimeout(() => {
 			this.appComponent.showOverlay = true;
 		});
+
+		if (this.userService.getRoles().includes('WWS') && this.userService.getRoles().includes('WMA')) {
+			params = params.append('country', localStorage.getItem('countryCode'));
+		}
+
 		this.authorizationsService.getAuthoriations(params)
 			.subscribe(res => {
 				data = res;

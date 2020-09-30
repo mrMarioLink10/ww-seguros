@@ -97,7 +97,7 @@
           <mat-list-item *ngIf="showMatListen(['WWS']) && showMatListen(['WMA'])"
             style="color: white; max-height: 35px !important; padding-left: 0.75rem" class="mt-10">
             <mat-form-field color="accent" appearance="outline" class="w-full" style="font-size: small !important;">
-              <mat-select [(ngModel)]="country">
+              <mat-select [(ngModel)]="country" (selectionChange)="setCountry()">
                 <mat-option value="rd">RD</mat-option>
                 <mat-option value="pn">PN</mat-option>
               </mat-select>

@@ -71,6 +71,11 @@ export class QuotesComponent implements OnInit {
   getQuotes(params: HttpParams = new HttpParams()) {
     let data;
     console.log(params);
+
+    if (this.userService.getRoles().includes('WWS') && this.userService.getRoles().includes('WMA')) {
+      params = params.append('country', localStorage.getItem('countryCode'));
+    }
+
     setTimeout(() => {
       this.appComponent.showOverlay = true;
     });
@@ -98,9 +103,9 @@ export class QuotesComponent implements OnInit {
   navigateToSaludPdf(id) {
     window.open(`${environment.urlCotizadoresPdf}/salud/cotizacion-${id}.pdf`, '_blank');
 
-}
+  }
   navigateToLifePdf(id) {
-      window.open(`${environment.urlCotizadoresPdf}/tmp/cotizacion-${id}.pdf`, '_blank');
+    window.open(`${environment.urlCotizadoresPdf}/tmp/cotizacion-${id}.pdf`, '_blank');
 
   }
   newQuote() {

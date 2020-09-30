@@ -10,7 +10,6 @@ import { FormHandlerService } from '../../../core/services/forms/form-handler.se
 import { AppComponent } from '../../../app.component';
 import { UserService } from '../../../core/services/user/user.service';
 import { environment } from 'src/environments/environment';
-import { DashboardLayoutComponent } from '../shared/layouts/dashboard-layout/dashboard-layout.component';
 
 export interface Requests {
   no: number;
@@ -81,14 +80,13 @@ export class RequestsComponent implements OnInit {
     private formHandlerService: FormHandlerService,
     private appComponent: AppComponent,
     private userService: UserService,
-    private dashboardLayout: DashboardLayoutComponent
   ) { }
 
   getRequests(params: HttpParams = new HttpParams()) {
     let data;
 
     if (this.userService.getRoles().includes('WWS') && this.userService.getRoles().includes('WMA')) {
-      params = params.append('country', this.dashboardLayout.getCountry());
+      params = params.append('country', localStorage.getItem('countryCode'));
     }
 
     this.loading = true;

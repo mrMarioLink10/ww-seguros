@@ -24,7 +24,7 @@ export class DashboardLayoutComponent implements OnInit, OnDestroy {
   userEmail: string;
   role: string;
   roles: any;
-  public country = 'rd';
+  country: string;
 
   watchRouter: Subscription;
 
@@ -78,14 +78,22 @@ export class DashboardLayoutComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    if (localStorage.getItem('countryCode')) {
+      this.country = localStorage.getItem('countryCode');
+    } else {
+      this.country = 'rd';
+      localStorage.setItem('countryCode', this.country);
+    }
+
     this.userName = this.userService.getUserInformation().name;
     this.userEmail = this.userService.getUserInformation().email;
     this.role = this.userService.getRoleCotizador();
     this.roles = this.userService.getRoles();
   }
 
-  getCountry(): string {
-    return this.country;
+  setCountry() {
+    localStorage.setItem('countryCode', this.country);
+    window.location.reload();
   }
 
   showMatListen(permittedRoles: any[]) {

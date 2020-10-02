@@ -1176,19 +1176,6 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy, DoCheck {
 			this.authorization.get('informacionAsegurado').get('idNumber').disable();
 			this.authorization.get('informacionAsegurado').get('filterType').disable();
 			this.authorization.get('informacionAsegurado').get('idNumber2').disable();
-			this.authorization.get('informacionAsegurado').get('idNumber2').clearValidators();
-			this.authorization.get('informacionAsegurado').get('idNumber2').updateValueAndValidity();
-
-			if (data.data.informacionAsegurado.idNumber2 != '') {
-				console.log('Entro');
-				this.idNumber2Options.push({
-					value: data.data.informacionAsegurado.idNumber2,
-					viewValue: data.data.informacionAsegurado.idNumber2,
-					policy: data.data.informacionAsegurado.noPoliza
-				});
-				this.authorization.get('informacionAsegurado').get('idNumber2').setValue(data.data.informacionAsegurado.idNumber2);
-				this.idNumber2FieldVisible = true;
-			}
 
 			switch (data.data.informacionAsegurado.sexo) {
 				case 'M':
@@ -1214,6 +1201,21 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy, DoCheck {
 			this.authorization['controls'].informacionAsegurado['controls'].noPoliza.setValue(data.data.informacionAsegurado.noPoliza);
 			this.authorization['controls'].informacionAsegurado['controls'].filterType.setValue(data.data.informacionAsegurado.filterType);
 			this.authorization['controls'].informacionAsegurado['controls'].idNumber.setValue(data.data.informacionAsegurado.idNumber);
+
+			this.authorization.get('informacionAsegurado').get('idNumber2').clearValidators();
+			this.authorization.get('informacionAsegurado').get('idNumber2').updateValueAndValidity();
+
+			if (data.data.informacionAsegurado.idNumber2 != '') {
+				console.log('Entro');
+				this.idNumber2Options.push({
+					value: data.data.informacionAsegurado.idNumber2,
+					viewValue: data.data.informacionAsegurado.idNumber2,
+					policy: data.data.informacionAsegurado.noPoliza
+				});
+				this.authorization.get('informacionAsegurado').get('idNumber2').setValue(data.data.informacionAsegurado.idNumber2);
+				this.idNumber2FieldVisible = true;
+			}
+
 			this.authorization['controls'].informacionAsegurado['controls'].sexo.setValue(data.data.informacionAsegurado.sexo);
 			this.authorization['controls'].informacionAsegurado['controls'].correo.setValue(data.data.informacionAsegurado.correo);
 			this.authorization['controls'].informacionAsegurado['controls'].direccion.setValue(data.data.informacionAsegurado.direccion);
@@ -1388,7 +1390,6 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy, DoCheck {
 
 			this.authorization.markAllAsTouched();
 			this.authorization.updateValueAndValidity();
-
 		});
 		setTimeout(() => {
 			this.appComponent.showOverlay = false;

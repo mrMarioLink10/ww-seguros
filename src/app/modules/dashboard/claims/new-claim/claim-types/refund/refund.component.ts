@@ -1254,6 +1254,9 @@ export class RefundComponent implements OnInit {
 			if (data.data.agreeWithDeclaration === 'true' || data.data.agreeWithDeclaration === 'TRUE') {
 				this.refundForm.get('agreeWithDeclaration').setValue(true);
 			}
+
+			if (this.refundForm.get('countryRoleCode')) { this.refundForm.get('countryRoleCode').setValidators(null); }
+
 			// if (this.refundForm.get('haveAditionalComentary').value === 'FALSE') {
 			// 	this.refundForm.get('haveAditionalComentary').setValue('');
 			// }

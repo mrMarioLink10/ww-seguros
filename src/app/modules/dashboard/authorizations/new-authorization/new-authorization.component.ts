@@ -1095,6 +1095,9 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy, DoCheck {
 					break;
 			}
 
+			if (this.authorization.get('countryRoleCode')) { this.authorization.get('countryRoleCode').setValidators(null); }
+
+
 			this.authorization['controls'].fecha.setValue(data.data.fecha);
 			this.authorization['controls'].idNumber.setValue(data.data.idNumber);
 			this.authorization['controls'].informacionAsegurado['controls'].tipoReclamo.setValue(data.data.informacionAsegurado.tipoReclamo);

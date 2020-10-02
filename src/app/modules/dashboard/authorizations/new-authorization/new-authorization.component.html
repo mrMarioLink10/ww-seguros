@@ -149,6 +149,10 @@
               placeholder="12345678"></app-input>
           </div>
           <div class="mr-3">
+            <app-input [group]="authorization" label="ID Number" name='idNumber' placeholder="246810">
+            </app-input>
+          </div>
+          <div class="mr-3">
             <app-radio-button [group]="authorization.get('informacionAsegurado')" [options]="generos" name="sexo">
             </app-radio-button>
           </div>

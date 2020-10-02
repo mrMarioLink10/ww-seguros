@@ -218,6 +218,18 @@ export class RefundComponent implements OnInit {
 	filterValueArray = [];
 	categoriaSubscribe: any = [];
 
+	idNumber2FieldVisible = false;
+	searchIdNumberAccess = false;
+
+	idNumber2Options = [];
+
+	// idNumber2Label = 'Asegurados poliza ';
+
+	idNumber2Field = {
+		label: 'Asegurados misma poliza' ,
+		options: this.idNumber2Options
+	};
+
 	refundForm: FormGroup;
 	diagnosticList: FormArray;
 	@ViewChild('form', { static: false }) form;
@@ -243,7 +255,7 @@ export class RefundComponent implements OnInit {
 	timeAutoComplete = 0;
 
 	ngOnInit() {
-
+		console.log('El largo de this.idNumber2Options es ' + this.idNumber2Options.length);
 		this.appComponent.showOverlay = true;
 		this.returnCategorias();
 		// this.returnProveedores();
@@ -341,6 +353,7 @@ export class RefundComponent implements OnInit {
 				noPoliza: [{ value: '', disabled: true }, [Validators.required]],
 				filterType: ['', Validators.required],
 				idNumber: ['', Validators.required],
+				idNumber2: [''],
 				nombre: [{ value: '', disabled: true }, [Validators.required]],
 				direccion: ['',],
 				telefono: ['',],
@@ -414,6 +427,12 @@ export class RefundComponent implements OnInit {
 			this.refundForm.get('informacion').get('idNumber').setValue('');
 			this.refundForm.get('informacion').get('idNumber').markAsUntouched();
 
+			this.idNumber2FieldVisible = false;
+			this.searchIdNumberAccess = false;
+			this.idNumber2Options.splice(0, this.idNumber2Options.length);
+			this.refundForm.get('informacion').get('idNumber2').setValue('');
+			this.refundForm.get('informacion').get('idNumber2').markAsUntouched();
+
 			if (valueFilter == 'NOMBRE') {
 				this.filteredOptions = this.refundForm.get('informacion').get('idNumber').valueChanges
 					.pipe(
@@ -437,6 +456,22 @@ export class RefundComponent implements OnInit {
 						map(value => typeof value === 'string' ? value : value),
 						map(value => value ? this._filter(value) : this.dataAutoCompletePolicy.slice())
 					);
+			}
+		});
+
+		this.refundForm.get('informacion').get('idNumber').valueChanges.subscribe(valueIdNumber => {
+
+			if (this.idNumber2Options.length > 0) {
+				if (this.idNumber2Options[0].policy) {
+					if (this.idNumber2Options[0].policy != valueIdNumber) {
+
+						this.idNumber2FieldVisible = false;
+						this.searchIdNumberAccess = false;
+						this.idNumber2Options.splice(0, this.idNumber2Options.length);
+						this.refundForm.get('informacion').get('idNumber2').setValue('');
+						this.refundForm.get('informacion').get('idNumber2').markAsUntouched();
+					}
+				}
 			}
 		});
 
@@ -1183,58 +1218,115 @@ export class RefundComponent implements OnInit {
 
 		let idNumberObject;
 
-		if (this.refundForm.get('informacion').get('filterType').value == 'NOMBRE') {
-			idNumberObject = this.dataAutoCompleteIdNumberObject.find(nombre =>
-				nombre.name == idNumber);
-			idNumber = (idNumberObject.value).toString();
-		}
-		if (this.refundForm.get('informacion').get('filterType').value == 'ID') {
-			idNumber = (idNumber).toString();
-		}
-		if (this.refundForm.get('informacion').get('filterType').value == 'POLIZA') {
-			idNumberObject = this.dataAutoCompleteIdNumberObject.find(nombre =>
-				nombre.policy == idNumber);
-			idNumber = (idNumberObject.value).toString();
-		}
-
-		// idNumberObject = this.dataAutoCompleteIdNumberObject.find(nombre =>
-		// 	nombre.name == idNumber);
-		// console.log(idNumberObject);
-
-		this.appComponent.showOverlay = true;
-		this.userService.getInsurancePeople(idNumber)
-			.subscribe((response: any) => {
-				console.log(response);
-				this.appComponent.showOverlay = false;
-				if (response.data !== null) {
-					this.showContent = true;
-					const dialogRef = this.dialog.open(BaseDialogComponent, {
-						data: this.dialogOption.idNumberFound(response.data),
-						minWidth: 385,
-					});
-					setTimeout(() => {
-						dialogRef.close();
-					}, 4000);
-
-					this.refundForm.get('informacion').get('nombre').setValue(`${response.data.asegurado.nombres_asegurado} ${response.data.asegurado.apellidos_asegurado}`);
-					this.refundForm.get('informacion').get('noPoliza').setValue(response.data.asegurado.no_poliza);
-					this.refundForm.get('idNumber').setValue(response.data.asegurado.id_asegurado);
-
-				} else {
-					this.showContent = false;
-					const dialogRef = this.dialog.open(BaseDialogComponent, {
-						data: this.dialogOption.idNumberNotFound,
-						minWidth: 385,
-					});
-					setTimeout(() => {
-						dialogRef.close();
-					}, 4000);
-
-					this.refundForm.get('informacion').get('nombre').setValue('');
-					this.refundForm.get('informacion').get('noPoliza').setValue('');
-
+		if (idNumber != '') {
+			console.log(idNumber);
+			if (this.refundForm.get('informacion').get('filterType').value == 'NOMBRE') {
+				this.searchIdNumberAccess = true;
+				if (this.dataAutoCompleteIdNumberObject.find(nombre => nombre.name == idNumber)) {
+					console.log('Asegurado encontrado');
+					idNumberObject = this.dataAutoCompleteIdNumberObject.find(nombre =>
+						nombre.name == idNumber);
+					idNumber = (idNumberObject.value).toString();
 				}
-			});
+				else {
+					console.log('Asegurado no encontrado');
+				}
+			}
+			if (this.refundForm.get('informacion').get('filterType').value == 'ID') {
+				this.searchIdNumberAccess = true;
+				idNumber = (idNumber).toString();
+			}
+			if (this.refundForm.get('informacion').get('filterType').value == 'POLIZA' && this.idNumber2Options.length == 0) {
+				this.appComponent.showOverlay = true;
+				if (this.dataAutoCompleteIdNumberObject.find(nombre => nombre.policy == idNumber)) {
+					console.log('Póliza encontrada');
+					const idNumber2Policy = idNumber;
+					// tslint:disable-next-line: prefer-for-of
+					for (let x = 0; x < this.dataAutoCompleteIdNumberObject.length; x++) {
+						if (idNumber2Policy == this.dataAutoCompleteIdNumberObject[x].policy) {
+							this.idNumber2Options.push({
+									value: this.dataAutoCompleteIdNumberObject[x].name,
+									viewValue: this.dataAutoCompleteIdNumberObject[x].name,
+									policy: this.dataAutoCompleteIdNumberObject[x].policy
+								});
+						}
+					}
+					if (this.idNumber2Options.length > 1) {
+						this.idNumber2FieldVisible = true;
+						this.searchIdNumberAccess = false;
+					}
+					else {
+						this.idNumber2FieldVisible = false;
+						this.searchIdNumberAccess = true;
+						this.refundForm.get('informacion').get('idNumber2').setValue('');
+						this.refundForm.get('informacion').get('idNumber2').markAsUntouched();
+
+						idNumberObject = this.dataAutoCompleteIdNumberObject.find(nombre =>
+							nombre.policy == idNumber);
+						idNumber = (idNumberObject.value).toString();
+						this.idNumber2Options.splice(0, this.idNumber2Options.length);
+					}
+				}
+				else {
+					console.log('Póliza no encontrada');
+					this.searchIdNumberAccess = true;
+				}
+				// setTimeout(() => {
+					this.appComponent.showOverlay = false;
+				// }, 1000);
+			}
+
+			if (this.refundForm.get('informacion').get('idNumber2').value != '' && this.idNumber2FieldVisible == true) {
+				this.searchIdNumberAccess = true;
+				const idNumber2Value = this.refundForm.get('informacion').get('idNumber2').value;
+
+				idNumberObject = this.dataAutoCompleteIdNumberObject.find(nombre =>
+					nombre.name == idNumber2Value);
+				idNumber = (idNumberObject.value).toString();
+			}
+
+			// idNumberObject = this.dataAutoCompleteIdNumberObject.find(nombre =>
+			// 	nombre.name == idNumber);
+			// console.log(idNumberObject);
+
+			if (this.searchIdNumberAccess == true) {
+
+			this.appComponent.showOverlay = true;
+			this.userService.getInsurancePeople(idNumber)
+				.subscribe((response: any) => {
+					console.log(response);
+					this.appComponent.showOverlay = false;
+					if (response.data !== null) {
+						this.showContent = true;
+						const dialogRef = this.dialog.open(BaseDialogComponent, {
+							data: this.dialogOption.idNumberFound(response.data),
+							minWidth: 385,
+						});
+						setTimeout(() => {
+							dialogRef.close();
+						}, 4000);
+
+						this.refundForm.get('informacion').get('nombre').setValue(`${response.data.asegurado.nombres_asegurado} ${response.data.asegurado.apellidos_asegurado}`);
+						this.refundForm.get('informacion').get('noPoliza').setValue(response.data.asegurado.no_poliza);
+						this.refundForm.get('idNumber').setValue(response.data.asegurado.id_asegurado);
+
+					} else {
+						this.showContent = false;
+						const dialogRef = this.dialog.open(BaseDialogComponent, {
+							data: this.dialogOption.idNumberNotFound,
+							minWidth: 385,
+						});
+						setTimeout(() => {
+							dialogRef.close();
+						}, 4000);
+
+						this.refundForm.get('informacion').get('nombre').setValue('');
+						this.refundForm.get('informacion').get('noPoliza').setValue('');
+
+					}
+				});
+			}
+		}
 	}
 
 	getData(id) {
@@ -1245,8 +1337,12 @@ export class RefundComponent implements OnInit {
 			console.log(data);
 			this.refundForm.get('informacion').get('idNumber').disable();
 			this.refundForm.get('informacion').get('filterType').disable();
+			this.refundForm.get('informacion').get('idNumber2').disable();
 
 			this.dataMappingFromApi.iterateThroughtAllObject(data.data, this.refundForm);
+
+			this.refundForm.get('informacion').get('idNumber2').clearValidators();
+			this.refundForm.get('informacion').get('idNumber2').updateValueAndValidity();
 
 			this.diagnosticList = this.refundForm.get('diagnosticos') as FormArray;
 			this.filesInformation = data.data.diagnosticos;
@@ -1258,8 +1354,47 @@ export class RefundComponent implements OnInit {
 			// 	this.refundForm.get('haveAditionalComentary').setValue('');
 			// }
 			// if (this.refundForm.get('agreeWithDeclaration').value === 'FALSE') {
-			// 	this.refundForm.get('agreeWithDeclaration').setValue('');
+			// 	this.refundForm.get('agreeWithDeclaration').setValue(''); data.informacion.idNumber2
 			// }
+			if (data.data.informacion.idNumber2 != '') {
+				console.log('Entro');
+				// if (this.dataAutoCompleteIdNumberObject.find(nombre => nombre.policy == data.data.informacion.idNumber)) {
+				// 	console.log('Entro 2');
+				// 	console.log('Poliza en editar encontrada. La poliza es ' + data.data.informacion.idNumber);
+				// 	const idNumber2Policy = data.data.informacion.idNumber;
+				// 	// tslint:disable-next-line: prefer-for-of
+				// 	for (let x = 0; x < this.dataAutoCompleteIdNumberObject.length; x++) {
+				// 		if (idNumber2Policy == this.dataAutoCompleteIdNumberObject[x].policy) {
+				// 			this.idNumber2Options.push({
+				// 					value: this.dataAutoCompleteIdNumberObject[x].name,
+				// 					viewValue: this.dataAutoCompleteIdNumberObject[x].name,
+				// 					policy: this.dataAutoCompleteIdNumberObject[x].policy
+				// 				});
+				// 		}
+				// 	}
+				// 	if (this.idNumber2Options.length > 1) {
+				// 		this.refundForm.get('informacion').get('idNumber2').setValue(data.data.informacion.idNumber2);
+				// 		this.idNumber2FieldVisible = true;
+				// 	}
+				// 	else {
+				// 		this.idNumber2FieldVisible = false;
+				// 		this.refundForm.get('informacion').get('idNumber2').setValue('');
+				// 		this.refundForm.get('informacion').get('idNumber2').markAsUntouched();
+
+				// 		this.idNumber2Options.splice(0, this.idNumber2Options.length);
+				// 	}
+				// }
+				// else {
+				// 	console.log('NO Entro 2');
+				// }
+				this.idNumber2Options.push({
+					value: data.data.informacion.idNumber2,
+					viewValue: data.data.informacion.idNumber2,
+					policy: data.data.informacion.noPoliza
+				});
+				this.refundForm.get('informacion').get('idNumber2').setValue(data.data.informacion.idNumber2);
+				this.idNumber2FieldVisible = true;
+			}
 			this.showContent = true;
 			this.refundForm.markAllAsTouched();
 			this.refundForm.updateValueAndValidity();

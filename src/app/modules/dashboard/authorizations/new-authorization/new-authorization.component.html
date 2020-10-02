@@ -18,7 +18,7 @@
         <app-select name="filterType" [options]="filterOptions" [group]="authorization.get('informacionAsegurado')">
         </app-select>
       </div>
-      <div *ngIf="this.authorization.get('informacionAsegurado').get('filterType').value == 'NOMBRE' ">
+      <div class="mr-3" *ngIf="this.authorization.get('informacionAsegurado').get('filterType').value == 'NOMBRE' ">
         <form [formGroup]="authorization.get('informacionAsegurado')">
           <mat-form-field color="accent" appearance="outline" class="w-full bg-transparente"
             style="font-size: small !important;">
@@ -37,7 +37,7 @@
           </mat-form-field>
         </form>
       </div>
-      <div *ngIf="this.authorization.get('informacionAsegurado').get('filterType').value == 'ID' ">
+      <div class="mr-3" *ngIf="this.authorization.get('informacionAsegurado').get('filterType').value == 'ID' ">
         <form [formGroup]="authorization.get('informacionAsegurado')">
           <mat-form-field color="accent" appearance="outline" class="w-full bg-transparente"
             style="font-size: small !important;">
@@ -56,7 +56,7 @@
           </mat-form-field>
         </form>
       </div>
-      <div *ngIf="this.authorization.get('informacionAsegurado').get('filterType').value == 'POLIZA' ">
+      <div class="mr-3" *ngIf="this.authorization.get('informacionAsegurado').get('filterType').value == 'POLIZA' ">
         <form [formGroup]="authorization.get('informacionAsegurado')">
           <mat-form-field color="accent" appearance="outline" class="w-full bg-transparente"
             style="font-size: small !important;">
@@ -74,6 +74,9 @@
             </mat-error>
           </mat-form-field>
         </form>
+      </div>
+      <div *ngIf="idNumber2FieldVisible" class="mr-3">
+        <app-select name="idNumber2" [options]="idNumber2Field" [group]="authorization.get('informacionAsegurado')"></app-select>
       </div>
       <!-- <div *ngIf="timeAutoComplete == 1" class="mr-3 col-span-2 ml-5 md:ml-0">
         <form [formGroup]="authorization.get('informacionAsegurado')">

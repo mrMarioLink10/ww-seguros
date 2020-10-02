@@ -311,7 +311,7 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy, DoCheck {
 			}),
 			files: this.fb.array([this.createFormArray()]),
 			isComplete: [false, Validators.required],
-			idNumber: ['', Validators.required],
+			idNumber: [{ value: '', disabled: true }, Validators.required],
 
 		});
 

@@ -350,7 +350,7 @@ export class RefundComponent implements OnInit {
 			haveAditionalComentary: [''],
 			comentary: [''],
 			forma: ['', Validators.required],
-			idNumber: ['', Validators.required],
+			idNumber: [{ value: '', disabled: true }, Validators.required],
 			totalAmount: ['', Validators.required],
 			totalAmountPesos: ['', Validators.required],
 			agreeWithDeclaration: ['', [Validators.requiredTrue]],

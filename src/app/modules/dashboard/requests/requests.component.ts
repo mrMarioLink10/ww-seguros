@@ -61,7 +61,7 @@ export class RequestsComponent implements OnInit {
   };
 
   // tslint:disable-next-line: max-line-length
-  displayedColumns: string[] = ['noCotizacion', 'nombres', 'apellidos', 'seguro', 'plan', 'fecha', 'monto', 'estatus', 'acciones'];
+  displayedColumns: string[] = ['noCotizacion', 'nombres', 'apellidos', 'seguro', 'plan', 'fecha', 'monto', 'createdBy', 'estatus', 'acciones'];
 
   dataSource;
   requests: any;

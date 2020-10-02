@@ -2609,6 +2609,8 @@ export class DisabilityComponent implements OnInit, DoCheck {
           this.mercantileRegisterArray = this.disabilityGroup.get('files').get('mercantile') as FormArray;
         }
 
+        if (this.disabilityGroup.get('countryRoleCode')) { this.disabilityGroup.get('countryRoleCode').setValidators(null); }
+
         if (formCB.get('hasAnotherCoverage').value !== 'SI') {
           formCB.removeControl('anotherCoverages');
           this.existingCoveragesList = undefined;

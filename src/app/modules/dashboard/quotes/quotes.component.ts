@@ -25,6 +25,8 @@ export interface Quotes {
   templateUrl: './quotes.component.html',
   styleUrls: ['./quotes.component.scss']
 })
+
+// tslint:disable: max-line-length
 export class QuotesComponent implements OnInit {
 
   statusTypes = [
@@ -71,6 +73,11 @@ export class QuotesComponent implements OnInit {
   getQuotes(params: HttpParams = new HttpParams()) {
     let data;
     console.log(params);
+
+    if (this.userService.getRoles().includes('WWS') && this.userService.getRoles().includes('WMA')) {
+      params = params.append('country', localStorage.getItem('countryCode'));
+    }
+
     setTimeout(() => {
       this.appComponent.showOverlay = true;
     });
@@ -88,9 +95,11 @@ export class QuotesComponent implements OnInit {
   ngOnInit() {
     this.getQuotes();
   }
+
   navigateToLife(id) {
     this.router.navigateByUrl(`/dashboard/requests/new-requests/vida/cotizacion/${id}`);
   }
+
   navigateToSalud(id) {
     this.router.navigateByUrl(`/dashboard/requests/new-requests/salud/cotizacion/${id}`);
   }
@@ -98,17 +107,25 @@ export class QuotesComponent implements OnInit {
   navigateToSaludPdf(id) {
     window.open(`${environment.urlCotizadoresPdf}/salud/cotizacion-${id}.pdf`, '_blank');
 
-}
+  }
   navigateToLifePdf(id) {
-      window.open(`${environment.urlCotizadoresPdf}/tmp/cotizacion-${id}.pdf`, '_blank');
+    window.open(`${environment.urlCotizadoresPdf}/tmp/cotizacion-${id}.pdf`, '_blank');
 
   }
+
   newQuote() {
-    if (this.userService.getRoleCotizador() === 'WWS') {
-      window.open(`${environment.urlCotizadores}/?cia=wws`, '_blank');
-    } else if (this.userService.getRoleCotizador() === 'WMA') {
-      window.open(`${environment.urlCotizadores}/?cia=wwm`, '_blank');
+    if (this.userService.getRoles().includes('WWS') && this.userService.getRoles().includes('WMA')) {
+      const country = localStorage.getItem('countryCode');
+      country === 'rd' ? window.open(`${environment.urlCotizadores}/?cia=wws`, '_blank') : window.open(`${environment.urlCotizadores}/?cia=wwm`, '_blank');
+
+    } else {
+      if (this.userService.getRoleCotizador() === 'WWS') {
+        window.open(`${environment.urlCotizadores}/?cia=wws`, '_blank');
+      } else if (this.userService.getRoleCotizador() === 'WMA') {
+        window.open(`${environment.urlCotizadores}/?cia=wwm`, '_blank');
+      }
     }
+
   }
 
 }

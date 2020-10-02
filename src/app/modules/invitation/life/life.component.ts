@@ -3457,6 +3457,8 @@ export class LifeComponent implements OnInit, DoCheck {
         formFiles.removeControl('id2');
         formFiles.removeControl('id2Url');
 
+        if (formGeneral.get('countryRoleCode')) { formGeneral.get('countryRoleCode').setValidators(null); }
+
         if (formP.get('contractorIsLegalEntity').value !== 'SI') {
           // formEP.removeControl('isPayerExposed');
           // formEP.removeControl('isContractorExposed');

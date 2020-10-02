@@ -3611,6 +3611,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
         formP.removeControl('sameAsPayer');
         formFiles.removeControl('incomesCertified');
 
+        if (formGeneral.get('countryRoleCode')) { formGeneral.get('countryRoleCode').setValidators(null); }
 
         if (this.newRequest.get('questionsB').get('familyWithDiseases') !== undefined && this.newRequest.get('questionsB').get('familyWithDiseases') !== null) {
           this.familyWithDiseasesList = this.newRequest.get('questionsB').get('familyWithDiseases') as FormArray;

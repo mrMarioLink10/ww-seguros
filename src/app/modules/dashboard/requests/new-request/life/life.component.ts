@@ -49,7 +49,7 @@ export class LifeComponent implements OnInit, DoCheck {
     private cd: ChangeDetectorRef,
     public requestService: RequestsService
   ) {
-    var d = new Date();
+    let d = new Date();
     d.setFullYear(d.getFullYear() - 18);
     this.maxDate = d;
   }
@@ -1628,7 +1628,7 @@ export class LifeComponent implements OnInit, DoCheck {
             ['document']: reader.result
           });
 
-          //this.markForCheck();
+          // this.markForCheck();
         };
       }
     }
@@ -1642,7 +1642,7 @@ export class LifeComponent implements OnInit, DoCheck {
             ['copyId']: reader.result
           });
 
-          //this.markForCheck();
+          // this.markForCheck();
         };
       }
     }
@@ -1656,7 +1656,7 @@ export class LifeComponent implements OnInit, DoCheck {
             ['register']: reader.result
           });
 
-          //this.markForCheck();
+          // this.markForCheck();
         };
       }
     } else if (name === 'contractor') {
@@ -1669,7 +1669,7 @@ export class LifeComponent implements OnInit, DoCheck {
             ['id2Attached']: reader.result
           });
 
-          //this.markForCheck();
+          // this.markForCheck();
         };
       }
     } else if (name === 'payer') {
@@ -1682,7 +1682,7 @@ export class LifeComponent implements OnInit, DoCheck {
             ['id2Attached']: reader.result
           });
 
-          //this.markForCheck();
+          // this.markForCheck();
         };
       }
     } else if (name === 'person') {
@@ -1695,7 +1695,7 @@ export class LifeComponent implements OnInit, DoCheck {
             ['id2Attached']: reader.result
           });
 
-          //this.markForCheck();
+          // this.markForCheck();
         };
       }
     } else if (name === 'incomesCertified') {
@@ -1708,7 +1708,7 @@ export class LifeComponent implements OnInit, DoCheck {
             ['incomesCertified']: reader.result
           });
 
-          //this.markForCheck();
+          // this.markForCheck();
         };
       }
     }
@@ -1800,15 +1800,15 @@ export class LifeComponent implements OnInit, DoCheck {
   }
 
   addFilesD(form: FormGroup) {
-    //form.addControl('urineAnalysis', this.fb.control('', Validators.required));
+    // form.addControl('urineAnalysis', this.fb.control('', Validators.required));
   }
 
   addFilesE(form: FormGroup) {
-    //form.addControl('restingElectrocardiogram', this.fb.control('', Validators.required));
+    // form.addControl('restingElectrocardiogram', this.fb.control('', Validators.required));
   }
 
   addFilesF(form: FormGroup) {
-    //form.addControl('stressElectrocardiogram', this.fb.control('', Validators.required));
+    // form.addControl('stressElectrocardiogram', this.fb.control('', Validators.required));
   }
 
   deleteFiles(form: FormGroup) {
@@ -2218,7 +2218,7 @@ export class LifeComponent implements OnInit, DoCheck {
     }
 
     if (event.valor === 'SI') {
-      //console.log(`aqui estoy yo '${event.name}'`);
+      // console.log(`aqui estoy yo '${event.name}'`);
       switch (event.name) {
         case 'diving':
           formAQ.addControl('solicitudBuceo', this.fb.group({}));
@@ -3378,7 +3378,7 @@ export class LifeComponent implements OnInit, DoCheck {
   }
 
   activitiesQuestionsLength() {
-    //console.log(this.newRequest.get('activitiesQuestionnaires'));
+    // console.log(this.newRequest.get('activitiesQuestionnaires'));
     if (this.newRequest.get('activitiesQuestionnaires').get('id')) {
       return Object.keys(this.newRequest.get('activitiesQuestionnaires').value).length > 1;
     }
@@ -3467,6 +3467,8 @@ export class LifeComponent implements OnInit, DoCheck {
       formFiles.removeControl('medicExamUrl');
       formFiles.removeControl('id2');
       formFiles.removeControl('id2Url');
+
+      if (formGeneral.get('countryRoleCode')) { formGeneral.get('countryRoleCode').setValidators(null); }
 
       if (formP.get('contractorIsLegalEntity').value !== 'SI') {
         // formEP.removeControl('isPayerExposed');
@@ -3886,7 +3888,7 @@ export class LifeComponent implements OnInit, DoCheck {
 
     this.life.returnData(id).subscribe(data => {
       // console.log(data.data.asegurado.documentoIdentidad)
-      //console.log(data);
+      // console.log(data);
 
       this.processiingDataToForm(data);
       this.showContent = true;

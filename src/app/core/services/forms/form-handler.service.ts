@@ -15,6 +15,7 @@ import { environment } from '../../../../environments/environment';
 import { AppComponent } from 'src/app/app.component';
 import { Observable, Subject } from 'rxjs';
 import { RequestsService } from 'src/app/modules/invitation/services/requests.service';
+import { UserService } from '../user/user.service';
 // tslint:disable: forin
 // tslint:disable: variable-name
 
@@ -36,7 +37,8 @@ export class FormHandlerService {
 		private disabilityService: DisabilityService,
 		private http: HttpClient,
 		private fb: FormBuilder,
-		private requestService: RequestsService
+		private requestService: RequestsService,
+		private userService: UserService,
 	) { }
 
 	sendForm(form: FormGroup, name: string, type?: string, appComponent?: any, id?: number, isInvitation?: boolean) {
@@ -148,6 +150,11 @@ export class FormHandlerService {
 				form.get('isComplete').setValue(true);
 			} else {
 				form.get('isComplete').setValue(false);
+			}
+
+			form.removeControl('countryRoleCode');
+			if (this.userService.getRoles().includes('WWS') && this.userService.getRoles().includes('WMA')) {
+				form.addControl('countryRoleCode', this.fb.control(localStorage.getItem('countryCode')));
 			}
 
 			this.sendedForm = form.getRawValue();

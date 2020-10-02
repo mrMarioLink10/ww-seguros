@@ -324,7 +324,7 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy, DoCheck {
 			}),
 			files: this.fb.array([this.createFormArray()]),
 			isComplete: [false, Validators.required],
-			idNumber: ['', Validators.required],
+			idNumber: [{ value: '', disabled: true }, Validators.required],
 
 		});
 
@@ -1201,6 +1201,9 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy, DoCheck {
 				default:
 					break;
 			}
+
+			if (this.authorization.get('countryRoleCode')) { this.authorization.get('countryRoleCode').setValidators(null); }
+
 
 			this.authorization['controls'].fecha.setValue(data.data.fecha);
 			this.authorization['controls'].idNumber.setValue(data.data.idNumber);

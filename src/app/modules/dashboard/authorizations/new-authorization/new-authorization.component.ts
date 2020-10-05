@@ -213,7 +213,7 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy, DoCheck {
 	// idNumber2Label = 'Asegurados poliza ';
 
 	idNumber2Field = {
-		label: 'Asegurados misma poliza' ,
+		label: 'Asegurados misma póliza' ,
 		options: this.idNumber2Options
 	};
 
@@ -999,7 +999,7 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy, DoCheck {
 
 		let idNumberObject;
 
-		if (idNumber != '') {
+		if (idNumber != '' && idNumber != null && idNumber != undefined) {
 
 			if (this.authorization.get('informacionAsegurado').get('filterType').value == 'NOMBRE') {
 				this.searchIdNumberAccess = true;

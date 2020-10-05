@@ -1,9 +1,9 @@
-import {Component, Input, OnInit, EventEmitter,Output, ViewChild, ElementRef } from '@angular/core';
-import {Bill, BillFilter} from '../../models/bill';
-import {MatPaginator, MatTableDataSource, MatSort} from '@angular/material';
-import {BillsService} from '../../../services/consultation/bills.service';
-import {UserService} from '../../../../../core/services/user/user.service';
-import {HttpParams} from '@angular/common/http';
+import { Component, Input, OnInit, EventEmitter, Output, ViewChild, ElementRef } from '@angular/core';
+import { Bill, BillFilter } from '../../models/bill';
+import { MatPaginator, MatTableDataSource, MatSort } from '@angular/material';
+import { BillsService } from '../../../services/consultation/bills.service';
+import { UserService } from '../../../../../core/services/user/user.service';
+import { HttpParams } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -13,7 +13,7 @@ import { environment } from 'src/environments/environment';
 })
 export class BillsTableComponent implements OnInit {
 
-  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
   billsFilter: BillFilter;
@@ -37,9 +37,9 @@ export class BillsTableComponent implements OnInit {
   userRole: string;
   dataSource;
   data: Bill[] = [];
-  displayedColumns: string[] = ['policyId', 'billId' , 'clientName', 'expirationDate',  'totalBalance', 'actions'];
+  displayedColumns: string[] = ['policyId', 'billId', 'clientName', 'expirationDate', 'totalBalance', 'actions'];
   emitPendingBills(policies: Bill[]) {
-    const filteredPolicies = policies.filter( p => p.paymentState === 'P');
+    const filteredPolicies = policies.filter(p => p.paymentState === 'P');
     this.pendingBillsEmitter.emit(filteredPolicies.length);
   }
   constructor(private billsService: BillsService, private userService: UserService) { }
@@ -51,7 +51,12 @@ export class BillsTableComponent implements OnInit {
   }
 
   loadData() {
-    const httpParams = this.constructQueryParams();
+    let httpParams = this.constructQueryParams();
+
+    if (this.userService.getRoles().includes('WWS') && this.userService.getRoles().includes('WMA')) {
+      httpParams = httpParams.append('country', localStorage.getItem('countryCode'));
+    }
+
     this.billsService.getBills(httpParams).subscribe((res: any) => {
       this.data = res.data || [];
       this.dataSource = new MatTableDataSource(this.data);
@@ -81,7 +86,7 @@ export class BillsTableComponent implements OnInit {
       case 'WMA':
         return `${this.BASE_URL}/InvoiceView/ExportPMToPDF/${billId}`;
       default:
-        return'';
+        return '';
     }
   }
   BASE_URL: any = `${environment.fileUrl}`;

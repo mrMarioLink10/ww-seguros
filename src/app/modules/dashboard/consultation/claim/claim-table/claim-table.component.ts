@@ -5,7 +5,7 @@ import { ClaimService } from '../services/claim.service';
 import { ActivatedRoute } from '@angular/router';
 import { PolicyService } from '../../../services/consultation/policy.service';
 import { AppComponent } from '../../../../../app.component';
-import {UserService} from '../../../../../core/services/user/user.service';
+import { UserService } from '../../../../../core/services/user/user.service';
 import { environment } from 'src/environments/environment';
 
 
@@ -16,7 +16,7 @@ import { environment } from 'src/environments/environment';
 })
 export class ClaimTableComponent implements OnInit {
 
-  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
   claimFilter;
@@ -36,16 +36,16 @@ export class ClaimTableComponent implements OnInit {
   // certifi2;
   dataSource;
   data = [];
-  displayedColumns: string[] = ['certificado','patientId', 'patientName' , 'authorization', 'serviceDate', 'paymentState',
-  'paymentType', 'paymentDocument', 'paymentDate', 'actions'];
+  displayedColumns: string[] = ['certificado', 'patientId', 'patientName', 'authorization', 'serviceDate', 'paymentState',
+    'paymentType', 'paymentDocument', 'paymentDate', 'actions'];
 
 
   constructor(private claimService: ClaimService, private activatedRoute: ActivatedRoute,
-              private policyService: PolicyService, private appComponent: AppComponent, private userService: UserService) {
+    private policyService: PolicyService, private appComponent: AppComponent, private userService: UserService) {
     // this.policyId = this.activatedRoute.snapshot.paramMap.get('policyId');
-   }
+  }
 
-   userRole: string;
+  userRole: string;
   ngOnInit() {
     this.userRole = this.userService.getRoleCotizador();
   }
@@ -57,7 +57,7 @@ export class ClaimTableComponent implements OnInit {
       case 'WMA':
         return `${this.BASE_URL}/InvoiceView/ExportToPDF/ReclamosData/${billId}/${poliza}/?location=false`;
       default:
-        return'';
+        return '';
     }
   }
   loadData() {
@@ -68,7 +68,12 @@ export class ClaimTableComponent implements OnInit {
 
     // console.log(this.policyId);
 
-    const httpParams = this.constructQueryParams();
+    let httpParams = this.constructQueryParams();
+
+    if (this.userService.getRoles().includes('WWS') && this.userService.getRoles().includes('WMA')) {
+      httpParams = httpParams.append('country', localStorage.getItem('countryCode'));
+    }
+
     this.claimService.getClaims(httpParams, this.policyId).subscribe((res: any) => {
       this.data = res.data || [];
       this.dataSource = new MatTableDataSource(this.data);

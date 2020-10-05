@@ -226,7 +226,7 @@ export class RefundComponent implements OnInit {
 	// idNumber2Label = 'Asegurados poliza ';
 
 	idNumber2Field = {
-		label: 'Asegurados misma poliza' ,
+		label: 'Asegurados misma póliza' ,
 		options: this.idNumber2Options
 	};
 
@@ -1218,7 +1218,7 @@ export class RefundComponent implements OnInit {
 
 		let idNumberObject;
 
-		if (idNumber != '') {
+		if (idNumber != '' && idNumber != null && idNumber != undefined) {
 			console.log(idNumber);
 			if (this.refundForm.get('informacion').get('filterType').value == 'NOMBRE') {
 				this.searchIdNumberAccess = true;

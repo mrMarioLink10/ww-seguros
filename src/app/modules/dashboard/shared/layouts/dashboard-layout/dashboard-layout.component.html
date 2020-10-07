@@ -30,7 +30,7 @@
         </div>
         <mat-list class="dashboard-background-color-gradient pr-3" style="height: 100vh !important">
 
-          <mat-list-item *ngIf="showMatListen(['intermediario_admin'])" [routerLink]="['consult']"
+          <mat-list-item *ngIf="showMatListen(['Datos_polizas', 'Datos_facturas'])" [routerLink]="['consult']"
             routerLinkActive="router-link-active" style="color: white; max-height: 35px !important;" class="my-3">
             <img style="max-height: 35px !important;"
               [src]="activeRoute.includes('/dashboard/consult') ? '../../../../../../assets/iconos/user_search_icon_filled.svg' : '../../../../../../assets/iconos/user_search_icon.svg'"
@@ -38,27 +38,23 @@
             <div style="max-height: 35px !important;" class="text-xs uppercase">Consulta</div>
           </mat-list-item>
 
-          <mat-list-item
-            *ngIf="showMatListen(['intermediario', 'intermediario_admin', 'wws_intermediario_admin', 'wws_interno'])"
-            [routerLink]="['quotes']" routerLinkActive="router-link-active"
-            style="color: white; max-height: 35px !important;" class="my-3">
+          <mat-list-item *ngIf="showMatListen(['Cotizador_Vida', 'Cotizador_Salud'])" [routerLink]="['quotes']"
+            routerLinkActive="router-link-active" style="color: white; max-height: 35px !important;" class="my-3">
             <img style="max-height: 35px !important;"
               [src]="!activeRoute.includes('/dashboard/quotes') ? '../../../../../../assets/iconos/library_books-24px.svg' : '../../../../../../assets/iconos/library_books-24px-b.svg'"
               height="24px" width="24px" class="mr-3 ml-3">
             <div style="max-height: 35px !important;" class="text-xs uppercase">Cotizaciones</div>
           </mat-list-item>
 
-          <mat-list-item *ngIf="showMatListen(['intermediario', 'intermediario_admin', 'wws_intermediario_admin'])"
-            [routerLink]="['requests']" routerLinkActive="router-link-active"
-            style="color: white; max-height: 35px !important;" class="my-3">
+          <mat-list-item *ngIf="showMatListen(['Solicitud_suscripcion'])" [routerLink]="['requests']"
+            routerLinkActive="router-link-active" style="color: white; max-height: 35px !important;" class="my-3">
             <img style="max-height: 35px !important;"
               [src]="!activeRoute.includes('/dashboard/requests') ? '../../../../../../assets/iconos/library_add-24px.svg' : '../../../../../../assets/iconos/library_add-24px-b.svg'"
               height="24px" width="24px" class="mr-3 ml-3">
             <div style="max-height: 35px !important;" class="text-xs uppercase">Solicitudes</div>
           </mat-list-item>
 
-          <mat-list-item
-            *ngIf="this.role === 'WWS' && showMatListen(['intermediario', 'intermediario_admin', 'usuario'])"
+          <mat-list-item *ngIf="this.role === 'WWS' && showMatListen(['Solicitud_reembolsos'])"
             [routerLink]="['claims']" routerLinkActive="router-link-active"
             style="color: white; max-height: 35px !important;" class="my-3">
             <img style="max-height: 35px !important;"
@@ -67,8 +63,7 @@
             <div style="max-height: 35px !important;" class="text-xs uppercase">Reembolsos</div>
           </mat-list-item>
 
-          <mat-list-item
-            *ngIf="this.role === 'WWS' && showMatListen(['intermediario', 'intermediario_admin', 'usuario'])"
+          <mat-list-item *ngIf="this.role === 'WWS' && showMatListen(['Solicitud_precertificacion'])"
             [routerLink]="['authorizations']" routerLinkActive="router-link-active"
             style="color: white; max-height: 35px !important;" class="my-3">
             <img style="max-height: 35px !important;"

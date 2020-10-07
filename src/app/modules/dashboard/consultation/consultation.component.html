@@ -6,12 +6,12 @@
   <div class="tabs-content px-4 mt-3 sm:mt-10">
     <mat-tab-group mat-stretch-tabs [(selectedIndex)]="activeTab">
 
-      <mat-tab label="Pólizas">
+      <mat-tab *ngIf="roleLetShow(['Datos_polizas'])" label="Pólizas">
         <app-policy-filter (filters)="setPolicyFilters($event)"></app-policy-filter>
         <app-policy-table [filters]="policyFilters" #policyTable></app-policy-table>
       </mat-tab>
 
-      <mat-tab label="Facturas Pendientes">
+      <mat-tab *ngIf="roleLetShow(['Datos_facturas'])" label="Facturas Pendientes">
         <app-bills-filter (filters)="setBillsFilters($event)"></app-bills-filter>
         <app-bills-table [filters]="billsFilter" (pendingBillsEmitter)="setPendingPolicies($event)" #billTable>
         </app-bills-table>

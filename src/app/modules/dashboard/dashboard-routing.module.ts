@@ -5,6 +5,7 @@ import { AppAuthGuard } from 'src/app/core/guards/app-auth.guard';
 import { WwmAccessGuard } from '../../core/guards/wwm-access.guard';
 import { NotFoundComponent } from 'src/app/shared/components/not-found/not-found.component';
 
+// tslint:disable: max-line-length
 const routes: Routes = [
 	{
 		path: '',
@@ -20,33 +21,33 @@ const routes: Routes = [
 				loadChildren: () => import('./claims/claims.module').then((m) => m.ClaimsModule),
 				canLoad: [AppAuthGuard],
 				canActivate: [WwmAccessGuard],
-				data: { accessRoles: ['intermediario', 'intermediario_admin', 'usuario'] }
+				data: { accessRoles: ['Solicitud_reembolsos'] }
 			},
 			{
 				path: 'authorizations',
 				loadChildren: () => import('./authorizations/authorizations.module').then((m) => m.AuthorizationsModule),
 				canLoad: [AppAuthGuard],
 				canActivate: [WwmAccessGuard],
-				data: { accessRoles: ['intermediario', 'intermediario_admin', 'usuario'] }
+				data: { accessRoles: ['Solicitud_precertificacion'] }
 			},
 			{
 				path: 'quotes',
 				loadChildren: () => import('./quotes/quotes.module').then((m) => m.QuotesModule),
 				canLoad: [AppAuthGuard],
-				data: { accessRoles: ['intermediario', 'intermediario_admin', 'wws_intermediario_admin', 'wws_interno'] }
+				data: { accessRoles: ['Cotizador_Vida', 'Cotizador_Salud'] }
 			},
 			{
 				path: 'requests',
 				loadChildren: () => import('./requests/requests.module').then((m) => m.RequestsModule),
 				canLoad: [AppAuthGuard],
-				data: { accessRoles: ['intermediario', 'intermediario_admin', 'wws_intermediario_admin'] }
+				data: { accessRoles: ['Solicitud_suscripcion'] }
 
 			},
 			{
 				path: 'consult',
 				loadChildren: () => import('./consultation/consultation.module').then((m) => m.ConsultationModule),
 				canLoad: [AppAuthGuard],
-				data: { accessRoles: ['intermediario_admin'] }
+				data: { accessRoles: ['Datos_polizas', 'Datos_facturas'] }
 			}
 		]
 	},

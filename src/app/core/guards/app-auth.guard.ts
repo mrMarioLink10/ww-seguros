@@ -63,8 +63,8 @@ export class AppAuthGuard extends KeycloakAuthGuard implements CanLoad {
           }
         }
         if (granted === false) {
-          const quotesAccessRoles = ['intermediario', 'intermediario_admin', 'wws_intermediario_admin', 'wws_interno', 'usuario'];
-          const userAccessRoles = ['usuario'];
+          const quotesAccessRoles = ['Cotizador_Vida', 'Cotizador_Salud'];
+          const userAccessRoles = ['Solicitud_Reclamos'];
 
           let target = 'not-found';
 

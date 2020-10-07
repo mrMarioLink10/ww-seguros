@@ -6,6 +6,7 @@ import { Insured, PolicyDetail } from '../../models/policy-detail';
 import { PolicyService } from '../../../services/consultation/policy.service';
 import { AppComponent } from '../../../../../app.component';
 import { BillFilter } from '../../models/bill';
+import { UserService } from '../../../../../core/services/user/user.service';
 
 
 @Component({
@@ -39,7 +40,7 @@ export class PolicyDetailsComponent implements OnInit {
 
   claimsCondition = false;
   spinnerValue = true;
-
+  roles;
   recharge;
 
   constructor(
@@ -47,13 +48,15 @@ export class PolicyDetailsComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private policyService: PolicyService,
     private appComponent: AppComponent,
-    private router: Router
+    private router: Router,
+    private userService: UserService
   ) {
     this.policyId = this.activatedRoute.snapshot.paramMap.get('policyId');
   }
 
   ngOnInit() {
     this.recharge = false;
+    this.roles = this.userService.getRoles();
     if (this.policyId) {
       this.searchPolicy(this.policyId);
       this.claimsConditionValue();
@@ -88,8 +91,8 @@ export class PolicyDetailsComponent implements OnInit {
         this.appComponent.showOverlay = false;
         console.log(this.policyDetail.ramo);
         if (this.policyDetail.ramo.toLowerCase().includes('salud')) {
-            this.claimsCondition = true;
-          }
+          this.claimsCondition = true;
+        }
         // }, 500);
       }
       else {
@@ -148,5 +151,13 @@ export class PolicyDetailsComponent implements OnInit {
 
   setStatusFilters(event) {
     this.statusFilter = event;
+  }
+
+  roleLetShow(permittedRoles: any[]) {
+    for (const permittedRole of permittedRoles) {
+      if (this.roles.indexOf(permittedRole) > -1) {
+        return true;
+      }
+    }
   }
 }

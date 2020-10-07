@@ -1,5 +1,5 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {UserService} from '../../../../core/services/user/user.service';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { UserService } from '../../../../core/services/user/user.service';
 
 @Component({
   selector: 'app-consult-header',
@@ -22,6 +22,7 @@ export class ConsultHeaderComponent implements OnInit {
   ngOnInit() {
     this.userName = this.userService.getUserInformation().name;
     this.userEmail = this.userService.getUserInformation().email;
+
   }
 
   activatePolicyTab() {

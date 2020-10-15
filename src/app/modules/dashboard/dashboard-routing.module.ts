@@ -48,6 +48,12 @@ const routes: Routes = [
 				loadChildren: () => import('./consultation/consultation.module').then((m) => m.ConsultationModule),
 				canLoad: [AppAuthGuard],
 				data: { accessRoles: ['Datos_polizas', 'Datos_facturas'] }
+			},
+			{
+				path: 'settings',
+				loadChildren: () => import('./settings/settings.module').then((m) => m.SettingsModule),
+				canLoad: [AppAuthGuard],
+				data: { accessRoles: [] }
 			}
 		]
 	},

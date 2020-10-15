@@ -1,0 +1,133 @@
+<!-- <div class="p-6 pr-6 xs:pr-6 sm:pr-6 md:pr-12 lg:pr-12 xl:pr-12 bg-white">
+    <form [formGroup]='settingsGroup'>
+      <h3 class="uppercase dashboard-page-title pt-8">Configuración</h3>
+
+      <div class="mt-20">
+        <div class="mt-6 p-3 pb-3 pt-4" style="background-color: #F2F2F2">
+          <h2 class="" style="color: #18446B; font-weight: bold;">Datos</h2>
+        </div>
+        <div class="mt-5">
+            <div class="grid xl:grid-cols-4">
+                <div class="mr-3 col-span-2">
+                  <app-input [group]="settingsGroup" label="Nombre del Usuario" name="userName"
+                    placeholder="Por ej: Jose María"></app-input>
+                </div>
+            </div>
+            <div class="grid xl:grid-cols-4">
+                <div class="mr-3">
+                  <app-input [group]="settingsGroup" label="Contraseña" name="password"
+                    placeholder="Por ej: Jose María"></app-input>
+                </div>
+                <div class="mr-3">
+                  <app-input [group]="settingsGroup" label="Correo desde" name="mailFrom"
+                    placeholder="Por ej: Jose María"></app-input>
+                </div>
+                <div class="mr-3">
+                  <app-input [group]="settingsGroup" label="Preguntarle al lider si smtpServer va" name="smtpServer"
+                    placeholder="Por ej: Jose María"></app-input>
+                </div> 
+            </div>
+        </div>
+        <div class="mt-6 p-3 pb-3 pt-4" style="background-color: #F2F2F2">
+          <h2 class="" style="color: #18446B; font-weight: bold;">Solicitudes</h2>
+        </div>
+        <div class="mt-5 grid xl:grid-cols-4">
+            <div class="mr-3">
+              <app-input [group]="settingsGroup" label="Nueva Solicitud (Vida, Rep. Dom.)" name="vidaNuevaSolicitudRD"
+                placeholder="Por ej: Jose María"></app-input>
+            </div>
+            <div class="mr-3">
+              <app-input [group]="settingsGroup" label="Nueva Solicitud de Correo (Salud, Rep. Dom.)" name="saludNuevaSolicitudMailsRD"
+                placeholder="Por ej: Jose María"></app-input>
+            </div>
+            <div class="mr-3">
+              <app-input [group]="settingsGroup" label="Nueva Solicitud (Reembolsos, Rep. Dom.)" name="reembolsoNuevaSolicitudRD"
+                placeholder="Por ej: Jose María"></app-input>
+            </div>
+            <div class="mr-3">
+              <app-input [group]="settingsGroup" label="Nueva Solicitud de Correo (Autorizaciones, Rep. Dom.)" name="autorizacionesNuevaSolicitudMailsRD"
+                placeholder="Por ej: Jose María"></app-input>
+            </div>
+            <div class="mr-3">
+              <app-input [group]="settingsGroup" label="Nueva Solicitud (Disability, Panamá)" name="disabilityNuevaSolicitudPM"
+                placeholder="Por ej: Jose María"></app-input>
+            </div>
+            <div class="mr-3">
+              <app-input [group]="settingsGroup" label="Nueva Solicitud (Autorizaciones, Panamá)" name="autorizacionesNuevaSolicitudPM"
+                placeholder="Por ej: Jose María"></app-input>
+            </div>
+            <div class="mr-3">
+              <app-input [group]="settingsGroup" label="Nueva Solicitud (Reembolsos, Panamá)" name="reembolsoNuevaSolicitudPM"
+                placeholder="Por ej: Jose María"></app-input>
+            </div>
+        </div>
+        <div class="mt-6 p-3 pb-3 pt-4" style="background-color: #F2F2F2">
+          <h2 class="" style="color: #18446B; font-weight: bold;">Correos</h2>
+        </div>
+        <div class="mt-5 grid xl: grid-cols-4">       
+            <div class="mr-3">
+              <app-input [group]="settingsGroup" label="Correos (Vida, Rep. Dom.)" name="vidaMailsRD"
+                placeholder="Por ej: Jose María"></app-input>
+            </div>
+            <div class="mr-3">
+              <app-input [group]="settingsGroup" label="Correos (Disability, Rep. Dom.)" name="disabilityMailsRD"
+                placeholder="Por ej: Jose María"></app-input>
+            </div>
+            <div class="mr-3">
+              <app-input [group]="settingsGroup" label="Correos (Salud, Rep. Dom.)" name="saludMailsRD"
+                placeholder="Por ej: Jose María"></app-input>
+            </div>
+            <div class="mr-3">
+              <app-input [group]="settingsGroup" label="Correos (Reembolsos, Rep. Dom.)" name="reembolsoMailsRD"
+                placeholder="Por ej: Jose María"></app-input>
+            </div>
+            <div class="mr-3">
+              <app-input [group]="settingsGroup" label="Correos (Autorizaciones, Rep. Dom.)" name="autorizacionesMailsRD"
+                placeholder="Por ej: Jose María"></app-input>
+            </div>
+            <div class="mr-3">
+              <app-input [group]="settingsGroup" label="Correos (Vida, Panamá)" name="vidaMailsPN"
+                placeholder="Por ej: Jose María"></app-input>
+            </div>
+            <div class="mr-3">
+              <app-input [group]="settingsGroup" label="Correos (Disability, Panamá)" name="disabilityMailsPN"
+                placeholder="Por ej: Jose María"></app-input>
+            </div>
+            <div class="mr-3">
+              <app-input [group]="settingsGroup" label="Correos (Salud, Panamá)" name="saludMailsPN"
+                placeholder="Por ej: Jose María"></app-input>
+            </div>
+            <div class="mr-3">
+              <app-input [group]="settingsGroup" label="Correos (Reembolsos, Panamá)" name="reembolsoMailsPM"
+                placeholder="Por ej: Jose María"></app-input>
+            </div>
+            <div class="mr-3">
+              <app-input [group]="settingsGroup" label="Correos (Autorizaciones, Panamá)" name="autorizacionesMailsPM"
+                placeholder="Por ej: Jose María"></app-input>
+            </div>
+        </div>
+      </div>
+    </form>
+    <form #form="ngForm">
+      <div class="mt-8">
+        <button mat-button class="save-button" style="margin-right: 7.5px !important;"
+        (click)="changeBlockedValue()">{{buttonText}}</button>
+        <button *ngIf="this.blocked == false" mat-button class="send-button" style="margin-right: 7.5px !important;"
+        (click)="saveChangesUseless()" type="submit">Guardar cambios</button>
+        <button mat-button class="cancel-form-button" style="margin-right: 7.5px !important;"
+          (click)="formHandler.sendForm(disabilityGroup, 'disability', 'cancel')" type="submit">Cancelar</button>
+        <button mat-button class="save-button" style="margin-right: 7.5px !important;"
+          (click)="formHandler.sendForm(disabilityGroup, 'disability', 'save', appComponent)"
+          type="submit">Guardar</button>
+        <button mat-button class="send-button" style="margin-right: 7.5px !important;"
+          (click)="formHandler.sendForm(disabilityGroup, 'disability', 'send', appComponent)"
+          type="submit">Enviar</button>
+        <button mat-button class="send-button"
+          (click)="formHandler.sendForm(disabilityGroup, 'disability', 'invitation', this.appComponent)"
+          type="submit">Enviar a
+          cliente</button>
+      </div>
+    </form>
+  </div>
+   -->
+   *settings works*

@@ -1307,8 +1307,14 @@ export class RefundComponent implements OnInit {
 						}, 4000);
 
 						this.refundForm.get('informacion').get('nombre').setValue(`${response.data.asegurado.nombres_asegurado} ${response.data.asegurado.apellidos_asegurado}`);
-						this.refundForm.get('informacion').get('noPoliza').setValue(response.data.asegurado.no_poliza);
+						// this.refundForm.get('informacion').get('noPoliza').setValue(response.data.asegurado.no_poliza);
 						this.refundForm.get('idNumber').setValue(response.data.asegurado.id_asegurado);
+
+						if (this.dataAutoCompleteIdNumberObject.find(nombre => nombre.name == this.refundForm.get('informacion').get('nombre').value)) {
+							console.log('el nombre de response.data es igual a nombre.name');
+							console.log(this.dataAutoCompleteIdNumberObject.find(nombre => nombre.name == this.refundForm.get('informacion').get('nombre').value).policy);
+							this.refundForm.get('informacion').get('noPoliza').setValue(this.dataAutoCompleteIdNumberObject.find(nombre => nombre.name == this.refundForm.get('informacion').get('nombre').value).policy);
+						}
 
 					} else {
 						this.showContent = false;

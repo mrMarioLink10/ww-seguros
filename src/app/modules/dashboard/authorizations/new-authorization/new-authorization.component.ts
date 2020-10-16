@@ -1093,8 +1093,14 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy, DoCheck {
 
 						this.authorization.get('informacionAsegurado').get('nombres').setValue(response.data.asegurado.nombres_asegurado);
 						this.authorization.get('informacionAsegurado').get('apellidos').setValue(response.data.asegurado.apellidos_asegurado);
-						this.authorization.get('informacionAsegurado').get('noPoliza').setValue(response.data.asegurado.no_poliza);
+						// this.authorization.get('informacionAsegurado').get('noPoliza').setValue(response.data.asegurado.no_poliza);
 						this.authorization.get('idNumber').setValue(response.data.asegurado.id_asegurado);
+
+						if (this.dataAutoCompleteIdNumberObject.find(nombre => nombre.name == (this.authorization.get('informacionAsegurado').get('nombres').value + ' ' + this.authorization.get('informacionAsegurado').get('apellidos').value))) {
+							console.log('el nombre de response.data es igual a nombre.name');
+							console.log(this.dataAutoCompleteIdNumberObject.find(nombre => nombre.name == (this.authorization.get('informacionAsegurado').get('nombres').value + ' ' + this.authorization.get('informacionAsegurado').get('apellidos').value)).policy);
+							this.authorization.get('informacionAsegurado').get('noPoliza').setValue(this.dataAutoCompleteIdNumberObject.find(nombre => nombre.name == (this.authorization.get('informacionAsegurado').get('nombres').value + ' ' + this.authorization.get('informacionAsegurado').get('apellidos').value)).policy);
+						}
 
 						switch (response.data.asegurado.sexo) {
 							case 'M':

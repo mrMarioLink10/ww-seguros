@@ -28,7 +28,7 @@ export class AppAuthGuard extends KeycloakAuthGuard implements CanLoad {
         this.authenticated = await this.keycloakAngular.isLoggedIn();
         this.roles = await this.keycloakAngular.getUserRoles(true);
         console.log('roles:', this.keycloakAngular.getUserRoles(true));
-        console.log('acceso permitido a: ', route.data.accessRoles)
+        console.log('acceso permitido a: ', route.data.accessRoles);
         const result = await this.checkAccessAllowed(route.data.accessRoles);
         resolve(result);
       } catch (error) {

@@ -66,7 +66,14 @@
   </div>
 
   <app-add-array-button [array]="form.get('acordeon')" [item]="addItem('acordeon')"></app-add-array-button>
-</div>
-<div class="radio-button-label add-field mt-6 ml-3" (click)="print()">
-  Imprimir formulario en consola
+
+  <form #fakeForm="ngForm" [formGroup]="form">
+    <div *ngIf="showContent" class="mt-8 mb-4">
+      <button mat-button class="cancel-form-button" style="margin-right: 7.5px !important;"
+        (click)="formHandler.sendForm(form, 'form', 'cancel')" type="submit">Cancelar</button>
+      <button #saveButton name="saveButton" mat-button class="save-button" style="margin-right: 7.5px !important;"
+        (click)="sendForm(form, 'form', 'save')" type="submit">Guardar</button>
+      <!-- <button mat-button class="send-button" (click)="sendForm(form, 'form', 'send', ID)" type="submit">Enviar</button> -->
+    </div>
+  </form>
 </div>

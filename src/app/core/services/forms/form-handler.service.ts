@@ -16,6 +16,7 @@ import { AppComponent } from 'src/app/app.component';
 import { Observable, Subject } from 'rxjs';
 import { RequestsService } from 'src/app/modules/invitation/services/requests.service';
 import { UserService } from '../user/user.service';
+import { FormsService } from '../../../modules/dashboard/services/forms/forms.service';
 // tslint:disable: forin
 // tslint:disable: variable-name
 
@@ -39,6 +40,7 @@ export class FormHandlerService {
 		private fb: FormBuilder,
 		private requestService: RequestsService,
 		private userService: UserService,
+		private formsService: FormsService
 	) { }
 
 	sendForm(form: FormGroup, name: string, type?: string, appComponent?: any, id?: number, isInvitation?: boolean) {
@@ -56,7 +58,6 @@ export class FormHandlerService {
 		const ID = id;
 		console.log('ID', ID);
 
-
 		switch (name) {
 			case 'claims-reclaim':
 				if (type === 'send') {
@@ -67,6 +68,17 @@ export class FormHandlerService {
 					dataClosing = this.dialogOption.confirmedSavedForm('Reclamo');
 				}
 				route = 'dashboard/claims';
+				break;
+
+			case 'form':
+				if (type === 'send') {
+					dataOpen = this.dialogOption.sendForm('creación de formulario');
+					dataClosing = this.dialogOption.confirmedForm('creación de formulario');
+				} else if (type === 'save') {
+					dataOpen = this.dialogOption.saveForm('creación de formulario');
+					dataClosing = this.dialogOption.confirmedSavedForm('creación de formulario');
+				}
+				route = 'dashboard/forms';
 				break;
 
 			case 'claims-refund':
@@ -251,6 +263,17 @@ export class FormHandlerService {
 									});
 								break;
 
+							case 'form':
+								appComponent.showOverlay = true;
+								this.formsService.postData(json)
+									.subscribe(res => {
+										this.correctSend(res, dialog, dataClosing, route);
+										appComponent.showOverlay = false;
+									}, (err) => {
+										this.badSend(err, dialog);
+									});
+								break;
+
 							case 'life':
 								appComponent.showOverlay = true;
 								if (isInvitation) {
@@ -391,6 +414,42 @@ export class FormHandlerService {
 											.subscribe((res: any) => {
 												if (res.data.id) {
 													this.newAuthorizationService.sendAuthorization(res.data.id)
+														.subscribe(response => {
+															appComponent.showOverlay = false;
+															console.log(response);
+															this.correctSend(response, dialog, dataClosing, route);
+
+														});
+												}
+												// this.correctSend(res, dialog, dataClosing, route);
+
+											}, (err) => {
+												appComponent.showOverlay = false;
+												this.badSend(err, dialog);
+
+											});
+									}
+									break;
+
+								case 'form':
+									if (ID) {
+										appComponent.showOverlay = true;
+										this.formsService.sendData(ID)
+											.subscribe(res => {
+												appComponent.showOverlay = false;
+
+												this.correctSend(res, dialog, dataClosing, route);
+											}, (err) => {
+												appComponent.showOverlay = false;
+												this.badSend(err, dialog);
+
+											});
+									} else {
+										appComponent.showOverlay = true;
+										this.formsService.postData(json)
+											.subscribe((res: any) => {
+												if (res.data.id) {
+													this.formsService.sendData(res.data.id)
 														.subscribe(response => {
 															appComponent.showOverlay = false;
 															console.log(response);

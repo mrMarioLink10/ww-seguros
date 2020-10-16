@@ -19,6 +19,7 @@ export class InputComponent implements OnInit, AfterViewChecked {
 	@Input() max: string;
 	@Input() placeholder: string;
 	@Input() disabled?: boolean;
+	@Input() beLowerCase?: boolean;
 	@Input() group: FormGroup;
 
 	constructor(private cdr: ChangeDetectorRef) { }

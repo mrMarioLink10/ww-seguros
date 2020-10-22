@@ -27,7 +27,12 @@ export class FormsService {
 
     return this.http.post(`${environment.apiUrl}/api/DynamicForm`, body, httpOptions);
   }
+
   sendData(id): Observable<any> {
     return this.http.post(`${environment.apiUrl}/api/DynamicForm/confirm/${id}`, id);
+  }
+
+  getTargetData(id: number): Observable<any> {
+    return this.http.get(`${environment.apiUrl}/api/DynamicForm/${id}`);
   }
 }

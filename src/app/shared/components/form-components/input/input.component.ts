@@ -38,4 +38,9 @@ export class InputComponent implements OnInit, AfterViewChecked {
 		k = event.charCode;
 		return ((k > 64 && k < 91) || (k > 96 && k < 123) || k === 8 || k === 32 || (k >= 48 && k <= 57) || k === 44 || k === 46 || k === 64 || k === 241 || k === 209);
 	}
+
+	goCap(input, $event) {
+		input.value = $event.target.value.toUpperCase();
+		this.cdr.detectChanges();
+	}
 }

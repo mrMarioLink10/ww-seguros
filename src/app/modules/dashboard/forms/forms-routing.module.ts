@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { CanExitGuard } from 'src/app/core/guards/can-exit.guard';
 import { FormsComponent } from './forms.component';
 import { NewFormComponent } from './new-form/new-form.component';
 
@@ -13,6 +14,12 @@ const routes: Routes = [
   {
     path: 'new-form',
     component: NewFormComponent,
+    canDeactivate: [CanExitGuard]
+  },
+  {
+    path: 'new-form/:id',
+    component: NewFormComponent,
+    canDeactivate: [CanExitGuard]
   }
 ];
 

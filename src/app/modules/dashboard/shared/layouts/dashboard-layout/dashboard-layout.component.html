@@ -72,8 +72,8 @@
             <div style="max-height: 35px !important;" class="text-xs uppercase">PRE - Autorizaciones</div>
           </mat-list-item>
 
-          <mat-list-item [routerLink]="['forms']" routerLinkActive="router-link-active"
-            style="color: white; max-height: 35px !important;" class="my-3">
+          <mat-list-item *ngIf="showMatListen(['administrador'])" [routerLink]="['forms']"
+            routerLinkActive="router-link-active" style="color: white; max-height: 35px !important;" class="my-3">
             <img style="max-height: 35px !important;"
               [src]="!activeRoute.includes('/dashboard/forms') ? '../../../../../../assets/iconos/formulario.svg' : '../../../../../../assets/iconos/formulario-b.svg'"
               height="24px" width="24px" class="mr-3 ml-3">
@@ -107,14 +107,13 @@
             </mat-form-field>
           </mat-list-item>
 
-          <!-- <mat-list-item
-            [routerLink]="['settings']" routerLinkActive="router-link-active"
-            style="color: white; max-height: 35px !important;" class="my-3">
+          <mat-list-item *ngIf="showMatListen(['administrador'])" [routerLink]="['settings']"
+            routerLinkActive="router-link-active" style="color: white; max-height: 35px !important;" class="my-3">
             <img style="max-height: 35px !important;"
               [src]="!activeRoute.includes('/dashboard/settings') ? '../../../../../../assets/iconos/autorizacion2.svg' : '../../../../../../assets/iconos/autorizacion1.svg'"
               height="24px" width="24px" class="mr-3 ml-3">
             <div style="max-height: 35px !important;" class="text-xs uppercase">Configuración</div>
-          </mat-list-item> -->
+          </mat-list-item>
 
           <!-- <mat-list-item style="color: white; max-height: 35px !important; padding-left: 0.75rem" class="mt-10">
             <button class="text-xs uppercase h-full w-full text-left" (click)="logOut()">Salir</button>

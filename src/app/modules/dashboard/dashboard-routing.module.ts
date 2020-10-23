@@ -52,13 +52,13 @@ const routes: Routes = [
 				path: 'forms',
 				loadChildren: () => import('./forms/forms.module').then((m) => m.FormsDashboardModule),
 				canLoad: [AppAuthGuard],
-				data: { accessRoles: [] }
+				data: { accessRoles: ['administrador'] }
 			},
 			{
 				path: 'settings',
 				loadChildren: () => import('./settings/settings.module').then((m) => m.SettingsModule),
 				canLoad: [AppAuthGuard],
-				data: { accessRoles: [] }
+				data: { accessRoles: ['administrador'] }
 			}
 		]
 	},

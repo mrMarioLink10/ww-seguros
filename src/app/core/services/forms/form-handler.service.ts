@@ -17,6 +17,7 @@ import { Observable, Subject } from 'rxjs';
 import { RequestsService } from 'src/app/modules/invitation/services/requests.service';
 import { UserService } from '../user/user.service';
 import { FormsService } from '../../../modules/dashboard/services/forms/forms.service';
+import { SettingsService } from '../../../modules/dashboard/settings/services/settings.service';
 // tslint:disable: forin
 // tslint:disable: variable-name
 
@@ -40,7 +41,8 @@ export class FormHandlerService {
 		private fb: FormBuilder,
 		private requestService: RequestsService,
 		private userService: UserService,
-		private formsService: FormsService
+		private formsService: FormsService,
+		private settingsService: SettingsService,
 	) { }
 
 	sendForm(form: FormGroup, name: string, type?: string, appComponent?: any, id?: number, isInvitation?: boolean) {
@@ -765,5 +767,64 @@ export class FormHandlerService {
 		});
 
 		return name;
+	}
+
+	saveFormSettings(form: FormGroup, appComponent: any) {
+		console.log('Impresion de formulario de settings down here: ', form);
+
+		let Dialog;
+		let dataOpen;
+		let dataClosing;
+		const route = 'dashboard/settings';
+
+		dataOpen = this.dialogOption.saveSettings();
+		dataClosing = this.dialogOption.confirmedSavedSettings();
+
+		Dialog = this.dialog.open(BaseDialogComponent, {
+			data: dataOpen,
+			minWidth: 385,
+		});
+
+		Dialog.afterClosed().subscribe((result) => {
+
+			this.sendedForm = form.getRawValue();
+			const json = JSON.stringify(this.sendedForm);
+			console.log(json);
+
+			console.log('result es igual a ' + result);
+
+			if (result === 'true') {
+				let dialog;
+				appComponent.showOverlay = true;
+				if (form.valid) {
+					console.log('settings es valido');
+					this.settingsService.postSettings(json)
+						.subscribe(res => {
+							this.correctSend(res, dialog, dataClosing, route);
+							appComponent.showOverlay = false;
+							console.log('Envio realizado correctamente');
+							setTimeout(() => {
+								window.location.reload();
+							}, 2000);
+						}, (err) => {
+							this.badSend(err, dialog);
+							console.log('Envio fallido');
+						});
+				}
+				else {
+					setTimeout(() => {
+						appComponent.showOverlay = false;
+						console.log('settings NO es valido');
+						dialog = this.dialog.open(BaseDialogComponent, {
+							data: this.dialogOption.settingsInvalid(),
+							minWidth: 385
+						});
+						this.closeDialog(dialog);
+					}, 1000);
+				}
+			}
+		});
+
+		// this.dialogHandler(form);
 	}
 }

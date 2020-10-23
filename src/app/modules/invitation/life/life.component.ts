@@ -1475,13 +1475,13 @@ export class LifeComponent implements OnInit, DoCheck {
       if (i !== null) {
         if (this.contigentBeneficaryTitles) {
           if (this.contigentBeneficaryTitles[i] && this.newRequest.get('contingentBeneficiary').get('dependentsC').get(i.toString()).value.id2Attached !== '') {
-            return this.contigentBeneficaryTitles[i].id2AttachedUrl;
+            return this.contigentBeneficaryTitles[i].id2AttachedBeneficiaryUrl;
           }
         }
       } else {
         if (this.contigentAnotherTitle) {
           if (this.contigentAnotherTitle && this.newRequest.get('contingentBeneficiary').get('personBenefited').value.id2Attached !== '') {
-            return this.contigentAnotherTitle.id2AttachedUrl;
+            return this.contigentAnotherTitle.id2AttachedBeneficiaryUrl;
           }
         }
       }
@@ -1766,7 +1766,7 @@ export class LifeComponent implements OnInit, DoCheck {
   }
 
   addFilesB(form: FormGroup) {
-    form.addControl('medicExam', this.fb.control('', Validators.required));
+    // form.addControl('medicExam', this.fb.control('', Validators.required));
   }
 
   addFilesC(form: FormGroup) {
@@ -1884,7 +1884,7 @@ export class LifeComponent implements OnInit, DoCheck {
 
   ngDoCheck(): void {
     //   this.maxWidth = window.matchMedia('(max-width: 11270px)');
-    if (this.newRequest.get('generalInformation').get('hasAnotherCoverage').value == 'NO' &&
+    if (this.newRequest.get('generalInformation').get('hasAnotherCoverage').value != 'SI' &&
       this.newRequest.get('generalInformation').get('anotherCoverages')) {
 
       const formQDoCheck = this.newRequest.get('generalInformation') as FormGroup;
@@ -1904,17 +1904,18 @@ export class LifeComponent implements OnInit, DoCheck {
       }
     }
 
-    if (this.newRequest.get('generalInformation').get('anyoneProposed').value == 'NO' &&
+    if (this.newRequest.get('generalInformation').get('anyoneProposed').value != 'SI' &&
       this.newRequest.get('generalInformation').get('insuranceProposed')) {
 
       const formGIDoCheck = this.newRequest.get('generalInformation') as FormGroup;
       formGIDoCheck.removeControl('insuranceProposed');
+      this.insuranceProposedList = undefined;
     }
     // tslint:disable-next-line: prefer-for-of
     for (let x = 0; x < this.medicQuestions.length; x++) {
 
       if (this.medicQuestions[x].name != 'haveHadWeightChanges' && this.medicQuestions[x].name != 'isWomen'
-        && this.newRequest.get('medicalHistory').get(this.medicQuestions[x].name).value == 'NO' &&
+        && this.newRequest.get('medicalHistory').get(this.medicQuestions[x].name).value != 'SI' &&
         this.newRequest.get('medicalHistory').get('informations').get(this.medicQuestions[x].group)) {
 
         const formHMIDoCheck = this.newRequest.get('medicalHistory').get('informations') as FormGroup;
@@ -1938,12 +1939,19 @@ export class LifeComponent implements OnInit, DoCheck {
       }
     }
 
-    if (this.newRequest.get('agentReport').get('isLessThan21').value == 'NO' &&
+    if (this.newRequest.get('agentReport').get('isLessThan21').value != 'SI' &&
       this.newRequest.get('agentReport').get('familyInsurances')) {
 
       const formARDoCheck = this.newRequest.get('agentReport') as FormGroup;
       formARDoCheck.removeControl('familyInsurances');
       this.familyRelationshipInsurances = undefined;
+    }
+    if (this.newRequest.get('generalInformation').get('haveLostDriveLicense').value != 'SI' &&
+      this.newRequest.get('generalInformation').get('lostDriveLicense')) {
+
+      const formGIDoCheck = this.newRequest.get('generalInformation') as FormGroup;
+      formGIDoCheck.removeControl('lostDriveLicense');
+      this.lostDriveLicenseList = undefined;
     }
   }
 

@@ -7,6 +7,7 @@ import { MatDialog } from '@angular/material';
 import { BaseDialogComponent } from 'src/app/shared/components/base-dialog/base-dialog.component';
 import { DialogOptionService } from 'src/app/core/services/dialog/dialog-option.service';
 import { map, first } from 'rxjs/operators';
+import { FormHandlerService } from 'src/app/core/services/forms/form-handler.service';
 
 @Component({
   selector: 'app-settings',
@@ -23,14 +24,16 @@ export class SettingsComponent implements OnInit {
   'vidaMailsRD', 'disabilityMailsRD', 'saludMailsRD', 'vidaMailsPN', 'disabilityMailsPN', 'saludMailsPN',
   'reembolsoNuevaSolicitudRD', 'autorizacionesNuevaSolicitudMailsRD', 'autorizacionesNuevaSolicitudPM',
   'reembolsoNuevaSolicitudPM', 'reembolsoMailsRD', 'autorizacionesMailsRD', 'reembolsoMailsPM', 'autorizacionesMailsPM',
-  'mailFrom', 'smtpServer', 'userName', 'password'];
+  'mailFrom', 'smtpServer', 'userName', 'password', 'port'];
 
   @ViewChild('form', { static: false }) form;
 
   constructor( private fb: FormBuilder, private settingService: SettingsService, public appComponent: AppComponent,
-               public dialog: MatDialog, private dialogOption: DialogOptionService) { }
+               public dialog: MatDialog, private dialogOption: DialogOptionService,
+               public formHandler: FormHandlerService) { }
 
   ngOnInit() {
+    this.appComponent.showOverlay = true;
 
     this.settingsGroup = this.fb.group({
       vidaNuevaSolicitudRD: ['', Validators.required],
@@ -52,6 +55,7 @@ export class SettingsComponent implements OnInit {
       autorizacionesMailsPM: ['', Validators.required],
       mailFrom: ['', Validators.required],
       smtpServer: ['', Validators.required],
+      port: ['', Validators.required],
       userName: ['', Validators.required],
       password: ['', Validators.required],
     });
@@ -82,8 +86,10 @@ export class SettingsComponent implements OnInit {
     }
   }
 
-  saveChangesUseless() {
-    console.log('Esto no sirve para nada, recordatorio de que hare esta funcionalidad en el formHandler de Isai');
+  saveChanges() {
+    // console.log('Esto no sirve para nada, recordatorio de que hare esta funcionalidad en el formHandler de Isai');
+    this.settingsGroup.markAllAsTouched();
+    this.formHandler.saveFormSettings(this.settingsGroup, this.appComponent);
   }
 
   // canDeactivate(): Observable<boolean> | boolean {
@@ -107,8 +113,26 @@ export class SettingsComponent implements OnInit {
 
   getData() {
     this.settingService.returnData().subscribe(data => {
+      // this.appComponent.showOverlay = true;
       console.log(data);
+      if (data.data != null) {
+        // tslint:disable-next-line: prefer-for-of
+        for (let x = 0; x < this.settingsFieldsNamesArray.length; x++) {
+          this.settingsGroup.get(this.settingsFieldsNamesArray[x]).setValue(data.data[this.settingsFieldsNamesArray[x]]);
+        }
+        if (data.data.id) {
+          this.settingsGroup.addControl('id', this.fb.control(''));
+          this.settingsGroup.get('id').setValue(data.data.id);
+        }
+        setTimeout(() => {
+          this.appComponent.showOverlay = false;
+        }, 5000);
+      }
+      else {
+        setTimeout(() => {
+          this.appComponent.showOverlay = false;
+        }, 5000);
+      }
     });
-    // this.appComponent.showOverlay = true;
   }
 }

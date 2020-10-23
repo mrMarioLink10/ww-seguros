@@ -1,5 +1,5 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Component, OnInit, Input, DoCheck } from '@angular/core';
+import { FormGroup, FormBuilder, Validators, RequiredValidator } from '@angular/forms';
 import { FieldConfig } from 'src/app/shared/components/form-components/models/field-config';
 
 @Component({
@@ -7,7 +7,7 @@ import { FieldConfig } from 'src/app/shared/components/form-components/models/fi
   templateUrl: './financial-status.component.html',
   styles: []
 })
-export class FinancialStatusComponent implements OnInit {
+export class FinancialStatusComponent implements OnInit, DoCheck {
 
   @Input() form: FormGroup;
   @Input() showWarningDot: boolean;
@@ -200,6 +200,19 @@ export class FinancialStatusComponent implements OnInit {
 
   }
 
+  ngDoCheck() {
+
+    if (this.form.get('currency').value != null) {
+      if (this.form.get('currency').value != undefined) {
+        if (this.form.get('currency').value != '') {
+          if (this.currencyLabel != this.form.get('currency').value) {
+            this.currencyLabel = this.form.get('currency').value;
+          }
+        }
+      }
+    }
+  }
+
   setStep(index: number) {
     this.step = index;
   }
@@ -210,7 +223,7 @@ export class FinancialStatusComponent implements OnInit {
 
   addBasicControls() {
 
-    this.form.addControl('name', this.fb.control('', Validators.required));
+    this.form.addControl('name', this.fb.control(''));
     this.form.addControl('date', this.fb.control(new Date(), Validators.required));
     this.form.addControl('currency', this.fb.control('', Validators.required));
     this.form.addControl('lawsuit', this.fb.control('', Validators.required));
@@ -272,7 +285,12 @@ export class FinancialStatusComponent implements OnInit {
 
     }));
 
-
+    if (this.form) {
+      if (this.form.get('name')) {
+        this.form.get('name').clearValidators();
+        this.form.get('name').updateValueAndValidity();
+      }
+    }
   }
 
   selectChange(event) {
@@ -280,8 +298,6 @@ export class FinancialStatusComponent implements OnInit {
     this.currencyLabel = event.valor;
     console.log('El valor del select es: ' + this.currencyLabel);
     console.log(JSON.stringify(this.form.value));
-
-
   }
 
 

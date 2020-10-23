@@ -61,7 +61,7 @@ export class AuthorizationsComponent implements OnInit {
 		customClass: 'dashboard-button'
 	};
 
-	displayedColumns: string[] = ['noPoliza', 'nombres', 'apellidos', 'tipoReclamo', 'procedimiento', 'nombreServicio', 'condicion', 'status', 'acciones'];
+	displayedColumns: string[] = ['noPoliza', 'nombres', 'apellidos', 'tipoReclamo', 'procedimiento', 'nombreServicio', 'condicion', 'userName', 'status', 'acciones'];
 
 	dataSource;
 	authorizations: any[];

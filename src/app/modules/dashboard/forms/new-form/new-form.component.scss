@@ -1,0 +1,61 @@
+.info-home {
+  background-color: #F2F2F2;
+
+  mat-form-field {
+    width: 300px;
+  }
+
+  .w-h {
+    width: 150px;
+  }
+}
+
+::ng-deep .mat-tab-labels {
+  margin-top: 15px;
+  background-color: #F2F2F2;
+}
+
+.colorb {
+  background-color: #E6E7E8;
+  padding: 15px;
+  margin: 15px;
+}
+
+.background-w {
+
+  background-color: white;
+}
+
+mat-divider {
+  margin-top: 15px !important;
+  margin-bottom: 30px !important;
+}
+
+.pt-21 {
+  padding-top: 21px !important;
+}
+
+.acordeon {
+  background-color: #F2F2F2;
+  margin: 20px 0px;
+}
+
+.seccion {
+  margin: 10px 10px;
+  padding: 4px;
+  border-color: #e1e1e1;
+  border-width: 1px;
+}
+
+.campo {
+  border-color: #007DB7;
+  border-radius: 2.5px;
+  border-width: 1px;
+  margin: 0px 0.75rem 0.75rem 0px;
+}
+
+.add-field {
+  cursor: pointer !important;
+  color: #007DB7 !important;
+  font-weight: bold;
+}

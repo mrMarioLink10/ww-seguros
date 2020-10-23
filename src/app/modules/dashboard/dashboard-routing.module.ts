@@ -41,13 +41,18 @@ const routes: Routes = [
 				loadChildren: () => import('./requests/requests.module').then((m) => m.RequestsModule),
 				canLoad: [AppAuthGuard],
 				data: { accessRoles: ['Solicitud_suscripcion'] }
-
 			},
 			{
 				path: 'consult',
 				loadChildren: () => import('./consultation/consultation.module').then((m) => m.ConsultationModule),
 				canLoad: [AppAuthGuard],
 				data: { accessRoles: ['Datos_polizas', 'Datos_facturas'] }
+			},
+			{
+				path: 'forms',
+				loadChildren: () => import('./forms/forms.module').then((m) => m.FormsDashboardModule),
+				canLoad: [AppAuthGuard],
+				data: { accessRoles: [] }
 			},
 			{
 				path: 'settings',

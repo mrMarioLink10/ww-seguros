@@ -56,6 +56,11 @@
           <td class="padding-cell" mat-cell *matCellDef="let element"> {{element.monto | currency}} </td>
         </ng-container>
 
+        <ng-container matColumnDef="idBroker" style="margin-right: 15px !important">
+          <th class="padding-cell" mat-header-cell *matHeaderCellDef mat-sort-header> Creada por </th>
+          <td class="padding-cell" mat-cell *matCellDef="let element"> {{element.idBroker | titlecase}} </td>
+        </ng-container>
+
         <ng-container matColumnDef="estatus" style="margin-right: 15px !important">
           <th class="padding-cell" mat-header-cell *matHeaderCellDef mat-sort-header> Estatus </th>
           <td class="padding-cell text-color-green" mat-cell *matCellDef="let element"
@@ -69,27 +74,27 @@
             <!--  <button mat-mini-fab aria-label="Ver mas" class="dashboard-table-buttons">
               <img src="../../../../assets/iconos/eye.svg">
             </button> -->
-            <button mat-mini-fab aria-label="Enviar"  title="Crear Solicitud"
+            <button mat-mini-fab aria-label="Enviar" title="Crear Solicitud"
               *ngIf="element.tipoSeguro === 'VIDA' || element.tipoSeguro === 'VIDA'" class="dashboard-table-buttons"
-              (click)="navigateToLife(element.noCotizacion)"  title="Enviar">
+              (click)="navigateToLife(element.noCotizacion)" title="Enviar">
               <img src="../../../../assets/iconos/check.svg">
             </button>
-            <button mat-mini-fab aria-label="Enviar"  title="Crear Solicitud"
+            <button mat-mini-fab aria-label="Enviar" title="Crear Solicitud"
               *ngIf="element.tipoSeguro === 'SALUD' || element.tipoSeguro === 'SALUD'"
               (click)="navigateToSalud(element.noCotizacion)" class="dashboard-table-buttons">
               <img src="../../../../assets/iconos/check.svg">
             </button>
 
-            <button mat-mini-fab aria-label="Enviar"  title="Ver Cotización"
-            *ngIf="element.tipoSeguro === 'VIDA' || element.tipoSeguro === 'VIDA'" class="dashboard-table-buttons"
-            (click)="navigateToLifePdf(element.noCotizacion)">
-            <img src="../../../../assets/iconos/eye.svg">
-          </button>
-          <button mat-mini-fab aria-label="Enviar"
-            *ngIf="element.tipoSeguro === 'SALUD' || element.tipoSeguro === 'SALUD'" title="Ver Cotización"
-            (click)="navigateToSaludPdf(element.noCotizacion)" class="dashboard-table-buttons">
-            <img src="../../../../assets/iconos/eye.svg">
-          </button>
+            <button mat-mini-fab aria-label="Enviar" title="Ver Cotización"
+              *ngIf="element.tipoSeguro === 'VIDA' || element.tipoSeguro === 'VIDA'" class="dashboard-table-buttons"
+              (click)="navigateToLifePdf(element.noCotizacion)">
+              <img src="../../../../assets/iconos/eye.svg">
+            </button>
+            <button mat-mini-fab aria-label="Enviar"
+              *ngIf="element.tipoSeguro === 'SALUD' || element.tipoSeguro === 'SALUD'" title="Ver Cotización"
+              (click)="navigateToSaludPdf(element.noCotizacion)" class="dashboard-table-buttons">
+              <img src="../../../../assets/iconos/eye.svg">
+            </button>
 
           </td>
         </ng-container>

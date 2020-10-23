@@ -1,0 +1,79 @@
+<div class="p-6 pl-6 pr-6 xs:pr-6 sm:pr-6 md:pr-12 lg:pr-12 xl:pr-12 bg-white">
+  <h3 class="uppercase dashboard-page-title pt-8">nuevo formulario</h3>
+  <div class="mt-6 p-3 pb-4 info-cot">
+    <div class="filter-title">Info. Formulario</div>
+    <div class="mt-3 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4">
+      <app-input class="mr-3" [group]="form" label="Nombre del formulario" name="formName">
+      </app-input>
+      <app-input class="mr-3 col-span-3" [group]="form" label="Descripción" name="formDescription">
+      </app-input>
+    </div>
+  </div>
+  <h3 class="uppercase dashboard-page-title pt-8" style="font-size: 16px">acordeones</h3>
+  <div class="acordeon pb-3" *ngFor="let acordeon of form.get('acordeon')['controls']; let i = index">
+    <div class="mt-3 ml-3 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4">
+      <app-input class="mr-3 mt-4 col-span-2" [group]="form.get('acordeon').get(i.toString())"
+        label="Título del acordeón" name="titulo">
+      </app-input>
+    </div>
+    <h3 class="uppercase dashboard-page-title mt-2 ml-3" style="font-size: 16px;">secciones</h3>
+    <!-- SECCIONES POR ACORDEON -->
+    <div class="seccion ml-3" *ngFor="let seccion of acordeon.get('seccion')['controls']; let id = index">
+      <div class="mt-3 ml-3 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-6 xl:grid-cols-6">
+        <app-number-input class="mr-3" [group]="seccion" label="Campos por fila" name="ancho">
+        </app-number-input>
+      </div>
+      <div class="ml-3 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-2 xl:grid-cols-2">
+        <div class="radio-button-label">Campos</div>
+        <div class="radio-button-label add-field" (click)="addField(seccion.get('campos'))">
+          Agregar campo
+        </div>
+      </div>
+      <hr class="w-full my-3 ww-divider">
+      <!-- CAMPOS POR SECCION -->
+      <div class="mt-3 ml-3 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-6 xl:grid-cols-6">
+        <div *ngFor="let campo of seccion.get('campos')['controls']; let idx = index">
+          <div class="flex justify-between campo pl-3 py-1">
+            <div style="align-self: center;">
+              {{getFieldName(campo, idx)}}
+            </div>
+            <div class="">
+              <button mat-mini-fab aria-label="Editar campo" (click)="editFieldParams(campo)" type="button" class="ml-3"
+                class="dashboard-toolbar-buttons"
+                style="border: 1px rgb(197, 197, 197) solid; margin-right: 0.35rem !important;">
+                <mat-icon style="color: #18446B">edit</mat-icon>
+              </button>
+              <app-delete-array-button *ngIf="seccion.get('campos')['controls'].length > 1"
+                [array]="seccion.get('campos')" [index]="idx">
+              </app-delete-array-button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <app-delete-array-button *ngIf="acordeon.get('seccion')['controls'].length > 1"
+        [array]="form.get('acordeon').get(i.toString()).get('seccion')" [index]="id">
+      </app-delete-array-button>
+      <!-- <hr *ngIf="acordeon.get('seccion')['controls'].length > 1" class="w-full mt-3 ww-divider"> -->
+    </div>
+
+    <app-add-array-button class="ml-3" [array]="form.get('acordeon').get(i.toString()).get('seccion')"
+      [item]="addItem('seccion')">
+    </app-add-array-button>
+    <hr *ngIf="form.get('acordeon')['controls'].length > 1" class="w-full my-3 ww-divider">
+    <app-delete-array-button class="ml-3 my-3" *ngIf="form.get('acordeon')['controls'].length > 1"
+      [array]="form.get('acordeon')" [index]="i"></app-delete-array-button>
+  </div>
+
+  <app-add-array-button [array]="form.get('acordeon')" [item]="addItem('acordeon')"></app-add-array-button>
+
+  <form #fakeForm="ngForm" [formGroup]="form">
+    <div *ngIf="showContent" class="mt-8 mb-4">
+      <button mat-button class="cancel-form-button" style="margin-right: 7.5px !important;"
+        (click)="formHandler.sendForm(form, 'form', 'cancel')" type="submit">Cancelar</button>
+      <button #saveButton name="saveButton" mat-button class="save-button" style="margin-right: 7.5px !important;"
+        (click)="sendForm(form, 'form', 'save')" type="submit">Guardar</button>
+      <!-- <button mat-button class="send-button" (click)="sendForm(form, 'form', 'send', ID)" type="submit">Enviar</button> -->
+    </div>
+  </form>
+</div>

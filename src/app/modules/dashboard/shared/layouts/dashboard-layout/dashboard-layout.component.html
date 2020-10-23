@@ -116,9 +116,9 @@
             <div style="max-height: 35px !important;" class="text-xs uppercase">Configuración</div>
           </mat-list-item> -->
 
-          <mat-list-item style="color: white; max-height: 35px !important; padding-left: 0.75rem" class="mt-10">
+          <!-- <mat-list-item style="color: white; max-height: 35px !important; padding-left: 0.75rem" class="mt-10">
             <button class="text-xs uppercase h-full w-full text-left" (click)="logOut()">Salir</button>
-          </mat-list-item>
+          </mat-list-item> -->
 
         </mat-list>
       </mat-nav-list>
@@ -132,6 +132,13 @@
             class="dashboard-toolbar-buttons"
             style="background-color: #0179B2 !important; border-radius: 10px !important; margin-top: 40px; margin-left: 9px;">
             <mat-icon style="color: white; font-weight: 600;">arrow_back</mat-icon>
+          </button>
+        </div>
+        <div class="flex justify-end">
+          <button (click)="logOut()" mat-mini-fab aria-label="Example icon-button with a heart icon"
+            class="dashboard-toolbar-buttons"
+            style="background-color: #0179B2 !important; border-radius: 10px !important; margin-top: 40px; margin-left: 9px;">
+            <mat-icon style="color: white; font-weight: 600;">login</mat-icon>
           </button>
         </div>
         <div class="flex flex-row justify-end flex-wrap w">

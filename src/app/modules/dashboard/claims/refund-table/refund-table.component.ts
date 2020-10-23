@@ -40,7 +40,7 @@ export class RefundTableComponent implements OnInit {
 
   dataSource;
   data = [];
-  displayedColumns: string[] = ['noPoliza', 'nombre', 'tipoReclamo', 'totalAmountPesos', 'totalAmount', 'forma', 'estatus', 'acciones'];
+  displayedColumns: string[] = ['noPoliza', 'nombre', 'tipoReclamo', 'totalAmountPesos', 'totalAmount', 'forma', 'userName', 'estatus', 'acciones'];
 
   constructor(private appComponent: AppComponent, private claimsService: ClaimsService,
     private userService: UserService, public formHandlerService: FormHandlerService,

@@ -47,30 +47,30 @@
           <td class="padding-cell" mat-cell *matCellDef="let element"> {{element.updateDate}} </td>
         </ng-container>
 
-        <!-- <ng-container matColumnDef="estatus" style="margin-right: 15px !important">
+        <ng-container matColumnDef="status" style="margin-right: 15px !important">
           <th class="padding-cell" mat-header-cell *matHeaderCellDef mat-sort-header> Estatus </th>
           <td class="padding-cell" mat-cell *matCellDef="let element"
-            [ngClass]="{'text-color-yellow': element.estatus === 0 || element.estatus === 6, 'text-color-red': element.estatus === 4, 'text-color-green': element.estatus === 2 || element.estatus === 7, 'text-color-blue-table': element.estatus === 1}">
-            {{element.estatus | tableStatus}} </td>
-        </ng-container> -->
+            [ngClass]="{'text-color-yellow': element.status === 0 || element.status === 6, 'text-color-red': element.status === 4, 'text-color-green': element.status === 2 || element.status === 7, 'text-color-blue-table': element.status === 1}">
+            {{element.status | tableStatus}} </td>
+        </ng-container>
 
         <ng-container matColumnDef="acciones" style="text-align: end !important; margin-right: 15px !important; ">
           <th class="padding-cell" mat-header-cell *matHeaderCellDef
             style="max-width: 140px !important; min-width: 137px !important; width: 137px !important;"> Acciones </th>
           <td class="padding-cell" mat-cell *matCellDef="let element"
             style="max-width: 140px !important; min-width: 137px !important; width: 137px !important;">
-            <!-- <button *ngIf="element.estatus === 1" (click)="directSendTarget(element.id)" mat-mini-fab
+            <!-- <button *ngIf="element.status === 1" (click)="directSendTarget(element.id)" mat-mini-fab
               aria-label="Enviar" class="dashboard-table-buttons" title="Enviar">
               <img src="../../../../assets/iconos/send.svg">
             </button> -->
             <button mat-mini-fab aria-label="Editar"
-              *ngIf="element.estatus === 1 || element.estatus === 0 || element.estatus === 6 || element.estatus === 7"
+              *ngIf="element.status === 1 || element.status === 0 || element.status === 6 || element.status === 7"
               class="dashboard-table-buttons" (click)="editTarget(element.id)" title="Editar">
               <!--  -->
               <img src="../../../../assets/iconos/edit.svg">
             </button>
 
-            <button *ngIf=" element.estatus === 1 || element.estatus === 0" title="Eliminar"
+            <button *ngIf=" element.status === 1 || element.status === 0" title="Eliminar"
               (click)="deleteTarget(element.id)" mat-mini-fab aria-label="Eliminar" class="dashboard-table-buttons">
               <img src="../../../../assets/iconos/trash.svg">
             </button>

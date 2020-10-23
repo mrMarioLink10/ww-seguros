@@ -1,20 +1,22 @@
 <h3 class="uppercase dashboard-page-title mb-8" style="font-size: 16px">Editar propiedades del campo</h3>
 <div class="h-full">
   <div class="grid grid-cols-2">
-    <app-input class="mr-3" [beLowerCase]="true" [group]="data" label="Nombre unico del campo (Sin espacios)"
-      name="name">
+    <app-input class="mr-3" [group]="data" label="Nombre unico del campo (Sin espacios)" name="name">
     </app-input>
-    <app-input class="mr-3" [beLowerCase]="true" [group]="data" label="Titulo del campo" name="label">
+    <app-input class="mr-3" [group]="data" label="Titulo del campo" name="label">
     </app-input>
     <app-select class="mr-3" [group]="data" [options]="type" (selected)="checkRangeStatus(data.value.type)">
     </app-select>
     <app-radio-button *ngIf="data.value.type === 'TEXTO' || data.value.type === 'NUMERICO'" class="mr-3" [group]="data"
       name="validator" [title]="getValidatorTitle(data.value.type)" [options]="diseaseService.yesOrNoOriginal">
     </app-radio-button>
-    <div *ngIf="data.value.type === 'NUMERICO' && data.value.validator === 'NO'" class="grid grid-cols-2">
-      <app-number-input class="mr-3" [group]="data" label="Valor minimo (No obligatorio)" name="range">
+    <app-radio-button *ngIf="data.value.type === 'NUMERICO' && data.value.validator === 'NO'" class="mr-3"
+      [group]="data" name="haveRange" title="¿Tiene rango?" [options]="diseaseService.yesOrNoOriginal">
+    </app-radio-button>
+    <div *ngIf="data.value.type === 'NUMERICO' && data.value.haveRange === 'SI'" class="grid grid-cols-2">
+      <app-number-input class="mr-3" [group]="data" label="Valor minimo" [max]="data.value.rangeEnd" name="range">
       </app-number-input>
-      <app-number-input class="mr-3" [group]="data" label="Valor maximo (No obligatorio)" name="rangeEnd">
+      <app-number-input class="mr-3" [group]="data" label="Valor maximo" [min]="data.value.range" name="rangeEnd">
       </app-number-input>
     </div>
     <app-select class="mr-3" [group]="data" [options]="required"></app-select>
@@ -41,10 +43,9 @@
     <div class="grid grid-cols-4">
       <div class="grid grid-cols-6" *ngFor="let item of data.get('dropdown')['controls'] as FormGroup; let i = index">
         <div class="col-span-5">
-          <app-input class="mr-3" [beLowerCase]="true" [group]="item" label="Nombre unico del valor (Sin espacios)"
-            name="value">
+          <app-input class="mr-3" [group]="item" label="Nombre unico del valor (Sin espacios)" name="value">
           </app-input>
-          <app-input class="mr-3" [beLowerCase]="true" [group]="item" label="Titulo del valor" name="text">
+          <app-input class="mr-3" [group]="item" label="Titulo del valor" name="text">
           </app-input>
         </div>
         <app-delete-array-button class="ml-3" *ngIf="data.get('dropdown')['controls'].length > 1"

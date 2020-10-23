@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material';
 import { Observable } from 'rxjs';
@@ -8,6 +8,9 @@ import { EditFieldComponent } from '../components/edit-field/edit-field.componen
 import { DialogOptionService } from '../../../../core/services/dialog/dialog-option.service';
 import { FormHandlerService } from '../../../../core/services/forms/form-handler.service';
 import { AppComponent } from '../../../../app.component';
+import { FormsService } from '../../services/forms/forms.service';
+import { FormDataFillingService } from '../../services/shared/formDataFillingService';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-new-form',
@@ -18,6 +21,7 @@ export class NewFormComponent implements OnInit {
 
   form: FormGroup;
   showContent = true;
+  ID = null;
 
   @ViewChild('fakeForm', { static: false }) fakeForm;
 
@@ -25,11 +29,27 @@ export class NewFormComponent implements OnInit {
     private fb: FormBuilder,
     private dialog: MatDialog,
     private dialogOption: DialogOptionService,
-    private formHandler: FormHandlerService,
-    private appComponent: AppComponent
+    public formHandler: FormHandlerService,
+    private appComponent: AppComponent,
+    private formsService: FormsService,
+    private dataMappingFromApi: FormDataFillingService,
+    private cd: ChangeDetectorRef,
+    private route: ActivatedRoute
   ) { }
 
   ngOnInit() {
+
+    this.route.params.subscribe(res => {
+      this.ID = res.id;
+    });
+
+    if (this.ID != null) {
+      console.log('El ID es ' + this.ID);
+      this.getData(this.ID);
+    } else if (this.ID == null) {
+      console.log('ID esta vacio');
+    }
+
     this.form = this.fb.group({
       formName: ['', Validators.required],
       formDescription: ['', Validators.required],
@@ -59,8 +79,9 @@ export class NewFormComponent implements OnInit {
           type: ['', Validators.required],
           isRequired: ['', Validators.required],
           validator: [''],
-          range: [''],
-          rangeEnd: [''],
+          haveRange: [''],
+          range: [0],
+          rangeEnd: [0],
           callForm: [''],
           valueForForm: [''],
           DynamicFormInfo: this.fb.group({
@@ -114,10 +135,24 @@ export class NewFormComponent implements OnInit {
   }
 
   sendForm(form: FormGroup, formType: string, sendType: string, id?: number) {
-    console.log(id);
-
     this.formHandler.sendForm(form, formType, sendType, this.appComponent, id);
-
   }
 
+  getData(id: number) {
+    setTimeout(() => {
+      this.appComponent.showOverlay = true;
+    });
+
+    this.formsService.getTargetData(id).subscribe(data => {
+      this.dataMappingFromApi.iterateThroughtAllObject(data.data, this.form);
+
+      setTimeout(() => {
+        this.appComponent.showOverlay = false;
+      });
+
+      this.form.markAllAsTouched();
+      this.form.updateValueAndValidity();
+      this.cd.markForCheck();
+    });
+  }
 }

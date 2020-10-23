@@ -4,7 +4,7 @@ import { BaseDialogComponent } from 'src/app/shared/components/base-dialog/base-
 import { BaseDialog } from 'src/app/shared/components/base-dialog/models/base-dialog';
 import { FieldConfig } from '../../../../../shared/components/form-components/models/field-config';
 import { DiseaseService } from '../../../shared/components/disease/shared/disease/disease.service';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-edit-field',
@@ -78,15 +78,21 @@ export class EditFieldComponent implements OnInit {
   }
 
   checkRangeStatus(value?) {
-    this.data.get('validator').reset();
-    this.data.get('range').reset();
-    this.data.get('rangeEnd').reset();
-    this.data.get('valueForForm').reset();
-    this.data.get('dropdown').reset();
+    this.trueReset(this.data.get('validator'), '');
+    this.trueReset(this.data.get('haveRange'), '');
+    this.trueReset(this.data.get('range'), 0);
+    this.trueReset(this.data.get('rangeEnd'), 0);
+    this.trueReset(this.data.get('valueForForm'), '');
+    this.trueReset(this.data.get('dropdown'), [{ value: '', text: '' }]);
 
     if (value !== 'callForm') {
-      this.data.get('callForm').reset();
+      this.trueReset(this.data.get('callForm'), '');
     }
+  }
+
+  trueReset(field: FormControl, valueToSet: any) {
+    field.reset();
+    field.setValue(valueToSet);
   }
 
   getValidatorTitle(value) {

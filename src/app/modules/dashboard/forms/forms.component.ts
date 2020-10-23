@@ -29,7 +29,7 @@ export class FormsComponent implements OnInit {
     customClass: 'dashboard-button'
   };
 
-  displayedColumns: string[] = ['formName', 'formDescription', 'createBy', 'creationDate', 'updateDate'];
+  displayedColumns: string[] = ['formName', 'formDescription', 'createBy', 'creationDate', 'updateDate', 'status', 'acciones'];
 
   loading = false;
   dataSource;
@@ -86,7 +86,7 @@ export class FormsComponent implements OnInit {
   }
 
   deleteTarget(id: number) {
-    this.formHandlerService.deleteRequest(id, 'DynamicForm', null, this.appComponent)
+    this.formHandlerService.deleteRequest(id, 'DynamicForm', 'Formulario', this.appComponent)
       .subscribe(res => {
         console.log(res);
         if (res === true) { this.getForms(); }

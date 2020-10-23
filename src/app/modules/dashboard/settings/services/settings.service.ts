@@ -10,7 +10,7 @@ export class SettingsService {
 
   constructor(private http: HttpClient) { }
 
-  postRequest(body) {
+  postSettings(body) {
 
     const httpOptions = {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' })

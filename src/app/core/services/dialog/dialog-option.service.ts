@@ -194,4 +194,34 @@ export class DialogOptionService {
 			showButtons: false
 		};
 	}
+
+	saveSettings() {
+		return {
+			logo: 'warning',
+			title: 'Confirmación',
+			text: `Se procederá a guardar los cambios en Configuración`,
+			showButtons: true,
+			showCancelButton: true,
+			textPrincipalButton: 'Guardar',
+			textCancelButton: 'Cancelar'
+		};
+	}
+
+	confirmedSavedSettings() {
+		return {
+			logo: 'check',
+			title: 'Confirmación',
+			text: `Los cambios en Configuración han sido guardados`,
+			showButtons: false,
+		};
+	}
+
+	settingsInvalid() {
+		return {
+			logo: 'warning',
+			title: 'Campos Inválidos',
+			text: 'Revisar los campos que aparecen en rojo',
+			showButtons: false
+		};
+	}
 }

@@ -1,7 +1,8 @@
 <h3 class="uppercase dashboard-page-title mb-8" style="font-size: 16px">Editar propiedades del campo</h3>
 <div class="h-full">
   <div class="grid grid-cols-2">
-    <app-input class="mr-3" [group]="data" label="Nombre unico del campo (Sin espacios)" name="name">
+    <app-input class="mr-3" [preventSpace]="true" [group]="data" label="Nombre unico del campo (Sin espacios)"
+      name="name">
     </app-input>
     <app-input class="mr-3" [group]="data" label="Titulo del campo" name="label">
     </app-input>

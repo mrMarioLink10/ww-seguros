@@ -59,6 +59,12 @@ const routes: Routes = [
 				loadChildren: () => import('./settings/settings.module').then((m) => m.SettingsModule),
 				canLoad: [AppAuthGuard],
 				data: { accessRoles: ['administrador'] }
+			},
+			{
+				path: 'policyAdministration',
+				loadChildren: () => import('./policy-administration/policy-administration.module').then((m) => m.PolicyAdministrationModule),
+				canLoad: [AppAuthGuard],
+				data: { accessRoles: ['administrador'] }
 			}
 		]
 	},

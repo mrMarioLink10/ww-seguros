@@ -13,7 +13,6 @@ import { TableStatusPipe } from '../../core/pipes/table-status.pipe';
 import { MatProgressButtonsModule } from 'mat-progress-buttons';
 import { NgxMaskModule } from 'ngx-mask';
 
-
 @NgModule({
   declarations: [],
   imports: [

@@ -20,9 +20,9 @@ export const environment = {
   urlCotizadoresBoth: "http://portalwwg.eastus.cloudapp.azure.com:3000/?cia=",
   urlCotizadoresVida: "http://portalwwg.eastus.cloudapp.azure.com:3000/vida",
   urlCotizadoresSalud: "http://portalwwg.eastus.cloudapp.azure.com:3000/salud",
-  baseUrl: 'https://wwsdevfrontend-desadevfrontend.azurewebsites.net/',
+  baseUrl: 'https://portal.wwseguros.com.do/',
   keycloak: keycloakConfig,
-  apiUrl: 'https://wwsdevportalbackend-desadevportalbackend.azurewebsites.net',
+  apiUrl: 'https://wwsdevportalbackend.azurewebsites.net',
   urlNotAccess: 'https://wwsdevportalbackend-desadevportalbackend.azurewebsites.net/AccesoPortal/index/?location=',
   keycloakConfig
 };

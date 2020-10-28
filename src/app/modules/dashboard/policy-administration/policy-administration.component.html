@@ -7,7 +7,7 @@
           <div class="mr-3">
             <app-select name="filterType" [options]="filterOptions" [group]="administrationPolicyGroup"></app-select>
           </div>
-          <div class="mr-3" *ngIf="this.administrationPolicyGroup.get('filterType').value == 'NOMBRE' ">
+          <div class="mr-3 col-span-2" *ngIf="this.administrationPolicyGroup.get('filterType').value == 'NOMBRE' ">
             <form [formGroup]="administrationPolicyGroup">
               <mat-form-field color="accent" appearance="outline" class="w-full bg-transparente"
                 style="font-size: small !important;">
@@ -78,14 +78,57 @@
         </div>
       </div>
       <div *ngIf="showContent" class="mt-12">
-        <div>
-          <label> <strong> Por favor, seleccione el pdf que desee descargar. </strong> </label>
-          <div class="mr-3">
-            <app-select name="pdfSelector" [options]="pdfOptionsField" [group]="administrationPolicyGroup"></app-select>
+        <div class="grid grid-cols-1 lg:grid-cols-2">
+          <div>
+            <label> <strong> Por favor, seleccione el pdf que desee descargar. </strong> </label>
+            <div class="grid grid-cols-2 lg:grid-cols-3">
+              <div class="mr-3 mt-5 lg:col-span-2">
+                <app-select name="pdfSelector" [options]="pdfOptionsField" [group]="administrationPolicyGroup"></app-select>
+              </div>
+              <div class="mt-5 ml-3">
+                <button *ngIf="this.administrationPolicyGroup.get('pdfSelector').value != ''" (click)="download()" type="button" class="flex justify-center content-center nofocus small-search-button" title="Descargar">
+                  <img src="/assets/iconos/cloud_download-white-18dp.svg">
+                </button>
+              </div>
+            </div>
           </div>
         </div>
 
-        <label> Por favor, suba/cargue el/los pdf(s) llenado(s) aquí.</label>
+        <div class="mt-20">
+          <label> <strong> Por favor, suba/cargue el/los pdf(s) llenado(s) aquí. </strong> </label>
+
+          <!-- <div>
+            <div
+              *ngFor="let studies of disabilityGroup.get('policyholderJuridical').get('commercialRegister')['controls']; let i = index">
+              <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
+                <app-file-input class="mr-3"
+                  [ngClass]="{'col-span-3': disabilityGroup.get('policyholderJuridical').get('commercialRegister')['controls'].length > 1,
+                'col-span-4': disabilityGroup.get('policyholderJuridical').get('commercialRegister')['controls'].length === 1}"
+                  [group]="disabilityGroup.get('policyholderJuridical').get('commercialRegister').get(i.toString())"
+                  name="commercialRegisters" label="Registo mercantil / aviso de operación"
+                  [fileNameWatcher]="arrayStudiesWatcher(i, 'commercialRegister', 'policyholderJuridical')"
+                  (onFileChange)="onStudiesChange($event, i, 'commercialRegister', 'policyholderJuridical')">
+                </app-file-input>
+                <div
+                  [ngClass]="{'col-span-1': disabilityGroup.get('policyholderJuridical').get('commercialRegister')['controls'].length > 1}"
+                  *ngIf="disabilityGroup.get('policyholderJuridical').get('commercialRegister')['controls'].length > 1">
+                  <button mat-mini-fab aria-label=" Eliminar estudio"
+                    (click)="diseaseService.removeToList(i, disabilityGroup.get('policyholderJuridical').get('commercialRegister'))"
+                    type="button" class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
+                    <mat-icon style="color: #18446B">remove</mat-icon>
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div class="mb-6">
+              <button mat-mini-fab aria-label="Agregar estudio"
+                (click)="addToList(disabilityGroup.get('policyholderJuridical').get('commercialRegister'), 'commercialRegister')"
+                type="button" class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
+                <mat-icon style="color: #18446B">add</mat-icon>
+              </button>
+            </div>
+          </div> -->
+        </div>
       </div>
     </form>
     <form #form="ngForm">

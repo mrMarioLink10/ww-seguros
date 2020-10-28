@@ -24,7 +24,7 @@ export class PolicyAdministrationComponent implements OnInit {
   searchIdNumberAccess = false;
   showContent = false;
 
-  country: string;
+  country = '';
   role: string;
 
   idNumber2Options = [];
@@ -60,8 +60,8 @@ export class PolicyAdministrationComponent implements OnInit {
   dataAutoCompletePolicy = [];
 
   pdfOptions = [];
-  pdfOptionsRD = [];
-  pdfOptionsPNMA = [];
+//   pdfOptionsRD = [];
+//   pdfOptionsPNMA = [];
 
 	pdfOptionsField = {
 		label: 'Seleccionar PDF para descargar' ,
@@ -77,24 +77,25 @@ export class PolicyAdministrationComponent implements OnInit {
   ngOnInit() {
 	this.appComponent.showOverlay = true;
 
-	if (localStorage.getItem('countryCode')) {
-		this.country = localStorage.getItem('countryCode');
-	  } else {
-		this.country = 'rd';
-		localStorage.setItem('countryCode', this.country);
-	  }
+	console.log(this.userService.getRoles());
 
-	if (localStorage.getItem('countryCode')) {
+	if (this.userService.getRoles().includes('WWS') && this.userService.getRoles().includes('WMA')) {
+		this.country = localStorage.getItem('countryCode');
+
 		if (this.country == 'rd') {
 			this.role = 'WWS';
 		}
 		else if (this.country == 'pm') {
 			this.role = 'WMA';
 		}
-	  } else {
+	}
+	else {
 		this.role = this.userService.getRoleCotizador();
-	  }
+	}
 
+	// console.log(this.userService.getRoleCotizador());
+
+	console.log('this.country es igual a ' + this.country);
 	console.log('this.role es igual a ' + this.role);
 
 	this.returnPdfOptions();
@@ -211,20 +212,56 @@ export class PolicyAdministrationComponent implements OnInit {
 		});
   }
 
+  pdfOptionsRD = [{name:'pdf Vida Prueba RD', url: 'http.com.vidaPDf'}];
+
   returnPdfOptions() {
-	  this.pdfOptionsPNMA.push({
-		value: 'pdf vida',
-		viewValue: 'PDF Vida panama',
-		url: 'http.com.vidaPDf'
-	});
+
+	  if (this.role == 'WWS') {
+
+		// tslint:disable-next-line: prefer-for-of
+		for (let x = 0; x < this.pdfOptionsRD.length; x++) {
+			this.pdfOptions.push({
+				value: this.pdfOptionsRD[x].name,
+				viewValue: this.pdfOptionsRD[x].name,
+				url: this.pdfOptionsRD[x].url
+			});
+		}
+		console.log('this.pdfOptions[0].url es igual a ' + this.pdfOptions[0].url);
+	  }
+	  else if (this.role == 'WMA') {
+		this.pdfOptions.push({
+			value: 'pdf vida',
+			viewValue: 'PDF Vida panama',
+			url: 'http.com.vidaPDf'
+		});
+	  }
+
 	//   this.pdfOptionsRD.push({
 	// 	name: data.data[x].asegurado.nombres_asegurado + ' ' + data.data[x].asegurado.apellidos_asegurado,
 	// 	// id: data.data[x].asegurado.id_asegurado,
 	// 	policy: data.data[x].asegurado.no_poliza,
 	// 	value: data.data[x].asegurado.id_asegurado
 	// });
-	  this.pdfOptions = this.pdfOptionsPNMA;
+	//   this.pdfOptions = this.pdfOptionsPNMA;
 	  console.log(this.pdfOptions);
+  }
+
+  download() {
+	  console.log('hola, soy descarga');
+	  this.policyAdministrationService.download('/assets/pdfs/SOLICITUDCANCELACIONDEENDOSODECESION(WWM).pdf')
+	  .subscribe(blob => {
+		const a = document.createElement('a');
+		// tslint:disable-next-line: align
+		const objectUrl = URL.createObjectURL(blob);
+        // tslint:disable-next-line: align
+		a.href = objectUrl;
+		// tslint:disable-next-line: align
+		a.download = 'pdfPrueba.pdf';
+		// tslint:disable-next-line: align
+		a.click();
+		// tslint:disable-next-line: align
+        URL.revokeObjectURL(objectUrl);
+	  });
   }
 
   searchIdNumber(idNumber: string) {

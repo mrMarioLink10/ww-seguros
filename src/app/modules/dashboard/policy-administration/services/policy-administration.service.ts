@@ -27,4 +27,10 @@ export class PolicyAdministrationService {
   getIdNumbers(): Observable<any> {
     return this.http.get(`${environment.apiUrl}/api/DatosEmpresa/autocomplete`);
   }
+
+  download(url: string): Observable<Blob> {
+    return this.http.get(url, {
+      responseType: 'blob'
+    });
+  }
 }

@@ -8,10 +8,11 @@ import { SharedModule } from '../shared/shared.module';
 import { GlobalSharedModule } from '../../../shared/global-shared.module';
 import { EditFieldComponent } from './components/edit-field/edit-field.component';
 import { FilterComponent } from './components/filter/filter.component';
+import { TestingComponent } from './testing/testing.component';
 
 
 @NgModule({
-  declarations: [FormsComponent, NewFormComponent, EditFieldComponent, FilterComponent],
+  declarations: [FormsComponent, NewFormComponent, EditFieldComponent, FilterComponent, TestingComponent],
   entryComponents: [EditFieldComponent],
   imports: [
     CommonModule,

@@ -35,4 +35,8 @@ export class FormsService {
   getTargetData(id: number): Observable<any> {
     return this.http.get(`${environment.apiUrl}/api/DynamicForm/${id}`);
   }
+
+  getDynamicForm(id: number): Observable<any> {
+    return this.http.get(`${environment.apiUrl}/api/DynamicForm/${id}`);
+  }
 }

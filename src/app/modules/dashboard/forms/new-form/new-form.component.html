@@ -15,6 +15,9 @@
       <app-input class="mr-3 mt-4 col-span-2" [group]="form.get('acordeon').get(i.toString())"
         label="Título del acordeón" name="titulo">
       </app-input>
+      <app-input [preventSpace]="true" class="mr-3 mt-4" [group]="form.get('acordeon').get(i.toString())"
+        label="Nombre del grupo (sin espacios)" name="nombre">
+      </app-input>
     </div>
     <h3 class="uppercase dashboard-page-title mt-2 ml-3" style="font-size: 16px;">secciones</h3>
     <!-- SECCIONES POR ACORDEON -->

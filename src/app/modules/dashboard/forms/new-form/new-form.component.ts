@@ -63,6 +63,7 @@ export class NewFormComponent implements OnInit {
       case 'acordeon':
         return this.fb.group({
           titulo: ['', Validators.required],
+          nombre: ['', Validators.required],
           seccion: this.fb.array([this.addItem('seccion')])
         });
 

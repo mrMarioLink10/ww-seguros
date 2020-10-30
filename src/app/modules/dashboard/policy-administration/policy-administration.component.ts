@@ -10,6 +10,8 @@ import { map, first, startWith } from 'rxjs/operators';
 import { FormHandlerService } from 'src/app/core/services/forms/form-handler.service';
 import { FieldConfig } from 'src/app/shared/components/form-components/models/field-config';
 import { UserService } from '../../../core/services/user/user.service';
+import { FormArrayGeneratorService } from 'src/app/core/services/forms/form-array-generator.service';
+import { DiseaseService } from '../shared/components/disease/shared/disease/disease.service';
 
 @Component({
   selector: 'app-policy-administration',
@@ -59,20 +61,92 @@ export class PolicyAdministrationComponent implements OnInit {
   dataAutoCompleteName = [];
   dataAutoCompletePolicy = [];
 
+  arrayPdfArchivesTitles = [];
+
   pdfOptions = [];
-//   pdfOptionsRD = [];
-//   pdfOptionsPNMA = [];
+
+  pdfOptionsRD = [
+	{
+	  name: 'SOLICITUD DE CAMBIO DE BENEFICIARIO',
+	  url: '/assets/pdfs/SOLICITUDCAMBIODEBENEFICIARIO(WWS).pdf'
+	},
+  	{
+	  name: 'SOLICITUD DE CAMBIO DE CONTRATANTE',
+	  url: '/assets/pdfs/SOLICITUDCAMBIODECONTRATANTEPOLIZAS(WWS).pdf'
+	},
+  	{
+	  name: 'SOLICITUD DE CAMBIO - PÓLIZA',
+	  url: '/assets/pdfs/SOLICITUDCAMBIOPOLIZA(WWS).pdf'
+	},
+  	{
+	  name: 'SOLICITUD DE CAMBIO - PÓLIZA DE DISABILITY',
+	  url: '/assets/pdfs/SOLICITUDCAMBIOPOLIZADISABILITY(WWS).pdf'
+	},
+  	{
+	  name: 'SOLICITUD DE CAMBIO - PÓLIZA DE VIDA INDIVIDUAL',
+	  url: '/assets/pdfs/SOLICITUDCAMBIOPOLIZAINDIVIDUAL(WWS).pdf'
+	},
+  	{
+	  name: 'SOLICITUD DE CAMBIO - PÓLIZA DE SALUD',
+	  url: '/assets/pdfs/SOLICITUDCAMBIOPOLIZASALUDINDIVIDUAL(WWS).pdf'
+	},
+  	{
+	  name: 'CANCELACIÓN DE ENDOSO DE CESIÓN DE DERECHOS',
+	  url: '/assets/pdfs/SOLICITUDCANCELACIONDEENDOSODECESION(WWS).pdf'
+	}
+];
+
+  pdfOptionsPNMA = [
+	{
+	  name: 'SOLICITUD DE CAMBIO DE BENEFICIARIO',
+	  url: '/assets/pdfs/SOLICITUDCAMBIODEBENEFICIARIO(WWM).pdf'
+	},
+  	{
+	  name: 'SOLICITUD DE CAMBIO DE CONTRATANTE',
+	  url: '/assets/pdfs/SOLICITUDCAMBIODECONTRATANTEPOLIZAS(WWM).pdf'
+	},
+  	{
+	  name: 'SOLICITUD DE CAMBIO - PÓLIZA',
+	  url: '/assets/pdfs/SOLICITUDCAMBIOPOLIZA(WWM).pdf'
+	},
+  	{
+	  name: 'SOLICITUD DE CAMBIO - PÓLIZA DE DISABILITY',
+	  url: '/assets/pdfs/SOLICITUDCAMBIOPOLIZADISABILITY(WWM).pdf'
+	},
+  	{
+	  name: 'SOLICITUD DE CAMBIO - PÓLIZA DE VIDA INDIVIDUAL',
+	  url: '/assets/pdfs/SOLICITUDCAMBIOPOLIZAINDIVIDUAL(WWM).pdf'
+	},
+  	{
+	  name: 'SOLICITUD DE CAMBIO - PÓLIZA DE SALUD',
+	  url: '/assets/pdfs/SOLICITUDCAMBIOPOLIZASALUDINDIVIDUAL(WWM).pdf'
+	},
+  	{
+	  name: 'CANCELACIÓN DE ENDOSO DE CESIÓN DE DERECHOS',
+	  url: '/assets/pdfs/SOLICITUDCANCELACIONDEENDOSODECESION(WWM).pdf'
+	}
+];
 
 	pdfOptionsField = {
 		label: 'Seleccionar PDF para descargar' ,
 		options: this.pdfOptions
 	};
 
+	pdfFileGroup = {
+		pdfFile: ['', Validators.required]
+	};
+
+	policyAdministrationFieldsNamesArray = ['idNumber', 'filterType', 'pdfSelector', 'personName'];
+
   constructor(private fb: FormBuilder, private appComponent: AppComponent,
 			  // tslint:disable-next-line: align
 			  private policyAdministrationService: PolicyAdministrationService, private userService: UserService,
 			  // tslint:disable-next-line: align
-			  public dialog: MatDialog, private dialogOption: DialogOptionService) { }
+			  public dialog: MatDialog, private dialogOption: DialogOptionService,
+			  // tslint:disable-next-line: align
+			  public formMethods: FormArrayGeneratorService, public diseaseService: DiseaseService,
+			  // tslint:disable-next-line: align
+			  private formHandler: FormHandlerService) { }
 
   ngOnInit() {
 	this.appComponent.showOverlay = true;
@@ -85,7 +159,7 @@ export class PolicyAdministrationComponent implements OnInit {
 		if (this.country == 'rd') {
 			this.role = 'WWS';
 		}
-		else if (this.country == 'pm') {
+		else if (this.country == 'pn') {
 			this.role = 'WMA';
 		}
 	}
@@ -105,8 +179,10 @@ export class PolicyAdministrationComponent implements OnInit {
     this.administrationPolicyGroup = this.fb.group({
       idNumber: ['', Validators.required],
       filterType: ['', Validators.required],
-	  idNumber2: ['', Validators.required],
+	  idNumber2: [''],
 	  pdfSelector: ['', Validators.required],
+	  personName: [{value: '', disabled: true}, Validators.required],
+	  pdfArchives: this.fb.group({pdfFile: ['']}),
     });
 	// tslint:disable-next-line: align
     this.administrationPolicyGroup.get('filterType').valueChanges.subscribe(valueFilter => {
@@ -161,6 +237,8 @@ export class PolicyAdministrationComponent implements OnInit {
 				}
 			}
 		});
+
+	// this.getData();
   }
 
   displayFn(user: any) {
@@ -192,13 +270,9 @@ export class PolicyAdministrationComponent implements OnInit {
 			console.log(data.data);
 			// tslint:disable-next-line: prefer-for-of
 			for (let x = 0; x < data.data.length; x++) {
-				// this.dataAutoCompleteIdNumber.push(data.data[x].asegurado.nombres_asegurado +
-				// 	' ' + data.data[x].asegurado.apellidos_asegurado + ' - '
-				// 	+ data.data[x].asegurado.id_asegurado);
 
 				this.dataAutoCompleteIdNumberObject.push({
 					name: data.data[x].asegurado.nombres_asegurado + ' ' + data.data[x].asegurado.apellidos_asegurado,
-					// id: data.data[x].asegurado.id_asegurado,
 					policy: data.data[x].asegurado.no_poliza,
 					value: data.data[x].asegurado.id_asegurado
 				});
@@ -212,12 +286,9 @@ export class PolicyAdministrationComponent implements OnInit {
 		});
   }
 
-  pdfOptionsRD = [{name:'pdf Vida Prueba RD', url: 'http.com.vidaPDf'}];
-
   returnPdfOptions() {
 
 	  if (this.role == 'WWS') {
-
 		// tslint:disable-next-line: prefer-for-of
 		for (let x = 0; x < this.pdfOptionsRD.length; x++) {
 			this.pdfOptions.push({
@@ -229,26 +300,31 @@ export class PolicyAdministrationComponent implements OnInit {
 		console.log('this.pdfOptions[0].url es igual a ' + this.pdfOptions[0].url);
 	  }
 	  else if (this.role == 'WMA') {
-		this.pdfOptions.push({
-			value: 'pdf vida',
-			viewValue: 'PDF Vida panama',
-			url: 'http.com.vidaPDf'
-		});
+		// tslint:disable-next-line: prefer-for-of
+		for (let x = 0; x < this.pdfOptionsPNMA.length; x++) {
+			this.pdfOptions.push({
+				value: this.pdfOptionsPNMA[x].name,
+				viewValue: this.pdfOptionsPNMA[x].name,
+				url: this.pdfOptionsPNMA[x].url
+			});
+		}
 	  }
-
-	//   this.pdfOptionsRD.push({
-	// 	name: data.data[x].asegurado.nombres_asegurado + ' ' + data.data[x].asegurado.apellidos_asegurado,
-	// 	// id: data.data[x].asegurado.id_asegurado,
-	// 	policy: data.data[x].asegurado.no_poliza,
-	// 	value: data.data[x].asegurado.id_asegurado
-	// });
-	//   this.pdfOptions = this.pdfOptionsPNMA;
 	  console.log(this.pdfOptions);
   }
 
-  download() {
+  download(pdfName) {
+
+	  let pdfObject;
+
+	  this.appComponent.showOverlay = true;
+
+	  pdfObject = this.pdfOptions.find(nombrePdf => nombrePdf.value == pdfName);
+
 	  console.log('hola, soy descarga');
-	  this.policyAdministrationService.download('/assets/pdfs/SOLICITUDCANCELACIONDEENDOSODECESION(WWM).pdf')
+	  console.log('hola, soy pdfObject, y soy igual a ', pdfObject);
+	  console.log('hola, soy pdfObject.url, y soy igual a ' + pdfObject.url);
+
+	  this.policyAdministrationService.download(pdfObject.url)
 	  .subscribe(blob => {
 		const a = document.createElement('a');
 		// tslint:disable-next-line: align
@@ -256,12 +332,63 @@ export class PolicyAdministrationComponent implements OnInit {
         // tslint:disable-next-line: align
 		a.href = objectUrl;
 		// tslint:disable-next-line: align
-		a.download = 'pdfPrueba.pdf';
+		a.download = `${pdfObject.value}.pdf`;
 		// tslint:disable-next-line: align
 		a.click();
 		// tslint:disable-next-line: align
-        URL.revokeObjectURL(objectUrl);
+		URL.revokeObjectURL(objectUrl);
+		// this.administrationPolicyGroup.get('pdfSelector').setValue('');
+		this.appComponent.showOverlay = false;
 	  });
+  }
+
+  arrayPdfArchivesWatcher() {
+    // if (this.arrayPdfArchivesTitles) {
+    //   if (this.administrationPolicyGroup.get('pdfArchives')) {
+    //     // tslint:disable-next-line: max-line-length
+    //     if (this.arrayPdfArchivesTitles[i] && this.administrationPolicyGroup.get('pdfArchives').get(i.toString()).value.pdfFile !== '') {
+    //       return this.arrayPdfArchivesTitles[i].pdfFileUrl;
+    //     }
+    //   }
+	// }
+	if (this.administrationPolicyGroup.get('pdfArchives').value.pdfFileUrl &&
+	this.administrationPolicyGroup.get('pdfArchives').value.pdfFile !== '') {
+		return this.administrationPolicyGroup.get('pdfArchives').value.pdfFileUrl;
+	}
+  }
+
+  onStudiesChange(event) {
+    const reader = new FileReader();
+
+    console.log(event);
+
+    // if (name == 'studies') {
+    if (event.target.files && event.target.files.length) {
+      const [file] = event.target.files;
+      reader.readAsDataURL(file);
+      reader.onload = () => {
+        this.administrationPolicyGroup.get('pdfArchives').patchValue({
+          ['pdfFile']: reader.result
+        });
+      };
+    }
+    // }
+  }
+
+  addToList(list: any) {
+    console.warn('list', list);
+    list.push(this.createFormArray());
+  }
+
+  createFormArray() {
+	return this.fb.group(this.pdfFileGroup);
+  }
+
+  saveChanges() {
+	// console.log(JSON.stringify(this.administrationPolicyGroup.getRawValue()));
+	this.administrationPolicyGroup.markAllAsTouched();
+    // tslint:disable-next-line: align
+    this.formHandler.saveFormAdministrationPolicy(this.administrationPolicyGroup, this.appComponent);
   }
 
   searchIdNumber(idNumber: string) {
@@ -356,6 +483,8 @@ export class PolicyAdministrationComponent implements OnInit {
 							dialogRef.close();
 						}, 4000);
 
+						// tslint:disable-next-line: max-line-length
+						this.administrationPolicyGroup.get('personName').setValue(`${response.data.asegurado.nombres_asegurado} ${response.data.asegurado.apellidos_asegurado}`);
 					} else {
 						this.showContent = false;
 						const dialogRef = this.dialog.open(BaseDialogComponent, {
@@ -365,9 +494,79 @@ export class PolicyAdministrationComponent implements OnInit {
 						setTimeout(() => {
 							dialogRef.close();
 						}, 4000);
+						this.administrationPolicyGroup.get('personName').setValue('');
 					}
 				});
 			}
 		}
+	}
+
+	getData() {
+		// this.appComponent.showOverlay = true;
+
+		// this.policyAdministrationService.returnData().subscribe(data => {
+
+		// 	console.log(data.data);
+
+		// 	if (data.data != null) {
+		// 		// tslint:disable-next-line: prefer-for-of
+		// 		for (let x = 0; x < this.policyAdministrationFieldsNamesArray.length; x++) {
+		// 		  this.administrationPolicyGroup.get(this.policyAdministrationFieldsNamesArray[x]
+		// 			).setValue(data.data[this.policyAdministrationFieldsNamesArray[x]]);
+		// 		}
+		// 		if (this.administrationPolicyGroup.get('filterType').value == 'POLIZA') {
+
+		// 			const idNumber2Policy = this.administrationPolicyGroup.get('idNumber').value;
+		// 			// tslint:disable-next-line: prefer-for-of
+		// 			for (let x = 0; x < this.dataAutoCompleteIdNumberObject.length; x++) {
+		// 				if (idNumber2Policy == this.dataAutoCompleteIdNumberObject[x].policy) {
+		// 					this.idNumber2Options.push({
+		// 							value: this.dataAutoCompleteIdNumberObject[x].name,
+		// 							viewValue: this.dataAutoCompleteIdNumberObject[x].name,
+		// 							policy: this.dataAutoCompleteIdNumberObject[x].policy
+		// 						});
+		// 				}
+		// 			}
+		// 			if (this.idNumber2Options.length > 1) {
+		// 				this.idNumber2FieldVisible = true;
+		// 				this.searchIdNumberAccess = true;
+		// 				this.administrationPolicyGroup.get('idNumber2').setValue(data.data.idNumber2);
+		// 			}
+		// 			else {
+		// 				this.idNumber2FieldVisible = false;
+		// 				this.searchIdNumberAccess = true;
+		// 				// this.administrationPolicyGroup.get('idNumber2').setValue('');
+		// 				// this.administrationPolicyGroup.get('idNumber2').markAsUntouched();
+
+		// 				this.idNumber2Options.splice(0, this.idNumber2Options.length);
+		// 			}
+		// 		}
+		// 		this.administrationPolicyGroup.get('pdfArchives').get('pdfFile').setValue(data.data.pdfArchives.pdfFile);
+
+		// 		if (data.data.pdfArchives.pdfFileUrl) {
+		// 		  this.administrationPolicyGroup.get('pdfArchives').addControl('pdfFileUrl', this.fb.control(''));
+		// 		  this.administrationPolicyGroup.get('pdfArchives').get('pdfFileUrl').setValue(data.data.pdfArchives.pdfFileUrl);
+		// 		}
+
+		// 		if (data.data.pdfArchives.id) {
+		// 		  this.administrationPolicyGroup.get('pdfArchives').addControl('id', this.fb.control(''));
+		// 		  this.administrationPolicyGroup.get('pdfArchives').get('id').setValue(data.data.pdfArchives.id);
+		// 		}
+
+		// 		if (data.data.id) {
+		// 		  this.administrationPolicyGroup.addControl('id', this.fb.control(''));
+		// 		  this.administrationPolicyGroup.get('id').setValue(data.data.id);
+		// 		}
+		// 		setTimeout(() => {
+			//    this.showContent = true;
+		// 		  this.appComponent.showOverlay = false;
+		// 		}, 5000);
+		// 	  }
+		// 	  else {
+		// 		setTimeout(() => {
+		// 		  this.appComponent.showOverlay = false;
+		// 		}, 5000);
+		// 	  }
+		// });
 	}
 }

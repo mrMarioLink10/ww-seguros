@@ -10,15 +10,15 @@ export class PolicyAdministrationService {
 
   constructor(private http: HttpClient) { }
 
-  // postPolicyAdministration(body) {
+  postPolicyAdministration(body) {
 
-  //   const httpOptions = {
-  //     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-  //   };
+    const httpOptions = {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+    };
 
-  //   console.log('body:', body);
-  //   return this.http.post(`${environment.apiUrl}/api/`, body, httpOptions);
-  // }
+    console.log('body:', body);
+    return this.http.post(`${environment.apiUrl}/api/SolicitudesPdf/pdfforms`, body, httpOptions);
+  }
 
   // returnData(): Observable<any> {
   //   return this.http.get(`${environment.apiUrl}/api/`);

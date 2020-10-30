@@ -5,15 +5,15 @@ import { GlobalSharedModule } from 'src/app/shared/global-shared.module';
 import { SharedModule } from '../shared/shared.module';
 import { MaterialModule } from '../../../shared/modules/material.module';
 
-import { SettingsRoutingModule } from './settings-routing.module';
-import { SettingsComponent } from './settings.component';
+import { PolicyAdministrationComponent } from './policy-administration.component';
+import { PolicyAdministrationRoutingModule } from './policy-administration-routing.module';
 
 
 @NgModule({
-  declarations: [SettingsComponent],
+  declarations: [PolicyAdministrationComponent],
   imports: [
     CommonModule,
-    SettingsRoutingModule,
+    PolicyAdministrationRoutingModule,
     FormsModule,
     ReactiveFormsModule,
     GlobalSharedModule,
@@ -21,4 +21,4 @@ import { SettingsComponent } from './settings.component';
     MaterialModule
   ]
 })
-export class SettingsModule { }
+export class PolicyAdministrationModule { }

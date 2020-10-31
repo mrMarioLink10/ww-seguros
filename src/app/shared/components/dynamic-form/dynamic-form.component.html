@@ -1,0 +1,21 @@
+<mat-accordion *ngIf="form.get('acordeon')" #matAccordion="matAccordion" name="matAccordion"
+  class="ww-mat-accordion example-headers-align" [togglePosition]="'before'">
+  <mat-expansion-panel *ngFor="let item of form.get('acordeon')['controls']; let idx = index" class="ww-mat-expansion"
+    [expanded]="step === idx" (opened)="setStep(idx)">
+    <mat-expansion-panel-header class="body-13 icon-blue">
+      <mat-panel-title>
+        {{item.value.titulo | titlecase}}
+      </mat-panel-title>
+      <mat-panel-description>
+        <div></div>
+        <div *ngIf="showWarningDot(item.get('seccion'))" class="warning-accordion-dot"></div>
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+
+    <mat-action-row class="action-row">
+      <button mat-button class="next-button" (click)="nextStep()" type="button">
+        Siguiente
+      </button>
+    </mat-action-row>
+  </mat-expansion-panel>
+</mat-accordion>

@@ -10,10 +10,13 @@
   <div class="acordeon pb-3" *ngFor="let item of generalForm.get('dynamicForms')['controls']; let i = index">
     <div class="mt-3 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4">
       <app-select *ngIf="this.idsOptions" label="Formulario" name="idForm"
-        (selected)="generateDynamicForm($event, generalForm.get('dynamicForms').get(i.toString()))"
-        [group]="generalForm.get('dynamicForms').get(i.toString())" [options]="this.idsOptions">
+        (selected)="generateDynamicForm($event, generalForm.get('dynamicForms').get(i.toString()))" [group]="item"
+        [options]="this.idsOptions">
       </app-select>
     </div>
+    {{item.value | json}}
+    {{item.get('form').value | json}}
+    <app-dynamic-form *ngIf="item.get('form')" [form]="item.get('form')" [ID]="null"></app-dynamic-form>
     <hr *ngIf="generalForm.get('dynamicForms')['controls'].length > 1" class="w-full my-3 ww-divider">
     <app-delete-array-button class="ml-3 my-3" *ngIf="generalForm.get('dynamicForms')['controls'].length > 1"
       [array]="generalForm.get('dynamicForms')" [index]="i"></app-delete-array-button>

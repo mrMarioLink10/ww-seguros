@@ -4,6 +4,7 @@ import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { FormsService } from '../../services/forms/forms.service';
 import { FieldConfig } from '../../../../shared/components/form-components/models/field-config';
 import { AppComponent } from '../../../../app.component';
+import { FormDataFillingService } from '../../services/shared/formDataFillingService';
 
 @Component({
   selector: 'app-testing',
@@ -22,7 +23,8 @@ export class TestingComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private formsService: FormsService,
-    public appComponent: AppComponent
+    public appComponent: AppComponent,
+    private formDataFillingService: FormDataFillingService
   ) { }
 
   ngOnInit() {
@@ -73,14 +75,17 @@ export class TestingComponent implements OnInit {
   }
 
   generateDynamicForm($event, group) {
+    console.log($event);
     const idForm = $event.valor;
-
     group.get('form').reset();
-    group.get('form').setValue({});
+    // group.get('form').setValue({});
 
     this.formsService.getDynamicForm(idForm)
       .subscribe(res => {
         console.log(res);
+
+        this.formDataFillingService.iterateThroughtAllObject(res.data, group.get('form'));
+        console.warn('new form', group.get('form'));
       });
 
   }

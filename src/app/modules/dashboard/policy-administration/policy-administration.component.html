@@ -4,10 +4,10 @@
 
       <div class="p-3 pb-2 mb-4" style="background-color: #F2F2F2">
         <div class="mt-3 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 xl:grid-cols-5">
-          <div class="mr-3">
+          <!-- <div class="mr-3">
             <app-select name="filterType" [options]="filterOptions" [group]="administrationPolicyGroup"></app-select>
-          </div>
-          <div class="mr-3 col-span-2" *ngIf="this.administrationPolicyGroup.get('filterType').value == 'NOMBRE' ">
+          </div> -->
+          <!-- <div class="mr-3 col-span-2" *ngIf="this.administrationPolicyGroup.get('filterType').value == 'NOMBRE' ">
             <form [formGroup]="administrationPolicyGroup">
               <mat-form-field color="accent" appearance="outline" class="w-full bg-transparente"
                 style="font-size: small !important;">
@@ -44,7 +44,7 @@
                 </mat-error>
               </mat-form-field>
             </form>
-          </div>
+          </div> -->
           <div class="mr-3" *ngIf="this.administrationPolicyGroup.get('filterType').value == 'POLIZA' ">
             <form [formGroup]="administrationPolicyGroup">
               <mat-form-field color="accent" appearance="outline" class="w-full bg-transparente"

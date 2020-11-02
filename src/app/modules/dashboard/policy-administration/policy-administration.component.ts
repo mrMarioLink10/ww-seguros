@@ -178,49 +178,57 @@ export class PolicyAdministrationComponent implements OnInit {
 	// tslint:disable-next-line: align
     this.administrationPolicyGroup = this.fb.group({
       idNumber: ['', Validators.required],
-      filterType: ['', Validators.required],
+      filterType: ['POLIZA', Validators.required],
 	  idNumber2: [''],
 	  pdfSelector: ['', Validators.required],
 	  personName: [{value: '', disabled: true}, Validators.required],
 	  pdfArchives: this.fb.group({pdfFile: ['']}),
     });
 	// tslint:disable-next-line: align
-    this.administrationPolicyGroup.get('filterType').valueChanges.subscribe(valueFilter => {
+    // this.administrationPolicyGroup.get('filterType').valueChanges.subscribe(valueFilter => {
 
-			this.administrationPolicyGroup.get('idNumber').setValue('');
-			this.administrationPolicyGroup.get('idNumber').markAsUntouched();
+	// 		this.administrationPolicyGroup.get('idNumber').setValue('');
+	// 		this.administrationPolicyGroup.get('idNumber').markAsUntouched();
 
-			this.idNumber2FieldVisible = false;
-			this.searchIdNumberAccess = false;
-			this.idNumber2Options.splice(0, this.idNumber2Options.length);
-			this.administrationPolicyGroup.get('idNumber2').setValue('');
-			this.administrationPolicyGroup.get('idNumber2').markAsUntouched();
+	// 		this.idNumber2FieldVisible = false;
+	// 		this.searchIdNumberAccess = false;
+	// 		this.idNumber2Options.splice(0, this.idNumber2Options.length);
+	// 		this.administrationPolicyGroup.get('idNumber2').setValue('');
+	// 		this.administrationPolicyGroup.get('idNumber2').markAsUntouched();
 
-			if (valueFilter == 'NOMBRE') {
-				this.filteredOptions = this.administrationPolicyGroup.get('idNumber').valueChanges
-					.pipe(
-						startWith(''),
-						map(value => typeof value === 'string' ? value : value),
-						map(value => value ? this._filter(value) : this.dataAutoCompleteName.slice())
-					);
-			}
-			if (valueFilter == 'ID') {
-				this.filteredOptions = this.administrationPolicyGroup.get('idNumber').valueChanges
-					.pipe(
-						startWith(''),
-						map(value => typeof value === 'string' ? value : value),
-						map(value => value ? this._filter(value) : this.dataAutoCompleteIdNumber.slice())
-					);
-			}
-			if (valueFilter == 'POLIZA') {
-				this.filteredOptions = this.administrationPolicyGroup.get('idNumber').valueChanges
-					.pipe(
-						startWith(''),
-						map(value => typeof value === 'string' ? value : value),
-						map(value => value ? this._filter(value) : this.dataAutoCompletePolicy.slice())
-					);
-			}
-		});
+	// 		if (valueFilter == 'NOMBRE') {
+	// 			this.filteredOptions = this.administrationPolicyGroup.get('idNumber').valueChanges
+	// 				.pipe(
+	// 					startWith(''),
+	// 					map(value => typeof value === 'string' ? value : value),
+	// 					map(value => value ? this._filter(value) : this.dataAutoCompleteName.slice())
+	// 				);
+	// 		}
+	// 		if (valueFilter == 'ID') {
+	// 			this.filteredOptions = this.administrationPolicyGroup.get('idNumber').valueChanges
+	// 				.pipe(
+	// 					startWith(''),
+	// 					map(value => typeof value === 'string' ? value : value),
+	// 					map(value => value ? this._filter(value) : this.dataAutoCompleteIdNumber.slice())
+	// 				);
+	// 		}
+	// 		if (valueFilter == 'POLIZA') {
+	// 			this.filteredOptions = this.administrationPolicyGroup.get('idNumber').valueChanges
+	// 				.pipe(
+	// 					startWith(''),
+	// 					map(value => typeof value === 'string' ? value : value),
+	// 					map(value => value ? this._filter(value) : this.dataAutoCompletePolicy.slice())
+	// 				);
+	// 		}
+	// 	});
+
+	this.filteredOptions = this.administrationPolicyGroup.get('idNumber').valueChanges
+			.pipe(
+				startWith(''),
+				map(value => typeof value === 'string' ? value : value),
+				map(value => value ? this._filter(value) : this.dataAutoCompletePolicy.slice())
+			);
+
 		  // tslint:disable-next-line: align
 		  this.administrationPolicyGroup.get('idNumber').valueChanges.subscribe(valueIdNumber => {
 
@@ -247,21 +255,25 @@ export class PolicyAdministrationComponent implements OnInit {
 
   private _filter(value): any[] {
 
-		if (this.administrationPolicyGroup.get('filterType').value == 'NOMBRE') {
-			const filterValue = value.toLowerCase();
+		// if (this.administrationPolicyGroup.get('filterType').value == 'NOMBRE') {
+		// 	const filterValue = value.toLowerCase();
 
-			return this.dataAutoCompleteName.filter(option => option.toLowerCase().indexOf(filterValue) === 0);
-		}
-		if (this.administrationPolicyGroup.get('filterType').value == 'ID') {
-			const filterValueNumber = value.toString();
+		// 	return this.dataAutoCompleteName.filter(option => option.toLowerCase().indexOf(filterValue) === 0);
+		// }
+		// if (this.administrationPolicyGroup.get('filterType').value == 'ID') {
+		// 	const filterValueNumber = value.toString();
 
-			return this.dataAutoCompleteIdNumber.filter(option => option.toString().indexOf(filterValueNumber) === 0);
-		}
-		if (this.administrationPolicyGroup.get('filterType').value == 'POLIZA') {
-			const filterValue = value.toLowerCase();
+		// 	return this.dataAutoCompleteIdNumber.filter(option => option.toString().indexOf(filterValueNumber) === 0);
+		// }
+		// if (this.administrationPolicyGroup.get('filterType').value == 'POLIZA') {
+		// 	const filterValue = value.toLowerCase();
 
-			return this.dataAutoCompletePolicy.filter(option => option.toLowerCase().indexOf(filterValue) === 0);
-		}
+		// 	return this.dataAutoCompletePolicy.filter(option => option.toLowerCase().indexOf(filterValue) === 0);
+		// }
+
+		const filterValue = value.toLowerCase();
+
+		return this.dataAutoCompletePolicy.filter(option => option.toLowerCase().indexOf(filterValue) === 0);
   }
 
   returnAutoCompleteData() {
@@ -282,7 +294,16 @@ export class PolicyAdministrationComponent implements OnInit {
 
 				this.dataAutoCompletePolicy.push(data.data[x].asegurado.no_poliza);
 			}
-			this.appComponent.showOverlay = false;
+
+			// tslint:disable-next-line: align
+			setTimeout(() => {
+				this.administrationPolicyGroup.get('idNumber').setValue('');
+				this.administrationPolicyGroup.get('idNumber').markAsUntouched();
+			}, 1000);
+
+			setTimeout(() => {
+				this.appComponent.showOverlay = false;
+			}, 3000);
 		});
   }
 

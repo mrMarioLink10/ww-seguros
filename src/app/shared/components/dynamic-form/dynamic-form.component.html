@@ -1,6 +1,7 @@
 <mat-accordion *ngIf="form.get('acordeon')" #matAccordion="matAccordion" name="matAccordion"
   class="ww-mat-accordion example-headers-align" [togglePosition]="'before'">
-  <mat-expansion-panel *ngFor="let item of form.get('acordeon')['controls']; let idx = index" class="ww-mat-expansion"
+  <mat-expansion-panel style="margin-bottom: 14px !important;"
+    *ngFor="let item of form.get('acordeon')['controls']; let idx = index" class="ww-mat-expansion"
     [expanded]="step === idx" (opened)="setStep(idx)">
     <mat-expansion-panel-header class="body-13 icon-blue">
       <mat-panel-title>
@@ -11,7 +12,18 @@
         <div *ngIf="showWarningDot(item.get('seccion'))" class="warning-accordion-dot"></div>
       </mat-panel-description>
     </mat-expansion-panel-header>
-
+    <div *ngFor="let seccion of item.get('seccion')['controls']; let ix = index">
+      <div
+        class="grid grid-cols-1 sm:grid-cols-{{seccion.value.ancho}} md:grid-cols-{{seccion.value.ancho}} lg:grid-cols-{{seccion.value.ancho}} xl:grid-cols-{{seccion.value.ancho}}">
+        <div *ngFor="let campo of seccion.get('campos')['controls']">
+          <app-dynamic-field [label]="campo.value.label" name="valueCollectedFromForm"
+            [haveRange]="campo.value.haveRange" [range]="campo.value.range" [rangeEnd]="campo.value.rangeEnd"
+            [isRequired]="campo.value.isRequired" [type]="campo.value.type" [group]="campo"></app-dynamic-field>
+        </div>
+      </div>
+      <hr *ngIf=" item.get('seccion')['controls'].length> 1 && ix !== item.get('seccion')['controls'].length-1"
+        class="w-full my-3 ww-divider">
+    </div>
     <mat-action-row class="action-row">
       <button mat-button class="next-button" (click)="nextStep()" type="button">
         Siguiente

@@ -8,11 +8,12 @@ import { FormsModule } from '@angular/forms';
 import { NgxMaskModule } from 'ngx-mask';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { DynamicFormComponent } from './components/dynamic-form/dynamic-form.component';
+import { DynamicFieldComponent } from './components/dynamic-field/dynamic-field.component';
 
 @NgModule({
-	declarations: [BaseDialogComponent, NotFoundComponent, DynamicFormComponent],
+	declarations: [BaseDialogComponent, NotFoundComponent, DynamicFormComponent, DynamicFieldComponent],
 	imports: [CommonModule, MaterialModule, FormComponentsModule, MatDialogModule, FormsModule, NgxMaskModule],
-	exports: [FormComponentsModule, MaterialModule, DynamicFormComponent],
+	exports: [FormComponentsModule, MaterialModule, DynamicFormComponent, DynamicFieldComponent],
 	entryComponents: [BaseDialogComponent]
 })
 export class GlobalSharedModule { }

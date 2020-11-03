@@ -75,6 +75,9 @@ export class TestingComponent implements OnInit {
   }
 
   generateDynamicForm($event, group) {
+    setTimeout(() => {
+      this.appComponent.showOverlay = true;
+    });
     console.log($event);
     const idForm = $event.valor;
     group.get('form').reset();
@@ -86,6 +89,9 @@ export class TestingComponent implements OnInit {
 
         this.formDataFillingService.iterateThroughtAllObject(res.data, group.get('form'));
         console.warn('new form', group.get('form'));
+        setTimeout(() => {
+          this.appComponent.showOverlay = false;
+        });
       });
 
   }

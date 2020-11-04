@@ -51,7 +51,7 @@
             <img style="max-height: 35px !important;"
               [src]="!activeRoute.includes('/dashboard/requests') ? '../../../../../../assets/iconos/library_add-24px.svg' : '../../../../../../assets/iconos/library_add-24px-b.svg'"
               height="24px" width="24px" class="mr-3 ml-3">
-            <div style="max-height: 35px !important;" class="text-xs uppercase">Solicitudes</div>
+            <div style="max-height: 35px !important;" class="text-xs uppercase">Nuevo negocio</div>
           </mat-list-item>
 
           <mat-list-item *ngIf="this.role === 'WWS' && showMatListen(['Solicitud_reembolsos'])"
@@ -70,6 +70,14 @@
               [src]="!activeRoute.includes('/dashboard/authorizations') ? '../../../../../../assets/iconos/autorizacion2.svg' : '../../../../../../assets/iconos/autorizacion1.svg'"
               height="24px" width="24px" class="mr-3 ml-3">
             <div style="max-height: 35px !important;" class="text-xs uppercase">PRE - Autorizaciones</div>
+          </mat-list-item>
+
+          <mat-list-item *ngIf="showMatListen(['Solicitud_suscripcion'])" [routerLink]="['policyAdministration']"
+            routerLinkActive="router-link-active" style="color: white; max-height: 35px !important;" class="my-3">
+            <img style="max-height: 35px !important;"
+              [src]="!activeRoute.includes('/dashboard/policyAdministration') ? '../../../../../../assets/iconos/user_search_icon.svg' : '../../../../../../assets/iconos/user_search_icon_filled.svg'"
+              height="24px" width="24px" class="mr-3 ml-3">
+            <div style="max-height: 35px !important;" class="text-xs uppercase">Administración Pólizas</div>
           </mat-list-item>
 
           <mat-list-item *ngIf="showMatListen(['administrador'])" [routerLink]="['forms']"

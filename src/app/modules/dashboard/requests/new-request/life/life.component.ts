@@ -1490,13 +1490,13 @@ export class LifeComponent implements OnInit, DoCheck {
     } else {
       if (i !== null) {
         if (this.contigentBeneficaryTitles) {
-          if (this.contigentBeneficaryTitles[i] && this.newRequest.get('contingentBeneficiary').get('dependentsC').get(i.toString()).value.id2Attached !== '') {
+          if (this.contigentBeneficaryTitles[i] && this.newRequest.get('contingentBeneficiary').get('dependentsC').get(i.toString()).value.id2AttachedBeneficiary !== '') {
             return this.contigentBeneficaryTitles[i].id2AttachedBeneficiaryUrl;
           }
         }
       } else {
         if (this.contigentAnotherTitle) {
-          if (this.contigentAnotherTitle && this.newRequest.get('contingentBeneficiary').get('personBenefited').value.id2Attached !== '') {
+          if (this.contigentAnotherTitle && this.newRequest.get('contingentBeneficiary').get('personBenefited').value.id2AttachedBeneficiary !== '') {
             return this.contigentAnotherTitle.id2AttachedBeneficiaryUrl;
           }
         }

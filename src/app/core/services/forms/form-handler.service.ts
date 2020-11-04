@@ -18,6 +18,7 @@ import { RequestsService } from 'src/app/modules/invitation/services/requests.se
 import { UserService } from '../user/user.service';
 import { FormsService } from '../../../modules/dashboard/services/forms/forms.service';
 import { SettingsService } from '../../../modules/dashboard/settings/services/settings.service';
+import { PolicyAdministrationService } from '../../../modules/dashboard/policy-administration/services/policy-administration.service';
 // tslint:disable: forin
 // tslint:disable: variable-name
 
@@ -43,6 +44,7 @@ export class FormHandlerService {
 		private userService: UserService,
 		private formsService: FormsService,
 		private settingsService: SettingsService,
+		private policyAdministrationService: PolicyAdministrationService,
 	) { }
 
 	sendForm(form: FormGroup, name: string, type?: string, appComponent?: any, id?: number, isInvitation?: boolean) {
@@ -824,7 +826,62 @@ export class FormHandlerService {
 				}
 			}
 		});
+	}
 
-		// this.dialogHandler(form);
+	saveFormAdministrationPolicy(form: FormGroup, appComponent: any) {
+		console.log('Impresion de formulario de administracion de polizas down here: ', form);
+
+		let Dialog;
+		let dataOpen;
+		let dataClosing;
+		const route = 'dashboard/requests';
+
+		dataOpen = this.dialogOption.saveAdministrationPolicy();
+		dataClosing = this.dialogOption.confirmedSavedAdministrationPolicy();
+
+		Dialog = this.dialog.open(BaseDialogComponent, {
+			data: dataOpen,
+			minWidth: 385,
+		});
+
+		Dialog.afterClosed().subscribe((result) => {
+
+			this.sendedForm = form.getRawValue();
+			const json = JSON.stringify(this.sendedForm);
+			console.log(json);
+
+			console.log('result es igual a ' + result);
+
+			if (result === 'true') {
+				let dialog;
+				appComponent.showOverlay = true;
+				if (form.valid) {
+					console.log('administracion de polizas es valido');
+					this.policyAdministrationService.postPolicyAdministration(json)
+						.subscribe(res => {
+							this.correctSend(res, dialog, dataClosing, route);
+							appComponent.showOverlay = false;
+							console.log('Envio realizado correctamente');
+							// setTimeout(() => {
+							// 	window.location.reload();
+							// }, 2000);
+						}, (err) => {
+							this.badSend(err, dialog);
+							console.log('Envio fallido');
+						});
+				}
+				else {
+					setTimeout(() => {
+						appComponent.showOverlay = false;
+						console.log('settings NO es valido');
+						dialog = this.dialog.open(BaseDialogComponent, {
+							data: this.dialogOption.AdministrationPolicyInvalid(),
+							minWidth: 385
+						});
+						this.closeDialog(dialog);
+					}, 1000);
+				}
+			}
+		});
 	}
 }

@@ -944,9 +944,6 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
     } else if (this.noCotizacion == null) {
       this.noCotizacion = '';
     }
-
-    this.thereIsAWomenOnTheRequest();
-    this.thereIsAMenOnTheRequest();
   }
 
   getBmiUpdated(Form) {
@@ -1504,7 +1501,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
   }
 
   thereIsAWomenOnTheRequest() {
-    console.log('thereIsAMenOnTheRequest');
+    console.log('thereIsAWomenOnTheRequest');
 
     let womenCount = 0;
     this.cd.detectChanges();
@@ -1520,6 +1517,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
         }
       }
 
+      console.log('value person', this.newRequest.value.person);
       console.log(this.newRequest.value.person.sex);
       if (this.newRequest.get('person').get('sex').value === 'FEMENINO') {
         womenCount += 1;
@@ -1531,7 +1529,9 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
       } else {
         this.isThereAWomen = false;
       }
-    }, 1500);
+
+      console.log('is women', this.isThereAWomen);
+    }, 4000);
 
   }
 
@@ -1562,7 +1562,10 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
       } else {
         this.isThereAMen = false;
       }
-    }, 1500);
+
+      console.log('is men', this.isThereAMen);
+
+    }, 4000);
 
   }
 
@@ -3710,6 +3713,9 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
                 dialogRef.close();
               }, 4000);
             }
+
+            this.thereIsAWomenOnTheRequest();
+            this.thereIsAMenOnTheRequest();
           });
         }
         else {
@@ -4177,6 +4183,9 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
           formQBMHI.removeControl('reclamationInfo');
         }
       }
+
+      this.thereIsAWomenOnTheRequest();
+      this.thereIsAMenOnTheRequest();
 
       this.isFormValidToFill = true;
 

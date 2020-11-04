@@ -931,9 +931,6 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
       console.log('noCotizacion esta vacio');
       this.noCotizacion = '';
     }
-
-    this.thereIsAWomenOnTheRequest();
-    this.thereIsAMenOnTheRequest();
   }
 
   getBmiUpdated(Form) {
@@ -3528,6 +3525,9 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
           dialogRef.close();
         }, 4000);
       }
+
+      this.thereIsAWomenOnTheRequest();
+      this.thereIsAMenOnTheRequest();
     });
 
   }
@@ -3969,6 +3969,9 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
             formQBMHI.removeControl('reclamationInfo');
           }
         }
+
+        this.thereIsAWomenOnTheRequest();
+        this.thereIsAMenOnTheRequest();
 
         this.isFormValidToFill = true;
         this.appComponent.showOverlay = false;

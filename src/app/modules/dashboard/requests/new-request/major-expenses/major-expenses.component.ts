@@ -944,9 +944,6 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
     } else if (this.noCotizacion == null) {
       this.noCotizacion = '';
     }
-
-    this.thereIsAWomenOnTheRequest();
-    this.thereIsAMenOnTheRequest();
   }
 
   getBmiUpdated(Form) {
@@ -3710,6 +3707,10 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
                 dialogRef.close();
               }, 4000);
             }
+
+            this.thereIsAWomenOnTheRequest();
+            this.thereIsAMenOnTheRequest();
+
           });
         }
         else {
@@ -3782,7 +3783,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
       formFiles.removeControl('incomesCertified');
 
       if (formGeneral.get('countryRoleCode')) { formGeneral.get('countryRoleCode').setValidators(null); }
-      
+
       if (this.newRequest.get('questionsB').get('familyWithDiseases') !== undefined && this.newRequest.get('questionsB').get('familyWithDiseases') !== null) {
         this.familyWithDiseasesList = this.newRequest.get('questionsB').get('familyWithDiseases') as FormArray;
       } else {
@@ -4179,6 +4180,9 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
           formQBMHI.removeControl('reclamationInfo');
         }
       }
+
+      this.thereIsAWomenOnTheRequest();
+      this.thereIsAMenOnTheRequest();
 
       this.isFormValidToFill = true;
 

@@ -2162,8 +2162,8 @@ export class DisabilityComponent implements OnInit, DoCheck {
             formFiles.removeControl('mercantilePayer');
           }
 
-          formFiles.addControl('copyId', this.fb.array([this.createFormArray('filesCopyId')]));
-          this.filesCopyIdArray = this.disabilityGroup.get('files').get('copyId') as FormArray;
+          // formFiles.addControl('copyId', this.fb.array([this.createFormArray('filesCopyId')]));
+          // this.filesCopyIdArray = this.disabilityGroup.get('files').get('copyId') as FormArray;
 
           break;
 

@@ -3718,6 +3718,11 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
           formEP.removeControl('contractorExposedInfo');
         }
 
+        if (formP.get('mandatorySubject')) {
+          formP.get('mandatorySubject').setValidators(Validators.required);
+          formP.get('mandatorySubject').updateValueAndValidity();
+        }
+
         if (formP.get('isPayer').value !== 'NO') {
           formGeneral.removeControl('payer');
           formGeneral.removeControl('payerJuridical');

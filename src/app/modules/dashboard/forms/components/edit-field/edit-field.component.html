@@ -28,12 +28,12 @@
 
     </app-radio-button>
     <mat-form-field
-      *ngIf="data.value.callForm === 'SI' && data.get('dropdown').get('0').value.text !== null && data.get('dropdown').get('0').value.text !== '' && data.get('dropdown').get('0').value.value !== null && data.get('dropdown').get('0').value.value !== ''"
+      *ngIf="data.value.callForm === 'SI' && data.get('dropdown').get('0').value.viewValue !== null && data.get('dropdown').get('0').value.viewValue !== '' && data.get('dropdown').get('0').value.value !== null && data.get('dropdown').get('0').value.value !== ''"
       color="accent" appearance="outline" class="w-full mr-3" style="font-size: small !important;" [formGroup]="data">
       <mat-label>Valor que activa otro formulario</mat-label>
       <mat-select formControlName="valueForForm">
         <mat-option *ngFor="let dpd of data.get('dropdown')['controls']; index as i" value="{{dpd.value.value}}">
-          {{dpd.value.text}}
+          {{dpd.value.viewValue}}
         </mat-option>
       </mat-select>
     </mat-form-field>
@@ -46,7 +46,7 @@
         <div class="col-span-5">
           <app-input class="mr-3" [group]="item" label="Nombre unico del valor (Sin espacios)" name="value">
           </app-input>
-          <app-input class="mr-3" [group]="item" label="Titulo del valor" name="text">
+          <app-input class="mr-3" [group]="item" label="Titulo del valor" name="viewValue">
           </app-input>
         </div>
         <app-delete-array-button class="ml-3" *ngIf="data.get('dropdown')['controls'].length > 1"

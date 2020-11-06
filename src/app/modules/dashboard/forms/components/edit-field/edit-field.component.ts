@@ -83,7 +83,7 @@ export class EditFieldComponent implements OnInit {
     this.trueReset(this.data.get('range'), 0);
     this.trueReset(this.data.get('rangeEnd'), 0);
     this.trueReset(this.data.get('valueForForm'), '');
-    this.trueReset(this.data.get('dropdown'), [{ value: '', text: '' }]);
+    this.trueReset(this.data.get('dropdown'), [{ value: '', viewValue: '' }]);
 
     if (value !== 'callForm') {
       this.trueReset(this.data.get('callForm'), '');
@@ -104,7 +104,7 @@ export class EditFieldComponent implements OnInit {
       case 'dropDownItem':
         return this.fb.group({
           value: [''],
-          text: [''],
+          viewValue: [''],
         });
     }
   }

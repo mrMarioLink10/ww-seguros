@@ -94,7 +94,7 @@ export class NewFormComponent implements OnInit {
       case 'dropDownItem':
         return this.fb.group({
           value: [''],
-          text: [''],
+          viewValue: [''],
         });
     }
   }

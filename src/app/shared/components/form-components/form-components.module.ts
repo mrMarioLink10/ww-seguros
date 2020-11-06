@@ -16,6 +16,7 @@ import { MaterialFileInputModule } from 'ngx-material-file-input';
 import { SectionABlockComponent } from './section-a-block/section-a-block.component';
 import { AddArrayButtonComponent } from './add-array-button/add-array-button.component';
 import { DeleteArrayButtonComponent } from './delete-array-button/delete-array-button.component';
+import { CheckboxComponent } from './checkbox/checkbox.component';
 
 @NgModule({
 	declarations: [
@@ -29,7 +30,8 @@ import { DeleteArrayButtonComponent } from './delete-array-button/delete-array-b
 		FileInputComponent,
 		SectionABlockComponent,
 		AddArrayButtonComponent,
-		DeleteArrayButtonComponent
+		DeleteArrayButtonComponent,
+		CheckboxComponent
 	],
 	exports: [
 		SelectComponent,

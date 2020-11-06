@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { FormGroup, Validators } from '@angular/forms';
+import { FieldConfig } from '../form-components/models/field-config';
 
 @Component({
   selector: 'app-dynamic-field',
@@ -12,16 +13,32 @@ export class DynamicFieldComponent implements OnInit {
   @Input() name: string;
   @Input() type: string;
   @Input() label: string;
+  @Input() validator: string;
   @Input() haveRange: string;
   @Input() range: number;
   @Input() rangeEnd: number;
-  @Input() dropdown: any[];
+  @Input() values: any[];
   @Input() isRequired: string;
-
+  options: FieldConfig = { options: [] };
   constructor() { }
 
   ngOnInit() {
-    console.log(this.group, this.name);
+
+    if (this.values.length > 0) {
+      for (const iterator of this.values) {
+        console.log('iterator', iterator);
+        this.options.options.push({ value: iterator.value, viewValue: iterator.viewValue });
+      }
+    }
+
+    if (this.isRequired === 'NO OBLIGATORIO') {
+      this.group.get(this.name).setValidators(null);
+    }
+
+    if (this.validator === 'SI' && this.type === 'TEXTO') {
+      console.log('SOY EMAIL')
+      this.group.get(this.name).setValidators([Validators.email]);
+    }
   }
 
 }

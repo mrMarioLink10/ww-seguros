@@ -1,5 +1,15 @@
-<!-- <app-input class="mr-3" *ngIf="type === 'TEXTO'" [group]="group" [name]="name" [label]="label"></app-input>
-<app-number-input *ngIf="type === 'NUMERICO' && haveRange !== 'NO'" [group]="group" [name]="name" [label]="label">
-</app-number-input> -->
-<!-- {{group}}
-{{name}} -->
+<app-input *ngIf="type === 'TEXTO'" [group]="group" [name]="name" [label]="label"></app-input>
+<app-number-input *ngIf="type === 'NUMERICO' && haveRange == 'NO'" [group]="group" [name]="name" [label]="label">
+</app-number-input>
+<app-number-input *ngIf="type === 'NUMERICO' && haveRange == 'SI'" [group]="group" [max]="rangeEnd" [min]="range"
+  [name]="name" [label]="label">
+</app-number-input>
+<app-number-input *ngIf="type === 'NUMERICO' && validator == 'SI'" [group]="group" isPhone="true" [name]="name"
+  [label]="label">
+</app-number-input>
+<app-select *ngIf="type === 'DROPDOWN'" [group]="group" [name]="name" [label]="label" [options]="this.options">
+</app-select>
+<app-radio-button *ngIf="type === 'RADIO BUTTON'" [group]="group" [name]="name" [title]="label"
+  [options]="this.options">
+</app-radio-button>
+<!-- <app-checkbox *ngIf="type === 'DROPDOWN'" [group]="group" [name]="name" [label]="label" [options]="this.options"></app-checkbox> -->

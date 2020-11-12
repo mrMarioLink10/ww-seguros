@@ -1,9 +1,9 @@
 <h3 class="uppercase dashboard-page-title mb-8" style="font-size: 16px">Editar propiedades del campo</h3>
 <div class="h-full">
   <div class="grid grid-cols-2">
-    <app-input class="mr-3" [preventSpace]="true" [group]="data" label="Nombre unico del campo (Sin espacios)"
+    <!-- <app-input class="mr-3" [preventSpace]="true" [group]="data" label="Nombre unico del campo (Sin espacios)"
       name="name">
-    </app-input>
+    </app-input> -->
     <app-input class="mr-3" [group]="data" label="Titulo del campo" name="label">
     </app-input>
     <app-select class="mr-3" [group]="data" [options]="type" (selected)="checkRangeStatus(data.value.type)">
@@ -11,8 +11,9 @@
     <app-radio-button *ngIf="data.value.type === 'TEXTO' || data.value.type === 'NUMERICO'" class="mr-3" [group]="data"
       name="validator" [title]="getValidatorTitle(data.value.type)" [options]="diseaseService.yesOrNoOriginal">
     </app-radio-button>
-    <app-radio-button *ngIf="data.value.type === 'NUMERICO' && data.value.validator === 'NO'" class="mr-3"
-      [group]="data" name="haveRange" title="¿Tiene rango?" [options]="diseaseService.yesOrNoOriginal">
+    <app-radio-button
+      *ngIf="(data.value.type === 'NUMERICO' && data.value.validator === 'NO') || data.value.type === 'FECHA'"
+      class="mr-3" [group]="data" name="haveRange" title="¿Tiene rango?" [options]="diseaseService.yesOrNoOriginal">
     </app-radio-button>
     <div *ngIf="data.value.type === 'NUMERICO' && data.value.haveRange === 'SI'" class="grid grid-cols-2">
       <app-number-input class="mr-3" [group]="data" label="Valor minimo" [max]="data.value.rangeEnd" name="range">
@@ -20,12 +21,45 @@
       <app-number-input class="mr-3" [group]="data" label="Valor maximo" [min]="data.value.range" name="rangeEnd">
       </app-number-input>
     </div>
+    <!-- <div *ngIf="data.value.type === 'FECHA' && data.value.haveRange === 'SI'" class="grid grid-cols-2">
+      <app-date-picker class="mr-3" [group]="data" label="Fecha minima" [max]="data.value.rangeEnd" name="range">
+      </app-date-picker>
+      <app-date-picker class="mr-3" [group]="data" label="Fecha maxima" [min]="data.value.range" name="rangeEnd">
+      </app-date-picker>
+    </div> -->
     <app-select class="mr-3" [group]="data" [options]="required"></app-select>
-    <app-radio-button
-      *ngIf="data.value.type === 'DROPDOWN' || data.value.type === 'CHECKBOX' || data.value.type === 'RADIO BUTTON'"
-      class="mr-3" [group]="data" name="callForm" title="¿Llama otro formulario?"
-      (selected)="checkRangeStatus('callForm')" [options]="diseaseService.yesOrNoOriginal">
+    <app-select class="mr-3" *ngIf="data.value.type !== 'CHECKBOX'" [group]="data" [options]="enable"></app-select>
+    <app-input class="mr-3" *ngIf="(data.value.type === 'TEXTO') && data.value.isEnable === 'DESHABILITADO'"
+      [group]="data" label="Valor por default" name="defaultValue">
+    </app-input>
+    <app-number-input class="mr-3"
+      *ngIf="data.value.type === 'NUMERICO' && data.value.validator === 'NO' && data.value.isEnable === 'DESHABILITADO'"
+      [group]="data" label="Valor por default" name="defaultValue">
+    </app-number-input>
+    <app-number-input isPhone="true" class="mr-3"
+      *ngIf="data.value.type === 'NUMERICO' && data.value.validator === 'SI' && data.value.isEnable === 'DESHABILITADO'"
+      [group]="data" label="Valor por default" name="defaultValue">
+    </app-number-input>
+    <app-date-picker class="mr-3" *ngIf="data.value.type === 'FECHA' && data.value.isEnable === 'DESHABILITADO'"
+      [group]="data" label="Valor por default" name="defaultValue">
+    </app-date-picker>
 
+    <div class="mr-3">
+      <mat-form-field
+        *ngIf="data.value.isEnable === 'DESHABILITADO' && (data.value.type === 'DROPDOWN' || data.value.type === 'RADIO BUTTON') && data.get('dropdown').get('0').value.viewValue !== null && data.get('dropdown').get('0').value.viewValue !== '' && data.get('dropdown').get('0').value.value !== null && data.get('dropdown').get('0').value.value !== ''"
+        color="accent" appearance="outline" class="w-full mr-3" style="font-size: small !important;" [formGroup]="data">
+        <mat-label>Valor por default</mat-label>
+        <mat-select formControlName="defaultValue">
+          <mat-option *ngFor="let dpd of data.get('dropdown')['controls']; index as i" value="{{dpd.value.value}}">
+            {{dpd.value.viewValue}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <app-radio-button *ngIf="data.value.type === 'DROPDOWN' || data.value.type === 'RADIO BUTTON'" class="mr-3"
+      [group]="data" name="callForm" title="¿Llama otro formulario?" (selected)="checkRangeStatus('callForm')"
+      [options]="diseaseService.yesOrNoOriginal">
     </app-radio-button>
     <mat-form-field
       *ngIf="data.value.callForm === 'SI' && data.get('dropdown').get('0').value.viewValue !== null && data.get('dropdown').get('0').value.viewValue !== '' && data.get('dropdown').get('0').value.value !== null && data.get('dropdown').get('0').value.value !== ''"
@@ -38,9 +72,8 @@
       </mat-select>
     </mat-form-field>
   </div>
-  <hr *ngIf="data.value.type === 'DROPDOWN' || data.value.type === 'CHECKBOX' || data.value.type === 'RADIO BUTTON'"
-    class="w-full mb-3 ww-divider">
-  <div *ngIf="data.value.type === 'DROPDOWN' || data.value.type === 'CHECKBOX' || data.value.type === 'RADIO BUTTON'">
+  <hr *ngIf="data.value.type === 'DROPDOWN' || data.value.type === 'RADIO BUTTON'" class="w-full mb-3 ww-divider">
+  <div *ngIf="data.value.type === 'DROPDOWN' || data.value.type === 'RADIO BUTTON'">
     <div class="grid grid-cols-4">
       <div class="grid grid-cols-6" *ngFor="let item of data.get('dropdown')['controls'] as FormGroup; let i = index">
         <div class="col-span-5">

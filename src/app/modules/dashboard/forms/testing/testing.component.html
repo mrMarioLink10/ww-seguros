@@ -23,4 +23,11 @@
   <app-add-array-button class="mt-3" [array]="generalForm.get('dynamicForms')" [item]="addItem('dynamicForm')">
   </app-add-array-button>
 
+  <app-dynamic-form class="mb-3" *ngIf="dynamicForms.get('dynamicForms').get('0').get('form')"
+    [form]="dynamicForms.get('dynamicForms').get('0').get('form')" [ID]="null">
+  </app-dynamic-form>
+
+  <div class="mt-3 text-blue-700" (click)="print()">Imprimir form</div>
+  <div class="mt-3 text-blue-700" (click)="save()">Guardar form</div>
+  <div class="mt-3 text-blue-700" (click)="print()"></div>
 </div>

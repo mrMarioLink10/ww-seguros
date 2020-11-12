@@ -63,7 +63,6 @@ export class NewFormComponent implements OnInit {
       case 'acordeon':
         return this.fb.group({
           titulo: ['', Validators.required],
-          nombre: ['', Validators.required],
           seccion: this.fb.array([this.addItem('seccion')])
         });
 
@@ -75,10 +74,11 @@ export class NewFormComponent implements OnInit {
 
       case 'field':
         return this.fb.group({
-          name: ['', Validators.required],
           label: ['', Validators.required],
           type: ['', Validators.required],
           isRequired: ['', Validators.required],
+          isEnable: ['', Validators.required],
+          defaultValue: [''],
           validator: [''],
           haveRange: [''],
           range: [0],

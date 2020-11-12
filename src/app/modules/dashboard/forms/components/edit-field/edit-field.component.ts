@@ -1,7 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { BaseDialogComponent } from 'src/app/shared/components/base-dialog/base-dialog.component';
-import { BaseDialog } from 'src/app/shared/components/base-dialog/models/base-dialog';
 import { FieldConfig } from '../../../../../shared/components/form-components/models/field-config';
 import { DiseaseService } from '../../../shared/components/disease/shared/disease/disease.service';
 import { FormBuilder, FormControl } from '@angular/forms';
@@ -25,6 +23,10 @@ export class EditFieldComponent implements OnInit {
       {
         value: 'NUMERICO',
         viewValue: 'Numerico'
+      },
+      {
+        value: 'FECHA',
+        viewValue: 'Fecha'
       },
       {
         value: 'DROPDOWN',
@@ -56,12 +58,25 @@ export class EditFieldComponent implements OnInit {
     ]
   };
 
+  enable: FieldConfig = {
+    label: 'Estatus por default del campo',
+    name: 'isEnable',
+    options: [
+      {
+        value: 'HABILITADO',
+        viewValue: 'Habilitado'
+      },
+      {
+        value: 'DESHABILITADO',
+        viewValue: 'Deshabilitado'
+      },
+    ]
+  };
+
   validator: FieldConfig = {
     label: '¿Es requerido?',
     name: 'validator',
   };
-
-
 
   constructor(
     public dialogRef: MatDialogRef<EditFieldComponent>,

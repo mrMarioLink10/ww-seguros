@@ -12,4 +12,5 @@
 <app-radio-button *ngIf="type === 'RADIO BUTTON'" [group]="group" [name]="name" [title]="label"
   [options]="this.options">
 </app-radio-button>
-<!-- <app-checkbox *ngIf="type === 'DROPDOWN'" [group]="group" [name]="name" [label]="label" [options]="this.options"></app-checkbox> -->
+<app-checkbox *ngIf="type === 'CHECKBOX'" [group]="group" [name]="name" [label]="label"></app-checkbox>
+<app-date-picker *ngIf="type === 'FECHA'" [group]="group" [name]="name" [label]="label"></app-date-picker>

@@ -15,6 +15,8 @@ export class DynamicFieldComponent implements OnInit {
   @Input() label: string;
   @Input() validator: string;
   @Input() haveRange: string;
+  @Input() isEnable: string;
+  @Input() defaultValue: string;
   @Input() range: number;
   @Input() rangeEnd: number;
   @Input() values: any[];
@@ -29,6 +31,11 @@ export class DynamicFieldComponent implements OnInit {
         console.log('iterator', iterator);
         this.options.options.push({ value: iterator.value, viewValue: iterator.viewValue });
       }
+    }
+
+    if (this.isEnable === 'DESHABILITADO') {
+      this.group.get(this.name).disable();
+      this.group.get(this.name).setValue(this.defaultValue);
     }
 
     if (this.isRequired === 'NO OBLIGATORIO') {

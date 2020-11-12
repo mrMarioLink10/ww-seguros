@@ -17,6 +17,7 @@ export class TestingComponent implements OnInit {
 
   forms: any[];
   generalForm: FormGroup;
+  dynamicForms: FormGroup;
   showContent = false;
   idsOptions: any = null;
 
@@ -32,6 +33,10 @@ export class TestingComponent implements OnInit {
     this.generalForm = this.fb.group({
       dynamicForms: this.fb.array([this.addItem('dynamicForm')])
     });
+    this.dynamicForms = this.fb.group({
+      dynamicForms: this.fb.array([this.addItem('dynamicFormUnique')])
+    });
+    this.generateCreatedForm(3, this.dynamicForms.get('dynamicForms').get('0'));
   }
 
   addItem(target: string) {
@@ -39,6 +44,11 @@ export class TestingComponent implements OnInit {
       case 'dynamicForm':
         return this.fb.group({
           idForm: ['', Validators.required],
+          form: this.fb.group({})
+        });
+
+      case 'dynamicFormUnique':
+        return this.fb.group({
           form: this.fb.group({})
         });
     }
@@ -88,11 +98,47 @@ export class TestingComponent implements OnInit {
         console.log(res);
 
         this.formDataFillingService.iterateThroughtAllObject(res.data, group.get('form'));
+        console.warn('new form unique', group.get('form'));
+        setTimeout(() => {
+          this.appComponent.showOverlay = false;
+        });
+      });
+  }
+
+  generateCreatedForm(id, group) {
+    setTimeout(() => {
+      this.appComponent.showOverlay = true;
+    });
+    console.warn('FORM:', group);
+    const idForm = id;
+    group.get('form').reset();
+    // group.get('form').setValue({});
+
+    this.formsService.getDynamicForm(idForm)
+      .subscribe(res => {
+        console.log(res);
+
+        this.formDataFillingService.iterateThroughtAllObject(res.data, group.get('form'));
         console.warn('new form', group.get('form'));
         setTimeout(() => {
           this.appComponent.showOverlay = false;
         });
       });
+  }
 
+  print() {
+    console.log(this.generalForm);
+  }
+
+  save() {
+    const form = this.generalForm.get('dynamicForms').get('0').get('form') as FormGroup;
+    const json = JSON.stringify(form.getRawValue());
+    console.log(this.generalForm);
+    console.log(json);
+
+    this.formsService.postDynamicForm(json)
+      .subscribe(res => {
+        console.log(res);
+      });
   }
 }

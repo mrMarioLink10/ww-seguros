@@ -17,6 +17,7 @@ export class DynamicFormComponent implements OnInit {
   @Input() fakeForm: any;
 
   ngOnInit() {
+    console.log('FORM EN DYNAMIC FORM', this.form);
   }
 
   setStep(index: number) {

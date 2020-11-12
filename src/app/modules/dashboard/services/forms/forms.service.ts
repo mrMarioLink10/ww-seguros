@@ -20,12 +20,19 @@ export class FormsService {
   }
 
   postData(body) {
-
     const httpOptions = {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' })
     };
 
     return this.http.post(`${environment.apiUrl}/api/DynamicForm`, body, httpOptions);
+  }
+
+  postDynamicForm(body) {
+    const httpOptions = {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+    };
+
+    return this.http.post(`${environment.apiUrl}/api/DynamicPersistanceForm`, body, httpOptions);
   }
 
   sendData(id): Observable<any> {

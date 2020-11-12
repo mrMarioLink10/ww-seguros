@@ -19,7 +19,8 @@
           <app-dynamic-field [label]="campo.value.label" name="valueCollectedFromForm"
             [haveRange]="campo.value.haveRange" [range]="campo.value.range" [validator]="campo.value.validator"
             [rangeEnd]="campo.value.rangeEnd" [isRequired]="campo.value.isRequired" [type]="campo.value.type"
-            [values]="campo.value.dropdown" [group]="campo"></app-dynamic-field>
+            [values]="campo.value.dropdown" [isEnable]="campo.value.isEnable" [defaultValue]="campo.value.defaultValue"
+            [group]="campo"></app-dynamic-field>
         </div>
       </div>
       <hr *ngIf=" item.get('seccion')['controls'].length> 1 && ix !== item.get('seccion')['controls'].length-1"

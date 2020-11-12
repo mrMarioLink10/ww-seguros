@@ -44,7 +44,8 @@ import { CheckboxComponent } from './checkbox/checkbox.component';
 		FileInputComponent,
 		SectionABlockComponent,
 		AddArrayButtonComponent,
-		DeleteArrayButtonComponent
+		DeleteArrayButtonComponent,
+		CheckboxComponent
 	],
 	imports: [
 		CommonModule,

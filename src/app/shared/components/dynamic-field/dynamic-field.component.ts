@@ -28,7 +28,6 @@ export class DynamicFieldComponent implements OnInit {
 
     if (this.values.length > 0) {
       for (const iterator of this.values) {
-        console.log('iterator', iterator);
         this.options.options.push({ value: iterator.value, viewValue: iterator.viewValue });
       }
     }
@@ -43,7 +42,6 @@ export class DynamicFieldComponent implements OnInit {
     }
 
     if (this.validator === 'SI' && this.type === 'TEXTO') {
-      console.log('SOY EMAIL')
       this.group.get(this.name).setValidators([Validators.email]);
     }
   }

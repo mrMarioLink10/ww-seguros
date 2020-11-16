@@ -36,7 +36,7 @@ export class TestingComponent implements OnInit {
     this.dynamicForms = this.fb.group({
       dynamicForms: this.fb.array([this.addItem('dynamicFormUnique')])
     });
-    this.generateCreatedForm(3, this.dynamicForms.get('dynamicForms').get('0'));
+    this.generateCreatedForm(7, this.dynamicForms.get('dynamicForms').get('0'));
   }
 
   addItem(target: string) {
@@ -88,16 +88,14 @@ export class TestingComponent implements OnInit {
     setTimeout(() => {
       this.appComponent.showOverlay = true;
     });
-    console.log($event);
     const idForm = $event.valor;
     group.get('form').reset();
-    // group.get('form').setValue({});
 
     this.formsService.getDynamicForm(idForm)
       .subscribe(res => {
         console.log(res);
 
-        this.formDataFillingService.iterateThroughtAllObject(res.data, group.get('form'));
+        this.formDataFillingService.iterateThroughtAllObjectForms(res.data, group.get('form'));
         console.warn('new form unique', group.get('form'));
         setTimeout(() => {
           this.appComponent.showOverlay = false;
@@ -109,17 +107,12 @@ export class TestingComponent implements OnInit {
     setTimeout(() => {
       this.appComponent.showOverlay = true;
     });
-    console.warn('FORM:', group);
     const idForm = id;
     group.get('form').reset();
-    // group.get('form').setValue({});
 
-    this.formsService.getDynamicForm(idForm)
+    this.formsService.getCreatedDynamicForm(idForm)
       .subscribe(res => {
-        console.log(res);
-
-        this.formDataFillingService.iterateThroughtAllObject(res.data, group.get('form'));
-        console.warn('new form', group.get('form'));
+        this.formDataFillingService.iterateThroughtAllObjectForms(res.data, group.get('form'));
         setTimeout(() => {
           this.appComponent.showOverlay = false;
         });

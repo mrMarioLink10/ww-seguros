@@ -46,4 +46,8 @@ export class FormsService {
   getDynamicForm(id: number): Observable<any> {
     return this.http.get(`${environment.apiUrl}/api/DynamicPersistanceForm/NewForm/${id}`);
   }
+
+  getCreatedDynamicForm(id: number): Observable<any> {
+    return this.http.get(`${environment.apiUrl}/api/DynamicPersistanceForm/${id}`);
+  }
 }

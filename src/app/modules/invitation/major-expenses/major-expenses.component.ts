@@ -1512,12 +1512,12 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
             const weightUnit = this.newRequest.get('dependents').get('allDependents').get(index.toString()).get('weightUnit').value;
 
             const result = this.getBmiValue(value, weight, weightUnit, heightUnit);
-            this.newRequest
-              .get('dependents')
-              .get('allDependents')
-              .get(index.toString())
-              .get('bmi')
-              .setValue(result);
+            // this.newRequest
+            //   .get('dependents')
+            //   .get('allDependents')
+            //   .get(index.toString())
+            //   .get('bmi')
+            //   .setValue(result);
 
           });
           this.newRequest.get('dependents').get('allDependents').get(index.toString()).get('weight').valueChanges.subscribe(value => {
@@ -1525,12 +1525,12 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
             const heightUnit = this.newRequest.get('dependents').get('allDependents').get(index.toString()).get('heightUnit').value;
             const weightUnit = this.newRequest.get('dependents').get('allDependents').get(index.toString()).get('weightUnit').value;
             const result = this.getBmiValue(height, value, weightUnit, heightUnit);
-            this.newRequest
-              .get('dependents')
-              .get('allDependents')
-              .get(index.toString())
-              .get('bmi')
-              .setValue(result);
+            // this.newRequest
+            //   .get('dependents')
+            //   .get('allDependents')
+            //   .get(index.toString())
+            //   .get('bmi')
+            //   .setValue(result);
 
           });
 
@@ -1539,12 +1539,12 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
             const weight = this.newRequest.get('dependents').get('allDependents').get(index.toString()).get('weight').value;
             const weightUnit = this.newRequest.get('dependents').get('allDependents').get(index.toString()).get('weightUnit').value;
             const result = this.getBmiValue(height, weight, weightUnit, value);
-            this.newRequest
-              .get('dependents')
-              .get('allDependents')
-              .get(index.toString())
-              .get('bmi')
-              .setValue(result);
+            // this.newRequest
+            //   .get('dependents')
+            //   .get('allDependents')
+            //   .get(index.toString())
+            //   .get('bmi')
+            //   .setValue(result);
 
           });
 
@@ -1553,12 +1553,12 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
             const weight = this.newRequest.get('dependents').get('allDependents').get(index.toString()).get('weight').value;
             const heightUnit = this.newRequest.get('dependents').get('allDependents').get(index.toString()).get('heightUnit').value;
             const result = this.getBmiValue(height, weight, value, heightUnit);
-            this.newRequest
-              .get('dependents')
-              .get('allDependents')
-              .get(index.toString())
-              .get('bmi')
-              .setValue(result);
+            // this.newRequest
+            //   .get('dependents')
+            //   .get('allDependents')
+            //   .get(index.toString())
+            //   .get('bmi')
+            //   .setValue(result);
 
           });
         } else {

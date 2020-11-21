@@ -810,7 +810,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
       }),
       incomes: this.fb.group({
         principalIncome: ['', Validators.required],
-        otherIncomes: ['', Validators.required],
+        otherIncomes: [''],
       }),
       dependents: this.fb.group({
         allDependents: this.fb.array([]),

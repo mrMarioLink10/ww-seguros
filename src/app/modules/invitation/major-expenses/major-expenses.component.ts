@@ -810,7 +810,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
       }),
       incomes: this.fb.group({
         principalIncome: ['', Validators.required],
-        otherIncomes: ['', Validators.required],
+        otherIncomes: [''],
       }),
       dependents: this.fb.group({
         allDependents: this.fb.array([]),
@@ -986,15 +986,15 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
   }
 
   addEventChange() {
-    this.newRequest.get('person').get('weightUnit').valueChanges.subscribe(value => {
-      this.getBmi(this.newRequest.get('person').value.height, this.newRequest.get('person').value.weight);
-    });
-    this.newRequest.get('person').get('heightUnit').valueChanges.subscribe(value => {
-      this.getBmi(this.newRequest.get('person').value.height, this.newRequest.get('person').value.weight);
-    });
-    this.newRequest.get('person').get('weight').valueChanges.subscribe(value => {
-      this.getBmi(this.newRequest.get('person').value.height, value);
-    });
+    // this.newRequest.get('person').get('weightUnit').valueChanges.subscribe(value => {
+    //   this.getBmi(this.newRequest.get('person').value.height, this.newRequest.get('person').value.weight);
+    // });
+    // this.newRequest.get('person').get('heightUnit').valueChanges.subscribe(value => {
+    //   this.getBmi(this.newRequest.get('person').value.height, this.newRequest.get('person').value.weight);
+    // });
+    // this.newRequest.get('person').get('weight').valueChanges.subscribe(value => {
+    //   this.getBmi(this.newRequest.get('person').value.height, value);
+    // });
     this.newRequest.get('noC').valueChanges.subscribe(value => {
       if (value !== '' && value !== undefined) {
         this.isNotValidToSearch = false;
@@ -1002,9 +1002,9 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
         this.isNotValidToSearch = true;
       }
     });
-    this.newRequest.get('person').get('height').valueChanges.subscribe(value => {
-      this.getBmi(value, this.newRequest.get('person').value.weight);
-    });
+    // this.newRequest.get('person').get('height').valueChanges.subscribe(value => {
+    //   this.getBmi(value, this.newRequest.get('person').value.weight);
+    // });
 
     this.newRequest.get('person').get('date').valueChanges.subscribe(value => {
       const timeDiff = Math.abs(Date.now() - new Date(value).getTime());
@@ -1512,12 +1512,12 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
             const weightUnit = this.newRequest.get('dependents').get('allDependents').get(index.toString()).get('weightUnit').value;
 
             const result = this.getBmiValue(value, weight, weightUnit, heightUnit);
-            this.newRequest
-              .get('dependents')
-              .get('allDependents')
-              .get(index.toString())
-              .get('bmi')
-              .setValue(result);
+            // this.newRequest
+            //   .get('dependents')
+            //   .get('allDependents')
+            //   .get(index.toString())
+            //   .get('bmi')
+            //   .setValue(result);
 
           });
           this.newRequest.get('dependents').get('allDependents').get(index.toString()).get('weight').valueChanges.subscribe(value => {
@@ -1525,12 +1525,12 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
             const heightUnit = this.newRequest.get('dependents').get('allDependents').get(index.toString()).get('heightUnit').value;
             const weightUnit = this.newRequest.get('dependents').get('allDependents').get(index.toString()).get('weightUnit').value;
             const result = this.getBmiValue(height, value, weightUnit, heightUnit);
-            this.newRequest
-              .get('dependents')
-              .get('allDependents')
-              .get(index.toString())
-              .get('bmi')
-              .setValue(result);
+            // this.newRequest
+            //   .get('dependents')
+            //   .get('allDependents')
+            //   .get(index.toString())
+            //   .get('bmi')
+            //   .setValue(result);
 
           });
 
@@ -1539,12 +1539,12 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
             const weight = this.newRequest.get('dependents').get('allDependents').get(index.toString()).get('weight').value;
             const weightUnit = this.newRequest.get('dependents').get('allDependents').get(index.toString()).get('weightUnit').value;
             const result = this.getBmiValue(height, weight, weightUnit, value);
-            this.newRequest
-              .get('dependents')
-              .get('allDependents')
-              .get(index.toString())
-              .get('bmi')
-              .setValue(result);
+            // this.newRequest
+            //   .get('dependents')
+            //   .get('allDependents')
+            //   .get(index.toString())
+            //   .get('bmi')
+            //   .setValue(result);
 
           });
 
@@ -1553,12 +1553,12 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
             const weight = this.newRequest.get('dependents').get('allDependents').get(index.toString()).get('weight').value;
             const heightUnit = this.newRequest.get('dependents').get('allDependents').get(index.toString()).get('heightUnit').value;
             const result = this.getBmiValue(height, weight, value, heightUnit);
-            this.newRequest
-              .get('dependents')
-              .get('allDependents')
-              .get(index.toString())
-              .get('bmi')
-              .setValue(result);
+            // this.newRequest
+            //   .get('dependents')
+            //   .get('allDependents')
+            //   .get(index.toString())
+            //   .get('bmi')
+            //   .setValue(result);
 
           });
         } else {

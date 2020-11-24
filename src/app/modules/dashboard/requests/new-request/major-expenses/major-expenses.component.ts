@@ -1581,13 +1581,13 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
 
   showWarningDot(Form: any): boolean {
     if (!this.ID) {
-      if (!Form.valid && this.ogForm.submitted) {
+      if (Form.invalid && this.ogForm.submitted) {
         return true;
       } else {
         return false;
       }
     } else {
-      if (Form.valid) {
+      if (!Form.invalid) {
         return false;
       } else {
         return true;

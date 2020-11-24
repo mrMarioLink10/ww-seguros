@@ -17,7 +17,7 @@ export class TableStatusPipe implements PipeTransform {
         return 'Enviado';
 
       case '3':
-        return 'Cancelado';
+        return 'Disponible';
 
       case '4':
         return 'Eliminado';
@@ -38,7 +38,7 @@ export class TableStatusPipe implements PipeTransform {
         return 'Enviado';
 
       case 3:
-        return 'Cancelado';
+        return 'Disponible';
 
       case 4:
         return 'Eliminado';

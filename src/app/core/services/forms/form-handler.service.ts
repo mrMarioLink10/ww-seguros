@@ -162,7 +162,7 @@ export class FormHandlerService {
 		});
 
 		Dialog.afterClosed().subscribe((result) => {
-			if (form.valid) {
+			if (!form.invalid) {
 				form.get('isComplete').setValue(true);
 			} else {
 				form.get('isComplete').setValue(false);
@@ -357,7 +357,7 @@ export class FormHandlerService {
 						// 	minWidth: 385
 						// });
 						// this.closeDialog(dialog);
-						if (form.valid) {
+						if (!form.invalid) {
 							switch (name) {
 								case 'claims-reclaim':
 									this.claimService.postClaim(json)
@@ -798,7 +798,7 @@ export class FormHandlerService {
 			if (result === 'true') {
 				let dialog;
 				appComponent.showOverlay = true;
-				if (form.valid) {
+				if (!form.invalid) {
 					console.log('settings es valido');
 					this.settingsService.postSettings(json)
 						.subscribe(res => {
@@ -855,7 +855,7 @@ export class FormHandlerService {
 			if (result === 'true') {
 				let dialog;
 				appComponent.showOverlay = true;
-				if (form.valid) {
+				if (!form.invalid) {
 					console.log('administracion de polizas es valido');
 					this.policyAdministrationService.postPolicyAdministration(json)
 						.subscribe(res => {

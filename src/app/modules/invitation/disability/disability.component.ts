@@ -913,14 +913,14 @@ export class DisabilityComponent implements OnInit, DoCheck {
 
     if (this.form !== undefined) {
       if (!this.ID) {
-        if (!form.valid && this.form.submitted) {
+        if (form.invalid && this.form.submitted) {
           return true;
         } else {
           return false;
         }
 
       } else {
-        if (form.valid) {
+        if (!form.invalid) {
           return false;
         } else {
           return true;

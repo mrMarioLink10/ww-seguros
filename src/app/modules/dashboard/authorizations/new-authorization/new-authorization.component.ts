@@ -213,7 +213,7 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy, DoCheck {
 	// idNumber2Label = 'Asegurados poliza ';
 
 	idNumber2Field = {
-		label: 'Asegurados misma póliza' ,
+		label: 'Asegurados misma póliza',
 		options: this.idNumber2Options
 	};
 
@@ -668,14 +668,14 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy, DoCheck {
 	showWarningDot(form: any): boolean {
 		if (!this.ID) {
 
-			if (!form.valid && this.form.submitted) {
+			if (form.invalid && this.form.submitted) {
 				return true;
 			} else {
 				return false;
 			}
 
 		} else {
-			if (form.valid) {
+			if (!form.invalid) {
 				return false;
 			} else {
 				return true;
@@ -1017,7 +1017,7 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy, DoCheck {
 				this.searchIdNumberAccess = true;
 				idNumber = (idNumber).toString();
 			}
-			if (this.authorization.get('informacionAsegurado').get('filterType').value == 'POLIZA'  && this.idNumber2Options.length == 0) {
+			if (this.authorization.get('informacionAsegurado').get('filterType').value == 'POLIZA' && this.idNumber2Options.length == 0) {
 				this.appComponent.showOverlay = true;
 
 				if (this.dataAutoCompleteIdNumberObject.find(nombre => nombre.policy == idNumber)) {
@@ -1027,10 +1027,10 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy, DoCheck {
 					for (let x = 0; x < this.dataAutoCompleteIdNumberObject.length; x++) {
 						if (idNumber2Policy == this.dataAutoCompleteIdNumberObject[x].policy) {
 							this.idNumber2Options.push({
-									value: this.dataAutoCompleteIdNumberObject[x].name,
-									viewValue: this.dataAutoCompleteIdNumberObject[x].name,
-									policy: this.dataAutoCompleteIdNumberObject[x].policy
-								});
+								value: this.dataAutoCompleteIdNumberObject[x].name,
+								viewValue: this.dataAutoCompleteIdNumberObject[x].name,
+								policy: this.dataAutoCompleteIdNumberObject[x].policy
+							});
 						}
 					}
 					if (this.idNumber2Options.length > 1) {
@@ -1055,7 +1055,7 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy, DoCheck {
 				}
 
 				// setTimeout(() => {
-					this.appComponent.showOverlay = false;
+				this.appComponent.showOverlay = false;
 				// }, 1000);
 			}
 
@@ -1074,64 +1074,64 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy, DoCheck {
 			// idNumber = (idNumberObject.value).toString();
 			if (this.searchIdNumberAccess == true) {
 
-			this.appComponent.showOverlay = true;
+				this.appComponent.showOverlay = true;
 
-			this.userService.getInsurancePeople(idNumber)
-				.subscribe((response: any) => {
+				this.userService.getInsurancePeople(idNumber)
+					.subscribe((response: any) => {
 
-					console.log(response);
-					this.appComponent.showOverlay = false;
-					if (response.data !== null) {
-						this.showContent = true;
-						const dialogRef = this.dialog.open(BaseDialogComponent, {
-							data: this.dialogOption.idNumberFound(response.data),
-							minWidth: 385,
-						});
-						setTimeout(() => {
-							dialogRef.close();
-						}, 4000);
+						console.log(response);
+						this.appComponent.showOverlay = false;
+						if (response.data !== null) {
+							this.showContent = true;
+							const dialogRef = this.dialog.open(BaseDialogComponent, {
+								data: this.dialogOption.idNumberFound(response.data),
+								minWidth: 385,
+							});
+							setTimeout(() => {
+								dialogRef.close();
+							}, 4000);
 
-						this.authorization.get('informacionAsegurado').get('nombres').setValue(response.data.asegurado.nombres_asegurado);
-						this.authorization.get('informacionAsegurado').get('apellidos').setValue(response.data.asegurado.apellidos_asegurado);
-						// this.authorization.get('informacionAsegurado').get('noPoliza').setValue(response.data.asegurado.no_poliza);
-						this.authorization.get('idNumber').setValue(response.data.asegurado.id_asegurado);
+							this.authorization.get('informacionAsegurado').get('nombres').setValue(response.data.asegurado.nombres_asegurado);
+							this.authorization.get('informacionAsegurado').get('apellidos').setValue(response.data.asegurado.apellidos_asegurado);
+							// this.authorization.get('informacionAsegurado').get('noPoliza').setValue(response.data.asegurado.no_poliza);
+							this.authorization.get('idNumber').setValue(response.data.asegurado.id_asegurado);
 
-						if (this.dataAutoCompleteIdNumberObject.find(nombre => nombre.name == (this.authorization.get('informacionAsegurado').get('nombres').value + ' ' + this.authorization.get('informacionAsegurado').get('apellidos').value))) {
-							console.log('el nombre de response.data es igual a nombre.name');
-							console.log(this.dataAutoCompleteIdNumberObject.find(nombre => nombre.name == (this.authorization.get('informacionAsegurado').get('nombres').value + ' ' + this.authorization.get('informacionAsegurado').get('apellidos').value)).policy);
-							this.authorization.get('informacionAsegurado').get('noPoliza').setValue(this.dataAutoCompleteIdNumberObject.find(nombre => nombre.name == (this.authorization.get('informacionAsegurado').get('nombres').value + ' ' + this.authorization.get('informacionAsegurado').get('apellidos').value)).policy);
+							if (this.dataAutoCompleteIdNumberObject.find(nombre => nombre.name == (this.authorization.get('informacionAsegurado').get('nombres').value + ' ' + this.authorization.get('informacionAsegurado').get('apellidos').value))) {
+								console.log('el nombre de response.data es igual a nombre.name');
+								console.log(this.dataAutoCompleteIdNumberObject.find(nombre => nombre.name == (this.authorization.get('informacionAsegurado').get('nombres').value + ' ' + this.authorization.get('informacionAsegurado').get('apellidos').value)).policy);
+								this.authorization.get('informacionAsegurado').get('noPoliza').setValue(this.dataAutoCompleteIdNumberObject.find(nombre => nombre.name == (this.authorization.get('informacionAsegurado').get('nombres').value + ' ' + this.authorization.get('informacionAsegurado').get('apellidos').value)).policy);
+							}
+
+							switch (response.data.asegurado.sexo) {
+								case 'M':
+									this.authorization.get('informacionAsegurado').get('sexo').setValue('MASCULINO');
+									break;
+
+								case 'F':
+									this.authorization.get('informacionAsegurado').get('sexo').setValue('FEMENINO');
+									break;
+								default:
+									break;
+							}
+
+						} else {
+							this.showContent = false;
+
+							const dialogRef = this.dialog.open(BaseDialogComponent, {
+								data: this.dialogOption.idNumberNotFound,
+								minWidth: 385,
+							});
+							setTimeout(() => {
+								dialogRef.close();
+							}, 4000);
+
+							this.authorization.get('informacionAsegurado').get('nombres').setValue('');
+							this.authorization.get('informacionAsegurado').get('apellidos').setValue('');
+							this.authorization.get('informacionAsegurado').get('noPoliza').setValue('');
+							this.authorization.get('informacionAsegurado').get('sexo').setValue('');
+
 						}
-
-						switch (response.data.asegurado.sexo) {
-							case 'M':
-								this.authorization.get('informacionAsegurado').get('sexo').setValue('MASCULINO');
-								break;
-
-							case 'F':
-								this.authorization.get('informacionAsegurado').get('sexo').setValue('FEMENINO');
-								break;
-							default:
-								break;
-						}
-
-					} else {
-						this.showContent = false;
-
-						const dialogRef = this.dialog.open(BaseDialogComponent, {
-							data: this.dialogOption.idNumberNotFound,
-							minWidth: 385,
-						});
-						setTimeout(() => {
-							dialogRef.close();
-						}, 4000);
-
-						this.authorization.get('informacionAsegurado').get('nombres').setValue('');
-						this.authorization.get('informacionAsegurado').get('apellidos').setValue('');
-						this.authorization.get('informacionAsegurado').get('noPoliza').setValue('');
-						this.authorization.get('informacionAsegurado').get('sexo').setValue('');
-
-					}
-				});
+					});
 			}
 		}
 	}

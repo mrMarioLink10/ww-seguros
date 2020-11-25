@@ -4186,6 +4186,34 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
         }
       }
 
+      if (this.newRequest.get('contingentBeneficiary').get('dependentsC')) {
+        // tslint:disable-next-line: prefer-for-of
+        for (let x = 0; x < this.newRequest.get('contingentBeneficiary').get('dependentsC')['controls'].length; x++) {
+          const contingentBeneficiaryGroup = this.newRequest.get('contingentBeneficiary').get('dependentsC').get(x.toString()) as FormGroup;
+
+          contingentBeneficiaryGroup.get('name').clearValidators();
+          contingentBeneficiaryGroup.get('name').updateValueAndValidity();
+          contingentBeneficiaryGroup.get('date').clearValidators();
+          contingentBeneficiaryGroup.get('date').updateValueAndValidity();
+          contingentBeneficiaryGroup.get('id2').clearValidators();
+          contingentBeneficiaryGroup.get('id2').updateValueAndValidity();
+          contingentBeneficiaryGroup.get('idType').clearValidators();
+          contingentBeneficiaryGroup.get('idType').updateValueAndValidity();
+          contingentBeneficiaryGroup.get('id2Attached').clearValidators();
+          contingentBeneficiaryGroup.get('id2Attached').updateValueAndValidity();
+          contingentBeneficiaryGroup.get('nationality').clearValidators();
+          contingentBeneficiaryGroup.get('nationality').updateValueAndValidity();
+          contingentBeneficiaryGroup.get('ocupation').clearValidators();
+          contingentBeneficiaryGroup.get('ocupation').updateValueAndValidity();
+          contingentBeneficiaryGroup.get('family').clearValidators();
+          contingentBeneficiaryGroup.get('family').updateValueAndValidity();
+          contingentBeneficiaryGroup.get('quantity').clearValidators();
+          contingentBeneficiaryGroup.get('quantity').updateValueAndValidity();
+          contingentBeneficiaryGroup.get('quantity').setValidators([Validators.min(1), Validators.max(100)]);
+          contingentBeneficiaryGroup.get('quantity').updateValueAndValidity();
+        }
+      }
+
       this.thereIsAWomenOnTheRequest();
       this.thereIsAMenOnTheRequest();
 

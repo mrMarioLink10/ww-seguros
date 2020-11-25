@@ -6,7 +6,7 @@
   right: 0;
 }
 
-.router-link-active{
+.router-link-active {
   background-color: white !important;
   color: #18446B !important;
   border-top-right-radius: 45px;
@@ -34,12 +34,14 @@ h1.example-app-name {
      `<body>` to be our scrolling element for mobile layouts. */
   flex: 1 0 auto;
 }
-.matMenu{
-  margin-top:30px;
+
+.matMenu {
+  margin-top: 30px;
 }
-::ng-deep .menu-item-text{
-  line-height: 18px!important;
-  padding: 9px 0!important;
+
+::ng-deep .menu-item-text {
+  line-height: 18px !important;
+  padding: 9px 0 !important;
   border-bottom: #F2F2F2 solid 1px !important;
 }
 
@@ -47,22 +49,31 @@ h1.example-app-name {
   height: auto !important;
 }
 
-::ng-deep .mat-menu-item{
+::ng-deep .mat-menu-item {
   line-height: 15px !important;
   margin: 10px 0;
   white-space: initial !important;
 }
 
-::ng-deep .mat-menu-content{
+::ng-deep .mat-menu-content {
   padding-bottom: 15px !important;
   position: relative;
-  width:100%;
-  max-width:283px;
+  width: 100%;
+  max-width: 283px;
   height: 100%;
   max-height: 372px;
 }
-::ng-deep .cdk-overlay-pane{
-  margin-top:9px !important;
+
+::ng-deep .cdk-overlay-pane {
+  margin-top: 9px !important;
 }
 
+.country-select {
+  ::ng-deep .mat-select-value {
+    color: #0179B2 !important;
+  }
 
+  ::ng-deep .mat-select-arrow {
+    color: #0179B2 !important;
+  }
+}

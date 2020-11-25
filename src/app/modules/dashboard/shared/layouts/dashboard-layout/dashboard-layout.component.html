@@ -105,15 +105,7 @@
               height="24px" width="24px" class="mr-3 ml-3">
             <div style="max-height: 35px !important;" class="text-xs uppercase">Términos de Uso </div>
           </mat-list-item>
-          <mat-list-item *ngIf="showMatListen(['WWS']) && showMatListen(['WMA'])"
-            style="color: white; max-height: 35px !important; padding-left: 0.75rem" class="mt-10">
-            <mat-form-field color="accent" appearance="outline" class="w-full" style="font-size: small !important;">
-              <mat-select [(ngModel)]="country" (selectionChange)="setCountry()">
-                <mat-option value="rd">RD</mat-option>
-                <mat-option value="pn">PN</mat-option>
-              </mat-select>
-            </mat-form-field>
-          </mat-list-item>
+
 
           <mat-list-item *ngIf="showMatListen(['administrador'])" [routerLink]="['settings']"
             routerLinkActive="router-link-active" style="color: white; max-height: 35px !important;" class="my-3">
@@ -142,9 +134,19 @@
           </button>
         </div>
         <div class="flex justify-end">
+          <div *ngIf="showMatListen(['WWS']) && showMatListen(['WMA'])"
+            style="color: white; max-height: 35px !important; padding-left: 0.75rem" class="mt-10">
+            <mat-form-field color="accent" appearance="outline" class="w-full country-select"
+              style="font-size: small !important;">
+              <mat-select [(ngModel)]="country" (selectionChange)="setCountry()">
+                <mat-option value="rd">RD</mat-option>
+                <mat-option value="pn">PN</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
           <button (click)="logOut()" mat-mini-fab aria-label="Example icon-button with a heart icon"
             class="dashboard-toolbar-buttons"
-            style="background-color: #0179B2 !important; border-radius: 10px !important; margin-top: 40px; margin-left: 9px;">
+            style="background-color: #0179B2 !important; border-radius: 10px !important; margin-top: 42px; margin-left: 9px;">
             <mat-icon style="color: white; font-weight: 600;">login</mat-icon>
           </button>
         </div>

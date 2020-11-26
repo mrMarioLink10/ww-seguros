@@ -739,8 +739,8 @@
         type="submit">Enviar</button> -->
       <button #saveButton name="saveButton" mat-button class="save-button" style="margin-right: 7.5px !important;"
         (click)="sendForm(refundForm, 'claims-refund', 'save')" type="submit">Guardar</button>
-      <button mat-button class="send-button" (click)="sendForm(refundForm, 'claims-refund', 'send', ID)"
-        type="submit">Enviar</button>
+      <button *ngIf="!refundForm.invalid" mat-button class="send-button"
+        (click)="sendForm(refundForm, 'claims-refund', 'send', ID)" type="submit">Enviar</button>
     </div>
   </form>
 </div>

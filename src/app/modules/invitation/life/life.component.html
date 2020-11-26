@@ -2307,8 +2307,8 @@
         (click)="formHandler.sendForm(newRequest, 'life', 'cancel')" type="submit">Cancelar</button> -->
       <button mat-button class="save-button" style="margin-right: 7.5px !important;"
         (click)="sendForm(newRequest, 'life', 'save', ID)" type="submit">Guardar</button>
-      <button mat-button class="send-button" (click)="sendForm(newRequest, 'life', 'send', ID)"
-        type="submit">Enviar</button>
+      <button *ngIf="!newRequest.invalid" mat-button class="send-button"
+        (click)="sendForm(newRequest, 'life', 'send', ID)" type="submit">Enviar</button>
     </div>
   </form>
 </div>

@@ -2893,7 +2893,7 @@ export class LifeComponent implements OnInit, DoCheck {
           if (!this.newRequest.get('contractor')) {
             this.newRequest.addControl('contractor', this.fb.group({
               firstName: ['', Validators.required],
-              secondName: ['', Validators.required],
+              secondName: [''],
               lastName: ['', Validators.required],
               date: ['', Validators.required],
               sex: ['', Validators.required],
@@ -2948,7 +2948,7 @@ export class LifeComponent implements OnInit, DoCheck {
           if (!this.newRequest.get('payer')) {
             this.newRequest.addControl('payer', this.fb.group({
               firstName: ['', Validators.required],
-              secondName: ['', Validators.required],
+              secondName: [''],
               lastName: ['', Validators.required],
               date: ['', Validators.required],
               sex: ['', Validators.required],

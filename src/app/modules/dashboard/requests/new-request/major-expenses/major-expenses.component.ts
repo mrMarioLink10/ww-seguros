@@ -750,7 +750,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
       person: this.fb.group({
         // conozcaSuClientePersona: this.fb.group({}),
         firstName: ['', Validators.required],
-        secondName: ['', Validators.required],
+        secondName: [''],
         lastName: ['', Validators.required],
         weightUnit: ['', Validators.required],
         heightUnit: ['', Validators.required],
@@ -2351,7 +2351,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
               // conozcaSuClientePersonaJuridica: this.fb.group({}),
               // conozcaSuClientePersona: this.fb.group({}),
               firstName: ['', Validators.required],
-              secondName: ['', Validators.required],
+              secondName: [''],
               lastName: ['', Validators.required],
               date: ['', Validators.required],
               sex: ['', Validators.required],

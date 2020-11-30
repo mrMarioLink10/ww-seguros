@@ -3741,6 +3741,20 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
             formContractor.removeControl('countryOfResidence');
             formContractor.removeControl('countryOfBirth');
             formContractor.removeControl('economicActivity');
+            formContractor.get('tel').setValidators(null);
+            formContractor.get('officeTel').setValidators(null);
+            formContractor.get('secondName').setValidators(null);
+            formContractor.get('fax').setValidators(null);
+            formContractor.get('weightUnit').setValidators(null);
+            formContractor.get('weight').setValidators(null);
+            formContractor.get('heightUnit').setValidators(null);
+            formContractor.get('height').setValidators(null);
+            formContractor.get('bmi').setValidators(null);
+            if (formContractor.get('inches')) {
+              formContractor.get('inches').setValidators(null);
+            }
+            const formCompany = formContractor.get('office') as FormGroup;
+            formCompany.removeControl('economicActivity');
           }
         }
 
@@ -3760,6 +3774,20 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
             formPayer.removeControl('countryOfBirth');
             formPayer.removeControl('isContractor');
             formPayer.removeControl('economicActivity');
+            formPayer.get('tel').setValidators(null);
+            formPayer.get('officeTel').setValidators(null);
+            formPayer.get('secondName').setValidators(null);
+            formPayer.get('fax').setValidators(null);
+            formPayer.get('weightUnit').setValidators(null);
+            formPayer.get('weight').setValidators(null);
+            formPayer.get('heightUnit').setValidators(null);
+            formPayer.get('height').setValidators(null);
+            formPayer.get('bmi').setValidators(null);
+            if (formPayer.get('inches')) {
+              formPayer.get('inches').setValidators(null);
+            }
+            const formCompany = formPayer.get('office') as FormGroup;
+            formCompany.removeControl('economicActivity');
           }
         }
 

@@ -91,8 +91,7 @@
       <app-input [group]="form.get('treatments').get(i.toString())" name="name" label="Nombre tratamiento">
       </app-input>
     </div>
-    <div *ngIf="treatmentUndergoneList.length > 1"
-      [ngClass]="{'': treatmentUndergoneList.length === 1, 'col-span-1': treatmentUndergoneList.length > 1} ">
+    <div [ngClass]="{'': treatmentUndergoneList.length === 1, 'col-span-1': treatmentUndergoneList.length > 1} ">
       <button mat-mini-fab aria-label=" Eliminar estudio"
         (click)="diseaseService.removeToList(i, treatmentUndergoneList)" type="treatments"
         class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
@@ -122,8 +121,7 @@
       <app-input [group]="form.get('studies').get(i.toString())" name="results" label="Resultado del estudio">
       </app-input>
     </div>
-    <div *ngIf="studiesList.length > 1"
-      [ngClass]="{'': studiesList.length === 1, 'col-span-1': studiesList.length > 1} ">
+    <div [ngClass]="{'': studiesList.length === 1, 'col-span-1': studiesList.length > 1} ">
       <button mat-mini-fab aria-label=" Eliminar estudio" (click)="diseaseService.removeToList(i, studiesList)"
         type="studies" class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
         <mat-icon style="color: #18446B">remove</mat-icon>

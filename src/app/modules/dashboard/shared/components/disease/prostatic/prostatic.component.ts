@@ -41,8 +41,8 @@ export class ProstaticComponent implements OnInit, DoCheck {
 
   ngDoCheck() {
     if (this.xTreatmentValidators == 0) {
-      if (this.form.get('treatments') && ( this.treatmentUndergoneList != null ||
-        this.treatmentUndergoneList != undefined )) {
+      if (this.form.get('treatments') && (this.treatmentUndergoneList != null ||
+        this.treatmentUndergoneList != undefined)) {
         // tslint:disable-next-line: prefer-for-of
         for (let x = 0; x < this.treatmentUndergoneList.length; x++) {
           this.form.get('treatments').get(x.toString()).get('name').setValidators(Validators.required);
@@ -56,10 +56,10 @@ export class ProstaticComponent implements OnInit, DoCheck {
   ngOnInit() {
     this.addBasicControls();
 
-    this.form.addControl('treatments', this.fb.array([this.createFormArray('treatments')]));
+    this.form.addControl('treatments', this.fb.array([]));
     this.treatmentUndergoneList = this.form.get('treatments') as FormArray;
 
-    this.form.addControl('studies', this.fb.array([this.createFormArray('studies')]));
+    this.form.addControl('studies', this.fb.array([]));
     this.studiesList = this.form.get('studies') as FormArray;
 
     this.questions = [
@@ -175,10 +175,10 @@ export class ProstaticComponent implements OnInit, DoCheck {
   }
 
   addBasicControls() {
-    this.form.addControl('firstName', this.fb.control('', ));
-    this.form.addControl('lastName', this.fb.control('', ));
-    this.form.addControl('birthdate', this.fb.control('', ));
-    this.form.addControl('policeNo', this.fb.control('', ));
+    this.form.addControl('firstName', this.fb.control('',));
+    this.form.addControl('lastName', this.fb.control('',));
+    this.form.addControl('birthdate', this.fb.control('',));
+    this.form.addControl('policeNo', this.fb.control('',));
     this.form.addControl('hasProstateEvaluation', this.fb.control('', Validators.required));
     this.form.addControl('hasPSATotal', this.fb.control('', Validators.required));
     this.form.addControl('hasProstateUltrasound', this.fb.control('', Validators.required));

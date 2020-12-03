@@ -48,18 +48,18 @@ const routes: Routes = [
 				canLoad: [AppAuthGuard],
 				data: { accessRoles: ['Datos_polizas', 'Datos_facturas'] }
 			},
-			{
-				path: 'forms',
-				loadChildren: () => import('./forms/forms.module').then((m) => m.FormsDashboardModule),
-				canLoad: [AppAuthGuard],
-				data: { accessRoles: ['administrador'] }
-			},
-			{
-				path: 'settings',
-				loadChildren: () => import('./settings/settings.module').then((m) => m.SettingsModule),
-				canLoad: [AppAuthGuard],
-				data: { accessRoles: ['administrador'] }
-			},
+			// {
+			// 	path: 'forms',
+			// 	loadChildren: () => import('./forms/forms.module').then((m) => m.FormsDashboardModule),
+			// 	canLoad: [AppAuthGuard],
+			// 	data: { accessRoles: ['administrador'] }
+			// },
+			// {
+			// 	path: 'settings',
+			// 	loadChildren: () => import('./settings/settings.module').then((m) => m.SettingsModule),
+			// 	canLoad: [AppAuthGuard],
+			// 	data: { accessRoles: ['administrador'] }
+			// },
 			{
 				path: 'policyAdministration',
 				loadChildren: () => import('./policy-administration/policy-administration.module').then((m) => m.PolicyAdministrationModule),

@@ -597,11 +597,11 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
     idType: ['', Validators.required],
     id2: ['', Validators.required],
     age: [{ value: '', disabled: false }, Validators.required],
-    weight: ['', Validators.required],
-    height: ['', Validators.required],
-    weightUnit: ['', Validators.required],
-    heightUnit: ['', Validators.required],
-    bmi: [{ value: '', disabled: true }, Validators.required],
+    weight: [''],
+    height: [''],
+    weightUnit: [''],
+    heightUnit: [''],
+    bmi: [{ value: '', disabled: true }],
     status: ['', Validators.required],
     country: ['', Validators.required],
     city: ['', Validators.required],
@@ -2169,11 +2169,11 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
               idType: ['', Validators.required],
               id2: ['', Validators.required],
               age: [{ value: '', disabled: false }, Validators.required],
-              weight: ['', Validators.required],
-              height: ['', Validators.required],
-              weightUnit: ['', Validators.required],
-              heightUnit: ['', Validators.required],
-              bmi: [{ value: '', disabled: true }, Validators.required],
+              weight: [''],
+              height: [''],
+              weightUnit: [''],
+              heightUnit: [''],
+              bmi: [{ value: '', disabled: true }],
               status: ['', Validators.required],
               country: ['', Validators.required],
               city: ['', Validators.required],
@@ -3761,6 +3761,13 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
             }
             const formCompany = formContractor.get('office') as FormGroup;
             formCompany.removeControl('economicActivity');
+            formCompany.get('company').setValidators(null);
+            formCompany.get('position').setValidators(null);
+            formCompany.get('direction').setValidators(null);
+            formCompany.get('sector').setValidators(null);
+            formCompany.get('city').setValidators(null);
+            formCompany.get('country').setValidators(null);
+
           }
         }
 
@@ -3794,6 +3801,12 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
             }
             const formCompany = formPayer.get('office') as FormGroup;
             formCompany.removeControl('economicActivity');
+            formCompany.get('company').setValidators(null);
+          formCompany.get('position').setValidators(null);
+          formCompany.get('direction').setValidators(null);
+          formCompany.get('sector').setValidators(null);
+          formCompany.get('city').setValidators(null);
+          formCompany.get('country').setValidators(null);
           }
         }
 

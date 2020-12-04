@@ -578,7 +578,8 @@
                 label="Copia de cedula" [fileNameWatcher]="arrayStudiesWatcher(null, 'contractor')"
                 (onFileChange)="onStudiesChange2($event, null, 'contractor')">
               </app-file-input>
-              <app-input class="mr-3" [group]="newRequest.get('contractor')" label="Edad" name='age'></app-input>
+              <app-number-input class="mr-3" [group]="newRequest.get('contractor')" label="Edad" name='age'>
+              </app-number-input>
               <!-- <div class="grid grid-cols-3 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3">
                 <app-input class="mr-1" [group]="newRequest.get('contractor')" label="Peso / Kg" name='weight'>
                 </app-input>
@@ -699,7 +700,8 @@
                 [fileNameWatcher]="arrayStudiesWatcher(null, 'payer')"
                 (onFileChange)="onStudiesChange2($event, null, 'payer')">
               </app-file-input>
-              <app-input class="mr-3" [group]="newRequest.get('payer')" label="Edad" name='age'></app-input>
+              <app-number-input class="mr-3" [group]="newRequest.get('payer')" label="Edad" name='age'>
+              </app-number-input>
               <!-- <div class="grid grid-cols-3 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3">
                 <app-input class="mr-1" [group]="newRequest.get('payer')" label="Peso / Kg" name='weight'>
                 </app-input>

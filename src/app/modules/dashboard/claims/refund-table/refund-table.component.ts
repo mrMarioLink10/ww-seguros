@@ -16,7 +16,7 @@ import { environment } from 'src/environments/environment';
 })
 export class RefundTableComponent implements OnInit {
 
-  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   BASE_URL: any = `${environment.fileUrl}`;
   refundFilter;
@@ -40,11 +40,11 @@ export class RefundTableComponent implements OnInit {
 
   dataSource;
   data = [];
-  displayedColumns: string[] = ['noPoliza', 'nombre', 'tipoReclamo', 'totalAmountPesos', 'totalAmount', 'forma', 'estatus', 'acciones'];
+  displayedColumns: string[] = ['noPoliza', 'nombre', 'tipoReclamo', 'totalAmountPesos', 'totalAmount', 'forma', 'userName', 'estatus', 'acciones'];
 
   constructor(private appComponent: AppComponent, private claimsService: ClaimsService,
-              private userService: UserService, public formHandlerService: FormHandlerService,
-              public refund: RefundService) { }
+    private userService: UserService, public formHandlerService: FormHandlerService,
+    public refund: RefundService) { }
 
   ngOnInit() {
     this.loadData();
@@ -53,7 +53,10 @@ export class RefundTableComponent implements OnInit {
 
   loadData() {
     this.appComponent.showOverlay = true;
-    const httpParams = this.constructQueryParams();
+    let httpParams = this.constructQueryParams();
+    if (this.userService.getRoles().includes('WWS') && this.userService.getRoles().includes('WMA')) {
+      httpParams = httpParams.append('country', localStorage.getItem('countryCode'));
+    }
     this.claimsService.getRefunds(httpParams).subscribe((res: any) => {
       this.data = res.data || [];
       // console.log(this.policyId);
@@ -91,26 +94,26 @@ export class RefundTableComponent implements OnInit {
   }
 
   seeRequest(id: number) {
-		if (this.role === 'WWS') {
-			window.open(`${this.BASE_URL}/ReembolsosView/Index/${id}/?location=true`, '_blank');
-		} else {
-			window.open(`${this.BASE_URL}/ReembolsosView/Index/${id}/?location=false`, '_blank');
-		}
-	}
+    if (this.role === 'WWS') {
+      window.open(`${this.BASE_URL}/ReembolsosView/Index/${id}/?location=true`, '_blank');
+    } else {
+      window.open(`${this.BASE_URL}/ReembolsosView/Index/${id}/?location=false`, '_blank');
+    }
+  }
 
-	deleteRefund(id: number) {
-		this.formHandlerService.deleteRequest(id, 'Reembolsos', 'Reembolso', this.appComponent)
-			.subscribe(res => {
-				if (res === true) { this.loadData(); }
-			});
-	}
+  deleteRefund(id: number) {
+    this.formHandlerService.deleteRequest(id, 'Reembolsos', 'Reembolso', this.appComponent)
+      .subscribe(res => {
+        if (res === true) { this.loadData(); }
+      });
+  }
 
-	directSendRefund(id: number) {
-		this.formHandlerService.directSendRequest(id, 'Reembolsos', 'Reembolso', this.appComponent)
-			.subscribe(res => {
-				if (res === true) { this.loadData(); }
-			});
+  directSendRefund(id: number) {
+    this.formHandlerService.directSendRequest(id, 'Reembolsos', 'Reembolso', this.appComponent)
+      .subscribe(res => {
+        if (res === true) { this.loadData(); }
+      });
 
-	}
+  }
 
 }

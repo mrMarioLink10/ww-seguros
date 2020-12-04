@@ -61,7 +61,7 @@ export class RequestsComponent implements OnInit {
   };
 
   // tslint:disable-next-line: max-line-length
-  displayedColumns: string[] = ['noCotizacion', 'nombres', 'apellidos', 'seguro', 'plan', 'fecha', 'monto', 'estatus', 'acciones'];
+  displayedColumns: string[] = ['noCotizacion', 'nombres', 'apellidos', 'seguro', 'plan', 'fecha', 'monto', 'createdBy', 'estatus', 'acciones'];
 
   dataSource;
   requests: any;
@@ -79,11 +79,16 @@ export class RequestsComponent implements OnInit {
     public disability: DisabilityService,
     private formHandlerService: FormHandlerService,
     private appComponent: AppComponent,
-    private userService: UserService
+    private userService: UserService,
   ) { }
 
   getRequests(params: HttpParams = new HttpParams()) {
     let data;
+
+    if (this.userService.getRoles().includes('WWS') && this.userService.getRoles().includes('WMA')) {
+      params = params.append('country', localStorage.getItem('countryCode'));
+    }
+
     this.loading = true;
 
     setTimeout(() => {

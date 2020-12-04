@@ -1,0 +1,87 @@
+<div class="pl-6 pr-6 xs:pr-6 sm:pr-6 md:pr-12 lg:pr-12 xl:pr-12 bg-white">
+  <div class="uppercase dashboard-page-title pt-12">Formularios</div>
+  <div class="mt-6 w-full">
+    <!-- <app-filter [status]="statusTypes"></app-filter> -->
+    <!-- <app-filter></app-filter> -->
+  </div>
+  <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 mt-10">
+    <div class="dashboard-page-subtitle flex
+      justify-center sm:justify-center md:justify-start
+       lg:justify-start
+       xl:justify-start
+      ">Lista de Formularios</div>
+    <div class="flex
+      justify-center sm:justify-center md:justify-end lg:justify-end xl:justify-end
+      mt-3 sm:mt-3 md:mt-0 lg:mt-0 xl:mt-0
+      ">
+      <mat-bar-button [options]="newRequestButtonOptions" (click)="newForm()"></mat-bar-button>
+    </div>
+  </div>
+  <div class="mt-6 pb-8 w-full ">
+    <div class="table-responsive" style="overflow-y: hidden; overflow-x: auto; max-width: 100%;">
+      <table matSort mat-table [dataSource]="dataSource" class="w-full dashboard-basic-table">
+        <!-- Position Column -->
+
+        <ng-container matColumnDef="formName" style="margin-right: 15px !important">
+          <th class="padding-cell" mat-header-cell *matHeaderCellDef mat-sort-header> Nombre </th>
+          <td class="padding-cell" mat-cell *matCellDef="let element"> {{element.formName}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="formDescription" style="margin-right: 15px !important">
+          <th class="padding-cell" mat-header-cell *matHeaderCellDef mat-sort-header> Descripción </th>
+          <td class="padding-cell" mat-cell *matCellDef="let element"> {{element.formDescription}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="createBy" style="margin-right: 15px !important">
+          <th class="padding-cell" mat-header-cell *matHeaderCellDef mat-sort-header> Creada por </th>
+          <td class="padding-cell" mat-cell *matCellDef="let element"> {{element.createBy | lowercase}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="creationDate" style="margin-right: 15px !important">
+          <th class="padding-cell" mat-header-cell *matHeaderCellDef mat-sort-header> Fecha de creación </th>
+          <td class="padding-cell" mat-cell *matCellDef="let element"> {{element.creationDate}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="updateDate" style="margin-right: 15px !important">
+          <th class="padding-cell" mat-header-cell *matHeaderCellDef mat-sort-header> Fecha de modificación </th>
+          <td class="padding-cell" mat-cell *matCellDef="let element"> {{element.updateDate}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="status" style="margin-right: 15px !important">
+          <th class="padding-cell" mat-header-cell *matHeaderCellDef mat-sort-header> Estatus </th>
+          <td class="padding-cell" mat-cell *matCellDef="let element"
+            [ngClass]="{'text-color-yellow': element.status === 0 || element.status === 6, 'text-color-red': element.status === 4, 'text-color-green': element.status === 2 || element.status === 7, 'text-color-blue-table': element.status === 1}">
+            {{element.status | tableStatus}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="acciones" style="text-align: end !important; margin-right: 15px !important; ">
+          <th class="padding-cell" mat-header-cell *matHeaderCellDef
+            style="max-width: 140px !important; min-width: 137px !important; width: 137px !important;"> Acciones </th>
+          <td class="padding-cell" mat-cell *matCellDef="let element"
+            style="max-width: 140px !important; min-width: 137px !important; width: 137px !important;">
+            <!-- <button *ngIf="element.status === 1" (click)="directSendTarget(element.id)" mat-mini-fab
+              aria-label="Enviar" class="dashboard-table-buttons" title="Enviar">
+              <img src="../../../../assets/iconos/send.svg">
+            </button> -->
+            <button mat-mini-fab aria-label="Editar"
+              *ngIf="element.status === 1 || element.status === 0 || element.status === 6 || element.status === 7"
+              class="dashboard-table-buttons" (click)="editTarget(element.id)" title="Editar">
+              <!--  -->
+              <img src="../../../../assets/iconos/edit.svg">
+            </button>
+
+            <button *ngIf=" element.status === 1 || element.status === 0" title="Eliminar"
+              (click)="deleteTarget(element.id)" mat-mini-fab aria-label="Eliminar" class="dashboard-table-buttons">
+              <img src="../../../../assets/iconos/trash.svg">
+            </button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+    </div>
+    <mat-paginator color="accent" class="dashboard-table-paginator" [pageSizeOptions]="[5, 10, 20]"
+      showFirstLastButtons></mat-paginator>
+  </div>
+</div>

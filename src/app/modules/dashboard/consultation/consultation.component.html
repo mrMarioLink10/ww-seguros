@@ -1,17 +1,16 @@
 <div>
   <div class="ml-6 uppercase dashboard-page-title mt-12 mb-3">CONSULTA</div>
-  <app-consult-header style="max-height: 5px;"
-    (activeTab)="setActiveTab($event); policyTable.sortTableByPendingPayments()" [_pendingPolicies]="pendingPolicies">
+  <app-consult-header style="max-height: 5px;" (activeTab)="setActiveTab($event);" [_pendingPolicies]="pendingPolicies">
   </app-consult-header>
   <div class="tabs-content px-4 mt-3 sm:mt-10">
     <mat-tab-group mat-stretch-tabs [(selectedIndex)]="activeTab">
 
-      <mat-tab label="Pólizas">
+      <mat-tab *ngIf="roleLetShow(['Datos_polizas'])" label="Pólizas">
         <app-policy-filter (filters)="setPolicyFilters($event)"></app-policy-filter>
         <app-policy-table [filters]="policyFilters" #policyTable></app-policy-table>
       </mat-tab>
 
-      <mat-tab label="Facturas Pendientes">
+      <mat-tab *ngIf="roleLetShow(['Datos_facturas'])" label="Facturas Pendientes">
         <app-bills-filter (filters)="setBillsFilters($event)"></app-bills-filter>
         <app-bills-table [filters]="billsFilter" (pendingBillsEmitter)="setPendingPolicies($event)" #billTable>
         </app-bills-table>

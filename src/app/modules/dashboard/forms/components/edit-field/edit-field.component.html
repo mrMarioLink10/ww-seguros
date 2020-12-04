@@ -1,0 +1,72 @@
+<h3 class="uppercase dashboard-page-title mb-8" style="font-size: 16px">Editar propiedades del campo</h3>
+<div class="h-full">
+  <div class="grid grid-cols-2">
+    <app-input class="mr-3" [preventSpace]="true" [group]="data" label="Nombre unico del campo (Sin espacios)"
+      name="name">
+    </app-input>
+    <app-input class="mr-3" [group]="data" label="Titulo del campo" name="label">
+    </app-input>
+    <app-select class="mr-3" [group]="data" [options]="type" (selected)="checkRangeStatus(data.value.type)">
+    </app-select>
+    <app-radio-button *ngIf="data.value.type === 'TEXTO' || data.value.type === 'NUMERICO'" class="mr-3" [group]="data"
+      name="validator" [title]="getValidatorTitle(data.value.type)" [options]="diseaseService.yesOrNoOriginal">
+    </app-radio-button>
+    <app-radio-button *ngIf="data.value.type === 'NUMERICO' && data.value.validator === 'NO'" class="mr-3"
+      [group]="data" name="haveRange" title="¿Tiene rango?" [options]="diseaseService.yesOrNoOriginal">
+    </app-radio-button>
+    <div *ngIf="data.value.type === 'NUMERICO' && data.value.haveRange === 'SI'" class="grid grid-cols-2">
+      <app-number-input class="mr-3" [group]="data" label="Valor minimo" [max]="data.value.rangeEnd" name="range">
+      </app-number-input>
+      <app-number-input class="mr-3" [group]="data" label="Valor maximo" [min]="data.value.range" name="rangeEnd">
+      </app-number-input>
+    </div>
+    <app-select class="mr-3" [group]="data" [options]="required"></app-select>
+    <app-radio-button
+      *ngIf="data.value.type === 'DROPDOWN' || data.value.type === 'CHECKBOX' || data.value.type === 'RADIO BUTTON'"
+      class="mr-3" [group]="data" name="callForm" title="¿Llama otro formulario?"
+      (selected)="checkRangeStatus('callForm')" [options]="diseaseService.yesOrNoOriginal">
+
+    </app-radio-button>
+    <mat-form-field
+      *ngIf="data.value.callForm === 'SI' && data.get('dropdown').get('0').value.text !== null && data.get('dropdown').get('0').value.text !== '' && data.get('dropdown').get('0').value.value !== null && data.get('dropdown').get('0').value.value !== ''"
+      color="accent" appearance="outline" class="w-full mr-3" style="font-size: small !important;" [formGroup]="data">
+      <mat-label>Valor que activa otro formulario</mat-label>
+      <mat-select formControlName="valueForForm">
+        <mat-option *ngFor="let dpd of data.get('dropdown')['controls']; index as i" value="{{dpd.value.value}}">
+          {{dpd.value.text}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <hr *ngIf="data.value.type === 'DROPDOWN' || data.value.type === 'CHECKBOX' || data.value.type === 'RADIO BUTTON'"
+    class="w-full mb-3 ww-divider">
+  <div *ngIf="data.value.type === 'DROPDOWN' || data.value.type === 'CHECKBOX' || data.value.type === 'RADIO BUTTON'">
+    <div class="grid grid-cols-4">
+      <div class="grid grid-cols-6" *ngFor="let item of data.get('dropdown')['controls'] as FormGroup; let i = index">
+        <div class="col-span-5">
+          <app-input class="mr-3" [group]="item" label="Nombre unico del valor (Sin espacios)" name="value">
+          </app-input>
+          <app-input class="mr-3" [group]="item" label="Titulo del valor" name="text">
+          </app-input>
+        </div>
+        <app-delete-array-button class="ml-3" *ngIf="data.get('dropdown')['controls'].length > 1"
+          [array]="data.get('dropdown')" [index]="i">
+        </app-delete-array-button>
+      </div>
+    </div>
+    <app-add-array-button class="ml-3" [array]="data.get('dropdown')" [item]="addItem('dropDownItem')">
+    </app-add-array-button>
+  </div>
+  <div mat-dialog-actions class="text-center">
+    <hr class="w-full mb-3 ww-divider">
+    <div class="w-full">
+      <!-- <div class="w-full px-1">
+          <button mat-stroked-button class="cancel-button w-full" (click)="onNoClick()"
+            mat-dialog-close="cancel">Cancelar</button>
+        </div> -->
+      <div class="w-full px-1">
+        <button mat-stroked-button class="next-button w-full" [mat-dialog-close]="true" cdkFocusInitial>Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>

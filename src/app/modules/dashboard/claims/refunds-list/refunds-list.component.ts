@@ -21,7 +21,7 @@ import { environment } from 'src/environments/environment';
 export class RefundsListComponent implements OnInit {
 
 	displayedColumns: string[] = ['noPoliza', 'nombre', 'idNumber', 'totalAmount', 'forma', 'estatus', 'acciones'];
-  BASE_URL: any = `${environment.fileUrl}`;
+	BASE_URL: any = `${environment.fileUrl}`;
 	dataSource;
 	@Input() refunds: any[];
 
@@ -44,8 +44,11 @@ export class RefundsListComponent implements OnInit {
 	) { }
 
 	getRefunds(params: HttpParams = new HttpParams()) {
-    let data;
-    console.log(params);
+		let data;
+		console.log(params);
+		if (this.userService.getRoles().includes('WWS') && this.userService.getRoles().includes('WMA')) {
+			params = params.append('country', localStorage.getItem('countryCode'));
+		}
 		setTimeout(() => {
 			this.appComponent.showOverlay = true;
 		});
@@ -53,8 +56,8 @@ export class RefundsListComponent implements OnInit {
 			.subscribe(res => {
 				this.appComponent.showOverlay = false;
 				data = res;
-        this.refunds = data.data;
-        console.log(data.data);
+				this.refunds = data.data;
+				console.log(data.data);
 				this.dataSource = new MatTableDataSource(this.refunds);
 				this.dataSource.sort = this.sort;
 				this.dataSource.paginator = this.paginator;

@@ -3,7 +3,7 @@ import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 import { AppComponent } from '../../../../../app.component';
 import { AccountStatusService } from '../service/account-status.service';
 import { HttpParams } from '@angular/common/http';
-import {UserService} from '../../../../../core/services/user/user.service';
+import { UserService } from '../../../../../core/services/user/user.service';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -13,7 +13,7 @@ import { environment } from 'src/environments/environment';
 })
 export class AccountStatusTableComponent implements OnInit {
 
-  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
   statusFilter;
@@ -36,8 +36,8 @@ export class AccountStatusTableComponent implements OnInit {
 
   dataSource;
   data = [];
-  displayedColumns: string[] = ['type', 'numeroDocument' , 'docDate', 'concepto', 'initialDate',
-  'finalDate', 'debit', 'credit', 'balance'];
+  displayedColumns: string[] = ['type', 'numeroDocument', 'docDate', 'concepto', 'initialDate',
+    'finalDate', 'debit', 'credit', 'balance'];
 
   constructor(private appComponent: AppComponent, private status: AccountStatusService, private userService: UserService) { }
   userRole = "";
@@ -47,7 +47,12 @@ export class AccountStatusTableComponent implements OnInit {
   }
 
   loadData() {
-    const httpParams = this.constructQueryParams();
+    let httpParams = this.constructQueryParams();
+
+    if (this.userService.getRoles().includes('WWS') && this.userService.getRoles().includes('WMA')) {
+      httpParams = httpParams.append('country', localStorage.getItem('countryCode'));
+    }
+
     this.status.getStatus(httpParams, this.policyId).subscribe((res: any) => {
       this.data = res.data || [];
       console.log(this.policyId);
@@ -58,15 +63,14 @@ export class AccountStatusTableComponent implements OnInit {
       this.appComponent.showOverlay = false;
     });
   }
-  getDownloadLink(id)
-  {
+  getDownloadLink(id) {
     switch (this.userRole) {
       case 'WWS':
         return `${this.BASE_URL}/InvoiceView/ExportToPDF/EstadoDeCuentas/${id}/?location=true`;
       case 'WMA':
         return `${this.BASE_URL}/InvoiceView/ExportToPDF/EstadoDeCuentas/${id}/?location=false`;
       default:
-        return'';
+        return '';
     }
   }
   constructQueryParams(): HttpParams {

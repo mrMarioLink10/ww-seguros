@@ -3,7 +3,7 @@ import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 import { ReceiptService } from '../services/receipt.service';
 import { HttpParams } from '@angular/common/http';
 import { AppComponent } from '../../../../../app.component';
-import {UserService} from '../../../../../core/services/user/user.service';
+import { UserService } from '../../../../../core/services/user/user.service';
 import { environment } from 'src/environments/environment';
 
 
@@ -14,7 +14,7 @@ import { environment } from 'src/environments/environment';
 })
 export class ReceiptTableComponent implements OnInit {
 
-  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
   receiptfilter;
@@ -36,8 +36,8 @@ export class ReceiptTableComponent implements OnInit {
   BASE_URL: any = `${environment.fileUrl}`;
   dataSource;
   data = [];
-  displayedColumns: string[] = ['receiptNumber', 'client' , 'rec', 'chargeDate', 'paymentType',
-  'amountCharge', 'actions'];
+  displayedColumns: string[] = ['receiptNumber', 'client', 'rec', 'chargeDate', 'paymentType',
+    'amountCharge', 'actions'];
 
   constructor(private receiptService: ReceiptService, private appComponent: AppComponent, private userService: UserService) { }
   userRole;
@@ -53,11 +53,16 @@ export class ReceiptTableComponent implements OnInit {
       case 'WMA':
         return `${this.BASE_URL}/InvoiceView/ExportToPDF/Reembolsos/${billId}/?location=false`;
       default:
-        return'';
+        return '';
     }
   }
   loadData() {
-    const httpParams = this.constructQueryParams();
+    let httpParams = this.constructQueryParams();
+
+    if (this.userService.getRoles().includes('WWS') && this.userService.getRoles().includes('WMA')) {
+      httpParams = httpParams.append('country', localStorage.getItem('countryCode'));
+    }
+
     this.receiptService.getReceipts(httpParams, this.policyId).subscribe((res: any) => {
       this.data = res.data || [];
       console.log(this.policyId);

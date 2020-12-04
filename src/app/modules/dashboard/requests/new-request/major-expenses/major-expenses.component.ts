@@ -617,11 +617,11 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
     idType: ['', Validators.required],
     id2: ['', Validators.required],
     age: [{ value: '', disabled: false }, Validators.required],
-    weight: ['', Validators.required],
-    height: ['', Validators.required],
-    weightUnit: ['', Validators.required],
-    heightUnit: ['', Validators.required],
-    bmi: [{ value: '', disabled: true }, Validators.required],
+    weight: [''],
+    height: [''],
+    weightUnit: [''],
+    heightUnit: [''],
+    bmi: [{ value: '', disabled: true }],
     status: ['', Validators.required],
     country: ['', Validators.required],
     city: ['', Validators.required],
@@ -750,7 +750,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
       person: this.fb.group({
         // conozcaSuClientePersona: this.fb.group({}),
         firstName: ['', Validators.required],
-        secondName: ['', Validators.required],
+        secondName: [''],
         lastName: ['', Validators.required],
         weightUnit: ['', Validators.required],
         heightUnit: ['', Validators.required],
@@ -1053,6 +1053,9 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
     // });
     // this.newRequest.get('person').get('weight').valueChanges.subscribe(value => {
     //   this.getBmi(this.newRequest.get('person').value.height, value);
+    // });
+    // this.newRequest.get('person').get('height').valueChanges.subscribe(value => {
+    //   this.getBmi(value, this.newRequest.get('person').value.weight);
     // });
     this.newRequest.get('noC').valueChanges.subscribe(value => {
       if (value !== '' && value !== undefined) {
@@ -2357,7 +2360,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
               // conozcaSuClientePersonaJuridica: this.fb.group({}),
               // conozcaSuClientePersona: this.fb.group({}),
               firstName: ['', Validators.required],
-              secondName: ['', Validators.required],
+              secondName: [''],
               lastName: ['', Validators.required],
               date: ['', Validators.required],
               sex: ['', Validators.required],
@@ -2365,11 +2368,11 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
               idType: ['', Validators.required],
               id2: ['', Validators.required],
               age: [{ value: '', disabled: false }, Validators.required],
-              weight: ['', Validators.required],
-              height: ['', Validators.required],
-              weightUnit: ['', Validators.required],
-              heightUnit: ['', Validators.required],
-              bmi: [{ value: '', disabled: true }, Validators.required],
+              weight: [''],
+              height: [''],
+              weightUnit: [''],
+              heightUnit: [''],
+              bmi: [{ value: '', disabled: true }],
               status: ['', Validators.required],
               country: ['', Validators.required],
               city: ['', Validators.required],
@@ -3787,6 +3790,8 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
       formP.removeControl('sameAsPayer');
       formFiles.removeControl('incomesCertified');
 
+      if (formGeneral.get('countryRoleCode')) { formGeneral.get('countryRoleCode').setValidators(null); }
+
       if (this.newRequest.get('questionsB').get('familyWithDiseases') !== undefined && this.newRequest.get('questionsB').get('familyWithDiseases') !== null) {
         this.familyWithDiseasesList = this.newRequest.get('questionsB').get('familyWithDiseases') as FormArray;
       } else {
@@ -3892,6 +3897,11 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
         formEP.removeControl('contractorExposedInfo');
       }
 
+      if (formP.get('mandatorySubject')) {
+        formP.get('mandatorySubject').setValidators(Validators.required);
+        formP.get('mandatorySubject').updateValueAndValidity();
+      }
+
       if (formP.get('isPayer').value !== 'NO') {
         formGeneral.removeControl('payer');
         formGeneral.removeControl('payerJuridical');
@@ -3930,6 +3940,12 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
           }
           const formCompany = formContractor.get('office') as FormGroup;
           formCompany.removeControl('economicActivity');
+          formCompany.get('company').setValidators(null);
+          formCompany.get('position').setValidators(null);
+          formCompany.get('direction').setValidators(null);
+          formCompany.get('sector').setValidators(null);
+          formCompany.get('city').setValidators(null);
+          formCompany.get('country').setValidators(null);
         }
       }
 
@@ -3963,6 +3979,12 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
           }
           const formCompany = formPayer.get('office') as FormGroup;
           formCompany.removeControl('economicActivity');
+          formCompany.get('company').setValidators(null);
+          formCompany.get('position').setValidators(null);
+          formCompany.get('direction').setValidators(null);
+          formCompany.get('sector').setValidators(null);
+          formCompany.get('city').setValidators(null);
+          formCompany.get('country').setValidators(null);
         }
       }
 

@@ -1,0 +1,124 @@
+<div class="p-6 pr-6 xs:pr-6 sm:pr-6 md:pr-12 lg:pr-12 xl:pr-12 bg-white">
+    <form [formGroup]='settingsGroup'>
+      <h3 class="uppercase dashboard-page-title pt-8">Configuración</h3>
+
+      <div class="mt-20">
+        <div class="mt-6 p-3 pb-3 pt-4" style="background-color: #F2F2F2">
+          <h2 class="" style="color: #18446B; font-weight: bold;">Datos</h2>
+        </div>
+        <div class="mt-5">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
+                <div class="mr-3 md:col-span-2">
+                  <app-input [group]="settingsGroup" label="SMTP User Name" name="userName"
+                    placeholder=""></app-input>
+                </div>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
+                <div class="mr-3">
+                  <app-input [group]="settingsGroup" label="SMTP Password" name="password"
+                    placeholder="" type="password"></app-input>
+                </div>
+                <div class="mr-3">
+                  <app-input [group]="settingsGroup" label="SMTP From User" name="mailFrom"
+                    placeholder=""></app-input>
+                </div>
+                <div class="mr-3">
+                  <app-input [group]="settingsGroup" label="SMTP Url" name="smtpServer"
+                    placeholder=""></app-input>
+                </div> 
+                <div class="mr-3">
+                  <app-number-input [group]="settingsGroup" label="SMTP Port" name="port"
+                    placeholder=""></app-number-input>
+                </div> 
+            </div>
+        </div>
+        <div class="mt-6 p-3 pb-3 pt-4" style="background-color: #F2F2F2">
+          <h2 class="" style="color: #18446B; font-weight: bold;">Solicitudes</h2>
+        </div>
+        <div class="mt-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
+            <div class="mr-3">
+              <app-input [group]="settingsGroup" label="Subject Nueva Solicitud Vida" name="vidaNuevaSolicitudRD"
+                placeholder=""></app-input>
+            </div>
+            <div class="mr-3">
+              <app-input [group]="settingsGroup" label="Subject Nueva Solicitud Salud" name="saludNuevaSolicitudMailsRD"
+                placeholder=""></app-input>
+            </div>
+            <div class="mr-3">
+              <app-input [group]="settingsGroup" label="Subject Nueva Solicitud Reembolso (LOCAL)" name="reembolsoNuevaSolicitudRD"
+                placeholder=""></app-input>
+            </div>
+            <div class="mr-3">
+              <app-input [group]="settingsGroup" label="Subject Nueva Solicitud Pre-Autorizaciones RD" name="autorizacionesNuevaSolicitudMailsRD"
+                placeholder=""></app-input>
+            </div>
+            <div class="mr-3">
+              <app-input [group]="settingsGroup" label="Subject Nueva Solicitud Disability" name="disabilityNuevaSolicitudPM"
+                placeholder=""></app-input>
+            </div>
+            <div class="mr-3">
+              <app-input [group]="settingsGroup" label="Subject Nueva Solicitud Pre-Autorizaciones Panamá" name="autorizacionesNuevaSolicitudPM"
+                placeholder=""></app-input>
+            </div>
+            <div class="mr-3">
+              <app-input [group]="settingsGroup" label="Subject Nueva Solicitud Reembolso (INTERNACIONAL)" name="reembolsoNuevaSolicitudPM"
+                placeholder=""></app-input>
+            </div>
+        </div>
+        <div class="mt-6 p-3 pb-3 pt-4" style="background-color: #F2F2F2">
+          <h2 class="" style="color: #18446B; font-weight: bold;">Correos</h2>
+        </div>
+        <div class="mt-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
+            <div class="mr-3">
+              <app-input [group]="settingsGroup" label="Enviar Correos Nueva Solicitud Vida RD a:" name="vidaMailsRD"
+                placeholder=""></app-input>
+            </div>
+            <div class="mr-3">
+              <app-input [group]="settingsGroup" label="Enviar Correos Nueva Solicitud Disability RD a:" name="disabilityMailsRD"
+                placeholder=""></app-input>
+            </div>
+            <div class="mr-3">
+              <app-input [group]="settingsGroup" label="Enviar Correos Nueva Solicitud Salud RD a:" name="saludMailsRD"
+                placeholder=""></app-input>
+            </div>
+            <div class="mr-3">
+              <app-input [group]="settingsGroup" label="Enviar Correos Reembolsos Locales a:" name="reembolsoMailsRD"
+                placeholder=""></app-input>
+            </div>
+            <div class="mr-3">
+              <app-input [group]="settingsGroup" label="Enviar Correos Autorizaciones Locales a:" name="autorizacionesMailsRD"
+                placeholder=""></app-input>
+            </div>
+            <div class="mr-3">
+              <app-input [group]="settingsGroup" label="Enviar Correos Nueva Solicitud Vida Panamá a:" name="vidaMailsPN"
+                placeholder=""></app-input>
+            </div>
+            <div class="mr-3">
+              <app-input [group]="settingsGroup" label="Enviar Correos Nueva Solicitud Disability Panamá a:" name="disabilityMailsPN"
+                placeholder=""></app-input>
+            </div>
+            <div class="mr-3">
+              <app-input [group]="settingsGroup" label="Enviar Correos Nueva Solicitud Salud Panamá a:" name="saludMailsPN"
+                placeholder=""></app-input>
+            </div>
+            <div class="mr-3">
+              <app-input [group]="settingsGroup" label="Enviar Correos Reembolsos Internacionales a:" name="reembolsoMailsPM"
+                placeholder=""></app-input>
+            </div>
+            <div class="mr-3">
+              <app-input [group]="settingsGroup" label="Enviar Correos Autorizaciones Internacionales a:" name="autorizacionesMailsPM"
+                placeholder=""></app-input>
+            </div>
+        </div>
+      </div>
+    </form>
+    <form #form="ngForm">
+      <div class="mt-8">
+        <button mat-button class="save-button" style="margin-right: 7.5px !important; margin-top: 10px;"
+        (click)="changeBlockedValue()">{{buttonText}}</button>
+        <button *ngIf="this.blocked == false" mat-button class="send-button" style="margin-right: 7.5px !important; margin-top: 10px;"
+        (click)="saveChanges()" type="submit">Guardar cambios</button>
+      </div>
+    </form>
+  </div>
+  

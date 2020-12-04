@@ -140,8 +140,8 @@ export class SpineComponent implements OnInit, DoCheck {
   }
 
   addBasicControls() {
-    this.form.addControl('nombre', this.fb.control('', Validators.required));
-    this.form.addControl('edad', this.fb.control('', [Validators.required, Validators.min(1)]));
+    this.form.addControl('nombre', this.fb.control(''));
+    this.form.addControl('edad', this.fb.control('', [Validators.min(1)]));
     this.form.addControl('nombreMedico', this.fb.control('', Validators.required));
     this.form.addControl('centroSalud', this.fb.control('', Validators.required));
     this.form.addControl('telefonoCentro', this.fb.control('', Validators.required));
@@ -183,6 +183,10 @@ export class SpineComponent implements OnInit, DoCheck {
       this.affectedSegmentList = this.form.get('affectedSegment') as FormArray;
     }
 
+    this.form.get('nombre').clearValidators();
+    this.form.get('nombre').updateValueAndValidity();
+    this.form.get('edad').clearValidators();
+    this.form.get('edad').updateValueAndValidity();
     // this.form.addControl('typeTreatment', this.fb.array([this.createFormArray('typeTreatment')]));
     // this.typesTreatmentList = this.form.get('typeTreatment') as FormArray;
   }

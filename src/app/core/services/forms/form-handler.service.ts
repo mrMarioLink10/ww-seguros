@@ -15,6 +15,10 @@ import { environment } from '../../../../environments/environment';
 import { AppComponent } from 'src/app/app.component';
 import { Observable, Subject } from 'rxjs';
 import { RequestsService } from 'src/app/modules/invitation/services/requests.service';
+import { UserService } from '../user/user.service';
+import { FormsService } from '../../../modules/dashboard/services/forms/forms.service';
+import { SettingsService } from '../../../modules/dashboard/settings/services/settings.service';
+import { PolicyAdministrationService } from '../../../modules/dashboard/policy-administration/services/policy-administration.service';
 // tslint:disable: forin
 // tslint:disable: variable-name
 
@@ -36,7 +40,11 @@ export class FormHandlerService {
 		private disabilityService: DisabilityService,
 		private http: HttpClient,
 		private fb: FormBuilder,
-		private requestService: RequestsService
+		private requestService: RequestsService,
+		private userService: UserService,
+		private formsService: FormsService,
+		private settingsService: SettingsService,
+		private policyAdministrationService: PolicyAdministrationService,
 	) { }
 
 	sendForm(form: FormGroup, name: string, type?: string, appComponent?: any, id?: number, isInvitation?: boolean) {
@@ -54,7 +62,6 @@ export class FormHandlerService {
 		const ID = id;
 		console.log('ID', ID);
 
-
 		switch (name) {
 			case 'claims-reclaim':
 				if (type === 'send') {
@@ -65,6 +72,17 @@ export class FormHandlerService {
 					dataClosing = this.dialogOption.confirmedSavedForm('Reclamo');
 				}
 				route = 'dashboard/claims';
+				break;
+
+			case 'form':
+				if (type === 'send') {
+					dataOpen = this.dialogOption.sendForm('creación de formulario');
+					dataClosing = this.dialogOption.confirmedForm('creación de formulario');
+				} else if (type === 'save') {
+					dataOpen = this.dialogOption.saveForm('creación de formulario');
+					dataClosing = this.dialogOption.confirmedSavedForm('creación de formulario');
+				}
+				route = 'dashboard/forms';
 				break;
 
 			case 'claims-refund':
@@ -148,6 +166,11 @@ export class FormHandlerService {
 				form.get('isComplete').setValue(true);
 			} else {
 				form.get('isComplete').setValue(false);
+			}
+
+			form.removeControl('countryRoleCode');
+			if (this.userService.getRoles().includes('WWS') && this.userService.getRoles().includes('WMA')) {
+				form.addControl('countryRoleCode', this.fb.control(localStorage.getItem('countryCode')));
 			}
 
 			this.sendedForm = form.getRawValue();
@@ -236,6 +259,17 @@ export class FormHandlerService {
 							case 'new-authorization':
 								appComponent.showOverlay = true;
 								this.newAuthorizationService.postClaim(json)
+									.subscribe(res => {
+										this.correctSend(res, dialog, dataClosing, route);
+										appComponent.showOverlay = false;
+									}, (err) => {
+										this.badSend(err, dialog);
+									});
+								break;
+
+							case 'form':
+								appComponent.showOverlay = true;
+								this.formsService.postData(json)
 									.subscribe(res => {
 										this.correctSend(res, dialog, dataClosing, route);
 										appComponent.showOverlay = false;
@@ -384,6 +418,42 @@ export class FormHandlerService {
 											.subscribe((res: any) => {
 												if (res.data.id) {
 													this.newAuthorizationService.sendAuthorization(res.data.id)
+														.subscribe(response => {
+															appComponent.showOverlay = false;
+															console.log(response);
+															this.correctSend(response, dialog, dataClosing, route);
+
+														});
+												}
+												// this.correctSend(res, dialog, dataClosing, route);
+
+											}, (err) => {
+												appComponent.showOverlay = false;
+												this.badSend(err, dialog);
+
+											});
+									}
+									break;
+
+								case 'form':
+									if (ID) {
+										appComponent.showOverlay = true;
+										this.formsService.sendData(ID)
+											.subscribe(res => {
+												appComponent.showOverlay = false;
+
+												this.correctSend(res, dialog, dataClosing, route);
+											}, (err) => {
+												appComponent.showOverlay = false;
+												this.badSend(err, dialog);
+
+											});
+									} else {
+										appComponent.showOverlay = true;
+										this.formsService.postData(json)
+											.subscribe((res: any) => {
+												if (res.data.id) {
+													this.formsService.sendData(res.data.id)
 														.subscribe(response => {
 															appComponent.showOverlay = false;
 															console.log(response);
@@ -699,5 +769,119 @@ export class FormHandlerService {
 		});
 
 		return name;
+	}
+
+	saveFormSettings(form: FormGroup, appComponent: any) {
+		console.log('Impresion de formulario de settings down here: ', form);
+
+		let Dialog;
+		let dataOpen;
+		let dataClosing;
+		const route = 'dashboard/settings';
+
+		dataOpen = this.dialogOption.saveSettings();
+		dataClosing = this.dialogOption.confirmedSavedSettings();
+
+		Dialog = this.dialog.open(BaseDialogComponent, {
+			data: dataOpen,
+			minWidth: 385,
+		});
+
+		Dialog.afterClosed().subscribe((result) => {
+
+			this.sendedForm = form.getRawValue();
+			const json = JSON.stringify(this.sendedForm);
+			console.log(json);
+
+			console.log('result es igual a ' + result);
+
+			if (result === 'true') {
+				let dialog;
+				appComponent.showOverlay = true;
+				if (!form.invalid) {
+					console.log('settings es valido');
+					this.settingsService.postSettings(json)
+						.subscribe(res => {
+							this.correctSend(res, dialog, dataClosing, route);
+							appComponent.showOverlay = false;
+							console.log('Envio realizado correctamente');
+							setTimeout(() => {
+								window.location.reload();
+							}, 2000);
+						}, (err) => {
+							this.badSend(err, dialog);
+							console.log('Envio fallido');
+						});
+				}
+				else {
+					setTimeout(() => {
+						appComponent.showOverlay = false;
+						console.log('settings NO es valido');
+						dialog = this.dialog.open(BaseDialogComponent, {
+							data: this.dialogOption.settingsInvalid(),
+							minWidth: 385
+						});
+						this.closeDialog(dialog);
+					}, 1000);
+				}
+			}
+		});
+	}
+
+	saveFormAdministrationPolicy(form: FormGroup, appComponent: any) {
+		console.log('Impresion de formulario de administracion de polizas down here: ', form);
+
+		let Dialog;
+		let dataOpen;
+		let dataClosing;
+		const route = 'dashboard/requests';
+
+		dataOpen = this.dialogOption.saveAdministrationPolicy();
+		dataClosing = this.dialogOption.confirmedSavedAdministrationPolicy();
+
+		Dialog = this.dialog.open(BaseDialogComponent, {
+			data: dataOpen,
+			minWidth: 385,
+		});
+
+		Dialog.afterClosed().subscribe((result) => {
+
+			this.sendedForm = form.getRawValue();
+			const json = JSON.stringify(this.sendedForm);
+			console.log(json);
+
+			console.log('result es igual a ' + result);
+
+			if (result === 'true') {
+				let dialog;
+				appComponent.showOverlay = true;
+				if (!form.invalid) {
+					console.log('administracion de polizas es valido');
+					this.policyAdministrationService.postPolicyAdministration(json)
+						.subscribe(res => {
+							this.correctSend(res, dialog, dataClosing, route);
+							appComponent.showOverlay = false;
+							console.log('Envio realizado correctamente');
+							// setTimeout(() => {
+							// 	window.location.reload();
+							// }, 2000);
+						}, (err) => {
+							this.badSend(err, dialog);
+							console.log('Envio fallido');
+						});
+				}
+				else {
+					setTimeout(() => {
+						appComponent.showOverlay = false;
+						console.log('settings NO es valido');
+						dialog = this.dialog.open(BaseDialogComponent, {
+							data: this.dialogOption.AdministrationPolicyInvalid(),
+							minWidth: 385
+						});
+						this.closeDialog(dialog);
+					}, 1000);
+				}
+			}
+		});
 	}
 }

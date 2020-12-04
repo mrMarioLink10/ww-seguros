@@ -1,0 +1,88 @@
+.text-404 {
+  position: relative;
+  text-align: left;
+  font-weight: bold;
+  letter-spacing: 0px;
+  color: #E6E6E6;
+  text-shadow: 0px 0px 6px #00000015;
+  opacity: 0.66;
+  font-size: 160px;
+  line-height: 300px;
+}
+
+.title {
+  text-align: left;
+  font-weight: bold;
+  letter-spacing: 0px;
+  color: #535353;
+  opacity: 1;
+  font-size: 30px;
+}
+
+.information {
+  text-align: left;
+  font-weight: 500;
+  letter-spacing: 0px;
+  color: #4A4A4A;
+  opacity: 1;
+  line-height: 1.1;
+  font-size: 14px;
+}
+
+.go-back {
+  text-align: left;
+  font-size: 20px;
+  letter-spacing: 0px;
+  color: #24ACE7;
+  opacity: 1;
+  font-weight: 500;
+  padding-left: 0px;
+  padding-right: 0px;
+}
+
+.circle {
+  border-radius: 50%;
+  position: fixed;
+  z-index: 100;
+  background: rgb(0, 125, 183);
+  background: -moz-linear-gradient(180deg, rgba(0, 125, 183, 1) 22%, rgba(36, 172, 231, 1) 100%);
+  background: -webkit-linear-gradient(180deg, rgba(0, 125, 183, 1) 22%, rgba(36, 172, 231, 1) 100%);
+  background: linear-gradient(180deg, rgba(0, 125, 183, 1) 22%, rgba(36, 172, 231, 1) 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#007db7", endColorstr="#24ace7", GradientType=1);
+  box-shadow: -2px 2px 2px 0px #00000030;
+}
+
+.circle-404 {
+  position: absolute;
+  left: 84%;
+  height: 35px;
+  width: 35px;
+  top: 51.5%;
+}
+
+.circle-down-right {
+  top: 71%;
+  width: 370px;
+  left: 68.5%;
+  height: 360px;
+}
+
+.circle-top-right {
+  top: -51%;
+  width: 707px;
+  left: 57.5%;
+  height: 707px;
+}
+
+.bg {
+  /* The image used */
+  background-image: url("../../../../assets/404background.svg");
+
+  /* Full height */
+  height: 100%;
+
+  /* Center and scale the image nicely */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}

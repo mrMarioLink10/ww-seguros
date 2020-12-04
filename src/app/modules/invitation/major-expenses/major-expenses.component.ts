@@ -597,11 +597,11 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
     idType: ['', Validators.required],
     id2: ['', Validators.required],
     age: [{ value: '', disabled: false }, Validators.required],
-    weight: ['', Validators.required],
-    height: ['', Validators.required],
-    weightUnit: ['', Validators.required],
-    heightUnit: ['', Validators.required],
-    bmi: [{ value: '', disabled: true }, Validators.required],
+    weight: [''],
+    height: [''],
+    weightUnit: [''],
+    heightUnit: [''],
+    bmi: [{ value: '', disabled: true }],
     status: ['', Validators.required],
     country: ['', Validators.required],
     city: ['', Validators.required],
@@ -733,7 +733,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
       person: this.fb.group({
         // conozcaSuClientePersona: this.fb.group({}),
         firstName: ['', Validators.required],
-        secondName: ['', Validators.required],
+        secondName: [''],
         lastName: ['', Validators.required],
         weightUnit: ['', Validators.required],
         heightUnit: ['', Validators.required],
@@ -1005,13 +1005,10 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
     // this.newRequest.get('person').get('height').valueChanges.subscribe(value => {
     //   this.getBmi(value, this.newRequest.get('person').value.weight);
     // });
-
     this.newRequest.get('person').get('date').valueChanges.subscribe(value => {
       const timeDiff = Math.abs(Date.now() - new Date(value).getTime());
       const age = Math.floor(timeDiff / (1000 * 3600 * 24) / 365.25);
-      if (value !== '' && value !== undefined && value !== null) {
-        this.newRequest.get('person').get('age').setValue(age);
-      }
+    }
     });
 
     this.newRequest.get('person').get('age').valueChanges.subscribe(value => {
@@ -1022,3022 +1019,3041 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
       }
     });
 
-    this.newRequest.get('person').get('sex').valueChanges.subscribe(value => {
-      if (value === 'MASCULINO' && this.newRequest.get('person').get('age').value >= 50) {
-        this.questionnairesGastosMayores.addControl('solicitudProstatica', this.fb.group({}));
-      } else {
-        this.questionnairesGastosMayores.removeControl('solicitudProstatica');
-      }
-    });
+this.newRequest.get('person').get('sex').valueChanges.subscribe(value => {
+  if (value === 'MASCULINO' && this.newRequest.get('person').get('age').value >= 50) {
+    this.questionnairesGastosMayores.addControl('solicitudProstatica', this.fb.group({}));
+  } else {
+    this.questionnairesGastosMayores.removeControl('solicitudProstatica');
+  }
+});
 
+this.isContractor = false;
+this.newRequest.get('person').get('isContractor').valueChanges.subscribe(value => {
+
+  this.isContractor = true;
+  if (value === 'SI') {
     this.isContractor = false;
-    this.newRequest.get('person').get('isContractor').valueChanges.subscribe(value => {
-
-      this.isContractor = true;
-      if (value === 'SI') {
-        this.isContractor = false;
-        this.titles = FormValidationsConstant.titlesForMajorExpenses;
-      } else {
-        this.titles = FormValidationsConstant.titlesForMajorExpensesComplete;
-      }
-    });
-    this.isContractorPep = false;
-    // this.newRequest.get('exposedPerson').get('contractor').valueChanges.subscribe(value => {
-
-    //   this.isContractorPep = false;
-    //   if (value === 'SI') {
-    //     this.isContractorPep = true;
-    //   }
-
-    // });
-
-    this.isSolicitantePep = false;
-    this.newRequest.get('exposedPerson').get('headLine').valueChanges.subscribe(value => {
-
-      this.isSolicitantePep = false;
-      if (value === 'SI') {
-        this.isSolicitantePep = true;
-      }
-
-    });
-    if (this.newRequest.get('person').get('isJuridica')) {
-      this.isJuridica = false;
-      this.newRequest.get('person').get('isJuridica').valueChanges.subscribe(value => {
-        this.isJuridica = false;
-        console.log(value);
-        if (value === 'SI') {
-
-        } else {
-        }
-
-      });
-    }
-
+    this.titles = FormValidationsConstant.titlesForMajorExpenses;
+  } else {
+    this.titles = FormValidationsConstant.titlesForMajorExpensesComplete;
   }
-  searchIdNumber(idNumber: string) {
-    this.appComponent.showOverlay = true;
+});
+this.isContractorPep = false;
+// this.newRequest.get('exposedPerson').get('contractor').valueChanges.subscribe(value => {
 
-    this.quotesService.returnDataSalud(idNumber).subscribe(data => {
-      this.appComponent.showOverlay = false;
+//   this.isContractorPep = false;
+//   if (value === 'SI') {
+//     this.isContractorPep = true;
+//   }
 
-      if (data !== undefined && data.data !== null && data.data !== undefined && data.data.nombre !== undefined) {
-        const dialogRef = this.dialog.open(BaseDialogComponent, {
-          data: this.dialogOption.noCFound(data.data),
-          minWidth: 385,
-        });
-        setTimeout(() => {
-          dialogRef.close();
-        }, 4000);
-        this.isFormValidToFill = true;
-        this.notFoundQuote = false;
+// });
 
-        this.newRequest.get('payment').setValue(this.currencyPipe.transform(data.data.monto));
-        this.newRequest.get('plans').setValue(data.data.plan);
-        this.newRequest.get('deducibles').setValue(data.data.deducible);
-        this.newRequest.get('person').get('date').setValue(data.data.fecha_nacimiento);
-        this.newRequest.get('person').get('firstName').setValue(data.data.nombre);
-        this.newRequest.get('person').get('lastName').setValue(data.data.apellidos);
+this.isSolicitantePep = false;
+this.newRequest.get('exposedPerson').get('headLine').valueChanges.subscribe(value => {
 
-        switch (data.data.sexo) {
-          case 'M':
-            this.newRequest.get('person').get('sex').setValue('MASCULINO');
-            break;
-
-          case 'F':
-            this.newRequest.get('person').get('sex').setValue('FEMENINO');
-            break;
-
-          default:
-            break;
-        }
-
-      } else {
-        this.notFoundQuote = true;
-
-        this.newRequest.get('payment').reset();
-        this.newRequest.get('plans').reset();
-        this.newRequest.get('deducibles').reset();
-        this.newRequest.get('person').get('date').reset();
-        this.newRequest.get('person').get('firstName').reset();
-        this.newRequest.get('person').get('sex').reset();
-
-        const dialogRef = this.dialog.open(BaseDialogComponent, {
-          data: this.dialogOption.noCNotFound,
-          minWidth: 385,
-        });
-        setTimeout(() => {
-          dialogRef.close();
-        }, 4000);
-      }
-    });
-
-
+  this.isSolicitantePep = false;
+  if (value === 'SI') {
+    this.isSolicitantePep = true;
   }
 
-  newQuote() {
-    if (this.userService.getRoleCotizador() === 'WWS') {
-      window.open(`${environment.urlCotizadoresSalud}?cia=wws`, '_blank');
-    } else if (this.userService.getRoleCotizador() === 'WMA') {
-      window.open(`${environment.urlCotizadoresSalud}?cia=wwm`, '_blank');
-    }
-  }
-  canDeactivate(): Observable<boolean> | boolean {
-    if (this.ogForm.submitted) {
-      return true;
+});
+if (this.newRequest.get('person').get('isJuridica')) {
+  this.isJuridica = false;
+  this.newRequest.get('person').get('isJuridica').valueChanges.subscribe(value => {
+    this.isJuridica = false;
+    console.log(value);
+    if (value === 'SI') {
+
+    } else {
     }
 
-    if (this.newRequest.dirty && !this.ogForm.submitted) {
+  });
+}
+
+  }
+searchIdNumber(idNumber: string) {
+  this.appComponent.showOverlay = true;
+
+  this.quotesService.returnDataSalud(idNumber).subscribe(data => {
+    this.appComponent.showOverlay = false;
+
+    if (data !== undefined && data.data !== null && data.data !== undefined && data.data.nombre !== undefined) {
       const dialogRef = this.dialog.open(BaseDialogComponent, {
-        data: this.dialogOption.exitConfirm,
+        data: this.dialogOption.noCFound(data.data),
         minWidth: 385,
       });
-      return dialogRef.componentInstance.dialogRef.afterClosed().pipe(map(result => {
-        if (result === 'true') {
-          return true;
-        }
-      }), first());
-    }
-    return true;
-  }
+      setTimeout(() => {
+        dialogRef.close();
+      }, 4000);
+      this.isFormValidToFill = true;
+      this.notFoundQuote = false;
 
-  onStudiesChange(event, i, type?: string, group?: string) {
-    const reader = new FileReader();
+      this.newRequest.get('payment').setValue(this.currencyPipe.transform(data.data.monto));
+      this.newRequest.get('plans').setValue(data.data.plan);
+      this.newRequest.get('deducibles').setValue(data.data.deducible);
+      this.newRequest.get('person').get('date').setValue(data.data.fecha_nacimiento);
+      this.newRequest.get('person').get('firstName').setValue(data.data.nombre);
+      this.newRequest.get('person').get('lastName').setValue(data.data.apellidos);
 
-    if (type) {
-      switch (type) {
-        case 'legalRepresentativeId2':
-          if (event.target.files && event.target.files.length) {
-            const [file] = event.target.files;
-            reader.readAsDataURL(file);
-            reader.onload = () => {
-              this.newRequest.get(group).get(type).get(i.toString()).patchValue({
-                [type + 's']: reader.result
-              });
-              this.cd.markForCheck();
-            };
-          }
+      switch (data.data.sexo) {
+        case 'M':
+          this.newRequest.get('person').get('sex').setValue('MASCULINO');
           break;
 
-        case 'commercialRegister':
-          if (event.target.files && event.target.files.length) {
-            const [file] = event.target.files;
-            reader.readAsDataURL(file);
-            reader.onload = () => {
-              this.newRequest.get(group).get(type).get(i.toString()).patchValue({
-                [type + 's']: reader.result
-              });
-              this.cd.markForCheck();
-            };
-          }
+        case 'F':
+          this.newRequest.get('person').get('sex').setValue('FEMENINO');
+          break;
+
+        default:
           break;
       }
+
     } else {
-      if (event.target.files && event.target.files.length) {
-        const [file] = event.target.files;
-        reader.readAsDataURL(file);
+      this.notFoundQuote = true;
 
-        reader.onload = () => {
-          this.newRequest.get('files').get('studies').get(i.toString()).patchValue({
-            ['study']: reader.result
-          });
+      this.newRequest.get('payment').reset();
+      this.newRequest.get('plans').reset();
+      this.newRequest.get('deducibles').reset();
+      this.newRequest.get('person').get('date').reset();
+      this.newRequest.get('person').get('firstName').reset();
+      this.newRequest.get('person').get('sex').reset();
 
-          this.cd.markForCheck();
-        };
-      }
+      const dialogRef = this.dialog.open(BaseDialogComponent, {
+        data: this.dialogOption.noCNotFound,
+        minWidth: 385,
+      });
+      setTimeout(() => {
+        dialogRef.close();
+      }, 4000);
     }
+  });
+
+
+}
+
+newQuote() {
+  if (this.userService.getRoleCotizador() === 'WWS') {
+    window.open(`${environment.urlCotizadoresSalud}?cia=wws`, '_blank');
+  } else if (this.userService.getRoleCotizador() === 'WMA') {
+    window.open(`${environment.urlCotizadoresSalud}?cia=wwm`, '_blank');
+  }
+}
+canDeactivate(): Observable<boolean> | boolean {
+  if(this.ogForm.submitted) {
+  return true;
+}
+
+if (this.newRequest.dirty && !this.ogForm.submitted) {
+  const dialogRef = this.dialog.open(BaseDialogComponent, {
+    data: this.dialogOption.exitConfirm,
+    minWidth: 385,
+  });
+  return dialogRef.componentInstance.dialogRef.afterClosed().pipe(map(result => {
+    if (result === 'true') {
+      return true;
+    }
+  }), first());
+}
+return true;
   }
 
-  onStudiesChange2(event, i, name) {
-    const reader = new FileReader();
+onStudiesChange(event, i, type ?: string, group ?: string) {
+  const reader = new FileReader();
 
-    if (name === 'documentsKnowClient') {
-      if (event.target.files && event.target.files.length) {
-        const [file] = event.target.files;
-        reader.readAsDataURL(file);
+  if (type) {
+    switch (type) {
+      case 'legalRepresentativeId2':
+        if (event.target.files && event.target.files.length) {
+          const [file] = event.target.files;
+          reader.readAsDataURL(file);
+          reader.onload = () => {
+            this.newRequest.get(group).get(type).get(i.toString()).patchValue({
+              [type + 's']: reader.result
+            });
+            this.cd.markForCheck();
+          };
+        }
+        break;
 
-        reader.onload = () => {
-          this.newRequest.get('files').get('documentsKnowClient').get(i.toString()).patchValue({
-            ['document']: reader.result
-          });
-
-          // this.markForCheck();
-        };
-      }
-    } else if (name === 'copyId') {
-      if (event.target.files && event.target.files.length) {
-        const [file] = event.target.files;
-        reader.readAsDataURL(file);
-
-        reader.onload = () => {
-          this.newRequest.get('files').get('copyId').get(i.toString()).patchValue({
-            ['idId']: reader.result
-          });
-
-          // this.markForCheck();
-        };
-      }
-    } else if (name === 'mercantile') {
-      if (event.target.files && event.target.files.length) {
-        const [file] = event.target.files;
-        reader.readAsDataURL(file);
-
-        reader.onload = () => {
-          this.newRequest.get('files').get('mercantile').get(i.toString()).patchValue({
-            ['register']: reader.result
-          });
-
-          // this.markForCheck();
-        };
-      }
-    } else if (name === 'person') {
-      if (event.target.files && event.target.files.length) {
-        const [file] = event.target.files;
-        reader.readAsDataURL(file);
-
-        reader.onload = () => {
-          this.newRequest.get(name).patchValue({
-            ['id2Attached']: reader.result
-          });
-
-          // this.markForCheck();
-        };
-      }
-    } else if (name === 'contractor') {
-      if (event.target.files && event.target.files.length) {
-        const [file] = event.target.files;
-        reader.readAsDataURL(file);
-
-        reader.onload = () => {
-          this.newRequest.get(name).patchValue({
-            ['id2Attached']: reader.result
-          });
-
-          // this.markForCheck();
-        };
-      }
-    } else if (name === 'payer') {
-      if (event.target.files && event.target.files.length) {
-        const [file] = event.target.files;
-        reader.readAsDataURL(file);
-
-        reader.onload = () => {
-          this.newRequest.get(name).patchValue({
-            ['id2Attached']: reader.result
-          });
-
-          // this.markForCheck();
-        };
-      }
-    } else if (name === 'incomesCertified') {
-      if (event.target.files && event.target.files.length) {
-        const [file] = event.target.files;
-        reader.readAsDataURL(file);
-
-        reader.onload = () => {
-          this.newRequest.get('exposedPerson').patchValue({
-            ['incomesCertified']: reader.result
-          });
-
-          // this.markForCheck();
-        };
-      }
+      case 'commercialRegister':
+        if (event.target.files && event.target.files.length) {
+          const [file] = event.target.files;
+          reader.readAsDataURL(file);
+          reader.onload = () => {
+            this.newRequest.get(group).get(type).get(i.toString()).patchValue({
+              [type + 's']: reader.result
+            });
+            this.cd.markForCheck();
+          };
+        }
+        break;
     }
-  }
-
-  onBeneficiaryFileChangeOnArray(event, formName, i?: number, group?: string) {
-    const reader = new FileReader();
-
+  } else {
     if (event.target.files && event.target.files.length) {
       const [file] = event.target.files;
       reader.readAsDataURL(file);
 
       reader.onload = () => {
-        if (i !== null) {
-          this.newRequest.get(group).get('dependentsC').get(i.toString()).patchValue({
-            [formName]: reader.result
-          });
-        } else {
-          this.newRequest.get(group).get('personBenefited').patchValue({
-            [formName]: reader.result
-          });
-        }
+        this.newRequest.get('files').get('studies').get(i.toString()).patchValue({
+          ['study']: reader.result
+        });
 
         this.cd.markForCheck();
       };
     }
   }
+}
 
-  canShow(questionName: string) {
-    if (questionName === 'havePregnant' && this.isThereAWomen === true) {
+onStudiesChange2(event, i, name) {
+  const reader = new FileReader();
+
+  if (name === 'documentsKnowClient') {
+    if (event.target.files && event.target.files.length) {
+      const [file] = event.target.files;
+      reader.readAsDataURL(file);
+
+      reader.onload = () => {
+        this.newRequest.get('files').get('documentsKnowClient').get(i.toString()).patchValue({
+          ['document']: reader.result
+        });
+
+        // this.markForCheck();
+      };
+    }
+  } else if (name === 'copyId') {
+    if (event.target.files && event.target.files.length) {
+      const [file] = event.target.files;
+      reader.readAsDataURL(file);
+
+      reader.onload = () => {
+        this.newRequest.get('files').get('copyId').get(i.toString()).patchValue({
+          ['idId']: reader.result
+        });
+
+        // this.markForCheck();
+      };
+    }
+  } else if (name === 'mercantile') {
+    if (event.target.files && event.target.files.length) {
+      const [file] = event.target.files;
+      reader.readAsDataURL(file);
+
+      reader.onload = () => {
+        this.newRequest.get('files').get('mercantile').get(i.toString()).patchValue({
+          ['register']: reader.result
+        });
+
+        // this.markForCheck();
+      };
+    }
+  } else if (name === 'person') {
+    if (event.target.files && event.target.files.length) {
+      const [file] = event.target.files;
+      reader.readAsDataURL(file);
+
+      reader.onload = () => {
+        this.newRequest.get(name).patchValue({
+          ['id2Attached']: reader.result
+        });
+
+        // this.markForCheck();
+      };
+    }
+  } else if (name === 'contractor') {
+    if (event.target.files && event.target.files.length) {
+      const [file] = event.target.files;
+      reader.readAsDataURL(file);
+
+      reader.onload = () => {
+        this.newRequest.get(name).patchValue({
+          ['id2Attached']: reader.result
+        });
+
+        // this.markForCheck();
+      };
+    }
+  } else if (name === 'payer') {
+    if (event.target.files && event.target.files.length) {
+      const [file] = event.target.files;
+      reader.readAsDataURL(file);
+
+      reader.onload = () => {
+        this.newRequest.get(name).patchValue({
+          ['id2Attached']: reader.result
+        });
+
+        // this.markForCheck();
+      };
+    }
+  } else if (name === 'incomesCertified') {
+    if (event.target.files && event.target.files.length) {
+      const [file] = event.target.files;
+      reader.readAsDataURL(file);
+
+      reader.onload = () => {
+        this.newRequest.get('exposedPerson').patchValue({
+          ['incomesCertified']: reader.result
+        });
+
+        // this.markForCheck();
+      };
+    }
+  }
+}
+
+onBeneficiaryFileChangeOnArray(event, formName, i ?: number, group ?: string) {
+  const reader = new FileReader();
+
+  if (event.target.files && event.target.files.length) {
+    const [file] = event.target.files;
+    reader.readAsDataURL(file);
+
+    reader.onload = () => {
+      if (i !== null) {
+        this.newRequest.get(group).get('dependentsC').get(i.toString()).patchValue({
+          [formName]: reader.result
+        });
+      } else {
+        this.newRequest.get(group).get('personBenefited').patchValue({
+          [formName]: reader.result
+        });
+      }
+
+      this.cd.markForCheck();
+    };
+  }
+}
+
+canShow(questionName: string) {
+  if (questionName === 'havePregnant' && this.isThereAWomen === true) {
+    return true;
+  } else if (questionName === 'haveReproductiveOrganDisorders' && this.isThereAWomen === true) {
+    return true;
+  } else if ((questionName === 'havePregnant' || questionName === 'haveReproductiveOrganDisorders') && this.isThereAWomen === false) {
+    return false;
+  } else {
+    return true;
+  }
+}
+
+canPersonOptionShow(questionName: string) {
+  const isWomen = this.newRequest.get('person').value.sex === 'FEMENINO';
+
+  if (questionName === 'havePregnant' && isWomen === true) {
+    return true;
+  } else if (questionName === 'haveReproductiveOrganDisorders' && isWomen === true) {
+    return true;
+  } else if ((questionName === 'havePregnant' || questionName === 'haveReproductiveOrganDisorders') && isWomen === false) {
+    return false;
+  } else {
+    return true;
+  }
+}
+
+canDependentOptionShow(questionName: string, id: number) {
+  const isWomen = this.newRequest.get('dependents').get('allDependents').value[id].sex === 'FEMENINO';
+  if (questionName === 'havePregnant' && isWomen === true) {
+    return true;
+  } else if (questionName === 'haveReproductiveOrganDisorders' && isWomen === true) {
+    return true;
+  } else if ((questionName === 'havePregnant' || questionName === 'haveReproductiveOrganDisorders') && isWomen === false) {
+    return false;
+  } else {
+    return true;
+  }
+}
+
+thereIsAWomenOnTheRequest() {
+  console.log('thereIsAMenOnTheRequest');
+
+  let womenCount = 0;
+  this.cd.detectChanges();
+
+  setTimeout(() => {
+    for (const idx in this.newRequest.get('dependents').get('allDependents').value) {
+      if (this.newRequest.get('dependents').get('allDependents').value.hasOwnProperty(idx)) {
+        const element = this.newRequest.get('dependents').get('allDependents').value[idx];
+        console.log(element.sex);
+        if (element.sex === 'FEMENINO') {
+          womenCount += 1;
+        }
+      }
+    }
+
+    console.log(this.newRequest.value.person.sex);
+    if (this.newRequest.get('person').get('sex').value === 'FEMENINO') {
+      womenCount += 1;
+    }
+
+    if (womenCount > 0) {
+      console.log('Hay mujer');
+      this.isThereAWomen = true;
+    } else {
+      this.isThereAWomen = false;
+    }
+  }, 1500);
+
+}
+
+thereIsAMenOnTheRequest() {
+  console.log('thereIsAMenOnTheRequest');
+  let menCount = 0;
+  this.cd.detectChanges();
+
+  setTimeout(() => {
+    for (const idx in this.newRequest.get('dependents').get('allDependents').value) {
+      if (this.newRequest.get('dependents').get('allDependents').value.hasOwnProperty(idx)) {
+        const element = this.newRequest.get('dependents').get('allDependents').value[idx];
+        console.log(element.sex);
+        if (element.sex === 'MASCULINO') {
+          menCount += 1;
+        }
+      }
+    }
+
+    console.log(this.newRequest.value.person.sex);
+    if (this.newRequest.get('person').get('sex').value === 'MASCULINO') {
+      menCount += 1;
+    }
+
+    if (menCount > 0) {
+      console.log('Hay men');
+      this.isThereAMen = true;
+    } else {
+      this.isThereAMen = false;
+    }
+  }, 1500);
+
+}
+
+relationWatcher(event, realForm) {
+  console.log('event: ', event.valor, 'form: ', realForm);
+  const form = realForm as FormGroup;
+  if (event.valor === 'OTROS') {
+    form.addControl('specifyRelationship', this.fb.control('', Validators.required));
+  } else {
+    form.removeControl('specifyRelationship');
+  }
+}
+
+showWarningDot(Form: any): boolean {
+  if (!this.ID) {
+    if (Form.invalid && this.ogForm.submitted) {
       return true;
-    } else if (questionName === 'haveReproductiveOrganDisorders' && this.isThereAWomen === true) {
-      return true;
-    } else if ((questionName === 'havePregnant' || questionName === 'haveReproductiveOrganDisorders') && this.isThereAWomen === false) {
+    } else {
+      return false;
+    }
+  } else {
+    if (!Form.invalid) {
       return false;
     } else {
       return true;
     }
   }
+}
 
-  canPersonOptionShow(questionName: string) {
-    const isWomen = this.newRequest.get('person').value.sex === 'FEMENINO';
+ngDoCheck() { }
 
-    if (questionName === 'havePregnant' && isWomen === true) {
-      return true;
-    } else if (questionName === 'haveReproductiveOrganDisorders' && isWomen === true) {
-      return true;
-    } else if ((questionName === 'havePregnant' || questionName === 'haveReproductiveOrganDisorders') && isWomen === false) {
-      return false;
-    } else {
-      return true;
-    }
-  }
+add(dependentsFormArray, group) {
 
-  canDependentOptionShow(questionName: string, id: number) {
-    const isWomen = this.newRequest.get('dependents').get('allDependents').value[id].sex === 'FEMENINO';
-    if (questionName === 'havePregnant' && isWomen === true) {
-      return true;
-    } else if (questionName === 'haveReproductiveOrganDisorders' && isWomen === true) {
-      return true;
-    } else if ((questionName === 'havePregnant' || questionName === 'haveReproductiveOrganDisorders') && isWomen === false) {
-      return false;
-    } else {
-      return true;
-    }
-  }
+  const increment = dependentsFormArray.length + 1;
+  dependentsFormArray = this.formMethods.addElement(dependentsFormArray, increment, group).formArray;
 
-  thereIsAWomenOnTheRequest() {
-    console.log('thereIsAMenOnTheRequest');
 
-    let womenCount = 0;
-    this.cd.detectChanges();
+  this.AddEventOnEachDependentVariable();
+}
+AddEventOnEachDependentVariable() {
+  /*for(let index = 0;index < this.newRequest.get('dependents').get('allDependents').length;index++)
+  {
+    console.log(index);
+  }*/
+  // for(let index in this.dependentsFormArray.controls)
+  if (this.newRequest.get('dependents').get('allDependents') !== undefined && this.newRequest.get('dependents').get('allDependents') !== null) {
+    const arrayElement = this.newRequest.get('dependents').get('allDependents') as FormArray;
+    for (let index = 0; index < arrayElement.length; index++) {
 
-    setTimeout(() => {
-      for (const idx in this.newRequest.get('dependents').get('allDependents').value) {
-        if (this.newRequest.get('dependents').get('allDependents').value.hasOwnProperty(idx)) {
-          const element = this.newRequest.get('dependents').get('allDependents').value[idx];
-          console.log(element.sex);
-          if (element.sex === 'FEMENINO') {
-            womenCount += 1;
+      // tslint:disable-next-line: max-line-length
+      const isBmiEventAssigned = this.newRequest.get('dependents').get('allDependents').get(index.toString()).get('isBmiEventAssigned').value;
+
+      if (isBmiEventAssigned == false) {
+        this.newRequest
+          .get('dependents')
+          .get('allDependents')
+          .get(index.toString())
+          .get('isBmiEventAssigned')
+          .setValue(true);
+        this.newRequest.get('dependents').get('allDependents').get(index.toString()).get('date').valueChanges.subscribe(value => {
+          const timeDiff = Math.abs(Date.now() - new Date(value).getTime());
+          const age = Math.floor(timeDiff / (1000 * 3600 * 24) / 365.25);
+          this.newRequest.get('dependents').get('allDependents').get(index.toString()).get('age').setValue(age);
+          // questionnaire.addControl('solicitudProstatica', this.fb.group({}));
+
+          const form = this.newRequest.get('dependents').get('allDependents').get(index.toString()) as FormGroup;
+          if (age >= 50 && form.get('sex').value === 'MASCULINO') {
+            form.addControl('solicitudProstatica', this.fb.group({}));
+          } else {
+            form.removeControl('solicitudProstatica');
           }
-        }
-      }
-
-      console.log(this.newRequest.value.person.sex);
-      if (this.newRequest.get('person').get('sex').value === 'FEMENINO') {
-        womenCount += 1;
-      }
-
-      if (womenCount > 0) {
-        console.log('Hay mujer');
-        this.isThereAWomen = true;
-      } else {
-        this.isThereAWomen = false;
-      }
-    }, 1500);
-
-  }
-
-  thereIsAMenOnTheRequest() {
-    console.log('thereIsAMenOnTheRequest');
-    let menCount = 0;
-    this.cd.detectChanges();
-
-    setTimeout(() => {
-      for (const idx in this.newRequest.get('dependents').get('allDependents').value) {
-        if (this.newRequest.get('dependents').get('allDependents').value.hasOwnProperty(idx)) {
-          const element = this.newRequest.get('dependents').get('allDependents').value[idx];
-          console.log(element.sex);
-          if (element.sex === 'MASCULINO') {
-            menCount += 1;
+        });
+        this.newRequest.get('dependents').get('allDependents').get(index.toString()).get('sex').valueChanges.subscribe(value => {
+          const form = this.newRequest.get('dependents').get('allDependents').get(index.toString()) as FormGroup;
+          if (form.get('age').value >= 50 && value === 'MASCULINO') {
+            form.addControl('solicitudProstatica', this.fb.group({}));
+          } else {
+            form.removeControl('solicitudProstatica');
           }
+        });
+        this.newRequest.get('dependents').get('allDependents').get(index.toString()).get('height').valueChanges.subscribe(value => {
+          const weight = this.newRequest.get('dependents').get('allDependents').get(index.toString()).get('weight').value;
+          const heightUnit = this.newRequest.get('dependents').get('allDependents').get(index.toString()).get('heightUnit').value;
+          const weightUnit = this.newRequest.get('dependents').get('allDependents').get(index.toString()).get('weightUnit').value;
+
+          const result = this.getBmiValue(value, weight, weightUnit, heightUnit);
+          // this.newRequest
+          //   .get('dependents')
+          //   .get('allDependents')
+          //   .get(index.toString())
+          //   .get('bmi')
+          //   .setValue(result);
+
+        });
+        this.newRequest.get('dependents').get('allDependents').get(index.toString()).get('weight').valueChanges.subscribe(value => {
+          const height = this.newRequest.get('dependents').get('allDependents').get(index.toString()).get('height').value;
+          const heightUnit = this.newRequest.get('dependents').get('allDependents').get(index.toString()).get('heightUnit').value;
+          const weightUnit = this.newRequest.get('dependents').get('allDependents').get(index.toString()).get('weightUnit').value;
+          const result = this.getBmiValue(height, value, weightUnit, heightUnit);
+          // this.newRequest
+          //   .get('dependents')
+          //   .get('allDependents')
+          //   .get(index.toString())
+          //   .get('bmi')
+          //   .setValue(result);
+
+        });
+
+        this.newRequest.get('dependents').get('allDependents').get(index.toString()).get('heightUnit').valueChanges.subscribe(value => {
+          const height = this.newRequest.get('dependents').get('allDependents').get(index.toString()).get('height').value;
+          const weight = this.newRequest.get('dependents').get('allDependents').get(index.toString()).get('weight').value;
+          const weightUnit = this.newRequest.get('dependents').get('allDependents').get(index.toString()).get('weightUnit').value;
+          const result = this.getBmiValue(height, weight, weightUnit, value);
+          // this.newRequest
+          //   .get('dependents')
+          //   .get('allDependents')
+          //   .get(index.toString())
+          //   .get('bmi')
+          //   .setValue(result);
+
+        });
+
+        this.newRequest.get('dependents').get('allDependents').get(index.toString()).get('weightUnit').valueChanges.subscribe(value => {
+          const height = this.newRequest.get('dependents').get('allDependents').get(index.toString()).get('height').value;
+          const weight = this.newRequest.get('dependents').get('allDependents').get(index.toString()).get('weight').value;
+          const heightUnit = this.newRequest.get('dependents').get('allDependents').get(index.toString()).get('heightUnit').value;
+          const result = this.getBmiValue(height, weight, value, heightUnit);
+          // this.newRequest
+          //   .get('dependents')
+          //   .get('allDependents')
+          //   .get(index.toString())
+          //   .get('bmi')
+          //   .setValue(result);
+
+        });
+      } else {
+        this.newRequest
+          .get('dependents')
+          .get('allDependents')
+          .get(index.toString())
+          .get('isBmiEventAssigned')
+          .setValue(true);
+      }
+    }
+
+  }
+}
+getBmiValue(height: any, weight: any, typeWeight: any, typeHeight: any) {
+  if (height !== '' && weight !== '') {
+    if (typeWeight === 'LIBRAS') { weight = weight / 2.205; }
+    if (typeHeight === 'PIE') {
+      height = height / 3.281;
+    }
+    const bmi = weight / ((height / 100) * (height / 100));
+
+    if (bmi !== Infinity) {
+      const value = parseFloat(`${bmi}`).toFixed(2);
+      return value;
+    }
+
+  }
+  return 0;
+}
+isBenefitMinorThan100(group: string, subgroup: string): boolean {
+  const form = this.newRequest.get(group).get(subgroup) as FormGroup;
+
+  if (this.benefitFor(form).total < 100 && this.benefitFor(form).isDirty) { return true; } else { return false; }
+}
+
+isBenefitMajorThan100(group: string, subgroup: string): boolean {
+  const form = this.newRequest.get(group).get(subgroup) as FormGroup;
+
+  if (this.benefitFor(form).total > 100 && this.benefitFor(form).isDirty) { return true; } else { return false; }
+}
+
+benefitFor(form: FormGroup) {
+  let total = 0;
+  let isDirty = false;
+
+  // tslint:disable-next-line: forin
+  for (const dpd in form.value) {
+    if (form.controls[dpd].dirty) { isDirty = true; }
+    total += form.value[dpd].quantity;
+
+  }
+  return { total, isDirty };
+}
+
+// setQuestionsA(){
+//   this.questions.forEach((question,index)=> {
+//     if(index > 0){
+//       if(question.time){
+//         this.add(this.questionsFormArray,this.timeQuestionGroup);
+//       }
+//       else if(question.date){
+//         this.add(this.questionsFormArray,this.DateQuestionGroup);
+
+//       }else if(question.pregnant){
+//         this.add(this.questionsFormArray,this.pregnant);
+//       }
+//       else{
+//         this.add(this.questionsFormArray,this.questionsGroup);
+//       }
+//     }
+//   });
+// }
+
+proceduresFormGroup(index, i) {
+  return this.newRequest.get('questionsB').get(index.toString()).get('procedures').get(i.toString()) as FormGroup;
+}
+
+form(): FormGroup {
+  return this.fb.group(this.formGroupProcedure);
+}
+addprocedures() {
+  this.proceduresArray.push(this.form());
+  this.proceduresArray.updateValueAndValidity();
+}
+
+setStep(index: number) {
+  this.step = index;
+}
+
+nextStep(panel ?: string) {
+  this.step++;
+}
+
+juridicalGroup() {
+  return this.fb.group({
+    businessName: ['', Validators.required],
+    rnc: ['', Validators.required],
+    family: ['', Validators.required],
+    purpose: ['', Validators.required],
+    taxCountry: ['', Validators.required],
+    commercialRegister: this.fb.array([this.createFormArray('commercialRegister')]),
+    legalRepresentativeId2: this.fb.array([this.createFormArray('legalRepresentativeId2')]),
+  });
+}
+
+selectChange(event) {
+  const formGeneral = this.newRequest as FormGroup;
+  const formContractor = this.newRequest.get('contractor') as FormGroup;
+  const questionsForm = this.newRequest.get('questionsA') as FormGroup;
+  const questionsBForm = this.newRequest.get('questionsB') as FormGroup;
+  const mhiForm = this.newRequest.get('questionsB').get('medicalHealthInsurance') as FormGroup;
+  const exposedPersonForm = this.newRequest.get('exposedPerson') as FormGroup;
+  const formP = this.newRequest.get('person') as FormGroup;
+  const formEP = this.newRequest.get('exposedPerson') as FormGroup;
+  const formFiles = this.newRequest.get('files') as FormGroup;
+  console.log(event);
+  this.isJuridica = false;
+
+  if (event.name === 'mandatorySubject') {
+    if (formP.get('contractorIsJuridical').value === 'SI') {
+      if (this.juridicalObligatoryOptions.options[this.juridicalObligatoryOptions.options.map((e) => e.value).indexOf(event.valor)].obligatory === '1') {
+        formGeneral.addControl('antiLaundering', this.fb.group({}));
+      } else {
+        formGeneral.removeControl('antiLaundering');
+      }
+    } else if (formP.get('contractorIsJuridical').value === 'NO') {
+      if (this.physicalObligatoryOptions.options[this.physicalObligatoryOptions.options.map((e) => e.value).indexOf(event.valor)].obligatory === '1') {
+        formGeneral.addControl('antiLaundering', this.fb.group({}));
+      } else {
+        formGeneral.removeControl('antiLaundering');
+      }
+    }
+  }
+
+  if (event.name === 'mandatorySubjectPayer') {
+    if (formP.get('payerIsJuridical').value === 'SI') {
+      if (this.juridicalObligatoryOptions.options[this.juridicalObligatoryOptions.options.map((e) => e.value).indexOf(event.valor)].obligatory === '1') {
+        formGeneral.addControl('antiLaunderingPayer', this.fb.group({}));
+      } else {
+        formGeneral.removeControl('antiLaunderingPayer');
+      }
+    } else if (formP.get('payerIsJuridical').value === 'NO') {
+      if (this.physicalObligatoryOptions.options[this.physicalObligatoryOptions.options.map((e) => e.value).indexOf(event.valor)].obligatory === '1') {
+        formGeneral.addControl('antiLaunderingPayer', this.fb.group({}));
+      } else {
+        formGeneral.removeControl('antiLaunderingPayer');
+      }
+    }
+  }
+
+  if (event.valor === 'SI' || event.valor === 'SI') {
+    switch (event.name) {
+      case 'isContractor':
+        formP.removeControl('contractorIsJuridical');
+        formP.removeControl('mandatorySubject');
+
+        if (this.newRequest.get('files').get('copyId')) {
+          formFiles.removeControl('copyId');
         }
-      }
-
-      console.log(this.newRequest.value.person.sex);
-      if (this.newRequest.get('person').get('sex').value === 'MASCULINO') {
-        menCount += 1;
-      }
-
-      if (menCount > 0) {
-        console.log('Hay men');
-        this.isThereAMen = true;
-      } else {
-        this.isThereAMen = false;
-      }
-    }, 1500);
-
-  }
-
-  relationWatcher(event, realForm) {
-    console.log('event: ', event.valor, 'form: ', realForm);
-    const form = realForm as FormGroup;
-    if (event.valor === 'OTROS') {
-      form.addControl('specifyRelationship', this.fb.control('', Validators.required));
-    } else {
-      form.removeControl('specifyRelationship');
-    }
-  }
-
-  showWarningDot(Form: any): boolean {
-    if (!this.ID) {
-      if (Form.invalid && this.ogForm.submitted) {
-        return true;
-      } else {
-        return false;
-      }
-    } else {
-      if (!Form.invalid) {
-        return false;
-      } else {
-        return true;
-      }
-    }
-  }
-
-  ngDoCheck() { }
-
-  add(dependentsFormArray, group) {
-
-    const increment = dependentsFormArray.length + 1;
-    dependentsFormArray = this.formMethods.addElement(dependentsFormArray, increment, group).formArray;
-
-
-    this.AddEventOnEachDependentVariable();
-  }
-  AddEventOnEachDependentVariable() {
-    /*for(let index = 0;index < this.newRequest.get('dependents').get('allDependents').length;index++)
-    {
-      console.log(index);
-    }*/
-    // for(let index in this.dependentsFormArray.controls)
-    if (this.newRequest.get('dependents').get('allDependents') !== undefined && this.newRequest.get('dependents').get('allDependents') !== null) {
-      const arrayElement = this.newRequest.get('dependents').get('allDependents') as FormArray;
-      for (let index = 0; index < arrayElement.length; index++) {
-
-        // tslint:disable-next-line: max-line-length
-        const isBmiEventAssigned = this.newRequest.get('dependents').get('allDependents').get(index.toString()).get('isBmiEventAssigned').value;
-
-        if (isBmiEventAssigned == false) {
-          this.newRequest
-            .get('dependents')
-            .get('allDependents')
-            .get(index.toString())
-            .get('isBmiEventAssigned')
-            .setValue(true);
-          this.newRequest.get('dependents').get('allDependents').get(index.toString()).get('date').valueChanges.subscribe(value => {
-            const timeDiff = Math.abs(Date.now() - new Date(value).getTime());
-            const age = Math.floor(timeDiff / (1000 * 3600 * 24) / 365.25);
-            this.newRequest.get('dependents').get('allDependents').get(index.toString()).get('age').setValue(age);
-            // questionnaire.addControl('solicitudProstatica', this.fb.group({}));
-
-            const form = this.newRequest.get('dependents').get('allDependents').get(index.toString()) as FormGroup;
-            if (age >= 50 && form.get('sex').value === 'MASCULINO') {
-              form.addControl('solicitudProstatica', this.fb.group({}));
-            } else {
-              form.removeControl('solicitudProstatica');
-            }
-          });
-          this.newRequest.get('dependents').get('allDependents').get(index.toString()).get('sex').valueChanges.subscribe(value => {
-            const form = this.newRequest.get('dependents').get('allDependents').get(index.toString()) as FormGroup;
-            if (form.get('age').value >= 50 && value === 'MASCULINO') {
-              form.addControl('solicitudProstatica', this.fb.group({}));
-            } else {
-              form.removeControl('solicitudProstatica');
-            }
-          });
-          this.newRequest.get('dependents').get('allDependents').get(index.toString()).get('height').valueChanges.subscribe(value => {
-            const weight = this.newRequest.get('dependents').get('allDependents').get(index.toString()).get('weight').value;
-            const heightUnit = this.newRequest.get('dependents').get('allDependents').get(index.toString()).get('heightUnit').value;
-            const weightUnit = this.newRequest.get('dependents').get('allDependents').get(index.toString()).get('weightUnit').value;
-
-            const result = this.getBmiValue(value, weight, weightUnit, heightUnit);
-            // this.newRequest
-            //   .get('dependents')
-            //   .get('allDependents')
-            //   .get(index.toString())
-            //   .get('bmi')
-            //   .setValue(result);
-
-          });
-          this.newRequest.get('dependents').get('allDependents').get(index.toString()).get('weight').valueChanges.subscribe(value => {
-            const height = this.newRequest.get('dependents').get('allDependents').get(index.toString()).get('height').value;
-            const heightUnit = this.newRequest.get('dependents').get('allDependents').get(index.toString()).get('heightUnit').value;
-            const weightUnit = this.newRequest.get('dependents').get('allDependents').get(index.toString()).get('weightUnit').value;
-            const result = this.getBmiValue(height, value, weightUnit, heightUnit);
-            // this.newRequest
-            //   .get('dependents')
-            //   .get('allDependents')
-            //   .get(index.toString())
-            //   .get('bmi')
-            //   .setValue(result);
-
-          });
-
-          this.newRequest.get('dependents').get('allDependents').get(index.toString()).get('heightUnit').valueChanges.subscribe(value => {
-            const height = this.newRequest.get('dependents').get('allDependents').get(index.toString()).get('height').value;
-            const weight = this.newRequest.get('dependents').get('allDependents').get(index.toString()).get('weight').value;
-            const weightUnit = this.newRequest.get('dependents').get('allDependents').get(index.toString()).get('weightUnit').value;
-            const result = this.getBmiValue(height, weight, weightUnit, value);
-            // this.newRequest
-            //   .get('dependents')
-            //   .get('allDependents')
-            //   .get(index.toString())
-            //   .get('bmi')
-            //   .setValue(result);
-
-          });
-
-          this.newRequest.get('dependents').get('allDependents').get(index.toString()).get('weightUnit').valueChanges.subscribe(value => {
-            const height = this.newRequest.get('dependents').get('allDependents').get(index.toString()).get('height').value;
-            const weight = this.newRequest.get('dependents').get('allDependents').get(index.toString()).get('weight').value;
-            const heightUnit = this.newRequest.get('dependents').get('allDependents').get(index.toString()).get('heightUnit').value;
-            const result = this.getBmiValue(height, weight, value, heightUnit);
-            // this.newRequest
-            //   .get('dependents')
-            //   .get('allDependents')
-            //   .get(index.toString())
-            //   .get('bmi')
-            //   .setValue(result);
-
-          });
-        } else {
-          this.newRequest
-            .get('dependents')
-            .get('allDependents')
-            .get(index.toString())
-            .get('isBmiEventAssigned')
-            .setValue(true);
-        }
-      }
-
-    }
-  }
-  getBmiValue(height: any, weight: any, typeWeight: any, typeHeight: any) {
-    if (height !== '' && weight !== '') {
-      if (typeWeight === 'LIBRAS') { weight = weight / 2.205; }
-      if (typeHeight === 'PIE') {
-        height = height / 3.281;
-      }
-      const bmi = weight / ((height / 100) * (height / 100));
-
-      if (bmi !== Infinity) {
-        const value = parseFloat(`${bmi}`).toFixed(2);
-        return value;
-      }
-
-    }
-    return 0;
-  }
-  isBenefitMinorThan100(group: string, subgroup: string): boolean {
-    const form = this.newRequest.get(group).get(subgroup) as FormGroup;
-
-    if (this.benefitFor(form).total < 100 && this.benefitFor(form).isDirty) { return true; } else { return false; }
-  }
-
-  isBenefitMajorThan100(group: string, subgroup: string): boolean {
-    const form = this.newRequest.get(group).get(subgroup) as FormGroup;
-
-    if (this.benefitFor(form).total > 100 && this.benefitFor(form).isDirty) { return true; } else { return false; }
-  }
-
-  benefitFor(form: FormGroup) {
-    let total = 0;
-    let isDirty = false;
-
-    // tslint:disable-next-line: forin
-    for (const dpd in form.value) {
-      if (form.controls[dpd].dirty) { isDirty = true; }
-      total += form.value[dpd].quantity;
-
-    }
-    return { total, isDirty };
-  }
-
-  // setQuestionsA(){
-  //   this.questions.forEach((question,index)=> {
-  //     if(index > 0){
-  //       if(question.time){
-  //         this.add(this.questionsFormArray,this.timeQuestionGroup);
-  //       }
-  //       else if(question.date){
-  //         this.add(this.questionsFormArray,this.DateQuestionGroup);
-
-  //       }else if(question.pregnant){
-  //         this.add(this.questionsFormArray,this.pregnant);
-  //       }
-  //       else{
-  //         this.add(this.questionsFormArray,this.questionsGroup);
-  //       }
-  //     }
-  //   });
-  // }
-
-  proceduresFormGroup(index, i) {
-    return this.newRequest.get('questionsB').get(index.toString()).get('procedures').get(i.toString()) as FormGroup;
-  }
-
-  form(): FormGroup {
-    return this.fb.group(this.formGroupProcedure);
-  }
-  addprocedures() {
-    this.proceduresArray.push(this.form());
-    this.proceduresArray.updateValueAndValidity();
-  }
-
-  setStep(index: number) {
-    this.step = index;
-  }
-
-  nextStep(panel?: string) {
-    this.step++;
-  }
-
-  juridicalGroup() {
-    return this.fb.group({
-      businessName: ['', Validators.required],
-      rnc: ['', Validators.required],
-      family: ['', Validators.required],
-      purpose: ['', Validators.required],
-      taxCountry: ['', Validators.required],
-      commercialRegister: this.fb.array([this.createFormArray('commercialRegister')]),
-      legalRepresentativeId2: this.fb.array([this.createFormArray('legalRepresentativeId2')]),
-    });
-  }
-
-  selectChange(event) {
-    const formGeneral = this.newRequest as FormGroup;
-    const formContractor = this.newRequest.get('contractor') as FormGroup;
-    const questionsForm = this.newRequest.get('questionsA') as FormGroup;
-    const questionsBForm = this.newRequest.get('questionsB') as FormGroup;
-    const mhiForm = this.newRequest.get('questionsB').get('medicalHealthInsurance') as FormGroup;
-    const exposedPersonForm = this.newRequest.get('exposedPerson') as FormGroup;
-    const formP = this.newRequest.get('person') as FormGroup;
-    const formEP = this.newRequest.get('exposedPerson') as FormGroup;
-    const formFiles = this.newRequest.get('files') as FormGroup;
-    console.log(event);
-    this.isJuridica = false;
-
-    if (event.name === 'mandatorySubject') {
-      if (formP.get('contractorIsJuridical').value === 'SI') {
-        if (this.juridicalObligatoryOptions.options[this.juridicalObligatoryOptions.options.map((e) => e.value).indexOf(event.valor)].obligatory === '1') {
-          formGeneral.addControl('antiLaundering', this.fb.group({}));
-        } else {
+        if ((this.newRequest.get('antiLaundering'))) {
           formGeneral.removeControl('antiLaundering');
         }
-      } else if (formP.get('contractorIsJuridical').value === 'NO') {
-        if (this.physicalObligatoryOptions.options[this.physicalObligatoryOptions.options.map((e) => e.value).indexOf(event.valor)].obligatory === '1') {
-          formGeneral.addControl('antiLaundering', this.fb.group({}));
-        } else {
-          formGeneral.removeControl('antiLaundering');
+        if ((this.newRequest.get('conozcaSuClientePersonaJuridica'))) {
+          formGeneral.removeControl('conozcaSuClientePersonaJuridica');
         }
-      }
-    }
-
-    if (event.name === 'mandatorySubjectPayer') {
-      if (formP.get('payerIsJuridical').value === 'SI') {
-        if (this.juridicalObligatoryOptions.options[this.juridicalObligatoryOptions.options.map((e) => e.value).indexOf(event.valor)].obligatory === '1') {
-          formGeneral.addControl('antiLaunderingPayer', this.fb.group({}));
-        } else {
-          formGeneral.removeControl('antiLaunderingPayer');
-        }
-      } else if (formP.get('payerIsJuridical').value === 'NO') {
-        if (this.physicalObligatoryOptions.options[this.physicalObligatoryOptions.options.map((e) => e.value).indexOf(event.valor)].obligatory === '1') {
-          formGeneral.addControl('antiLaunderingPayer', this.fb.group({}));
-        } else {
-          formGeneral.removeControl('antiLaunderingPayer');
-        }
-      }
-    }
-
-    if (event.valor === 'SI' || event.valor === 'SI') {
-      switch (event.name) {
-        case 'isContractor':
-          formP.removeControl('contractorIsJuridical');
+        if (this.newRequest.get('person').get('mandatorySubject')) {
           formP.removeControl('mandatorySubject');
-
-          if (this.newRequest.get('files').get('copyId')) {
-            formFiles.removeControl('copyId');
-          }
-          if ((this.newRequest.get('antiLaundering'))) {
-            formGeneral.removeControl('antiLaundering');
-          }
-          if ((this.newRequest.get('conozcaSuClientePersonaJuridica'))) {
-            formGeneral.removeControl('conozcaSuClientePersonaJuridica');
-          }
-          if (this.newRequest.get('person').get('mandatorySubject')) {
-            formP.removeControl('mandatorySubject');
-          }
-          formP.removeControl('isJuridica');
-          if (formEP) {
-            formEP.removeControl('contractor');
-            formEP.removeControl('contractorExposedInfo');
-          }
-          if (this.newRequest.get('files').get('mercantile')) {
-            formFiles.removeControl('mercantile');
-          }
-          if (formGeneral.get('contractor')) {
-            formGeneral.removeControl('contractor');
-          }
-
-          if (formGeneral.get('contractorJuridical')) {
-            formGeneral.removeControl('contractorJuridical');
-          }
-
-          this.newRequest.get('person').get('office').get('company').clearValidators();
-          this.newRequest.get('person').get('office').get('company').updateValueAndValidity();
-          this.newRequest.get('person').get('office').get('company').markAsUntouched();
-
-          this.newRequest.get('person').get('office').get('position').clearValidators();
-          this.newRequest.get('person').get('office').get('position').updateValueAndValidity();
-          this.newRequest.get('person').get('office').get('position').markAsUntouched();
-
-          this.newRequest.get('person').get('office').get('direction').clearValidators();
-          this.newRequest.get('person').get('office').get('direction').updateValueAndValidity();
-          this.newRequest.get('person').get('office').get('direction').markAsUntouched();
-
-          // this.newRequest.get('person').get('office').get('economicActivity').clearValidators();
-          // this.newRequest.get('person').get('office').get('economicActivity').updateValueAndValidity();
-          // this.newRequest.get('person').get('office').get('economicActivity').markAsUntouched();
-
-          this.newRequest.get('person').get('office').get('sector').clearValidators();
-          this.newRequest.get('person').get('office').get('sector').updateValueAndValidity();
-          this.newRequest.get('person').get('office').get('sector').markAsUntouched();
-
-          this.newRequest.get('person').get('office').get('city').clearValidators();
-          this.newRequest.get('person').get('office').get('city').updateValueAndValidity();
-          this.newRequest.get('person').get('office').get('city').markAsUntouched();
-
-          this.newRequest.get('person').get('office').get('country').clearValidators();
-          this.newRequest.get('person').get('office').get('country').updateValueAndValidity();
-          this.newRequest.get('person').get('office').get('country').markAsUntouched();
-          break;
-
-        case 'contractorIsJuridical':
-
+        }
+        formP.removeControl('isJuridica');
+        if (formEP) {
           formEP.removeControl('contractor');
+          formEP.removeControl('contractorExposedInfo');
+        }
+        if (this.newRequest.get('files').get('mercantile')) {
+          formFiles.removeControl('mercantile');
+        }
+        if (formGeneral.get('contractor')) {
           formGeneral.removeControl('contractor');
-          formGeneral.addControl('contractorJuridical', this.juridicalGroup());
+        }
 
-          formGeneral.addControl('conozcaSuClientePersonaJuridica', this.fb.group({}));
-          formP.get('mandatorySubject').reset();
-          break;
+        if (formGeneral.get('contractorJuridical')) {
+          formGeneral.removeControl('contractorJuridical');
+        }
 
-        case 'isPayer':
-          formP.removeControl('payerIsJuridical');
-          formP.removeControl('mandatorySubjectPayer');
+        this.newRequest.get('person').get('office').get('company').clearValidators();
+        this.newRequest.get('person').get('office').get('company').updateValueAndValidity();
+        this.newRequest.get('person').get('office').get('company').markAsUntouched();
+
+        this.newRequest.get('person').get('office').get('position').clearValidators();
+        this.newRequest.get('person').get('office').get('position').updateValueAndValidity();
+        this.newRequest.get('person').get('office').get('position').markAsUntouched();
+
+        this.newRequest.get('person').get('office').get('direction').clearValidators();
+        this.newRequest.get('person').get('office').get('direction').updateValueAndValidity();
+        this.newRequest.get('person').get('office').get('direction').markAsUntouched();
+
+        // this.newRequest.get('person').get('office').get('economicActivity').clearValidators();
+        // this.newRequest.get('person').get('office').get('economicActivity').updateValueAndValidity();
+        // this.newRequest.get('person').get('office').get('economicActivity').markAsUntouched();
+
+        this.newRequest.get('person').get('office').get('sector').clearValidators();
+        this.newRequest.get('person').get('office').get('sector').updateValueAndValidity();
+        this.newRequest.get('person').get('office').get('sector').markAsUntouched();
+
+        this.newRequest.get('person').get('office').get('city').clearValidators();
+        this.newRequest.get('person').get('office').get('city').updateValueAndValidity();
+        this.newRequest.get('person').get('office').get('city').markAsUntouched();
+
+        this.newRequest.get('person').get('office').get('country').clearValidators();
+        this.newRequest.get('person').get('office').get('country').updateValueAndValidity();
+        this.newRequest.get('person').get('office').get('country').markAsUntouched();
+        break;
+
+      case 'contractorIsJuridical':
+
+        formEP.removeControl('contractor');
+        formGeneral.removeControl('contractor');
+        formGeneral.addControl('contractorJuridical', this.juridicalGroup());
+
+        formGeneral.addControl('conozcaSuClientePersonaJuridica', this.fb.group({}));
+        formP.get('mandatorySubject').reset();
+        break;
+
+      case 'isPayer':
+        formP.removeControl('payerIsJuridical');
+        formP.removeControl('mandatorySubjectPayer');
 
 
-          if ((this.newRequest.get('antiLaunderingPayer'))) {
-            formGeneral.removeControl('antiLaunderingPayer');
-          }
-          if ((this.newRequest.get('conozcaSuClientePersonaJuridicaPayer'))) {
-            formGeneral.removeControl('conozcaSuClientePersonaJuridicaPayer');
-          }
+        if ((this.newRequest.get('antiLaunderingPayer'))) {
+          formGeneral.removeControl('antiLaunderingPayer');
+        }
+        if ((this.newRequest.get('conozcaSuClientePersonaJuridicaPayer'))) {
+          formGeneral.removeControl('conozcaSuClientePersonaJuridicaPayer');
+        }
 
-          formP.removeControl('isJuridica');
-          if (formEP) {
-            formEP.removeControl('payer');
-            formEP.removeControl('payerExposedInfo');
-          }
-
-          formEP.removeControl('incomesCertified');
-
-
-          if (formGeneral.get('payer')) {
-            formGeneral.removeControl('payer');
-          }
-
-          if (formGeneral.get('payerJuridical')) {
-            formGeneral.removeControl('payerJuridical');
-          }
-
-          this.newRequest.get('person').get('office').get('company').clearValidators();
-          this.newRequest.get('person').get('office').get('company').updateValueAndValidity();
-          this.newRequest.get('person').get('office').get('company').markAsUntouched();
-
-          this.newRequest.get('person').get('office').get('position').clearValidators();
-          this.newRequest.get('person').get('office').get('position').updateValueAndValidity();
-          this.newRequest.get('person').get('office').get('position').markAsUntouched();
-
-          this.newRequest.get('person').get('office').get('direction').clearValidators();
-          this.newRequest.get('person').get('office').get('direction').updateValueAndValidity();
-          this.newRequest.get('person').get('office').get('direction').markAsUntouched();
-
-          // this.newRequest.get('person').get('office').get('economicActivity').clearValidators();
-          // this.newRequest.get('person').get('office').get('economicActivity').updateValueAndValidity();
-          // this.newRequest.get('person').get('office').get('economicActivity').markAsUntouched();
-
-          this.newRequest.get('person').get('office').get('sector').clearValidators();
-          this.newRequest.get('person').get('office').get('sector').updateValueAndValidity();
-          this.newRequest.get('person').get('office').get('sector').markAsUntouched();
-
-          this.newRequest.get('person').get('office').get('city').clearValidators();
-          this.newRequest.get('person').get('office').get('city').updateValueAndValidity();
-          this.newRequest.get('person').get('office').get('city').markAsUntouched();
-
-          this.newRequest.get('person').get('office').get('country').clearValidators();
-          this.newRequest.get('person').get('office').get('country').updateValueAndValidity();
-          this.newRequest.get('person').get('office').get('country').markAsUntouched();
-          break;
-
-        case 'payerIsJuridical':
-
+        formP.removeControl('isJuridica');
+        if (formEP) {
           formEP.removeControl('payer');
           formEP.removeControl('payerExposedInfo');
-          formEP.removeControl('incomesCertified');
+        }
 
-          formP.get('mandatorySubjectPayer').reset();
+        formEP.removeControl('incomesCertified');
 
+
+        if (formGeneral.get('payer')) {
           formGeneral.removeControl('payer');
-          formGeneral.addControl('payerJuridical', this.juridicalGroup());
+        }
 
-          formGeneral.addControl('conozcaSuClientePersonaJuridicaPayer', this.fb.group({}));
-          break;
-
-
-        case 'isJuridica':
-
-          if (formGeneral.get('contractor')) {
-            formGeneral.removeControl('contractor');
-          }
-          if (formEP) {
-            formEP.removeControl('contractor');
-            formEP.removeControl('contractorExposedInfo');
-          }
-          if (this.newRequest.get('conozcaSuClientePersonaContratante')) {
-            formGeneral.removeControl('conozcaSuClientePersonaContratante');
-          }
-          if (!(this.newRequest.get('conozcaSuClientePersonaJuridica'))) {
-            formGeneral.addControl('conozcaSuClientePersonaJuridica', this.fb.group({}));
-          }
-          // formContractor.addControl('conozcaSuClientePersonaJuridica', this.fb.group({}));
-
-          if (this.newRequest.get('files').get('copyId')) {
-            formFiles.removeControl('copyId');
-          }
-          formP.addControl('mandatorySubject', this.fb.control('', Validators.required));
-
-          console.log('entro');
-          this.isJuridica = true;
-          this.titles = FormValidationsConstant.titlesForMajorExpenses;
-          break;
-
-        case 'contractor':
-          exposedPersonForm.addControl('contractorExposedInfo', this.fb.group({
-            lastPosition: ['', Validators.required],
-            time: ['', Validators.required],
-            timeNumber: ['', [Validators.required, Validators.min(1)]]
-          }));
-
-          if (!formEP.get('payer')) {
-            if (!formEP.get('incomesCertified')) {
-              formEP.addControl('incomesCertified', this.fb.control('', Validators.required));
-            }
-          }
-          // formGeneral.addControl('conozcaSuClientePersonaContratante', this.fb.group({}));
-          break;
-        // Si
-        case 'headLine':
-          exposedPersonForm.addControl('headLineExposedInfo', this.fb.group({
-            lastPosition: ['', Validators.required],
-            time: ['', Validators.required],
-            timeNumber: ['', [Validators.required, Validators.min(1)]]
-          }));
-
-          if (!formEP.get('payer')) {
-            if (!formEP.get('incomesCertified')) {
-              formEP.addControl('incomesCertified', this.fb.control('', Validators.required));
-            }
-          }
-
-          // formGeneral.addControl('conozcaSuClientePersona', this.fb.group({}));
-          break;
-
-        case 'payer':
-          exposedPersonForm.addControl('payerExposedInfo', this.fb.group({
-            lastPosition: ['', Validators.required],
-            time: ['', Validators.required],
-            timeNumber: ['', [Validators.required, Validators.min(1)]]
-          }));
-
-          formEP.addControl('incomesCertified', this.fb.control('', Validators.required));
-
-          // formGeneral.addControl('conozcaSuClientePersona', this.fb.group({}));
-          break;
-
-        case 'hasDeclinedInsuranceCompany':
-          questionsBForm.addControl('declinedInsuranceInformation', this.fb.group({
-            reason: ['', Validators.required],
-          }));
-          break;
-
-        case 'didReclamation':
-          mhiForm.addControl('reclamationInfo', this.fb.control('', Validators.required));
-          break;
-
-        case 'haveHadMedicalHealthInsurance':
-          questionsBForm.addControl('medicalHealthInsurance', this.fb.group({
-            companyName: ['', Validators.required],
-            policeNo: ['', Validators.required],
-            insureName: ['', Validators.required],
-            insuranceCompany: ['', Validators.required],
-            policeType: ['', Validators.required],
-            emitionDate: ['', Validators.required],
-            isItCurrent: ['', Validators.required],
-            didReclamation: ['', Validators.required],
-          }));
-          break;
-
-        case 'hasFamilyWithHeartKidneyDisease':
-          questionsBForm.addControl('familyWithDiseases', this.fb.array([this.createFormArray('haveDisease')]));
-          this.familyWithDiseasesList = questionsBForm.get('familyWithDiseases') as FormArray;
-          break;
-
-        case 'haveConsultedForUnmentioned':
-          questionsBForm.addControl('consultedForUnmentioned', this.fb.array([this.createFormArray('medicInformation')]));
-          break;
-
-        case 'haveAlterationForUnmentioned':
-          questionsBForm.addControl('alterationForUnmentioned', this.fb.array([this.createFormArray('medicInformation')]));
-          break;
-
-        case 'haveHadExamStudiesTests':
-          questionsBForm.addControl('specializedTests', this.fb.array([this.createFormArray('specializedTests')]));
-          break;
-
-        case 'pep_radio_insured':
-
-          this.newRequest.addControl('exposedPerson', this.fb.group({
-            headLine: ['', Validators.required],
-
-          }));
-          if (formContractor) {
-            const formEP2 = this.newRequest.get('exposedPerson') as FormGroup;
-
-            formEP2.addControl('contractor', this.fb.control('', Validators.required));
-          }
-          if (!(this.newRequest.get('files').get('documentsKnowClient'))) {
-            formFiles.addControl('documentsKnowClient', this.fb.array([this.createFormArray('filesDocumentsKnowClient')]));
-            this.filesDocumentsKnowClientArray = this.newRequest.get('files').get('documentsKnowClient') as FormArray;
-          } else if (this.newRequest.get('files').get('documentsKnowClient')) {
-            formFiles.removeControl('documentsKnowClient');
-            formFiles.addControl('documentsKnowClient', this.fb.array([this.createFormArray('filesDocumentsKnowClient')]));
-            this.filesDocumentsKnowClientArray = this.newRequest.get('files').get('documentsKnowClient') as FormArray;
-          }
-
-          break;
-
-        case 'mandatorySubject':
-          /* if (!(this.newRequest.get('conozcaSuClientePersonaJuridica'))) {
-             formGeneral.addControl('conozcaSuClientePersonaJuridica', this.fb.group({}));
-           }*/
-          // if (!(this.newRequest.get('files').get('mercantile'))) {
-          //   formFiles.addControl('mercantile', this.fb.array([this.createFormArray('mercantileRegister')]));
-          //   this.mercantileRegisterArray = this.newRequest.get('files').get('mercantile') as FormArray;
-          // } else if (this.newRequest.get('files').get('mercantile')) {
-          //   formFiles.removeControl('mercantile');
-          //   formFiles.addControl('mercantile', this.fb.array([this.createFormArray('mercantileRegister')]));
-          //   this.mercantileRegisterArray = this.newRequest.get('files').get('mercantile') as FormArray;
-          // }
-          formGeneral.addControl('antiLaundering', this.fb.group({}));
-          break;
-
-        case 'mandatorySubjectPayer':
-          formGeneral.addControl('antiLaunderingPayer', this.fb.group({}));
-          break;
-
-        default:
-          break;
-      }
-    } else if (event.valor === 'NO' || event.valor === 'NO') {
-      switch (event.name) {
-        case 'isContractor':
-          // if (this.newRequest.get('conozcaSuClientePersonaContratante')) {
-          //   formGeneral.removeControl('conozcaSuClientePersonaContratante');
-          // }
-
-          formP.addControl('contractorIsJuridical', this.fb.control('', Validators.required));
-          formP.addControl('mandatorySubject', this.fb.control('', Validators.required));
-
-          // formP.addControl('isJuridica', this.fb.control('', Validators.required));
-          // formEP.addControl('contractor', this.fb.control('', Validators.required));
-
-          // 
-
-          /* if (this.newRequest.get('conozcaSuClientePersona')) {
-             formGeneral.removeControl('conozcaSuClientePersona');
-           }*/
-
-          this.newRequest.get('person').get('office').get('company').setValidators(Validators.required);
-          this.newRequest.get('person').get('office').get('company').updateValueAndValidity();
-          this.newRequest.get('person').get('office').get('company').markAsUntouched();
-
-          this.newRequest.get('person').get('office').get('position').setValidators(Validators.required);
-          this.newRequest.get('person').get('office').get('position').updateValueAndValidity();
-          this.newRequest.get('person').get('office').get('position').markAsUntouched();
-
-          this.newRequest.get('person').get('office').get('direction').setValidators(Validators.required);
-          this.newRequest.get('person').get('office').get('direction').updateValueAndValidity();
-          this.newRequest.get('person').get('office').get('direction').markAsUntouched();
-
-          // this.newRequest.get('person').get('office').get('economicActivity').setValidators(Validators.required);
-          // this.newRequest.get('person').get('office').get('economicActivity').updateValueAndValidity();
-          // this.newRequest.get('person').get('office').get('economicActivity').markAsUntouched();
-
-          this.newRequest.get('person').get('office').get('sector').setValidators(Validators.required);
-          this.newRequest.get('person').get('office').get('sector').updateValueAndValidity();
-          this.newRequest.get('person').get('office').get('sector').markAsUntouched();
-
-          this.newRequest.get('person').get('office').get('city').setValidators(Validators.required);
-          this.newRequest.get('person').get('office').get('city').updateValueAndValidity();
-          this.newRequest.get('person').get('office').get('city').markAsUntouched();
-
-          this.newRequest.get('person').get('office').get('country').setValidators(Validators.required);
-          this.newRequest.get('person').get('office').get('country').updateValueAndValidity();
-          this.newRequest.get('person').get('office').get('country').markAsUntouched();
-
-          break;
-
-        case 'contractorIsJuridical':
-          formGeneral.removeControl('conozcaSuClientePersonaJuridica');
-          formGeneral.removeControl('antiLaundering');
-          formGeneral.removeControl('contractorJuridical');
-          formP.get('mandatorySubject').reset();
-
-          if (formEP) {
-            formEP.addControl('contractor', this.fb.control('', Validators.required));
-          }
-          formGeneral.addControl('contractor', this.fb.group(this.holderGroup));
-          break;
-
-        case 'isPayer':
-          // if (this.newRequest.get('conozcaSuClientePersonaContratante')) {
-          //   formGeneral.removeControl('conozcaSuClientePersonaContratante');
-          // }
-
-          formP.addControl('payerIsJuridical', this.fb.control('', Validators.required));
-          formP.addControl('mandatorySubjectPayer', this.fb.control('', Validators.required));
-
-          // formP.addControl('isJuridica', this.fb.control('', Validators.required));
-          // formEP.addControl('contractor', this.fb.control('', Validators.required));
-
-          // 
-
-          /* if (this.newRequest.get('conozcaSuClientePersona')) {
-             formGeneral.removeControl('conozcaSuClientePersona');
-           }*/
-
-          this.newRequest.get('person').get('office').get('company').setValidators(Validators.required);
-          this.newRequest.get('person').get('office').get('company').updateValueAndValidity();
-          this.newRequest.get('person').get('office').get('company').markAsUntouched();
-
-          this.newRequest.get('person').get('office').get('position').setValidators(Validators.required);
-          this.newRequest.get('person').get('office').get('position').updateValueAndValidity();
-          this.newRequest.get('person').get('office').get('position').markAsUntouched();
-
-          this.newRequest.get('person').get('office').get('direction').setValidators(Validators.required);
-          this.newRequest.get('person').get('office').get('direction').updateValueAndValidity();
-          this.newRequest.get('person').get('office').get('direction').markAsUntouched();
-
-          // this.newRequest.get('person').get('office').get('economicActivity').setValidators(Validators.required);
-          // this.newRequest.get('person').get('office').get('economicActivity').updateValueAndValidity();
-          // this.newRequest.get('person').get('office').get('economicActivity').markAsUntouched();
-
-          this.newRequest.get('person').get('office').get('sector').setValidators(Validators.required);
-          this.newRequest.get('person').get('office').get('sector').updateValueAndValidity();
-          this.newRequest.get('person').get('office').get('sector').markAsUntouched();
-
-          this.newRequest.get('person').get('office').get('city').setValidators(Validators.required);
-          this.newRequest.get('person').get('office').get('city').updateValueAndValidity();
-          this.newRequest.get('person').get('office').get('city').markAsUntouched();
-
-          this.newRequest.get('person').get('office').get('country').setValidators(Validators.required);
-          this.newRequest.get('person').get('office').get('country').updateValueAndValidity();
-          this.newRequest.get('person').get('office').get('country').markAsUntouched();
-
-          break;
-
-        case 'payerIsJuridical':
-          formGeneral.removeControl('conozcaSuClientePersonaJuridicaPayer');
-          formGeneral.removeControl('antiLaunderingPayer');
+        if (formGeneral.get('payerJuridical')) {
           formGeneral.removeControl('payerJuridical');
-          formP.get('mandatorySubjectPayer').reset();
+        }
 
-          if (formEP) {
-            formEP.removeControl('incomesCertified');
-            formEP.addControl('payer', this.fb.control('', Validators.required));
-          }
-          formGeneral.addControl('payer', this.fb.group(this.holderGroup));
-          break;
+        this.newRequest.get('person').get('office').get('company').clearValidators();
+        this.newRequest.get('person').get('office').get('company').updateValueAndValidity();
+        this.newRequest.get('person').get('office').get('company').markAsUntouched();
 
-        case 'isJuridica':
+        this.newRequest.get('person').get('office').get('position').clearValidators();
+        this.newRequest.get('person').get('office').get('position').updateValueAndValidity();
+        this.newRequest.get('person').get('office').get('position').markAsUntouched();
 
-          // formContractor.removeControl('conozcaSuClientePersonaJuridica');
-          this.titles = FormValidationsConstant.titlesForMajorExpensesComplete;
+        this.newRequest.get('person').get('office').get('direction').clearValidators();
+        this.newRequest.get('person').get('office').get('direction').updateValueAndValidity();
+        this.newRequest.get('person').get('office').get('direction').markAsUntouched();
 
-          if ((this.newRequest.get('antiLaundering'))) {
-            formGeneral.removeControl('antiLaundering');
+        // this.newRequest.get('person').get('office').get('economicActivity').clearValidators();
+        // this.newRequest.get('person').get('office').get('economicActivity').updateValueAndValidity();
+        // this.newRequest.get('person').get('office').get('economicActivity').markAsUntouched();
+
+        this.newRequest.get('person').get('office').get('sector').clearValidators();
+        this.newRequest.get('person').get('office').get('sector').updateValueAndValidity();
+        this.newRequest.get('person').get('office').get('sector').markAsUntouched();
+
+        this.newRequest.get('person').get('office').get('city').clearValidators();
+        this.newRequest.get('person').get('office').get('city').updateValueAndValidity();
+        this.newRequest.get('person').get('office').get('city').markAsUntouched();
+
+        this.newRequest.get('person').get('office').get('country').clearValidators();
+        this.newRequest.get('person').get('office').get('country').updateValueAndValidity();
+        this.newRequest.get('person').get('office').get('country').markAsUntouched();
+        break;
+
+      case 'payerIsJuridical':
+
+        formEP.removeControl('payer');
+        formEP.removeControl('payerExposedInfo');
+        formEP.removeControl('incomesCertified');
+
+        formP.get('mandatorySubjectPayer').reset();
+
+        formGeneral.removeControl('payer');
+        formGeneral.addControl('payerJuridical', this.juridicalGroup());
+
+        formGeneral.addControl('conozcaSuClientePersonaJuridicaPayer', this.fb.group({}));
+        break;
+
+
+      case 'isJuridica':
+
+        if (formGeneral.get('contractor')) {
+          formGeneral.removeControl('contractor');
+        }
+        if (formEP) {
+          formEP.removeControl('contractor');
+          formEP.removeControl('contractorExposedInfo');
+        }
+        if (this.newRequest.get('conozcaSuClientePersonaContratante')) {
+          formGeneral.removeControl('conozcaSuClientePersonaContratante');
+        }
+        if (!(this.newRequest.get('conozcaSuClientePersonaJuridica'))) {
+          formGeneral.addControl('conozcaSuClientePersonaJuridica', this.fb.group({}));
+        }
+        // formContractor.addControl('conozcaSuClientePersonaJuridica', this.fb.group({}));
+
+        if (this.newRequest.get('files').get('copyId')) {
+          formFiles.removeControl('copyId');
+        }
+        formP.addControl('mandatorySubject', this.fb.control('', Validators.required));
+
+        console.log('entro');
+        this.isJuridica = true;
+        this.titles = FormValidationsConstant.titlesForMajorExpenses;
+        break;
+
+      case 'contractor':
+        exposedPersonForm.addControl('contractorExposedInfo', this.fb.group({
+          lastPosition: ['', Validators.required],
+          time: ['', Validators.required],
+          timeNumber: ['', [Validators.required, Validators.min(1)]]
+        }));
+
+        if (!formEP.get('payer')) {
+          if (!formEP.get('incomesCertified')) {
+            formEP.addControl('incomesCertified', this.fb.control('', Validators.required));
           }
-          if ((this.newRequest.get('conozcaSuClientePersonaJuridica'))) {
-            formGeneral.removeControl('conozcaSuClientePersonaJuridica');
+        }
+        // formGeneral.addControl('conozcaSuClientePersonaContratante', this.fb.group({}));
+        break;
+      // Si
+      case 'headLine':
+        exposedPersonForm.addControl('headLineExposedInfo', this.fb.group({
+          lastPosition: ['', Validators.required],
+          time: ['', Validators.required],
+          timeNumber: ['', [Validators.required, Validators.min(1)]]
+        }));
+
+        if (!formEP.get('payer')) {
+          if (!formEP.get('incomesCertified')) {
+            formEP.addControl('incomesCertified', this.fb.control('', Validators.required));
           }
-          if (this.newRequest.get('person').get('mandatorySubject')) {
-            formP.removeControl('mandatorySubject');
-          }
-          if (this.newRequest.get('files').get('mercantile')) {
-            formFiles.removeControl('mercantile');
-          }
-          // formGeneral.addControl('conozcaSuClientePersona', this.fb.group({}));
-          if (!(this.newRequest.get('copyId'))) {
-            formFiles.addControl('copyId', this.fb.array([this.createFormArray('filesCopyId')]));
-            this.filesCopyIdArray = this.newRequest.get('files').get('copyId') as FormArray;
-          }
-          if (formEP) {
-            formEP.addControl('contractor', this.fb.control('', Validators.required));
-          }
-          if (!formGeneral.get('contractor')) {
-            formGeneral.addControl('contractor', this.fb.group({
-              // conozcaSuClientePersonaJuridica: this.fb.group({}),
-              // conozcaSuClientePersona: this.fb.group({}),
-              firstName: ['', Validators.required],
-              secondName: ['', Validators.required],
-              lastName: ['', Validators.required],
-              date: ['', Validators.required],
-              sex: ['', Validators.required],
+        }
+
+        // formGeneral.addControl('conozcaSuClientePersona', this.fb.group({}));
+        break;
+
+      case 'payer':
+        exposedPersonForm.addControl('payerExposedInfo', this.fb.group({
+          lastPosition: ['', Validators.required],
+          time: ['', Validators.required],
+          timeNumber: ['', [Validators.required, Validators.min(1)]]
+        }));
+
+        formEP.addControl('incomesCertified', this.fb.control('', Validators.required));
+
+        // formGeneral.addControl('conozcaSuClientePersona', this.fb.group({}));
+        break;
+
+      case 'hasDeclinedInsuranceCompany':
+        questionsBForm.addControl('declinedInsuranceInformation', this.fb.group({
+          reason: ['', Validators.required],
+        }));
+        break;
+
+      case 'didReclamation':
+        mhiForm.addControl('reclamationInfo', this.fb.control('', Validators.required));
+        break;
+
+      case 'haveHadMedicalHealthInsurance':
+        questionsBForm.addControl('medicalHealthInsurance', this.fb.group({
+          companyName: ['', Validators.required],
+          policeNo: ['', Validators.required],
+          insureName: ['', Validators.required],
+          insuranceCompany: ['', Validators.required],
+          policeType: ['', Validators.required],
+          emitionDate: ['', Validators.required],
+          isItCurrent: ['', Validators.required],
+          didReclamation: ['', Validators.required],
+        }));
+        break;
+
+      case 'hasFamilyWithHeartKidneyDisease':
+        questionsBForm.addControl('familyWithDiseases', this.fb.array([this.createFormArray('haveDisease')]));
+        this.familyWithDiseasesList = questionsBForm.get('familyWithDiseases') as FormArray;
+        break;
+
+      case 'haveConsultedForUnmentioned':
+        questionsBForm.addControl('consultedForUnmentioned', this.fb.array([this.createFormArray('medicInformation')]));
+        break;
+
+      case 'haveAlterationForUnmentioned':
+        questionsBForm.addControl('alterationForUnmentioned', this.fb.array([this.createFormArray('medicInformation')]));
+        break;
+
+      case 'haveHadExamStudiesTests':
+        questionsBForm.addControl('specializedTests', this.fb.array([this.createFormArray('specializedTests')]));
+        break;
+
+      case 'pep_radio_insured':
+
+        this.newRequest.addControl('exposedPerson', this.fb.group({
+          headLine: ['', Validators.required],
+
+        }));
+        if (formContractor) {
+          const formEP2 = this.newRequest.get('exposedPerson') as FormGroup;
+
+          formEP2.addControl('contractor', this.fb.control('', Validators.required));
+        }
+        if (!(this.newRequest.get('files').get('documentsKnowClient'))) {
+          formFiles.addControl('documentsKnowClient', this.fb.array([this.createFormArray('filesDocumentsKnowClient')]));
+          this.filesDocumentsKnowClientArray = this.newRequest.get('files').get('documentsKnowClient') as FormArray;
+        } else if (this.newRequest.get('files').get('documentsKnowClient')) {
+          formFiles.removeControl('documentsKnowClient');
+          formFiles.addControl('documentsKnowClient', this.fb.array([this.createFormArray('filesDocumentsKnowClient')]));
+          this.filesDocumentsKnowClientArray = this.newRequest.get('files').get('documentsKnowClient') as FormArray;
+        }
+
+        break;
+
+      case 'mandatorySubject':
+        /* if (!(this.newRequest.get('conozcaSuClientePersonaJuridica'))) {
+           formGeneral.addControl('conozcaSuClientePersonaJuridica', this.fb.group({}));
+         }*/
+        // if (!(this.newRequest.get('files').get('mercantile'))) {
+        //   formFiles.addControl('mercantile', this.fb.array([this.createFormArray('mercantileRegister')]));
+        //   this.mercantileRegisterArray = this.newRequest.get('files').get('mercantile') as FormArray;
+        // } else if (this.newRequest.get('files').get('mercantile')) {
+        //   formFiles.removeControl('mercantile');
+        //   formFiles.addControl('mercantile', this.fb.array([this.createFormArray('mercantileRegister')]));
+        //   this.mercantileRegisterArray = this.newRequest.get('files').get('mercantile') as FormArray;
+        // }
+        formGeneral.addControl('antiLaundering', this.fb.group({}));
+        break;
+
+      case 'mandatorySubjectPayer':
+        formGeneral.addControl('antiLaunderingPayer', this.fb.group({}));
+        break;
+
+      default:
+        break;
+    }
+  } else if (event.valor === 'NO' || event.valor === 'NO') {
+    switch (event.name) {
+      case 'isContractor':
+        // if (this.newRequest.get('conozcaSuClientePersonaContratante')) {
+        //   formGeneral.removeControl('conozcaSuClientePersonaContratante');
+        // }
+
+        formP.addControl('contractorIsJuridical', this.fb.control('', Validators.required));
+        formP.addControl('mandatorySubject', this.fb.control('', Validators.required));
+
+        // formP.addControl('isJuridica', this.fb.control('', Validators.required));
+        // formEP.addControl('contractor', this.fb.control('', Validators.required));
+
+        // 
+
+        /* if (this.newRequest.get('conozcaSuClientePersona')) {
+           formGeneral.removeControl('conozcaSuClientePersona');
+         }*/
+
+        this.newRequest.get('person').get('office').get('company').setValidators(Validators.required);
+        this.newRequest.get('person').get('office').get('company').updateValueAndValidity();
+        this.newRequest.get('person').get('office').get('company').markAsUntouched();
+
+        this.newRequest.get('person').get('office').get('position').setValidators(Validators.required);
+        this.newRequest.get('person').get('office').get('position').updateValueAndValidity();
+        this.newRequest.get('person').get('office').get('position').markAsUntouched();
+
+        this.newRequest.get('person').get('office').get('direction').setValidators(Validators.required);
+        this.newRequest.get('person').get('office').get('direction').updateValueAndValidity();
+        this.newRequest.get('person').get('office').get('direction').markAsUntouched();
+
+        // this.newRequest.get('person').get('office').get('economicActivity').setValidators(Validators.required);
+        // this.newRequest.get('person').get('office').get('economicActivity').updateValueAndValidity();
+        // this.newRequest.get('person').get('office').get('economicActivity').markAsUntouched();
+
+        this.newRequest.get('person').get('office').get('sector').setValidators(Validators.required);
+        this.newRequest.get('person').get('office').get('sector').updateValueAndValidity();
+        this.newRequest.get('person').get('office').get('sector').markAsUntouched();
+
+        this.newRequest.get('person').get('office').get('city').setValidators(Validators.required);
+        this.newRequest.get('person').get('office').get('city').updateValueAndValidity();
+        this.newRequest.get('person').get('office').get('city').markAsUntouched();
+
+        this.newRequest.get('person').get('office').get('country').setValidators(Validators.required);
+        this.newRequest.get('person').get('office').get('country').updateValueAndValidity();
+        this.newRequest.get('person').get('office').get('country').markAsUntouched();
+
+        break;
+
+      case 'contractorIsJuridical':
+        formGeneral.removeControl('conozcaSuClientePersonaJuridica');
+        formGeneral.removeControl('antiLaundering');
+        formGeneral.removeControl('contractorJuridical');
+        formP.get('mandatorySubject').reset();
+
+        if (formEP) {
+          formEP.addControl('contractor', this.fb.control('', Validators.required));
+        }
+        formGeneral.addControl('contractor', this.fb.group(this.holderGroup));
+        break;
+
+      case 'isPayer':
+        // if (this.newRequest.get('conozcaSuClientePersonaContratante')) {
+        //   formGeneral.removeControl('conozcaSuClientePersonaContratante');
+        // }
+
+        formP.addControl('payerIsJuridical', this.fb.control('', Validators.required));
+        formP.addControl('mandatorySubjectPayer', this.fb.control('', Validators.required));
+
+        // formP.addControl('isJuridica', this.fb.control('', Validators.required));
+        // formEP.addControl('contractor', this.fb.control('', Validators.required));
+
+        // 
+
+        /* if (this.newRequest.get('conozcaSuClientePersona')) {
+           formGeneral.removeControl('conozcaSuClientePersona');
+         }*/
+
+        this.newRequest.get('person').get('office').get('company').setValidators(Validators.required);
+        this.newRequest.get('person').get('office').get('company').updateValueAndValidity();
+        this.newRequest.get('person').get('office').get('company').markAsUntouched();
+
+        this.newRequest.get('person').get('office').get('position').setValidators(Validators.required);
+        this.newRequest.get('person').get('office').get('position').updateValueAndValidity();
+        this.newRequest.get('person').get('office').get('position').markAsUntouched();
+
+        this.newRequest.get('person').get('office').get('direction').setValidators(Validators.required);
+        this.newRequest.get('person').get('office').get('direction').updateValueAndValidity();
+        this.newRequest.get('person').get('office').get('direction').markAsUntouched();
+
+        // this.newRequest.get('person').get('office').get('economicActivity').setValidators(Validators.required);
+        // this.newRequest.get('person').get('office').get('economicActivity').updateValueAndValidity();
+        // this.newRequest.get('person').get('office').get('economicActivity').markAsUntouched();
+
+        this.newRequest.get('person').get('office').get('sector').setValidators(Validators.required);
+        this.newRequest.get('person').get('office').get('sector').updateValueAndValidity();
+        this.newRequest.get('person').get('office').get('sector').markAsUntouched();
+
+        this.newRequest.get('person').get('office').get('city').setValidators(Validators.required);
+        this.newRequest.get('person').get('office').get('city').updateValueAndValidity();
+        this.newRequest.get('person').get('office').get('city').markAsUntouched();
+
+        this.newRequest.get('person').get('office').get('country').setValidators(Validators.required);
+        this.newRequest.get('person').get('office').get('country').updateValueAndValidity();
+        this.newRequest.get('person').get('office').get('country').markAsUntouched();
+
+        break;
+
+      case 'payerIsJuridical':
+        formGeneral.removeControl('conozcaSuClientePersonaJuridicaPayer');
+        formGeneral.removeControl('antiLaunderingPayer');
+        formGeneral.removeControl('payerJuridical');
+        formP.get('mandatorySubjectPayer').reset();
+
+        if (formEP) {
+          formEP.removeControl('incomesCertified');
+          formEP.addControl('payer', this.fb.control('', Validators.required));
+        }
+        formGeneral.addControl('payer', this.fb.group(this.holderGroup));
+        break;
+
+      case 'isJuridica':
+
+        // formContractor.removeControl('conozcaSuClientePersonaJuridica');
+        this.titles = FormValidationsConstant.titlesForMajorExpensesComplete;
+
+        if ((this.newRequest.get('antiLaundering'))) {
+          formGeneral.removeControl('antiLaundering');
+        }
+        if ((this.newRequest.get('conozcaSuClientePersonaJuridica'))) {
+          formGeneral.removeControl('conozcaSuClientePersonaJuridica');
+        }
+        if (this.newRequest.get('person').get('mandatorySubject')) {
+          formP.removeControl('mandatorySubject');
+        }
+        if (this.newRequest.get('files').get('mercantile')) {
+          formFiles.removeControl('mercantile');
+        }
+        // formGeneral.addControl('conozcaSuClientePersona', this.fb.group({}));
+        if (!(this.newRequest.get('copyId'))) {
+          formFiles.addControl('copyId', this.fb.array([this.createFormArray('filesCopyId')]));
+          this.filesCopyIdArray = this.newRequest.get('files').get('copyId') as FormArray;
+        }
+        if (formEP) {
+          formEP.addControl('contractor', this.fb.control('', Validators.required));
+        }
+        if (!formGeneral.get('contractor')) {
+          formGeneral.addControl('contractor', this.fb.group({
+            // conozcaSuClientePersonaJuridica: this.fb.group({}),
+            // conozcaSuClientePersona: this.fb.group({}),
+            firstName: ['', Validators.required],
+            secondName: [''],
+            lastName: ['', Validators.required],
+            date: ['', Validators.required],
+            sex: ['', Validators.required],
+            nationality: ['', Validators.required],
+            idType: ['', Validators.required],
+            id2: ['', Validators.required],
+            age: [{ value: '', disabled: false }, Validators.required],
+            weight: [''],
+            height: [''],
+            weightUnit: [''],
+            heightUnit: [''],
+            bmi: [{ value: '', disabled: true }],
+            status: ['', Validators.required],
+            country: ['', Validators.required],
+            city: ['', Validators.required],
+            direction: ['', Validators.required],
+            tel: [''],
+            cel: ['', Validators.required],
+            officeTel: [''],
+            fax: [''],
+            email: ['', [Validators.required, Validators.email]],
+            office: this.fb.group({
+              company: [''],
+              position: [''],
+              direction: [''],
+              // economicActivity: [''],
+              sector: [''],
+              city: [''],
+              country: [''],
+            })
+            /*societyName: ['', Validators.required],
+            commercialName: [''],
+            taxpayerNumber: ['', Validators.required],
+            socialHome: [''],
+            tel: ['', Validators.required],
+            email: ['', Validators.required],
+            commercialActivity: ['', Validators.required],
+            // requestType: ['', Validators.required],
+            legalRepresentation: this.fb.group({
+              name: ['', Validators.required],
+              position: ['', Validators.required],
               nationality: ['', Validators.required],
               idType: ['', Validators.required],
               id2: ['', Validators.required],
-              age: [{ value: '', disabled: false }, Validators.required],
-              weight: ['', Validators.required],
-              height: ['', Validators.required],
-              weightUnit: ['', Validators.required],
-              heightUnit: ['', Validators.required],
-              bmi: [{ value: '', disabled: true }, Validators.required],
-              status: ['', Validators.required],
-              country: ['', Validators.required],
-              city: ['', Validators.required],
-              direction: ['', Validators.required],
-              tel: [''],
-              cel: ['', Validators.required],
-              officeTel: [''],
-              fax: [''],
-              email: ['', [Validators.required, Validators.email]],
-              office: this.fb.group({
-                company: [''],
-                position: [''],
-                direction: [''],
-                // economicActivity: [''],
-                sector: [''],
-                city: [''],
-                country: [''],
-              })
-              /*societyName: ['', Validators.required],
-              commercialName: [''],
-              taxpayerNumber: ['', Validators.required],
-              socialHome: [''],
-              tel: ['', Validators.required],
-              email: ['', Validators.required],
-              commercialActivity: ['', Validators.required],
-              // requestType: ['', Validators.required],
-              legalRepresentation: this.fb.group({
-                name: ['', Validators.required],
-                position: ['', Validators.required],
-                nationality: ['', Validators.required],
-                idType: ['', Validators.required],
-                id2: ['', Validators.required],
-                policy: [''],
-                email: ['', Validators.required]
-              })*/
-            }));
+              policy: [''],
+              email: ['', Validators.required]
+            })*/
+          }));
+        }
+        break;
+
+      case 'havePregnant':
+        questionsForm.removeControl('pregnant');
+        break;
+      case 'haveHighRiskSport':
+        questionsForm.removeControl('highRiskSport');
+        break;
+
+      case 'haveNicotine':
+        questionsForm.removeControl('nicotine');
+        break;
+
+      case 'contractor':
+        exposedPersonForm.removeControl('contractorExposedInfo');
+        // if (this.newRequest.get('conozcaSuClientePersonaContratante')) {
+        //   formGeneral.removeControl('conozcaSuClientePersonaContratante');
+        // }
+
+        if (!formEP.get('payer')) {
+          if (formEP.get('incomesCertified')) {
+            formEP.removeControl('incomesCertified');
           }
+        }
+        break;
+
+      case 'headLine':
+        exposedPersonForm.removeControl('headLineExposedInfo');
+        if (!formEP.get('payer')) {
+          if (formEP.get('incomesCertified')) {
+            formEP.removeControl('incomesCertified');
+          }
+        }
+
+        break;
+
+      case 'payer':
+        formEP.removeControl('incomesCertified');
+        exposedPersonForm.removeControl('payerExposedInfo');
+
+        break;
+
+      case 'hasDeclinedInsuranceCompany':
+        questionsBForm.removeControl('declinedInsuranceInformation');
+        break;
+
+      case 'haveHadMedicalHealthInsurance':
+        questionsBForm.removeControl('medicalHealthInsurance');
+        break;
+
+      case 'didReclamation':
+        mhiForm.removeControl('reclamationInfo');
+        break;
+
+      case 'haveMusculoskeletal':
+        this.makeFalseAll(event.name);
+        break;
+
+      case 'haveCerebrovascular':
+        this.makeFalseAll(event.name);
+        break;
+
+      case 'haveNervousSystem':
+        this.makeFalseAll(event.name);
+        break;
+
+      case 'haveVisionHearing':
+        this.makeFalseAll(event.name);
+        break;
+
+      case 'haveCardiovascularSystem':
+        this.makeFalseAll(event.name);
+        break;
+
+      case 'haveRespiratorySystem':
+        this.makeFalseAll(event.name);
+        break;
+
+      case 'haveDigestiveSystem':
+        this.makeFalseAll(event.name);
+        break;
+
+      case 'haveUrinarySystem':
+        this.makeFalseAll(event.name);
+        break;
+
+      case 'haveMaleReproductiveOrgans':
+        this.makeFalseAll(event.name);
+        break;
+
+      case 'haveBloodDisorders':
+        this.makeFalseAll(event.name);
+        break;
+
+      case 'haveEndocrineDisorders':
+        this.makeFalseAll(event.name);
+        break;
+
+      case 'haveAlternateTreatment':
+        this.makeFalseAll(event.name);
+        break;
+
+      case 'haveFunctionalLimitation':
+        this.makeFalseAll(event.name);
+        break;
+
+      case 'haveDeformity':
+        this.makeFalseAll(event.name);
+        break;
+
+      case 'haveBloodTransfusion':
+        this.makeFalseAll(event.name);
+        break;
+
+      case 'haveAlcoholicDependence':
+        this.makeFalseAll(event.name);
+        break;
+
+      case 'haveNicotine':
+        this.makeFalseAll(event.name);
+        break;
+
+      case 'haveStd':
+        this.makeFalseAll(event.name);
+        break;
+
+      case 'havePhysiologicalDisorder':
+        this.makeFalseAll(event.name);
+        break;
+
+      case 'haveHighRiskSport':
+        this.makeFalseAll(event.name);
+        break;
+
+      case 'havePregnant':
+        this.makeFalseAll(event.name);
+        break;
+
+      case 'haveReproductiveOrganDisorders':
+        this.makeFalseAll(event.name);
+        break;
+
+
+      case 'hasFamilyWithHeartKidneyDisease':
+        questionsBForm.removeControl('familyWithDiseases');
+        this.familyWithDiseasesList = undefined;
+        break;
+      // No
+      case 'pep_radio_insured':
+
+        if (this.newRequest.get('conozcaSuClientePersona')) {
+          formGeneral.removeControl('conozcaSuClientePersona');
+        }
+        if (this.newRequest.get('conozcaSuClientePersonaContratante')) {
+          formGeneral.removeControl('conozcaSuClientePersonaContratante');
+        }
+        this.newRequest.removeControl('exposedPerson');
+        if (!(this.newRequest.get('files').get('documentsKnowClient'))) {
+          formFiles.addControl('documentsKnowClient', this.fb.array([this.createFormArray('filesDocumentsKnowClient')]));
+          this.filesDocumentsKnowClientArray = this.newRequest.get('files').get('documentsKnowClient') as FormArray;
+        } else if (this.newRequest.get('files').get('documentsKnowClient')) {
+          formFiles.removeControl('documentsKnowClient');
+          formFiles.addControl('documentsKnowClient', this.fb.array([this.createFormArray('filesDocumentsKnowClient')]));
+          this.filesDocumentsKnowClientArray = this.newRequest.get('files').get('documentsKnowClient') as FormArray;
+        }
+        break;
+
+      case 'mandatorySubject':
+
+        // if (!(this.newRequest.get('files').get('mercantile'))) {
+        //   formFiles.addControl('mercantile', this.fb.array([this.createFormArray('mercantileRegister')]));
+        //   this.mercantileRegisterArray = this.newRequest.get('files').get('mercantile') as FormArray;
+        // } else if (this.newRequest.get('files').get('mercantile')) {
+        //   formFiles.removeControl('mercantile');
+        //   formFiles.addControl('mercantile', this.fb.array([this.createFormArray('mercantileRegister')]));
+        //   this.mercantileRegisterArray = this.newRequest.get('files').get('mercantile') as FormArray;
+        // }
+        if ((this.newRequest.get('antiLaundering'))) {
+          formGeneral.removeControl('antiLaundering');
+        }
+
+        break;
+
+      case 'mandatorySubjectPayer':
+        formGeneral.removeControl('antiLaunderingPayer');
+
+        break;
+
+      case 'haveConsultedForUnmentioned':
+        questionsBForm.removeControl('consultedForUnmentioned');
+        break;
+
+      case 'haveAlterationForUnmentioned':
+        questionsBForm.removeControl('alterationForUnmentioned');
+        break;
+
+      case 'haveHadExamStudiesTests':
+        questionsBForm.removeControl('specializedTests');
+        break;
+
+
+
+      default:
+        break;
+    }
+  }
+}
+
+radioChange(event) {
+  console.log(`value: ${event.value}, name: ${event.source.name}`);
+
+}
+
+ailmentSelected(type, form, watcherForm) {
+  switch (type) {
+    case 'musculoSkeletal':
+      this.checkIfHaveAilment(type, form, watcherForm);
+      break;
+
+    case 'cardiovascularSystem':
+      this.checkIfHaveAilment(type, form, watcherForm);
+      break;
+
+    case 'endocrineDisorders':
+      this.checkIfHaveAilment(type, form, watcherForm);
+      break;
+
+    case 'urinarySystem':
+      this.checkIfHaveAilment(type, form, watcherForm);
+      break;
+
+    default:
+      break;
+  }
+}
+
+// tslint:disable: forin
+checkIfHaveAilment(type, form, watcherForm) {
+  const stay = [];
+
+  for (const key in watcherForm.get(type).value) {
+    const element = watcherForm.get(type).value[key].ailment;
+    stay.push(element);
+  }
+
+  switch (type) {
+    case 'musculoSkeletal':
+      this.ailmentMusculoskeletalGenerator(stay, form);
+      break;
+
+    case 'cardiovascularSystem':
+      this.ailmentCardiovascularGenerator(stay, form);
+      break;
+
+    case 'endocrineDisorders':
+      this.ailmentEndocrineGenerator(stay, form);
+      break;
+
+    case 'urinarySystem':
+      this.ailmentUrinaryGenerator(stay, form);
+      break;
+
+  }
+}
+isFormReadyToRender() {
+  const validation = this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudHipertensionArterial') ||
+    this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudCardioVasculares') ||
+    this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudDiabetes') ||
+    this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudArtitris') ||
+    this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('columnaVertebralColumnaVertebral') ||
+    this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudMusculoesqueleticos') ||
+    this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudRenales') ||
+    this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudProstatica');
+  return validation;
+}
+
+isGoToTopRender() {
+  const validation = this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudHipertensionArterial') ||
+    this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudCardioVasculares') ||
+    this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudDiabetes') ||
+    this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudArtitris') ||
+    this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('columnaVertebralColumnaVertebral') ||
+    this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudMusculoesqueleticos') ||
+    this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudRenales') ||
+    this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudProstatica') ||
+    this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudBuceo') ||
+    this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudMoto') ||
+    this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudAviacion') ||
+    this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudMontanismo');
+
+  let dependentValidation;
+
+  // tslint:disable: forin
+  for (const key in this.allDependents.controls) {
+    const element = this.allDependents.controls[key] as FormGroup;
+
+    dependentValidation = element.get('solicitudHipertensionArterial') ||
+      element.get('solicitudCardioVasculares') ||
+      element.get('solicitudDiabetes') ||
+      element.get('solicitudArtitris') ||
+      element.get('columnaVertebralColumnaVertebral') ||
+      element.get('solicitudMusculoesqueleticos') ||
+      element.get('solicitudRenales') ||
+      element.get('solicitudProstatica') ||
+      element.get('solicitudBuceo') ||
+      element.get('solicitudMoto') ||
+      element.get('solicitudAviacion') ||
+      element.get('solicitudMontanismo');
+  }
+
+  return (validation || dependentValidation);
+}
+
+isActivityReadyToRender() {
+  const validation = this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudBuceo') ||
+    this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudMoto') ||
+    this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudAviacion') ||
+    this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudMontanismo');
+  return validation;
+}
+// tslint:disable: max-line-length
+ailmentMusculoskeletalGenerator(stay, form) {
+  let arthritisCounter = 0;
+  let spineCounter = 0;
+  let musculoSkeletal = 0;
+
+  for (const key in stay) {
+    if (Object.prototype.hasOwnProperty.call(stay, key)) {
+      const element = stay[key];
+      if (element) {
+        switch (element) {
+          case 'ARTRITIS':
+            arthritisCounter++;
+            break;
+
+          case 'LUMBAGO':
+            spineCounter++;
+            break;
+
+          case 'HERNIA DISCAL':
+            spineCounter++;
+            break;
+
+          case 'ESCOLIOSIS':
+            spineCounter++;
+            break;
+
+          case 'OTRO PADECIMIENTOS DE LA COLUMNA VERTEBRAL':
+            spineCounter++;
+            break;
+
+          case 'OTRO TRASTORNO MÚSCULO ESQUELÉTICOS':
+            musculoSkeletal++;
+            break;
+        }
+      }
+    }
+  }
+
+  if (arthritisCounter > 0) {
+    if (!form.get('solicitudArtitris')) {
+      form.addControl('solicitudArtitris', this.fb.group({}));
+    }
+  } else {
+    if (form.get('solicitudArtitris')) {
+      form.removeControl('solicitudArtitris');
+    }
+  }
+
+  if (spineCounter > 0) {
+    if (!form.get('columnaVertebralColumnaVertebral')) {
+      form.addControl('columnaVertebralColumnaVertebral', this.fb.group({}));
+    }
+  } else {
+    if (form.get('columnaVertebralColumnaVertebral')) {
+      form.removeControl('columnaVertebralColumnaVertebral');
+    }
+  }
+
+  if (musculoSkeletal > 0) {
+    if (!form.get('solicitudMusculoesqueleticos')) {
+      form.addControl('solicitudMusculoesqueleticos', this.fb.group({}));
+    }
+  } else {
+    if (form.get('solicitudMusculoesqueleticos')) {
+      form.removeControl('solicitudMusculoesqueleticos');
+    }
+  }
+}
+
+ailmentCardiovascularGenerator(stay, form) {
+  let hypertensionCounter = 0;
+  let cardiovascularCounter = 0;
+
+  for (const key in stay) {
+    if (Object.prototype.hasOwnProperty.call(stay, key)) {
+      const element = stay[key];
+      if (element) {
+        // switch (element) {
+        //   case 'PRESIÓN ARTERIAL ALTA':
+        //     hypertensionCounter++;
+        //     break;
+
+        //   case 'OTROS PADECIMIENTO DEL SISTEMA CARDIOVASCULAR':
+        //     cardiovascularCounter++;
+        //     break;
+        // }
+        if (element === 'PRESIÓN ARTERIAL ALTA') {
+          hypertensionCounter++;
+        } else {
+          cardiovascularCounter++;
+        }
+      }
+    }
+  }
+
+  if (hypertensionCounter > 0) {
+    if (!form.get('solicitudHipertensionArterial')) {
+      console.warn('CREO EL FORMULARIO: solicitudHipertensionArterial');
+      form.addControl('solicitudHipertensionArterial', this.fb.group({}));
+    }
+  } else {
+    if (form.get('solicitudHipertensionArterial')) {
+      console.warn('ELIMINO EL FORMULARIO: solicitudHipertensionArterial');
+      form.removeControl('solicitudHipertensionArterial');
+    }
+  }
+
+  if (cardiovascularCounter > 0) {
+    if (!form.get('solicitudCardioVasculares')) {
+      console.warn('CREO EL FORMULARIO: solicitudCardioVasculares');
+      form.addControl('solicitudCardioVasculares', this.fb.group({}));
+    }
+  } else {
+    if (form.get('solicitudCardioVasculares')) {
+      console.warn('ELIMINO EL FORMULARIO: solicitudCardioVasculares');
+      form.removeControl('solicitudCardioVasculares');
+    }
+  }
+}
+
+ailmentEndocrineGenerator(stay, form) {
+  let diabetesCounter = 0;
+
+  for (const key in stay) {
+    if (Object.prototype.hasOwnProperty.call(stay, key)) {
+      const element = stay[key];
+      if (element === 'DIABETES') {
+        switch (element) {
+          case 'DIABETES':
+            diabetesCounter++;
+            break;
+        }
+      }
+    }
+  }
+  if (diabetesCounter > 0) {
+    if (!form.get('solicitudDiabetes')) {
+      form.addControl('solicitudDiabetes', this.fb.group({}));
+    }
+  } else {
+    if (form.get('solicitudDiabetes')) {
+      form.removeControl('solicitudDiabetes');
+    }
+  }
+}
+
+ailmentUrinaryGenerator(stay, form) {
+  let renalCounter = 0;
+
+  for (const key in stay) {
+    if (Object.prototype.hasOwnProperty.call(stay, key)) {
+      const element = stay[key];
+      if (element) {
+        // switch (element) {
+        //   case 'CÁLCULO RENALES':
+        //     break;
+        //   }
+        renalCounter++;
+      }
+    }
+  }
+  if (renalCounter > 0) {
+    if (!form.get('solicitudRenales')) {
+      console.log('OKIDOKI IN');
+      form.addControl('solicitudRenales', this.fb.group({}));
+    }
+  } else {
+    if (form.get('solicitudRenales')) {
+      console.log('OKIDOKI OUT');
+      form.removeControl('solicitudRenales');
+    }
+  }
+}
+
+
+valueChange($event, question, typeOrIndex) {
+  const questionsA = this.newRequest.get('questionsA') as FormGroup;
+  const questionsANicotine = this.newRequest.get('questionsA').get('nicotine') as FormGroup;
+
+  console.log('tipo/index: ', typeOrIndex, 'event:', $event, 'question: ', question);
+  if (typeOrIndex === 'solicitante') {
+    if ($event.checked === true || $event.valor === 'SI') {
+      switch (question) {
+        case 'havePregnant':
+          this.questionsA.addControl('pregnant', this.fb.group({
+            time: ['', Validators.required]
+          }));
           break;
 
-        case 'havePregnant':
-          questionsForm.removeControl('pregnant');
-          break;
         case 'haveHighRiskSport':
-          questionsForm.removeControl('highRiskSport');
+          this.questionsA.addControl('highRiskSport', this.fb.group({
+            diving: ['', Validators.required],
+            racing: ['', Validators.required],
+            skydiving: ['', Validators.required],
+            mountaineering: ['', Validators.required],
+          }));
           break;
 
         case 'haveNicotine':
-          questionsForm.removeControl('nicotine');
+          this.questionsA.addControl('nicotine', this.fb.group({
+            quantity: ['', Validators.required],
+            timerange: ['', Validators.required],
+            time: ['', Validators.required],
+            isActualSmoker: ['', Validators.required],
+          }));
           break;
 
-        case 'contractor':
-          exposedPersonForm.removeControl('contractorExposedInfo');
-          // if (this.newRequest.get('conozcaSuClientePersonaContratante')) {
-          //   formGeneral.removeControl('conozcaSuClientePersonaContratante');
-          // }
-
-          if (!formEP.get('payer')) {
-            if (formEP.get('incomesCertified')) {
-              formEP.removeControl('incomesCertified');
-            }
-          }
+        case 'diving':
+          this.questionnairesGastosMayores.addControl('solicitudBuceo', this.fb.group({}));
           break;
 
-        case 'headLine':
-          exposedPersonForm.removeControl('headLineExposedInfo');
-          if (!formEP.get('payer')) {
-            if (formEP.get('incomesCertified')) {
-              formEP.removeControl('incomesCertified');
-            }
-          }
-
+        case 'racing':
+          this.questionnairesGastosMayores.addControl('solicitudMoto', this.fb.group({}));
           break;
 
-        case 'payer':
-          formEP.removeControl('incomesCertified');
-          exposedPersonForm.removeControl('payerExposedInfo');
-
+        case 'skydiving':
+          this.questionnairesGastosMayores.addControl('solicitudAviacion', this.fb.group({}));
           break;
 
-        case 'hasDeclinedInsuranceCompany':
-          questionsBForm.removeControl('declinedInsuranceInformation');
-          break;
-
-        case 'haveHadMedicalHealthInsurance':
-          questionsBForm.removeControl('medicalHealthInsurance');
-          break;
-
-        case 'didReclamation':
-          mhiForm.removeControl('reclamationInfo');
-          break;
-
-        case 'haveMusculoskeletal':
-          this.makeFalseAll(event.name);
-          break;
-
-        case 'haveCerebrovascular':
-          this.makeFalseAll(event.name);
-          break;
-
-        case 'haveNervousSystem':
-          this.makeFalseAll(event.name);
-          break;
-
-        case 'haveVisionHearing':
-          this.makeFalseAll(event.name);
-          break;
-
-        case 'haveCardiovascularSystem':
-          this.makeFalseAll(event.name);
-          break;
-
-        case 'haveRespiratorySystem':
-          this.makeFalseAll(event.name);
-          break;
-
-        case 'haveDigestiveSystem':
-          this.makeFalseAll(event.name);
-          break;
-
-        case 'haveUrinarySystem':
-          this.makeFalseAll(event.name);
-          break;
-
-        case 'haveMaleReproductiveOrgans':
-          this.makeFalseAll(event.name);
-          break;
-
-        case 'haveBloodDisorders':
-          this.makeFalseAll(event.name);
+        case 'mountaineering':
+          this.questionnairesGastosMayores.addControl('solicitudMontanismo', this.fb.group({}));
           break;
 
         case 'haveEndocrineDisorders':
-          this.makeFalseAll(event.name);
+          // this.questionnairesGastosMayores.addControl('solicitudDiabetes', this.fb.group({}));
+          questionsA.addControl('endocrineDisorders', this.fb.array([this.createFormArray('questionsAInformation')]));
+          this.endocrineDisordersList = questionsA.get('endocrineDisorders') as FormArray;
+          break;
+          break;
+
+        case 'haveUrinarySystem':
+          // this.questionnairesGastosMayores.addControl('solicitudRenales', this.fb.group({}));
+          questionsA.addControl('urinarySystem', this.fb.array([this.createFormArray('questionsAInformation')]));
+          this.urinarySystemList = questionsA.get('urinarySystem') as FormArray;
+          break;
+          break;
+
+        case 'haveMusculoskeletal':
+          // this.questionnairesGastosMayores.addControl('solicitudArtitris', this.fb.group({}));
+          // this.questionnairesGastosMayores.addControl('columnaVertebralColumnaVertebral', this.fb.group({}));
+          // this.questionnairesGastosMayores.addControl('solicitudMusculoesqueleticos', this.fb.group({}));
+
+          questionsA.addControl('musculoSkeletal', this.fb.array([this.createFormArray('questionsAInformation')]));
+          this.musculoSkeletalList = questionsA.get('musculoSkeletal') as FormArray;
+          break;
+
+        case 'haveCardiovascularSystem':
+          // this.questionnairesGastosMayores.addControl('solicitudHipertensionArterial', this.fb.group({}));
+          // this.questionnairesGastosMayores.addControl('solicitudCardioVasculares', this.fb.group({}));
+          questionsA.addControl('cardiovascularSystem', this.fb.array([this.createFormArray('questionsAInformation')]));
+          this.cardiovascularSystemList = questionsA.get('cardiovascularSystem') as FormArray;
+          break;
+
+        case 'haveCerebrovascular':
+          questionsA.addControl('cerebroVascular', this.fb.array([this.createFormArray('questionsAInformation')]));
+          break;
+
+        case 'haveNervousSystem':
+          questionsA.addControl('nervousSystem', this.fb.array([this.createFormArray('questionsAInformation')]));
+          break;
+
+        case 'haveVisionHearing':
+          questionsA.addControl('visionHearing', this.fb.array([this.createFormArray('questionsAInformation')]));
+          break;
+
+        case 'haveRespiratorySystem':
+          questionsA.addControl('respiratorySystem', this.fb.array([this.createFormArray('questionsAInformation')]));
+          break;
+
+        case 'haveDigestiveSystem':
+          questionsA.addControl('digestiveSystem', this.fb.array([this.createFormArray('questionsAInformation')]));
+          break;
+
+        case 'haveMaleReproductiveOrgans':
+          questionsA.addControl('maleReproductiveOrgans', this.fb.array([this.createFormArray('questionsAInformation')]));
+          break;
+
+        case 'haveBloodDisorders':
+          questionsA.addControl('bloodDisorders', this.fb.array([this.createFormArray('questionsAInformation')]));
           break;
 
         case 'haveAlternateTreatment':
-          this.makeFalseAll(event.name);
+          questionsA.addControl('alternateTreatment', this.fb.array([this.createFormArray('questionsAInformation')]));
           break;
 
         case 'haveFunctionalLimitation':
-          this.makeFalseAll(event.name);
+          questionsA.addControl('functionalLimitation', this.fb.array([this.createFormArray('questionsAInformation')]));
           break;
 
         case 'haveDeformity':
-          this.makeFalseAll(event.name);
-          break;
-
-        case 'haveBloodTransfusion':
-          this.makeFalseAll(event.name);
-          break;
-
-        case 'haveAlcoholicDependence':
-          this.makeFalseAll(event.name);
-          break;
-
-        case 'haveNicotine':
-          this.makeFalseAll(event.name);
+          questionsA.addControl('deformity', this.fb.array([this.createFormArray('questionsAInformation')]));
           break;
 
         case 'haveStd':
-          this.makeFalseAll(event.name);
+          questionsA.addControl('std', this.fb.array([this.createFormArray('questionsAInformation')]));
           break;
 
         case 'havePhysiologicalDisorder':
-          this.makeFalseAll(event.name);
+          questionsA.addControl('physiologicalDisorder', this.fb.array([this.createFormArray('questionsAInformation')]));
           break;
 
-        case 'haveHighRiskSport':
-          this.makeFalseAll(event.name);
-          break;
-
-        case 'havePregnant':
-          this.makeFalseAll(event.name);
+        case 'haveBloodTransfusion':
+          questionsA.addControl('bloodTransfusion', this.fb.array([this.createFormArray('questionsAInformation')]));
           break;
 
         case 'haveReproductiveOrganDisorders':
-          this.makeFalseAll(event.name);
+          questionsA.addControl('reproductiveOrganDisorders', this.fb.array([this.createFormArray('questionsAInformation')]));
           break;
 
-
-        case 'hasFamilyWithHeartKidneyDisease':
-          questionsBForm.removeControl('familyWithDiseases');
-          this.familyWithDiseasesList = undefined;
-          break;
-        // No
-        case 'pep_radio_insured':
-
-          if (this.newRequest.get('conozcaSuClientePersona')) {
-            formGeneral.removeControl('conozcaSuClientePersona');
-          }
-          if (this.newRequest.get('conozcaSuClientePersonaContratante')) {
-            formGeneral.removeControl('conozcaSuClientePersonaContratante');
-          }
-          this.newRequest.removeControl('exposedPerson');
-          if (!(this.newRequest.get('files').get('documentsKnowClient'))) {
-            formFiles.addControl('documentsKnowClient', this.fb.array([this.createFormArray('filesDocumentsKnowClient')]));
-            this.filesDocumentsKnowClientArray = this.newRequest.get('files').get('documentsKnowClient') as FormArray;
-          } else if (this.newRequest.get('files').get('documentsKnowClient')) {
-            formFiles.removeControl('documentsKnowClient');
-            formFiles.addControl('documentsKnowClient', this.fb.array([this.createFormArray('filesDocumentsKnowClient')]));
-            this.filesDocumentsKnowClientArray = this.newRequest.get('files').get('documentsKnowClient') as FormArray;
-          }
+        case 'haveAlcoholicDependence':
+          questionsA.addControl('alcoholicDependence', this.fb.group({
+            date: ['', Validators.required],
+            substance: ['', Validators.required],
+            threatment: ['', Validators.required],
+          }));
           break;
 
-        case 'mandatorySubject':
-
-          // if (!(this.newRequest.get('files').get('mercantile'))) {
-          //   formFiles.addControl('mercantile', this.fb.array([this.createFormArray('mercantileRegister')]));
-          //   this.mercantileRegisterArray = this.newRequest.get('files').get('mercantile') as FormArray;
-          // } else if (this.newRequest.get('files').get('mercantile')) {
-          //   formFiles.removeControl('mercantile');
-          //   formFiles.addControl('mercantile', this.fb.array([this.createFormArray('mercantileRegister')]));
-          //   this.mercantileRegisterArray = this.newRequest.get('files').get('mercantile') as FormArray;
-          // }
-          if ((this.newRequest.get('antiLaundering'))) {
-            formGeneral.removeControl('antiLaundering');
-          }
-
+        default:
+          break;
+      }
+    } else if ($event.checked === false || $event.valor === 'NO') {
+      switch (question) {
+        case 'havePregnant':
+          this.questionsA.removeControl('pregnant');
           break;
 
-        case 'mandatorySubjectPayer':
-          formGeneral.removeControl('antiLaunderingPayer');
-
+        case 'diving':
+          this.questionnairesGastosMayores.removeControl('solicitudBuceo');
           break;
 
-        case 'haveConsultedForUnmentioned':
-          questionsBForm.removeControl('consultedForUnmentioned');
+        case 'racing':
+          this.questionnairesGastosMayores.removeControl('solicitudMoto');
           break;
 
-        case 'haveAlterationForUnmentioned':
-          questionsBForm.removeControl('alterationForUnmentioned');
+        case 'skydiving':
+          this.questionnairesGastosMayores.removeControl('solicitudAviacion');
           break;
 
-        case 'haveHadExamStudiesTests':
-          questionsBForm.removeControl('specializedTests');
+        case 'mountaineering':
+          this.questionnairesGastosMayores.removeControl('solicitudMontanismo');
           break;
 
+        case 'haveHighRiskSport':
+          this.questionsA.removeControl('highRiskSport');
+          break;
 
+        case 'haveNicotine':
+          this.questionsA.removeControl('nicotine');
+          break;
+
+        case 'haveEndocrineDisorders':
+          this.questionnairesGastosMayores.removeControl('solicitudDiabetes');
+          questionsA.removeControl('endocrineDisorders');
+          this.endocrineDisordersList = undefined;
+          break;
+
+        case 'haveUrinarySystem':
+          this.questionnairesGastosMayores.removeControl('solicitudRenales');
+          questionsA.removeControl('urinarySystem');
+          this.urinarySystemList = undefined;
+          break;
+
+        case 'haveMusculoskeletal':
+          this.questionnairesGastosMayores.removeControl('solicitudArtitris');
+          this.questionnairesGastosMayores.removeControl('columnaVertebralColumnaVertebral');
+          this.questionnairesGastosMayores.removeControl('solicitudMusculoesqueleticos');
+          questionsA.removeControl('musculoSkeletal');
+          this.musculoSkeletalList = undefined;
+          break;
+
+        case 'haveCardiovascularSystem':
+          this.questionnairesGastosMayores.removeControl('solicitudHipertensionArterial');
+          this.questionnairesGastosMayores.removeControl('solicitudCardioVasculares');
+          questionsA.removeControl('cardiovascularSystem');
+          this.cardiovascularSystemList = undefined;
+          break;
+
+        case 'haveCerebrovascular':
+          questionsA.removeControl('cerebroVascular');
+          break;
+
+        case 'haveNervousSystem':
+          questionsA.removeControl('nervousSystem');
+          break;
+
+        case 'haveVisionHearing':
+          questionsA.removeControl('visionHearing');
+          break;
+
+        case 'haveRespiratorySystem':
+          questionsA.removeControl('respiratorySystem');
+          break;
+
+        case 'haveDigestiveSystem':
+          questionsA.removeControl('digestiveSystem');
+          break;
+
+        case 'haveMaleReproductiveOrgans':
+          questionsA.removeControl('maleReproductiveOrgans');
+          break;
+
+        case 'haveBloodDisorders':
+          questionsA.removeControl('bloodDisorders');
+          break;
+
+        case 'haveAlternateTreatment':
+          questionsA.removeControl('alternateTreatment');
+          break;
+
+        case 'haveFunctionalLimitation':
+          questionsA.removeControl('functionalLimitation');
+          break;
+
+        case 'haveDeformity':
+          questionsA.removeControl('deformity');
+          break;
+
+        case 'haveStd':
+          questionsA.removeControl('std');
+          break;
+
+        case 'havePhysiologicalDisorder':
+          questionsA.removeControl('physiologicalDisorder');
+          break;
+
+        case 'haveBloodTransfusion':
+          questionsA.removeControl('bloodTransfusion');
+          break;
+
+        case 'haveAlcoholicDependence':
+          questionsA.removeControl('alcoholicDependence');
+          break;
+
+        case 'haveReproductiveOrganDisorders':
+          questionsA.removeControl('reproductiveOrganDisorders');
+          break;
 
         default:
           break;
       }
     }
+
+    if (questionsANicotine) {
+      if ($event.valor === 'EX-FUMADOR') {
+        questionsANicotine.addControl('lastTimeSmoked', this.fb.control('', Validators.required));
+        console.log(questionsANicotine);
+      } else {
+        questionsANicotine.removeControl('lastTimeSmoked');
+      }
+    }
+  } else {
+    const dependents = this.allDependents;
+    const questionnaire = dependents.at(typeOrIndex) as FormGroup;
+    // const questionnaireNicotine = questionnaire['controls']['nicotine'] as FormGroup;
+
+    // const questionnaire = dependent.get('questionnairesGastosMayores') as FormGroup;
+
+    if ($event.checked === true || $event.valor === 'SI') {
+      console.log('true');
+      switch (question) {
+        case 'haveEndocrineDisorders':
+          // questionnaire.addControl('solicitudDiabetes', this.fb.group({}));
+          questionnaire.addControl('endocrineDisorders', this.fb.array([this.createFormArray('questionsAInformation')]));
+
+          break;
+
+        case 'havePregnant':
+          questionnaire.addControl('pregnant', this.fb.group({
+            time: ['', Validators.required]
+          }));
+          break;
+
+        case 'haveNicotine':
+          questionnaire.addControl('nicotine', this.fb.group({
+            quantity: ['', Validators.required],
+            timerange: ['', Validators.required],
+            time: ['', Validators.required],
+            isActualSmoker: ['', Validators.required],
+            lastTimeSmoked: [''],
+          }));
+          break;
+
+        case 'haveHighRiskSport':
+          questionnaire.addControl('highRiskSport', this.fb.group({
+            diving: ['', Validators.required],
+            racing: ['', Validators.required],
+            skydiving: ['', Validators.required],
+            mountaineering: ['', Validators.required],
+          }));
+          break;
+
+        case 'diving':
+          console.log('entrodondee');
+          questionnaire.addControl('solicitudBuceo', this.fb.group({}));
+          break;
+
+        case 'racing':
+          questionnaire.addControl('solicitudMoto', this.fb.group({}));
+          break;
+
+        case 'skydiving':
+          questionnaire.addControl('solicitudAviacion', this.fb.group({}));
+          break;
+
+        case 'mountaineering':
+
+          questionnaire.addControl('solicitudMontanismo', this.fb.group({}));
+          break;
+
+        case 'haveUrinarySystem':
+          questionnaire.addControl('urinarySystem', this.fb.array([this.createFormArray('questionsAInformation')]));
+
+          // questionnaire.addControl('solicitudRenales', this.fb.group({}));
+          break;
+
+        case 'haveMusculoskeletal':
+          // questionnaire.addControl('solicitudArtitris', this.fb.group({}));
+          // questionnaire.addControl('columnaVertebralColumnaVertebral', this.fb.group({}));
+          // questionnaire.addControl('solicitudMusculoesqueleticos', this.fb.group({}));
+          questionnaire.addControl('musculoSkeletal', this.fb.array([this.createFormArray('questionsAInformation')]));
+          break;
+
+        case 'haveCardiovascularSystem':
+          questionnaire.addControl('cardiovascularSystem', this.fb.array([this.createFormArray('questionsAInformation')]));
+
+          // questionnaire.addControl('solicitudHipertensionArterial', this.fb.group({}));
+          // questionnaire.addControl('solicitudCardioVasculares', this.fb.group({}));
+          break;
+
+        case 'haveCerebrovascular':
+          questionnaire.addControl('cerebroVascular', this.fb.array([this.createFormArray('questionsAInformation')]));
+          break;
+
+        case 'haveNervousSystem':
+          questionnaire.addControl('nervousSystem', this.fb.array([this.createFormArray('questionsAInformation')]));
+          break;
+
+        case 'haveVisionHearing':
+          questionnaire.addControl('visionHearing', this.fb.array([this.createFormArray('questionsAInformation')]));
+          break;
+
+        case 'haveRespiratorySystem':
+          questionnaire.addControl('respiratorySystem', this.fb.array([this.createFormArray('questionsAInformation')]));
+          break;
+
+        case 'haveDigestiveSystem':
+          questionnaire.addControl('digestiveSystem', this.fb.array([this.createFormArray('questionsAInformation')]));
+          break;
+
+        case 'haveMaleReproductiveOrgans':
+          questionnaire.addControl('maleReproductiveOrgans', this.fb.array([this.createFormArray('questionsAInformation')]));
+          break;
+
+        case 'haveBloodDisorders':
+          questionnaire.addControl('bloodDisorders', this.fb.array([this.createFormArray('questionsAInformation')]));
+          break;
+
+        case 'haveAlternateTreatment':
+          questionnaire.addControl('alternateTreatment', this.fb.array([this.createFormArray('questionsAInformation')]));
+          break;
+
+        case 'haveFunctionalLimitation':
+          questionnaire.addControl('functionalLimitation', this.fb.array([this.createFormArray('questionsAInformation')]));
+          break;
+
+        case 'haveDeformity':
+          questionnaire.addControl('deformity', this.fb.array([this.createFormArray('questionsAInformation')]));
+          break;
+
+        case 'haveStd':
+          questionnaire.addControl('std', this.fb.array([this.createFormArray('questionsAInformation')]));
+          break;
+
+        case 'havePhysiologicalDisorder':
+          questionnaire.addControl('physiologicalDisorder', this.fb.array([this.createFormArray('questionsAInformation')]));
+          break;
+
+        case 'haveBloodTransfusion':
+          questionnaire.addControl('bloodTransfusion', this.fb.array([this.createFormArray('questionsAInformation')]));
+          break;
+
+        case 'haveReproductiveOrganDisorders':
+          questionnaire.addControl('reproductiveOrganDisorders', this.fb.array([this.createFormArray('questionsAInformation')]));
+          break;
+
+        case 'haveAlcoholicDependence':
+          questionnaire.addControl('alcoholicDependence', this.fb.group({
+            date: ['', Validators.required],
+            substance: ['', Validators.required],
+            threatment: ['', Validators.required],
+          }));
+          break;
+
+
+        default:
+          break;
+      }
+    } else if ($event.checked === false || $event.valor === 'NO') {
+      console.log('false');
+
+      switch (question) {
+        case 'haveEndocrineDisorders':
+          questionnaire.removeControl('endocrineDisorders');
+
+          questionnaire.removeControl('solicitudDiabetes');
+          break;
+
+        case 'havePregnant':
+          questionnaire.removeControl('pregnant');
+          break;
+
+        case 'haveNicotine':
+          questionnaire.removeControl('nicotine');
+          break;
+
+        case 'haveHighRiskSport':
+          questionnaire.removeControl('highRiskSport');
+          break;
+
+        case 'haveUrinarySystem':
+          questionnaire.removeControl('solicitudRenales');
+          questionnaire.removeControl('urinarySystem');
+
+          break;
+
+        case 'diving':
+          questionnaire.removeControl('solicitudBuceo');
+          break;
+
+        case 'racing':
+          questionnaire.removeControl('solicitudMoto');
+          break;
+
+        case 'skydiving':
+          questionnaire.removeControl('solicitudAviacion');
+          break;
+
+        case 'mountaineering':
+          questionnaire.removeControl('solicitudMontanismo');
+          break;
+
+        case 'haveMusculoskeletal':
+          questionnaire.removeControl('solicitudArtitris');
+          questionnaire.removeControl('columnaVertebralColumnaVertebral');
+          questionnaire.removeControl('solicitudMusculoesqueleticos');
+
+          questionnaire.removeControl('musculoSkeletal');
+          break;
+
+        case 'haveCardiovascularSystem':
+          questionnaire.removeControl('cardiovascularSystem');
+
+          questionnaire.removeControl('solicitudHipertensionArterial');
+          questionnaire.removeControl('solicitudCardioVasculares');
+          break;
+
+        case 'haveCerebrovascular':
+          questionnaire.removeControl('cerebroVascular');
+          break;
+
+        case 'haveNervousSystem':
+          questionnaire.removeControl('nervousSystem');
+          break;
+
+        case 'haveVisionHearing':
+          questionnaire.removeControl('visionHearing');
+          break;
+
+        case 'haveRespiratorySystem':
+          questionnaire.removeControl('respiratorySystem');
+          break;
+
+        case 'haveDigestiveSystem':
+          questionnaire.removeControl('digestiveSystem');
+          break;
+
+        case 'haveMaleReproductiveOrgans':
+          questionnaire.removeControl('maleReproductiveOrgans');
+          break;
+
+        case 'haveBloodDisorders':
+          questionnaire.removeControl('bloodDisorders');
+          break;
+
+        case 'haveAlternateTreatment':
+          questionnaire.removeControl('alternateTreatment');
+          break;
+
+        case 'haveFunctionalLimitation':
+          questionnaire.removeControl('functionalLimitation');
+          break;
+
+        case 'haveDeformity':
+          questionnaire.removeControl('deformity');
+          break;
+
+        case 'haveStd':
+          questionnaire.removeControl('std');
+          break;
+
+        case 'havePhysiologicalDisorder':
+          questionnaire.removeControl('physiologicalDisorder');
+          break;
+
+        case 'haveBloodTransfusion':
+          questionnaire.removeControl('bloodTransfusion');
+          break;
+
+        case 'haveAlcoholicDependence':
+          questionnaire.removeControl('alcoholicDependence');
+          break;
+
+        case 'haveReproductiveOrganDisorders':
+          questionnaire.removeControl('reproductiveOrganDisorders');
+          break;
+
+        default:
+          break;
+      }
+
+
+    }
+
+    // console.log(questionnaireNicotine)
+    // if (questionnaireNicotine) {
+    //   if ($event.valor === 'EX-FUMADOR') {
+    //     console.log('klk');
+    //     questionnaireNicotine.addControl('lastTimeSmoked', this.fb.control('', Validators.required));
+    //     console.log(questionnaireNicotine);
+    //   } else {
+    //     questionnaireNicotine.removeControl('lastTimeSmoked');
+    //   }
+    // }
+    // console.log(questionnaire.value.name, questionnaire.value);
+
   }
+}
 
-  radioChange(event) {
-    console.log(`value: ${event.value}, name: ${event.source.name}`);
+makeFalseAll(name) {
+  this.newRequest.get('questionsA').get(name).setValue(false);
+  this.valueChange({ checked: false }, name, 'solicitante');
+
+  const dpd = this.newRequest.get('dependents').get('allDependents') as FormArray;
+  // tslint:disable-next-line: forin
+  for (const element in this.dependentsFormArray.value) {
+    // tslint:disable-next-line: radix
+    const dependent = dpd.at(parseInt(element));
+
+    dependent.get(name).setValue(false);
+    this.valueChange({ checked: false }, name, element);
+  }
+}
+
+selectChangeUrl(event) {
+  switch (event) {
+    case 'vida':
+      this.router.navigateByUrl('dashboard/requests/new-requests/vida');
+      break;
+
+    case 'disability':
+      this.router.navigateByUrl('dashboard/requests/new-requests/disability');
+      break;
+
+    case 'gastos mayores':
+      this.router.navigateByUrl('dashboard/requests/new-requests/salud');
+      break;
+
+    default:
+      break;
+  }
+}
+
+getBmi(height: any, weight: any) {
+  const weightUnit = this.newRequest.get('person').get('weightUnit').value;
+  const heightUnit = this.newRequest.get('person').get('heightUnit').value;
+  if (weight !== '' && height !== '') {
+    if (weightUnit === 'LIBRAS') { weight = weight / 2.205; }
+    if (heightUnit === 'PIE') {
+      height = height / 3.281; // (((height * 12) + inches) * 2.54);
+    }
+
+    const bmi = weight / ((height / 100) * (height / 100));
+    if (bmi !== Infinity) {
+      const value = parseFloat(`${bmi}`).toFixed(2);
+      this.newRequest.get('person').get('bmi').setValue(value);
+    }
 
   }
+}
 
-  ailmentSelected(type, form, watcherForm) {
-    switch (type) {
-      case 'musculoSkeletal':
-        this.checkIfHaveAilment(type, form, watcherForm);
-        break;
+print() {
+  console.log('solicitante: ', this.newRequest.get('questionsA'));
+  console.log('dependientes: ', this.newRequest.get('dependents').value.allDependents);
+}
 
-      case 'cardiovascularSystem':
-        this.checkIfHaveAilment(type, form, watcherForm);
-        break;
-
-      case 'endocrineDisorders':
-        this.checkIfHaveAilment(type, form, watcherForm);
-        break;
-
-      case 'urinarySystem':
-        this.checkIfHaveAilment(type, form, watcherForm);
-        break;
-
-      default:
-        break;
+arrayStudiesWatcher(i: number, type ?: string, group ?: string) {
+  if (type === 'person') {
+    const formP = this.newRequest.get('person') as FormGroup;
+    if (formP.value.id2AttachedUrl && formP.value.id2Attached !== '') { return formP.value.id2AttachedUrl; }
+  } else if (type === 'contractor') {
+    const formP = this.newRequest.get('contractor') as FormGroup;
+    if (formP.value.id2AttachedUrl && formP.value.id2Attached !== '') { return formP.value.id2AttachedUrl; }
+  } else if (type === 'payer') {
+    const formP = this.newRequest.get('payer') as FormGroup;
+    if (formP.value.id2AttachedUrl && formP.value.id2Attached !== '') { return formP.value.id2AttachedUrl; }
+  } else if (type === 'incomesCertified') {
+    const formP = this.newRequest.get('exposedPerson') as FormGroup;
+    if (formP.value.incomesCertifiedUrl && formP.value.incomesCertified !== '') { return formP.value.incomesCertifiedUrl; }
+  } else if (type === 'commercialRegister') {
+    if (this.newRequest.get(group).get(type).get(i.toString())) {
+      if (this.newRequest.get(group).get(type).get(i.toString()) && this.newRequest.get(group).get(type).get(i.toString()).value[type + 's'] !== '') {
+        return this.newRequest.get(group).get(type).get(i.toString()).value[type + 'Url'];
+      }
+    }
+  } else if (type === 'legalRepresentativeId2') {
+    if (this.newRequest.get(group).get(type).get(i.toString())) {
+      if (this.newRequest.get(group).get(type).get(i.toString()) && this.newRequest.get(group).get(type).get(i.toString()).value[type + 's'] !== '') {
+        return this.newRequest.get(group).get(type).get(i.toString()).value[type + 'Url'];
+      }
+    }
+  } else {
+    if (this.arrayFilesTitles) {
+      if (this.arrayFilesTitles[i] && this.newRequest.get('files').get('studies').get(i.toString()).value.study !== '') {
+        return this.arrayFilesTitles[i].studyUrl;
+      }
     }
   }
-
-  // tslint:disable: forin
-  checkIfHaveAilment(type, form, watcherForm) {
-    const stay = [];
-
-    for (const key in watcherForm.get(type).value) {
-      const element = watcherForm.get(type).value[key].ailment;
-      stay.push(element);
-    }
-
-    switch (type) {
-      case 'musculoSkeletal':
-        this.ailmentMusculoskeletalGenerator(stay, form);
-        break;
-
-      case 'cardiovascularSystem':
-        this.ailmentCardiovascularGenerator(stay, form);
-        break;
-
-      case 'endocrineDisorders':
-        this.ailmentEndocrineGenerator(stay, form);
-        break;
-
-      case 'urinarySystem':
-        this.ailmentUrinaryGenerator(stay, form);
-        break;
-
-    }
-  }
-  isFormReadyToRender() {
-    const validation = this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudHipertensionArterial') ||
-      this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudCardioVasculares') ||
-      this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudDiabetes') ||
-      this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudArtitris') ||
-      this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('columnaVertebralColumnaVertebral') ||
-      this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudMusculoesqueleticos') ||
-      this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudRenales') ||
-      this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudProstatica');
-    return validation;
-  }
-
-  isGoToTopRender() {
-    const validation = this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudHipertensionArterial') ||
-      this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudCardioVasculares') ||
-      this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudDiabetes') ||
-      this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudArtitris') ||
-      this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('columnaVertebralColumnaVertebral') ||
-      this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudMusculoesqueleticos') ||
-      this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudRenales') ||
-      this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudProstatica') ||
-      this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudBuceo') ||
-      this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudMoto') ||
-      this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudAviacion') ||
-      this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudMontanismo');
-
-    let dependentValidation;
-
-    // tslint:disable: forin
-    for (const key in this.allDependents.controls) {
-      const element = this.allDependents.controls[key] as FormGroup;
-
-      dependentValidation = element.get('solicitudHipertensionArterial') ||
-        element.get('solicitudCardioVasculares') ||
-        element.get('solicitudDiabetes') ||
-        element.get('solicitudArtitris') ||
-        element.get('columnaVertebralColumnaVertebral') ||
-        element.get('solicitudMusculoesqueleticos') ||
-        element.get('solicitudRenales') ||
-        element.get('solicitudProstatica') ||
-        element.get('solicitudBuceo') ||
-        element.get('solicitudMoto') ||
-        element.get('solicitudAviacion') ||
-        element.get('solicitudMontanismo');
-    }
-
-    return (validation || dependentValidation);
-  }
-
-  isActivityReadyToRender() {
-    const validation = this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudBuceo') ||
-      this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudMoto') ||
-      this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudAviacion') ||
-      this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudMontanismo');
-    return validation;
-  }
-  // tslint:disable: max-line-length
-  ailmentMusculoskeletalGenerator(stay, form) {
-    let arthritisCounter = 0;
-    let spineCounter = 0;
-    let musculoSkeletal = 0;
-
-    for (const key in stay) {
-      if (Object.prototype.hasOwnProperty.call(stay, key)) {
-        const element = stay[key];
-        if (element) {
-          switch (element) {
-            case 'ARTRITIS':
-              arthritisCounter++;
-              break;
-
-            case 'LUMBAGO':
-              spineCounter++;
-              break;
-
-            case 'HERNIA DISCAL':
-              spineCounter++;
-              break;
-
-            case 'ESCOLIOSIS':
-              spineCounter++;
-              break;
-
-            case 'OTRO PADECIMIENTOS DE LA COLUMNA VERTEBRAL':
-              spineCounter++;
-              break;
-
-            case 'OTRO TRASTORNO MÚSCULO ESQUELÉTICOS':
-              musculoSkeletal++;
-              break;
-          }
+}
+// tslint:disable: max-line-length
+id2AttachedViewValue(i: number, group: string) {
+  if (group === 'primaryBenefits') {
+    if (i !== null) {
+      if (this.primaryBeneficaryTitles) {
+        if (this.primaryBeneficaryTitles[i] && this.newRequest.get('primaryBenefits').get('dependentsC').get(i.toString()).value.id2Attached !== '') {
+          return this.primaryBeneficaryTitles[i].id2AttachedUrl;
+        }
+      }
+    } else {
+      if (this.primaryAnotherTitle) {
+        if (this.primaryAnotherTitle && this.newRequest.get('primaryBenefits').get('personBenefited').value.id2Attached !== '') {
+          return this.primaryAnotherTitle.id2AttachedUrl;
         }
       }
     }
-
-    if (arthritisCounter > 0) {
-      if (!form.get('solicitudArtitris')) {
-        form.addControl('solicitudArtitris', this.fb.group({}));
+  } else {
+    if (i !== null) {
+      if (this.contigentBeneficaryTitles) {
+        if (this.contigentBeneficaryTitles[i] && this.newRequest.get('contingentBeneficiary').get('dependentsC').get(i.toString()).value.id2Attached !== '') {
+          return this.contigentBeneficaryTitles[i].id2AttachedUrl;
+        }
       }
     } else {
-      if (form.get('solicitudArtitris')) {
-        form.removeControl('solicitudArtitris');
-      }
-    }
-
-    if (spineCounter > 0) {
-      if (!form.get('columnaVertebralColumnaVertebral')) {
-        form.addControl('columnaVertebralColumnaVertebral', this.fb.group({}));
-      }
-    } else {
-      if (form.get('columnaVertebralColumnaVertebral')) {
-        form.removeControl('columnaVertebralColumnaVertebral');
-      }
-    }
-
-    if (musculoSkeletal > 0) {
-      if (!form.get('solicitudMusculoesqueleticos')) {
-        form.addControl('solicitudMusculoesqueleticos', this.fb.group({}));
-      }
-    } else {
-      if (form.get('solicitudMusculoesqueleticos')) {
-        form.removeControl('solicitudMusculoesqueleticos');
+      if (this.contigentAnotherTitle) {
+        if (this.contigentAnotherTitle && this.newRequest.get('contingentBeneficiary').get('personBenefited').value.id2Attached !== '') {
+          return this.contigentAnotherTitle.id2AttachedUrl;
+        }
       }
     }
   }
+}
 
-  ailmentCardiovascularGenerator(stay, form) {
-    let hypertensionCounter = 0;
-    let cardiovascularCounter = 0;
+createFormArray(type: string): FormGroup {
+  switch (type) {
+    case 'medicInformation':
+      return this.fb.group({
+        name: [''],
+        ailment: ['', Validators.required],
+        date: ['', Validators.required],
+        threatment: ['', Validators.required],
+        time: [''],
+        duration: ['', Validators.min(1)],
+        medicCenterName: [''],
+        medicCenterAddress: [''],
+      });
 
-    for (const key in stay) {
-      if (Object.prototype.hasOwnProperty.call(stay, key)) {
-        const element = stay[key];
-        if (element) {
-          // switch (element) {
-          //   case 'PRESIÓN ARTERIAL ALTA':
-          //     hypertensionCounter++;
-          //     break;
+    case 'questionsAInformation':
+      return this.fb.group({
+        name: [{ value: '', disabled: true }],
+        ailment: ['', Validators.required],
+        date: ['', Validators.required],
+        threatment: ['', Validators.required],
+        time: [''],
+        duration: ['', Validators.min(1)],
+        medicCenterName: [''],
+        medicCenterAddress: [''],
+      });
 
-          //   case 'OTROS PADECIMIENTO DEL SISTEMA CARDIOVASCULAR':
-          //     cardiovascularCounter++;
-          //     break;
-          // }
-          if (element === 'PRESIÓN ARTERIAL ALTA') {
-            hypertensionCounter++;
+    case 'specializedTests':
+      return this.fb.group({
+        date: ['', Validators.required],
+        whichStudy: ['', Validators.required],
+        results: ['', Validators.required],
+      });
+
+    case 'haveDisease':
+      return this.fb.group({
+        family: ['', Validators.required],
+      });
+      break;
+
+    case 'filesStudies':
+      return this.fb.group({
+        study: ['', Validators.required],
+      });
+
+    case 'filesDocumentsKnowClient':
+      return this.fb.group({
+        document: ['', Validators.required],
+      });
+
+    case 'filesCopyId':
+      return this.fb.group({
+        idId: ['', Validators.required],
+      });
+
+    case 'mercantileRegister':
+      return this.fb.group({
+        register: ['', Validators.required],
+      });
+
+    case 'commercialRegister':
+      return this.fb.group({
+        commercialRegisters: [''],
+      });
+
+    case 'legalRepresentativeId2':
+      return this.fb.group({
+        legalRepresentativeId2s: [''],
+      });
+    default:
+      break;
+  }
+}
+
+addToList(list: any, type: string) {
+  list.push(this.createFormArray(type));
+}
+
+SaveForm(newRequestReq: FormGroup) {
+  this.formHandler.sendForm(newRequestReq, 'major-expenses', 'send');
+}
+getDataCotizaciones(id) {
+  this.quotesService.returnDataSalud(id).subscribe(data => {
+
+    if (data !== undefined && data.data !== null && data.data !== undefined && data.data.nombre !== undefined) {
+      const dialogRef = this.dialog.open(BaseDialogComponent, {
+        data: this.dialogOption.noCFound(data.data),
+        minWidth: 385,
+      });
+      setTimeout(() => {
+        dialogRef.close();
+      }, 4000);
+      this.isFormValidToFill = true;
+      this.notFoundQuote = false;
+
+      this.newRequest.get('payment').setValue(this.currencyPipe.transform(data.data.monto));
+      this.newRequest.get('plans').setValue(data.data.plan);
+      this.newRequest.get('deducibles').setValue(data.data.deducible);
+      this.newRequest.get('person').get('date').setValue(data.data.fecha_nacimiento);
+      this.newRequest.get('person').get('firstName').setValue(data.data.nombre);
+      this.newRequest.get('person').get('lastName').setValue(data.data.apellidos);
+
+      switch (data.data.sexo) {
+        case 'M':
+          this.newRequest.get('person').get('sex').setValue('MASCULINO');
+          break;
+
+        case 'F':
+          this.newRequest.get('person').get('sex').setValue('FEMENINO');
+          break;
+
+        default:
+          break;
+      }
+
+    } else {
+      this.notFoundQuote = true;
+
+      this.newRequest.get('payment').reset();
+      this.newRequest.get('plans').reset();
+      this.newRequest.get('deducibles').reset();
+      this.newRequest.get('person').get('date').reset();
+      this.newRequest.get('person').get('firstName').reset();
+      this.newRequest.get('person').get('sex').reset();
+
+      const dialogRef = this.dialog.open(BaseDialogComponent, {
+        data: this.dialogOption.noCNotFound,
+        minWidth: 385,
+      });
+      setTimeout(() => {
+        dialogRef.close();
+      }, 4000);
+    }
+
+    this.thereIsAWomenOnTheRequest();
+    this.thereIsAMenOnTheRequest();
+  });
+
+}
+
+arrayDocumentsKnowClientWatcher(i: number) {
+  if (this.arrayFilesTitlesDocumentsKnowClient) {
+    if (this.newRequest.get('files').get('documentsKnowClient')) {
+      // tslint:disable-next-line: max-line-length
+      if (this.arrayFilesTitlesDocumentsKnowClient[i] && this.newRequest.get('files').get('documentsKnowClient').get(i.toString()).value.document !== '') {
+        return this.arrayFilesTitlesDocumentsKnowClient[i].documentUrl;
+      }
+    }
+  }
+}
+
+arrayCopyIdWatcher(i: number) {
+  if (this.arrayFilesTitlesCopyId) {
+    if (this.newRequest.get('files').get('copyId')) {
+      // tslint:disable-next-line: max-line-length
+      if (this.arrayFilesTitlesCopyId[i] && this.newRequest.get('files').get('copyId').get(i.toString()).value.idId !== '') {
+        return this.arrayFilesTitlesCopyId[i].idIdUrl;
+      }
+    }
+  }
+}
+
+arrayRegisterWatcher(i: number) {
+  if (this.arrayFilesTitlesMercantile) {
+    if (this.newRequest.get('files').get('mercantile')) {
+      // tslint:disable-next-line: max-line-length
+      if (this.arrayFilesTitlesMercantile[i] && this.newRequest.get('files').get('mercantile').get(i.toString()).value.register !== '') {
+        return this.arrayFilesTitlesMercantile[i].registerUrl;
+      }
+    }
+  }
+}
+
+getData(key) {
+  /*setTimeout(() => {
+    this.appComponent.showOverlay = true;
+  });*/
+  this.appComponent.showOverlay = true;
+  this.requestService.getRequestData('salud', key).subscribe((data: any) => {
+    // console.log(data);
+    // console.log( this.newRequest);
+    if (data !== undefined && data.data !== null &&
+      data.data !== undefined) {
+      // this.ID = data.data.id;
+      console.log(data.data);
+      this.dataMappingFromApi.iterateThroughtAllObject(data.data, this.newRequest);
+      this.AddEventOnEachDependentVariable();
+
+      switch (data.data.countryCode) {
+        case 'RD':
+          this.role = 'WWS';
+          break;
+        case 'PM':
+          this.role = 'WMA';
+          break;
+        default:
+          this.role = 'WMA';
+          break;
+      }
+
+      const formP = this.newRequest.get('person') as FormGroup;
+      const formPO = this.newRequest.get('person').get('office') as FormGroup;
+      const formQA = this.newRequest.get('questionsA') as FormGroup;
+      const formQB = this.newRequest.get('questionsB') as FormGroup;
+      const formEP = this.newRequest.get('exposedPerson') as FormGroup;
+      const formSAH = this.newRequest.get('sectionAHelper') as FormGroup;
+      const formGeneral = this.newRequest as FormGroup;
+      const formContractor = this.newRequest.get('contractor') as FormGroup;
+      const formPayer = this.newRequest.get('payer') as FormGroup;
+      const formFiles = this.newRequest.get('files') as FormGroup;
+
+      formP.removeControl('contractorIsLegalEntity');
+      formP.removeControl('contractorMandatory');
+      formP.removeControl('payerMandatory');
+      formP.removeControl('pep_radio_insured');
+      formP.removeControl('sameAsContractor');
+      formP.removeControl('sameAsPayer');
+      formFiles.removeControl('incomesCertified');
+
+      if (formGeneral.get('countryRoleCode')) { formGeneral.get('countryRoleCode').setValidators(null); }
+
+      if (this.newRequest.get('questionsB').get('familyWithDiseases') !== undefined && this.newRequest.get('questionsB').get('familyWithDiseases') !== null) {
+        this.familyWithDiseasesList = this.newRequest.get('questionsB').get('familyWithDiseases') as FormArray;
+      } else {
+        this.familyWithDiseasesList = undefined;
+      }
+
+      if (formP.get('isContractor').value === 'NO') {
+        // formP.removeControl('isJuridica');
+        // if (formGeneral.get('contractor')) {
+        //   formGeneral.removeControl('contractor');
+        // }
+        // if (this.newRequest.get('conozcaSuClientePersonaContratante')) {
+        //   formGeneral.removeControl('conozcaSuClientePersonaContratante');
+        // }
+        // if (this.newRequest.get('files').get('copyId')) {
+        //   formFiles.removeControl('copyId');
+        // }
+        // if ((this.newRequest.get('antiLaundering'))) {
+        //   formGeneral.removeControl('antiLaundering');
+        // }
+        // if ((this.newRequest.get('conozcaSuClientePersonaJuridica'))) {
+        //   formGeneral.removeControl('conozcaSuClientePersonaJuridica');
+        // }
+        // if (this.newRequest.get('person').get('mandatorySubject')) {
+        //   formP.removeControl('mandatorySubject');
+        // }
+        // formP.removeControl('isJuridica');
+        // if (formEP) {
+        //   formEP.removeControl('contractor');
+        //   formEP.removeControl('contractorExposedInfo');
+        // }
+        // if (this.newRequest.get('files').get('mercantile')) {
+        //   formFiles.removeControl('mercantile');
+        // }
+        // if (formGeneral.get('contractor')) {
+        //   formGeneral.removeControl('contractor');
+        // }
+
+        // this.newRequest.get('person').get('office').get('company').setValidators(Validators.required);
+        // this.newRequest.get('person').get('office').get('company').updateValueAndValidity();
+        // this.newRequest.get('person').get('office').get('company').markAsUntouched();
+
+        // this.newRequest.get('person').get('office').get('position').setValidators(Validators.required);
+        // this.newRequest.get('person').get('office').get('position').updateValueAndValidity();
+        // this.newRequest.get('person').get('office').get('position').markAsUntouched();
+
+        // this.newRequest.get('person').get('office').get('direction').setValidators(Validators.required);
+        // this.newRequest.get('person').get('office').get('direction').updateValueAndValidity();
+        // this.newRequest.get('person').get('office').get('direction').markAsUntouched();
+
+        // this.newRequest.get('person').get('office').get('economicActivity').setValidators(Validators.required);
+        // this.newRequest.get('person').get('office').get('economicActivity').updateValueAndValidity();
+        // this.newRequest.get('person').get('office').get('economicActivity').markAsUntouched();
+
+        // this.newRequest.get('person').get('office').get('sector').setValidators(Validators.required);
+        // this.newRequest.get('person').get('office').get('sector').updateValueAndValidity();
+        // this.newRequest.get('person').get('office').get('sector').markAsUntouched();
+
+        // this.newRequest.get('person').get('office').get('city').setValidators(Validators.required);
+        // this.newRequest.get('person').get('office').get('city').updateValueAndValidity();
+        // this.newRequest.get('person').get('office').get('city').markAsUntouched();
+
+        // this.newRequest.get('person').get('office').get('country').setValidators(Validators.required);
+        // this.newRequest.get('person').get('office').get('country').updateValueAndValidity();
+        // this.newRequest.get('person').get('office').get('country').markAsUntouched();
+
+
+        // if (this.newRequest.get('files').get('copyId')) {
+        //   formFiles.removeControl('copyId');
+        // }
+        // if ((this.newRequest.get('antiLaundering'))) {
+        //   formGeneral.removeControl('antiLaundering');
+        // }
+        // if ((this.newRequest.get('conozcaSuClientePersonaJuridica'))) {
+        //   formGeneral.removeControl('conozcaSuClientePersonaJuridica');
+        // }
+        // if (this.newRequest.get('person').get('mandatorySubject')) {
+        //   formP.removeControl('mandatorySubject');
+        // }
+        // formP.removeControl('isJuridica');
+        // if (formEP) {
+        //   formEP.removeControl('contractor');
+        //   formEP.removeControl('contractorExposedInfo');
+        // }
+        // if (this.newRequest.get('files').get('mercantile')) {
+        //   formFiles.removeControl('mercantile');
+        // }
+      }
+
+      if (formP.get('isContractor').value !== 'SI') {
+        // if (formEP) {
+        //   formEP.removeControl('contractorExposedInfo');
+        //   formEP.removeControl('contractor');
+        // }
+      }
+
+      if (formP.get('isContractor').value !== 'NO') {
+        formGeneral.removeControl('contractor');
+        formGeneral.removeControl('contractorJuridical');
+        formP.removeControl('mandatorySubject');
+        formP.removeControl('contractorIsJuridical');
+        formEP.removeControl('contractor');
+        formEP.removeControl('contractorExposedInfo');
+      }
+
+      if (formP.get('mandatorySubject')) {
+        formP.get('mandatorySubject').setValidators(Validators.required);
+        formP.get('mandatorySubject').updateValueAndValidity();
+      }
+
+      if (formP.get('isPayer').value !== 'NO') {
+        formGeneral.removeControl('payer');
+        formGeneral.removeControl('payerJuridical');
+        formP.removeControl('mandatorySubjectPayer');
+        formP.removeControl('payerIsJuridical');
+        formEP.removeControl('payer');
+        formEP.removeControl('payerExposedInfo');
+      }
+
+      if (formP.get('contractorIsJuridical')) {
+        if (formP.get('contractorIsJuridical').value !== 'NO') {
+          formEP.removeControl('contractor');
+          formEP.removeControl('contractorExposedInfo');
+          formGeneral.removeControl('contractor');
+        }
+      }
+
+      if (formP.get('contractorIsJuridical')) {
+        if (formP.get('contractorIsJuridical').value === 'NO') {
+          formGeneral.removeControl('contractorJuridical');
+          formContractor.removeControl('pepRadioInsured');
+          formContractor.removeControl('countryOfResidence');
+          formContractor.removeControl('countryOfBirth');
+          formContractor.removeControl('economicActivity');
+          formContractor.get('tel').setValidators(null);
+          formContractor.get('officeTel').setValidators(null);
+          formContractor.get('secondName').setValidators(null);
+          formContractor.get('fax').setValidators(null);
+          formContractor.get('weightUnit').setValidators(null);
+          formContractor.get('weight').setValidators(null);
+          formContractor.get('heightUnit').setValidators(null);
+          formContractor.get('height').setValidators(null);
+          formContractor.get('bmi').setValidators(null);
+          if (formContractor.get('inches')) {
+            formContractor.get('inches').setValidators(null);
+          }
+          const formCompany = formContractor.get('office') as FormGroup;
+          formCompany.removeControl('economicActivity');
+          formCompany.get('company').setValidators(null);
+          formCompany.get('position').setValidators(null);
+          formCompany.get('direction').setValidators(null);
+          formCompany.get('sector').setValidators(null);
+          formCompany.get('city').setValidators(null);
+          formCompany.get('country').setValidators(null);
+
+        }
+      }
+
+      if (formP.get('payerIsJuridical')) {
+        if (formP.get('payerIsJuridical').value !== 'NO') {
+          formEP.removeControl('payer');
+          formEP.removeControl('payerExposedInfo');
+          formGeneral.removeControl('payer');
+        }
+      }
+
+      if (formP.get('payerIsJuridical')) {
+        if (formP.get('payerIsJuridical').value === 'NO') {
+          formGeneral.removeControl('payerJuridical');
+          formPayer.removeControl('pepRadioInsured');
+          formPayer.removeControl('countryOfResidence');
+          formPayer.removeControl('countryOfBirth');
+          formPayer.removeControl('isContractor');
+          formPayer.removeControl('economicActivity');
+          formPayer.get('tel').setValidators(null);
+          formPayer.get('officeTel').setValidators(null);
+          formPayer.get('secondName').setValidators(null);
+          formPayer.get('fax').setValidators(null);
+          formPayer.get('weightUnit').setValidators(null);
+          formPayer.get('weight').setValidators(null);
+          formPayer.get('heightUnit').setValidators(null);
+          formPayer.get('height').setValidators(null);
+          formPayer.get('bmi').setValidators(null);
+          if (formPayer.get('inches')) {
+            formPayer.get('inches').setValidators(null);
+          }
+          const formCompany = formPayer.get('office') as FormGroup;
+          formCompany.removeControl('economicActivity');
+          formCompany.get('company').setValidators(null);
+          formCompany.get('position').setValidators(null);
+          formCompany.get('direction').setValidators(null);
+          formCompany.get('sector').setValidators(null);
+          formCompany.get('city').setValidators(null);
+          formCompany.get('country').setValidators(null);
+        }
+      }
+
+      if (formP.get('heightUnit').value !== 'PIE') {
+        formP.removeControl('inches');
+      }
+
+      if (formP.get('mandatorySubject')) {
+        if (formP.get('mandatorySubject').value !== 'SI') {
+          // formGeneral.removeControl('antiLaundering');
+        }
+      }
+
+      if (formEP && formEP.get('headLine').value !== 'SI') {
+        formEP.removeControl('headLineExposedInfo');
+
+        if (!formEP.get('payer')) {
+          if (formEP.get('contractor')) {
+            if (formEP.get('contractor').value !== 'SI') {
+              formEP.removeControl('incomesCertified');
+            }
           } else {
-            cardiovascularCounter++;
+            formEP.removeControl('incomesCertified');
           }
+        } else if (formEP.get('payer').value !== 'SI') {
+          formEP.removeControl('incomesCertified');
         }
       }
-    }
 
-    if (hypertensionCounter > 0) {
-      if (!form.get('solicitudHipertensionArterial')) {
-        console.warn('CREO EL FORMULARIO: solicitudHipertensionArterial');
-        form.addControl('solicitudHipertensionArterial', this.fb.group({}));
-      }
-    } else {
-      if (form.get('solicitudHipertensionArterial')) {
-        console.warn('ELIMINO EL FORMULARIO: solicitudHipertensionArterial');
-        form.removeControl('solicitudHipertensionArterial');
-      }
-    }
+      if (formEP.get('contractor')) {
+        if (formEP.get('contractor').value !== 'SI') {
+          formEP.removeControl('contractorExposedInfo');
+        }
 
-    if (cardiovascularCounter > 0) {
-      if (!form.get('solicitudCardioVasculares')) {
-        console.warn('CREO EL FORMULARIO: solicitudCardioVasculares');
-        form.addControl('solicitudCardioVasculares', this.fb.group({}));
-      }
-    } else {
-      if (form.get('solicitudCardioVasculares')) {
-        console.warn('ELIMINO EL FORMULARIO: solicitudCardioVasculares');
-        form.removeControl('solicitudCardioVasculares');
-      }
-    }
-  }
-
-  ailmentEndocrineGenerator(stay, form) {
-    let diabetesCounter = 0;
-
-    for (const key in stay) {
-      if (Object.prototype.hasOwnProperty.call(stay, key)) {
-        const element = stay[key];
-        if (element === 'DIABETES') {
-          switch (element) {
-            case 'DIABETES':
-              diabetesCounter++;
-              break;
+        if (!formEP.get('payer')) {
+          if (formEP.get('headline').value !== 'SI') {
+            formEP.removeControl('incomesCertified');
           }
-        }
-      }
-    }
-    if (diabetesCounter > 0) {
-      if (!form.get('solicitudDiabetes')) {
-        form.addControl('solicitudDiabetes', this.fb.group({}));
-      }
-    } else {
-      if (form.get('solicitudDiabetes')) {
-        form.removeControl('solicitudDiabetes');
-      }
-    }
-  }
-
-  ailmentUrinaryGenerator(stay, form) {
-    let renalCounter = 0;
-
-    for (const key in stay) {
-      if (Object.prototype.hasOwnProperty.call(stay, key)) {
-        const element = stay[key];
-        if (element) {
-          // switch (element) {
-          //   case 'CÁLCULO RENALES':
-          //     break;
-          //   }
-          renalCounter++;
-        }
-      }
-    }
-    if (renalCounter > 0) {
-      if (!form.get('solicitudRenales')) {
-        console.log('OKIDOKI IN');
-        form.addControl('solicitudRenales', this.fb.group({}));
-      }
-    } else {
-      if (form.get('solicitudRenales')) {
-        console.log('OKIDOKI OUT');
-        form.removeControl('solicitudRenales');
-      }
-    }
-  }
-
-
-  valueChange($event, question, typeOrIndex) {
-    const questionsA = this.newRequest.get('questionsA') as FormGroup;
-    const questionsANicotine = this.newRequest.get('questionsA').get('nicotine') as FormGroup;
-
-    console.log('tipo/index: ', typeOrIndex, 'event:', $event, 'question: ', question);
-    if (typeOrIndex === 'solicitante') {
-      if ($event.checked === true || $event.valor === 'SI') {
-        switch (question) {
-          case 'havePregnant':
-            this.questionsA.addControl('pregnant', this.fb.group({
-              time: ['', Validators.required]
-            }));
-            break;
-
-          case 'haveHighRiskSport':
-            this.questionsA.addControl('highRiskSport', this.fb.group({
-              diving: ['', Validators.required],
-              racing: ['', Validators.required],
-              skydiving: ['', Validators.required],
-              mountaineering: ['', Validators.required],
-            }));
-            break;
-
-          case 'haveNicotine':
-            this.questionsA.addControl('nicotine', this.fb.group({
-              quantity: ['', Validators.required],
-              timerange: ['', Validators.required],
-              time: ['', Validators.required],
-              isActualSmoker: ['', Validators.required],
-            }));
-            break;
-
-          case 'diving':
-            this.questionnairesGastosMayores.addControl('solicitudBuceo', this.fb.group({}));
-            break;
-
-          case 'racing':
-            this.questionnairesGastosMayores.addControl('solicitudMoto', this.fb.group({}));
-            break;
-
-          case 'skydiving':
-            this.questionnairesGastosMayores.addControl('solicitudAviacion', this.fb.group({}));
-            break;
-
-          case 'mountaineering':
-            this.questionnairesGastosMayores.addControl('solicitudMontanismo', this.fb.group({}));
-            break;
-
-          case 'haveEndocrineDisorders':
-            // this.questionnairesGastosMayores.addControl('solicitudDiabetes', this.fb.group({}));
-            questionsA.addControl('endocrineDisorders', this.fb.array([this.createFormArray('questionsAInformation')]));
-            this.endocrineDisordersList = questionsA.get('endocrineDisorders') as FormArray;
-            break;
-            break;
-
-          case 'haveUrinarySystem':
-            // this.questionnairesGastosMayores.addControl('solicitudRenales', this.fb.group({}));
-            questionsA.addControl('urinarySystem', this.fb.array([this.createFormArray('questionsAInformation')]));
-            this.urinarySystemList = questionsA.get('urinarySystem') as FormArray;
-            break;
-            break;
-
-          case 'haveMusculoskeletal':
-            // this.questionnairesGastosMayores.addControl('solicitudArtitris', this.fb.group({}));
-            // this.questionnairesGastosMayores.addControl('columnaVertebralColumnaVertebral', this.fb.group({}));
-            // this.questionnairesGastosMayores.addControl('solicitudMusculoesqueleticos', this.fb.group({}));
-
-            questionsA.addControl('musculoSkeletal', this.fb.array([this.createFormArray('questionsAInformation')]));
-            this.musculoSkeletalList = questionsA.get('musculoSkeletal') as FormArray;
-            break;
-
-          case 'haveCardiovascularSystem':
-            // this.questionnairesGastosMayores.addControl('solicitudHipertensionArterial', this.fb.group({}));
-            // this.questionnairesGastosMayores.addControl('solicitudCardioVasculares', this.fb.group({}));
-            questionsA.addControl('cardiovascularSystem', this.fb.array([this.createFormArray('questionsAInformation')]));
-            this.cardiovascularSystemList = questionsA.get('cardiovascularSystem') as FormArray;
-            break;
-
-          case 'haveCerebrovascular':
-            questionsA.addControl('cerebroVascular', this.fb.array([this.createFormArray('questionsAInformation')]));
-            break;
-
-          case 'haveNervousSystem':
-            questionsA.addControl('nervousSystem', this.fb.array([this.createFormArray('questionsAInformation')]));
-            break;
-
-          case 'haveVisionHearing':
-            questionsA.addControl('visionHearing', this.fb.array([this.createFormArray('questionsAInformation')]));
-            break;
-
-          case 'haveRespiratorySystem':
-            questionsA.addControl('respiratorySystem', this.fb.array([this.createFormArray('questionsAInformation')]));
-            break;
-
-          case 'haveDigestiveSystem':
-            questionsA.addControl('digestiveSystem', this.fb.array([this.createFormArray('questionsAInformation')]));
-            break;
-
-          case 'haveMaleReproductiveOrgans':
-            questionsA.addControl('maleReproductiveOrgans', this.fb.array([this.createFormArray('questionsAInformation')]));
-            break;
-
-          case 'haveBloodDisorders':
-            questionsA.addControl('bloodDisorders', this.fb.array([this.createFormArray('questionsAInformation')]));
-            break;
-
-          case 'haveAlternateTreatment':
-            questionsA.addControl('alternateTreatment', this.fb.array([this.createFormArray('questionsAInformation')]));
-            break;
-
-          case 'haveFunctionalLimitation':
-            questionsA.addControl('functionalLimitation', this.fb.array([this.createFormArray('questionsAInformation')]));
-            break;
-
-          case 'haveDeformity':
-            questionsA.addControl('deformity', this.fb.array([this.createFormArray('questionsAInformation')]));
-            break;
-
-          case 'haveStd':
-            questionsA.addControl('std', this.fb.array([this.createFormArray('questionsAInformation')]));
-            break;
-
-          case 'havePhysiologicalDisorder':
-            questionsA.addControl('physiologicalDisorder', this.fb.array([this.createFormArray('questionsAInformation')]));
-            break;
-
-          case 'haveBloodTransfusion':
-            questionsA.addControl('bloodTransfusion', this.fb.array([this.createFormArray('questionsAInformation')]));
-            break;
-
-          case 'haveReproductiveOrganDisorders':
-            questionsA.addControl('reproductiveOrganDisorders', this.fb.array([this.createFormArray('questionsAInformation')]));
-            break;
-
-          case 'haveAlcoholicDependence':
-            questionsA.addControl('alcoholicDependence', this.fb.group({
-              date: ['', Validators.required],
-              substance: ['', Validators.required],
-              threatment: ['', Validators.required],
-            }));
-            break;
-
-          default:
-            break;
-        }
-      } else if ($event.checked === false || $event.valor === 'NO') {
-        switch (question) {
-          case 'havePregnant':
-            this.questionsA.removeControl('pregnant');
-            break;
-
-          case 'diving':
-            this.questionnairesGastosMayores.removeControl('solicitudBuceo');
-            break;
-
-          case 'racing':
-            this.questionnairesGastosMayores.removeControl('solicitudMoto');
-            break;
-
-          case 'skydiving':
-            this.questionnairesGastosMayores.removeControl('solicitudAviacion');
-            break;
-
-          case 'mountaineering':
-            this.questionnairesGastosMayores.removeControl('solicitudMontanismo');
-            break;
-
-          case 'haveHighRiskSport':
-            this.questionsA.removeControl('highRiskSport');
-            break;
-
-          case 'haveNicotine':
-            this.questionsA.removeControl('nicotine');
-            break;
-
-          case 'haveEndocrineDisorders':
-            this.questionnairesGastosMayores.removeControl('solicitudDiabetes');
-            questionsA.removeControl('endocrineDisorders');
-            this.endocrineDisordersList = undefined;
-            break;
-
-          case 'haveUrinarySystem':
-            this.questionnairesGastosMayores.removeControl('solicitudRenales');
-            questionsA.removeControl('urinarySystem');
-            this.urinarySystemList = undefined;
-            break;
-
-          case 'haveMusculoskeletal':
-            this.questionnairesGastosMayores.removeControl('solicitudArtitris');
-            this.questionnairesGastosMayores.removeControl('columnaVertebralColumnaVertebral');
-            this.questionnairesGastosMayores.removeControl('solicitudMusculoesqueleticos');
-            questionsA.removeControl('musculoSkeletal');
-            this.musculoSkeletalList = undefined;
-            break;
-
-          case 'haveCardiovascularSystem':
-            this.questionnairesGastosMayores.removeControl('solicitudHipertensionArterial');
-            this.questionnairesGastosMayores.removeControl('solicitudCardioVasculares');
-            questionsA.removeControl('cardiovascularSystem');
-            this.cardiovascularSystemList = undefined;
-            break;
-
-          case 'haveCerebrovascular':
-            questionsA.removeControl('cerebroVascular');
-            break;
-
-          case 'haveNervousSystem':
-            questionsA.removeControl('nervousSystem');
-            break;
-
-          case 'haveVisionHearing':
-            questionsA.removeControl('visionHearing');
-            break;
-
-          case 'haveRespiratorySystem':
-            questionsA.removeControl('respiratorySystem');
-            break;
-
-          case 'haveDigestiveSystem':
-            questionsA.removeControl('digestiveSystem');
-            break;
-
-          case 'haveMaleReproductiveOrgans':
-            questionsA.removeControl('maleReproductiveOrgans');
-            break;
-
-          case 'haveBloodDisorders':
-            questionsA.removeControl('bloodDisorders');
-            break;
-
-          case 'haveAlternateTreatment':
-            questionsA.removeControl('alternateTreatment');
-            break;
-
-          case 'haveFunctionalLimitation':
-            questionsA.removeControl('functionalLimitation');
-            break;
-
-          case 'haveDeformity':
-            questionsA.removeControl('deformity');
-            break;
-
-          case 'haveStd':
-            questionsA.removeControl('std');
-            break;
-
-          case 'havePhysiologicalDisorder':
-            questionsA.removeControl('physiologicalDisorder');
-            break;
-
-          case 'haveBloodTransfusion':
-            questionsA.removeControl('bloodTransfusion');
-            break;
-
-          case 'haveAlcoholicDependence':
-            questionsA.removeControl('alcoholicDependence');
-            break;
-
-          case 'haveReproductiveOrganDisorders':
-            questionsA.removeControl('reproductiveOrganDisorders');
-            break;
-
-          default:
-            break;
+        } else if (formEP.get('payer').value !== 'SI') {
+          formEP.removeControl('incomesCertified');
         }
       }
 
-      if (questionsANicotine) {
-        if ($event.valor === 'EX-FUMADOR') {
-          questionsANicotine.addControl('lastTimeSmoked', this.fb.control('', Validators.required));
-          console.log(questionsANicotine);
-        } else {
-          questionsANicotine.removeControl('lastTimeSmoked');
+      if (formEP.get('payer')) {
+        if (formEP.get('payer').value !== 'SI') {
+          formEP.removeControl('payerExposedInfo');
+          formEP.removeControl('incomesCertified');
         }
       }
-    } else {
-      const dependents = this.allDependents;
-      const questionnaire = dependents.at(typeOrIndex) as FormGroup;
-      // const questionnaireNicotine = questionnaire['controls']['nicotine'] as FormGroup;
 
-      // const questionnaire = dependent.get('questionnairesGastosMayores') as FormGroup;
-
-      if ($event.checked === true || $event.valor === 'SI') {
-        console.log('true');
-        switch (question) {
-          case 'haveEndocrineDisorders':
-            // questionnaire.addControl('solicitudDiabetes', this.fb.group({}));
-            questionnaire.addControl('endocrineDisorders', this.fb.array([this.createFormArray('questionsAInformation')]));
-
-            break;
-
-          case 'havePregnant':
-            questionnaire.addControl('pregnant', this.fb.group({
-              time: ['', Validators.required]
-            }));
-            break;
-
-          case 'haveNicotine':
-            questionnaire.addControl('nicotine', this.fb.group({
-              quantity: ['', Validators.required],
-              timerange: ['', Validators.required],
-              time: ['', Validators.required],
-              isActualSmoker: ['', Validators.required],
-              lastTimeSmoked: [''],
-            }));
-            break;
-
-          case 'haveHighRiskSport':
-            questionnaire.addControl('highRiskSport', this.fb.group({
-              diving: ['', Validators.required],
-              racing: ['', Validators.required],
-              skydiving: ['', Validators.required],
-              mountaineering: ['', Validators.required],
-            }));
-            break;
-
-          case 'diving':
-            console.log('entrodondee');
-            questionnaire.addControl('solicitudBuceo', this.fb.group({}));
-            break;
-
-          case 'racing':
-            questionnaire.addControl('solicitudMoto', this.fb.group({}));
-            break;
-
-          case 'skydiving':
-            questionnaire.addControl('solicitudAviacion', this.fb.group({}));
-            break;
-
-          case 'mountaineering':
-
-            questionnaire.addControl('solicitudMontanismo', this.fb.group({}));
-            break;
-
-          case 'haveUrinarySystem':
-            questionnaire.addControl('urinarySystem', this.fb.array([this.createFormArray('questionsAInformation')]));
-
-            // questionnaire.addControl('solicitudRenales', this.fb.group({}));
-            break;
-
-          case 'haveMusculoskeletal':
-            // questionnaire.addControl('solicitudArtitris', this.fb.group({}));
-            // questionnaire.addControl('columnaVertebralColumnaVertebral', this.fb.group({}));
-            // questionnaire.addControl('solicitudMusculoesqueleticos', this.fb.group({}));
-            questionnaire.addControl('musculoSkeletal', this.fb.array([this.createFormArray('questionsAInformation')]));
-            break;
-
-          case 'haveCardiovascularSystem':
-            questionnaire.addControl('cardiovascularSystem', this.fb.array([this.createFormArray('questionsAInformation')]));
-
-            // questionnaire.addControl('solicitudHipertensionArterial', this.fb.group({}));
-            // questionnaire.addControl('solicitudCardioVasculares', this.fb.group({}));
-            break;
-
-          case 'haveCerebrovascular':
-            questionnaire.addControl('cerebroVascular', this.fb.array([this.createFormArray('questionsAInformation')]));
-            break;
-
-          case 'haveNervousSystem':
-            questionnaire.addControl('nervousSystem', this.fb.array([this.createFormArray('questionsAInformation')]));
-            break;
-
-          case 'haveVisionHearing':
-            questionnaire.addControl('visionHearing', this.fb.array([this.createFormArray('questionsAInformation')]));
-            break;
-
-          case 'haveRespiratorySystem':
-            questionnaire.addControl('respiratorySystem', this.fb.array([this.createFormArray('questionsAInformation')]));
-            break;
-
-          case 'haveDigestiveSystem':
-            questionnaire.addControl('digestiveSystem', this.fb.array([this.createFormArray('questionsAInformation')]));
-            break;
-
-          case 'haveMaleReproductiveOrgans':
-            questionnaire.addControl('maleReproductiveOrgans', this.fb.array([this.createFormArray('questionsAInformation')]));
-            break;
-
-          case 'haveBloodDisorders':
-            questionnaire.addControl('bloodDisorders', this.fb.array([this.createFormArray('questionsAInformation')]));
-            break;
-
-          case 'haveAlternateTreatment':
-            questionnaire.addControl('alternateTreatment', this.fb.array([this.createFormArray('questionsAInformation')]));
-            break;
-
-          case 'haveFunctionalLimitation':
-            questionnaire.addControl('functionalLimitation', this.fb.array([this.createFormArray('questionsAInformation')]));
-            break;
-
-          case 'haveDeformity':
-            questionnaire.addControl('deformity', this.fb.array([this.createFormArray('questionsAInformation')]));
-            break;
-
-          case 'haveStd':
-            questionnaire.addControl('std', this.fb.array([this.createFormArray('questionsAInformation')]));
-            break;
-
-          case 'havePhysiologicalDisorder':
-            questionnaire.addControl('physiologicalDisorder', this.fb.array([this.createFormArray('questionsAInformation')]));
-            break;
-
-          case 'haveBloodTransfusion':
-            questionnaire.addControl('bloodTransfusion', this.fb.array([this.createFormArray('questionsAInformation')]));
-            break;
-
-          case 'haveReproductiveOrganDisorders':
-            questionnaire.addControl('reproductiveOrganDisorders', this.fb.array([this.createFormArray('questionsAInformation')]));
-            break;
-
-          case 'haveAlcoholicDependence':
-            questionnaire.addControl('alcoholicDependence', this.fb.group({
-              date: ['', Validators.required],
-              substance: ['', Validators.required],
-              threatment: ['', Validators.required],
-            }));
-            break;
-
-
-          default:
-            break;
-        }
-      } else if ($event.checked === false || $event.valor === 'NO') {
-        console.log('false');
-
-        switch (question) {
-          case 'haveEndocrineDisorders':
-            questionnaire.removeControl('endocrineDisorders');
-
-            questionnaire.removeControl('solicitudDiabetes');
-            break;
-
-          case 'havePregnant':
-            questionnaire.removeControl('pregnant');
-            break;
-
-          case 'haveNicotine':
-            questionnaire.removeControl('nicotine');
-            break;
-
-          case 'haveHighRiskSport':
-            questionnaire.removeControl('highRiskSport');
-            break;
-
-          case 'haveUrinarySystem':
-            questionnaire.removeControl('solicitudRenales');
-            questionnaire.removeControl('urinarySystem');
-
-            break;
-
-          case 'diving':
-            questionnaire.removeControl('solicitudBuceo');
-            break;
-
-          case 'racing':
-            questionnaire.removeControl('solicitudMoto');
-            break;
-
-          case 'skydiving':
-            questionnaire.removeControl('solicitudAviacion');
-            break;
-
-          case 'mountaineering':
-            questionnaire.removeControl('solicitudMontanismo');
-            break;
-
-          case 'haveMusculoskeletal':
-            questionnaire.removeControl('solicitudArtitris');
-            questionnaire.removeControl('columnaVertebralColumnaVertebral');
-            questionnaire.removeControl('solicitudMusculoesqueleticos');
-
-            questionnaire.removeControl('musculoSkeletal');
-            break;
-
-          case 'haveCardiovascularSystem':
-            questionnaire.removeControl('cardiovascularSystem');
-
-            questionnaire.removeControl('solicitudHipertensionArterial');
-            questionnaire.removeControl('solicitudCardioVasculares');
-            break;
-
-          case 'haveCerebrovascular':
-            questionnaire.removeControl('cerebroVascular');
-            break;
-
-          case 'haveNervousSystem':
-            questionnaire.removeControl('nervousSystem');
-            break;
-
-          case 'haveVisionHearing':
-            questionnaire.removeControl('visionHearing');
-            break;
-
-          case 'haveRespiratorySystem':
-            questionnaire.removeControl('respiratorySystem');
-            break;
-
-          case 'haveDigestiveSystem':
-            questionnaire.removeControl('digestiveSystem');
-            break;
-
-          case 'haveMaleReproductiveOrgans':
-            questionnaire.removeControl('maleReproductiveOrgans');
-            break;
-
-          case 'haveBloodDisorders':
-            questionnaire.removeControl('bloodDisorders');
-            break;
-
-          case 'haveAlternateTreatment':
-            questionnaire.removeControl('alternateTreatment');
-            break;
-
-          case 'haveFunctionalLimitation':
-            questionnaire.removeControl('functionalLimitation');
-            break;
-
-          case 'haveDeformity':
-            questionnaire.removeControl('deformity');
-            break;
-
-          case 'haveStd':
-            questionnaire.removeControl('std');
-            break;
-
-          case 'havePhysiologicalDisorder':
-            questionnaire.removeControl('physiologicalDisorder');
-            break;
-
-          case 'haveBloodTransfusion':
-            questionnaire.removeControl('bloodTransfusion');
-            break;
-
-          case 'haveAlcoholicDependence':
-            questionnaire.removeControl('alcoholicDependence');
-            break;
-
-          case 'haveReproductiveOrganDisorders':
-            questionnaire.removeControl('reproductiveOrganDisorders');
-            break;
-
-          default:
-            break;
-        }
-
-
+      if (formQA.get('haveHighRiskSport').value !== true) {
+        formQA.removeControl('highRiskSport');
       }
 
-      // console.log(questionnaireNicotine)
-      // if (questionnaireNicotine) {
-      //   if ($event.valor === 'EX-FUMADOR') {
-      //     console.log('klk');
-      //     questionnaireNicotine.addControl('lastTimeSmoked', this.fb.control('', Validators.required));
-      //     console.log(questionnaireNicotine);
-      //   } else {
-      //     questionnaireNicotine.removeControl('lastTimeSmoked');
+      if (formQA.get('haveNicotine').value !== true) {
+        formQA.removeControl('nicotine');
+      }
+
+      if (formQA.get('nicotine')) {
+        if (formQA.get('nicotine').get('isActualSmoker').value !== 'EX-FUMADOR') {
+          const formQAC = formQA.get('nicotine') as FormGroup;
+
+          formQAC.removeControl('lastTimeSmoked');
+        }
+      }
+
+      if (formQA.get('havePregnant').value !== true) {
+        formQA.removeControl('pregnant');
+      }
+
+      formSAH.removeControl('haveSpine');
+      formQA.removeControl('haveSpine');
+      formQB.removeControl('hasFamilyWithHeartKidneyDisease');
+
+      // if (this.newRequest.get('person').get('conozcaSuClientePersona')) {
+      //   formP.removeControl('conozcaSuClientePersona');
+      // }
+      // if ((this.newRequest.get('person').get('antiLaundering'))) {
+      //   formP.removeControl('antiLaundering');
+      // }
+      // if ((this.newRequest.get('person').get('conozcaSuClientePersonaJuridica'))) {
+      //   formP.removeControl('conozcaSuClientePersonaJuridica');
+      // }
+
+      // if (this.newRequest.get('contractor')) {
+      //   if (this.newRequest.get('contractor').get('conozcaSuClientePersona')) {
+      //     formContractor.removeControl('conozcaSuClientePersona');
       //   }
       // }
-      // console.log(questionnaire.value.name, questionnaire.value);
 
-    }
-  }
 
-  makeFalseAll(name) {
-    this.newRequest.get('questionsA').get(name).setValue(false);
-    this.valueChange({ checked: false }, name, 'solicitante');
-
-    const dpd = this.newRequest.get('dependents').get('allDependents') as FormArray;
-    // tslint:disable-next-line: forin
-    for (const element in this.dependentsFormArray.value) {
-      // tslint:disable-next-line: radix
-      const dependent = dpd.at(parseInt(element));
-
-      dependent.get(name).setValue(false);
-      this.valueChange({ checked: false }, name, element);
-    }
-  }
-
-  selectChangeUrl(event) {
-    switch (event) {
-      case 'vida':
-        this.router.navigateByUrl('dashboard/requests/new-requests/vida');
-        break;
-
-      case 'disability':
-        this.router.navigateByUrl('dashboard/requests/new-requests/disability');
-        break;
-
-      case 'gastos mayores':
-        this.router.navigateByUrl('dashboard/requests/new-requests/salud');
-        break;
-
-      default:
-        break;
-    }
-  }
-
-  getBmi(height: any, weight: any) {
-    const weightUnit = this.newRequest.get('person').get('weightUnit').value;
-    const heightUnit = this.newRequest.get('person').get('heightUnit').value;
-    if (weight !== '' && height !== '') {
-      if (weightUnit === 'LIBRAS') { weight = weight / 2.205; }
-      if (heightUnit === 'PIE') {
-        height = height / 3.281; // (((height * 12) + inches) * 2.54);
+      this.contingentBeneficiaryArray = this.newRequest.get('contingentBeneficiary').get('dependentsC') as FormArray;
+      this.primaryBenefitsArray = this.newRequest.get('primaryBenefits').get('dependentsC') as FormArray;
+      this.studentDependents = this.newRequest.get('dependents').get('students') as FormArray;
+      this.dependentsFormArray = this.newRequest.get('dependents').get('allDependents') as FormArray;
+      this.questionsFormArray = this.newRequest.get('questionsA') as FormArray;
+      this.questionsBFormArray = this.newRequest.get('questionsB') as FormArray;
+      if (this.newRequest.get('questionsB')) {
+        this.informationList = this.newRequest.get('questionsB').get('information') as FormArray;
       }
+      this.filesStudiesArray = this.newRequest.get('files').get('studies') as FormArray;
 
-      const bmi = weight / ((height / 100) * (height / 100));
-      if (bmi !== Infinity) {
-        const value = parseFloat(`${bmi}`).toFixed(2);
-        this.newRequest.get('person').get('bmi').setValue(value);
-      }
+      this.arrayFilesTitles = data.data.files.studies;
+      this.primaryBeneficaryTitles = data.data.primaryBenefits.dependentsC;
+      this.contigentBeneficaryTitles = data.data.contingentBeneficiary.dependentsC;
+      this.primaryAnotherTitle = data.data.primaryBenefits.personBenefited;
+      this.contigentAnotherTitle = data.data.contingentBeneficiary.personBenefited;
 
-    }
-  }
+      if (this.newRequest.get('files') && this.newRequest.get('files').get('documentsKnowClient')) {
+        this.filesDocumentsKnowClientArray = this.newRequest.get('files').get('documentsKnowClient') as FormArray;
+      }
+      if (this.newRequest.get('files') && this.newRequest.get('files').get('copyId')) {
+        this.filesCopyIdArray = this.newRequest.get('files').get('copyId') as FormArray;
+      }
+      if (this.newRequest.get('files') && this.newRequest.get('files').get('mercantile')) {
+        this.mercantileRegisterArray = this.newRequest.get('files').get('mercantile') as FormArray;
+      }
+      this.arrayFilesTitlesDocumentsKnowClient = data.data.files.documentsKnowClient;
+      this.arrayFilesTitlesCopyId = data.data.files.copyId;
+      this.arrayFilesTitlesMercantile = data.data.files.mercantile;
 
-  print() {
-    console.log('solicitante: ', this.newRequest.get('questionsA'));
-    console.log('dependientes: ', this.newRequest.get('dependents').value.allDependents);
-  }
+      for (const dependent in this.dependentsFormArray.controls) {
+        if (Object.prototype.hasOwnProperty.call(this.dependentsFormArray.controls, dependent)) {
+          const element = this.dependentsFormArray.controls[dependent] as FormGroup;
 
-  arrayStudiesWatcher(i: number, type?: string, group?: string) {
-    if (type === 'person') {
-      const formP = this.newRequest.get('person') as FormGroup;
-      if (formP.value.id2AttachedUrl && formP.value.id2Attached !== '') { return formP.value.id2AttachedUrl; }
-    } else if (type === 'contractor') {
-      const formP = this.newRequest.get('contractor') as FormGroup;
-      if (formP.value.id2AttachedUrl && formP.value.id2Attached !== '') { return formP.value.id2AttachedUrl; }
-    } else if (type === 'payer') {
-      const formP = this.newRequest.get('payer') as FormGroup;
-      if (formP.value.id2AttachedUrl && formP.value.id2Attached !== '') { return formP.value.id2AttachedUrl; }
-    } else if (type === 'incomesCertified') {
-      const formP = this.newRequest.get('exposedPerson') as FormGroup;
-      if (formP.value.incomesCertifiedUrl && formP.value.incomesCertified !== '') { return formP.value.incomesCertifiedUrl; }
-    } else if (type === 'commercialRegister') {
-      if (this.newRequest.get(group).get(type).get(i.toString())) {
-        if (this.newRequest.get(group).get(type).get(i.toString()) && this.newRequest.get(group).get(type).get(i.toString()).value[type + 's'] !== '') {
-          return this.newRequest.get(group).get(type).get(i.toString()).value[type + 'Url'];
-        }
-      }
-    } else if (type === 'legalRepresentativeId2') {
-      if (this.newRequest.get(group).get(type).get(i.toString())) {
-        if (this.newRequest.get(group).get(type).get(i.toString()) && this.newRequest.get(group).get(type).get(i.toString()).value[type + 's'] !== '') {
-          return this.newRequest.get(group).get(type).get(i.toString()).value[type + 'Url'];
-        }
-      }
-    } else {
-      if (this.arrayFilesTitles) {
-        if (this.arrayFilesTitles[i] && this.newRequest.get('files').get('studies').get(i.toString()).value.study !== '') {
-          return this.arrayFilesTitles[i].studyUrl;
-        }
-      }
-    }
-  }
-  // tslint:disable: max-line-length
-  id2AttachedViewValue(i: number, group: string) {
-    if (group === 'primaryBenefits') {
-      if (i !== null) {
-        if (this.primaryBeneficaryTitles) {
-          if (this.primaryBeneficaryTitles[i] && this.newRequest.get('primaryBenefits').get('dependentsC').get(i.toString()).value.id2Attached !== '') {
-            return this.primaryBeneficaryTitles[i].id2AttachedUrl;
+          if (element.get('haveHighRiskSport').value !== true) {
+            element.removeControl('highRiskSport');
           }
+
+          if (element.get('haveNicotine').value !== true) {
+            element.removeControl('nicotine');
+          }
+
+          if (element.get('havePregnant').value !== true) {
+            element.removeControl('pregnant');
+          }
+
+          if (element.get('heightUnit').value !== 'PIE') {
+            element.removeControl('inches');
+          }
+
+          element.removeControl('haveSpine');
         }
-      } else {
-        if (this.primaryAnotherTitle) {
-          if (this.primaryAnotherTitle && this.newRequest.get('primaryBenefits').get('personBenefited').value.id2Attached !== '') {
-            return this.primaryAnotherTitle.id2AttachedUrl;
+      }
+
+      // tslint:disable: no-string-literal
+      if (formQB.get('specializedTests')) {
+        for (const key in formQB.get('specializedTests')['controls']) {
+          if (Object.prototype.hasOwnProperty.call(formQB.get('specializedTests')['controls'], key)) {
+            const element = formQB.get('specializedTests')['controls'][key] as FormGroup;
+            if (element.value.whichStudy !== 'OTROS') {
+              element.removeControl('specifyStudy');
+            }
           }
         }
       }
-    } else {
-      if (i !== null) {
-        if (this.contigentBeneficaryTitles) {
-          if (this.contigentBeneficaryTitles[i] && this.newRequest.get('contingentBeneficiary').get('dependentsC').get(i.toString()).value.id2Attached !== '') {
-            return this.contigentBeneficaryTitles[i].id2AttachedUrl;
-          }
-        }
-      } else {
-        if (this.contigentAnotherTitle) {
-          if (this.contigentAnotherTitle && this.newRequest.get('contingentBeneficiary').get('personBenefited').value.id2Attached !== '') {
-            return this.contigentAnotherTitle.id2AttachedUrl;
-          }
+
+      // if (formP.get('pep_radio_insured')) {
+      //   if (formP.get('pep_radio_insured').value !== 'SI') {
+      //     this.newRequest.removeControl('exposedPerson');
+      //   }
+      // }
+
+      if (formP.get('isContractor')) {
+        if (formP.get('isContractor').value !== 'NO') {
+          formPO.get('company').setValidators(null);
+          formPO.get('position').setValidators(null);
+          formPO.get('direction').setValidators(null);
+          // formPO.get('economicActivity').setValidators(null);
+          formPO.get('sector').setValidators(null);
+          formPO.get('city').setValidators(null);
+          formPO.get('country').setValidators(null);
         }
       }
-    }
-  }
 
-  createFormArray(type: string): FormGroup {
-    switch (type) {
-      case 'medicInformation':
-        return this.fb.group({
-          name: [''],
-          ailment: ['', Validators.required],
-          date: ['', Validators.required],
-          threatment: ['', Validators.required],
-          time: [''],
-          duration: ['', Validators.min(1)],
-          medicCenterName: [''],
-          medicCenterAddress: [''],
-        });
+      if (formContractor) {
+        formContractor.removeControl('isContractor');
+      }
 
-      case 'questionsAInformation':
-        return this.fb.group({
-          name: [{ value: '', disabled: true }],
-          ailment: ['', Validators.required],
-          date: ['', Validators.required],
-          threatment: ['', Validators.required],
-          time: [''],
-          duration: ['', Validators.min(1)],
-          medicCenterName: [''],
-          medicCenterAddress: [''],
-        });
+      if (formQB.get('consultedForUnmentioned')) {
+        for (const key in formQB.get('consultedForUnmentioned')['controls']) {
+          const element = formQB.get('consultedForUnmentioned')['controls'][key] as FormGroup;
 
-      case 'specializedTests':
-        return this.fb.group({
-          date: ['', Validators.required],
-          whichStudy: ['', Validators.required],
-          results: ['', Validators.required],
-        });
-
-      case 'haveDisease':
-        return this.fb.group({
-          family: ['', Validators.required],
-        });
-        break;
-
-      case 'filesStudies':
-        return this.fb.group({
-          study: ['', Validators.required],
-        });
-
-      case 'filesDocumentsKnowClient':
-        return this.fb.group({
-          document: ['', Validators.required],
-        });
-
-      case 'filesCopyId':
-        return this.fb.group({
-          idId: ['', Validators.required],
-        });
-
-      case 'mercantileRegister':
-        return this.fb.group({
-          register: ['', Validators.required],
-        });
-
-      case 'commercialRegister':
-        return this.fb.group({
-          commercialRegisters: [''],
-        });
-
-      case 'legalRepresentativeId2':
-        return this.fb.group({
-          legalRepresentativeId2s: [''],
-        });
-      default:
-        break;
-    }
-  }
-
-  addToList(list: any, type: string) {
-    list.push(this.createFormArray(type));
-  }
-
-  SaveForm(newRequestReq: FormGroup) {
-    this.formHandler.sendForm(newRequestReq, 'major-expenses', 'send');
-  }
-  getDataCotizaciones(id) {
-    this.quotesService.returnDataSalud(id).subscribe(data => {
-
-      if (data !== undefined && data.data !== null && data.data !== undefined && data.data.nombre !== undefined) {
-        const dialogRef = this.dialog.open(BaseDialogComponent, {
-          data: this.dialogOption.noCFound(data.data),
-          minWidth: 385,
-        });
-        setTimeout(() => {
-          dialogRef.close();
-        }, 4000);
-        this.isFormValidToFill = true;
-        this.notFoundQuote = false;
-
-        this.newRequest.get('payment').setValue(this.currencyPipe.transform(data.data.monto));
-        this.newRequest.get('plans').setValue(data.data.plan);
-        this.newRequest.get('deducibles').setValue(data.data.deducible);
-        this.newRequest.get('person').get('date').setValue(data.data.fecha_nacimiento);
-        this.newRequest.get('person').get('firstName').setValue(data.data.nombre);
-        this.newRequest.get('person').get('lastName').setValue(data.data.apellidos);
-
-        switch (data.data.sexo) {
-          case 'M':
-            this.newRequest.get('person').get('sex').setValue('MASCULINO');
-            break;
-
-          case 'F':
-            this.newRequest.get('person').get('sex').setValue('FEMENINO');
-            break;
-
-          default:
-            break;
+          element.get('medicCenterName').setValidators(null);
+          element.get('medicCenterAddress').setValidators(null);
+          element.get('duration').setValidators(null);
+          element.get('time').setValidators(null);
         }
+      }
 
-      } else {
-        this.notFoundQuote = true;
+      if (formQB.get('alterationForUnmentioned')) {
+        for (const key in formQB.get('alterationForUnmentioned')['controls']) {
+          const element = formQB.get('alterationForUnmentioned')['controls'][key] as FormGroup;
 
-        this.newRequest.get('payment').reset();
-        this.newRequest.get('plans').reset();
-        this.newRequest.get('deducibles').reset();
-        this.newRequest.get('person').get('date').reset();
-        this.newRequest.get('person').get('firstName').reset();
-        this.newRequest.get('person').get('sex').reset();
+          element.get('medicCenterName').setValidators(null);
+          element.get('medicCenterAddress').setValidators(null);
+          element.get('duration').setValidators(null);
+          element.get('time').setValidators(null);
+        }
+      }
 
-        const dialogRef = this.dialog.open(BaseDialogComponent, {
-          data: this.dialogOption.noCNotFound,
-          minWidth: 385,
-        });
-        setTimeout(() => {
-          dialogRef.close();
-        }, 4000);
+      if (formQB.get('medicalHealthInsurance')) {
+        if (formQB.get('medicalHealthInsurance').value.didReclamation !== 'SI') {
+          const formQBMHI = formQB.get('medicalHealthInsurance') as FormGroup;
+
+          formQBMHI.removeControl('reclamationInfo');
+        }
+      }
+
+      if (this.newRequest.get('contingentBeneficiary').get('dependentsC')) {
+        // tslint:disable-next-line: prefer-for-of
+        for (let x = 0; x < this.newRequest.get('contingentBeneficiary').get('dependentsC')['controls'].length; x++) {
+          const contingentBeneficiaryGroup = this.newRequest.get('contingentBeneficiary').get('dependentsC').get(x.toString()) as FormGroup;
+
+          contingentBeneficiaryGroup.get('name').clearValidators();
+          contingentBeneficiaryGroup.get('name').updateValueAndValidity();
+          contingentBeneficiaryGroup.get('date').clearValidators();
+          contingentBeneficiaryGroup.get('date').updateValueAndValidity();
+          contingentBeneficiaryGroup.get('id2').clearValidators();
+          contingentBeneficiaryGroup.get('id2').updateValueAndValidity();
+          contingentBeneficiaryGroup.get('idType').clearValidators();
+          contingentBeneficiaryGroup.get('idType').updateValueAndValidity();
+          contingentBeneficiaryGroup.get('id2Attached').clearValidators();
+          contingentBeneficiaryGroup.get('id2Attached').updateValueAndValidity();
+          contingentBeneficiaryGroup.get('nationality').clearValidators();
+          contingentBeneficiaryGroup.get('nationality').updateValueAndValidity();
+          contingentBeneficiaryGroup.get('ocupation').clearValidators();
+          contingentBeneficiaryGroup.get('ocupation').updateValueAndValidity();
+          contingentBeneficiaryGroup.get('family').clearValidators();
+          contingentBeneficiaryGroup.get('family').updateValueAndValidity();
+          contingentBeneficiaryGroup.get('quantity').clearValidators();
+          contingentBeneficiaryGroup.get('quantity').updateValueAndValidity();
+          contingentBeneficiaryGroup.get('quantity').setValidators([Validators.min(1), Validators.max(100)]);
+          contingentBeneficiaryGroup.get('quantity').updateValueAndValidity();
+        }
       }
 
       this.thereIsAWomenOnTheRequest();
       this.thereIsAMenOnTheRequest();
-    });
 
-  }
+      this.isFormValidToFill = true;
+      this.appComponent.showOverlay = false;
 
-  arrayDocumentsKnowClientWatcher(i: number) {
-    if (this.arrayFilesTitlesDocumentsKnowClient) {
-      if (this.newRequest.get('files').get('documentsKnowClient')) {
-        // tslint:disable-next-line: max-line-length
-        if (this.arrayFilesTitlesDocumentsKnowClient[i] && this.newRequest.get('files').get('documentsKnowClient').get(i.toString()).value.document !== '') {
-          return this.arrayFilesTitlesDocumentsKnowClient[i].documentUrl;
-        }
-      }
+      this.newRequest.markAllAsTouched();
+      this.newRequest.updateValueAndValidity();
+
     }
-  }
 
-  arrayCopyIdWatcher(i: number) {
-    if (this.arrayFilesTitlesCopyId) {
-      if (this.newRequest.get('files').get('copyId')) {
-        // tslint:disable-next-line: max-line-length
-        if (this.arrayFilesTitlesCopyId[i] && this.newRequest.get('files').get('copyId').get(i.toString()).value.idId !== '') {
-          return this.arrayFilesTitlesCopyId[i].idIdUrl;
-        }
-      }
-    }
-  }
-
-  arrayRegisterWatcher(i: number) {
-    if (this.arrayFilesTitlesMercantile) {
-      if (this.newRequest.get('files').get('mercantile')) {
-        // tslint:disable-next-line: max-line-length
-        if (this.arrayFilesTitlesMercantile[i] && this.newRequest.get('files').get('mercantile').get(i.toString()).value.register !== '') {
-          return this.arrayFilesTitlesMercantile[i].registerUrl;
-        }
-      }
-    }
-  }
-
-  getData(key) {
-    /*setTimeout(() => {
-      this.appComponent.showOverlay = true;
-    });*/
-    this.appComponent.showOverlay = true;
-    this.requestService.getRequestData('salud', key).subscribe((data: any) => {
-      // console.log(data);
-      // console.log( this.newRequest);
-      if (data !== undefined && data.data !== null &&
-        data.data !== undefined) {
-        // this.ID = data.data.id;
-        console.log(data.data);
-        this.dataMappingFromApi.iterateThroughtAllObject(data.data, this.newRequest);
-        this.AddEventOnEachDependentVariable();
-
-        switch (data.data.countryCode) {
-          case 'RD':
-            this.role = 'WWS';
-            break;
-          case 'PM':
-            this.role = 'WMA';
-            break;
-          default:
-            this.role = 'WMA';
-            break;
-        }
-
-        const formP = this.newRequest.get('person') as FormGroup;
-        const formPO = this.newRequest.get('person').get('office') as FormGroup;
-        const formQA = this.newRequest.get('questionsA') as FormGroup;
-        const formQB = this.newRequest.get('questionsB') as FormGroup;
-        const formEP = this.newRequest.get('exposedPerson') as FormGroup;
-        const formSAH = this.newRequest.get('sectionAHelper') as FormGroup;
-        const formGeneral = this.newRequest as FormGroup;
-        const formContractor = this.newRequest.get('contractor') as FormGroup;
-        const formPayer = this.newRequest.get('payer') as FormGroup;
-        const formFiles = this.newRequest.get('files') as FormGroup;
-
-        formP.removeControl('contractorIsLegalEntity');
-        formP.removeControl('contractorMandatory');
-        formP.removeControl('payerMandatory');
-        formP.removeControl('pep_radio_insured');
-        formP.removeControl('sameAsContractor');
-        formP.removeControl('sameAsPayer');
-        formFiles.removeControl('incomesCertified');
-
-
-        if (this.newRequest.get('questionsB').get('familyWithDiseases') !== undefined && this.newRequest.get('questionsB').get('familyWithDiseases') !== null) {
-          this.familyWithDiseasesList = this.newRequest.get('questionsB').get('familyWithDiseases') as FormArray;
-        } else {
-          this.familyWithDiseasesList = undefined;
-        }
-
-        if (formP.get('isContractor').value === 'NO') {
-          // formP.removeControl('isJuridica');
-          // if (formGeneral.get('contractor')) {
-          //   formGeneral.removeControl('contractor');
-          // }
-          // if (this.newRequest.get('conozcaSuClientePersonaContratante')) {
-          //   formGeneral.removeControl('conozcaSuClientePersonaContratante');
-          // }
-          // if (this.newRequest.get('files').get('copyId')) {
-          //   formFiles.removeControl('copyId');
-          // }
-          // if ((this.newRequest.get('antiLaundering'))) {
-          //   formGeneral.removeControl('antiLaundering');
-          // }
-          // if ((this.newRequest.get('conozcaSuClientePersonaJuridica'))) {
-          //   formGeneral.removeControl('conozcaSuClientePersonaJuridica');
-          // }
-          // if (this.newRequest.get('person').get('mandatorySubject')) {
-          //   formP.removeControl('mandatorySubject');
-          // }
-          // formP.removeControl('isJuridica');
-          // if (formEP) {
-          //   formEP.removeControl('contractor');
-          //   formEP.removeControl('contractorExposedInfo');
-          // }
-          // if (this.newRequest.get('files').get('mercantile')) {
-          //   formFiles.removeControl('mercantile');
-          // }
-          // if (formGeneral.get('contractor')) {
-          //   formGeneral.removeControl('contractor');
-          // }
-
-          // this.newRequest.get('person').get('office').get('company').setValidators(Validators.required);
-          // this.newRequest.get('person').get('office').get('company').updateValueAndValidity();
-          // this.newRequest.get('person').get('office').get('company').markAsUntouched();
-
-          // this.newRequest.get('person').get('office').get('position').setValidators(Validators.required);
-          // this.newRequest.get('person').get('office').get('position').updateValueAndValidity();
-          // this.newRequest.get('person').get('office').get('position').markAsUntouched();
-
-          // this.newRequest.get('person').get('office').get('direction').setValidators(Validators.required);
-          // this.newRequest.get('person').get('office').get('direction').updateValueAndValidity();
-          // this.newRequest.get('person').get('office').get('direction').markAsUntouched();
-
-          // this.newRequest.get('person').get('office').get('economicActivity').setValidators(Validators.required);
-          // this.newRequest.get('person').get('office').get('economicActivity').updateValueAndValidity();
-          // this.newRequest.get('person').get('office').get('economicActivity').markAsUntouched();
-
-          // this.newRequest.get('person').get('office').get('sector').setValidators(Validators.required);
-          // this.newRequest.get('person').get('office').get('sector').updateValueAndValidity();
-          // this.newRequest.get('person').get('office').get('sector').markAsUntouched();
-
-          // this.newRequest.get('person').get('office').get('city').setValidators(Validators.required);
-          // this.newRequest.get('person').get('office').get('city').updateValueAndValidity();
-          // this.newRequest.get('person').get('office').get('city').markAsUntouched();
-
-          // this.newRequest.get('person').get('office').get('country').setValidators(Validators.required);
-          // this.newRequest.get('person').get('office').get('country').updateValueAndValidity();
-          // this.newRequest.get('person').get('office').get('country').markAsUntouched();
-
-
-          // if (this.newRequest.get('files').get('copyId')) {
-          //   formFiles.removeControl('copyId');
-          // }
-          // if ((this.newRequest.get('antiLaundering'))) {
-          //   formGeneral.removeControl('antiLaundering');
-          // }
-          // if ((this.newRequest.get('conozcaSuClientePersonaJuridica'))) {
-          //   formGeneral.removeControl('conozcaSuClientePersonaJuridica');
-          // }
-          // if (this.newRequest.get('person').get('mandatorySubject')) {
-          //   formP.removeControl('mandatorySubject');
-          // }
-          // formP.removeControl('isJuridica');
-          // if (formEP) {
-          //   formEP.removeControl('contractor');
-          //   formEP.removeControl('contractorExposedInfo');
-          // }
-          // if (this.newRequest.get('files').get('mercantile')) {
-          //   formFiles.removeControl('mercantile');
-          // }
-        }
-
-        if (formP.get('isContractor').value !== 'SI') {
-          // if (formEP) {
-          //   formEP.removeControl('contractorExposedInfo');
-          //   formEP.removeControl('contractor');
-          // }
-        }
-
-        if (formP.get('isContractor').value !== 'NO') {
-          formGeneral.removeControl('contractor');
-          formGeneral.removeControl('contractorJuridical');
-          formP.removeControl('mandatorySubject');
-          formP.removeControl('contractorIsJuridical');
-          formEP.removeControl('contractor');
-          formEP.removeControl('contractorExposedInfo');
-        }
-
-        if (formP.get('isPayer').value !== 'NO') {
-          formGeneral.removeControl('payer');
-          formGeneral.removeControl('payerJuridical');
-          formP.removeControl('mandatorySubjectPayer');
-          formP.removeControl('payerIsJuridical');
-          formEP.removeControl('payer');
-          formEP.removeControl('payerExposedInfo');
-        }
-
-        if (formP.get('contractorIsJuridical')) {
-          if (formP.get('contractorIsJuridical').value !== 'NO') {
-            formEP.removeControl('contractor');
-            formEP.removeControl('contractorExposedInfo');
-            formGeneral.removeControl('contractor');
-          }
-        }
-
-        if (formP.get('contractorIsJuridical')) {
-          if (formP.get('contractorIsJuridical').value === 'NO') {
-            formGeneral.removeControl('contractorJuridical');
-            formContractor.removeControl('pepRadioInsured');
-            formContractor.removeControl('countryOfResidence');
-            formContractor.removeControl('countryOfBirth');
-            formContractor.removeControl('economicActivity');
-            formContractor.get('tel').setValidators(null);
-            formContractor.get('officeTel').setValidators(null);
-            formContractor.get('secondName').setValidators(null);
-            formContractor.get('fax').setValidators(null);
-            formContractor.get('weightUnit').setValidators(null);
-            formContractor.get('weight').setValidators(null);
-            formContractor.get('heightUnit').setValidators(null);
-            formContractor.get('height').setValidators(null);
-            formContractor.get('bmi').setValidators(null);
-            if (formContractor.get('inches')) {
-              formContractor.get('inches').setValidators(null);
-            }
-            const formCompany = formContractor.get('office') as FormGroup;
-            formCompany.removeControl('economicActivity');
-          }
-        }
-
-        if (formP.get('payerIsJuridical')) {
-          if (formP.get('payerIsJuridical').value !== 'NO') {
-            formEP.removeControl('payer');
-            formEP.removeControl('payerExposedInfo');
-            formGeneral.removeControl('payer');
-          }
-        }
-
-        if (formP.get('payerIsJuridical')) {
-          if (formP.get('payerIsJuridical').value === 'NO') {
-            formGeneral.removeControl('payerJuridical');
-            formPayer.removeControl('pepRadioInsured');
-            formPayer.removeControl('countryOfResidence');
-            formPayer.removeControl('countryOfBirth');
-            formPayer.removeControl('isContractor');
-            formPayer.removeControl('economicActivity');
-            formPayer.get('tel').setValidators(null);
-            formPayer.get('officeTel').setValidators(null);
-            formPayer.get('secondName').setValidators(null);
-            formPayer.get('fax').setValidators(null);
-            formPayer.get('weightUnit').setValidators(null);
-            formPayer.get('weight').setValidators(null);
-            formPayer.get('heightUnit').setValidators(null);
-            formPayer.get('height').setValidators(null);
-            formPayer.get('bmi').setValidators(null);
-            if (formPayer.get('inches')) {
-              formPayer.get('inches').setValidators(null);
-            }
-            const formCompany = formPayer.get('office') as FormGroup;
-            formCompany.removeControl('economicActivity');
-          }
-        }
-
-        if (formP.get('heightUnit').value !== 'PIE') {
-          formP.removeControl('inches');
-        }
-
-        if (formP.get('mandatorySubject')) {
-          if (formP.get('mandatorySubject').value !== 'SI') {
-            // formGeneral.removeControl('antiLaundering');
-          }
-        }
-
-        if (formEP && formEP.get('headLine').value !== 'SI') {
-          formEP.removeControl('headLineExposedInfo');
-
-          if (!formEP.get('payer')) {
-            if (formEP.get('contractor')) {
-              if (formEP.get('contractor').value !== 'SI') {
-                formEP.removeControl('incomesCertified');
-              }
-            } else {
-              formEP.removeControl('incomesCertified');
-            }
-          } else if (formEP.get('payer').value !== 'SI') {
-            formEP.removeControl('incomesCertified');
-          }
-        }
-
-        if (formEP.get('contractor')) {
-          if (formEP.get('contractor').value !== 'SI') {
-            formEP.removeControl('contractorExposedInfo');
-          }
-
-          if (!formEP.get('payer')) {
-            if (formEP.get('headline').value !== 'SI') {
-              formEP.removeControl('incomesCertified');
-            }
-          } else if (formEP.get('payer').value !== 'SI') {
-            formEP.removeControl('incomesCertified');
-          }
-        }
-
-        if (formEP.get('payer')) {
-          if (formEP.get('payer').value !== 'SI') {
-            formEP.removeControl('payerExposedInfo');
-            formEP.removeControl('incomesCertified');
-          }
-        }
-
-        if (formQA.get('haveHighRiskSport').value !== true) {
-          formQA.removeControl('highRiskSport');
-        }
-
-        if (formQA.get('haveNicotine').value !== true) {
-          formQA.removeControl('nicotine');
-        }
-
-        if (formQA.get('nicotine')) {
-          if (formQA.get('nicotine').get('isActualSmoker').value !== 'EX-FUMADOR') {
-            const formQAC = formQA.get('nicotine') as FormGroup;
-
-            formQAC.removeControl('lastTimeSmoked');
-          }
-        }
-
-        if (formQA.get('havePregnant').value !== true) {
-          formQA.removeControl('pregnant');
-        }
-
-        formSAH.removeControl('haveSpine');
-        formQA.removeControl('haveSpine');
-        formQB.removeControl('hasFamilyWithHeartKidneyDisease');
-
-        // if (this.newRequest.get('person').get('conozcaSuClientePersona')) {
-        //   formP.removeControl('conozcaSuClientePersona');
-        // }
-        // if ((this.newRequest.get('person').get('antiLaundering'))) {
-        //   formP.removeControl('antiLaundering');
-        // }
-        // if ((this.newRequest.get('person').get('conozcaSuClientePersonaJuridica'))) {
-        //   formP.removeControl('conozcaSuClientePersonaJuridica');
-        // }
-
-        // if (this.newRequest.get('contractor')) {
-        //   if (this.newRequest.get('contractor').get('conozcaSuClientePersona')) {
-        //     formContractor.removeControl('conozcaSuClientePersona');
-        //   }
-        // }
-
-
-        this.contingentBeneficiaryArray = this.newRequest.get('contingentBeneficiary').get('dependentsC') as FormArray;
-        this.primaryBenefitsArray = this.newRequest.get('primaryBenefits').get('dependentsC') as FormArray;
-        this.studentDependents = this.newRequest.get('dependents').get('students') as FormArray;
-        this.dependentsFormArray = this.newRequest.get('dependents').get('allDependents') as FormArray;
-        this.questionsFormArray = this.newRequest.get('questionsA') as FormArray;
-        this.questionsBFormArray = this.newRequest.get('questionsB') as FormArray;
-        if (this.newRequest.get('questionsB')) {
-          this.informationList = this.newRequest.get('questionsB').get('information') as FormArray;
-        }
-        this.filesStudiesArray = this.newRequest.get('files').get('studies') as FormArray;
-
-        this.arrayFilesTitles = data.data.files.studies;
-        this.primaryBeneficaryTitles = data.data.primaryBenefits.dependentsC;
-        this.contigentBeneficaryTitles = data.data.contingentBeneficiary.dependentsC;
-        this.primaryAnotherTitle = data.data.primaryBenefits.personBenefited;
-        this.contigentAnotherTitle = data.data.contingentBeneficiary.personBenefited;
-
-        if (this.newRequest.get('files') && this.newRequest.get('files').get('documentsKnowClient')) {
-          this.filesDocumentsKnowClientArray = this.newRequest.get('files').get('documentsKnowClient') as FormArray;
-        }
-        if (this.newRequest.get('files') && this.newRequest.get('files').get('copyId')) {
-          this.filesCopyIdArray = this.newRequest.get('files').get('copyId') as FormArray;
-        }
-        if (this.newRequest.get('files') && this.newRequest.get('files').get('mercantile')) {
-          this.mercantileRegisterArray = this.newRequest.get('files').get('mercantile') as FormArray;
-        }
-        this.arrayFilesTitlesDocumentsKnowClient = data.data.files.documentsKnowClient;
-        this.arrayFilesTitlesCopyId = data.data.files.copyId;
-        this.arrayFilesTitlesMercantile = data.data.files.mercantile;
-
-        for (const dependent in this.dependentsFormArray.controls) {
-          if (Object.prototype.hasOwnProperty.call(this.dependentsFormArray.controls, dependent)) {
-            const element = this.dependentsFormArray.controls[dependent] as FormGroup;
-
-            if (element.get('haveHighRiskSport').value !== true) {
-              element.removeControl('highRiskSport');
-            }
-
-            if (element.get('haveNicotine').value !== true) {
-              element.removeControl('nicotine');
-            }
-
-            if (element.get('havePregnant').value !== true) {
-              element.removeControl('pregnant');
-            }
-
-            if (element.get('heightUnit').value !== 'PIE') {
-              element.removeControl('inches');
-            }
-
-            element.removeControl('haveSpine');
-          }
-        }
-
-        // tslint:disable: no-string-literal
-        if (formQB.get('specializedTests')) {
-          for (const key in formQB.get('specializedTests')['controls']) {
-            if (Object.prototype.hasOwnProperty.call(formQB.get('specializedTests')['controls'], key)) {
-              const element = formQB.get('specializedTests')['controls'][key] as FormGroup;
-              if (element.value.whichStudy !== 'OTROS') {
-                element.removeControl('specifyStudy');
-              }
-            }
-          }
-        }
-
-        // if (formP.get('pep_radio_insured')) {
-        //   if (formP.get('pep_radio_insured').value !== 'SI') {
-        //     this.newRequest.removeControl('exposedPerson');
-        //   }
-        // }
-
-        if (formP.get('isContractor')) {
-          if (formP.get('isContractor').value !== 'NO') {
-            formPO.get('company').setValidators(null);
-            formPO.get('position').setValidators(null);
-            formPO.get('direction').setValidators(null);
-            // formPO.get('economicActivity').setValidators(null);
-            formPO.get('sector').setValidators(null);
-            formPO.get('city').setValidators(null);
-            formPO.get('country').setValidators(null);
-          }
-        }
-
-        if (formContractor) {
-          formContractor.removeControl('isContractor');
-        }
-
-        if (formQB.get('consultedForUnmentioned')) {
-          for (const key in formQB.get('consultedForUnmentioned')['controls']) {
-            const element = formQB.get('consultedForUnmentioned')['controls'][key] as FormGroup;
-
-            element.get('medicCenterName').setValidators(null);
-            element.get('medicCenterAddress').setValidators(null);
-            element.get('duration').setValidators(null);
-            element.get('time').setValidators(null);
-          }
-        }
-
-        if (formQB.get('alterationForUnmentioned')) {
-          for (const key in formQB.get('alterationForUnmentioned')['controls']) {
-            const element = formQB.get('alterationForUnmentioned')['controls'][key] as FormGroup;
-
-            element.get('medicCenterName').setValidators(null);
-            element.get('medicCenterAddress').setValidators(null);
-            element.get('duration').setValidators(null);
-            element.get('time').setValidators(null);
-          }
-        }
-
-        if (formQB.get('medicalHealthInsurance')) {
-          if (formQB.get('medicalHealthInsurance').value.didReclamation !== 'SI') {
-            const formQBMHI = formQB.get('medicalHealthInsurance') as FormGroup;
-
-            formQBMHI.removeControl('reclamationInfo');
-          }
-        }
-
-        if (this.newRequest.get('contingentBeneficiary').get('dependentsC')) {
-          // tslint:disable-next-line: prefer-for-of
-          for (let x = 0; x < this.newRequest.get('contingentBeneficiary').get('dependentsC')['controls'].length; x++) {
-            const contingentBeneficiaryGroup = this.newRequest.get('contingentBeneficiary').get('dependentsC').get(x.toString()) as FormGroup;
-
-            contingentBeneficiaryGroup.get('name').clearValidators();
-            contingentBeneficiaryGroup.get('name').updateValueAndValidity();
-            contingentBeneficiaryGroup.get('date').clearValidators();
-            contingentBeneficiaryGroup.get('date').updateValueAndValidity();
-            contingentBeneficiaryGroup.get('id2').clearValidators();
-            contingentBeneficiaryGroup.get('id2').updateValueAndValidity();
-            contingentBeneficiaryGroup.get('idType').clearValidators();
-            contingentBeneficiaryGroup.get('idType').updateValueAndValidity();
-            contingentBeneficiaryGroup.get('id2Attached').clearValidators();
-            contingentBeneficiaryGroup.get('id2Attached').updateValueAndValidity();
-            contingentBeneficiaryGroup.get('nationality').clearValidators();
-            contingentBeneficiaryGroup.get('nationality').updateValueAndValidity();
-            contingentBeneficiaryGroup.get('ocupation').clearValidators();
-            contingentBeneficiaryGroup.get('ocupation').updateValueAndValidity();
-            contingentBeneficiaryGroup.get('family').clearValidators();
-            contingentBeneficiaryGroup.get('family').updateValueAndValidity();
-            contingentBeneficiaryGroup.get('quantity').clearValidators();
-            contingentBeneficiaryGroup.get('quantity').updateValueAndValidity();
-            contingentBeneficiaryGroup.get('quantity').setValidators([Validators.min(1), Validators.max(100)]);
-            contingentBeneficiaryGroup.get('quantity').updateValueAndValidity();
-          }
-        }
-
-        this.thereIsAWomenOnTheRequest();
-        this.thereIsAMenOnTheRequest();
-
-        this.isFormValidToFill = true;
-        this.appComponent.showOverlay = false;
-
-        this.newRequest.markAllAsTouched();
-        this.newRequest.updateValueAndValidity();
-
-      }
-
-    });
-  }
+  });
+}
 
 }
 

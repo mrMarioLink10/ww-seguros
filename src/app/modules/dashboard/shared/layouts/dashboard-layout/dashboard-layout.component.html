@@ -29,96 +29,95 @@
           </div>
         </div>
         <mat-list class="dashboard-background-color-gradient pr-3" style="height: 100vh !important">
-          <!-- <mat-list-item
-            [routerLink]="['dashboard-view']"
-            routerLinkActive="router-link-active"
-            style="color: white; max-height: 35px !important;"
-            class="my-3">
-            <img style="max-height: 35px !important;" [src]="activeRoute !== '/dashboard/dashboard-view' ?  '../../../../../../assets/iconos/dashboard-24px.svg' : '../../../../../../assets/iconos/dashboard-24px-b.svg'" height="24px" width="24px" class="mr-1 ml-3">
-            <div style="max-height: 35px !important;" class="text-xs uppercase">Dashboard</div>
-          </mat-list-item> -->
-          <!-- <mat-list-item
-            [routerLink]="['request-management']"
-            routerLinkActive="router-link-active"
-            style="color: white; max-height: 35px !important;"
-            class="my-3">
-            <img style="max-height: 35px !important;" [src]="activeRoute !== '/dashboard/request-management' ? '../../../../../../assets/iconos/work_outline-24px.svg' : '../../../../../../assets/iconos/work_outline-24px-b.svg'" height="24px" width="24px" class="mr-1 ml-3">
-            <div style="max-height: 35px !important;" class="text-xs uppercase">Gestión de solicitud</div>
-          </mat-list-item> -->
-          <mat-list-item [routerLink]="['consult']" routerLinkActive="router-link-active"
-            style="color: white; max-height: 35px !important;" class="my-3">
+
+          <mat-list-item *ngIf="showMatListen(['Datos_polizas', 'Datos_facturas'])" [routerLink]="['consult']"
+            routerLinkActive="router-link-active" style="color: white; max-height: 35px !important;" class="my-3">
             <img style="max-height: 35px !important;"
               [src]="activeRoute.includes('/dashboard/consult') ? '../../../../../../assets/iconos/user_search_icon_filled.svg' : '../../../../../../assets/iconos/user_search_icon.svg'"
               height="24px" width="24px" class="mr-3 ml-3">
             <div style="max-height: 35px !important;" class="text-xs uppercase">Consulta</div>
           </mat-list-item>
-          <mat-list-item [routerLink]="['quotes']" routerLinkActive="router-link-active"
-            style="color: white; max-height: 35px !important;" class="my-3">
+
+          <mat-list-item *ngIf="showMatListen(['Cotizador_Vida', 'Cotizador_Salud'])" [routerLink]="['quotes']"
+            routerLinkActive="router-link-active" style="color: white; max-height: 35px !important;" class="my-3">
             <img style="max-height: 35px !important;"
               [src]="!activeRoute.includes('/dashboard/quotes') ? '../../../../../../assets/iconos/library_books-24px.svg' : '../../../../../../assets/iconos/library_books-24px-b.svg'"
               height="24px" width="24px" class="mr-3 ml-3">
-            <!-- <img *ngIf="!activeRoute" style="max-height: 35px !important;"
-              src="../../../../../../assets/iconos/library_books-24px.svg" height="24px" width="24px" class="mr-1 ml-3"> -->
             <div style="max-height: 35px !important;" class="text-xs uppercase">Cotizaciones</div>
           </mat-list-item>
-          <mat-list-item [routerLink]="['requests']" routerLinkActive="router-link-active"
-            style="color: white; max-height: 35px !important;" class="my-3">
+
+          <mat-list-item *ngIf="showMatListen(['Solicitud_suscripcion'])" [routerLink]="['requests']"
+            routerLinkActive="router-link-active" style="color: white; max-height: 35px !important;" class="my-3">
             <img style="max-height: 35px !important;"
               [src]="!activeRoute.includes('/dashboard/requests') ? '../../../../../../assets/iconos/library_add-24px.svg' : '../../../../../../assets/iconos/library_add-24px-b.svg'"
               height="24px" width="24px" class="mr-3 ml-3">
-            <!-- <img *ngIf="!activeRoute" style="max-height: 35px !important;"
-              src="../../../../../../assets/iconos/library_add-24px.svg" height="24px" width="24px" class="mr-1 ml-3"> -->
-            <div style="max-height: 35px !important;" class="text-xs uppercase">Solicitudes</div>
+            <div style="max-height: 35px !important;" class="text-xs uppercase">Nuevo negocio</div>
           </mat-list-item>
-          <mat-list-item *ngIf="this.role === 'WWS'" [routerLink]="['claims']" routerLinkActive="router-link-active"
+
+          <mat-list-item *ngIf="this.role === 'WWS' && showMatListen(['Solicitud_reembolsos'])"
+            [routerLink]="['claims']" routerLinkActive="router-link-active"
             style="color: white; max-height: 35px !important;" class="my-3">
             <img style="max-height: 35px !important;"
               [src]="!activeRoute.includes('/dashboard/claims') ? '../../../../../../assets/iconos/announcement-24px.svg' : '../../../../../../assets/iconos/announcement-24px-b.svg'"
               height="24px" width="24px" class="mr-3 ml-3">
-            <!-- <img *ngIf="!activeRoute" style="max-height: 35px !important;"
-              src="../../../../../../assets/iconos/announcement-24px.svg" height="24px" width="24px" class="mr-1 ml-3"> -->
             <div style="max-height: 35px !important;" class="text-xs uppercase">Reembolsos</div>
           </mat-list-item>
-          <mat-list-item *ngIf="this.role === 'WWS'" [routerLink]="['authorizations']"
-            routerLinkActive="router-link-active" style="color: white; max-height: 35px !important;" class="my-3">
+
+          <mat-list-item *ngIf="this.role === 'WWS' && showMatListen(['Solicitud_precertificacion'])"
+            [routerLink]="['authorizations']" routerLinkActive="router-link-active"
+            style="color: white; max-height: 35px !important;" class="my-3">
             <img style="max-height: 35px !important;"
               [src]="!activeRoute.includes('/dashboard/authorizations') ? '../../../../../../assets/iconos/autorizacion2.svg' : '../../../../../../assets/iconos/autorizacion1.svg'"
               height="24px" width="24px" class="mr-3 ml-3">
-            <!-- <img *ngIf="!activeRoute" style="max-height: 35px !important;"
-              src="../../../../../../assets/iconos/autorizacion2.svg" height="24px" width="24px" class="mr-1 ml-3"> -->
             <div style="max-height: 35px !important;" class="text-xs uppercase">PRE - Autorizaciones</div>
           </mat-list-item>
+
+        <!--  <mat-list-item *ngIf="showMatListen(['Solicitud_suscripcion'])" [routerLink]="['policyAdministration']"
+            routerLinkActive="router-link-active" style="color: white; max-height: 35px !important;" class="my-3">
+            <img style="max-height: 35px !important;"
+              [src]="!activeRoute.includes('/dashboard/policyAdministration') ? '../../../../../../assets/iconos/user_search_icon.svg' : '../../../../../../assets/iconos/user_search_icon_filled.svg'"
+              height="24px" width="24px" class="mr-3 ml-3">
+            <div style="max-height: 35px !important;" class="text-xs uppercase">Administración Pólizas</div>
+          </mat-list-item> -->
+
+          <!-- <mat-list-item *ngIf="showMatListen(['administrador'])" [routerLink]="['forms']"
+            routerLinkActive="router-link-active" style="color: white; max-height: 35px !important;" class="my-3">
+            <img style="max-height: 35px !important;"
+              [src]="!activeRoute.includes('/dashboard/forms') ? '../../../../../../assets/iconos/formulario.svg' : '../../../../../../assets/iconos/formulario-b.svg'"
+              height="24px" width="24px" class="mr-3 ml-3">
+            <div style="max-height: 35px !important;" class="text-xs uppercase">Formularios</div>
+          </mat-list-item> -->
+
           <mat-list-item (click)="sendEmail();" style="color: white; max-height: 35px !important;" class="my-3">
             <img style="max-height: 35px !important;" src="../../../../../../assets/iconos/ayuda-icon.svg" height="24px"
               width="24px" class="mr-3 ml-3">
-            <!-- <img *ngIf="!activeRoute" style="max-height: 35px !important;"
-              src="../../../../../../assets/iconos/autorizacion2.svg" height="24px" width="24px" class="mr-1 ml-3"> -->
             <div style="max-height: 35px !important;" class="text-xs uppercase">Ayuda</div>
           </mat-list-item>
+
           <mat-list-item (click)="GetInstrucstivo();" style="color: white; max-height: 35px !important;" class="my-3">
             <img style="max-height: 35px !important;" src="../../../../../../assets/iconos/instructivo-icon.svg"
               height="24px" width="24px" class="mr-3 ml-3">
-            <!-- <img *ngIf="!activeRoute" style="max-height: 35px !important;"
-              src="../../../../../../assets/iconos/autorizacion2.svg" height="24px" width="24px" class="mr-1 ml-3"> -->
             <div style="max-height: 35px !important;" class="text-xs uppercase">Instructivo </div>
           </mat-list-item>
+
           <mat-list-item (click)="GetTerminos();" style="color: white; max-height: 35px !important;" class="my-3">
             <img style="max-height: 35px !important;" src="../../../../../../assets/iconos/work_outline-24px.svg"
               height="24px" width="24px" class="mr-3 ml-3">
-            <!-- <img *ngIf="!activeRoute" style="max-height: 35px !important;"
-              src="../../../../../../assets/iconos/autorizacion2.svg" height="24px" width="24px" class="mr-1 ml-3"> -->
             <div style="max-height: 35px !important;" class="text-xs uppercase">Términos de Uso </div>
           </mat-list-item>
-          <!-- <mat-list-item [routerLink]="['information']" routerLinkActive="router-link-active"
-            style="color: white; max-height: 35px !important;" class="my-3">
+
+
+          <!-- <mat-list-item *ngIf="showMatListen(['administrador'])" [routerLink]="['settings']"
+            routerLinkActive="router-link-active" style="color: white; max-height: 35px !important;" class="my-3">
             <img style="max-height: 35px !important;"
-              [src]="!activeRoute.includes('/dashboard/information') ? '../../../../../../assets/iconos/perm_contact_calendar-24px.svg' : '../../../../../../assets/iconos/perm_contact_calendar-24px-b.svg'"
-              height="24px" width="24px" class="mr-1 ml-3">
-            <div style="max-height: 35px !important;" class="text-xs uppercase">Datos</div>
+              [src]="!activeRoute.includes('/dashboard/settings') ? '../../../../../../assets/iconos/settings.svg' : '../../../../../../assets/iconos/settings-b.svg'"
+              height="24px" width="24px" class="mr-3 ml-3">
+            <div style="max-height: 35px !important;" class="text-xs uppercase">Configuración</div>
           </mat-list-item> -->
-          <mat-list-item style="color: white; max-height: 35px !important; padding-left: 0.75rem" class="mt-10">
+
+          <!-- <mat-list-item style="color: white; max-height: 35px !important; padding-left: 0.75rem" class="mt-10">
             <button class="text-xs uppercase h-full w-full text-left" (click)="logOut()">Salir</button>
-          </mat-list-item>
+          </mat-list-item> -->
 
         </mat-list>
       </mat-nav-list>
@@ -132,6 +131,23 @@
             class="dashboard-toolbar-buttons"
             style="background-color: #0179B2 !important; border-radius: 10px !important; margin-top: 40px; margin-left: 9px;">
             <mat-icon style="color: white; font-weight: 600;">arrow_back</mat-icon>
+          </button>
+        </div>
+        <div class="flex justify-end">
+          <div *ngIf="showMatListen(['WWS']) && showMatListen(['WMA'])"
+            style="color: white; max-height: 35px !important; padding-left: 0.75rem" class="mt-10">
+            <mat-form-field color="accent" appearance="outline" class="w-full country-select"
+              style="font-size: small !important;">
+              <mat-select [(ngModel)]="country" (selectionChange)="setCountry()">
+                <mat-option value="rd">RD</mat-option>
+                <mat-option value="pn">PN</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <button (click)="logOut()" mat-mini-fab aria-label="Example icon-button with a heart icon"
+            class="dashboard-toolbar-buttons"
+            style="background-color: #0179B2 !important; border-radius: 10px !important; margin-top: 42px; margin-left: 9px;">
+            <mat-icon style="color: white; font-weight: 600;">login</mat-icon>
           </button>
         </div>
         <div class="flex flex-row justify-end flex-wrap w">

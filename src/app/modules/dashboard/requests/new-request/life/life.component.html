@@ -1890,19 +1890,19 @@
             <div [formGroup]="newRequest.get('files')">
 
               <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4 ">
-                <app-file-input class="mr-3" [group]="newRequest.get('files')" name="healthDeclaration"
+                <!-- <app-file-input class="mr-3" [group]="newRequest.get('files')" name="healthDeclaration"
                   *ngIf="newRequest.get('files').get('healthDeclaration')" label="Declaración de salud"
                   [fileNameWatcher]="fileNameWatcher('healthDeclaration')"
                   (onFileChange)="onFileChange($event, 'healthDeclaration')">
-                </app-file-input>
+                </app-file-input> -->
                 <!-- <app-file-input class="mr-3" [group]="newRequest.get('files')" name="id2"
                   *ngIf="newRequest.get('files').get('id2')" label="Documento de Identificación"
                   [fileNameWatcher]="fileNameWatcher('id2')" (onFileChange)="onFileChange($event, 'id2')">
                 </app-file-input> -->
-                <app-file-input class="mr-3" [group]="newRequest.get('files')" name="medicExam"
+                <!-- <app-file-input class="mr-3" [group]="newRequest.get('files')" name="medicExam"
                   *ngIf="newRequest.get('files').get('medicExam')" label="Examen médico"
                   [fileNameWatcher]="fileNameWatcher('medicExam')" (onFileChange)="onFileChange($event, 'medicExam')">
-                </app-file-input>
+                </app-file-input> -->
                 <!-- <app-file-input class="mr-3" [group]="newRequest.get('files')" name="glycemia"
                   *ngIf="newRequest.get('files').get('glycemia')" label="Glicemia"
                   [fileNameWatcher]="fileNameWatcher('glycemia')" (onFileChange)="onFileChange($event, 'glycemia')">

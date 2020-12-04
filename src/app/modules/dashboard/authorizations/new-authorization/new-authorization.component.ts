@@ -205,6 +205,18 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy, DoCheck {
 	// 	options: this.doctorNumbers
 	// };
 
+	idNumber2FieldVisible = false;
+	searchIdNumberAccess = false;
+
+	idNumber2Options = [];
+
+	// idNumber2Label = 'Asegurados poliza ';
+
+	idNumber2Field = {
+		label: 'Asegurados misma póliza',
+		options: this.idNumber2Options
+	};
+
 	authorization: FormGroup;
 
 	ID = null;
@@ -248,7 +260,7 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy, DoCheck {
 		}
 	}
 	ngOnInit() {
-
+		console.log('El largo de this.idNumber2Options es ' + this.idNumber2Options.length);
 		this.appComponent.showOverlay = true;
 		this.returnDoctors();
 		this.returnServiceCenters();
@@ -277,6 +289,7 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy, DoCheck {
 				noPoliza: [{ value: '', disabled: true }, [Validators.required]],
 				filterType: ['', Validators.required],
 				idNumber: ['', Validators.required],
+				idNumber2: [''],
 				sexo: [{ value: '', disabled: true }, [Validators.required]],
 				correo: ['', [Validators.email, Validators.required]],
 				direccion: [''],
@@ -310,7 +323,8 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy, DoCheck {
 				autorizacion: ['', Validators.required]
 			}),
 			files: this.fb.array([this.createFormArray()]),
-			isComplete: [false, Validators.required]
+			isComplete: [false, Validators.required],
+			idNumber: [{ value: '', disabled: true }, Validators.required],
 
 		});
 
@@ -428,6 +442,12 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy, DoCheck {
 			this.authorization.get('informacionAsegurado').get('idNumber').setValue('');
 			this.authorization.get('informacionAsegurado').get('idNumber').markAsUntouched();
 
+			this.idNumber2FieldVisible = false;
+			this.searchIdNumberAccess = false;
+			this.idNumber2Options.splice(0, this.idNumber2Options.length);
+			this.authorization.get('informacionAsegurado').get('idNumber2').setValue('');
+			this.authorization.get('informacionAsegurado').get('idNumber2').markAsUntouched();
+
 			if (valueFilter == 'NOMBRE') {
 				this.filteredOptions = this.authorization.get('informacionAsegurado').get('idNumber').valueChanges
 					.pipe(
@@ -451,6 +471,22 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy, DoCheck {
 						map(value => typeof value === 'string' ? value : value),
 						map(value => value ? this._filter(value) : this.dataAutoCompletePolicy.slice())
 					);
+			}
+		});
+
+		this.authorization.get('informacionAsegurado').get('idNumber').valueChanges.subscribe(valueIdNumber => {
+
+			if (this.idNumber2Options.length > 0) {
+				if (this.idNumber2Options[0].policy) {
+					if (this.idNumber2Options[0].policy != valueIdNumber) {
+
+						this.idNumber2FieldVisible = false;
+						this.searchIdNumberAccess = false;
+						this.idNumber2Options.splice(0, this.idNumber2Options.length);
+						this.authorization.get('informacionAsegurado').get('idNumber2').setValue('');
+						this.authorization.get('informacionAsegurado').get('idNumber2').markAsUntouched();
+					}
+				}
 			}
 		});
 
@@ -698,7 +734,7 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy, DoCheck {
 
 	returnAutoCompleteData() {
 		this.newAuthorization.getIdNumbers().subscribe(data => {
-			console.log(data);
+			console.warn('DATA:', data);
 			// tslint:disable-next-line: prefer-for-of
 			for (let x = 0; x < data.data.length; x++) {
 				// this.dataAutoCompleteIdNumber.push(data.data[x].asegurado.nombres_asegurado +
@@ -963,76 +999,141 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy, DoCheck {
 
 		let idNumberObject;
 
-		if (this.authorization.get('informacionAsegurado').get('filterType').value == 'NOMBRE') {
-			idNumberObject = this.dataAutoCompleteIdNumberObject.find(nombre =>
-				nombre.name == idNumber);
-			idNumber = (idNumberObject.value).toString();
-		}
-		if (this.authorization.get('informacionAsegurado').get('filterType').value == 'ID') {
-			idNumber = (idNumber).toString();
-		}
-		if (this.authorization.get('informacionAsegurado').get('filterType').value == 'POLIZA') {
-			idNumberObject = this.dataAutoCompleteIdNumberObject.find(nombre =>
-				nombre.policy == idNumber);
-			idNumber = (idNumberObject.value).toString();
-		}
+		if (idNumber != '' && idNumber != null && idNumber != undefined) {
 
-		// const idNumberObject = this.dataAutoCompleteIdNumberObject.find(nombre =>
-		// 	nombre.name == idNumber);
-		// // console.log(idNumberObject);
-		// idNumber = (idNumberObject.value).toString();
-
-		this.appComponent.showOverlay = true;
-
-		this.userService.getInsurancePeople(idNumber)
-			.subscribe((response: any) => {
-
-				console.log(response);
-				this.appComponent.showOverlay = false;
-				if (response.data !== null) {
-					this.showContent = true;
-					const dialogRef = this.dialog.open(BaseDialogComponent, {
-						data: this.dialogOption.idNumberFound(response.data),
-						minWidth: 385,
-					});
-					setTimeout(() => {
-						dialogRef.close();
-					}, 4000);
-
-					this.authorization.get('informacionAsegurado').get('nombres').setValue(response.data.asegurado.nombres_asegurado);
-					this.authorization.get('informacionAsegurado').get('apellidos').setValue(response.data.asegurado.apellidos_asegurado);
-					this.authorization.get('informacionAsegurado').get('noPoliza').setValue(response.data.asegurado.no_poliza);
-
-					switch (response.data.asegurado.sexo) {
-						case 'M':
-							this.authorization.get('informacionAsegurado').get('sexo').setValue('MASCULINO');
-							break;
-
-						case 'F':
-							this.authorization.get('informacionAsegurado').get('sexo').setValue('FEMENINO');
-							break;
-						default:
-							break;
-					}
-
-				} else {
-					this.showContent = false;
-
-					const dialogRef = this.dialog.open(BaseDialogComponent, {
-						data: this.dialogOption.idNumberNotFound,
-						minWidth: 385,
-					});
-					setTimeout(() => {
-						dialogRef.close();
-					}, 4000);
-
-					this.authorization.get('informacionAsegurado').get('nombres').setValue('');
-					this.authorization.get('informacionAsegurado').get('apellidos').setValue('');
-					this.authorization.get('informacionAsegurado').get('noPoliza').setValue('');
-					this.authorization.get('informacionAsegurado').get('sexo').setValue('');
-
+			if (this.authorization.get('informacionAsegurado').get('filterType').value == 'NOMBRE') {
+				this.searchIdNumberAccess = true;
+				if (this.dataAutoCompleteIdNumberObject.find(nombre => nombre.name == idNumber)) {
+					console.log('Asegurado encontrado');
+					idNumberObject = this.dataAutoCompleteIdNumberObject.find(nombre =>
+						nombre.name == idNumber);
+					idNumber = (idNumberObject.value).toString();
 				}
-			});
+				else {
+					console.log('Asegurado no encontrado');
+				}
+			}
+			if (this.authorization.get('informacionAsegurado').get('filterType').value == 'ID') {
+				this.searchIdNumberAccess = true;
+				idNumber = (idNumber).toString();
+			}
+			if (this.authorization.get('informacionAsegurado').get('filterType').value == 'POLIZA' && this.idNumber2Options.length == 0) {
+				this.appComponent.showOverlay = true;
+
+				if (this.dataAutoCompleteIdNumberObject.find(nombre => nombre.policy == idNumber)) {
+					console.log('Póliza encontrada');
+					const idNumber2Policy = idNumber;
+					// tslint:disable-next-line: prefer-for-of
+					for (let x = 0; x < this.dataAutoCompleteIdNumberObject.length; x++) {
+						if (idNumber2Policy == this.dataAutoCompleteIdNumberObject[x].policy) {
+							this.idNumber2Options.push({
+								value: this.dataAutoCompleteIdNumberObject[x].name,
+								viewValue: this.dataAutoCompleteIdNumberObject[x].name,
+								policy: this.dataAutoCompleteIdNumberObject[x].policy
+							});
+						}
+					}
+					if (this.idNumber2Options.length > 1) {
+						this.idNumber2FieldVisible = true;
+						this.searchIdNumberAccess = false;
+					}
+					else {
+						this.idNumber2FieldVisible = false;
+						this.searchIdNumberAccess = true;
+						this.authorization.get('informacionAsegurado').get('idNumber2').setValue('');
+						this.authorization.get('informacionAsegurado').get('idNumber2').markAsUntouched();
+
+						idNumberObject = this.dataAutoCompleteIdNumberObject.find(nombre =>
+							nombre.policy == idNumber);
+						idNumber = (idNumberObject.value).toString();
+						this.idNumber2Options.splice(0, this.idNumber2Options.length);
+					}
+				}
+				else {
+					console.log('Póliza no encontrada');
+					this.searchIdNumberAccess = true;
+				}
+
+				// setTimeout(() => {
+				this.appComponent.showOverlay = false;
+				// }, 1000);
+			}
+
+			if (this.authorization.get('informacionAsegurado').get('idNumber2').value != '' && this.idNumber2FieldVisible == true) {
+				this.searchIdNumberAccess = true;
+				const idNumber2Value = this.authorization.get('informacionAsegurado').get('idNumber2').value;
+
+				idNumberObject = this.dataAutoCompleteIdNumberObject.find(nombre =>
+					nombre.name == idNumber2Value);
+				idNumber = (idNumberObject.value).toString();
+			}
+
+			// const idNumberObject = this.dataAutoCompleteIdNumberObject.find(nombre =>
+			// 	nombre.name == idNumber);
+			// // console.log(idNumberObject);
+			// idNumber = (idNumberObject.value).toString();
+			if (this.searchIdNumberAccess == true) {
+
+				this.appComponent.showOverlay = true;
+
+				this.userService.getInsurancePeople(idNumber)
+					.subscribe((response: any) => {
+
+						console.log(response);
+						this.appComponent.showOverlay = false;
+						if (response.data !== null) {
+							this.showContent = true;
+							const dialogRef = this.dialog.open(BaseDialogComponent, {
+								data: this.dialogOption.idNumberFound(response.data),
+								minWidth: 385,
+							});
+							setTimeout(() => {
+								dialogRef.close();
+							}, 4000);
+
+							this.authorization.get('informacionAsegurado').get('nombres').setValue(response.data.asegurado.nombres_asegurado);
+							this.authorization.get('informacionAsegurado').get('apellidos').setValue(response.data.asegurado.apellidos_asegurado);
+							// this.authorization.get('informacionAsegurado').get('noPoliza').setValue(response.data.asegurado.no_poliza);
+							this.authorization.get('idNumber').setValue(response.data.asegurado.id_asegurado);
+
+							if (this.dataAutoCompleteIdNumberObject.find(nombre => nombre.name == (this.authorization.get('informacionAsegurado').get('nombres').value + ' ' + this.authorization.get('informacionAsegurado').get('apellidos').value))) {
+								console.log('el nombre de response.data es igual a nombre.name');
+								console.log(this.dataAutoCompleteIdNumberObject.find(nombre => nombre.name == (this.authorization.get('informacionAsegurado').get('nombres').value + ' ' + this.authorization.get('informacionAsegurado').get('apellidos').value)).policy);
+								this.authorization.get('informacionAsegurado').get('noPoliza').setValue(this.dataAutoCompleteIdNumberObject.find(nombre => nombre.name == (this.authorization.get('informacionAsegurado').get('nombres').value + ' ' + this.authorization.get('informacionAsegurado').get('apellidos').value)).policy);
+							}
+
+							switch (response.data.asegurado.sexo) {
+								case 'M':
+									this.authorization.get('informacionAsegurado').get('sexo').setValue('MASCULINO');
+									break;
+
+								case 'F':
+									this.authorization.get('informacionAsegurado').get('sexo').setValue('FEMENINO');
+									break;
+								default:
+									break;
+							}
+
+						} else {
+							this.showContent = false;
+
+							const dialogRef = this.dialog.open(BaseDialogComponent, {
+								data: this.dialogOption.idNumberNotFound,
+								minWidth: 385,
+							});
+							setTimeout(() => {
+								dialogRef.close();
+							}, 4000);
+
+							this.authorization.get('informacionAsegurado').get('nombres').setValue('');
+							this.authorization.get('informacionAsegurado').get('apellidos').setValue('');
+							this.authorization.get('informacionAsegurado').get('noPoliza').setValue('');
+							this.authorization.get('informacionAsegurado').get('sexo').setValue('');
+
+						}
+					});
+			}
+		}
 	}
 
 	canDeactivate(): Observable<boolean> | boolean {
@@ -1080,6 +1181,7 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy, DoCheck {
 			this.showContent = true;
 			this.authorization.get('informacionAsegurado').get('idNumber').disable();
 			this.authorization.get('informacionAsegurado').get('filterType').disable();
+			this.authorization.get('informacionAsegurado').get('idNumber2').disable();
 
 			switch (data.data.informacionAsegurado.sexo) {
 				case 'M':
@@ -1093,7 +1195,11 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy, DoCheck {
 					break;
 			}
 
+			if (this.authorization.get('countryRoleCode')) { this.authorization.get('countryRoleCode').setValidators(null); }
+
+
 			this.authorization['controls'].fecha.setValue(data.data.fecha);
+			this.authorization['controls'].idNumber.setValue(data.data.idNumber);
 			this.authorization['controls'].informacionAsegurado['controls'].tipoReclamo.setValue(data.data.informacionAsegurado.tipoReclamo);
 			//this.authorization['controls'].informacionAsegurado['controls'].tipoReclamoMoneda.setValue(data.data.tipoReclamoMoneda);
 			this.authorization['controls'].informacionAsegurado['controls'].nombres.setValue(data.data.informacionAsegurado.nombres);
@@ -1101,6 +1207,21 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy, DoCheck {
 			this.authorization['controls'].informacionAsegurado['controls'].noPoliza.setValue(data.data.informacionAsegurado.noPoliza);
 			this.authorization['controls'].informacionAsegurado['controls'].filterType.setValue(data.data.informacionAsegurado.filterType);
 			this.authorization['controls'].informacionAsegurado['controls'].idNumber.setValue(data.data.informacionAsegurado.idNumber);
+
+			this.authorization.get('informacionAsegurado').get('idNumber2').clearValidators();
+			this.authorization.get('informacionAsegurado').get('idNumber2').updateValueAndValidity();
+
+			if (data.data.informacionAsegurado.idNumber2 != '') {
+				console.log('Entro');
+				this.idNumber2Options.push({
+					value: data.data.informacionAsegurado.idNumber2,
+					viewValue: data.data.informacionAsegurado.idNumber2,
+					policy: data.data.informacionAsegurado.noPoliza
+				});
+				this.authorization.get('informacionAsegurado').get('idNumber2').setValue(data.data.informacionAsegurado.idNumber2);
+				this.idNumber2FieldVisible = true;
+			}
+
 			this.authorization['controls'].informacionAsegurado['controls'].sexo.setValue(data.data.informacionAsegurado.sexo);
 			this.authorization['controls'].informacionAsegurado['controls'].correo.setValue(data.data.informacionAsegurado.correo);
 			this.authorization['controls'].informacionAsegurado['controls'].direccion.setValue(data.data.informacionAsegurado.direccion);
@@ -1275,7 +1396,6 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy, DoCheck {
 
 			this.authorization.markAllAsTouched();
 			this.authorization.updateValueAndValidity();
-
 		});
 		setTimeout(() => {
 			this.appComponent.showOverlay = false;

@@ -69,6 +69,13 @@ export class DialogOptionService {
 		showButtons: false,
 	};
 
+	noAccess: BaseDialog = {
+		logo: 'warning',
+		title: 'Acceso invalido',
+		text: `Usted no tiene los permisos para acceder a esta sección del portal`,
+		showButtons: false,
+	};
+
 	sendInvitationLink: BaseDialog = {
 		logo: 'warning',
 		title: 'Introducir correo electrónico',
@@ -117,7 +124,7 @@ export class DialogOptionService {
 		return {
 			logo: 'check',
 			title: 'Confirmación',
-			text: `La solicitud de ${form} ha sido enviada`,
+			text: `Hemos recibido su solicitud`,
 			showButtons: false,
 		};
 	}
@@ -184,6 +191,66 @@ export class DialogOptionService {
 			logo: 'warning',
 			title: 'Campos Inválidos',
 			text: 'Revisar las secciones y los campos que aparecen en rojo',
+			showButtons: false
+		};
+	}
+
+	saveSettings() {
+		return {
+			logo: 'warning',
+			title: 'Confirmación',
+			text: `Se procederá a guardar los cambios en Configuración`,
+			showButtons: true,
+			showCancelButton: true,
+			textPrincipalButton: 'Guardar',
+			textCancelButton: 'Cancelar'
+		};
+	}
+
+	confirmedSavedSettings() {
+		return {
+			logo: 'check',
+			title: 'Confirmación',
+			text: `Los cambios en Configuración han sido guardados`,
+			showButtons: false,
+		};
+	}
+
+	settingsInvalid() {
+		return {
+			logo: 'warning',
+			title: 'Campos Inválidos',
+			text: 'Revisar los campos que aparecen en rojo',
+			showButtons: false
+		};
+	}
+
+	saveAdministrationPolicy() {
+		return {
+			logo: 'warning',
+			title: 'Confirmación',
+			text: `Se procederá a guardar los cambios en Administración de Pólizas`,
+			showButtons: true,
+			showCancelButton: true,
+			textPrincipalButton: 'Guardar',
+			textCancelButton: 'Cancelar'
+		};
+	}
+
+	confirmedSavedAdministrationPolicy() {
+		return {
+			logo: 'check',
+			title: 'Confirmación',
+			text: `Los cambios en Administración de Pólizas han sido guardados`,
+			showButtons: false,
+		};
+	}
+
+	AdministrationPolicyInvalid() {
+		return {
+			logo: 'warning',
+			title: 'Campos Inválidos',
+			text: 'Revisar los campos que aparecen en rojo',
 			showButtons: false
 		};
 	}

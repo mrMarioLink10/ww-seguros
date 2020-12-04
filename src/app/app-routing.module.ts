@@ -1,9 +1,8 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { DashboardLayoutComponent } from './modules/dashboard/shared/layouts/dashboard-layout/dashboard-layout.component';
-import { LoginComponent } from './modules/auth/login/login.component';
 import { AppAuthGuard } from './core/guards/app-auth.guard';
 import { CanExitGuard } from './core/guards/can-exit.guard';
+import { UserService } from './core/services/user/user.service';
 
 const routes: Routes = [
 	{

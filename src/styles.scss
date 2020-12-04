@@ -535,6 +535,90 @@ body {
   font-weight: bold;
 }
 
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+  @responsive {
+    .tx4-xl {
+      font-size: 485px !important;
+      line-height: 525px !important;
+    }
+
+    .tx4-lg {
+      font-size: 315px !important;
+      line-height: 395px !important;
+    }
+
+    .tx4-md {
+      font-size: 285px !important;
+      line-height: 325px !important;
+    }
+
+    .tx4-sm {
+      font-size: 245px !important;
+      line-height: 325px !important;
+    }
+
+    .t-xl {
+      font-size: 80px !important;
+    }
+
+    .t-lg {
+      font-size: 60px !important;
+    }
+
+    .t-md {
+      font-size: 40px !important;
+    }
+
+    .t-sm {
+      font-size: 40px !important;
+    }
+
+    .i-xl {
+      font-size: 30px !important;
+    }
+
+    .i-lg {
+      font-size: 19px !important;
+    }
+
+    .i-md {
+      font-size: 17px !important;
+    }
+
+    .i-sm {
+      font-size: 14px !important;
+    }
+
+    .c-404-xl {
+      height: 95px !important;
+      width: 95px !important;
+      top: 54.5% !important;
+    }
+
+    .c-404-lg {
+      height: 65px !important;
+      width: 65px !important;
+      top: 52.5% !important;
+    }
+
+    .c-404-md {
+      height: 55px !important;
+      width: 55px !important;
+      top: 54.5% !important;
+    }
+
+    .c-404-sm {
+      height: 45px !important;
+      width: 45px !important;
+      top: 54.5% !important;
+    }
+  }
+}
+
 /** OVERWRITING ANOTHER CLASSES */
 /** OVERWRITING ANOTHER CLASSES */
 /** OVERWRITING ANOTHER CLASSES */

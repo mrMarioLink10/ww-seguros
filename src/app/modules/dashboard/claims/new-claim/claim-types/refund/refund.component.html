@@ -12,7 +12,7 @@
     <div class="mr-3">
       <app-select name="filterType" [options]="filterOptions" [group]="refundForm.get('informacion')"></app-select>
     </div>
-    <div *ngIf="this.refundForm.get('informacion').get('filterType').value == 'NOMBRE' ">
+    <div class="mr-3" *ngIf="this.refundForm.get('informacion').get('filterType').value == 'NOMBRE' ">
       <form [formGroup]="refundForm.get('informacion')">
         <mat-form-field color="accent" appearance="outline" class="w-full bg-transparente"
           style="font-size: small !important;">
@@ -31,7 +31,7 @@
         </mat-form-field>
       </form>
     </div>
-    <div *ngIf="this.refundForm.get('informacion').get('filterType').value == 'ID' ">
+    <div class="mr-3" *ngIf="this.refundForm.get('informacion').get('filterType').value == 'ID' ">
       <form [formGroup]="refundForm.get('informacion')">
         <mat-form-field color="accent" appearance="outline" class="w-full bg-transparente"
           style="font-size: small !important;">
@@ -50,7 +50,7 @@
         </mat-form-field>
       </form>
     </div>
-    <div *ngIf="this.refundForm.get('informacion').get('filterType').value == 'POLIZA' ">
+    <div class="mr-3" *ngIf="this.refundForm.get('informacion').get('filterType').value == 'POLIZA' ">
       <form [formGroup]="refundForm.get('informacion')">
         <mat-form-field color="accent" appearance="outline" class="w-full bg-transparente"
           style="font-size: small !important;">
@@ -68,6 +68,9 @@
           </mat-error>
         </mat-form-field>
       </form>
+    </div>
+    <div *ngIf="idNumber2FieldVisible" class="mr-3">
+      <app-select name="idNumber2" [options]="idNumber2Field" [group]="refundForm.get('informacion')"></app-select>
     </div>
     <!-- <div *ngIf="timeAutoComplete == 1" class="mr-3 col-span-2">
       <form [formGroup]="refundForm.get('informacion')">
@@ -139,6 +142,10 @@
         </div> -->
         <div class="mr-3">
           <app-input [group]="refundForm.get('informacion')" label="No. Póliza" name='noPoliza' placeholder="246810">
+          </app-input>
+        </div>
+        <div class="mr-3">
+          <app-input [group]="refundForm" label="ID Number" name='idNumber' placeholder="246810">
           </app-input>
         </div>
         <div class="mr-3">

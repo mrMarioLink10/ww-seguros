@@ -1,9 +1,10 @@
-import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
-import {MatPaginator, MatTableDataSource, MatSort} from '@angular/material';
-import {Policy, PolicyFilter} from '../../models/policy';
-import {Router} from '@angular/router';
-import {PolicyService} from '../../../services/consultation/policy.service';
-import {HttpParams} from '@angular/common/http';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { MatPaginator, MatTableDataSource, MatSort } from '@angular/material';
+import { Policy, PolicyFilter } from '../../models/policy';
+import { Router } from '@angular/router';
+import { PolicyService } from '../../../services/consultation/policy.service';
+import { HttpParams } from '@angular/common/http';
+import { UserService } from '../../../../../core/services/user/user.service';
 
 @Component({
   selector: 'app-policy-table',
@@ -12,7 +13,7 @@ import {HttpParams} from '@angular/common/http';
 })
 export class PolicyTableComponent implements OnInit {
 
-  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
   policyFilters: PolicyFilter;
@@ -37,35 +38,48 @@ export class PolicyTableComponent implements OnInit {
   displayedColumns: string[] = ['id', 'clientName', 'product', 'insuredQuantity', 'validityDate',
     'paymentState'];
 
-    dataSource: MatTableDataSource<Policy>;
-    data: Policy[] = [];
-    loading = false;
+  dataSource: MatTableDataSource<Policy>;
+  data: Policy[] = [];
+  loading = false;
 
-  constructor(private route: Router, private policyService: PolicyService) { }
+  constructor(
+    private route: Router,
+    private policyService: PolicyService,
+    private userService: UserService
+  ) { }
 
   ngOnInit() {
+    console.warn('aqui ocurre el error');
+
     this.loadData();
   }
 
   loadData() {
     this.loading = true;
-    const params = this.generatePoliciesParams();
+    let params = this.generatePoliciesParams();
+
+    if (this.userService.getRoles().includes('WWS') && this.userService.getRoles().includes('WMA')) {
+      params = params.append('country', localStorage.getItem('countryCode'));
+    }
+
     this.policyService.getPolicies(params).subscribe((res: any) => {
       this.data = res.data;
       this.dataSource = new MatTableDataSource(this.data);
       this.dataSource.sort = this.sort;
       this.dataSource.paginator = this.paginator;
       this.emitPendingPolicies(this.data);
+      this.sortTableByPendingPayments();
       this.loading = false;
     });
   }
 
   sortTableByPendingPayments(): void {
+    console.warn('aqui ocurre el error');
     this.sort.sort({ id: 'paymentState', start: 'desc', disableClear: false });
   }
 
   emitPendingPolicies(policies: Policy[]) {
-    const filteredPolicies = policies.filter( p => p.paymentState === 'P');
+    const filteredPolicies = policies.filter(p => p.paymentState === 'P');
     this.pendingPoliciesEmitter.emit(filteredPolicies.length);
   }
 

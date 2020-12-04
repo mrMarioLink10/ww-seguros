@@ -19,6 +19,8 @@ export class InputComponent implements OnInit, AfterViewChecked {
 	@Input() max: string;
 	@Input() placeholder: string;
 	@Input() disabled?: boolean;
+	@Input() beLowerCase?: boolean;
+	@Input() preventSpace?: boolean;
 	@Input() group: FormGroup;
 
 	constructor(private cdr: ChangeDetectorRef) { }
@@ -35,6 +37,10 @@ export class InputComponent implements OnInit, AfterViewChecked {
 	omitSpecialChar(event) {
 		let k;
 		k = event.charCode;
-		return ((k > 64 && k < 91) || (k > 96 && k < 123) || k === 8 || k === 32 || (k >= 48 && k <= 57) || k === 44 || k === 46 || k === 64 || k === 241 || k === 209);
+		return ((k > 64 && k < 91) || (k > 96 && k < 123) || k === 8 || k === 32 || (k >= 48 && k <= 57) || k === 44 || k === 46 || k === 64 || k === 241 || k === 209 || k === 32);
+	}
+
+	goCap() {
+		this.group.get(this.name).setValue(this.group.value[this.name].toUpperCase());
 	}
 }

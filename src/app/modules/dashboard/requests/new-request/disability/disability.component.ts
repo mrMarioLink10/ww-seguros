@@ -2873,6 +2873,11 @@ export class DisabilityComponent implements OnInit, DoCheck {
           }
         }
 
+        if (formF.get('incomesCertified')) {
+          formF.get('incomesCertified').clearValidators();
+          formF.get('incomesCertified').updateValueAndValidity();
+        }
+
         if (this.disabilityGroup.get('questions').get('inches') &&
           this.disabilityGroup.get('questions').get('heightUnit').value === 'PIE') {
           this.disabilityGroup.get('questions').get('inches').setValidators([Validators.required, Validators.min(0), Validators.max(11)])

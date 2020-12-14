@@ -14,6 +14,7 @@ export const environment = {
   instructivoMedical: 'http://wwsdevportalbackend.azurewebsites.net/INSTRUCTIVO_WWM_V2.pdf',
   terminosCondiciones: 'http://wwsdevportalbackend.azurewebsites.net/TERMINOS_DE_USO.pdf',
   fileUrl: 'http://wwsdevportalbackend.azurewebsites.net',
+  fileUrlHttps: 'https://wwsdevportalbackend.azurewebsites.net',
   mailForHelp: 'ayuda_wws@wws.com.do',
   urlCotizadoresPdf: 'https://cotizadores.wwseguros.com.do:30443',
   urlCotizadores: 'https://cotizadores.wwseguros.com.do',

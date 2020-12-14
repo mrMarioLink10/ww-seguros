@@ -13,6 +13,7 @@ export const environment = {
   instructivoMedical: "http://wwsdevportalbackend-desadevportalbackend.azurewebsites.net/INSTRUCTIVO_WWM_V2.pdf",
   terminosCondiciones: "http://wwsdevportalbackend-desadevportalbackend.azurewebsites.net/TERMINOS_DE_USO.pdf",
   fileUrl: 'http://wwsdevportalbackend-desadevportalbackend.azurewebsites.net',
+  fileUrlHttps: 'https://wwsdevportalbackend-desadevportalbackend.azurewebsites.net',
   mailForHelp: "ayuda_wws@wws.com.do",
   mailForHelpPM: "ayuda_wwma@wwmedicalassurance.com",
   urlCotizadores: "http://portalwwg.eastus.cloudapp.azure.com:3000",

@@ -28,7 +28,7 @@ export class AccountStatusFilterComponent implements OnInit {
     endDate: [''],
 
   });
-  BASE_URL: any = `${environment.fileUrl}`;
+  BASE_URL: any = `${environment.fileUrlHttps}`;
 
   constructor(private fb: FormBuilder, private appComponent: AppComponent, private userService: UserService) { }
   userRole = "";

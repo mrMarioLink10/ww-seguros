@@ -16,7 +16,7 @@ export class BillsTableConsultComponent implements OnInit {
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
-  BASE_URL: any = `${environment.fileUrl}`;
+  BASE_URL: any = `${environment.fileUrlHttps}`;
   billsFilter: BillFilter;
   @Output() pendingBillsEmitter = new EventEmitter<number>();
   @Input() set filters(billsFilter: BillFilter) {

@@ -89,7 +89,7 @@ export class BillsTableComponent implements OnInit {
         return '';
     }
   }
-  BASE_URL: any = `${environment.fileUrl}`;
+  BASE_URL: any = `${environment.fileUrlHttps}`;
   constructQueryParams(): HttpParams {
     let httpParams = new HttpParams();
     if (this.billsFilter.policyId && this.billsFilter.policyId !== '') {

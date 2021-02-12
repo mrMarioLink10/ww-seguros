@@ -3802,6 +3802,22 @@ export class LifeComponent implements OnInit, DoCheck {
         if (formWI) {
           this.womenDisordersList = formWI.get('disorders') as FormArray;
         }
+
+        if (this.newRequest.get('primaryBenefits').get('dependentsC')) {
+          // tslint:disable-next-line: prefer-for-of
+          for (let x = 0; x < this.newRequest.get('primaryBenefits').get('dependentsC')['controls'].length; x++) {
+            this.newRequest.get('primaryBenefits').get('dependentsC').get(
+              x.toString()).get('name').setValidators(Validators.required);
+            this.newRequest.get('primaryBenefits').get('dependentsC').get(
+              x.toString()).get('name').updateValueAndValidity();
+
+            this.newRequest.get('primaryBenefits').get('dependentsC').get(
+              x.toString()).get('id2Attached').setValidators(Validators.required);
+            this.newRequest.get('primaryBenefits').get('dependentsC').get(
+              x.toString()).get('id2Attached').updateValueAndValidity();
+          }
+        }
+
         this.heartPainList = formHMI.get('heartPain') as FormArray;
         this.hypertensionList = formHMI.get('hypertensionVida') as FormArray;
         this.lostDriveLicenseList = formGI.get('lostDriveLicense') as FormArray;

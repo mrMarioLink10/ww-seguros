@@ -859,12 +859,9 @@ export class FormHandlerService {
 					console.log('administracion de polizas es valido');
 					this.policyAdministrationService.postPolicyAdministration(json)
 						.subscribe(res => {
-							this.correctSend(res, dialog, dataClosing, route);
+							this.correctSend(res, dialog, dataClosing, route, true);
 							appComponent.showOverlay = false;
 							console.log('Envio realizado correctamente');
-							// setTimeout(() => {
-							// 	window.location.reload();
-							// }, 2000);
 						}, (err) => {
 							this.badSend(err, dialog);
 							console.log('Envio fallido');

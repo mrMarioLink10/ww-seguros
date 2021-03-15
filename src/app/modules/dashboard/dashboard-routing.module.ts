@@ -65,7 +65,13 @@ const routes: Routes = [
 				loadChildren: () => import('./policy-administration/policy-administration.module').then((m) => m.PolicyAdministrationModule),
 				canLoad: [AppAuthGuard],
 				data: { accessRoles: ['Solicitud_suscripcion'] }
-			}
+			},
+			{
+				path: 'pa-requests',
+				loadChildren: () => import('./pa-requests/pa-requests.module').then((m) => m.PaRequestsModule),
+				canLoad: [AppAuthGuard],
+				data: { accessRoles: ['Solicitud_suscripcion'] }
+			},
 		]
 	},
 	{

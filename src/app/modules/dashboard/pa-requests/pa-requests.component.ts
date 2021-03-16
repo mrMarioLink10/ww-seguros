@@ -10,6 +10,7 @@ import { environment } from 'src/environments/environment';
 import { DisabilityService } from '../requests/new-request/disability/services/disability.service';
 import { LifeService } from '../requests/new-request/life/services/life.service';
 import { RequestsService } from '../services/requests/requests.service';
+import { PaRequestsService } from '../services/pa-requests.service';
 
 @Component({
   selector: 'app-pa-requests',
@@ -49,7 +50,7 @@ export class PaRequestsComponent implements OnInit {
   };
 
   // tslint:disable-next-line: max-line-length
-  displayedColumns: string[] = ['noCotizacion', 'nombres', 'apellidos', 'seguro', 'plan', 'fecha', 'monto', 'createdBy', 'estatus', 'acciones'];
+  displayedColumns: string[] = ['id', 'idNumber', 'personName', 'creationDate', 'createdBy', 'status', 'acciones'];
 
   dataSource;
   requests: any;
@@ -62,7 +63,7 @@ export class PaRequestsComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private requestsService: RequestsService,
+    private paRequestsService: PaRequestsService,
     public life: LifeService,
     public disability: DisabilityService,
     private formHandlerService: FormHandlerService,
@@ -82,7 +83,7 @@ export class PaRequestsComponent implements OnInit {
     setTimeout(() => {
       this.appComponent.showOverlay = true;
     });
-    this.requestsService.getRequests(params)
+    this.paRequestsService.getRequests(params)
       .subscribe(res => {
         this.appComponent.showOverlay = false;
 

@@ -1,151 +1,97 @@
-<div class="p-6 pr-6 xs:pr-6 sm:pr-6 md:pr-12 lg:pr-12 xl:pr-12 bg-white">
-    <form [formGroup]='administrationPolicyGroup'>
-      <h3 class="uppercase dashboard-page-title pt-8 pb-4">Administración de Pólizas</h3>
-
-      <div class="p-3 pb-2 mb-4" style="background-color: #F2F2F2">
-        <div class="mt-3 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 xl:grid-cols-5">
-          <!-- <div class="mr-3">
-            <app-select name="filterType" [options]="filterOptions" [group]="administrationPolicyGroup"></app-select>
-          </div> -->
-          <!-- <div class="mr-3 col-span-2" *ngIf="this.administrationPolicyGroup.get('filterType').value == 'NOMBRE' ">
-            <form [formGroup]="administrationPolicyGroup">
-              <mat-form-field color="accent" appearance="outline" class="w-full bg-transparente"
-                style="font-size: small !important;">
-                <mat-label>Nombre</mat-label>
-                <input formControlName="idNumber" matInput class="" type="text" [matAutocomplete]="auto"
-                  placeholder="Juan Juan">
-                <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
-                  <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
-                    {{option}}
-                  </mat-option>
-                </mat-autocomplete>
-                <mat-error
-                  *ngIf="administrationPolicyGroup.get('idNumber').touched && !administrationPolicyGroup.get('idNumber').valid">
-                  Este campo es obligatorio
-                </mat-error>
-              </mat-form-field>
-            </form>
-          </div>
-          <div class="mr-3" *ngIf="this.administrationPolicyGroup.get('filterType').value == 'ID' ">
-            <form [formGroup]="administrationPolicyGroup">
-              <mat-form-field color="accent" appearance="outline" class="w-full bg-transparente"
-                style="font-size: small !important;">
-                <mat-label>ID Number</mat-label>
-                <input formControlName="idNumber" matInput class="" type="number" [matAutocomplete]="auto"
-                  placeholder="00010002">
-                <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
-                  <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
-                    {{option}}
-                  </mat-option>
-                </mat-autocomplete>
-                <mat-error
-                  *ngIf="administrationPolicyGroup.get('idNumber').touched && !administrationPolicyGroup.get('idNumber').valid">
-                  Este campo es obligatorio
-                </mat-error>
-              </mat-form-field>
-            </form>
-          </div> -->
-          <div class="mr-3" *ngIf="this.administrationPolicyGroup.get('filterType').value == 'POLIZA' ">
-            <form [formGroup]="administrationPolicyGroup">
-              <mat-form-field color="accent" appearance="outline" class="w-full bg-transparente"
-                style="font-size: small !important;">
-                <mat-label>Póliza</mat-label>
-                <input formControlName="idNumber" matInput class="" type="text" [matAutocomplete]="auto"
-                  placeholder="SWWVT-00000">
-                <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
-                  <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
-                    {{option}}
-                  </mat-option>
-                </mat-autocomplete>
-                <mat-error
-                  *ngIf="administrationPolicyGroup.get('idNumber').touched && !administrationPolicyGroup.get('idNumber').valid">
-                  Este campo es obligatorio
-                </mat-error>
-              </mat-form-field>
-            </form>
-          </div> 
-            <div *ngIf="idNumber2FieldVisible" class="mr-3">
-                <app-select name="idNumber2" [options]="idNumber2Field" [group]="administrationPolicyGroup"></app-select>
-            </div>
-          <div
-            *ngIf="this.administrationPolicyGroup.get('filterType').value == 'NOMBRE' || this.administrationPolicyGroup.get('filterType').value == 'ID' || this.administrationPolicyGroup.get('filterType').value == 'POLIZA' ">
-            <button style="margin-left: 15px;"
-              (click)="searchIdNumber(administrationPolicyGroup.value.idNumber)" type="submit"
-              class="nofocus flex justify-center small-search-button">
-              <img src="/assets/iconos/search-icon.svg">
-            </button>
-          </div>
-        </div>
-      </div>
-      <div *ngIf="showContent" class="mt-12">
-
-        <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
-          <div class="mr-3 md:col-span-2">
-            <app-input name="personName" label="Nombre del Asegurado" [group]="administrationPolicyGroup"></app-input>
-          </div>
-        </div>
-
-        <div class="mt-10 grid grid-cols-1 lg:grid-cols-2">
-          <div>
-            <label> <strong> Por favor, seleccione el pdf que desee descargar. </strong> </label>
-            <div class="grid grid-cols-2 lg:grid-cols-3">
-              <div class="mr-3 mt-5 lg:col-span-2">
-                <app-select name="pdfSelector" [options]="pdfOptionsField" [group]="administrationPolicyGroup"></app-select>
-              </div>
-              <div class="mt-5 ml-3">
-                <button *ngIf="this.administrationPolicyGroup.get('pdfSelector').value != ''"
-                (click)="download(this.administrationPolicyGroup.get('pdfSelector').value)" type="button" 
-                class="flex justify-center content-center nofocus small-search-button" title="Descargar">
-                  <img src="/assets/iconos/cloud_download-white-18dp.svg">
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="mt-20">
-          <label> <strong> Por favor, suba/cargue el pdf llenado aquí. </strong> </label>
-
-          <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-            <div class="mt-5">
-              <!-- <div
-                *ngFor="let studies of administrationPolicyGroup.get('pdfArchives')['controls']; let i = index"> -->
-                <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
-                  <!-- [ngClass]="{'col-span-3': administrationPolicyGroup.get('pdfArchives')['controls'].length > 1,
-                  'col-span-4': administrationPolicyGroup.get('pdfArchives')['controls'].length === 1}" -->
-                  <app-file-input class="mr-3 col-span-4"
-                    [group]="administrationPolicyGroup.get('pdfArchives')"
-                    name="pdfFile" label="Archivos PDF"
-                    [fileNameWatcher]="arrayPdfArchivesWatcher()"
-                    (onFileChange)="onStudiesChange($event)">
-                  </app-file-input>
-                  <!-- <div
-                    [ngClass]="{'col-span-1': administrationPolicyGroup.get('pdfArchives')['controls'].length > 1}"
-                    *ngIf="administrationPolicyGroup.get('pdfArchives')['controls'].length > 1">
-                    <button mat-mini-fab aria-label=" Eliminar archivo pdf"
-                      (click)="diseaseService.removeToList(i, administrationPolicyGroup.get('pdfArchives'))"
-                      type="button" class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
-                      <mat-icon style="color: #18446B">remove</mat-icon>
-                    </button>
-                  </div> -->
-                </div>
-              <!-- </div> -->
-              <!-- <div class="mb-6">
-                <button mat-mini-fab aria-label="Agregar archivo pdf"
-                  (click)="addToList(administrationPolicyGroup.get('pdfArchives'))"
-                  type="button" class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
-                  <mat-icon style="color: #18446B">add</mat-icon>
-                </button>
-              </div> -->
-            </div>
-          </div>
-        </div>
-      </div>
-    </form>
-    <form #form="ngForm">
-      <div *ngIf="showContent" class="mt-8">
-        <button mat-button class="send-button" style="margin-right: 7.5px !important; margin-top: 10px;"
-        (click)="saveChanges()" type="submit">Guardar cambios</button>
-      </div>
-    </form>
+<div class="pl-6 pr-6 xs:pr-6 sm:pr-6 md:pr-12 lg:pr-12 xl:pr-12 bg-white">
+  <div class="uppercase dashboard-page-title pt-12">Solicitudes</div>
+  <div class="mt-6 w-full">
+    <!-- <app-filter [status]="statusTypes"></app-filter> -->
+    <app-filter (childEvent)="getRequests($event)" [fills]="fills"></app-filter>
   </div>
+  <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 mt-10">
+    <div class="dashboard-page-subtitle flex
+      justify-center sm:justify-center md:justify-start
+       lg:justify-start
+       xl:justify-start
+      ">Lista de Solicitudes</div>
+    <div class="flex
+      justify-center sm:justify-center md:justify-end lg:justify-end xl:justify-end
+      mt-3 sm:mt-3 md:mt-0 lg:mt-0 xl:mt-0
+      ">
+      <mat-bar-button [options]="newRequestButtonOptions" (btnClick)="newRequest()"></mat-bar-button>
+    </div>
+  </div>
+  <div class="mt-6 pb-8 w-full ">
+    <div class="table-responsive" style="overflow-y: hidden; overflow-x: auto; max-width: 100%;">
+      <table matSort mat-table [dataSource]="dataSource" class="w-full dashboard-basic-table">
+        <!-- Position Column -->
+        <ng-container matColumnDef="id" style="margin-right: 15px !important">
+          <th class="padding-cell" mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
+          <td class="padding-cell" mat-cell *matCellDef="let element"
+            style="color: #007DB7 !important; font-weight: 500 !important;"> {{element.id}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="idNumber" style="margin-right: 15px !important">
+          <th class="padding-cell" mat-header-cell *matHeaderCellDef mat-sort-header> Numero de ID </th>
+          <td class="padding-cell" mat-cell *matCellDef="let element"> {{element.idNumber}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="apellidos" style="margin-right: 15px !important">
+          <th class="padding-cell" mat-header-cell *matHeaderCellDef mat-sort-header> Apellidos </th>
+          <td class="padding-cell" mat-cell *matCellDef="let element"> {{element.apellidos}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="personName" style="margin-right: 15px !important">
+          <th class="padding-cell" mat-header-cell *matHeaderCellDef mat-sort-header> Nombre de persona </th>
+          <td class="padding-cell" mat-cell *matCellDef="let element"> {{element.personName}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="creationDate" style="margin-right: 15px !important">
+          <th class="padding-cell" mat-header-cell *matHeaderCellDef mat-sort-header> Fecha de creación </th>
+          <td class="padding-cell" mat-cell *matCellDef="let element"> {{element.creationDate |  date:'dd/MM/yyyy'}}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="createdBy" style="margin-right: 15px !important">
+          <th class="padding-cell" mat-header-cell *matHeaderCellDef mat-sort-header> Creada por </th>
+          <td class="padding-cell" mat-cell *matCellDef="let element"> {{element.createdBy | lowercase}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="status" style="margin-right: 15px !important">
+          <th class="padding-cell" mat-header-cell *matHeaderCellDef mat-sort-header> Estatus </th>
+          <td class="padding-cell" mat-cell *matCellDef="let element"
+            [ngClass]="{'text-color-yellow': element.status === 0 || element.status === 6, 'text-color-red': element.status === 4, 'text-color-green': element.status === 2 || element.status === 7, 'text-color-blue-table': element.status === 1}">
+            {{element.status | tableStatus}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="acciones" style="text-align: end !important; margin-right: 15px !important; ">
+          <th class="padding-cell" mat-header-cell *matHeaderCellDef
+            style="max-width: 140px !important; min-width: 137px !important; width: 137px !important;"> Acciones </th>
+          <td class="padding-cell" mat-cell *matCellDef="let element"
+            style="max-width: 140px !important; min-width: 137px !important; width: 137px !important;">
+            <!--
+              <button mat-mini-fab aria-label="Editar" *ngIf="element.estatus !== 'Enviado'"
+                class="dashboard-table-buttons">
+                <img src="../../../../assets/iconos/edit.svg">
+              </button>
+              -->
+            <button mat-mini-fab aria-label="Ver mas" (click)="seeRequest(element.id, element.seguro)"
+              *ngIf="element.status === 2 " class="dashboard-table-buttons" title="Ver Mas">
+              <img src="../../../../assets/iconos/eye.svg">
+            </button>
+            <button *ngIf="element.status === 1" (click)="directSendTargeting(element.id, element.seguro)" mat-mini-fab
+              aria-label="Enviar" class="dashboard-table-buttons" title="Enviar">
+              <img src="../../../../assets/iconos/send.svg">
+            </button>
+            <button *ngIf=" element.status === 1 || element.status === 0" title="Eliminar"
+              (click)="deleteTargeting(element.id, element.seguro)" mat-mini-fab aria-label="Eliminar"
+              class="dashboard-table-buttons">
+              <img src="../../../../assets/iconos/trash.svg">
+            </button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+    </div>
+    <mat-paginator color="accent" class="dashboard-table-paginator" [pageSizeOptions]="[5, 10, 20]"
+      showFirstLastButtons></mat-paginator>
+  </div>
+</div>

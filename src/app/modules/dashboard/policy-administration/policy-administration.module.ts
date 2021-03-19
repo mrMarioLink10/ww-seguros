@@ -7,10 +7,11 @@ import { MaterialModule } from '../../../shared/modules/material.module';
 
 import { PolicyAdministrationComponent } from './policy-administration.component';
 import { PolicyAdministrationRoutingModule } from './policy-administration-routing.module';
+import { NewPolicyComponent } from './new-policy/new-policy.component';
 
 
 @NgModule({
-  declarations: [PolicyAdministrationComponent],
+  declarations: [PolicyAdministrationComponent, NewPolicyComponent],
   imports: [
     CommonModule,
     PolicyAdministrationRoutingModule,

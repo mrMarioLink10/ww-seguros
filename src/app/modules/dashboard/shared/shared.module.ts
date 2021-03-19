@@ -26,7 +26,6 @@ import { FinancialStatusComponent } from './components/disease/financial-status/
 import { KnowYourCustomerComponent } from './components/disease/know-your-customer/know-your-customer.component';
 import { TableStatusPipe } from '../../../core/pipes/table-status.pipe';
 import { MaterialFileInputModule } from 'ngx-material-file-input';
-import { PaTableComponent } from './components/pa-table/pa-table.component';
 
 @NgModule({
   declarations: [

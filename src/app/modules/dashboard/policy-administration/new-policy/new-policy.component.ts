@@ -54,6 +54,24 @@ export class NewPolicyComponent implements OnInit {
     ]
   };
 
+  requestsType: FieldConfig = {
+    label: 'Tipo de Solicitud',
+    options: [
+      {
+        value: 'VIDA',
+        viewValue: 'Vida'
+      },
+      {
+        value: 'SALUD',
+        viewValue: 'Salud'
+      },
+      {
+        value: 'DISABILITY',
+        viewValue: 'Disability'
+      },
+    ]
+  };
+
   filteredOptions: Observable<any[]>;
 
   dataAutoCompleteIdNumber = [];
@@ -185,45 +203,8 @@ export class NewPolicyComponent implements OnInit {
       pdfSelector: ['', Validators.required],
       ramo: ['', Validators.required],
       personName: [{ value: '', disabled: true }, Validators.required],
-      pdfArchives: this.fb.group({ pdfFile: [''] }),
+      pdfArchives: this.fb.array([this.createFormArray()]),
     });
-    // tslint:disable-next-line: align
-    // this.administrationPolicyGroup.get('filterType').valueChanges.subscribe(valueFilter => {
-
-    // 		this.administrationPolicyGroup.get('idNumber').setValue('');
-    // 		this.administrationPolicyGroup.get('idNumber').markAsUntouched();
-
-    // 		this.idNumber2FieldVisible = false;
-    // 		this.searchIdNumberAccess = false;
-    // 		this.idNumber2Options.splice(0, this.idNumber2Options.length);
-    // 		this.administrationPolicyGroup.get('idNumber2').setValue('');
-    // 		this.administrationPolicyGroup.get('idNumber2').markAsUntouched();
-
-    // 		if (valueFilter == 'NOMBRE') {
-    // 			this.filteredOptions = this.administrationPolicyGroup.get('idNumber').valueChanges
-    // 				.pipe(
-    // 					startWith(''),
-    // 					map(value => typeof value === 'string' ? value : value),
-    // 					map(value => value ? this._filter(value) : this.dataAutoCompleteName.slice())
-    // 				);
-    // 		}
-    // 		if (valueFilter == 'ID') {
-    // 			this.filteredOptions = this.administrationPolicyGroup.get('idNumber').valueChanges
-    // 				.pipe(
-    // 					startWith(''),
-    // 					map(value => typeof value === 'string' ? value : value),
-    // 					map(value => value ? this._filter(value) : this.dataAutoCompleteIdNumber.slice())
-    // 				);
-    // 		}
-    // 		if (valueFilter == 'POLIZA') {
-    // 			this.filteredOptions = this.administrationPolicyGroup.get('idNumber').valueChanges
-    // 				.pipe(
-    // 					startWith(''),
-    // 					map(value => typeof value === 'string' ? value : value),
-    // 					map(value => value ? this._filter(value) : this.dataAutoCompletePolicy.slice())
-    // 				);
-    // 		}
-    // 	});
 
     this.filteredOptions = this.administrationPolicyGroup.get('idNumber').valueChanges
       .pipe(
@@ -366,7 +347,7 @@ export class NewPolicyComponent implements OnInit {
       });
   }
 
-  arrayPdfArchivesWatcher() {
+  arrayPdfArchivesWatcher(index: number) {
     // if (this.arrayPdfArchivesTitles) {
     //   if (this.administrationPolicyGroup.get('pdfArchives')) {
     //     // tslint:disable-next-line: max-line-length
@@ -375,13 +356,13 @@ export class NewPolicyComponent implements OnInit {
     //     }
     //   }
     // }
-    if (this.administrationPolicyGroup.get('pdfArchives').value.pdfFileUrl &&
-      this.administrationPolicyGroup.get('pdfArchives').value.pdfFile !== '') {
-      return this.administrationPolicyGroup.get('pdfArchives').value.pdfFileUrl;
+    if (this.administrationPolicyGroup.get('pdfArchives').get(index.toString()).value.pdfFileUrl &&
+      this.administrationPolicyGroup.get('pdfArchives').get(index.toString()).value.pdfFile !== '') {
+      return this.administrationPolicyGroup.get('pdfArchives').get(index.toString()).value.pdfFileUrl;
     }
   }
 
-  onStudiesChange(event) {
+  onStudiesChange(event, index: number) {
     const reader = new FileReader();
 
     console.log(event);
@@ -391,7 +372,7 @@ export class NewPolicyComponent implements OnInit {
       const [file] = event.target.files;
       reader.readAsDataURL(file);
       reader.onload = () => {
-        this.administrationPolicyGroup.get('pdfArchives').patchValue({
+        this.administrationPolicyGroup.get('pdfArchives').get(index.toString()).patchValue({
           ['pdfFile']: reader.result
         });
       };

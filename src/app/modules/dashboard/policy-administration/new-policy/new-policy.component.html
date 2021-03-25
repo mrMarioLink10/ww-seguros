@@ -83,6 +83,12 @@
           <app-input name="personName" label="Nombre del Asegurado" [group]="administrationPolicyGroup"></app-input>
         </div>
       </div>
+      <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
+        <div class="mr-3 md:col-span-2">
+          <app-select name="ramo" [options]="requestsType" [group]="administrationPolicyGroup">
+          </app-select>
+        </div>
+      </div>
 
       <div class="mt-10 grid grid-cols-1 lg:grid-cols-2">
         <div>
@@ -108,33 +114,23 @@
 
         <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           <div class="mt-5">
-            <!-- <div
-                *ngFor="let studies of administrationPolicyGroup.get('pdfArchives')['controls']; let i = index"> -->
-            <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
-              <!-- [ngClass]="{'col-span-3': administrationPolicyGroup.get('pdfArchives')['controls'].length > 1,
-                  'col-span-4': administrationPolicyGroup.get('pdfArchives')['controls'].length === 1}" -->
-              <app-file-input class="mr-3 col-span-4" [group]="administrationPolicyGroup.get('pdfArchives')"
-                name="pdfFile" label="Archivos PDF" [fileNameWatcher]="arrayPdfArchivesWatcher()"
-                (onFileChange)="onStudiesChange($event)">
-              </app-file-input>
-              <!-- <div
-                    [ngClass]="{'col-span-1': administrationPolicyGroup.get('pdfArchives')['controls'].length > 1}"
-                    *ngIf="administrationPolicyGroup.get('pdfArchives')['controls'].length > 1">
-                    <button mat-mini-fab aria-label=" Eliminar archivo pdf"
-                      (click)="diseaseService.removeToList(i, administrationPolicyGroup.get('pdfArchives'))"
-                      type="button" class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
-                      <mat-icon style="color: #18446B">remove</mat-icon>
-                    </button>
-                  </div> -->
+            <div *ngFor="let studies of administrationPolicyGroup.get('pdfArchives')['controls']; let i = index">
+              <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
+                <app-file-input class="mr-3"
+                  [ngClass]="{'col-span-4': administrationPolicyGroup.get('pdfArchives')['controls'].length === 1, 'col-span-3': administrationPolicyGroup.get('pdfArchives')['controls'].length > 1} "
+                  [group]="administrationPolicyGroup.get('pdfArchives').get(i.toString())" name="pdfFile"
+                  label="Archivos PDF" [fileNameWatcher]="arrayPdfArchivesWatcher(i)"
+                  (onFileChange)="onStudiesChange($event, i)">
+                </app-file-input>
+                <div *ngIf="administrationPolicyGroup.get('pdfArchives')['controls'].length > 1"
+                  [ngClass]="{'': administrationPolicyGroup.get('pdfArchives')['controls'].length === 1, 'col-span-1': administrationPolicyGroup.get('pdfArchives')['controls'].length > 1} ">
+                  <app-delete-array-button [array]="administrationPolicyGroup.get('pdfArchives')" [index]="i">
+                  </app-delete-array-button>
+                </div>
+              </div>
             </div>
-            <!-- </div> -->
-            <!-- <div class="mb-6">
-                <button mat-mini-fab aria-label="Agregar archivo pdf"
-                  (click)="addToList(administrationPolicyGroup.get('pdfArchives'))"
-                  type="button" class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
-                  <mat-icon style="color: #18446B">add</mat-icon>
-                </button>
-              </div> -->
+            <app-add-array-button [array]="administrationPolicyGroup.get('pdfArchives')" [item]="createFormArray()">
+            </app-add-array-button>
           </div>
         </div>
       </div>

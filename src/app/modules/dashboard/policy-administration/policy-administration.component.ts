@@ -65,6 +65,7 @@ export class PolicyAdministrationComponent implements OnInit {
 	role: any;
 
 	loading = false;
+	isWWSeguros = false;
 
 	@ViewChild(MatSort, { static: true }) sort: MatSort;
 	@ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
@@ -106,6 +107,10 @@ export class PolicyAdministrationComponent implements OnInit {
 	}
 
 	ngOnInit() {
+		if (this.userService.getRoles().includes('wws_intermediario_admin')) {
+			this.isWWSeguros = true;
+		}
+
 		this.role = this.userService.getRoleCotizador();
 		this.getRequests();
 	}
@@ -126,6 +131,14 @@ export class PolicyAdministrationComponent implements OnInit {
 
 	directSendTargeting(id: number, type: string) {
 
+	}
+
+	confirmRequest(id: number) {
+		this.formHandlerService.policyAdministration(id, 'confirm', this.appComponent);
+	}
+
+	rejectRequest(id: number) {
+		this.formHandlerService.policyAdministration(id, 'deny', this.appComponent);
 	}
 }
 

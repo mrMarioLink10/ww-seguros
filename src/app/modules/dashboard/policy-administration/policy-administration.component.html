@@ -10,7 +10,7 @@
        lg:justify-start
        xl:justify-start
       ">Lista de Solicitudes</div>
-    <div class="flex
+    <div *ngIf="!isWWSeguros" class="flex
       justify-center sm:justify-center md:justify-end lg:justify-end xl:justify-end
       mt-3 sm:mt-3 md:mt-0 lg:mt-0 xl:mt-0
       ">
@@ -57,7 +57,7 @@
           <th class="padding-cell" mat-header-cell *matHeaderCellDef mat-sort-header> Estatus </th>
           <td class="padding-cell" mat-cell *matCellDef="let element"
             [ngClass]="{'text-color-yellow': element.status === 0 || element.status === 6, 'text-color-red': element.status === 4, 'text-color-green': element.status === 2 || element.status === 7, 'text-color-blue-table': element.status === 1}">
-            {{element.status | tableStatus}} </td>
+            {{element.status | policyStatus}} </td>
         </ng-container>
 
         <ng-container matColumnDef="acciones" style="text-align: end !important; margin-right: 15px !important; ">
@@ -71,18 +71,23 @@
                 <img src="../../../../assets/iconos/edit.svg">
               </button>
               -->
-            <button mat-mini-fab aria-label="Ver mas" (click)="seeRequest(element.id, element.seguro)"
-              *ngIf="element.status === 2 " class="dashboard-table-buttons" title="Ver Mas">
-              <img src="../../../../assets/iconos/eye.svg">
-            </button>
-            <button *ngIf="element.status === 1" (click)="directSendTargeting(element.id, element.seguro)" mat-mini-fab
+
+            <!-- <button *ngIf="element.status === 1" (click)="directSendTargeting(element.id, element.seguro)" mat-mini-fab
               aria-label="Enviar" class="dashboard-table-buttons" title="Enviar">
               <img src="../../../../assets/iconos/send.svg">
-            </button>
-            <button *ngIf=" element.status === 1 || element.status === 0" title="Eliminar"
+            </button> -->
+            <!-- <button *ngIf=" element.status === 1 || element.status === 0" title="Eliminar"
               (click)="deleteTargeting(element.id, element.seguro)" mat-mini-fab aria-label="Eliminar"
               class="dashboard-table-buttons">
               <img src="../../../../assets/iconos/trash.svg">
+            </button> -->
+            <button mat-mini-fab aria-label="Ver mas" (click)="confirmRequest(element.id)"
+              *ngIf="element.status === 1 && isWWSeguros" class="dashboard-table-buttons" title="Ver Mas">
+              <img src="../../../../assets/iconos/eye.svg">
+            </button>
+            <button mat-mini-fab aria-label="Ver mas" (click)="rejectRequest(element.id)"
+              *ngIf="element.status === 1 && isWWSeguros" class="dashboard-table-buttons" title="Ver Mas">
+              <img src="../../../../assets/iconos/eye.svg">
             </button>
           </td>
         </ng-container>

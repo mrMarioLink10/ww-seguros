@@ -19,6 +19,7 @@ import { UserService } from '../user/user.service';
 import { FormsService } from '../../../modules/dashboard/services/forms/forms.service';
 import { SettingsService } from '../../../modules/dashboard/settings/services/settings.service';
 import { PolicyAdministrationService } from '../../../modules/dashboard/policy-administration/services/policy-administration.service';
+import { map } from 'rxjs/operators';
 // tslint:disable: forin
 // tslint:disable: variable-name
 
@@ -877,6 +878,60 @@ export class FormHandlerService {
 						});
 						this.closeDialog(dialog);
 					}, 1000);
+				}
+			}
+		});
+	}
+
+	policyAdministration(id: number, type: string, appComponent: any) {
+
+		let Dialog;
+		let dataOpen;
+		let dataClosing;
+		const route = 'policy-administration';
+
+		if (type === 'confirm') {
+			dataOpen = this.dialogOption.policyConfirm;
+			dataClosing = this.dialogOption.policySuccess;
+		} else {
+			dataOpen = this.dialogOption.policyDeny;
+			dataClosing = this.dialogOption.policyDenySuccess;
+		}
+
+		Dialog = this.dialog.open(BaseDialogComponent, {
+			data: dataOpen,
+			minWidth: 385,
+		});
+
+		Dialog.afterClosed().subscribe((result) => {
+
+			if (result === 'true') {
+				let dialog;
+				appComponent.showOverlay = true;
+				if (type === 'confirm') {
+					console.log('administracion de polizas confirmado');
+					// this.policyAdministrationService.confirmRequest(id)
+					// 	.pipe(map(res => {
+					// 		this.correctSend(res, dialog, dataClosing, route, true);
+					// 		appComponent.showOverlay = false;
+					// 		console.log('Envio realizado correctamente');
+					// 	}, (err) => {
+					// 		this.badSend(err, dialog);
+					// 		console.log('Envio fallido');
+					// 	}));
+				}
+				else {
+					console.log('administracion de polizas denegado');
+
+					// this.policyAdministrationService.rejectRequest(id)
+					// 	.pipe(map(res => {
+					// 		this.correctSend(res, dialog, dataClosing, route, true);
+					// 		appComponent.showOverlay = false;
+					// 		console.log('Envio realizado correctamente');
+					// 	}, (err) => {
+					// 		this.badSend(err, dialog);
+					// 		console.log('Envio fallido');
+					// 	}));
 				}
 			}
 		});

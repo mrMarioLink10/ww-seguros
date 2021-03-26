@@ -33,4 +33,12 @@ export class PolicyAdministrationService {
       responseType: 'blob'
     });
   }
+
+  confirmRequest(id: number) {
+    return (this.http.post(`${environment.apiUrl}/SolicitudesPdf/Confirm/${id}`, { params: { id: id.toString() } }));
+  }
+
+  rejectRequest(id: number) {
+    return (this.http.post(`${environment.apiUrl}/SolicitudesPdf/Deny/${id}`, { params: { id: id.toString() } }));
+  }
 }

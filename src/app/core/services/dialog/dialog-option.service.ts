@@ -48,6 +48,26 @@ export class DialogOptionService {
 		textCancelButton: 'Permanecer'
 	};
 
+	policyConfirm: BaseDialog = {
+		logo: 'check',
+		title: 'Cambio de Poliza',
+		text: `¿Está seguro de que quiere confirmar este cambio de poliza?`,
+		showButtons: true,
+		showCancelButton: true,
+		textPrincipalButton: 'Confirmar',
+		textCancelButton: 'Salir'
+	};
+
+	policyDeny: BaseDialog = {
+		logo: 'check',
+		title: 'Cambio de Poliza',
+		text: `¿Está seguro de que quiere rechazar este cambio de poliza?`,
+		showButtons: true,
+		showCancelButton: true,
+		textPrincipalButton: 'Confirmar',
+		textCancelButton: 'Salir'
+	};
+
 	WIP: BaseDialog = {
 		logo: 'warning',
 		title: 'WIP',
@@ -73,6 +93,20 @@ export class DialogOptionService {
 		logo: 'warning',
 		title: 'Acceso invalido',
 		text: `Usted no tiene los permisos para acceder a esta sección del portal`,
+		showButtons: false,
+	};
+
+	policySuccess: BaseDialog = {
+		logo: 'check',
+		title: 'Confirmación',
+		text: `El cambio de poliza ha sido confirmado`,
+		showButtons: false,
+	};
+
+	policyDenySuccess: BaseDialog = {
+		logo: 'check',
+		title: 'Confirmación',
+		text: `El cambio de poliza ha sido rechazada`,
 		showButtons: false,
 	};
 

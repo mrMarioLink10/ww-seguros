@@ -83,11 +83,11 @@
             </button> -->
             <button mat-mini-fab aria-label="Ver mas" (click)="confirmRequest(element.id)"
               *ngIf="element.status === 1 && isWWSeguros" class="dashboard-table-buttons" title="Ver Mas">
-              <img src="../../../../assets/iconos/eye.svg">
+              <img src="../../../../assets/iconos/check.svg">
             </button>
             <button mat-mini-fab aria-label="Ver mas" (click)="rejectRequest(element.id)"
               *ngIf="element.status === 1 && isWWSeguros" class="dashboard-table-buttons" title="Ver Mas">
-              <img src="../../../../assets/iconos/eye.svg">
+              <img src="../../../../assets/iconos/trash.svg">
             </button>
           </td>
         </ng-container>

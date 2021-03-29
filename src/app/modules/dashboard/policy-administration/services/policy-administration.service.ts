@@ -35,10 +35,10 @@ export class PolicyAdministrationService {
   }
 
   confirmRequest(id: number) {
-    return (this.http.post(`${environment.apiUrl}/SolicitudesPdf/Confirm/${id}`, { params: { id: id.toString() } }));
+    return (this.http.post(`${environment.apiUrl}/api/SolicitudesPdf/confirm/${id}`, { params: { id: id.toString() } }));
   }
 
   rejectRequest(id: number) {
-    return (this.http.post(`${environment.apiUrl}/SolicitudesPdf/Deny/${id}`, { params: { id: id.toString() } }));
+    return (this.http.post(`${environment.apiUrl}/api/SolicitudesPdf/deny/${id}`, { params: { id: id.toString() } }));
   }
 }

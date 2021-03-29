@@ -910,28 +910,28 @@ export class FormHandlerService {
 				appComponent.showOverlay = true;
 				if (type === 'confirm') {
 					console.log('administracion de polizas confirmado');
-					// this.policyAdministrationService.confirmRequest(id)
-					// 	.pipe(map(res => {
-					// 		this.correctSend(res, dialog, dataClosing, route, true);
-					// 		appComponent.showOverlay = false;
-					// 		console.log('Envio realizado correctamente');
-					// 	}, (err) => {
-					// 		this.badSend(err, dialog);
-					// 		console.log('Envio fallido');
-					// 	}));
-				}
-				else {
+					this.policyAdministrationService.confirmRequest(id)
+						.subscribe(res => {
+							console.log(res);
+							this.correctSend(res, dialog, dataClosing, route, true);
+							appComponent.showOverlay = false;
+							console.log('Envio realizado correctamente');
+						}, (err) => {
+							this.badSend(err, dialog);
+							console.log('Envio fallido');
+						});
+				} else {
 					console.log('administracion de polizas denegado');
-
-					// this.policyAdministrationService.rejectRequest(id)
-					// 	.pipe(map(res => {
-					// 		this.correctSend(res, dialog, dataClosing, route, true);
-					// 		appComponent.showOverlay = false;
-					// 		console.log('Envio realizado correctamente');
-					// 	}, (err) => {
-					// 		this.badSend(err, dialog);
-					// 		console.log('Envio fallido');
-					// 	}));
+					this.policyAdministrationService.rejectRequest(id)
+						.subscribe(res => {
+							console.log(res);
+							this.correctSend(res, dialog, dataClosing, route, true);
+							appComponent.showOverlay = false;
+							console.log('Envio realizado correctamente');
+						}, (err) => {
+							this.badSend(err, dialog);
+							console.log('Envio fallido');
+						});
 				}
 			}
 		});

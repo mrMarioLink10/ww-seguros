@@ -59,7 +59,7 @@ export class DialogOptionService {
 	};
 
 	policyDeny: BaseDialog = {
-		logo: 'check',
+		logo: 'warning',
 		title: 'Cambio de Poliza',
 		text: `¿Está seguro de que quiere rechazar este cambio de poliza?`,
 		showButtons: true,

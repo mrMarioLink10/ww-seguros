@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { Observable } from 'rxjs';
 
@@ -40,5 +40,13 @@ export class PolicyAdministrationService {
 
   rejectRequest(id: number) {
     return (this.http.post(`${environment.apiUrl}/api/SolicitudesPdf/deny/${id}`, { params: { id: id.toString() } }));
+  }
+
+  getRequests(params: HttpParams) {
+    return (this.http.get(`${environment.apiUrl}/api/SolicitudesPdf`, { params }));
+  }
+
+  getRequest(id: number) {
+    return this.http.get(`${environment.apiUrl}/api/SolicitudesPdf/${id}`, { params: { id: id.toString() } });
   }
 }

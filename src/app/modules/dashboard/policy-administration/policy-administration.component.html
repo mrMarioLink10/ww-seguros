@@ -65,12 +65,12 @@
             style="max-width: 140px !important; min-width: 137px !important; width: 137px !important;"> Acciones </th>
           <td class="padding-cell" mat-cell *matCellDef="let element"
             style="max-width: 140px !important; min-width: 137px !important; width: 137px !important;">
-            <!--
-              <button mat-mini-fab aria-label="Editar" *ngIf="element.estatus !== 'Enviado'"
-                class="dashboard-table-buttons">
-                <img src="../../../../assets/iconos/edit.svg">
-              </button>
-              -->
+
+            <button mat-mini-fab aria-label="Editar" (click)="editRequest(element.id)" *ngIf="element.status === 0"
+              class="dashboard-table-buttons">
+              <img src="../../../../assets/iconos/edit.svg">
+            </button>
+
 
             <!-- <button *ngIf="element.status === 1" (click)="directSendTargeting(element.id, element.seguro)" mat-mini-fab
               aria-label="Enviar" class="dashboard-table-buttons" title="Enviar">

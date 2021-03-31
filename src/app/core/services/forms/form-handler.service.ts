@@ -835,7 +835,7 @@ export class FormHandlerService {
 		let Dialog;
 		let dataOpen;
 		let dataClosing;
-		const route = 'dashboard/requests';
+		const route = 'dashboard/policy-administration';
 
 		dataOpen = this.dialogOption.saveAdministrationPolicy();
 		dataClosing = this.dialogOption.confirmedSavedAdministrationPolicy();
@@ -860,15 +860,14 @@ export class FormHandlerService {
 					console.log('administracion de polizas es valido');
 					this.policyAdministrationService.postPolicyAdministration(json)
 						.subscribe(res => {
-							this.correctSend(res, dialog, dataClosing, route, true);
+							this.correctSend(res, dialog, dataClosing, route, false);
 							appComponent.showOverlay = false;
 							console.log('Envio realizado correctamente');
 						}, (err) => {
 							this.badSend(err, dialog);
 							console.log('Envio fallido');
 						});
-				}
-				else {
+				} else {
 					setTimeout(() => {
 						appComponent.showOverlay = false;
 						console.log('settings NO es valido');
@@ -913,7 +912,8 @@ export class FormHandlerService {
 					this.policyAdministrationService.confirmRequest(id)
 						.subscribe(res => {
 							console.log(res);
-							this.correctSend(res, dialog, dataClosing, route, true);
+							location.reload();
+							this.correctSend(res, dialog, dataClosing, route, false);
 							appComponent.showOverlay = false;
 							console.log('Envio realizado correctamente');
 						}, (err) => {
@@ -925,7 +925,8 @@ export class FormHandlerService {
 					this.policyAdministrationService.rejectRequest(id)
 						.subscribe(res => {
 							console.log(res);
-							this.correctSend(res, dialog, dataClosing, route, true);
+							location.reload();
+							this.correctSend(res, dialog, dataClosing, route, false);
 							appComponent.showOverlay = false;
 							console.log('Envio realizado correctamente');
 						}, (err) => {

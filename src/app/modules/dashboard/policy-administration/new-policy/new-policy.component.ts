@@ -322,6 +322,8 @@ export class NewPolicyComponent implements OnInit {
 
       if (value !== '') {
         this.pdfOptions.length = 0;
+        this.administrationPolicyGroup.get('pdfSelector').reset();
+        this.administrationPolicyGroup.get('pdfSelector').setValue('');
         this.returnPdfOptions(value);
         this.administrationPolicyGroup.get('pdfSelector').enable();
       }

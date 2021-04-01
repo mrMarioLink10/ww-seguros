@@ -148,14 +148,14 @@ export class NewPolicyComponent implements OnInit {
   ];
 
   pdfOptionsVida = [
-    {
-      name: 'REHABILITACIÓN DE POLIZA',
-      url: ['/assets/pdfs/SOLICITUDCAMBIODEBENEFICIARIO']
-    },
-    {
-      name: 'AUMENTO SUMA ASEGURADA',
-      url: ['/assets/pdfs/SOLICITUDSEGURODEVIDA'] // FALTA
-    },
+    // {
+    //   name: 'REHABILITACIÓN DE POLIZA',
+    //   url: ['/assets/pdfs/REHABILITACIÓN']
+    // },
+    // {
+    //   name: 'AUMENTO SUMA ASEGURADA',
+    //   url: ['/assets/pdfs/SOLICITUDSEGURODEVIDA'] // FALTA
+    // },
     {
       name: 'CAMBIO DE CONTRATANTE',
       url: ['/assets/pdfs/SOLICITUDCAMBIODECONTRATANTEPOLIZAS']
@@ -168,10 +168,10 @@ export class NewPolicyComponent implements OnInit {
       name: 'CANCELACIÓN DE ENDOSO',
       url: ['/assets/pdfs/SOLICITUDCANCELACIONDEENDOSODECESION']
     },
-    {
-      name: 'CESIÓN DE POLIZA',
-      url: ['/assets/pdfs/SOLICITUDCESIONDEPOLIZAENGARANTIA'] // FALTA
-    },
+    // {
+    //   name: 'CESIÓN DE POLIZA',
+    //   url: ['/assets/pdfs/SOLICITUDCESIONDEPOLIZAENGARANTIA'] // FALTA
+    // },
     {
       name: 'CAMBIO DE INFORMACIÓN',
       url: ['/assets/pdfs/SOLICITUDCAMBIOPOLIZAINDIVIDUAL']
@@ -180,10 +180,10 @@ export class NewPolicyComponent implements OnInit {
       name: 'CAMBIO DE FRECUENCIA DE PAGO',
       url: ['/assets/pdfs/SOLICITUDCAMBIOPOLIZAINDIVIDUAL']
     },
-    {
-      name: 'CAMBIO DE PAGADOR',
-      url: ['/assets/pdfs/SOLICITUDCAMBIOPOLIZA', '/assets/pdfs/FORMULARIOKYC'] // ESTA PERO NO EN CARPETA
-    },
+    // {
+    //   name: 'CAMBIO DE PAGADOR',
+    //   url: ['/assets/pdfs/SOLICITUDCAMBIOPOLIZA', '/assets/pdfs/FORMULARIOKYC'] // ESTA PERO NO EN CARPETA
+    // },
     {
       name: 'RECLAMO DE BENEFICIARIO SEGURO DE VIDA',
       url: ['/assets/pdfs/RECLAMODEBENEFICIARIO'] // FALTA
@@ -191,11 +191,11 @@ export class NewPolicyComponent implements OnInit {
   ];
 
   pdfOptionsSalud = [
-    {
-      name: 'REHABILITACIÓN DE POLIZA',
-      url: ['/assets/pdfs/SOLICITUDCAMBIODEBENEFICIARIO', '/assets/pdfs/SOLICITUDSUSCRIPCIONGASTOSMAYORES',
-        '/assets/pdfs/PAGODEPRIMASMEDIANTETARJETADECREDITO'] // FALTA EL DE SOLICITUD
-    },
+    // {
+    //   name: 'REHABILITACIÓN DE POLIZA',
+    //   url: ['/assets/pdfs/SOLICITUDCAMBIODEBENEFICIARIO', '/assets/pdfs/SOLICITUDSUSCRIPCIONGASTOSMAYORES',
+    //     '/assets/pdfs/PAGODEPRIMASMEDIANTETARJETADECREDITO'] // FALTA EL DE SOLICITUD
+    // },
     {
       name: 'CAMBIO DE CONTRATANTE',
       url: ['/assets/pdfs/SOLICITUDCAMBIODECONTRATANTEPOLIZAS'] // NO ES EL MISMO QUE COMO SE LLAMA EN EL EXCEL
@@ -212,17 +212,17 @@ export class NewPolicyComponent implements OnInit {
       name: 'CAMBIO DE FRECUENCIA DE PAGO',
       url: ['/assets/pdfs/SOLICITUDCAMBIOPOLIZASALUDINDIVIDUAL']
     },
-    {
-      name: 'CAMBIO DE PAGADOR',
-      url: ['/assets/pdfs/SOLICITUDCAMBIOPOLIZA', '/assets/pdfs/FORMULARIOKYC'] // ESTA PERO NO EN CARPETA
-    },
+    // {
+    //   name: 'CAMBIO DE PAGADOR',
+    //   url: ['/assets/pdfs/SOLICITUDCAMBIOPOLIZA', '/assets/pdfs/FORMULARIOKYC'] // ESTA PERO NO EN CARPETA
+    // },
   ];
 
   pdfOptionsDisability = [
-    {
-      name: 'REHABILITACIÓN DE POLIZA',
-      url: ['/assets/pdfs/REHABILITACION'] // REVISAR SI ESTA
-    },
+    // {
+    //   name: 'REHABILITACIÓN DE POLIZA',
+    //   url: ['/assets/pdfs/REHABILITACION'] // REVISAR SI ESTA
+    // },
     {
       name: 'CAMBIO DE CONTRATANTE',
       url: ['/assets/pdfs/SOLICITUDCAMBIODECONTRATANTEPOLIZAS'] // NO ES EL MISMO QUE COMO SE LLAMA EN EL EXCEL
@@ -239,10 +239,10 @@ export class NewPolicyComponent implements OnInit {
       name: 'CAMBIO DE FRECUENCIA DE PAGO',
       url: ['/assets/pdfs/SOLICITUDCAMBIOPOLIZADISABILITY']
     },
-    {
-      name: 'CAMBIO DE PAGADOR',
-      url: ['/assets/pdfs/SOLICITUDCAMBIOPOLIZA', '/assets/pdfs/FORMULARIOKYC'] // ESTA PERO NO EN CARPETA
-    },
+    // {
+    //   name: 'CAMBIO DE PAGADOR',
+    //   url: ['/assets/pdfs/SOLICITUDCAMBIOPOLIZA', '/assets/pdfs/FORMULARIOKYC'] // ESTA PERO NO EN CARPETA
+    // },
     {
       name: 'RECLAMO POR DISABILITY',
       url: ['/assets/pdfs/RECLAMOSDISABILITY'] // REVISAR SI ESTA

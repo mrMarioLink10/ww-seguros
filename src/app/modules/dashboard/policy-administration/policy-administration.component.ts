@@ -29,11 +29,9 @@ export class PolicyAdministrationComponent implements OnInit {
 	) { }
 
 	statusTypes = [
-		{ value: 0, view: 'Incompleto' },
-		{ value: 1, view: 'Completo' },
-		{ value: 2, view: 'Enviado' },
-		{ value: 3, view: 'Cancelado' },
-		{ value: 4, view: 'Adjuntar Expediente' },
+		{ value: 0, view: 'Revisar' },
+		{ value: 1, view: 'En revisión' },
+		{ value: 2, view: 'Aceptada' },
 	];
 
 	fillType = 'tipoSeguro';
@@ -59,7 +57,7 @@ export class PolicyAdministrationComponent implements OnInit {
 	};
 
 	// tslint:disable-next-line: max-line-length
-	displayedColumns: string[] = ['id', 'idNumber', 'personName', 'creationDate', 'createdBy', 'status', 'acciones'];
+	displayedColumns: string[] = ['id', 'idNumber', 'ramo', 'personName', 'creationDate', 'createdBy', 'status', 'acciones'];
 
 	dataSource;
 	requests: any;

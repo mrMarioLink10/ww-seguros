@@ -260,6 +260,8 @@ export class NewPolicyComponent implements OnInit {
 
   policyAdministrationFieldsNamesArray = ['idNumber', 'filterType', 'pdfSelector', 'personName'];
 
+  isEditing = false;
+
   constructor(
     private fb: FormBuilder,
     private appComponent: AppComponent,
@@ -352,6 +354,7 @@ export class NewPolicyComponent implements OnInit {
       console.warn('Response de ruta:', response);
       if (response.data) {
         if (response.data.personName) {
+          this.isEditing = true;
           this.getData(response.data);
         }
       }
@@ -406,8 +409,10 @@ export class NewPolicyComponent implements OnInit {
 
       // tslint:disable-next-line: align
       setTimeout(() => {
-        this.administrationPolicyGroup.get('idNumber').setValue('');
-        this.administrationPolicyGroup.get('idNumber').markAsUntouched();
+        if (!this.isEditing) {
+          this.administrationPolicyGroup.get('idNumber').setValue('');
+          this.administrationPolicyGroup.get('idNumber').markAsUntouched();
+        }
       }, 1000);
 
       setTimeout(() => {
@@ -646,12 +651,12 @@ export class NewPolicyComponent implements OnInit {
 
     console.log('DATA PARA EDITAR:', data);
     this.dataMappingFromApi.iterateThroughtAllObject(data, this.administrationPolicyGroup);
-    console.log(this.administrationPolicyGroup.get('idNumber').value, data.idNumber);
-    this.administrationPolicyGroup.get('idNumber').setValue(data.idNumber);
-    console.log(this.administrationPolicyGroup.get('idNumber').value, data.idNumber);
-    this.administrationPolicyGroup.get('idNumber2').setValue(data.idNumber2);
+
     console.log('FORMULARIO LUEGO', this.administrationPolicyGroup.getRawValue());
 
+    this.administrationPolicyGroup.get('idNumber').setValue(data.idNumber);
+    this.administrationPolicyGroup.get('idNumber2').setValue(data.idNumber2);
+    this.administrationPolicyGroup.get('pdfSelector').setValue(data.pdfSelector);
     this.administrationPolicyGroup.removeControl('countryCode');
     this.administrationPolicyGroup.removeControl('createdBy');
     this.administrationPolicyGroup.removeControl('createdNameBy');
@@ -662,6 +667,7 @@ export class NewPolicyComponent implements OnInit {
     this.administrationPolicyGroup.removeControl('updateDate');
 
     console.log('FORMULARIO LUEGO', this.administrationPolicyGroup.getRawValue());
+
 
     this.showContent = true;
 

@@ -184,10 +184,10 @@ export class NewPolicyComponent implements OnInit {
     //   name: 'CAMBIO DE PAGADOR',
     //   url: ['/assets/pdfs/SOLICITUDCAMBIOPOLIZA', '/assets/pdfs/FORMULARIOKYC'] // ESTA PERO NO EN CARPETA
     // },
-    {
-      name: 'RECLAMO DE BENEFICIARIO SEGURO DE VIDA',
-      url: ['/assets/pdfs/RECLAMODEBENEFICIARIO'] // FALTA
-    },
+    // {
+    //   name: 'RECLAMO DE BENEFICIARIO SEGURO DE VIDA',
+    //   url: ['/assets/pdfs/RECLAMODEBENEFICIARIO'] // FALTA
+    // },
   ];
 
   pdfOptionsSalud = [
@@ -243,10 +243,10 @@ export class NewPolicyComponent implements OnInit {
     //   name: 'CAMBIO DE PAGADOR',
     //   url: ['/assets/pdfs/SOLICITUDCAMBIOPOLIZA', '/assets/pdfs/FORMULARIOKYC'] // ESTA PERO NO EN CARPETA
     // },
-    {
-      name: 'RECLAMO POR DISABILITY',
-      url: ['/assets/pdfs/RECLAMOSDISABILITY'] // REVISAR SI ESTA
-    },
+    // {
+    //   name: 'RECLAMO POR DISABILITY',
+    //   url: ['/assets/pdfs/RECLAMOSDISABILITY'] // REVISAR SI ESTA
+    // },
   ];
 
   pdfOptionsField = {

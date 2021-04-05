@@ -108,6 +108,10 @@
           </div>
         </div>
       </div>
+      <div *ngIf="administrationPolicyGroup.value.pdfSelector !== '' && requestInfo !== ''"
+        class="declaraciones px-4 sm:px-4 md:px-14 lg:px-12 xl:px-12 text-sm">
+        {{requestInfo}}
+      </div>
 
       <div class="mt-20">
         <label> <strong> Por favor, suba/cargue el pdf llenado aquí. </strong> </label>

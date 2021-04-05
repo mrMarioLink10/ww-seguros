@@ -14,6 +14,7 @@ import { DiseaseService } from '../../shared/components/disease/shared/disease/d
 import { PolicyAdministrationService } from '../services/policy-administration.service';
 import { ActivatedRoute } from '@angular/router';
 import { FormDataFillingService } from '../../services/shared/formDataFillingService';
+// tslint:disable: max-line-length
 
 @Component({
   selector: 'app-new-policy',
@@ -150,43 +151,53 @@ export class NewPolicyComponent implements OnInit {
   pdfOptionsVida = [
     // {
     //   name: 'REHABILITACIÓN DE POLIZA',
-    //   url: ['/assets/pdfs/REHABILITACIÓN']
+    //   url: ['/assets/pdfs/REHABILITACIÓN'],
+    //   text: 'Si la cancelación de su póliza fue realizada dentro de los 90 días favor completar el formulario de Rehabilitación y anexar comprobante de pago o formulario para uso tarjeta de crédito.'
     // },
     // {
     //   name: 'AUMENTO SUMA ASEGURADA',
-    //   url: ['/assets/pdfs/SOLICITUDSEGURODEVIDA'] // FALTA
+    //   url: ['/assets/pdfs/SOLICITUDSEGURODEVIDA'], // FALTA
+    //   text: 'Favor consultar los requisitos de asegurabilidad de acuerdo a la nueva suma total asegurada. (Ver tabla de requisito anexa) - '
     // },
     {
       name: 'CAMBIO DE CONTRATANTE',
-      url: ['/assets/pdfs/SOLICITUDCAMBIODECONTRATANTEPOLIZAS']
+      url: ['/assets/pdfs/SOLICITUDCAMBIODECONTRATANTEPOLIZAS'],
+      text: 'Favor completar el formulario para 1-Cambio de Contratante. En caso de Persona Física completar el formulario de 2-KYC y copia de identificación. En caso de Persona Jurídica, anexar registro mercantil y copia de identificación del representante legal. '
     },
     {
       name: 'CAMBIO DE BENEFICIARIO',
-      url: ['/assets/pdfs/SOLICITUDCAMBIODEBENEFICIARIO']
+      url: ['/assets/pdfs/SOLICITUDCAMBIODEBENEFICIARIO'],
+      text: 'Favor completar el formulario de cambio de beneficiario.'
     },
     {
       name: 'CANCELACIÓN DE ENDOSO',
-      url: ['/assets/pdfs/SOLICITUDCANCELACIONDEENDOSODECESION']
+      url: ['/assets/pdfs/SOLICITUDCANCELACIONDEENDOSODECESION'],
+      text: 'Favor completar formulario correspondiente a su solicitud. '
     },
     // {
     //   name: 'CESIÓN DE POLIZA',
-    //   url: ['/assets/pdfs/SOLICITUDCESIONDEPOLIZAENGARANTIA'] // FALTA
+    //   url: ['/assets/pdfs/SOLICITUDCESIONDEPOLIZAENGARANTIA'], // FALTA
+    //  text: 'Favor completar formulario correspondiente a su solicitud. '
     // },
     {
       name: 'CAMBIO DE INFORMACIÓN',
-      url: ['/assets/pdfs/SOLICITUDCAMBIOPOLIZAINDIVIDUAL']
+      url: ['/assets/pdfs/SOLICITUDCAMBIOPOLIZAINDIVIDUAL'],
+      text: 'Favor completar la sección correspondiente en el formulario de Solicitud de cambio.'
     },
     {
       name: 'CAMBIO DE FRECUENCIA DE PAGO',
-      url: ['/assets/pdfs/SOLICITUDCAMBIOPOLIZAINDIVIDUAL']
+      url: ['/assets/pdfs/SOLICITUDCAMBIOPOLIZAINDIVIDUAL'],
+      text: 'Favor completar la sección correspondiente en el formulario de Solicitud de cambio.'
     },
     // {
     //   name: 'CAMBIO DE PAGADOR',
-    //   url: ['/assets/pdfs/SOLICITUDCAMBIOPOLIZA', '/assets/pdfs/FORMULARIOKYC'] // ESTA PERO NO EN CARPETA
+    //   url: ['/assets/pdfs/SOLICITUDCAMBIOPOLIZA', '/assets/pdfs/FORMULARIOKYC'], // ESTA PERO NO EN CARPETA
+    //   text: 'Favor completar la sección correspondiente en el formulario de Solicitud de cambio. En caso de Persona Física completar el formulario de KYC y copia de identificación. En caso de Persona Jurídica, anexar registro mercantil y copia de identificación del representante legal.'
     // },
     // {
     //   name: 'RECLAMO DE BENEFICIARIO SEGURO DE VIDA',
-    //   url: ['/assets/pdfs/RECLAMODEBENEFICIARIO'] // FALTA
+    //   url: ['/assets/pdfs/RECLAMODEBENEFICIARIO'], // FALTA
+    //   text: 'Favor completar los siguientes requisitos para su reclamación: Formulario de Reclamación de Vida debidamente completado. Debe completarse un formulario por beneficiario. Copia de Documentos de Identificación asegurado fallecido y de los beneficiarios.  Documentos que confirmen los beneficiarios de la póliza en caso de que no haya una designación previa (Acta de Determinación de Herederos, Actas de  Matrimonio o de nacimiento de los hijos) Certificado de Defunción y causa del fallecimiento (si esta no está en el certificado) Actas Policiales (En caso de Accidentes) Informe del Médico Tratante con respecto al diagnóstico exacto de la Enfermedad.  La aseguradora podria requerir información adicional para la evaluación de su solicitud.'
     // },
   ];
 
@@ -194,23 +205,28 @@ export class NewPolicyComponent implements OnInit {
     // {
     //   name: 'REHABILITACIÓN DE POLIZA',
     //   url: ['/assets/pdfs/SOLICITUDCAMBIODEBENEFICIARIO', '/assets/pdfs/SOLICITUDSUSCRIPCIONGASTOSMAYORES',
-    //     '/assets/pdfs/PAGODEPRIMASMEDIANTETARJETADECREDITO'] // FALTA EL DE SOLICITUD
+    //     '/assets/pdfs/PAGODEPRIMASMEDIANTETARJETADECREDITO'], // FALTA EL DE SOLICITUD
+    //   text: 'A partir del fin del periodo de gracia y durante los siguientes 60 días la rehabilitación de la póliza de Salud puede ser solicitada con el formulario de rehabilitacion y anexar comprobante de pago o formulario de primas mediante tarjeta de crédito. Luego de este periodo se debe de completar el formulario de Suscripción de Gastos médicos mayores y cuestionarios adicionales de salud según aplique.'
     // },
     {
       name: 'CAMBIO DE CONTRATANTE',
-      url: ['/assets/pdfs/SOLICITUDCAMBIODECONTRATANTEPOLIZAS'] // NO ES EL MISMO QUE COMO SE LLAMA EN EL EXCEL
+      url: ['/assets/pdfs/SOLICITUDCAMBIODECONTRATANTEPOLIZAS'], // NO ES EL MISMO QUE COMO SE LLAMA EN EL EXCEL
+      text: 'Favor completar el formulario para 1-Cambio de Contratante. En caso de Persona Física completar el formulario de 2-KYC y copia de identificación. En caso de Persona Jurídica, anexar registro mercantil y copia de identificación del representante legal. '
     },
     {
       name: 'CAMBIO DE BENEFICIARIO',
-      url: ['/assets/pdfs/SOLICITUDCAMBIODEBENEFICIARIO']
+      url: ['/assets/pdfs/SOLICITUDCAMBIODEBENEFICIARIO'],
+      text: 'Favor completar el formulario de cambio de beneficiario. Aplica para titular de póliza con respecto a la cobertura adicional de Vida.'
     },
     {
       name: 'CAMBIO DE INFORMACIÓN',
-      url: ['/assets/pdfs/SOLICITUDCAMBIOPOLIZASALUDINDIVIDUAL']
+      url: ['/assets/pdfs/SOLICITUDCAMBIOPOLIZASALUDINDIVIDUAL'],
+      text: 'Favor completar la sección correspondiente en el formulario de Solicitud de cambio.'
     },
     {
       name: 'CAMBIO DE FRECUENCIA DE PAGO',
-      url: ['/assets/pdfs/SOLICITUDCAMBIOPOLIZASALUDINDIVIDUAL']
+      url: ['/assets/pdfs/SOLICITUDCAMBIOPOLIZASALUDINDIVIDUAL'],
+      text: 'Favor completar la sección correspondiente en el formulario de Solicitud de cambio.'
     },
     // {
     //   name: 'CAMBIO DE PAGADOR',
@@ -221,31 +237,39 @@ export class NewPolicyComponent implements OnInit {
   pdfOptionsDisability = [
     // {
     //   name: 'REHABILITACIÓN DE POLIZA',
-    //   url: ['/assets/pdfs/REHABILITACION'] // REVISAR SI ESTA
+    //   url: ['/assets/pdfs/REHABILITACION'], // REVISAR SI ESTA
+    //   text: 'Si la cancelación de su póliza fue realizada dentro de los 90 días favor completar el formulario de Rehabilitación y anexar comprobante de pago o formulario para uso tarjeta de crédito.'
     // },
     {
       name: 'CAMBIO DE CONTRATANTE',
-      url: ['/assets/pdfs/SOLICITUDCAMBIODECONTRATANTEPOLIZAS'] // NO ES EL MISMO QUE COMO SE LLAMA EN EL EXCEL
+      url: ['/assets/pdfs/SOLICITUDCAMBIODECONTRATANTEPOLIZAS'], // NO ES EL MISMO QUE COMO SE LLAMA EN EL EXCEL
+      text: 'Favor completar el formulario para 1-Cambio de Contratante. En caso de Persona Física completar el formulario de 2-KYC y copia de identificación. En caso de Persona Jurídica, anexar registro mercantil y copia de identificación del representante legal. '
     },
     {
       name: 'CAMBIO DE BENEFICIARIO',
-      url: ['/assets/pdfs/SOLICITUDCAMBIODEBENEFICIARIO']
+      url: ['/assets/pdfs/SOLICITUDCAMBIODEBENEFICIARIO'],
+      text: 'Favor completar el formulario de cambio de beneficiario. Aplica para cobertura de Vida. '
     },
     {
       name: 'CAMBIO DE INFORMACIÓN',
-      url: ['/assets/pdfs/SOLICITUDCAMBIOPOLIZADISABILITY']
+      url: ['/assets/pdfs/SOLICITUDCAMBIOPOLIZADISABILITY'],
+      text: 'Favor completar la sección correspondiente en el formulario de Solicitud de cambio.'
     },
     {
       name: 'CAMBIO DE FRECUENCIA DE PAGO',
-      url: ['/assets/pdfs/SOLICITUDCAMBIOPOLIZADISABILITY']
+      url: ['/assets/pdfs/SOLICITUDCAMBIOPOLIZADISABILITY'],
+      text: 'Favor completar la sección correspondiente en el formulario de Solicitud de cambio.'
     },
     // {
     //   name: 'CAMBIO DE PAGADOR',
-    //   url: ['/assets/pdfs/SOLICITUDCAMBIOPOLIZA', '/assets/pdfs/FORMULARIOKYC'] // ESTA PERO NO EN CARPETA
+    //   url: ['/assets/pdfs/SOLICITUDCAMBIOPOLIZA', '/assets/pdfs/FORMULARIOKYC'], // ESTA PERO NO EN CARPETA
+    //   text: 'Favor completar la sección correspondiente en el formulario de Solicitud de cambio. En caso de Persona Física completar el formulario de KYC y copia de identificación. En caso de Persona Jurídica, anexar registro mercantil y copia de identificación del representante legal.'
     // },
     // {
     //   name: 'RECLAMO POR DISABILITY',
-    //   url: ['/assets/pdfs/RECLAMOSDISABILITY'] // REVISAR SI ESTA
+    //   url: ['/assets/pdfs/RECLAMOSDISABILITY'], // REVISAR SI ESTA
+    //   text: 'Favor completar el formulario de reclamo de Dsiability y anexar información médica y laboral como soporte de su solicitud. La aseguradora podría requerir información adicional para la evaluación de su caso.'
+
     // },
   ];
 
@@ -261,6 +285,7 @@ export class NewPolicyComponent implements OnInit {
   policyAdministrationFieldsNamesArray = ['idNumber', 'filterType', 'pdfSelector', 'personName'];
 
   isEditing = false;
+  requestInfo = '';
 
   constructor(
     private fb: FormBuilder,
@@ -328,6 +353,23 @@ export class NewPolicyComponent implements OnInit {
         this.administrationPolicyGroup.get('pdfSelector').setValue('');
         this.returnPdfOptions(value);
         this.administrationPolicyGroup.get('pdfSelector').enable();
+      }
+    });
+
+    this.administrationPolicyGroup.get('pdfSelector').valueChanges.subscribe(value => {
+      console.log(value);
+
+      if (value !== '') {
+        if (this.pdfOptions[this.pdfOptions.findIndex(i => i.value === value)]) {
+          if (this.pdfOptions[this.pdfOptions.findIndex(i => i.value === value)].text) {
+            this.requestInfo = this.pdfOptions[this.pdfOptions.findIndex(i => i.value === value)].text;
+          }
+        }
+
+        console.log(this.requestInfo);
+        console.log(this.pdfOptions);
+        console.log(this.pdfOptions.findIndex(i => i.value === value));
+        console.log(this.pdfOptions[this.pdfOptions.findIndex(i => i.value === value)]);
       }
     });
 
@@ -442,7 +484,8 @@ export class NewPolicyComponent implements OnInit {
         this.pdfOptions.push({
           value: pdfOptionsArray[x].name,
           viewValue: pdfOptionsArray[x].name,
-          url: pdfOptionsArray[x].url
+          url: pdfOptionsArray[x].url,
+          text: pdfOptionsArray[x].text,
           // url: this.role === 'WWS' ? `${pdfOptionsArray[x].url}(WWS).pdf` : `${pdfOptionsArray[x].url}(WWM).pdf`
         });
       }

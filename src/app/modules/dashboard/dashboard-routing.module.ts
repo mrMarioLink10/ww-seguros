@@ -66,6 +66,12 @@ const routes: Routes = [
 				canLoad: [AppAuthGuard],
 				data: { accessRoles: ['Solicitud_suscripcion'] }
 			},
+			{
+				path: 'dynamic-pa',
+				loadChildren: () => import('./dynamic-pa/dynamic-pa.module').then((m) => m.DynamicPaModule),
+				canLoad: [AppAuthGuard],
+				data: { accessRoles: ['Solicitud_suscripcion'] }
+			},
 		]
 	},
 	{

@@ -14,6 +14,7 @@ import { ActivatedRoute } from '@angular/router';
 import { FormDataFillingService } from '../../services/shared/formDataFillingService';
 import { startWith, map } from 'rxjs/operators';
 import { BaseDialogComponent } from 'src/app/shared/components/base-dialog/base-dialog.component';
+import { QuoteService } from '../services/quote.service';
 
 @Component({
   selector: 'app-quote',
@@ -57,7 +58,7 @@ export class QuoteComponent implements OnInit {
   };
 
   requestsType: FieldConfig = {
-    label: 'Tipo de Solicitud',
+    label: 'Ramo',
     options: [
       {
         value: 'VIDA',
@@ -72,6 +73,25 @@ export class QuoteComponent implements OnInit {
         viewValue: 'Disability'
       },
     ]
+  };
+
+  changeType: FieldConfig = {
+    label: 'Tipo de Solicitud',
+    options: [
+      {
+        value: 'CAMBIO DE PRODUCTO',
+        viewValue: 'Cambio de producto'
+      },
+      {
+        value: 'CAMBIO DE DEDUCIBLE',
+        viewValue: 'Cambio de deducible'
+      },
+    ]
+  };
+
+  available: FieldConfig = {
+    label: 'Disponibles',
+    options: []
   };
 
   filteredOptions: Observable<any[]>;
@@ -96,10 +116,10 @@ export class QuoteComponent implements OnInit {
     public dialog: MatDialog,
     private dialogOption: DialogOptionService,
     public formMethods: FormArrayGeneratorService,
-    public diseaseService: DiseaseService,
     private formHandler: FormHandlerService,
     private route: ActivatedRoute,
     private dataMappingFromApi: FormDataFillingService,
+    private quoteService: QuoteService,
   ) { }
 
   ngOnInit() {
@@ -132,6 +152,8 @@ export class QuoteComponent implements OnInit {
       idNumber2: [''],
       pdfSelector: [{ value: '', disabled: true }, Validators.required],
       ramo: ['', Validators.required],
+      tipoSolicitud: ['', Validators.required],
+      productoTo: ['', Validators.required],
       personName: [{ value: '', disabled: true }, Validators.required],
     });
 
@@ -180,30 +202,72 @@ export class QuoteComponent implements OnInit {
   }
 
   private _filter(value): any[] {
-
-    // if (this.administrationPolicyGroup.get('filterType').value == 'NOMBRE') {
-    // 	const filterValue = value.toLowerCase();
-
-    // 	return this.dataAutoCompleteName.filter(option => option.toLowerCase().indexOf(filterValue) === 0);
-    // }
-    // if (this.administrationPolicyGroup.get('filterType').value == 'ID') {
-    // 	const filterValueNumber = value.toString();
-
-    // 	return this.dataAutoCompleteIdNumber.filter(option => option.toString().indexOf(filterValueNumber) === 0);
-    // }
-    // if (this.administrationPolicyGroup.get('filterType').value == 'POLIZA') {
-    // 	const filterValue = value.toLowerCase();
-
-    // 	return this.dataAutoCompletePolicy.filter(option => option.toLowerCase().indexOf(filterValue) === 0);
-    // }
-
     const filterValue = value.toLowerCase();
 
     return this.dataAutoCompletePolicy.filter(option => option.toLowerCase().indexOf(filterValue) === 0);
   }
 
-  returnAutoCompleteData() {
+  selectChangeType(event) {
+    this.appComponent.showOverlay = true;
+    this.administrationPolicyGroup.get('productoTo').setValue('');
+    this.administrationPolicyGroup.get('productoTo').reset();
+    this.available.options.length = 0;
 
+    if (event.valor === 'CAMBIO DE PRODUCTO') {
+      this.quoteService.getProductChange(this.administrationPolicyGroup.value.idNumber, this.country)
+        .subscribe((res: any) => {
+          this.completeAvailableOptions(res.data);
+          this.appComponent.showOverlay = false;
+        });
+    } else {
+      this.quoteService.getDeductible(this.administrationPolicyGroup.value.idNumber, this.country)
+        .subscribe((res: any) => {
+          this.completeAvailableOptions(res.data);
+          this.appComponent.showOverlay = false;
+        });
+    }
+  }
+
+  selectAvailable(event) {
+    this.appComponent.showOverlay = true;
+
+    if (this.administrationPolicyGroup.get('tipoSolicitud').value === 'CAMBIO DE PRODUCTO') {
+      this.quoteService.getProductChangeSelected(this.administrationPolicyGroup.value.idNumber, event.valor, this.country)
+        .subscribe((res: any) => {
+          console.log(res);
+          this.appComponent.showOverlay = false;
+        });
+    } else {
+      this.quoteService.getDeductibleSelected(this.administrationPolicyGroup.value.idNumber, event.valor, this.country)
+        .subscribe((res: any) => {
+          console.log(res);
+          this.appComponent.showOverlay = false;
+        });
+    }
+  }
+
+  completeAvailableOptions(data) {
+    console.log(data);
+    if (data.length > 0) {
+      for (const i of data) {
+        console.log(i);
+        this.available.options.push({
+          value: i.value,
+          viewValue: i.text
+        });
+      }
+    } else {
+      const dialogRef = this.dialog.open(BaseDialogComponent, {
+        data: this.dialogOption.noAvaliableChanges,
+        minWidth: 385,
+      });
+      setTimeout(() => {
+        dialogRef.close();
+      }, 4000);
+    }
+  }
+
+  returnAutoCompleteData() {
     this.policyAdministrationService.getIdNumbers().subscribe(data => {
       console.log(data.data);
       // tslint:disable-next-line: prefer-for-of
@@ -348,6 +412,7 @@ export class QuoteComponent implements OnInit {
       }
     }
   }
+
 
   getData(data: any) {
     this.appComponent.showOverlay = true;

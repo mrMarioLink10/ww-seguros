@@ -121,6 +121,13 @@ export class DialogOptionService {
 		email: '',
 	};
 
+	noAvaliableChanges: BaseDialog = {
+		logo: 'warning',
+		title: 'No se han encontrados cambios disponibles',
+		text: `Esta poliza no tiene cambios disponibles de este tipo`,
+		showButtons: false,
+	};
+
 	deleteConfirm(title: string) {
 		return {
 			logo: 'warning',

@@ -83,9 +83,25 @@
           <app-input name="personName" label="Nombre del Asegurado" [group]="administrationPolicyGroup"></app-input>
         </div>
       </div>
-      <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
+      <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-5 xl:grid-cols-5">
         <div class="mr-3 md:col-span-2">
           <app-select name="ramo" [options]="requestsType" [group]="administrationPolicyGroup">
+          </app-select>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-5 xl:grid-cols-5">
+        <div class="mr-3 md:col-span-2">
+          <app-select name="tipoSolicitud" [options]="changeType" (selected)="selectChangeType($event)"
+            [group]="administrationPolicyGroup">
+          </app-select>
+        </div>
+      </div>
+      <div *ngIf="administrationPolicyGroup.value.tipoSolicitud !== ''"
+        class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-5 xl:grid-cols-5">
+        <div class="mr-3 md:col-span-2">
+          <app-select name="productoTo" [options]="available" [group]="administrationPolicyGroup"
+            (selected)="selectAvailable($event)">
           </app-select>
         </div>
       </div>

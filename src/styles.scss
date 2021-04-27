@@ -793,7 +793,12 @@ button.active:focus {
 }
 
 .warn-tab #mat-tab-label-0-1 {
-  color: red !important;
+  // color: red !important;
+
+  .mat-tab-label-content {
+    color: red !important;
+
+  }
 }
 
 .warn-tab-life #mat-tab-label-0-2 {

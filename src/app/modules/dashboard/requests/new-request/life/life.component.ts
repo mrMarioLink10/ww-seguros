@@ -3373,6 +3373,22 @@ export class LifeComponent implements OnInit, DoCheck {
 
   }
 
+  showAditionalRed() {
+    if (this.newRequest.get('questionnaires').get('solicitudHipertensionArterial')) {
+      if (this.newRequest.get('questionnaires').get('solicitudHipertensionArterial').invalid) {
+        return true;
+      }
+    }
+
+    if (this.newRequest.get('questionnaires').get('solicitudDiabetes')) {
+      if (this.newRequest.get('questionnaires').get('solicitudDiabetes').invalid) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
   questionsLength() {
     if (this.newRequest.get('questionnaires').get('solucionAntiLavadoDinero') && this.newRequest.get('questionnaires').get('solicitudEstadoFinancieroConfidencial')) {
       return Object.keys(this.newRequest.get('questionnaires').value).length - 2;

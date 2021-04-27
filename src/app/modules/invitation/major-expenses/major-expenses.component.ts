@@ -2524,6 +2524,149 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
     return (validation || dependentValidation);
   }
 
+  showAditionalRed() {
+    if (this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudHipertensionArterial')) {
+      if (this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudHipertensionArterial').invalid) {
+        return true;
+      }
+    }
+    if (this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudCardioVasculares')) {
+      if (this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudCardioVasculares').invalid) {
+        return true;
+      }
+    }
+    if (this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudDiabetes')) {
+      if (this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudDiabetes').invalid) {
+        return true;
+      }
+    }
+    if (this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudArtitris')) {
+      console.log(this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudArtitris').invalid);
+      if (this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudArtitris').invalid) {
+        return true;
+      }
+    }
+    if (this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('columnaVertebralColumnaVertebral')) {
+      if (this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('columnaVertebralColumnaVertebral').invalid) {
+        return true;
+      }
+    }
+    if (this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudMusculoesqueleticos')) {
+      if (this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudMusculoesqueleticos').invalid) {
+        return true;
+      }
+    }
+    if (this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudRenales')) {
+      if (this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudRenales').invalid) {
+        return true;
+      }
+    }
+    if (this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudProstatica')) {
+      if (this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudProstatica').invalid) {
+        return true;
+      }
+    }
+    if (this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudBuceo')) {
+      if (this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudBuceo').invalid) {
+        return true;
+      }
+    }
+    if (this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudMoto')) {
+      if (this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudMoto').invalid) {
+        return true;
+      }
+    }
+    if (this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudAviacion')) {
+      if (this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudAviacion').invalid) {
+        return true;
+      }
+    }
+    if (this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudMontanismo')) {
+      if (this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudMontanismo').invalid) {
+        return true;
+      }
+    }
+
+    //tslint: disable: forin
+    // for (const key in this.allDependents.controls) {
+    //   const element = this.allDependents.controls[key] as FormGroup;
+
+    //   if (element.get('solicitudHipertensionArterial')) {
+    //     if (element.get('solicitudHipertensionArterial').invalid) {
+    //       return true;
+    //     }
+    //   }
+
+    //   if (element.get('solicitudCardioVasculares')) {
+    //     if (element.get('solicitudCardioVasculares').invalid) {
+    //       return true;
+    //     }
+    //   }
+
+    //   if (element.get('solicitudDiabetes')) {
+    //     if (element.get('solicitudDiabetes').invalid) {
+    //       return true;
+    //     }
+    //   }
+
+    //   if (element.get('solicitudArtitris')) {
+    //     if (element.get('solicitudArtitris').invalid) {
+    //       return true;
+    //     }
+    //   }
+
+    //   if (element.get('columnaVertebralColumnaVertebral')) {
+    //     if (element.get('columnaVertebralColumnaVertebral').invalid) {
+    //       return true;
+    //     }
+    //   }
+
+    //   if (element.get('solicitudMusculoesqueleticos')) {
+    //     if (element.get('solicitudMusculoesqueleticos').invalid) {
+    //       return true;
+    //     }
+    //   }
+
+    //   if (element.get('solicitudRenales')) {
+    //     if (element.get('solicitudRenales').invalid) {
+    //       return true;
+    //     }
+    //   }
+
+    //   if (element.get('solicitudProstatica')) {
+    //     if (element.get('solicitudProstatica').invalid) {
+    //       return true;
+    //     }
+    //   }
+
+    //   if (element.get('solicitudBuceo')) {
+    //     if (element.get('solicitudBuceo').invalid) {
+    //       return true;
+    //     }
+    //   }
+
+    //   if (element.get('solicitudMoto')) {
+    //     if (element.get('solicitudMoto').invalid) {
+    //       return true;
+    //     }
+    //   }
+
+    //   if (element.get('solicitudAviacion')) {
+    //     if (element.get('solicitudAviacion').invalid) {
+    //       return true;
+    //     }
+    //   }
+
+    //   if (element.get('solicitudMontanismo')) {
+    //     if (element.get('solicitudMontanismo').invalid) {
+    //       return true;
+    //     }
+    //   }
+    // }
+
+    return false;
+  }
+
   isActivityReadyToRender() {
     const validation = this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudBuceo') ||
       this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudMoto') ||
@@ -3802,11 +3945,11 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
             const formCompany = formPayer.get('office') as FormGroup;
             formCompany.removeControl('economicActivity');
             formCompany.get('company').setValidators(null);
-          formCompany.get('position').setValidators(null);
-          formCompany.get('direction').setValidators(null);
-          formCompany.get('sector').setValidators(null);
-          formCompany.get('city').setValidators(null);
-          formCompany.get('country').setValidators(null);
+            formCompany.get('position').setValidators(null);
+            formCompany.get('direction').setValidators(null);
+            formCompany.get('sector').setValidators(null);
+            formCompany.get('city').setValidators(null);
+            formCompany.get('country').setValidators(null);
           }
         }
 

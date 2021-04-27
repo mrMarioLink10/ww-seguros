@@ -2567,6 +2567,58 @@ export class DisabilityComponent implements OnInit, DoCheck {
     }
   }
 
+  showAditionalRed() {
+    if (this.disabilityGroup.get('questionnaires').get('solicitudHipertensionArterial')) {
+      if (this.disabilityGroup.get('questionnaires').get('solicitudHipertensionArterial').disable) {
+        return true;
+      }
+    }
+
+    if (this.disabilityGroup.get('questionnaires').get('solicitudDiabetes')) {
+      if (this.disabilityGroup.get('questionnaires').get('solicitudDiabetes').disable) {
+        return true;
+      }
+    }
+
+    if (this.disabilityGroup.get('questionnaires').get('solicitudArtitris')) {
+      if (this.disabilityGroup.get('questionnaires').get('solicitudArtitris').disable) {
+        return true;
+      }
+    }
+
+    if (this.disabilityGroup.get('questionnaires').get('columnaVertebralColumnaVertebral')) {
+      if (this.disabilityGroup.get('questionnaires').get('columnaVertebralColumnaVertebral').disable) {
+        return true;
+      }
+    }
+
+    if (this.disabilityGroup.get('questionnaires').get('solicitudMusculoesqueleticos')) {
+      if (this.disabilityGroup.get('questionnaires').get('solicitudMusculoesqueleticos').disable) {
+        return true;
+      }
+    }
+
+    if (this.disabilityGroup.get('questionnaires').get('solicitudCardioVasculares')) {
+      if (this.disabilityGroup.get('questionnaires').get('solicitudCardioVasculares').disable) {
+        return true;
+      }
+    }
+
+    if (this.disabilityGroup.get('questionnaires').get('solicitudRenales')) {
+      if (this.disabilityGroup.get('questionnaires').get('solicitudRenales').disable) {
+        return true;
+      }
+    }
+
+    if (this.disabilityGroup.get('questionnaires').get('solicitudProstatica')) {
+      if (this.disabilityGroup.get('questionnaires').get('solicitudProstatica').disable) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
   getData(id) {
     console.log(id);
     setTimeout(() => {

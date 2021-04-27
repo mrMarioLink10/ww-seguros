@@ -41,7 +41,7 @@
     </div>
   </div>
   <div *ngIf="showContent">
-    <mat-tab-group>
+    <mat-tab-group [ngClass]="{'warn-tab': showAditionalRed()}">
       <mat-tab label="Asegurado" class="mat-tab-forms">
         <mat-accordion #matAccordion="matAccordion" name="matAccordion" class="ww-mat-accordion example-headers-align"
           [togglePosition]="'before'">
@@ -2143,6 +2143,21 @@
           </mat-expansion-panel>
         </mat-accordion>
       </mat-tab>
+      <mat-tab [ngClass]="{'warn-tab': showAditionalRed()}" label="Cuestionarios Adicionales"
+        *ngIf="newRequest.get('questionnaires').get('solicitudDiabetes') || newRequest.get('questionnaires').get('solicitudHipertensionArterial')"
+        class="mat-tab-forms">
+        <mat-accordion #matAccordion="matAccordion" name="matAccordion" class="ww-mat-accordion example-headers-align"
+          [togglePosition]="'before'">
+          <app-hypertension
+            [showWarningDot]="showWarningDot(newRequest.get('questionnaires').get('solicitudHipertensionArterial'))"
+            *ngIf="newRequest.get('questionnaires').get('solicitudHipertensionArterial')"
+            [form]="newRequest.get('questionnaires').get('solicitudHipertensionArterial')"></app-hypertension>
+          <app-mellitus-diabetes
+            [showWarningDot]="showWarningDot(newRequest.get('questionnaires').get('solicitudDiabetes'))"
+            *ngIf="newRequest.get('questionnaires').get('solicitudDiabetes')"
+            [form]="newRequest.get('questionnaires').get('solicitudDiabetes')"></app-mellitus-diabetes>
+        </mat-accordion>
+      </mat-tab>
       <mat-tab label="Cuestionarios Actividades" *ngIf="activitiesQuestionsLength()" class="mat-tab-forms">
         <mat-accordion #matAccordion="matAccordion" name="matAccordion" class="ww-mat-accordion example-headers-align"
           [togglePosition]="'before'">
@@ -2163,21 +2178,7 @@
             [form]="newRequest.get('activitiesQuestionnaires').get('solicitudMontanismo')"></app-mountaineering>
         </mat-accordion>
       </mat-tab>
-      <mat-tab label="Cuestionarios Adicionales"
-        *ngIf="newRequest.get('questionnaires').get('solicitudDiabetes') || newRequest.get('questionnaires').get('solicitudHipertensionArterial')"
-        class="mat-tab-forms">
-        <mat-accordion #matAccordion="matAccordion" name="matAccordion" class="ww-mat-accordion example-headers-align"
-          [togglePosition]="'before'">
-          <app-hypertension
-            [showWarningDot]="showWarningDot(newRequest.get('questionnaires').get('solicitudHipertensionArterial'))"
-            *ngIf="newRequest.get('questionnaires').get('solicitudHipertensionArterial')"
-            [form]="newRequest.get('questionnaires').get('solicitudHipertensionArterial')"></app-hypertension>
-          <app-mellitus-diabetes
-            [showWarningDot]="showWarningDot(newRequest.get('questionnaires').get('solicitudDiabetes'))"
-            *ngIf="newRequest.get('questionnaires').get('solicitudDiabetes')"
-            [form]="newRequest.get('questionnaires').get('solicitudDiabetes')"></app-mellitus-diabetes>
-        </mat-accordion>
-      </mat-tab>
+
       <mat-tab label="Formulario de Estado Financiero"
         *ngIf="newRequest.get('questionnaires').get('solicitudEstadoFinancieroConfidencial')" class="mat-tab-forms">
         <mat-accordion #matAccordion="matAccordion" name="matAccordion" class="ww-mat-accordion example-headers-align"

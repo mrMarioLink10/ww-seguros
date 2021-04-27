@@ -70,7 +70,7 @@
       </div>
     </div>
     <div #top></div>
-    <mat-tab-group [ngClass]="{'warn-tab': (isGoToTopRender() && isFormValidToFill)}" *ngIf="isFormValidToFill">
+    <mat-tab-group [ngClass]="{'warn-tab': showAditionalRed()}" *ngIf="isFormValidToFill">
       <mat-tab label="Asegurado">
         <div class="mt-6 p-3 pb-0 info-home">
           <div class="mt-3 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4">
@@ -2612,8 +2612,8 @@
           [form]="newRequest.get('contractor').get('conozcaSuClientePersonaJuridica')"> </app-know-your-client> -->
 
       </mat-tab>
-      <mat-tab label="Cuestionarios Adicionales" [ngClass]="{'warn-tab': (isGoToTopRender() && isFormValidToFill)}"
-        class="mat-tab-forms" *ngIf="isFormReadyToRender();">
+      <mat-tab label="Cuestionarios Adicionales" [ngClass]="{'warn-tab': showAditionalRed()}" class="mat-tab-forms"
+        *ngIf="isFormReadyToRender();">
         <mat-accordion #matAccordion="matAccordion" name="matAccordion" class="ww-mat-accordion example-headers-align"
           [togglePosition]="'before'">
           <app-hypertension

@@ -794,7 +794,7 @@ button.active:focus {
 
 $zero: 1;
 
-@for $i from 0 through 200 {
+@for $i from 0 through 300 {
 
   .warn-tab #mat-tab-label-#{$i}-#{$zero} {
     color: red !important;

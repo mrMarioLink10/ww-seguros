@@ -60,18 +60,18 @@ const routes: Routes = [
 			// 	canLoad: [AppAuthGuard],
 			// 	data: { accessRoles: ['administrador'] }
 			// },
-			{
-				path: 'policy-administration',
-				loadChildren: () => import('./policy-administration/policy-administration.module').then((m) => m.PolicyAdministrationModule),
-				canLoad: [AppAuthGuard],
-				data: { accessRoles: ['Solicitud_suscripcion'] }
-			},
-			{
-				path: 'dynamic-pa',
-				loadChildren: () => import('./dynamic-pa/dynamic-pa.module').then((m) => m.DynamicPaModule),
-				canLoad: [AppAuthGuard],
-				data: { accessRoles: ['Solicitud_suscripcion'] }
-			},
+			// {
+			// 	path: 'policy-administration',
+			// 	loadChildren: () => import('./policy-administration/policy-administration.module').then((m) => m.PolicyAdministrationModule),
+			// 	canLoad: [AppAuthGuard],
+			// 	data: { accessRoles: ['Solicitud_suscripcion'] }
+			// },
+			// {
+			// 	path: 'dynamic-pa',
+			// 	loadChildren: () => import('./dynamic-pa/dynamic-pa.module').then((m) => m.DynamicPaModule),
+			// 	canLoad: [AppAuthGuard],
+			// 	data: { accessRoles: ['Solicitud_suscripcion'] }
+			// },
 		]
 	},
 	{

@@ -2569,49 +2569,49 @@ export class DisabilityComponent implements OnInit, DoCheck {
 
   showAditionalRed() {
     if (this.disabilityGroup.get('questionnaires').get('solicitudHipertensionArterial')) {
-      if (this.disabilityGroup.get('questionnaires').get('solicitudHipertensionArterial').disable) {
+      if (this.disabilityGroup.get('questionnaires').get('solicitudHipertensionArterial').invalid) {
         return true;
       }
     }
 
     if (this.disabilityGroup.get('questionnaires').get('solicitudDiabetes')) {
-      if (this.disabilityGroup.get('questionnaires').get('solicitudDiabetes').disable) {
+      if (this.disabilityGroup.get('questionnaires').get('solicitudDiabetes').invalid) {
         return true;
       }
     }
 
     if (this.disabilityGroup.get('questionnaires').get('solicitudArtitris')) {
-      if (this.disabilityGroup.get('questionnaires').get('solicitudArtitris').disable) {
+      if (this.disabilityGroup.get('questionnaires').get('solicitudArtitris').invalid) {
         return true;
       }
     }
 
     if (this.disabilityGroup.get('questionnaires').get('columnaVertebralColumnaVertebral')) {
-      if (this.disabilityGroup.get('questionnaires').get('columnaVertebralColumnaVertebral').disable) {
+      if (this.disabilityGroup.get('questionnaires').get('columnaVertebralColumnaVertebral').invalid) {
         return true;
       }
     }
 
     if (this.disabilityGroup.get('questionnaires').get('solicitudMusculoesqueleticos')) {
-      if (this.disabilityGroup.get('questionnaires').get('solicitudMusculoesqueleticos').disable) {
+      if (this.disabilityGroup.get('questionnaires').get('solicitudMusculoesqueleticos').invalid) {
         return true;
       }
     }
 
     if (this.disabilityGroup.get('questionnaires').get('solicitudCardioVasculares')) {
-      if (this.disabilityGroup.get('questionnaires').get('solicitudCardioVasculares').disable) {
+      if (this.disabilityGroup.get('questionnaires').get('solicitudCardioVasculares').invalid) {
         return true;
       }
     }
 
     if (this.disabilityGroup.get('questionnaires').get('solicitudRenales')) {
-      if (this.disabilityGroup.get('questionnaires').get('solicitudRenales').disable) {
+      if (this.disabilityGroup.get('questionnaires').get('solicitudRenales').invalid) {
         return true;
       }
     }
 
     if (this.disabilityGroup.get('questionnaires').get('solicitudProstatica')) {
-      if (this.disabilityGroup.get('questionnaires').get('solicitudProstatica').disable) {
+      if (this.disabilityGroup.get('questionnaires').get('solicitudProstatica').invalid) {
         return true;
       }
     }

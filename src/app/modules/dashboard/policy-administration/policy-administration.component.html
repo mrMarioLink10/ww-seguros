@@ -66,7 +66,7 @@
           <td class="padding-cell" mat-cell *matCellDef="let element"
             style="max-width: 140px !important; min-width: 137px !important; width: 137px !important;">
 
-            <button mat-mini-fab aria-label="Editar" (click)="editRequest(element.id)" *ngIf="element.status === 0"
+            <button mat-mini-fab aria-label="Editar" (click)="editRequest(element.id)" *ngIf="element.status === 0 || isWWSeguros"
               class="dashboard-table-buttons">
               <img src="../../../../assets/iconos/edit.svg">
             </button>

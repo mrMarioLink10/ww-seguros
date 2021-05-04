@@ -151,8 +151,12 @@
   </form>
   <form #form="ngForm">
     <div *ngIf="showContent" class="mt-8">
-      <button mat-button class="send-button" style="margin-right: 7.5px !important; margin-top: 10px;"
+      <button *ngIf="!isWWSeguros" mat-button class="send-button" style="margin-right: 7.5px !important; margin-top: 10px;"
         (click)="saveChanges()" type="submit">Guardar cambios</button>
+      <button *ngIf="statusProperty== 1 && isWWSeguros" mat-button class="send-button" style="margin-right: 7.5px !important; margin-top: 10px;"
+        (click)="confirmRequest()" type="submit">Aceptar</button>
+      <button *ngIf="statusProperty== 1 && isWWSeguros" mat-button class="send-button" style="margin-right: 7.5px !important; margin-top: 10px;"
+        (click)="rejectRequest()" type="submit">Denegar</button>
     </div>
   </form>
 </div>

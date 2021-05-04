@@ -338,6 +338,8 @@ export class NewPolicyComponent implements OnInit {
 
   isWWSeguros = false;
 
+  statusProperty = -1;
+
   constructor(
     private fb: FormBuilder,
     private appComponent: AppComponent,
@@ -655,6 +657,16 @@ export class NewPolicyComponent implements OnInit {
     this.formHandler.saveFormAdministrationPolicy(this.administrationPolicyGroup, this.appComponent);
   }
 
+  confirmRequest() {
+    this.administrationPolicyGroup.markAllAsTouched();
+		this.formHandler.policyAdministration2(this.administrationPolicyGroup.get('id').value, 'confirm', this.appComponent, this.administrationPolicyGroup);
+	}
+
+	rejectRequest() {
+    this.administrationPolicyGroup.markAllAsTouched();
+		this.formHandler.policyAdministration2(this.administrationPolicyGroup.get('id').value, 'deny', this.appComponent, this.administrationPolicyGroup);
+	}
+
   searchIdNumber(idNumber: string) {
 
     let idNumberObject;
@@ -781,6 +793,9 @@ export class NewPolicyComponent implements OnInit {
       });
       this.idNumber2FieldVisible = true;
     }
+    this.statusProperty = data.status;
+    this.administrationPolicyGroup.get('comentario').setValue(data.comentario.toUpperCase());
+
     this.administrationPolicyGroup.get('pdfSelector').setValue(data.pdfSelector);
     this.administrationPolicyGroup.removeControl('countryCode');
     this.administrationPolicyGroup.removeControl('createdBy');

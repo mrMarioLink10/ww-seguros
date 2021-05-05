@@ -105,10 +105,12 @@ export class DashboardLayoutComponent implements OnInit, OnDestroy {
     else {
       if (this.userService.getRoleCotizador() === 'WWS') {
         this.country = 'rd';
+        localStorage.setItem('countryCode', this.country);
         console.log('this.country es igual a: ' + this.country);
       }
       else if (this.userService.getRoleCotizador() === 'WMA') {
         this.country = 'pn';
+        localStorage.setItem('countryCode', this.country);
         console.log('this.country es igual a: ' + this.country);
       }
     }

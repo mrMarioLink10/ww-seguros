@@ -84,18 +84,33 @@ export class DashboardLayoutComponent implements OnInit, OnDestroy {
       this.country = 'rd';
       localStorage.setItem('countryCode', this.country);
     }
+    console.log(localStorage.getItem('countryCode'));
 
     this.userName = this.userService.getUserInformation().name;
     this.userEmail = this.userService.getUserInformation().email;
     this.role = this.userService.getRoleCotizador();
     this.roles = this.userService.getRoles();
+    console.log(this.role);
+    console.log(this.roles);
 
-    if (this.country === 'pn') {
-      this.role = 'WMA';
-      console.log('this.role es igual a: ' + this.role);
+    if ((this.userService.getRoles().includes('WWS') && this.userService.getRoles().includes('WMA'))) {
+      if (this.country === 'pn') {
+        this.role = 'WMA';
+        console.log('this.role es igual a: ' + this.role);
+      }
+      else {
+        console.log('this.role es igual a: ' + this.role);
+      }
     }
     else {
-      console.log('this.role es igual a: ' + this.role);
+      if (this.userService.getRoleCotizador() === 'WWS') {
+        this.country = 'rd';
+        console.log('this.country es igual a: ' + this.country);
+      }
+      else if (this.userService.getRoleCotizador() === 'WMA') {
+        this.country = 'pn';
+        console.log('this.country es igual a: ' + this.country);
+      }
     }
   }
 

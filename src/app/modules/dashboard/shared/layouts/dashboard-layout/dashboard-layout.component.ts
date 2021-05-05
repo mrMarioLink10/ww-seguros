@@ -89,6 +89,14 @@ export class DashboardLayoutComponent implements OnInit, OnDestroy {
     this.userEmail = this.userService.getUserInformation().email;
     this.role = this.userService.getRoleCotizador();
     this.roles = this.userService.getRoles();
+
+    if (this.country === 'pn') {
+      this.role = 'WMA';
+      console.log('this.role es igual a: ' + this.role);
+    }
+    else {
+      console.log('this.role es igual a: ' + this.role);
+    }
   }
 
   setCountry() {

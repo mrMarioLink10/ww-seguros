@@ -303,7 +303,7 @@ export class QuoteComponent implements OnInit {
     // console.log(JSON.stringify(this.administrationPolicyGroup.getRawValue()));
     this.administrationPolicyGroup.markAllAsTouched();
     // tslint:disable-next-line: align
-    this.formHandler.saveFormAdministrationPolicy(this.administrationPolicyGroup, this.appComponent);
+    this.formHandler.saveDynamicQuote(this.administrationPolicyGroup, this.appComponent);
   }
 
   searchIdNumber(idNumber: string) {

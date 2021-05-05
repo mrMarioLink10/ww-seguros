@@ -24,4 +24,8 @@ export class QuoteService {
   getProductChangeSelected(poliza: string, selectionId: string, country: string) {
     return (this.http.get(`${environment.apiUrl}/api/FlujoClientesExistenteDinamico/SolicitudCambioSeleccionado/${poliza}/${selectionId}`, { params: { poliza, selectionId, country } }));
   }
+
+  postDynamicRequest(body) {
+    return (this.http.post(`${environment.apiUrl}/api/FlujoClientesExistenteDinamico/SolicitudDinamica`, body));
+  }
 }

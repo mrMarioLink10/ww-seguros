@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { ChangeRoutingModule } from './change-routing.module';
 import { ChangeComponent } from './change.component';
 import { NewRequestModule } from '../../requests/new-request/new-request.module';
+import { SharedModule } from '../../shared/shared.module';
 
 
 @NgModule({
@@ -11,7 +12,8 @@ import { NewRequestModule } from '../../requests/new-request/new-request.module'
   imports: [
     CommonModule,
     ChangeRoutingModule,
-    NewRequestModule
+    NewRequestModule,
+    SharedModule
   ]
 })
 export class ChangeModule { }

@@ -778,6 +778,14 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy, DoCheck {
 						this.dataAutoCompleteIdNumber.push(data.data[x].asegurado.id_asegurado);
 
 						this.dataAutoCompletePolicy.push(data.data[x].asegurado.no_poliza);
+
+						//NO BORRAR, estas lineas de código son para eliminar las posiciones repetidas.
+						this.dataAutoCompletePolicy = this.dataAutoCompletePolicy.reduce((unique, o) => {
+							if(!unique.some(obj => obj === o)) {
+							  unique.push(o);
+							}
+							return unique;
+						  },[]);
 						// console.log(this.dataAutoCompleteName);
 						// console.log(this.dataAutoCompleteIdNumber);
 						// console.log(this.dataAutoCompletePolicy);

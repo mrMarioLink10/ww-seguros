@@ -180,6 +180,9 @@ export class FormHandlerService {
 		});
 
 		Dialog.afterClosed().subscribe((result) => {
+			if (!form.get('isComplete')) {
+				form.addControl('isComplete', this.fb.control(''));
+			}
 			if (!form.invalid) {
 				form.get('isComplete').setValue(true);
 			} else {

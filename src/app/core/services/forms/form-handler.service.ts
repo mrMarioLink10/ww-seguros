@@ -21,6 +21,7 @@ import { SettingsService } from '../../../modules/dashboard/settings/services/se
 import { PolicyAdministrationService } from '../../../modules/dashboard/policy-administration/services/policy-administration.service';
 import { map } from 'rxjs/operators';
 import { QuoteService } from 'src/app/modules/dashboard/dynamic-pa/services/quote.service';
+import { ChangeService } from '../../../modules/dashboard/dynamic-pa/services/change.service';
 // tslint:disable: forin
 // tslint:disable: variable-name
 
@@ -47,7 +48,8 @@ export class FormHandlerService {
 		private formsService: FormsService,
 		private settingsService: SettingsService,
 		private policyAdministrationService: PolicyAdministrationService,
-		private dynamicQuoteService: QuoteService
+		private dynamicQuoteService: QuoteService,
+		private changeService: ChangeService
 	) { }
 
 	sendForm(form: FormGroup, name: string, type?: string, appComponent?: any, id?: number, isInvitation?: boolean) {
@@ -152,6 +154,19 @@ export class FormHandlerService {
 				route = 'dashboard/requests';
 				break;
 
+			case 'dynamic-pa':
+				if (type === 'send') {
+					dataOpen = this.dialogOption.sendForm('cambio');
+					dataClosing = this.dialogOption.confirmedForm('cambio');
+				} else if (type === 'save') {
+					dataOpen = this.dialogOption.saveForm('cambio');
+					dataClosing = this.dialogOption.confirmedSavedForm('cambio');
+				} else if (type === 'invitation') {
+					dataOpen = this.dialogOption.sendInvitationLink;
+					dataClosing = this.dialogOption.confirmedInvitationForm('cambio');
+				}
+				route = 'dashboard/dynamic-pa';
+				break;
 		}
 
 		if (type === 'cancel') {
@@ -335,6 +350,28 @@ export class FormHandlerService {
 										});
 								} else {
 									this.disabilityService.postRequest(json)
+										.subscribe(res => {
+											this.correctSend(res, dialog, dataClosing, route);
+											appComponent.showOverlay = false;
+										}, (err) => {
+											this.badSend(err, dialog);
+										});
+								}
+								break;
+
+							case 'dynamic-pa':
+								appComponent.showOverlay = true;
+								if (isInvitation) {
+									// this.requestService.saveRequestData('disability', ID, json)
+									// 	.subscribe(res => {
+									// 		this.correctSend(res, dialog, dataClosing, route, isInvitation);
+									// 		appComponent.showOverlay = false;
+									// 	}, (err) => {
+									// 		this.badSend(err, dialog);
+									// 	});
+									console.warn('ESTA ENTRANDO A INVITATION');
+								} else {
+									this.changeService.postDynamicData(json)
 										.subscribe(res => {
 											this.correctSend(res, dialog, dataClosing, route);
 											appComponent.showOverlay = false;
@@ -1027,120 +1064,120 @@ export class FormHandlerService {
 
 					// setTimeout(() => {
 
-						// Dialog.afterClosed().subscribe((result) => {
+					// Dialog.afterClosed().subscribe((result) => {
 
-							this.sendedForm = form.getRawValue();
-							const json = JSON.stringify(this.sendedForm);
-							console.log(json);
-				
-							// console.log('result es igual a ' + result);
-				
-							// if (result === 'true') {
-								let dialogPost;
-								appComponent.showOverlay = true;
-								if (!form.invalid) {
-									console.log('administracion de polizas es valido');
-									this.policyAdministrationService.postPolicyAdministration(json)
-										.subscribe(res => {
-											// const routePost = 'dashboard/policy-administration';
-											// dataClosing = this.dialogOption.confirmedSavedAdministrationPolicy();
-											// this.correctSend(res, dialogPost, dataClosing, routePost);
-											// appComponent.showOverlay = false;
-											console.log(res);
-											console.log('Envio realizado correctamente post');
+					this.sendedForm = form.getRawValue();
+					const json = JSON.stringify(this.sendedForm);
+					console.log(json);
 
-											console.log('administracion de polizas confirmado');
-											this.policyAdministrationService.confirmRequest(id)
-												.subscribe(res => {
-													console.log(res);
-													// location.reload();
-													this.correctSend(res, dialog, dataClosing, route);
-													appComponent.showOverlay = false;
-													console.log('Envio realizado correctamente confirm');
-						
-												}, (err) => {
-													this.badSend(err, dialog);
-													console.log('Envio fallido confirm');
-												});
+					// console.log('result es igual a ' + result);
 
-										}, (err) => {
-											this.badSend(err, dialogPost);
-											console.log(err)
-											console.log('Envio fallido post');
-										});
-								} else {
-									setTimeout(() => {
+					// if (result === 'true') {
+					let dialogPost;
+					appComponent.showOverlay = true;
+					if (!form.invalid) {
+						console.log('administracion de polizas es valido');
+						this.policyAdministrationService.postPolicyAdministration(json)
+							.subscribe(res => {
+								// const routePost = 'dashboard/policy-administration';
+								// dataClosing = this.dialogOption.confirmedSavedAdministrationPolicy();
+								// this.correctSend(res, dialogPost, dataClosing, routePost);
+								// appComponent.showOverlay = false;
+								console.log(res);
+								console.log('Envio realizado correctamente post');
+
+								console.log('administracion de polizas confirmado');
+								this.policyAdministrationService.confirmRequest(id)
+									.subscribe(res => {
+										console.log(res);
+										// location.reload();
+										this.correctSend(res, dialog, dataClosing, route);
 										appComponent.showOverlay = false;
-										console.log('settings NO es valido');
-										dialogPost = this.dialog.open(BaseDialogComponent, {
-											data: this.dialogOption.AdministrationPolicyInvalid(),
-											minWidth: 385
-										});
-										this.closeDialog(dialogPost);
-									}, 1000);
-								}
-							// }
-						// });
-						
+										console.log('Envio realizado correctamente confirm');
+
+									}, (err) => {
+										this.badSend(err, dialog);
+										console.log('Envio fallido confirm');
+									});
+
+							}, (err) => {
+								this.badSend(err, dialogPost);
+								console.log(err)
+								console.log('Envio fallido post');
+							});
+					} else {
+						setTimeout(() => {
+							appComponent.showOverlay = false;
+							console.log('settings NO es valido');
+							dialogPost = this.dialog.open(BaseDialogComponent, {
+								data: this.dialogOption.AdministrationPolicyInvalid(),
+								minWidth: 385
+							});
+							this.closeDialog(dialogPost);
+						}, 1000);
+					}
+					// }
+					// });
+
 					// }, 4000);
 				} else {
 					// setTimeout(() => {
 
-						// Dialog.afterClosed().subscribe((result) => {
+					// Dialog.afterClosed().subscribe((result) => {
 
-							this.sendedForm = form.getRawValue();
-							const json = JSON.stringify(this.sendedForm);
-							console.log(json);
-				
-							// console.log('result es igual a ' + result);
-				
-							// if (result === 'true') {
-								let dialogPost;
-								appComponent.showOverlay = true;
-								if (!form.invalid) {
-									console.log('administracion de polizas es valido');
-									this.policyAdministrationService.postPolicyAdministration(json)
-										.subscribe(res => {
-											// const routePost = 'dashboard/policy-administration';
-											// dataClosing = this.dialogOption.confirmedSavedAdministrationPolicy();
-											// this.correctSend(res, dialogPost, dataClosing, routePost);
-											// appComponent.showOverlay = false;
-											console.log(res);
-											console.log('Envio realizado correctamente post');
+					this.sendedForm = form.getRawValue();
+					const json = JSON.stringify(this.sendedForm);
+					console.log(json);
 
-											console.log('administracion de polizas denegado');
-											this.policyAdministrationService.rejectRequest(id)
-												.subscribe(res => {
-													console.log(res);
-													// location.reload();
-													this.correctSend(res, dialog, dataClosing, route);
-													appComponent.showOverlay = false;
-													console.log('Envio realizado correctamente reject');
-						
-												}, (err) => {
-													this.badSend(err, dialog);
-													console.log('Envio fallido reject');
-												});
+					// console.log('result es igual a ' + result);
 
-										}, (err) => {
-											this.badSend(err, dialogPost);
-											console.log(err)
-											console.log('Envio fallido post');
-										});
-								} else {
-									setTimeout(() => {
+					// if (result === 'true') {
+					let dialogPost;
+					appComponent.showOverlay = true;
+					if (!form.invalid) {
+						console.log('administracion de polizas es valido');
+						this.policyAdministrationService.postPolicyAdministration(json)
+							.subscribe(res => {
+								// const routePost = 'dashboard/policy-administration';
+								// dataClosing = this.dialogOption.confirmedSavedAdministrationPolicy();
+								// this.correctSend(res, dialogPost, dataClosing, routePost);
+								// appComponent.showOverlay = false;
+								console.log(res);
+								console.log('Envio realizado correctamente post');
+
+								console.log('administracion de polizas denegado');
+								this.policyAdministrationService.rejectRequest(id)
+									.subscribe(res => {
+										console.log(res);
+										// location.reload();
+										this.correctSend(res, dialog, dataClosing, route);
 										appComponent.showOverlay = false;
-										console.log('settings NO es valido');
-										dialogPost = this.dialog.open(BaseDialogComponent, {
-											data: this.dialogOption.AdministrationPolicyInvalid(),
-											minWidth: 385
-										});
-										this.closeDialog(dialogPost);
-									}, 1000);
-								}
-							// }
-						// });
-						
+										console.log('Envio realizado correctamente reject');
+
+									}, (err) => {
+										this.badSend(err, dialog);
+										console.log('Envio fallido reject');
+									});
+
+							}, (err) => {
+								this.badSend(err, dialogPost);
+								console.log(err)
+								console.log('Envio fallido post');
+							});
+					} else {
+						setTimeout(() => {
+							appComponent.showOverlay = false;
+							console.log('settings NO es valido');
+							dialogPost = this.dialog.open(BaseDialogComponent, {
+								data: this.dialogOption.AdministrationPolicyInvalid(),
+								minWidth: 385
+							});
+							this.closeDialog(dialogPost);
+						}, 1000);
+					}
+					// }
+					// });
+
 					// }, 4000);
 				}
 			}

@@ -23,12 +23,14 @@ export class ChangeComponent implements OnInit {
   changeForm: FormGroup;
 
   showContent = false;
+  data: any;
 
   ngOnInit() {
     this.changeForm = this.fb.group({});
     this.route.data.subscribe((response: any) => {
       console.log('RESPONDE DENTRO DEL COMPONENTE CHANGE', response);
       if (response.data) {
+        this.data = response.data;
         if (response.data.id) {
           this.getData(response.data);
         }

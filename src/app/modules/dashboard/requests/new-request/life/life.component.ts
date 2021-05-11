@@ -1,4 +1,4 @@
-import { Component, OnInit, DoCheck, ɵConsole, ChangeDetectorRef, AfterViewChecked, ViewChild } from '@angular/core';
+import { Component, OnInit, DoCheck, ɵConsole, ChangeDetectorRef, AfterViewChecked, ViewChild, Input } from '@angular/core';
 import { FormGroup, FormBuilder, FormArray, Validators, FormControl } from '@angular/forms';
 import { FormArrayGeneratorService } from 'src/app/core/services/forms/form-array-generator.service';
 import { FieldConfig } from 'src/app/shared/components/form-components/models/field-config';
@@ -688,6 +688,10 @@ export class LifeComponent implements OnInit, DoCheck {
 
   juridicalObligatoryOptions: any;
   physicalObligatoryOptions: any;
+
+  @Input() isChange = false;
+  @Input() changeForm: FormGroup;
+  @Input() changeData: any;
 
   @ViewChild('form', { static: false }) form;
   @ViewChild('matAccordion', { static: false }) matAccordion;

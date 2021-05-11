@@ -688,6 +688,10 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
   juridicalObligatoryOptions: any;
   physicalObligatoryOptions: any;
 
+  @Input() isChange = false;
+  @Input() changeForm: FormGroup;
+  @Input() changeData: any;
+
   @ViewChild('form', { static: false }) ogForm;
   step: number;
 
@@ -938,7 +942,21 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
     } else if (this.ID == null) {
     }
 
+    console.warn(this.isChange, this.changeData.cotizacionInfoCode);
+
+    if (this.isChange) {
+      this.noCotizacion = this.changeData.cotizacionInfoCode;
+      this.getDataCotizaciones(this.noCotizacion);
+      this.newRequest.get('noC').setValue(this.noCotizacion);
+      this.newRequest.get('noC').disable();
+      this.changeForm.removeControl('solicitudGastosMayores');
+      this.changeForm.addControl('solicitudGastosMayores', this.newRequest);
+      console.log('changeForm depue:', this.changeForm);
+      // this.changeForm.get('solicitudGastosMayores').controls = this.newRequest;
+    }
+
     if (this.noCotizacion != null) {
+
       this.getDataCotizaciones(this.noCotizacion);
       // this.getData(this.ID);
     } else if (this.noCotizacion == null) {

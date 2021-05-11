@@ -1,6 +1,9 @@
 <div class="p-6 pr-6 xs:pr-6 sm:pr-6 md:pr-12 lg:pr-12 xl:pr-12 bg-white">
   <form [formGroup]='newRequest'>
-    <h3 class="uppercase dashboard-page-title pt-8">Solicitudes - Suscripción Seguro de Gastos Médicos Mayores</h3>
+    <h3 *ngIf="!isChange" class="uppercase dashboard-page-title pt-8">Solicitudes - Suscripción Seguro de Gastos Médicos
+      Mayores</h3>
+    <h3 *ngIf="isChange" class="uppercase dashboard-page-title pt-8">Solicitud de Cambio - Suscripción Seguro de Gastos
+      Médicos Mayores</h3>
     <div class="mt-6 p-3 pb-0 info-cot">
       <div class="filter-title">Info. Inicio</div>
       <div class="mt-3 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4">
@@ -21,7 +24,7 @@
         <app-number-input class="mr-3" [group]="newRequest" label="No. de Cotización" name='noC'></app-number-input>
 
 
-        <div class="flex">
+        <div class="flex" *ngIf="!isChange">
           <button *ngIf="ID === null || ID === undefined" (click)="searchQuote(newRequest.value.noC)"
             [disabled]="isNotValidToSearch" class="nofocus flex justify-center small-search-button"
             style="display: -webkit-box">
@@ -35,7 +38,7 @@
         <div></div>
 
 
-        <div class="mr-3">
+        <div class="mr-3" *ngIf="!isChange">
           <mat-form-field color="accent" appearance="outline" class="w-full" style="font-size: small !important;">
             <mat-label>Tipo de Solicitud</mat-label>
             <mat-select [(value)]="routeSelected" (selectionChange)="selectChangeUrl($event.value)">
@@ -2876,7 +2879,7 @@
   </div>
 
   <form #form="ngForm">
-    <div class="mt-4" *ngIf="isFormValidToFill">
+    <div class="mt-4" *ngIf="isFormValidToFill && !isChange">
       <button mat-button class="cancel-form-button" style="margin-right: 7.5px !important;"
         (click)="formHandler.sendForm(newRequest, 'major-expenses', 'cancel')" type="submit">Cancelar</button>
       <button mat-button class="save-button" style="margin-right: 7.5px !important;"
@@ -2889,6 +2892,12 @@
         type="submit">Enviar
         a
         cliente</button>
+    </div>
+    <div class="mt-4" *ngIf="isFormValidToFill && isChange">
+      <button mat-button class="cancel-form-button" style="margin-right: 7.5px !important;"
+        (click)="formHandler.sendForm(newRequest, 'dynamic-pa', 'cancel')" type="submit">Cancelar</button>
+      <button mat-button class="save-button" style="margin-right: 7.5px !important;"
+        (click)="formHandler.sendForm(changeForm, 'dynamic-pa', 'save', appComponent)" type="submit">Guardar</button>
     </div>
   </form>
 </div>

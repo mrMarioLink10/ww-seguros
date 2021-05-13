@@ -45,7 +45,7 @@ export class LifeComponent implements OnInit, DoCheck {
     public dialog: MatDialog,
     private life: LifeService,
     private know: KnowYourCustomerComponent,
-    private appComponent: AppComponent,
+    public appComponent: AppComponent,
     private cd: ChangeDetectorRef,
     public requestService: RequestsService
   ) {
@@ -904,6 +904,17 @@ export class LifeComponent implements OnInit, DoCheck {
       payerQuestionnaires: this.fb.group({}),
       activitiesQuestionnaires: this.fb.group({}),
     });
+
+    if (this.isChange) {
+      this.noCotizacion = this.changeData.cotizacionInfoCode;
+      this.searchIdNumber(this.noCotizacion);
+      this.newRequest.get('noC').setValue(this.noCotizacion);
+      this.newRequest.get('noC').disable();
+      this.changeForm.removeControl('solicitudGastosMayores');
+      this.changeForm.addControl('solicitudGastosMayores', this.newRequest);
+      console.log('changeForm depue:', this.changeForm);
+      // this.changeForm.get('solicitudGastosMayores').controls = this.newRequest;
+    }
 
     if (this.noCotizacion) {
       console.log(this.noCotizacion);

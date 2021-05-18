@@ -69,7 +69,7 @@ export class NewPolicyComponent implements OnInit {
         viewValue: 'Salud'
       },
       {
-        value: 'DISABILITY',
+        value: 'L & D',
         viewValue: 'Disability'
       },
     ]

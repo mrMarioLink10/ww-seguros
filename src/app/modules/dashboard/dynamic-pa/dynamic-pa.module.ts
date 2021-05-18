@@ -8,6 +8,7 @@ import { GlobalSharedModule } from 'src/app/shared/global-shared.module';
 import { SharedModule } from '../shared/shared.module';
 import { MaterialModule } from 'src/app/shared/modules/material.module';
 import { QuoteComponent } from './quote/quote.component';
+import { ChangeModule } from './change/change.module';
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import { QuoteComponent } from './quote/quote.component';
     ReactiveFormsModule,
     GlobalSharedModule,
     SharedModule,
-    MaterialModule
+    MaterialModule,
+    ChangeModule
   ]
 })
 export class DynamicPaModule { }

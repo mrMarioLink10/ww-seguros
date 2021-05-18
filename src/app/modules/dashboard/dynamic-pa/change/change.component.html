@@ -1,1 +1,4 @@
-<p>change works!</p>
+<app-major-expenses *ngIf="changeForm.get('solicitudGastosMayores')" [changeData]="data" [isChange]="true"
+  [changeForm]="changeForm"></app-major-expenses>
+<app-life *ngIf="changeForm.get('solicitudVida')" [changeData]="data" [isChange]="true" [changeForm]="changeForm">
+</app-life>

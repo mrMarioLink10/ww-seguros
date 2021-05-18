@@ -66,7 +66,7 @@
           <td class="padding-cell" mat-cell *matCellDef="let element"
             style="max-width: 140px !important; min-width: 137px !important; width: 137px !important;">
 
-            <button mat-mini-fab aria-label="Editar" (click)="editRequest(element.id)" *ngIf="element.status === 0"
+            <button mat-mini-fab aria-label="Editar" (click)="editRequest(element.id)" *ngIf="element.status === 0 || isWWSeguros"
               class="dashboard-table-buttons">
               <img src="../../../../assets/iconos/edit.svg">
             </button>
@@ -81,14 +81,14 @@
               class="dashboard-table-buttons">
               <img src="../../../../assets/iconos/trash.svg">
             </button> -->
-            <button mat-mini-fab aria-label="Ver mas" (click)="confirmRequest(element.id)"
+            <!-- <button mat-mini-fab aria-label="Ver mas" (click)="confirmRequest(element.id)"
               *ngIf="element.status === 1 && isWWSeguros" class="dashboard-table-buttons" title="Ver Mas">
               <img src="../../../../assets/iconos/check.svg">
             </button>
             <button mat-mini-fab aria-label="Ver mas" (click)="rejectRequest(element.id)"
               *ngIf="element.status === 1 && isWWSeguros" class="dashboard-table-buttons" title="Ver Mas">
               <img src="../../../../assets/iconos/trash.svg">
-            </button>
+            </button> -->
           </td>
         </ng-container>
 

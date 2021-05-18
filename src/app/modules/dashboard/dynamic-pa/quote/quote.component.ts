@@ -57,24 +57,6 @@ export class QuoteComponent implements OnInit {
     ]
   };
 
-  requestsType: FieldConfig = {
-    label: 'Ramo',
-    options: [
-      {
-        value: 'VIDA',
-        viewValue: 'Vida'
-      },
-      {
-        value: 'SALUD',
-        viewValue: 'Salud'
-      },
-      {
-        value: 'DISABILITY',
-        viewValue: 'Disability'
-      },
-    ]
-  };
-
   changeType: FieldConfig = {
     label: 'Tipo de Solicitud',
     options: [
@@ -151,7 +133,6 @@ export class QuoteComponent implements OnInit {
       filterType: ['POLIZA', Validators.required],
       idNumber2: [''],
       pdfSelector: [{ value: '', disabled: true }, Validators.required],
-      ramo: ['', Validators.required],
       tipoSolicitud: ['', Validators.required],
       productoTo: ['', Validators.required],
       personName: [{ value: '', disabled: true }, Validators.required],
@@ -303,7 +284,7 @@ export class QuoteComponent implements OnInit {
     // console.log(JSON.stringify(this.administrationPolicyGroup.getRawValue()));
     this.administrationPolicyGroup.markAllAsTouched();
     // tslint:disable-next-line: align
-    this.formHandler.saveFormAdministrationPolicy(this.administrationPolicyGroup, this.appComponent);
+    this.formHandler.saveDynamicQuote(this.administrationPolicyGroup, this.appComponent);
   }
 
   searchIdNumber(idNumber: string) {

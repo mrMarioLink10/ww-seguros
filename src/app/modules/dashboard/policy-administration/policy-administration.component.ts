@@ -115,12 +115,12 @@ export class PolicyAdministrationComponent implements OnInit {
 	}
 
 
-	confirmRequest(id: number) {
-		this.formHandlerService.policyAdministration(id, 'confirm', this.appComponent);
-	}
+	// confirmRequest(id: number) {
+	// 	this.formHandlerService.policyAdministration(id, 'confirm', this.appComponent);
+	// }
 
-	rejectRequest(id: number) {
-		this.formHandlerService.policyAdministration(id, 'deny', this.appComponent);
-	}
+	// rejectRequest(id: number) {
+	// 	this.formHandlerService.policyAdministration(id, 'deny', this.appComponent);
+	// }
 }
 

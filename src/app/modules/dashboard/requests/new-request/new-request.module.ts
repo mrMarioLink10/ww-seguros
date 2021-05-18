@@ -29,6 +29,7 @@ import { KnowYourCustomerComponent } from '../../shared/components/disease/know-
     ServicesModule
   ], providers: [
     KnowYourCustomerComponent
-  ]
+  ],
+  exports: [MajorExpensesComponent, LifeComponent, NewRequestComponent]
 })
 export class NewRequestModule { }

@@ -15,6 +15,6 @@ export class ChangeService {
   }
 
   postDynamicData(body: any, country?: string) {
-    return (this.http.post(`${environment.apiUrl}/api/FlujoClientesExistenteDinamico/SolicitudDinamica`, { params: { body, country } }));
+    return (this.http.post(`${environment.apiUrl}/api/FlujoClientesExistenteDinamico/SolicitudDinamica`, body));
   }
 }

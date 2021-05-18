@@ -10,6 +10,7 @@ import { MatProgressButtonOptions } from 'mat-progress-buttons';
 import { MatSort, MatPaginator, MatTableDataSource } from '@angular/material';
 import { environment } from 'src/environments/environment';
 import { HttpParams } from '@angular/common/http';
+import { DynamicPaService } from './services/dynamic-pa.service';
 
 @Component({
   selector: 'app-dynamic-pa',
@@ -20,7 +21,7 @@ export class DynamicPaComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private policyAdministrationService: PolicyAdministrationService,
+    private dynamicPaService: DynamicPaService,
     public life: LifeService,
     public disability: DisabilityService,
     private formHandlerService: FormHandlerService,
@@ -82,7 +83,7 @@ export class DynamicPaComponent implements OnInit {
     setTimeout(() => {
       this.appComponent.showOverlay = true;
     });
-    this.policyAdministrationService.getRequests(params)
+    this.dynamicPaService.getRequests(params)
       .subscribe(res => {
         this.appComponent.showOverlay = false;
 

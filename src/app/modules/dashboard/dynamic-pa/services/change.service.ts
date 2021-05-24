@@ -14,6 +14,10 @@ export class ChangeService {
     return (this.http.get(`${environment.apiUrl}/api/FlujoClientesExistenteDinamico/SolicitudDinamica/${guid}/${cotizacionId}`, { params: { guid, cotizacionId, country } }));
   }
 
+   getExistantDynamicData(guid: string) {
+     return (this.http.get(`${environment.apiUrl}/api/FlujoClientesExistenteDinamico/SolicitudDinamica/${guid}`, { params: { guid } }));
+  }
+
   postDynamicData(body: any, country?: string) {
     return (this.http.post(`${environment.apiUrl}/api/FlujoClientesExistenteDinamico/SolicitudDinamica`, body));
   }

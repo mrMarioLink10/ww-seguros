@@ -949,9 +949,14 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
       this.getDataCotizaciones(this.noCotizacion);
       this.newRequest.get('noC').setValue(this.noCotizacion);
       this.newRequest.get('noC').disable();
+      const id = this.changeForm.value.solicitudGastosMayores.id;
+      const tempForm = this.changeForm.get('solicitudGastosMayores') as FormGroup;
+      console.log(tempForm, id);
       this.changeForm.removeControl('solicitudGastosMayores');
+      this.newRequest.addControl('id', this.fb.control(id));
       this.changeForm.addControl('solicitudGastosMayores', this.newRequest);
-      console.log('changeForm depue:', this.changeForm);
+
+      console.log('changeForm depue:', this.changeForm.getRawValue());
       // this.changeForm.get('solicitudGastosMayores').controls = this.newRequest;
     }
 

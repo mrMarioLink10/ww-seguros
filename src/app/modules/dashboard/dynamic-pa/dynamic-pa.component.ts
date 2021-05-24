@@ -58,7 +58,7 @@ export class DynamicPaComponent implements OnInit {
   };
 
   // tslint:disable-next-line: max-line-length
-  displayedColumns: string[] = ['id', 'idNumber', 'ramo', 'personName', 'creationDate', 'createdBy', 'status', 'acciones'];
+  displayedColumns: string[] = ['id', 'poliza', 'ramo', 'nombre', 'creationDate', 'createdBy', 'status', 'acciones'];
 
   dataSource;
   requests: any;
@@ -111,8 +111,8 @@ export class DynamicPaComponent implements OnInit {
     this.router.navigateByUrl('/dashboard/dynamic-pa/quote');
   }
 
-  editRequest(Id: number) {
-    this.router.navigate([`../dashboard/policy-administration/new-policy/edit`, { id: Id }]);
+  editRequest(guid: string) {
+    this.router.navigate([`../dashboard/dynamic-pa/edit`, { guid: guid }]);
   }
 
 

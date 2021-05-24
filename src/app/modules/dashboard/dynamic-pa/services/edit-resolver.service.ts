@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { MatDialog } from '@angular/material';
 import { ActivatedRouteSnapshot } from '@angular/router';
 import { Observable, of, EMPTY } from 'rxjs';
 import { mergeMap } from 'rxjs/operators';
@@ -10,7 +9,6 @@ import { ChangeService } from './change.service';
 })
 export class EditResolverService {
 constructor(
-    private dialog: MatDialog,
     private changeService: ChangeService
   ) { }
 

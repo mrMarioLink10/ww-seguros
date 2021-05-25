@@ -15,7 +15,9 @@ import { FormDataFillingService } from '../../services/shared/formDataFillingSer
 import { startWith, map } from 'rxjs/operators';
 import { BaseDialogComponent } from 'src/app/shared/components/base-dialog/base-dialog.component';
 import { QuoteService } from '../services/quote.service';
+import { environment } from 'src/environments/environment';
 
+// tslint:disable: max-line-length
 @Component({
   selector: 'app-quote',
   templateUrl: './quote.component.html',
@@ -264,6 +266,13 @@ export class QuoteComponent implements OnInit {
         this.dataAutoCompleteIdNumber.push(data.data[x].asegurado.id_asegurado);
 
         this.dataAutoCompletePolicy.push(data.data[x].asegurado.no_poliza);
+
+        this.dataAutoCompletePolicy = this.dataAutoCompletePolicy.reduce((unique, o) => {
+          if (!unique.some(obj => obj === o)) {
+            unique.push(o);
+          }
+          return unique;
+        }, []);
       }
 
       // tslint:disable-next-line: align
@@ -392,6 +401,27 @@ export class QuoteComponent implements OnInit {
           });
       }
     }
+  }
+
+  newQuote(poliza?, isProducto?, id?) {
+    const compania = localStorage.getItem('countryCode') === 'rd' ? 'wws' : 'wma';
+    const target = isProducto ? 'producto' : 'deducible';
+
+    console.log(poliza, isProducto, id, compania);
+
+    window.open(`${environment.urlCotizadores}/?cia=${compania}&poliza=${poliza}&${target}=${id}`, '_blank');
+    // if (this.userService.getRoles().includes('WWS') && this.userService.getRoles().includes('WMA')) {
+    //   const country = localStorage.getItem('countryCode');
+    //   country === 'rd' ? window.open(`${environment.urlCotizadores}/?cia=wws&poliza=${poliza}&producto`, '_blank') : window.open(`${environment.urlCotizadores}/?cia=wwm`, '_blank');
+
+    // } else {
+    //   if (this.userService.getRoleCotizador() === 'WWS') {
+    //     window.open(`${environment.urlCotizadores}/?cia=wws`, '_blank');
+    //   } else if (this.userService.getRoleCotizador() === 'WMA') {
+    //     window.open(`${environment.urlCotizadores}/?cia=wwm`, '_blank');
+    //   }
+    // }
+
   }
 
 

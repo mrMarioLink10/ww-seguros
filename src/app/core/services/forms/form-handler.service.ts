@@ -960,14 +960,20 @@ export class FormHandlerService {
         if (!form.invalid) {
           console.log('administracion de polizas es valido');
           this.dynamicQuoteService.postDynamicRequest(json)
-            .subscribe(res => {
+            .subscribe((res: any) => {
               this.correctSend(res, dialog, dataClosing, route, false);
               appComponent.showOverlay = false;
-              console.log('Envio realizado correctamente');
+              console.log('Envio realizado correctamente', res);
+              const compania = localStorage.getItem('countryCode') === 'rd' ? 'wws' : 'wma';
+              const target = this.sendedForm.tipoSolicitud === 'CAMBIO DE PRODUCTO' ? 'producto' : 'deducible';
+
+              // tslint:disable-next-line: max-line-length
+              window.open(`${environment.urlCotizadores}/?cia=${compania}&poliza=${res.data.poliza}&${target}=${this.sendedForm.productoTo}&guid=${res.data.directorioSolicitud}`, '_blank');
             }, (err) => {
               this.badSend(err, dialog);
               console.log('Envio fallido');
             });
+
         } else {
           setTimeout(() => {
             appComponent.showOverlay = false;

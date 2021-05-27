@@ -33,6 +33,7 @@ export class QuoteComponent implements OnInit {
 
   country = '';
   role: string;
+  isRamoSalud = false;
 
   idNumber2Options = [];
 
@@ -374,6 +375,7 @@ export class QuoteComponent implements OnInit {
         this.userService.getInsurancePeople(idNumber)
           .subscribe((response: any) => {
             console.log(response);
+            console.warn('RAMO: ', response.data.polizas[0].ramo);
             this.appComponent.showOverlay = false;
             if (response.data !== null) {
               this.showContent = true;
@@ -404,12 +406,9 @@ export class QuoteComponent implements OnInit {
   }
 
   newQuote(poliza?, isProducto?, id?) {
-    const compania = localStorage.getItem('countryCode') === 'rd' ? 'wws' : 'wma';
-    const target = isProducto ? 'producto' : 'deducible';
+    this.administrationPolicyGroup.markAllAsTouched();
+    this.formHandler.saveDynamicQuote(this.administrationPolicyGroup, this.appComponent);
 
-    console.log(poliza, isProducto, id, compania);
-
-    window.open(`${environment.urlCotizadores}/?cia=${compania}&poliza=${poliza}&${target}=${id}`, '_blank');
     // if (this.userService.getRoles().includes('WWS') && this.userService.getRoles().includes('WMA')) {
     //   const country = localStorage.getItem('countryCode');
     //   country === 'rd' ? window.open(`${environment.urlCotizadores}/?cia=wws&poliza=${poliza}&producto`, '_blank') : window.open(`${environment.urlCotizadores}/?cia=wwm`, '_blank');

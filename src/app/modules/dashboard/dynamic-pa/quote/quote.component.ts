@@ -66,11 +66,7 @@ export class QuoteComponent implements OnInit {
       {
         value: 'CAMBIO DE PRODUCTO',
         viewValue: 'Cambio de producto'
-      },
-      {
-        value: 'CAMBIO DE DEDUCIBLE',
-        viewValue: 'Cambio de deducible'
-      },
+      }
     ]
   };
 
@@ -376,6 +372,24 @@ export class QuoteComponent implements OnInit {
           .subscribe((response: any) => {
             console.log(response);
             console.warn('RAMO: ', response.data.polizas[0].ramo);
+            this.isRamoSalud = response.data.polizas[0].ramo === 'SALUD' ? true : false;
+
+            if (this.isRamoSalud) {
+              this.changeType = {
+                label: 'Tipo de Solicitud',
+                options: [
+                  {
+                    value: 'CAMBIO DE PRODUCTO',
+                    viewValue: 'Cambio de producto'
+                  },
+                  {
+                    value: 'CAMBIO DE DEDUCIBLE',
+                    viewValue: 'Cambio de deducible'
+                  },
+                ]
+              };
+            }
+
             this.appComponent.showOverlay = false;
             if (response.data !== null) {
               this.showContent = true;

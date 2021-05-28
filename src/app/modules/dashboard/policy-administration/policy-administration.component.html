@@ -37,6 +37,11 @@
           <td class="padding-cell" mat-cell *matCellDef="let element"> {{element.ramo | titlecase}} </td>
         </ng-container>
 
+        <ng-container matColumnDef="solicitud" style="margin-right: 15px !important">
+          <th class="padding-cell" mat-header-cell *matHeaderCellDef mat-sort-header> Tipo de Solicitud </th>
+          <td class="padding-cell" mat-cell *matCellDef="let element"> {{element.pdfSelector | titlecase}} </td>
+        </ng-container>
+
         <ng-container matColumnDef="personName" style="margin-right: 15px !important">
           <th class="padding-cell" mat-header-cell *matHeaderCellDef mat-sort-header> Nombre de persona </th>
           <td class="padding-cell" mat-cell *matCellDef="let element"> {{element.personName}} </td>
@@ -60,16 +65,27 @@
             {{element.status | policyStatus}} </td>
         </ng-container>
 
+        <ng-container matColumnDef="confirmDate" style="margin-right: 15px !important">
+          <th class="padding-cell" mat-header-cell *matHeaderCellDef mat-sort-header> Fecha de Aceptación </th>
+          <td class="padding-cell" mat-cell *matCellDef="let element"> 
+            <label *ngIf="element.status === 2">
+              {{element.confirmedDate |  date:'dd/MM/yyyy'}}
+            </label> 
+          </td>
+        </ng-container>
+
         <ng-container matColumnDef="acciones" style="text-align: end !important; margin-right: 15px !important; ">
           <th class="padding-cell" mat-header-cell *matHeaderCellDef
             style="max-width: 140px !important; min-width: 137px !important; width: 137px !important;"> Acciones </th>
           <td class="padding-cell" mat-cell *matCellDef="let element"
             style="max-width: 140px !important; min-width: 137px !important; width: 137px !important;">
 
-            <button mat-mini-fab aria-label="Editar" (click)="editRequest(element.id)" *ngIf="element.status === 0 || isWWSeguros"
-              class="dashboard-table-buttons">
-              <img src="../../../../assets/iconos/edit.svg">
-            </button>
+            <div *ngIf="element.status === 0 || element.status === 1">
+              <button mat-mini-fab aria-label="Editar" (click)="editRequest(element.id)" *ngIf="element.status === 0 || isWWSeguros"
+                class="dashboard-table-buttons">
+                <img src="../../../../assets/iconos/edit.svg">
+              </button>
+            </div>
 
 
             <!-- <button *ngIf="element.status === 1" (click)="directSendTargeting(element.id, element.seguro)" mat-mini-fab

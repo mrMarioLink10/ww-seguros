@@ -1095,7 +1095,9 @@ export class FormHandlerService {
 										console.log(res);
 										// location.reload();
 										this.correctSend(res, dialog, dataClosing, route);
-										appComponent.showOverlay = false;
+										// setTimeout(() => {
+											appComponent.showOverlay = false;
+										// }, 7000);
 										console.log('Envio realizado correctamente confirm');
 
 									}, (err) => {
@@ -1154,7 +1156,9 @@ export class FormHandlerService {
 										console.log(res);
 										// location.reload();
 										this.correctSend(res, dialog, dataClosing, route);
-										appComponent.showOverlay = false;
+										// setTimeout(() => {
+											appComponent.showOverlay = false;
+										// }, 7000);
 										console.log('Envio realizado correctamente reject');
 
 									}, (err) => {

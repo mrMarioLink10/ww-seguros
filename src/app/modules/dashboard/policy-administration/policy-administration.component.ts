@@ -57,7 +57,7 @@ export class PolicyAdministrationComponent implements OnInit {
 	};
 
 	// tslint:disable-next-line: max-line-length
-	displayedColumns: string[] = ['id', 'idNumber', 'ramo', 'personName', 'creationDate', 'createdBy', 'status', 'acciones'];
+	displayedColumns: string[] = ['id', 'idNumber', 'ramo', 'solicitud','personName', 'creationDate', 'createdBy', 'status', 'confirmDate', 'acciones'];
 
 	dataSource;
 	requests: any;
@@ -79,9 +79,9 @@ export class PolicyAdministrationComponent implements OnInit {
 
 		this.loading = true;
 
-		setTimeout(() => {
+		// setTimeout(() => {
 			this.appComponent.showOverlay = true;
-		});
+		// });
 		this.policyAdministrationService.getRequests(params)
 			.subscribe(res => {
 				this.appComponent.showOverlay = false;
@@ -92,7 +92,7 @@ export class PolicyAdministrationComponent implements OnInit {
 				this.dataSource.sort = this.sort;
 				this.dataSource.paginator = this.paginator;
 				this.loading = false;
-
+				// console.log(data);
 			}, err => console.log(err));
 	}
 

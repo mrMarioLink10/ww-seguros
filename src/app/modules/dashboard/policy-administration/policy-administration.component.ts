@@ -79,9 +79,9 @@ export class PolicyAdministrationComponent implements OnInit {
 
 		this.loading = true;
 
-		// setTimeout(() => {
+		setTimeout(() => {
 			this.appComponent.showOverlay = true;
-		// });
+		});
 		this.policyAdministrationService.getRequests(params)
 			.subscribe(res => {
 				this.appComponent.showOverlay = false;

@@ -261,7 +261,9 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy, DoCheck {
 	}
 	ngOnInit() {
 		console.log('El largo de this.idNumber2Options es ' + this.idNumber2Options.length);
-		this.appComponent.showOverlay = true;
+		setTimeout(() => {
+			this.appComponent.showOverlay = true;
+		  });
 		this.returnDoctors();
 		this.returnServiceCenters();
 		this.returnAutoCompleteData();

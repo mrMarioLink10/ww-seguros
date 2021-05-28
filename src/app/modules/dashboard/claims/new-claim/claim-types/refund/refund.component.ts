@@ -256,7 +256,9 @@ export class RefundComponent implements OnInit {
 
 	ngOnInit() {
 		console.log('El largo de this.idNumber2Options es ' + this.idNumber2Options.length);
-		this.appComponent.showOverlay = true;
+		setTimeout(() => {
+			this.appComponent.showOverlay = true;
+		  });
 		this.returnCategorias();
 		// this.returnProveedores();
 		this.returnBanks();

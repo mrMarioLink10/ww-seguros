@@ -383,7 +383,9 @@ export class NewPolicyComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.appComponent.showOverlay = true;
+    setTimeout(() => {
+      this.appComponent.showOverlay = true;
+    });
 
     console.log(this.userService.getRoles());
 

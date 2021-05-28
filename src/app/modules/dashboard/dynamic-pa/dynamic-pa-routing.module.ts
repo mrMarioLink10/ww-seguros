@@ -5,6 +5,7 @@ import { CanExitGuard } from 'src/app/core/guards/can-exit.guard';
 import { QuoteComponent } from './quote/quote.component';
 import { ChangeComponent } from './change/change.component';
 import { ChangeResolverService } from './services/change-resolver.service';
+import { EditResolverService } from './services/edit-resolver.service';
 
 
 const routes: Routes = [
@@ -24,6 +25,12 @@ const routes: Routes = [
     component: ChangeComponent,
     canDeactivate: [CanExitGuard],
     resolve: { data: ChangeResolverService }
+  },
+  {
+    path: 'edit',
+    component: ChangeComponent,
+    canDeactivate: [CanExitGuard],
+    resolve: { data: EditResolverService }
   },
 ];
 

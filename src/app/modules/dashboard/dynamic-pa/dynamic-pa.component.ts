@@ -10,22 +10,22 @@ import { MatProgressButtonOptions } from 'mat-progress-buttons';
 import { MatSort, MatPaginator, MatTableDataSource } from '@angular/material';
 import { environment } from 'src/environments/environment';
 import { HttpParams } from '@angular/common/http';
+import { DynamicPaService } from './services/dynamic-pa.service';
 
 @Component({
   selector: 'app-dynamic-pa',
   templateUrl: './dynamic-pa.component.html',
-  styleUrls: ['./dynamic-pa.component.scss']
+  styleUrls: ['./dynamic-pa.component.scss'],
 })
 export class DynamicPaComponent implements OnInit {
-
   constructor(
     private router: Router,
-    private policyAdministrationService: PolicyAdministrationService,
+    private dynamicPaService: DynamicPaService,
     public life: LifeService,
     public disability: DisabilityService,
     private formHandlerService: FormHandlerService,
     private appComponent: AppComponent,
-    private userService: UserService,
+    private userService: UserService
   ) { }
 
   statusTypes = [
@@ -38,9 +38,8 @@ export class DynamicPaComponent implements OnInit {
 
   fills = {
     status: this.statusTypes,
-    fillType: this.fillType
+    fillType: this.fillType,
   };
-
 
   newRequestButtonOptions: MatProgressButtonOptions = {
     active: false,
@@ -53,11 +52,20 @@ export class DynamicPaComponent implements OnInit {
     value: 0,
     disabled: false,
     fullWidth: true,
-    customClass: 'dashboard-button'
+    customClass: 'dashboard-button',
   };
 
   // tslint:disable-next-line: max-line-length
-  displayedColumns: string[] = ['id', 'idNumber', 'ramo', 'personName', 'creationDate', 'createdBy', 'status', 'acciones'];
+  displayedColumns: string[] = [
+    'id',
+    'poliza',
+    'ramo',
+    'nombre',
+    'creationDate',
+    'createdBy',
+    'status',
+    'acciones',
+  ];
 
   dataSource;
   requests: any;
@@ -82,8 +90,8 @@ export class DynamicPaComponent implements OnInit {
     setTimeout(() => {
       this.appComponent.showOverlay = true;
     });
-    this.policyAdministrationService.getRequests(params)
-      .subscribe(res => {
+    this.dynamicPaService.getRequests(params).subscribe(
+      (res) => {
         this.appComponent.showOverlay = false;
 
         data = res;
@@ -92,8 +100,8 @@ export class DynamicPaComponent implements OnInit {
         this.dataSource.sort = this.sort;
         this.dataSource.paginator = this.paginator;
         this.loading = false;
-
-      }, err => console.log(err));
+      }, (err) => console.log(err)
+    );
   }
 
   ngOnInit() {
@@ -110,10 +118,9 @@ export class DynamicPaComponent implements OnInit {
     this.router.navigateByUrl('/dashboard/dynamic-pa/quote');
   }
 
-  editRequest(Id: number) {
-    this.router.navigate([`../dashboard/policy-administration/new-policy/edit`, { id: Id }]);
+  editRequest(guid: string) {
+    this.router.navigate([`../dashboard/dynamic-pa/edit`, { guid }]);
   }
-
 
   confirmRequest(id: number) {
     this.formHandlerService.policyAdministration(id, 'confirm', this.appComponent);

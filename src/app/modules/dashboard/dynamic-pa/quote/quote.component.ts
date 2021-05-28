@@ -15,7 +15,9 @@ import { FormDataFillingService } from '../../services/shared/formDataFillingSer
 import { startWith, map } from 'rxjs/operators';
 import { BaseDialogComponent } from 'src/app/shared/components/base-dialog/base-dialog.component';
 import { QuoteService } from '../services/quote.service';
+import { environment } from 'src/environments/environment';
 
+// tslint:disable: max-line-length
 @Component({
   selector: 'app-quote',
   templateUrl: './quote.component.html',
@@ -31,6 +33,7 @@ export class QuoteComponent implements OnInit {
 
   country = '';
   role: string;
+  isRamoSalud = false;
 
   idNumber2Options = [];
 
@@ -63,11 +66,7 @@ export class QuoteComponent implements OnInit {
       {
         value: 'CAMBIO DE PRODUCTO',
         viewValue: 'Cambio de producto'
-      },
-      {
-        value: 'CAMBIO DE DEDUCIBLE',
-        viewValue: 'Cambio de deducible'
-      },
+      }
     ]
   };
 
@@ -264,6 +263,13 @@ export class QuoteComponent implements OnInit {
         this.dataAutoCompleteIdNumber.push(data.data[x].asegurado.id_asegurado);
 
         this.dataAutoCompletePolicy.push(data.data[x].asegurado.no_poliza);
+
+        this.dataAutoCompletePolicy = this.dataAutoCompletePolicy.reduce((unique, o) => {
+          if (!unique.some(obj => obj === o)) {
+            unique.push(o);
+          }
+          return unique;
+        }, []);
       }
 
       // tslint:disable-next-line: align
@@ -365,6 +371,25 @@ export class QuoteComponent implements OnInit {
         this.userService.getInsurancePeople(idNumber)
           .subscribe((response: any) => {
             console.log(response);
+            console.warn('RAMO: ', response.data.polizas[0].ramo);
+            this.isRamoSalud = response.data.polizas[0].ramo === 'SALUD' ? true : false;
+
+            if (this.isRamoSalud) {
+              this.changeType = {
+                label: 'Tipo de Solicitud',
+                options: [
+                  {
+                    value: 'CAMBIO DE PRODUCTO',
+                    viewValue: 'Cambio de producto'
+                  },
+                  {
+                    value: 'CAMBIO DE DEDUCIBLE',
+                    viewValue: 'Cambio de deducible'
+                  },
+                ]
+              };
+            }
+
             this.appComponent.showOverlay = false;
             if (response.data !== null) {
               this.showContent = true;
@@ -392,6 +417,24 @@ export class QuoteComponent implements OnInit {
           });
       }
     }
+  }
+
+  newQuote(poliza?, isProducto?, id?) {
+    this.administrationPolicyGroup.markAllAsTouched();
+    this.formHandler.saveDynamicQuote(this.administrationPolicyGroup, this.appComponent);
+
+    // if (this.userService.getRoles().includes('WWS') && this.userService.getRoles().includes('WMA')) {
+    //   const country = localStorage.getItem('countryCode');
+    //   country === 'rd' ? window.open(`${environment.urlCotizadores}/?cia=wws&poliza=${poliza}&producto`, '_blank') : window.open(`${environment.urlCotizadores}/?cia=wwm`, '_blank');
+
+    // } else {
+    //   if (this.userService.getRoleCotizador() === 'WWS') {
+    //     window.open(`${environment.urlCotizadores}/?cia=wws`, '_blank');
+    //   } else if (this.userService.getRoleCotizador() === 'WMA') {
+    //     window.open(`${environment.urlCotizadores}/?cia=wwm`, '_blank');
+    //   }
+    // }
+
   }
 
 

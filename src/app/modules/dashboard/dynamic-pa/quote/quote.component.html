@@ -4,47 +4,6 @@
 
     <div class="p-3 pb-2 mb-4" style="background-color: #F2F2F2">
       <div class="mt-3 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 xl:grid-cols-5">
-        <!-- <div class="mr-3">
-              <app-select name="filterType" [options]="filterOptions" [group]="administrationPolicyGroup"></app-select>
-            </div> -->
-        <!-- <div class="mr-3 col-span-2" *ngIf="this.administrationPolicyGroup.get('filterType').value == 'NOMBRE' ">
-              <form [formGroup]="administrationPolicyGroup">
-                <mat-form-field color="accent" appearance="outline" class="w-full bg-transparente"
-                  style="font-size: small !important;">
-                  <mat-label>Nombre</mat-label>
-                  <input formControlName="idNumber" matInput class="" type="text" [matAutocomplete]="auto"
-                    placeholder="Juan Juan">
-                  <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
-                    <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
-                      {{option}}
-                    </mat-option>
-                  </mat-autocomplete>
-                  <mat-error
-                    *ngIf="administrationPolicyGroup.get('idNumber').touched && !administrationPolicyGroup.get('idNumber').valid">
-                    Este campo es obligatorio
-                  </mat-error>
-                </mat-form-field>
-              </form>
-            </div>
-            <div class="mr-3" *ngIf="this.administrationPolicyGroup.get('filterType').value == 'ID' ">
-              <form [formGroup]="administrationPolicyGroup">
-                <mat-form-field color="accent" appearance="outline" class="w-full bg-transparente"
-                  style="font-size: small !important;">
-                  <mat-label>ID Number</mat-label>
-                  <input formControlName="idNumber" matInput class="" type="number" [matAutocomplete]="auto"
-                    placeholder="00010002">
-                  <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
-                    <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
-                      {{option}}
-                    </mat-option>
-                  </mat-autocomplete>
-                  <mat-error
-                    *ngIf="administrationPolicyGroup.get('idNumber').touched && !administrationPolicyGroup.get('idNumber').valid">
-                    Este campo es obligatorio
-                  </mat-error>
-                </mat-form-field>
-              </form>
-            </div> -->
         <div class="mr-3" *ngIf="this.administrationPolicyGroup.get('filterType').value == 'POLIZA' ">
           <form [formGroup]="administrationPolicyGroup">
             <mat-form-field color="accent" appearance="outline" class="w-full bg-transparente"
@@ -103,7 +62,7 @@
   <form #form="ngForm">
     <div *ngIf="showContent" class="mt-8">
       <button mat-button class="send-button" style="margin-right: 7.5px !important; margin-top: 10px;"
-        (click)="saveChanges()" type="submit">Cotizar</button>
+        (click)="newQuote(administrationPolicyGroup.value.idNumber, administrationPolicyGroup.value.tipoSolicitud === 'CAMBIO DE PRODUCTO', administrationPolicyGroup.value.productoTo)" type="submit">Cotizar</button>
     </div>
   </form>
 </div>

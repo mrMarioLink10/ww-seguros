@@ -1069,7 +1069,9 @@ export class FormHandlerService {
 
       if (result === 'true') {
         let dialog;
+
         appComponent.showOverlay = true;
+
         if (type === 'confirm') {
 
           // setTimeout(() => {
@@ -1084,7 +1086,7 @@ export class FormHandlerService {
 
           // if (result === 'true') {
           let dialogPost;
-          appComponent.showOverlay = true;
+          // appComponent.showOverlay = true;
           if (!form.invalid) {
             console.log('administracion de polizas es valido');
             this.policyAdministrationService.postPolicyAdministration(json)
@@ -1102,9 +1104,9 @@ export class FormHandlerService {
                     console.log(res);
                     // location.reload();
                     this.correctSend(res, dialog, dataClosing, route);
-					// setTimeout(() => {
-						appComponent.showOverlay = false;
-						// }, 7000);
+
+                    appComponent.showOverlay = false;
+
                     console.log('Envio realizado correctamente confirm');
 
                   }, (err) => {
@@ -1145,7 +1147,7 @@ export class FormHandlerService {
 
           // if (result === 'true') {
           let dialogPost;
-          appComponent.showOverlay = true;
+          // appComponent.showOverlay = true;
           if (!form.invalid) {
             console.log('administracion de polizas es valido');
             this.policyAdministrationService.postPolicyAdministration(json)
@@ -1163,9 +1165,9 @@ export class FormHandlerService {
                     console.log(res);
                     // location.reload();
                     this.correctSend(res, dialog, dataClosing, route);
-                    // setTimeout(() => {
-						appComponent.showOverlay = false;
-						// }, 7000);
+
+                    appComponent.showOverlay = false;
+
                     console.log('Envio realizado correctamente reject');
 
                   }, (err) => {

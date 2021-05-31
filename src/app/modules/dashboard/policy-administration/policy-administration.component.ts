@@ -84,7 +84,9 @@ export class PolicyAdministrationComponent implements OnInit {
 		});
 		this.policyAdministrationService.getRequests(params)
 			.subscribe(res => {
-				this.appComponent.showOverlay = false;
+				setTimeout(() => {
+					this.appComponent.showOverlay = false;
+				});
 
 				data = res;
 				this.requests = data.data;

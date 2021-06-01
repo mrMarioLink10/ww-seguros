@@ -942,7 +942,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
     } else if (this.ID == null) {
     }
 
-    console.warn(this.isChange, this.changeData.cotizacionInfoCode);
+    // console.warn(this.isChange, this.changeData.cotizacionInfoCode);
 
     if (this.isChange) {
       this.route.data.subscribe((response: any) => {

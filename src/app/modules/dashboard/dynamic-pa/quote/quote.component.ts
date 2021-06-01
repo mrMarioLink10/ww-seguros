@@ -374,6 +374,10 @@ export class QuoteComponent implements OnInit {
           .subscribe((response: any) => {
             console.log(response);
             console.warn('RAMO: ', response.data.polizas[0].ramo);
+
+            this.administrationPolicyGroup.get('tipoSolicitud').setValue('');
+            this.administrationPolicyGroup.get('tipoSolicitud').reset();
+
             this.isRamoSalud = response.data.polizas[0].ramo === 'SALUD' ? true : false;
 
             if (this.isRamoSalud) {

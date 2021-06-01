@@ -856,8 +856,7 @@ export class FormHandlerService {
               this.badSend(err, dialog);
               console.log('Envio fallido');
             });
-        }
-        else {
+        } else {
           setTimeout(() => {
             appComponent.showOverlay = false;
             console.log('settings NO es valido');
@@ -1116,7 +1115,7 @@ export class FormHandlerService {
 
               }, (err) => {
                 this.badSend(err, dialogPost);
-                console.log(err)
+                console.log(err);
                 console.log('Envio fallido post');
               });
           } else {
@@ -1177,7 +1176,7 @@ export class FormHandlerService {
 
               }, (err) => {
                 this.badSend(err, dialogPost);
-                console.log(err)
+                console.log(err);
                 console.log('Envio fallido post');
               });
           } else {

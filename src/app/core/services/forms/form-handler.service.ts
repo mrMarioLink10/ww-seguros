@@ -931,7 +931,7 @@ export class FormHandlerService {
     let Dialog;
     let dataOpen;
     let dataClosing;
-    const route = 'dashboard/policy-administration';
+    const route = 'dashboard/dynamic-pa';
 
     dataOpen = this.dialogOption.saveAdministrationPolicy();
     dataClosing = this.dialogOption.confirmedSavedAdministrationPolicy();
@@ -961,14 +961,14 @@ export class FormHandlerService {
           console.log('administracion de polizas es valido');
           this.dynamicQuoteService.postDynamicRequest(json)
             .subscribe((res: any) => {
-              this.correctSend(res, dialog, dataClosing, route, false);
-              appComponent.showOverlay = false;
               console.log('Envio realizado correctamente', res);
               const compania = localStorage.getItem('countryCode') === 'rd' ? 'wws' : 'wma';
               const target = this.sendedForm.tipoSolicitud === 'CAMBIO DE PRODUCTO' ? 'producto' : 'deducible';
-
               // tslint:disable-next-line: max-line-length
               window.open(`${environment.urlCotizadores}/?cia=${compania}&poliza=${res.data.poliza}&${target}=${this.sendedForm.productoTo}&guid=${res.data.directorioSolicitud}`, '_blank');
+              this.correctSend(res, dialog, dataClosing, route, false);
+              appComponent.showOverlay = false;
+
             }, (err) => {
               this.badSend(err, dialog);
               console.log('Envio fallido');
@@ -1102,9 +1102,9 @@ export class FormHandlerService {
                     console.log(res);
                     // location.reload();
                     this.correctSend(res, dialog, dataClosing, route);
-					// setTimeout(() => {
-						appComponent.showOverlay = false;
-						// }, 7000);
+                    // setTimeout(() => {
+                    appComponent.showOverlay = false;
+                    // }, 7000);
                     console.log('Envio realizado correctamente confirm');
 
                   }, (err) => {
@@ -1164,8 +1164,8 @@ export class FormHandlerService {
                     // location.reload();
                     this.correctSend(res, dialog, dataClosing, route);
                     // setTimeout(() => {
-						appComponent.showOverlay = false;
-						// }, 7000);
+                    appComponent.showOverlay = false;
+                    // }, 7000);
                     console.log('Envio realizado correctamente reject');
 
                   }, (err) => {

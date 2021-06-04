@@ -66,8 +66,8 @@
           <td class="padding-cell" mat-cell *matCellDef="let element"
             style="max-width: 140px !important; min-width: 137px !important; width: 137px !important;">
 
-            <button mat-mini-fab aria-label="Editar" (click)="editRequest(element.directorioSolicitud)" *ngIf="element.status === 0"
-              class="dashboard-table-buttons">
+            <button mat-mini-fab aria-label="Editar" (click)="editRequest(element.directorioSolicitud)"
+              *ngIf="element.status === 0  && element.cotizacionInfoCode !== 0" class="dashboard-table-buttons">
               <img src="../../../../assets/iconos/edit.svg">
             </button>
 
@@ -77,10 +77,9 @@
                 <img src="../../../../assets/iconos/send.svg">
               </button> -->
             <button *ngIf=" element.status === 1 || element.status === 0" title="Eliminar"
-                (click)="rejectRequest(element.id)" mat-mini-fab aria-label="Eliminar"
-                class="dashboard-table-buttons">
-                <img src="../../../../assets/iconos/trash.svg">
-              </button>
+              (click)="rejectRequest(element.id)" mat-mini-fab aria-label="Eliminar" class="dashboard-table-buttons">
+              <img src="../../../../assets/iconos/trash.svg">
+            </button>
             <button mat-mini-fab aria-label="Ver mas" (click)="confirmRequest(element.id)"
               *ngIf="element.status === 1 && isWWSeguros" class="dashboard-table-buttons" title="Ver Mas">
               <img src="../../../../assets/iconos/check.svg">

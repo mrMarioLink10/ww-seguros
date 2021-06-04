@@ -22,6 +22,7 @@ import { PolicyAdministrationService } from '../../../modules/dashboard/policy-a
 import { map } from 'rxjs/operators';
 import { QuoteService } from 'src/app/modules/dashboard/dynamic-pa/services/quote.service';
 import { ChangeService } from '../../../modules/dashboard/dynamic-pa/services/change.service';
+import { DynamicPaService } from '../../../modules/dashboard/dynamic-pa/services/dynamic-pa.service';
 // tslint:disable: forin
 // tslint:disable: variable-name
 
@@ -49,7 +50,8 @@ export class FormHandlerService {
     private settingsService: SettingsService,
     private policyAdministrationService: PolicyAdministrationService,
     private dynamicQuoteService: QuoteService,
-    private changeService: ChangeService
+    private changeService: ChangeService,
+    private dynamicPaService: DynamicPaService
   ) { }
 
   sendForm(form: FormGroup, name: string, type?: string, appComponent?: any, id?: number, isInvitation?: boolean) {
@@ -652,6 +654,43 @@ export class FormHandlerService {
                       });
                   }
                   break;
+
+                case 'dynamic-pa':
+                  if (ID) {
+                    appComponent.showOverlay = true;
+                    this.dynamicPaService.sendRequest(ID)
+                      .subscribe(res => {
+                        appComponent.showOverlay = false;
+
+                        this.correctSend(res, dialog, dataClosing, route);
+                      }, (err) => {
+                        appComponent.showOverlay = false;
+                        this.badSend(err, dialog);
+
+                      });
+                  } else {
+                    appComponent.showOverlay = true;
+                    this.changeService.postDynamicData(json)
+                      .subscribe((res: any) => {
+                        if (res.data.id) {
+                          this.dynamicPaService.sendRequest(res.data.directorioSolicitud)
+                            .subscribe(response => {
+                              appComponent.showOverlay = false;
+                              console.log(response);
+                              this.correctSend(response, dialog, dataClosing, route);
+
+                            });
+                        }
+                        // this.correctSend(res, dialog, dataClosing, route);
+
+                      }, (err) => {
+                        appComponent.showOverlay = false;
+                        this.badSend(err, dialog);
+
+                      });
+                  }
+                  break;
+
 
                 default:
                   break;

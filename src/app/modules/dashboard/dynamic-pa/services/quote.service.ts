@@ -17,12 +17,9 @@ export class QuoteService {
     return (this.http.get(`${environment.apiUrl}/api/FlujoClientesExistenteDinamico/CambioProducto/${poliza}`, { params: { poliza, country } }));
   }
 
-  getDeductibleSelected(poliza: string, selectionId: string, country: string) {
-    return (this.http.get(`${environment.apiUrl}/api/FlujoClientesExistenteDinamico/SolicitudDeducibleSeleccionado/${poliza}/${selectionId}`, { params: { poliza, selectionId, country } }));
-  }
-
-  getProductChangeSelected(poliza: string, selectionId: string, country: string) {
-    return (this.http.get(`${environment.apiUrl}/api/FlujoClientesExistenteDinamico/SolicitudCambioSeleccionado/${poliza}/${selectionId}`, { params: { poliza, selectionId, country } }));
+  saveTypeSelected(isDeducible: boolean, poliza: string, selectionId: string, country: string) {
+    const type = isDeducible ? 'SolicitudDeducibleSeleccionado' : 'SolicitudCambioSeleccionado';
+    return (this.http.get(`${environment.apiUrl}/api/FlujoClientesExistenteDinamico/${type}/${poliza}/${selectionId}`, { params: { poliza, selectionId, country } }));
   }
 
   postDynamicRequest(body) {

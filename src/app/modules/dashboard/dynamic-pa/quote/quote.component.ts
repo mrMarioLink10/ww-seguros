@@ -210,24 +210,6 @@ export class QuoteComponent implements OnInit {
     }
   }
 
-  selectAvailable(event) {
-    this.appComponent.showOverlay = true;
-
-    if (this.administrationPolicyGroup.get('tipoSolicitud').value === 'CAMBIO DE PRODUCTO') {
-      this.quoteService.getProductChangeSelected(this.administrationPolicyGroup.value.idNumber, event.valor, this.country)
-        .subscribe((res: any) => {
-          console.log(res);
-          this.appComponent.showOverlay = false;
-        });
-    } else {
-      this.quoteService.getDeductibleSelected(this.administrationPolicyGroup.value.idNumber, event.valor, this.country)
-        .subscribe((res: any) => {
-          console.log(res);
-          this.appComponent.showOverlay = false;
-        });
-    }
-  }
-
   completeAvailableOptions(data) {
     console.log(data);
     if (data.length > 0) {

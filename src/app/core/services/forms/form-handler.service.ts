@@ -958,7 +958,11 @@ export class FormHandlerService {
         appComponent.showOverlay = true;
         if (!form.invalid) {
           console.log('administracion de polizas es valido');
-          this.dynamicQuoteService.postDynamicRequest(json)
+
+          const isDeducible = this.sendedForm.tipoSolicitud === 'CAMBIO DE DEDUCIBLE' ? true : false;
+          const poliza = this.sendedForm.idNumber;
+          const selectionId = this.sendedForm.productoTo;
+          this.dynamicQuoteService.saveTypeSelected(isDeducible, poliza, selectionId, '')
             .subscribe((res: any) => {
               console.log('Envio realizado correctamente', res);
               const compania = localStorage.getItem('countryCode') === 'rd' ? 'wws' : 'wma';

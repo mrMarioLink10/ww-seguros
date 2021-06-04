@@ -123,7 +123,11 @@ export class DynamicPaComponent implements OnInit {
   }
 
   confirmRequest(id: number) {
-    this.formHandlerService.policyAdministration(id, 'confirm', this.appComponent);
+    this.formHandlerService.directSendRequest(id, 'FlujoClientesExistenteDinamico', 'Solicitud de Cambio', this.appComponent)
+      .subscribe(res => {
+        console.log(res);
+        if (res === true) { this.getRequests(); }
+      });
   }
 
   rejectRequest(id: number) {

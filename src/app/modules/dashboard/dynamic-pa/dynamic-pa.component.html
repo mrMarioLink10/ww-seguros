@@ -76,16 +76,12 @@
                 aria-label="Enviar" class="dashboard-table-buttons" title="Enviar">
                 <img src="../../../../assets/iconos/send.svg">
               </button> -->
+            <button *ngIf="element.status === 1" (click)="confirmRequest(element.id)" mat-mini-fab aria-label="Enviar"
+              class="dashboard-table-buttons" title="Enviar">
+              <img src="../../../../assets/iconos/send.svg">
+            </button>
             <button *ngIf=" element.status === 1 || element.status === 0" title="Eliminar"
               (click)="rejectRequest(element.id)" mat-mini-fab aria-label="Eliminar" class="dashboard-table-buttons">
-              <img src="../../../../assets/iconos/trash.svg">
-            </button>
-            <button mat-mini-fab aria-label="Ver mas" (click)="confirmRequest(element.id)"
-              *ngIf="element.status === 1 && isWWSeguros" class="dashboard-table-buttons" title="Ver Mas">
-              <img src="../../../../assets/iconos/check.svg">
-            </button>
-            <button mat-mini-fab aria-label="Ver mas" (click)="rejectRequest(element.id)"
-              *ngIf="element.status === 1 && isWWSeguros" class="dashboard-table-buttons" title="Ver Mas">
               <img src="../../../../assets/iconos/trash.svg">
             </button>
           </td>

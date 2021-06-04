@@ -673,7 +673,7 @@ export class FormHandlerService {
                     this.changeService.postDynamicData(json)
                       .subscribe((res: any) => {
                         if (res.data.id) {
-                          this.dynamicPaService.sendRequest(res.data.directorioSolicitud)
+                          this.dynamicPaService.sendRequest(res.data.id)
                             .subscribe(response => {
                               appComponent.showOverlay = false;
                               console.log(response);

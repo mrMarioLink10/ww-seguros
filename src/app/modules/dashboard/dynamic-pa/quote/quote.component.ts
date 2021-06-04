@@ -394,6 +394,16 @@ export class QuoteComponent implements OnInit {
                   },
                 ]
               };
+            } else {
+              this.changeType = {
+                label: 'Tipo de Solicitud',
+                options: [
+                  {
+                    value: 'CAMBIO DE PRODUCTO',
+                    viewValue: 'Cambio de producto'
+                  }
+                ]
+              };
             }
 
             this.appComponent.showOverlay = false;

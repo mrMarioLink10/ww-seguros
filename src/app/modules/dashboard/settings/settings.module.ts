@@ -19,7 +19,6 @@ import { SettingsComponent } from './settings.component';
     GlobalSharedModule,
     SharedModule,
     MaterialModule
-
   ]
 })
 export class SettingsModule { }

@@ -23,7 +23,7 @@
         </div>
       </div>
     </div>
-    <mat-tab-group class="mt-4">
+    <mat-tab-group [ngClass]="{'warn-tab': showAditionalRed()}" class="mt-4">
       <mat-tab label="Asegurado" class="mat-tab-forms">
 
         <div *ngIf="this.form !== undefined">
@@ -2516,7 +2516,8 @@
 
         </div>
       </mat-tab>
-      <mat-tab label="Cuestionarios médicos" *ngIf="questionsLength() > 0" class="mat-tab-forms">
+      <mat-tab [ngClass]="{'warn-tab': showAditionalRed()}" label="Cuestionarios médicos" *ngIf="questionsLength() > 0"
+        class="mat-tab-forms">
         <mat-accordion #matAccordion="matAccordion" name="matAccordion" class="ww-mat-accordion example-headers-align"
           [togglePosition]="'before'">
           <app-hypertension
@@ -2674,7 +2675,7 @@
       <button mat-button class="save-button" style="margin-right: 7.5px !important;"
         (click)="formHandler.sendForm(disabilityGroup, 'disability', 'save', appComponent)"
         type="submit">Guardar</button>
-      <button mat-button class="send-button" style="margin-right: 7.5px !important;"
+      <button *ngIf="!disabilityGroup.invalid" mat-button class="send-button" style="margin-right: 7.5px !important;"
         (click)="formHandler.sendForm(disabilityGroup, 'disability', 'send', appComponent)"
         type="submit">Enviar</button>
       <button mat-button class="send-button"

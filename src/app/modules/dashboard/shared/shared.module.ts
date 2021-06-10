@@ -26,6 +26,7 @@ import { FinancialStatusComponent } from './components/disease/financial-status/
 import { KnowYourCustomerComponent } from './components/disease/know-your-customer/know-your-customer.component';
 import { TableStatusPipe } from '../../../core/pipes/table-status.pipe';
 import { MaterialFileInputModule } from 'ngx-material-file-input';
+import { PolicyStatusPipe } from '../../../core/pipes/policy-status.pipe';
 
 @NgModule({
   declarations: [
@@ -48,7 +49,8 @@ import { MaterialFileInputModule } from 'ngx-material-file-input';
     MountaineeringComponent,
     FinancialStatusComponent,
     KnowYourCustomerComponent,
-    TableStatusPipe
+    TableStatusPipe,
+    PolicyStatusPipe
   ],
   imports: [CommonModule, MaterialModule, GlobalSharedModule, FormsModule, ReactiveFormsModule, HttpClientModule, MaterialFileInputModule],
   exports: [
@@ -72,6 +74,7 @@ import { MaterialFileInputModule } from 'ngx-material-file-input';
     FinancialStatusComponent,
     KnowYourCustomerComponent,
     TableStatusPipe,
+    PolicyStatusPipe,
     MaterialFileInputModule
   ]
 })

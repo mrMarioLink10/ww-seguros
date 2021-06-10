@@ -617,11 +617,11 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
     idType: ['', Validators.required],
     id2: ['', Validators.required],
     age: [{ value: '', disabled: false }, Validators.required],
-    weight: ['', Validators.required],
-    height: ['', Validators.required],
-    weightUnit: ['', Validators.required],
-    heightUnit: ['', Validators.required],
-    bmi: [{ value: '', disabled: true }, Validators.required],
+    weight: [''],
+    height: [''],
+    weightUnit: [''],
+    heightUnit: [''],
+    bmi: [{ value: '', disabled: true }],
     status: ['', Validators.required],
     country: ['', Validators.required],
     city: ['', Validators.required],
@@ -688,6 +688,10 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
   juridicalObligatoryOptions: any;
   physicalObligatoryOptions: any;
 
+  @Input() isChange = false;
+  @Input() changeForm: FormGroup;
+  @Input() changeData: any;
+
   @ViewChild('form', { static: false }) ogForm;
   step: number;
 
@@ -750,7 +754,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
       person: this.fb.group({
         // conozcaSuClientePersona: this.fb.group({}),
         firstName: ['', Validators.required],
-        secondName: ['', Validators.required],
+        secondName: [''],
         lastName: ['', Validators.required],
         weightUnit: ['', Validators.required],
         heightUnit: ['', Validators.required],
@@ -827,7 +831,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
       }),
       incomes: this.fb.group({
         principalIncome: ['', Validators.required],
-        otherIncomes: ['', Validators.required],
+        otherIncomes: [''],
       }),
       dependents: this.fb.group({
         allDependents: this.fb.array([]),
@@ -938,15 +942,45 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
     } else if (this.ID == null) {
     }
 
+    // console.warn(this.isChange, this.changeData.cotizacionInfoCode);
+
+    if (this.isChange) {
+      this.route.data.subscribe((response: any) => {
+        if (response.data) {
+          this.processingDataToForm(response);
+
+          setTimeout(() => {
+            this.appComponent.showOverlay = true;
+            this.isFormValidToFill = true;
+          }, 5000);
+
+          setTimeout(() => {
+            this.appComponent.showOverlay = false;
+          }, 5500);
+
+        } else {
+          this.noCotizacion = this.changeData.cotizacionInfoCode;
+          this.getDataCotizaciones(this.noCotizacion);
+          this.newRequest.get('noC').setValue(this.noCotizacion);
+          const id = this.changeForm.value.solicitudGastosMayores.id;
+          const tempForm = this.changeForm.get('solicitudGastosMayores') as FormGroup;
+          console.log(tempForm, id);
+          this.changeForm.removeControl('solicitudGastosMayores');
+          this.newRequest.addControl('id', this.fb.control(id));
+          this.changeForm.addControl('solicitudGastosMayores', this.newRequest);
+        }
+
+        this.newRequest.get('noC').disable();
+      });
+    }
+
     if (this.noCotizacion != null) {
+
       this.getDataCotizaciones(this.noCotizacion);
       // this.getData(this.ID);
     } else if (this.noCotizacion == null) {
       this.noCotizacion = '';
     }
-
-    this.thereIsAWomenOnTheRequest();
-    this.thereIsAMenOnTheRequest();
   }
 
   getBmiUpdated(Form) {
@@ -1038,6 +1072,149 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
     }
 
     return (validation || dependentValidation);
+  }
+
+  showAditionalRed() {
+    if (this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudHipertensionArterial')) {
+      if (this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudHipertensionArterial').invalid) {
+        return true;
+      }
+    }
+    if (this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudCardioVasculares')) {
+      if (this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudCardioVasculares').invalid) {
+        return true;
+      }
+    }
+    if (this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudDiabetes')) {
+      if (this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudDiabetes').invalid) {
+        return true;
+      }
+    }
+    if (this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudArtitris')) {
+      console.log(this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudArtitris').invalid);
+      if (this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudArtitris').invalid) {
+        return true;
+      }
+    }
+    if (this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('columnaVertebralColumnaVertebral')) {
+      if (this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('columnaVertebralColumnaVertebral').invalid) {
+        return true;
+      }
+    }
+    if (this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudMusculoesqueleticos')) {
+      if (this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudMusculoesqueleticos').invalid) {
+        return true;
+      }
+    }
+    if (this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudRenales')) {
+      if (this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudRenales').invalid) {
+        return true;
+      }
+    }
+    if (this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudProstatica')) {
+      if (this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudProstatica').invalid) {
+        return true;
+      }
+    }
+    if (this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudBuceo')) {
+      if (this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudBuceo').invalid) {
+        return true;
+      }
+    }
+    if (this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudMoto')) {
+      if (this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudMoto').invalid) {
+        return true;
+      }
+    }
+    if (this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudAviacion')) {
+      if (this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudAviacion').invalid) {
+        return true;
+      }
+    }
+    if (this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudMontanismo')) {
+      if (this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudMontanismo').invalid) {
+        return true;
+      }
+    }
+
+    // tslint: disable: forin
+    // for (const key in this.allDependents.controls) {
+    //   const element = this.allDependents.controls[key] as FormGroup;
+
+    //   if (element.get('solicitudHipertensionArterial')) {
+    //     if (element.get('solicitudHipertensionArterial').invalid) {
+    //       return true;
+    //     }
+    //   }
+
+    //   if (element.get('solicitudCardioVasculares')) {
+    //     if (element.get('solicitudCardioVasculares').invalid) {
+    //       return true;
+    //     }
+    //   }
+
+    //   if (element.get('solicitudDiabetes')) {
+    //     if (element.get('solicitudDiabetes').invalid) {
+    //       return true;
+    //     }
+    //   }
+
+    //   if (element.get('solicitudArtitris')) {
+    //     if (element.get('solicitudArtitris').invalid) {
+    //       return true;
+    //     }
+    //   }
+
+    //   if (element.get('columnaVertebralColumnaVertebral')) {
+    //     if (element.get('columnaVertebralColumnaVertebral').invalid) {
+    //       return true;
+    //     }
+    //   }
+
+    //   if (element.get('solicitudMusculoesqueleticos')) {
+    //     if (element.get('solicitudMusculoesqueleticos').invalid) {
+    //       return true;
+    //     }
+    //   }
+
+    //   if (element.get('solicitudRenales')) {
+    //     if (element.get('solicitudRenales').invalid) {
+    //       return true;
+    //     }
+    //   }
+
+    //   if (element.get('solicitudProstatica')) {
+    //     if (element.get('solicitudProstatica').invalid) {
+    //       return true;
+    //     }
+    //   }
+
+    //   if (element.get('solicitudBuceo')) {
+    //     if (element.get('solicitudBuceo').invalid) {
+    //       return true;
+    //     }
+    //   }
+
+    //   if (element.get('solicitudMoto')) {
+    //     if (element.get('solicitudMoto').invalid) {
+    //       return true;
+    //     }
+    //   }
+
+    //   if (element.get('solicitudAviacion')) {
+    //     if (element.get('solicitudAviacion').invalid) {
+    //       return true;
+    //     }
+    //   }
+
+    //   if (element.get('solicitudMontanismo')) {
+    //     if (element.get('solicitudMontanismo').invalid) {
+    //       return true;
+    //     }
+    //   }
+    // }
+
+    return false;
   }
 
   isActivityReadyToRender() {
@@ -1213,7 +1390,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
            default:
              break;
          }
- */
+  */
       } else {
         this.notFoundQuote = true;
 
@@ -1578,13 +1755,13 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
 
   showWarningDot(Form: any): boolean {
     if (!this.ID) {
-      if (!Form.valid && this.ogForm.submitted) {
+      if (Form.invalid && this.ogForm.submitted) {
         return true;
       } else {
         return false;
       }
     } else {
-      if (Form.valid) {
+      if (!Form.invalid) {
         return false;
       } else {
         return true;
@@ -1695,12 +1872,12 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
             const weightUnit = this.newRequest.get('dependents').get('allDependents').get(index.toString()).get('weightUnit').value;
 
             const result = this.getBmiValue(value, weight, weightUnit, heightUnit);
-            this.newRequest
-              .get('dependents')
-              .get('allDependents')
-              .get(index.toString())
-              .get('bmi')
-              .setValue(result);
+            // this.newRequest
+            //   .get('dependents')
+            //   .get('allDependents')
+            //   .get(index.toString())
+            //   .get('bmi')
+            //   .setValue(result);
 
           });
           this.newRequest.get('dependents').get('allDependents').get(index.toString()).get('weight').valueChanges.subscribe(value => {
@@ -1708,12 +1885,12 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
             const heightUnit = this.newRequest.get('dependents').get('allDependents').get(index.toString()).get('heightUnit').value;
             const weightUnit = this.newRequest.get('dependents').get('allDependents').get(index.toString()).get('weightUnit').value;
             const result = this.getBmiValue(height, value, weightUnit, heightUnit);
-            this.newRequest
-              .get('dependents')
-              .get('allDependents')
-              .get(index.toString())
-              .get('bmi')
-              .setValue(result);
+            // this.newRequest
+            //   .get('dependents')
+            //   .get('allDependents')
+            //   .get(index.toString())
+            //   .get('bmi')
+            //   .setValue(result);
 
           });
 
@@ -1722,12 +1899,12 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
             const weight = this.newRequest.get('dependents').get('allDependents').get(index.toString()).get('weight').value;
             const weightUnit = this.newRequest.get('dependents').get('allDependents').get(index.toString()).get('weightUnit').value;
             const result = this.getBmiValue(height, weight, weightUnit, value);
-            this.newRequest
-              .get('dependents')
-              .get('allDependents')
-              .get(index.toString())
-              .get('bmi')
-              .setValue(result);
+            // this.newRequest
+            //   .get('dependents')
+            //   .get('allDependents')
+            //   .get(index.toString())
+            //   .get('bmi')
+            //   .setValue(result);
 
           });
 
@@ -1736,12 +1913,12 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
             const weight = this.newRequest.get('dependents').get('allDependents').get(index.toString()).get('weight').value;
             const heightUnit = this.newRequest.get('dependents').get('allDependents').get(index.toString()).get('heightUnit').value;
             const result = this.getBmiValue(height, weight, value, heightUnit);
-            this.newRequest
-              .get('dependents')
-              .get('allDependents')
-              .get(index.toString())
-              .get('bmi')
-              .setValue(result);
+            // this.newRequest
+            //   .get('dependents')
+            //   .get('allDependents')
+            //   .get(index.toString())
+            //   .get('bmi')
+            //   .setValue(result);
 
           });
         } else {
@@ -2354,7 +2531,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
               // conozcaSuClientePersonaJuridica: this.fb.group({}),
               // conozcaSuClientePersona: this.fb.group({}),
               firstName: ['', Validators.required],
-              secondName: ['', Validators.required],
+              secondName: [''],
               lastName: ['', Validators.required],
               date: ['', Validators.required],
               sex: ['', Validators.required],
@@ -2362,11 +2539,11 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
               idType: ['', Validators.required],
               id2: ['', Validators.required],
               age: [{ value: '', disabled: false }, Validators.required],
-              weight: ['', Validators.required],
-              height: ['', Validators.required],
-              weightUnit: ['', Validators.required],
-              heightUnit: ['', Validators.required],
-              bmi: [{ value: '', disabled: true }, Validators.required],
+              weight: [''],
+              height: [''],
+              weightUnit: [''],
+              heightUnit: [''],
+              bmi: [{ value: '', disabled: true }],
               status: ['', Validators.required],
               country: ['', Validators.required],
               city: ['', Validators.required],
@@ -3678,16 +3855,16 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
                this.newRequest.get('person').get('date').setValue(data.data.fecha_nacimiento);
                this.newRequest.get('person').get('firstName').setValue(data.data.nombre);
                this.newRequest.get('person').get('lastName').setValue(data.data.apellidos);
-      
+
                switch (data.data.sexo) {
                  case 'M':
                    this.newRequest.get('person').get('sex').setValue('MASCULINO');
                    break;
-      
+
                  case 'F':
                    this.newRequest.get('person').get('sex').setValue('FEMENINO');
                    break;
-      
+
                  default:
                    break;
                }
@@ -3710,9 +3887,12 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
                 dialogRef.close();
               }, 4000);
             }
+
+            this.thereIsAWomenOnTheRequest();
+            this.thereIsAMenOnTheRequest();
+
           });
-        }
-        else {
+        } else {
           this.processingDataToForm(response);
         }
       });
@@ -3756,8 +3936,14 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
       this.ID = data.data.id;
       // console.log(data.data);
       console.log(data.data.antiLaundering);
-      this.dataMappingFromApi.iterateThroughtAllObject(data.data, this.newRequest);
-      console.log(this.newRequest.value.antiLaundering);
+      if (this.isChange) {
+        this.dataMappingFromApi.iterateThroughtAllObject(data.data, this.changeForm);
+        console.warn('THIS CHANGE FORM', this.changeForm);
+        const tempForm = this.changeForm.get('solicitudGastosMayores') as FormGroup;
+        this.newRequest = tempForm;
+      } else {
+        this.dataMappingFromApi.iterateThroughtAllObject(data.data, this.newRequest);
+      }
       this.AddEventOnEachDependentVariable();
       // console.log(this.newRequest);
 
@@ -3772,6 +3958,9 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
       const formContractor = this.newRequest.get('contractor') as FormGroup;
       const formPayer = this.newRequest.get('payer') as FormGroup;
       const formFiles = this.newRequest.get('files') as FormGroup;
+      const formCB = this.newRequest.get('contingentBeneficiary');
+
+      console.log('THIS NEW REQUEST', this.newRequest);
 
       formP.removeControl('contractorIsLegalEntity');
       formP.removeControl('contractorMandatory');
@@ -3780,9 +3969,14 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
       formP.removeControl('sameAsContractor');
       formP.removeControl('sameAsPayer');
       formFiles.removeControl('incomesCertified');
+      formP.get('officeTel').setValidators(null);
+      formP.get('tel').setValidators(null);
+      formCB.get('personBenefited').get('family').setValidators(null);
+      formCB.get('personBenefited').get('id2').setValidators(null);
+      formCB.get('personBenefited').get('idType').setValidators(null);
 
       if (formGeneral.get('countryRoleCode')) { formGeneral.get('countryRoleCode').setValidators(null); }
-      
+
       if (this.newRequest.get('questionsB').get('familyWithDiseases') !== undefined && this.newRequest.get('questionsB').get('familyWithDiseases') !== null) {
         this.familyWithDiseasesList = this.newRequest.get('questionsB').get('familyWithDiseases') as FormArray;
       } else {
@@ -3790,37 +3984,6 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
       }
 
       if (formP.get('isContractor').value === 'NO') {
-        // formP.removeControl('isJuridica');
-        // if (formGeneral.get('contractor')) {
-        //   formGeneral.removeControl('contractor');
-        // }
-        // if (this.newRequest.get('conozcaSuClientePersonaContratante')) {
-        //   formGeneral.removeControl('conozcaSuClientePersonaContratante');
-        // }
-        // if (this.newRequest.get('files').get('copyId')) {
-        //   formFiles.removeControl('copyId');
-        // }
-        // if ((this.newRequest.get('antiLaundering'))) {
-        //   formGeneral.removeControl('antiLaundering');
-        // }
-        // if ((this.newRequest.get('conozcaSuClientePersonaJuridica'))) {
-        //   formGeneral.removeControl('conozcaSuClientePersonaJuridica');
-        // }
-        // if (this.newRequest.get('person').get('mandatorySubject')) {
-        //   formP.removeControl('mandatorySubject');
-        // }
-        // formP.removeControl('isJuridica');
-        // if (formEP) {
-        //   formEP.removeControl('contractor');
-        //   formEP.removeControl('contractorExposedInfo');
-        // }
-        // if (this.newRequest.get('files').get('mercantile')) {
-        //   formFiles.removeControl('mercantile');
-        // }
-        // if (formGeneral.get('contractor')) {
-        //   formGeneral.removeControl('contractor');
-        // }
-
         this.newRequest.get('person').get('office').get('company').setValidators(Validators.required);
         this.newRequest.get('person').get('office').get('company').updateValueAndValidity();
         this.newRequest.get('person').get('office').get('company').markAsUntouched();
@@ -3849,34 +4012,6 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
         this.newRequest.get('person').get('office').get('country').updateValueAndValidity();
         this.newRequest.get('person').get('office').get('country').markAsUntouched();
 
-
-        // if (this.newRequest.get('files').get('copyId')) {
-        //   formFiles.removeControl('copyId');
-        // }
-        // if ((this.newRequest.get('antiLaundering'))) {
-        //   formGeneral.removeControl('antiLaundering');
-        // }
-        // if ((this.newRequest.get('conozcaSuClientePersonaJuridica'))) {
-        //   formGeneral.removeControl('conozcaSuClientePersonaJuridica');
-        // }
-        // if (this.newRequest.get('person').get('mandatorySubject')) {
-        //   formP.removeControl('mandatorySubject');
-        // }
-        // formP.removeControl('isJuridica');
-        // if (formEP) {
-        //   formEP.removeControl('contractor');
-        //   formEP.removeControl('contractorExposedInfo');
-        // }
-        // if (this.newRequest.get('files').get('mercantile')) {
-        //   formFiles.removeControl('mercantile');
-        // }
-      }
-
-      if (formP.get('isContractor').value !== 'SI') {
-        // if (formEP) {
-        //   formEP.removeControl('contractorExposedInfo');
-        //   formEP.removeControl('contractor');
-        // }
       }
 
       if (formP.get('isContractor').value !== 'NO') {
@@ -3886,6 +4021,11 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
         formP.removeControl('contractorIsJuridical');
         formEP.removeControl('contractor');
         formEP.removeControl('contractorExposedInfo');
+      }
+
+      if (formP.get('mandatorySubject')) {
+        formP.get('mandatorySubject').setValidators(Validators.required);
+        formP.get('mandatorySubject').updateValueAndValidity();
       }
 
       if (formP.get('isPayer').value !== 'NO') {
@@ -3912,6 +4052,26 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
           formContractor.removeControl('countryOfResidence');
           formContractor.removeControl('countryOfBirth');
           formContractor.removeControl('economicActivity');
+          formContractor.get('tel').setValidators(null);
+          formContractor.get('officeTel').setValidators(null);
+          formContractor.get('secondName').setValidators(null);
+          formContractor.get('fax').setValidators(null);
+          formContractor.get('weightUnit').setValidators(null);
+          formContractor.get('weight').setValidators(null);
+          formContractor.get('heightUnit').setValidators(null);
+          formContractor.get('height').setValidators(null);
+          formContractor.get('bmi').setValidators(null);
+          if (formContractor.get('inches')) {
+            formContractor.get('inches').setValidators(null);
+          }
+          const formCompany = formContractor.get('office') as FormGroup;
+          formCompany.removeControl('economicActivity');
+          formCompany.get('company').setValidators(null);
+          formCompany.get('position').setValidators(null);
+          formCompany.get('direction').setValidators(null);
+          formCompany.get('sector').setValidators(null);
+          formCompany.get('city').setValidators(null);
+          formCompany.get('country').setValidators(null);
         }
       }
 
@@ -3931,6 +4091,26 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
           formPayer.removeControl('countryOfBirth');
           formPayer.removeControl('isContractor');
           formPayer.removeControl('economicActivity');
+          formPayer.get('tel').setValidators(null);
+          formPayer.get('officeTel').setValidators(null);
+          formPayer.get('secondName').setValidators(null);
+          formPayer.get('fax').setValidators(null);
+          formPayer.get('weightUnit').setValidators(null);
+          formPayer.get('weight').setValidators(null);
+          formPayer.get('heightUnit').setValidators(null);
+          formPayer.get('height').setValidators(null);
+          formPayer.get('bmi').setValidators(null);
+          if (formPayer.get('inches')) {
+            formPayer.get('inches').setValidators(null);
+          }
+          const formCompany = formPayer.get('office') as FormGroup;
+          formCompany.removeControl('economicActivity');
+          formCompany.get('company').setValidators(null);
+          formCompany.get('position').setValidators(null);
+          formCompany.get('direction').setValidators(null);
+          formCompany.get('sector').setValidators(null);
+          formCompany.get('city').setValidators(null);
+          formCompany.get('country').setValidators(null);
         }
       }
 
@@ -3943,46 +4123,6 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
           // formGeneral.removeControl('antiLaundering');
         }
       }
-
-      // if (formP.get('isJuridica')) {
-      //   if (formP.get('isJuridica').value !== 'SI') {
-      //     formP.removeControl('mandatorySubject');
-      //   } else {
-      //     if (formGeneral.get('contractor')) {
-      //       formGeneral.removeControl('contractor');
-      //     }
-      //     if (formEP) {
-      //       formEP.removeControl('contractor');
-      //       formEP.removeControl('contractorExposedInfo');
-      //     }
-      //     if (this.newRequest.get('conozcaSuClientePersonaContratante')) {
-      //       formGeneral.removeControl('conozcaSuClientePersonaContratante');
-      //     }
-      //     if (this.newRequest.get('files').get('copyId')) {
-      //       formFiles.removeControl('copyId');
-      //     }
-      //   }
-      // } else {
-      //   formGeneral.removeControl('conozcaSuClientePersonaJuridica');
-      //   if (formGeneral.get('contractor')) {
-      //     formGeneral.removeControl('contractor');
-      //   }
-      //   if (this.newRequest.get('conozcaSuClientePersonaContratante')) {
-      //     formGeneral.removeControl('conozcaSuClientePersonaContratante');
-      //   }
-      //   if (!(this.newRequest.get('conozcaSuClientePersonaJuridica'))) {
-      //     formGeneral.addControl('conozcaSuClientePersonaJuridica', this.fb.group({}));
-      //   }
-
-      //   if (this.newRequest.get('files').get('copyId')) {
-      //     formFiles.removeControl('copyId');
-      //   }
-      // }
-
-      // if (formP.get('isContractor').value !== 'SI') {
-      //   formGeneral.removeControl('conozcaSuClientePersonaContratante');
-      //   formGeneral.removeControl('conozcaSuClientePersonaJuridica');
-      // }
 
       if (formEP && formEP.get('headLine').value !== 'SI') {
         formEP.removeControl('headLineExposedInfo');
@@ -4041,26 +4181,14 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
         formQA.removeControl('pregnant');
       }
 
+      if (!this.isThereAWomen) {
+        formSAH.removeControl('havePregnant');
+        formSAH.removeControl('haveReproductiveOrganDisorders');
+      }
+
       formSAH.removeControl('haveSpine');
       formQA.removeControl('haveSpine');
       formQB.removeControl('hasFamilyWithHeartKidneyDisease');
-
-      // if (this.newRequest.get('person').get('conozcaSuClientePersona')) {
-      //   formP.removeControl('conozcaSuClientePersona');
-      // }
-      // if ((this.newRequest.get('person').get('antiLaundering'))) {
-      //   formP.removeControl('antiLaundering');
-      // }
-      // if ((this.newRequest.get('person').get('conozcaSuClientePersonaJuridica'))) {
-      //   formP.removeControl('conozcaSuClientePersonaJuridica');
-      // }
-
-      // if (this.newRequest.get('contractor')) {
-      //   if (this.newRequest.get('contractor').get('conozcaSuClientePersona')) {
-      //     formContractor.removeControl('conozcaSuClientePersona');
-      //   }
-      // }
-
 
       this.contingentBeneficiaryArray = this.newRequest.get('contingentBeneficiary').get('dependentsC') as FormArray;
       this.primaryBenefitsArray = this.newRequest.get('primaryBenefits').get('dependentsC') as FormArray;
@@ -4073,11 +4201,25 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
       }
       this.filesStudiesArray = this.newRequest.get('files').get('studies') as FormArray;
 
-      this.arrayFilesTitles = data.data.files.studies;
-      this.primaryBeneficaryTitles = data.data.primaryBenefits.dependentsC;
-      this.contigentBeneficaryTitles = data.data.contingentBeneficiary.dependentsC;
-      this.primaryAnotherTitle = data.data.primaryBenefits.personBenefited;
-      this.contigentAnotherTitle = data.data.contingentBeneficiary.personBenefited;
+      if (!this.isChange) {
+        this.arrayFilesTitles = data.data.files.studies;
+        this.primaryBeneficaryTitles = data.data.primaryBenefits.dependentsC;
+        this.contigentBeneficaryTitles = data.data.contingentBeneficiary.dependentsC;
+        this.primaryAnotherTitle = data.data.primaryBenefits.personBenefited;
+        this.contigentAnotherTitle = data.data.contingentBeneficiary.personBenefited;
+        this.arrayFilesTitlesDocumentsKnowClient = data.data.files.documentsKnowClient;
+        this.arrayFilesTitlesCopyId = data.data.files.copyId;
+        this.arrayFilesTitlesMercantile = data.data.files.mercantile;
+      } else {
+        this.arrayFilesTitles = data.data.solicitudGastosMayores.files.studies;
+        this.primaryBeneficaryTitles = data.data.solicitudGastosMayores.primaryBenefits.dependentsC;
+        this.contigentBeneficaryTitles = data.data.solicitudGastosMayores.contingentBeneficiary.dependentsC;
+        this.primaryAnotherTitle = data.data.solicitudGastosMayores.primaryBenefits.personBenefited;
+        this.contigentAnotherTitle = data.data.solicitudGastosMayores.contingentBeneficiary.personBenefited;
+        this.arrayFilesTitlesDocumentsKnowClient = data.data.solicitudGastosMayores.files.documentsKnowClient;
+        this.arrayFilesTitlesCopyId = data.data.solicitudGastosMayores.files.copyId;
+        this.arrayFilesTitlesMercantile = data.data.solicitudGastosMayores.files.mercantile;
+      }
 
       if (this.newRequest.get('files') && this.newRequest.get('files').get('documentsKnowClient')) {
         this.filesDocumentsKnowClientArray = this.newRequest.get('files').get('documentsKnowClient') as FormArray;
@@ -4088,9 +4230,6 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
       if (this.newRequest.get('files') && this.newRequest.get('files').get('mercantile')) {
         this.mercantileRegisterArray = this.newRequest.get('files').get('mercantile') as FormArray;
       }
-      this.arrayFilesTitlesDocumentsKnowClient = data.data.files.documentsKnowClient;
-      this.arrayFilesTitlesCopyId = data.data.files.copyId;
-      this.arrayFilesTitlesMercantile = data.data.files.mercantile;
 
       for (const dependent in this.dependentsFormArray.controls) {
         if (Object.prototype.hasOwnProperty.call(this.dependentsFormArray.controls, dependent)) {
@@ -4179,6 +4318,37 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
           formQBMHI.removeControl('reclamationInfo');
         }
       }
+
+      if (this.newRequest.get('contingentBeneficiary').get('dependentsC')) {
+        // tslint:disable-next-line: prefer-for-of
+        for (let x = 0; x < this.newRequest.get('contingentBeneficiary').get('dependentsC')['controls'].length; x++) {
+          const contingentBeneficiaryGroup = this.newRequest.get('contingentBeneficiary').get('dependentsC').get(x.toString()) as FormGroup;
+
+          contingentBeneficiaryGroup.get('name').clearValidators();
+          contingentBeneficiaryGroup.get('name').updateValueAndValidity();
+          contingentBeneficiaryGroup.get('date').clearValidators();
+          contingentBeneficiaryGroup.get('date').updateValueAndValidity();
+          contingentBeneficiaryGroup.get('id2').clearValidators();
+          contingentBeneficiaryGroup.get('id2').updateValueAndValidity();
+          contingentBeneficiaryGroup.get('idType').clearValidators();
+          contingentBeneficiaryGroup.get('idType').updateValueAndValidity();
+          contingentBeneficiaryGroup.get('id2Attached').clearValidators();
+          contingentBeneficiaryGroup.get('id2Attached').updateValueAndValidity();
+          contingentBeneficiaryGroup.get('nationality').clearValidators();
+          contingentBeneficiaryGroup.get('nationality').updateValueAndValidity();
+          contingentBeneficiaryGroup.get('ocupation').clearValidators();
+          contingentBeneficiaryGroup.get('ocupation').updateValueAndValidity();
+          contingentBeneficiaryGroup.get('family').clearValidators();
+          contingentBeneficiaryGroup.get('family').updateValueAndValidity();
+          contingentBeneficiaryGroup.get('quantity').clearValidators();
+          contingentBeneficiaryGroup.get('quantity').updateValueAndValidity();
+          contingentBeneficiaryGroup.get('quantity').setValidators([Validators.min(1), Validators.max(100)]);
+          contingentBeneficiaryGroup.get('quantity').updateValueAndValidity();
+        }
+      }
+
+      this.thereIsAWomenOnTheRequest();
+      this.thereIsAMenOnTheRequest();
 
       this.isFormValidToFill = true;
 

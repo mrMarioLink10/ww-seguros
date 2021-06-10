@@ -1,0 +1,189 @@
+<div class="p-6 pr-6 xs:pr-6 sm:pr-6 md:pr-12 lg:pr-12 xl:pr-12 bg-white">
+  <form [formGroup]='administrationPolicyGroup'>
+    <h3 class="uppercase dashboard-page-title pt-8 pb-4">Administración de Pólizas</h3>
+
+    <div class="p-3 pb-2 mb-4" style="background-color: #F2F2F2">
+      <div class="mt-3 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 xl:grid-cols-5">
+        <!-- <div class="mr-3">
+            <app-select name="filterType" [options]="filterOptions" [group]="administrationPolicyGroup"></app-select>
+          </div> -->
+        <!-- <div class="mr-3 col-span-2" *ngIf="this.administrationPolicyGroup.get('filterType').value == 'NOMBRE' ">
+            <form [formGroup]="administrationPolicyGroup">
+              <mat-form-field color="accent" appearance="outline" class="w-full bg-transparente"
+                style="font-size: small !important;">
+                <mat-label>Nombre</mat-label>
+                <input formControlName="idNumber" matInput class="" type="text" [matAutocomplete]="auto"
+                  placeholder="Juan Juan">
+                <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+                  <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                    {{option}}
+                  </mat-option>
+                </mat-autocomplete>
+                <mat-error
+                  *ngIf="administrationPolicyGroup.get('idNumber').touched && !administrationPolicyGroup.get('idNumber').valid">
+                  Este campo es obligatorio
+                </mat-error>
+              </mat-form-field>
+            </form>
+          </div>
+          <div class="mr-3" *ngIf="this.administrationPolicyGroup.get('filterType').value == 'ID' ">
+            <form [formGroup]="administrationPolicyGroup">
+              <mat-form-field color="accent" appearance="outline" class="w-full bg-transparente"
+                style="font-size: small !important;">
+                <mat-label>ID Number</mat-label>
+                <input formControlName="idNumber" matInput class="" type="number" [matAutocomplete]="auto"
+                  placeholder="00010002">
+                <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+                  <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                    {{option}}
+                  </mat-option>
+                </mat-autocomplete>
+                <mat-error
+                  *ngIf="administrationPolicyGroup.get('idNumber').touched && !administrationPolicyGroup.get('idNumber').valid">
+                  Este campo es obligatorio
+                </mat-error>
+              </mat-form-field>
+            </form>
+          </div> -->
+        <div class="mr-3" *ngIf="this.administrationPolicyGroup.get('filterType').value == 'POLIZA' ">
+          <form [formGroup]="administrationPolicyGroup">
+            <mat-form-field color="accent" appearance="outline" class="w-full bg-transparente"
+              style="font-size: small !important;">
+              <mat-label>Póliza</mat-label>
+              <input formControlName="idNumber" matInput class="" type="text" [matAutocomplete]="auto"
+                placeholder="SWWVT-00000">
+              <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+                <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                  {{option}}
+                </mat-option>
+              </mat-autocomplete>
+              <mat-error
+                *ngIf="administrationPolicyGroup.get('idNumber').touched && !administrationPolicyGroup.get('idNumber').valid">
+                Este campo es obligatorio
+              </mat-error>
+            </mat-form-field>
+          </form>
+        </div>
+        <div *ngIf="idNumber2FieldVisible" class="mr-3">
+          <app-select name="idNumber2" [options]="idNumber2Field" [group]="administrationPolicyGroup"></app-select>
+        </div>
+        <div
+          *ngIf="(this.administrationPolicyGroup.get('filterType').value == 'NOMBRE' || this.administrationPolicyGroup.get('filterType').value == 'ID' || this.administrationPolicyGroup.get('filterType').value == 'POLIZA') && isEditing == false">
+          <button style="margin-left: 15px;" (click)="searchIdNumber(administrationPolicyGroup.value.idNumber)"
+            type="submit" class="nofocus flex justify-center small-search-button">
+            <img src="/assets/iconos/search-icon.svg">
+          </button>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="showContent" class="mt-12">
+
+      <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
+        <div class="mr-3 md:col-span-2">
+          <app-input name="personName" label="Nombre del Asegurado" [group]="administrationPolicyGroup"></app-input>
+        </div>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
+        <div class="mr-3 md:col-span-2">
+          <app-select name="ramo" [options]="requestsType" [group]="administrationPolicyGroup">
+          </app-select>
+        </div>
+      </div>
+
+      <div class="mt-10 grid grid-cols-1 lg:grid-cols-2">
+        <div>
+          <label> <strong> Por favor, seleccione el formulario que desea descargar. </strong> </label>
+          <div class="grid grid-cols-2 lg:grid-cols-3">
+            <div class="mr-3 mt-5 lg:col-span-2">
+              <app-select name="pdfSelector" [options]="pdfOptionsField" [group]="administrationPolicyGroup">
+              </app-select>
+            </div>
+            <div class="mt-5 ml-3">
+              <button *ngIf="this.administrationPolicyGroup.get('pdfSelector').value != '' && !this.administrationPolicyGroup.get('pdfSelector').disabled"
+                (click)="download(this.administrationPolicyGroup.get('pdfSelector').value)" type="button"
+                class="flex justify-center content-center nofocus small-search-button" title="Descargar">
+                <img src="/assets/iconos/cloud_download-white-18dp.svg">
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="administrationPolicyGroup.value.pdfSelector !== '' && requestInfo !== ''"
+        class="declaraciones px-4 sm:px-4 md:px-14 lg:px-12 xl:px-12 text-sm">
+        {{requestInfo}}
+      </div>
+
+      <div class="grid lg:grid-cols-2">
+        <div class="mt-20">
+          <label> <strong> Por favor, inserte los formularios completados aquí. </strong> </label>
+  
+          <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-2">
+            <div class="mt-5">
+              <div class="mb-5" *ngFor="let studies of administrationPolicyGroup.get('pdfArchives')['controls']; let i = index">
+                <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
+                  <app-file-input class="mr-3"
+                    [ngClass]="{'col-span-4': administrationPolicyGroup.get('pdfArchives')['controls'].length === 1, 'col-span-3': administrationPolicyGroup.get('pdfArchives')['controls'].length > 1} "
+                    [group]="administrationPolicyGroup.get('pdfArchives').get(i.toString())" name="pdfFile"
+                    label="Archivos PDF" [fileNameWatcher]="arrayPdfArchivesWatcher(i)"
+                    (onFileChange)="onStudiesChange($event, i)"
+                    [disabled]="isWWSeguros">
+                  </app-file-input>
+                  <div *ngIf="!isWWSeguros">
+                    <div *ngIf="administrationPolicyGroup.get('pdfArchives')['controls'].length > 1"
+                      [ngClass]="{'': administrationPolicyGroup.get('pdfArchives')['controls'].length === 1, 'col-span-1': administrationPolicyGroup.get('pdfArchives')['controls'].length > 1} ">
+                      <app-delete-array-button [array]="administrationPolicyGroup.get('pdfArchives')" [index]="i">
+                      </app-delete-array-button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div *ngIf="!isWWSeguros">
+                <app-add-array-button [array]="administrationPolicyGroup.get('pdfArchives')" [item]="createFormArray('pdfFile')">
+                </app-add-array-button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="mt-10 lg:mt-20">
+          <label> <strong> Comentarios de la revisión de su solicitud. </strong> </label>
+
+          <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-1 xl:grid-cols-1">
+            <div class="mt-5">
+              <div class="mb-5" *ngFor="let studiesComments of administrationPolicyGroup.get('comments')['controls']; let i = index">
+                <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
+                  <!-- [ngClass]="{'col-span-4': administrationPolicyGroup.get('comments')['controls'].length === 1, 'col-span-3': administrationPolicyGroup.get('comments')['controls'].length > 1} " -->
+                  <app-text-area label="" name='comentario' class="mr-3"
+                  [ngClass]="{'col-span-3': administrationPolicyGroup.get('comments')['controls'].length > 0}"
+                  [group]="administrationPolicyGroup.get('comments').get(i.toString())"></app-text-area>
+                  <div *ngIf="isWWSeguros">
+                    <!-- *ngIf="administrationPolicyGroup.get('comments')['controls'].length > 1" -->
+                    <div [ngClass]="{'col-span-1': administrationPolicyGroup.get('comments')['controls'].length > 0}">
+                      <!--[ngClass]="{'': administrationPolicyGroup.get('comments')['controls'].length === 1, 'col-span-1': administrationPolicyGroup.get('comments')['controls'].length > 1} " -->
+                      <app-delete-array-button [array]="administrationPolicyGroup.get('comments')" [index]="i">
+                      </app-delete-array-button>
+                    </div>
+                  </div>
+                </div>
+                <label> <strong> Fecha de Comentario: </strong> {{administrationPolicyGroup.get('comments').get(i.toString()).get('fechaComentario').value | date: 'dd/MM/yyyy'}} </label>
+              </div>
+              <div *ngIf="isWWSeguros">
+                <app-add-array-button [array]="administrationPolicyGroup.get('comments')" [item]="createFormArray('comments')">
+                </app-add-array-button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+  <form #form="ngForm">
+    <div *ngIf="showContent" class="mt-8">
+      <button *ngIf="!isWWSeguros" mat-button class="send-button" style="margin-right: 7.5px !important; margin-top: 10px;"
+        (click)="saveChanges()" type="submit">Guardar cambios</button>
+      <button *ngIf="statusProperty== 1 && isWWSeguros" mat-button class="send-button" style="margin-right: 7.5px !important; margin-top: 10px;"
+        (click)="confirmRequest()" type="submit">Aceptar</button>
+      <button *ngIf="statusProperty== 1 && isWWSeguros" mat-button class="send-button" style="margin-right: 7.5px !important; margin-top: 10px;"
+        (click)="rejectRequest()" type="submit">Denegar</button>
+    </div>
+  </form>
+</div>

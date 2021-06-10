@@ -87,7 +87,6 @@ export class SettingsComponent implements OnInit {
   }
 
   saveChanges() {
-    // console.log('Esto no sirve para nada, recordatorio de que hare esta funcionalidad en el formHandler de Isai');
     this.settingsGroup.markAllAsTouched();
     this.formHandler.saveFormSettings(this.settingsGroup, this.appComponent);
   }

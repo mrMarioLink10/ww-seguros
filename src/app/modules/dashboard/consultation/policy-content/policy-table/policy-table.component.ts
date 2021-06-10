@@ -49,6 +49,8 @@ export class PolicyTableComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    console.warn('aqui ocurre el error');
+
     this.loadData();
   }
 
@@ -66,11 +68,13 @@ export class PolicyTableComponent implements OnInit {
       this.dataSource.sort = this.sort;
       this.dataSource.paginator = this.paginator;
       this.emitPendingPolicies(this.data);
+      this.sortTableByPendingPayments();
       this.loading = false;
     });
   }
 
   sortTableByPendingPayments(): void {
+    console.warn('aqui ocurre el error');
     this.sort.sort({ id: 'paymentState', start: 'desc', disableClear: false });
   }
 

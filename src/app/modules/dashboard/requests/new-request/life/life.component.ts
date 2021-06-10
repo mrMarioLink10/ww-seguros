@@ -1,4 +1,4 @@
-import { Component, OnInit, DoCheck, ɵConsole, ChangeDetectorRef, AfterViewChecked, ViewChild } from '@angular/core';
+import { Component, OnInit, DoCheck, ɵConsole, ChangeDetectorRef, AfterViewChecked, ViewChild, Input } from '@angular/core';
 import { FormGroup, FormBuilder, FormArray, Validators, FormControl } from '@angular/forms';
 import { FormArrayGeneratorService } from 'src/app/core/services/forms/form-array-generator.service';
 import { FieldConfig } from 'src/app/shared/components/form-components/models/field-config';
@@ -45,7 +45,7 @@ export class LifeComponent implements OnInit, DoCheck {
     public dialog: MatDialog,
     private life: LifeService,
     private know: KnowYourCustomerComponent,
-    private appComponent: AppComponent,
+    public appComponent: AppComponent,
     private cd: ChangeDetectorRef,
     public requestService: RequestsService
   ) {
@@ -689,6 +689,10 @@ export class LifeComponent implements OnInit, DoCheck {
   juridicalObligatoryOptions: any;
   physicalObligatoryOptions: any;
 
+  @Input() isChange = false;
+  @Input() changeForm: FormGroup;
+  @Input() changeData: any;
+
   @ViewChild('form', { static: false }) form;
   @ViewChild('matAccordion', { static: false }) matAccordion;
 
@@ -900,6 +904,17 @@ export class LifeComponent implements OnInit, DoCheck {
       payerQuestionnaires: this.fb.group({}),
       activitiesQuestionnaires: this.fb.group({}),
     });
+
+    if (this.isChange) {
+      this.noCotizacion = this.changeData.cotizacionInfoCode;
+      this.searchIdNumber(this.noCotizacion);
+      this.newRequest.get('noC').setValue(this.noCotizacion);
+      this.newRequest.get('noC').disable();
+      this.changeForm.removeControl('solicitudGastosMayores');
+      this.changeForm.addControl('solicitudGastosMayores', this.newRequest);
+      console.log('changeForm depue:', this.changeForm);
+      // this.changeForm.get('solicitudGastosMayores').controls = this.newRequest;
+    }
 
     if (this.noCotizacion) {
       console.log(this.noCotizacion);
@@ -1490,13 +1505,13 @@ export class LifeComponent implements OnInit, DoCheck {
     } else {
       if (i !== null) {
         if (this.contigentBeneficaryTitles) {
-          if (this.contigentBeneficaryTitles[i] && this.newRequest.get('contingentBeneficiary').get('dependentsC').get(i.toString()).value.id2Attached !== '') {
+          if (this.contigentBeneficaryTitles[i] && this.newRequest.get('contingentBeneficiary').get('dependentsC').get(i.toString()).value.id2AttachedBeneficiary !== '') {
             return this.contigentBeneficaryTitles[i].id2AttachedBeneficiaryUrl;
           }
         }
       } else {
         if (this.contigentAnotherTitle) {
-          if (this.contigentAnotherTitle && this.newRequest.get('contingentBeneficiary').get('personBenefited').value.id2Attached !== '') {
+          if (this.contigentAnotherTitle && this.newRequest.get('contingentBeneficiary').get('personBenefited').value.id2AttachedBeneficiary !== '') {
             return this.contigentAnotherTitle.id2AttachedBeneficiaryUrl;
           }
         }
@@ -2062,13 +2077,13 @@ export class LifeComponent implements OnInit, DoCheck {
 
   showWarningDot(form: any): boolean {
     if (!this.ID) {
-      if (!form.valid && this.form.submitted) {
+      if (form.invalid && this.form.submitted) {
         return true;
       } else {
         return false;
       }
     } else {
-      if (form.valid) {
+      if (!form.invalid) {
         return false;
       } else {
         return true;
@@ -2893,7 +2908,7 @@ export class LifeComponent implements OnInit, DoCheck {
           if (!this.newRequest.get('contractor')) {
             this.newRequest.addControl('contractor', this.fb.group({
               firstName: ['', Validators.required],
-              secondName: ['', Validators.required],
+              secondName: [''],
               lastName: ['', Validators.required],
               date: ['', Validators.required],
               sex: ['', Validators.required],
@@ -2948,7 +2963,7 @@ export class LifeComponent implements OnInit, DoCheck {
           if (!this.newRequest.get('payer')) {
             this.newRequest.addControl('payer', this.fb.group({
               firstName: ['', Validators.required],
-              secondName: ['', Validators.required],
+              secondName: [''],
               lastName: ['', Validators.required],
               date: ['', Validators.required],
               sex: ['', Validators.required],
@@ -3371,6 +3386,22 @@ export class LifeComponent implements OnInit, DoCheck {
   addToList(list: any, type: string) {
     list.push(this.createFormArray(type));
 
+  }
+
+  showAditionalRed() {
+    if (this.newRequest.get('questionnaires').get('solicitudHipertensionArterial')) {
+      if (this.newRequest.get('questionnaires').get('solicitudHipertensionArterial').invalid) {
+        return true;
+      }
+    }
+
+    if (this.newRequest.get('questionnaires').get('solicitudDiabetes')) {
+      if (this.newRequest.get('questionnaires').get('solicitudDiabetes').invalid) {
+        return true;
+      }
+    }
+
+    return false;
   }
 
   questionsLength() {
@@ -3820,6 +3851,21 @@ export class LifeComponent implements OnInit, DoCheck {
 
       if (formWI) {
         this.womenDisordersList = formWI.get('disorders') as FormArray;
+      }
+
+      if (this.newRequest.get('primaryBenefits').get('dependentsC')) {
+        // tslint:disable-next-line: prefer-for-of
+        for (let x = 0; x < this.newRequest.get('primaryBenefits').get('dependentsC')['controls'].length; x++) {
+          this.newRequest.get('primaryBenefits').get('dependentsC').get(
+            x.toString()).get('name').setValidators(Validators.required);
+          this.newRequest.get('primaryBenefits').get('dependentsC').get(
+            x.toString()).get('name').updateValueAndValidity();
+
+          this.newRequest.get('primaryBenefits').get('dependentsC').get(
+            x.toString()).get('id2Attached').setValidators(Validators.required);
+          this.newRequest.get('primaryBenefits').get('dependentsC').get(
+            x.toString()).get('id2Attached').updateValueAndValidity();
+        }
       }
 
       this.heartPainList = formHMI.get('heartPain') as FormArray;

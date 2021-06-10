@@ -912,14 +912,14 @@ export class DisabilityComponent implements OnInit, DoCheck {
 
     if (this.form !== undefined) {
       if (!this.ID) {
-        if (!form.valid && this.form.submitted) {
+        if (form.invalid && this.form.submitted) {
           return true;
         } else {
           return false;
         }
 
       } else {
-        if (form.valid) {
+        if (!form.invalid) {
           return false;
         } else {
           return true;
@@ -1781,6 +1781,10 @@ export class DisabilityComponent implements OnInit, DoCheck {
             formGeneral.addControl('knowYourClient', this.fb.group({}));
           }
 
+          if ((this.disabilityGroup.get('antiLaundering'))) {
+            formGeneral.removeControl('antiLaundering');
+          }
+
           formInsured.get('mandatorySubject').reset();
 
           break;
@@ -1830,6 +1834,10 @@ export class DisabilityComponent implements OnInit, DoCheck {
           // if (this.disabilityGroup.get('files').get('copyId')) {
           //   formFiles.removeControl('copyId');
           // }
+
+          if ((this.disabilityGroup.get('antiLaunderingPayer'))) {
+            formGeneral.removeControl('antiLaunderingPayer');
+          }
 
           formInsured.get('payerMandatorySubject').reset();
 
@@ -2168,8 +2176,8 @@ export class DisabilityComponent implements OnInit, DoCheck {
             formFiles.removeControl('mercantilePayer');
           }
 
-          formFiles.addControl('copyId', this.fb.array([this.createFormArray('filesCopyId')]));
-          this.filesCopyIdArray = this.disabilityGroup.get('files').get('copyId') as FormArray;
+          // formFiles.addControl('copyId', this.fb.array([this.createFormArray('filesCopyId')]));
+          // this.filesCopyIdArray = this.disabilityGroup.get('files').get('copyId') as FormArray;
 
           break;
 
@@ -2559,6 +2567,58 @@ export class DisabilityComponent implements OnInit, DoCheck {
     }
   }
 
+  showAditionalRed() {
+    if (this.disabilityGroup.get('questionnaires').get('solicitudHipertensionArterial')) {
+      if (this.disabilityGroup.get('questionnaires').get('solicitudHipertensionArterial').invalid) {
+        return true;
+      }
+    }
+
+    if (this.disabilityGroup.get('questionnaires').get('solicitudDiabetes')) {
+      if (this.disabilityGroup.get('questionnaires').get('solicitudDiabetes').invalid) {
+        return true;
+      }
+    }
+
+    if (this.disabilityGroup.get('questionnaires').get('solicitudArtitris')) {
+      if (this.disabilityGroup.get('questionnaires').get('solicitudArtitris').invalid) {
+        return true;
+      }
+    }
+
+    if (this.disabilityGroup.get('questionnaires').get('columnaVertebralColumnaVertebral')) {
+      if (this.disabilityGroup.get('questionnaires').get('columnaVertebralColumnaVertebral').invalid) {
+        return true;
+      }
+    }
+
+    if (this.disabilityGroup.get('questionnaires').get('solicitudMusculoesqueleticos')) {
+      if (this.disabilityGroup.get('questionnaires').get('solicitudMusculoesqueleticos').invalid) {
+        return true;
+      }
+    }
+
+    if (this.disabilityGroup.get('questionnaires').get('solicitudCardioVasculares')) {
+      if (this.disabilityGroup.get('questionnaires').get('solicitudCardioVasculares').invalid) {
+        return true;
+      }
+    }
+
+    if (this.disabilityGroup.get('questionnaires').get('solicitudRenales')) {
+      if (this.disabilityGroup.get('questionnaires').get('solicitudRenales').invalid) {
+        return true;
+      }
+    }
+
+    if (this.disabilityGroup.get('questionnaires').get('solicitudProstatica')) {
+      if (this.disabilityGroup.get('questionnaires').get('solicitudProstatica').invalid) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
   getData(id) {
     console.log(id);
     setTimeout(() => {
@@ -2747,6 +2807,11 @@ export class DisabilityComponent implements OnInit, DoCheck {
           formInsured.removeControl('policyholderKnowClientRadio');
         }
 
+        if (formInsured.get('mandatorySubject')) {
+          formInsured.get('mandatorySubject').setValidators(Validators.required);
+          formInsured.get('mandatorySubject').updateValueAndValidity();
+        }
+
         if (formInsured.get('insuredPayerRadio').value !== 'NO') {
           formGeneral.removeControl('payer');
           formGeneral.removeControl('payerJuridical');
@@ -2762,7 +2827,19 @@ export class DisabilityComponent implements OnInit, DoCheck {
             formHolder.get('fax').setValidators(null);
             formHolder.get('secondName').setValidators(null);
             formHolder.get('telephone').setValidators(null);
+            formGeneral.removeControl('policyholderJuridical');
           }
+        }
+
+        if (formGeneral.get('policyholder')) {
+          formGeneral.get('policyholder').get('name').setValidators(Validators.required);
+          formGeneral.get('policyholder').get('name').updateValueAndValidity();
+          formGeneral.get('policyholder').get('lastName').setValidators(Validators.required);
+          formGeneral.get('policyholder').get('lastName').updateValueAndValidity();
+          formGeneral.get('policyholder').get('marital_status').setValidators(Validators.required);
+          formGeneral.get('policyholder').get('marital_status').updateValueAndValidity();
+          formGeneral.get('policyholder').get('id2Attached').setValidators(Validators.required);
+          formGeneral.get('policyholder').get('id2Attached').updateValueAndValidity();
         }
 
         if (formInsured.get('payerKnowClientRadio')) {
@@ -2773,7 +2850,19 @@ export class DisabilityComponent implements OnInit, DoCheck {
             formPayer.get('fax').setValidators(null);
             formPayer.get('secondName').setValidators(null);
             formPayer.get('telephone').setValidators(null);
+            formGeneral.removeControl('payerJuridical');
           }
+        }
+
+        if (formGeneral.get('payer')) {
+          formGeneral.get('payer').get('name').setValidators(Validators.required);
+          formGeneral.get('payer').get('name').updateValueAndValidity();
+          formGeneral.get('payer').get('lastName').setValidators(Validators.required);
+          formGeneral.get('payer').get('lastName').updateValueAndValidity();
+          formGeneral.get('payer').get('marital_status').setValidators(Validators.required);
+          formGeneral.get('payer').get('marital_status').updateValueAndValidity();
+          formGeneral.get('payer').get('id2Attached').setValidators(Validators.required);
+          formGeneral.get('payer').get('id2Attached').updateValueAndValidity();
         }
 
         if (formInsured.get('heightUnit')) {
@@ -2834,6 +2923,11 @@ export class DisabilityComponent implements OnInit, DoCheck {
               formPP.removeControl('conctractor');
             }
           }
+        }
+
+        if (formF.get('incomesCertified')) {
+          formF.get('incomesCertified').clearValidators();
+          formF.get('incomesCertified').updateValueAndValidity();
         }
 
         if (this.disabilityGroup.get('questions').get('inches') &&

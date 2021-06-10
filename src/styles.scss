@@ -791,3 +791,16 @@ button.active:focus {
   font-size: 13px;
   opacity: 100 !important;
 }
+
+$zero: 1;
+
+@for $i from 0 through 300 {
+
+  .warn-tab #mat-tab-label-#{$i}-#{$zero} {
+    color: red !important;
+  }
+}
+
+.warn-tab-life #mat-tab-label-0-2 {
+  color: red !important;
+}

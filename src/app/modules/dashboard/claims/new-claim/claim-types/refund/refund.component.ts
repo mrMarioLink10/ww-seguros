@@ -226,7 +226,7 @@ export class RefundComponent implements OnInit {
 	// idNumber2Label = 'Asegurados poliza ';
 
 	idNumber2Field = {
-		label: 'Asegurados misma póliza' ,
+		label: 'Asegurados misma póliza',
 		options: this.idNumber2Options
 	};
 
@@ -256,7 +256,9 @@ export class RefundComponent implements OnInit {
 
 	ngOnInit() {
 		console.log('El largo de this.idNumber2Options es ' + this.idNumber2Options.length);
-		this.appComponent.showOverlay = true;
+		setTimeout(() => {
+			this.appComponent.showOverlay = true;
+		  });
 		this.returnCategorias();
 		// this.returnProveedores();
 		this.returnBanks();
@@ -676,7 +678,7 @@ export class RefundComponent implements OnInit {
 					return false;
 				}
 			} else {
-				if (!form.valid && this.form.submitted) {
+				if (form.invalid && this.form.submitted) {
 					return true;
 				} else {
 					return false;
@@ -690,7 +692,7 @@ export class RefundComponent implements OnInit {
 					return false;
 				}
 			} else {
-				if (!form.valid) {
+				if (form.invalid) {
 					return true;
 				} else {
 					return false;
@@ -930,6 +932,14 @@ export class RefundComponent implements OnInit {
 				this.dataAutoCompleteIdNumber.push(data.data[x].asegurado.id_asegurado);
 
 				this.dataAutoCompletePolicy.push(data.data[x].asegurado.no_poliza);
+
+				//NO BORRAR, estas lineas de código son para eliminar las posiciones repetidas.
+				this.dataAutoCompletePolicy = this.dataAutoCompletePolicy.reduce((unique, o) => {
+					if(!unique.some(obj => obj === o)) {
+					  unique.push(o);
+					}
+					return unique;
+				  },[]);
 			}
 			this.timeAutoComplete = 1;
 			this.appComponent.showOverlay = false;
@@ -1245,10 +1255,10 @@ export class RefundComponent implements OnInit {
 					for (let x = 0; x < this.dataAutoCompleteIdNumberObject.length; x++) {
 						if (idNumber2Policy == this.dataAutoCompleteIdNumberObject[x].policy) {
 							this.idNumber2Options.push({
-									value: this.dataAutoCompleteIdNumberObject[x].name,
-									viewValue: this.dataAutoCompleteIdNumberObject[x].name,
-									policy: this.dataAutoCompleteIdNumberObject[x].policy
-								});
+								value: this.dataAutoCompleteIdNumberObject[x].name,
+								viewValue: this.dataAutoCompleteIdNumberObject[x].name,
+								policy: this.dataAutoCompleteIdNumberObject[x].policy
+							});
 						}
 					}
 					if (this.idNumber2Options.length > 1) {
@@ -1272,7 +1282,7 @@ export class RefundComponent implements OnInit {
 					this.searchIdNumberAccess = true;
 				}
 				// setTimeout(() => {
-					this.appComponent.showOverlay = false;
+				this.appComponent.showOverlay = false;
 				// }, 1000);
 			}
 
@@ -1291,46 +1301,46 @@ export class RefundComponent implements OnInit {
 
 			if (this.searchIdNumberAccess == true) {
 
-			this.appComponent.showOverlay = true;
-			this.userService.getInsurancePeople(idNumber)
-				.subscribe((response: any) => {
-					console.log(response);
-					this.appComponent.showOverlay = false;
-					if (response.data !== null) {
-						this.showContent = true;
-						const dialogRef = this.dialog.open(BaseDialogComponent, {
-							data: this.dialogOption.idNumberFound(response.data),
-							minWidth: 385,
-						});
-						setTimeout(() => {
-							dialogRef.close();
-						}, 4000);
+				this.appComponent.showOverlay = true;
+				this.userService.getInsurancePeople(idNumber)
+					.subscribe((response: any) => {
+						console.log(response);
+						this.appComponent.showOverlay = false;
+						if (response.data !== null) {
+							this.showContent = true;
+							const dialogRef = this.dialog.open(BaseDialogComponent, {
+								data: this.dialogOption.idNumberFound(response.data),
+								minWidth: 385,
+							});
+							setTimeout(() => {
+								dialogRef.close();
+							}, 4000);
 
-						this.refundForm.get('informacion').get('nombre').setValue(`${response.data.asegurado.nombres_asegurado} ${response.data.asegurado.apellidos_asegurado}`);
-						// this.refundForm.get('informacion').get('noPoliza').setValue(response.data.asegurado.no_poliza);
-						this.refundForm.get('idNumber').setValue(response.data.asegurado.id_asegurado);
+							this.refundForm.get('informacion').get('nombre').setValue(`${response.data.asegurado.nombres_asegurado} ${response.data.asegurado.apellidos_asegurado}`);
+							// this.refundForm.get('informacion').get('noPoliza').setValue(response.data.asegurado.no_poliza);
+							this.refundForm.get('idNumber').setValue(response.data.asegurado.id_asegurado);
 
-						if (this.dataAutoCompleteIdNumberObject.find(nombre => nombre.name == this.refundForm.get('informacion').get('nombre').value)) {
-							console.log('el nombre de response.data es igual a nombre.name');
-							console.log(this.dataAutoCompleteIdNumberObject.find(nombre => nombre.name == this.refundForm.get('informacion').get('nombre').value).policy);
-							this.refundForm.get('informacion').get('noPoliza').setValue(this.dataAutoCompleteIdNumberObject.find(nombre => nombre.name == this.refundForm.get('informacion').get('nombre').value).policy);
+							if (this.dataAutoCompleteIdNumberObject.find(nombre => nombre.name == this.refundForm.get('informacion').get('nombre').value)) {
+								console.log('el nombre de response.data es igual a nombre.name');
+								console.log(this.dataAutoCompleteIdNumberObject.find(nombre => nombre.name == this.refundForm.get('informacion').get('nombre').value).policy);
+								this.refundForm.get('informacion').get('noPoliza').setValue(this.dataAutoCompleteIdNumberObject.find(nombre => nombre.name == this.refundForm.get('informacion').get('nombre').value).policy);
+							}
+
+						} else {
+							this.showContent = false;
+							const dialogRef = this.dialog.open(BaseDialogComponent, {
+								data: this.dialogOption.idNumberNotFound,
+								minWidth: 385,
+							});
+							setTimeout(() => {
+								dialogRef.close();
+							}, 4000);
+
+							this.refundForm.get('informacion').get('nombre').setValue('');
+							this.refundForm.get('informacion').get('noPoliza').setValue('');
+
 						}
-
-					} else {
-						this.showContent = false;
-						const dialogRef = this.dialog.open(BaseDialogComponent, {
-							data: this.dialogOption.idNumberNotFound,
-							minWidth: 385,
-						});
-						setTimeout(() => {
-							dialogRef.close();
-						}, 4000);
-
-						this.refundForm.get('informacion').get('nombre').setValue('');
-						this.refundForm.get('informacion').get('noPoliza').setValue('');
-
-					}
-				});
+					});
 			}
 		}
 	}

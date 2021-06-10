@@ -32,7 +32,7 @@ export class AccountStatusTableComponent implements OnInit {
       };
     }
   }
-  BASE_URL: any = `${environment.fileUrl}`;
+  BASE_URL: any = `${environment.fileUrlHttps}`;
 
   dataSource;
   data = [];

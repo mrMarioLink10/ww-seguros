@@ -597,11 +597,11 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
     idType: ['', Validators.required],
     id2: ['', Validators.required],
     age: [{ value: '', disabled: false }, Validators.required],
-    weight: ['', Validators.required],
-    height: ['', Validators.required],
-    weightUnit: ['', Validators.required],
-    heightUnit: ['', Validators.required],
-    bmi: [{ value: '', disabled: true }, Validators.required],
+    weight: [''],
+    height: [''],
+    weightUnit: [''],
+    heightUnit: [''],
+    bmi: [{ value: '', disabled: true }],
     status: ['', Validators.required],
     country: ['', Validators.required],
     city: ['', Validators.required],
@@ -733,7 +733,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
       person: this.fb.group({
         // conozcaSuClientePersona: this.fb.group({}),
         firstName: ['', Validators.required],
-        secondName: ['', Validators.required],
+        secondName: [''],
         lastName: ['', Validators.required],
         weightUnit: ['', Validators.required],
         heightUnit: ['', Validators.required],
@@ -810,7 +810,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
       }),
       incomes: this.fb.group({
         principalIncome: ['', Validators.required],
-        otherIncomes: ['', Validators.required],
+        otherIncomes: [''],
       }),
       dependents: this.fb.group({
         allDependents: this.fb.array([]),
@@ -931,9 +931,6 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
       console.log('noCotizacion esta vacio');
       this.noCotizacion = '';
     }
-
-    this.thereIsAWomenOnTheRequest();
-    this.thereIsAMenOnTheRequest();
   }
 
   getBmiUpdated(Form) {
@@ -1444,13 +1441,13 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
 
   showWarningDot(Form: any): boolean {
     if (!this.ID) {
-      if (!Form.valid && this.ogForm.submitted) {
+      if (Form.invalid && this.ogForm.submitted) {
         return true;
       } else {
         return false;
       }
     } else {
-      if (Form.valid) {
+      if (!Form.invalid) {
         return false;
       } else {
         return true;
@@ -1515,12 +1512,12 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
             const weightUnit = this.newRequest.get('dependents').get('allDependents').get(index.toString()).get('weightUnit').value;
 
             const result = this.getBmiValue(value, weight, weightUnit, heightUnit);
-            this.newRequest
-              .get('dependents')
-              .get('allDependents')
-              .get(index.toString())
-              .get('bmi')
-              .setValue(result);
+            // this.newRequest
+            //   .get('dependents')
+            //   .get('allDependents')
+            //   .get(index.toString())
+            //   .get('bmi')
+            //   .setValue(result);
 
           });
           this.newRequest.get('dependents').get('allDependents').get(index.toString()).get('weight').valueChanges.subscribe(value => {
@@ -1528,12 +1525,12 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
             const heightUnit = this.newRequest.get('dependents').get('allDependents').get(index.toString()).get('heightUnit').value;
             const weightUnit = this.newRequest.get('dependents').get('allDependents').get(index.toString()).get('weightUnit').value;
             const result = this.getBmiValue(height, value, weightUnit, heightUnit);
-            this.newRequest
-              .get('dependents')
-              .get('allDependents')
-              .get(index.toString())
-              .get('bmi')
-              .setValue(result);
+            // this.newRequest
+            //   .get('dependents')
+            //   .get('allDependents')
+            //   .get(index.toString())
+            //   .get('bmi')
+            //   .setValue(result);
 
           });
 
@@ -1542,12 +1539,12 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
             const weight = this.newRequest.get('dependents').get('allDependents').get(index.toString()).get('weight').value;
             const weightUnit = this.newRequest.get('dependents').get('allDependents').get(index.toString()).get('weightUnit').value;
             const result = this.getBmiValue(height, weight, weightUnit, value);
-            this.newRequest
-              .get('dependents')
-              .get('allDependents')
-              .get(index.toString())
-              .get('bmi')
-              .setValue(result);
+            // this.newRequest
+            //   .get('dependents')
+            //   .get('allDependents')
+            //   .get(index.toString())
+            //   .get('bmi')
+            //   .setValue(result);
 
           });
 
@@ -1556,12 +1553,12 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
             const weight = this.newRequest.get('dependents').get('allDependents').get(index.toString()).get('weight').value;
             const heightUnit = this.newRequest.get('dependents').get('allDependents').get(index.toString()).get('heightUnit').value;
             const result = this.getBmiValue(height, weight, value, heightUnit);
-            this.newRequest
-              .get('dependents')
-              .get('allDependents')
-              .get(index.toString())
-              .get('bmi')
-              .setValue(result);
+            // this.newRequest
+            //   .get('dependents')
+            //   .get('allDependents')
+            //   .get(index.toString())
+            //   .get('bmi')
+            //   .setValue(result);
 
           });
         } else {
@@ -2164,7 +2161,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
               // conozcaSuClientePersonaJuridica: this.fb.group({}),
               // conozcaSuClientePersona: this.fb.group({}),
               firstName: ['', Validators.required],
-              secondName: ['', Validators.required],
+              secondName: [''],
               lastName: ['', Validators.required],
               date: ['', Validators.required],
               sex: ['', Validators.required],
@@ -2172,11 +2169,11 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
               idType: ['', Validators.required],
               id2: ['', Validators.required],
               age: [{ value: '', disabled: false }, Validators.required],
-              weight: ['', Validators.required],
-              height: ['', Validators.required],
-              weightUnit: ['', Validators.required],
-              heightUnit: ['', Validators.required],
-              bmi: [{ value: '', disabled: true }, Validators.required],
+              weight: [''],
+              height: [''],
+              weightUnit: [''],
+              heightUnit: [''],
+              bmi: [{ value: '', disabled: true }],
               status: ['', Validators.required],
               country: ['', Validators.required],
               city: ['', Validators.required],
@@ -2525,6 +2522,149 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
     }
 
     return (validation || dependentValidation);
+  }
+
+  showAditionalRed() {
+    if (this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudHipertensionArterial')) {
+      if (this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudHipertensionArterial').invalid) {
+        return true;
+      }
+    }
+    if (this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudCardioVasculares')) {
+      if (this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudCardioVasculares').invalid) {
+        return true;
+      }
+    }
+    if (this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudDiabetes')) {
+      if (this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudDiabetes').invalid) {
+        return true;
+      }
+    }
+    if (this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudArtitris')) {
+      console.log(this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudArtitris').invalid);
+      if (this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudArtitris').invalid) {
+        return true;
+      }
+    }
+    if (this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('columnaVertebralColumnaVertebral')) {
+      if (this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('columnaVertebralColumnaVertebral').invalid) {
+        return true;
+      }
+    }
+    if (this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudMusculoesqueleticos')) {
+      if (this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudMusculoesqueleticos').invalid) {
+        return true;
+      }
+    }
+    if (this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudRenales')) {
+      if (this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudRenales').invalid) {
+        return true;
+      }
+    }
+    if (this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudProstatica')) {
+      if (this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudProstatica').invalid) {
+        return true;
+      }
+    }
+    if (this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudBuceo')) {
+      if (this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudBuceo').invalid) {
+        return true;
+      }
+    }
+    if (this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudMoto')) {
+      if (this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudMoto').invalid) {
+        return true;
+      }
+    }
+    if (this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudAviacion')) {
+      if (this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudAviacion').invalid) {
+        return true;
+      }
+    }
+    if (this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudMontanismo')) {
+      if (this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudMontanismo').invalid) {
+        return true;
+      }
+    }
+
+    //tslint: disable: forin
+    // for (const key in this.allDependents.controls) {
+    //   const element = this.allDependents.controls[key] as FormGroup;
+
+    //   if (element.get('solicitudHipertensionArterial')) {
+    //     if (element.get('solicitudHipertensionArterial').invalid) {
+    //       return true;
+    //     }
+    //   }
+
+    //   if (element.get('solicitudCardioVasculares')) {
+    //     if (element.get('solicitudCardioVasculares').invalid) {
+    //       return true;
+    //     }
+    //   }
+
+    //   if (element.get('solicitudDiabetes')) {
+    //     if (element.get('solicitudDiabetes').invalid) {
+    //       return true;
+    //     }
+    //   }
+
+    //   if (element.get('solicitudArtitris')) {
+    //     if (element.get('solicitudArtitris').invalid) {
+    //       return true;
+    //     }
+    //   }
+
+    //   if (element.get('columnaVertebralColumnaVertebral')) {
+    //     if (element.get('columnaVertebralColumnaVertebral').invalid) {
+    //       return true;
+    //     }
+    //   }
+
+    //   if (element.get('solicitudMusculoesqueleticos')) {
+    //     if (element.get('solicitudMusculoesqueleticos').invalid) {
+    //       return true;
+    //     }
+    //   }
+
+    //   if (element.get('solicitudRenales')) {
+    //     if (element.get('solicitudRenales').invalid) {
+    //       return true;
+    //     }
+    //   }
+
+    //   if (element.get('solicitudProstatica')) {
+    //     if (element.get('solicitudProstatica').invalid) {
+    //       return true;
+    //     }
+    //   }
+
+    //   if (element.get('solicitudBuceo')) {
+    //     if (element.get('solicitudBuceo').invalid) {
+    //       return true;
+    //     }
+    //   }
+
+    //   if (element.get('solicitudMoto')) {
+    //     if (element.get('solicitudMoto').invalid) {
+    //       return true;
+    //     }
+    //   }
+
+    //   if (element.get('solicitudAviacion')) {
+    //     if (element.get('solicitudAviacion').invalid) {
+    //       return true;
+    //     }
+    //   }
+
+    //   if (element.get('solicitudMontanismo')) {
+    //     if (element.get('solicitudMontanismo').invalid) {
+    //       return true;
+    //     }
+    //   }
+    // }
+
+    return false;
   }
 
   isActivityReadyToRender() {
@@ -3528,6 +3668,9 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
           dialogRef.close();
         }, 4000);
       }
+
+      this.thereIsAWomenOnTheRequest();
+      this.thereIsAMenOnTheRequest();
     });
 
   }
@@ -3718,6 +3861,11 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
           formEP.removeControl('contractorExposedInfo');
         }
 
+        if (formP.get('mandatorySubject')) {
+          formP.get('mandatorySubject').setValidators(Validators.required);
+          formP.get('mandatorySubject').updateValueAndValidity();
+        }
+
         if (formP.get('isPayer').value !== 'NO') {
           formGeneral.removeControl('payer');
           formGeneral.removeControl('payerJuridical');
@@ -3742,6 +3890,27 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
             formContractor.removeControl('countryOfResidence');
             formContractor.removeControl('countryOfBirth');
             formContractor.removeControl('economicActivity');
+            formContractor.get('tel').setValidators(null);
+            formContractor.get('officeTel').setValidators(null);
+            formContractor.get('secondName').setValidators(null);
+            formContractor.get('fax').setValidators(null);
+            formContractor.get('weightUnit').setValidators(null);
+            formContractor.get('weight').setValidators(null);
+            formContractor.get('heightUnit').setValidators(null);
+            formContractor.get('height').setValidators(null);
+            formContractor.get('bmi').setValidators(null);
+            if (formContractor.get('inches')) {
+              formContractor.get('inches').setValidators(null);
+            }
+            const formCompany = formContractor.get('office') as FormGroup;
+            formCompany.removeControl('economicActivity');
+            formCompany.get('company').setValidators(null);
+            formCompany.get('position').setValidators(null);
+            formCompany.get('direction').setValidators(null);
+            formCompany.get('sector').setValidators(null);
+            formCompany.get('city').setValidators(null);
+            formCompany.get('country').setValidators(null);
+
           }
         }
 
@@ -3761,6 +3930,26 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
             formPayer.removeControl('countryOfBirth');
             formPayer.removeControl('isContractor');
             formPayer.removeControl('economicActivity');
+            formPayer.get('tel').setValidators(null);
+            formPayer.get('officeTel').setValidators(null);
+            formPayer.get('secondName').setValidators(null);
+            formPayer.get('fax').setValidators(null);
+            formPayer.get('weightUnit').setValidators(null);
+            formPayer.get('weight').setValidators(null);
+            formPayer.get('heightUnit').setValidators(null);
+            formPayer.get('height').setValidators(null);
+            formPayer.get('bmi').setValidators(null);
+            if (formPayer.get('inches')) {
+              formPayer.get('inches').setValidators(null);
+            }
+            const formCompany = formPayer.get('office') as FormGroup;
+            formCompany.removeControl('economicActivity');
+            formCompany.get('company').setValidators(null);
+            formCompany.get('position').setValidators(null);
+            formCompany.get('direction').setValidators(null);
+            formCompany.get('sector').setValidators(null);
+            formCompany.get('city').setValidators(null);
+            formCompany.get('country').setValidators(null);
           }
         }
 
@@ -3969,6 +4158,37 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
             formQBMHI.removeControl('reclamationInfo');
           }
         }
+
+        if (this.newRequest.get('contingentBeneficiary').get('dependentsC')) {
+          // tslint:disable-next-line: prefer-for-of
+          for (let x = 0; x < this.newRequest.get('contingentBeneficiary').get('dependentsC')['controls'].length; x++) {
+            const contingentBeneficiaryGroup = this.newRequest.get('contingentBeneficiary').get('dependentsC').get(x.toString()) as FormGroup;
+
+            contingentBeneficiaryGroup.get('name').clearValidators();
+            contingentBeneficiaryGroup.get('name').updateValueAndValidity();
+            contingentBeneficiaryGroup.get('date').clearValidators();
+            contingentBeneficiaryGroup.get('date').updateValueAndValidity();
+            contingentBeneficiaryGroup.get('id2').clearValidators();
+            contingentBeneficiaryGroup.get('id2').updateValueAndValidity();
+            contingentBeneficiaryGroup.get('idType').clearValidators();
+            contingentBeneficiaryGroup.get('idType').updateValueAndValidity();
+            contingentBeneficiaryGroup.get('id2Attached').clearValidators();
+            contingentBeneficiaryGroup.get('id2Attached').updateValueAndValidity();
+            contingentBeneficiaryGroup.get('nationality').clearValidators();
+            contingentBeneficiaryGroup.get('nationality').updateValueAndValidity();
+            contingentBeneficiaryGroup.get('ocupation').clearValidators();
+            contingentBeneficiaryGroup.get('ocupation').updateValueAndValidity();
+            contingentBeneficiaryGroup.get('family').clearValidators();
+            contingentBeneficiaryGroup.get('family').updateValueAndValidity();
+            contingentBeneficiaryGroup.get('quantity').clearValidators();
+            contingentBeneficiaryGroup.get('quantity').updateValueAndValidity();
+            contingentBeneficiaryGroup.get('quantity').setValidators([Validators.min(1), Validators.max(100)]);
+            contingentBeneficiaryGroup.get('quantity').updateValueAndValidity();
+          }
+        }
+
+        this.thereIsAWomenOnTheRequest();
+        this.thereIsAMenOnTheRequest();
 
         this.isFormValidToFill = true;
         this.appComponent.showOverlay = false;

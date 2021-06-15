@@ -6,7 +6,7 @@
     </app-input> -->
     <app-input class="mr-3" [group]="data" label="Titulo del campo" name="label">
     </app-input>
-    <app-select class="mr-3" [group]="data" [options]="type" (selected)="checkRangeStatus(data.value.type)">
+    <app-select class="mr-3" [group]="data" [options]="type" (selected)="checkRangeStatus(data.value.type, data.value.dropdown[0])">
     </app-select>
     <app-radio-button *ngIf="data.value.type === 'TEXTO' || data.value.type === 'NUMERICO'" class="mr-3" [group]="data"
       name="validator" [title]="getValidatorTitle(data.value.type)" [options]="diseaseService.yesOrNoOriginal">
@@ -21,12 +21,12 @@
       <app-number-input class="mr-3" [group]="data" label="Valor maximo" [min]="data.value.range" name="rangeEnd">
       </app-number-input>
     </div>
-    <!-- <div *ngIf="data.value.type === 'FECHA' && data.value.haveRange === 'SI'" class="grid grid-cols-2">
+    <div *ngIf="data.value.type === 'FECHA' && data.value.haveRange === 'SI'" class="grid grid-cols-2">
       <app-date-picker class="mr-3" [group]="data" label="Fecha minima" [max]="data.value.rangeEnd" name="range">
       </app-date-picker>
       <app-date-picker class="mr-3" [group]="data" label="Fecha maxima" [min]="data.value.range" name="rangeEnd">
       </app-date-picker>
-    </div> -->
+    </div>
     <app-select class="mr-3" [group]="data" [options]="required"></app-select>
     <app-select class="mr-3" *ngIf="data.value.type !== 'CHECKBOX'" [group]="data" [options]="enable"></app-select>
     <app-input class="mr-3" *ngIf="(data.value.type === 'TEXTO') && data.value.isEnable === 'DESHABILITADO'"

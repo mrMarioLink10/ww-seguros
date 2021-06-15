@@ -40,6 +40,10 @@ export class EditFieldComponent implements OnInit {
         value: 'RADIO BUTTON',
         viewValue: 'Radio button'
       },
+      {
+        value: 'ARCHIVO',
+        viewValue: 'Archivo'
+      },
     ]
   };
 
@@ -92,13 +96,22 @@ export class EditFieldComponent implements OnInit {
     this.dialogRef.close();
   }
 
-  checkRangeStatus(value?) {
+  checkRangeStatus(value?, extra?) {
+    console.log('value', value, 'extra', extra);
+
+    let valueToSet: any[] = [{ value: '', viewValue: '' }];
+
+    if (extra) {
+      valueToSet = [{ id: extra.id, value: '', viewValue: '' }];
+    }
+
     this.trueReset(this.data.get('validator'), '');
     this.trueReset(this.data.get('haveRange'), '');
     this.trueReset(this.data.get('range'), 0);
     this.trueReset(this.data.get('rangeEnd'), 0);
     this.trueReset(this.data.get('valueForForm'), '');
-    this.trueReset(this.data.get('dropdown'), [{ value: '', viewValue: '' }]);
+    this.trueReset(this.data.get('dropdown'), valueToSet);
+
 
     if (value !== 'callForm') {
       this.trueReset(this.data.get('callForm'), '');

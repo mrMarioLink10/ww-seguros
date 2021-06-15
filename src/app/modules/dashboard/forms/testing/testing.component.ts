@@ -36,7 +36,7 @@ export class TestingComponent implements OnInit {
     this.dynamicForms = this.fb.group({
       dynamicForms: this.fb.array([this.addItem('dynamicFormUnique')])
     });
-    this.generateCreatedForm(7, this.dynamicForms.get('dynamicForms').get('0'));
+    this.generateCreatedForm(95, this.dynamicForms.get('dynamicForms').get('0'));
   }
 
   addItem(target: string) {

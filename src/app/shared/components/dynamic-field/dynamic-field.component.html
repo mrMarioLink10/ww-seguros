@@ -14,3 +14,6 @@
 </app-radio-button>
 <app-checkbox *ngIf="type === 'CHECKBOX'" [group]="group" [name]="name" [label]="label"></app-checkbox>
 <app-date-picker *ngIf="type === 'FECHA'" [group]="group" [name]="name" [label]="label"></app-date-picker>
+<app-file-input *ngIf="type === 'ARCHIVO'" [group]="group" [name]="name"
+  [label]="label" (onFileChange)="uploadFile($event)">
+</app-file-input>

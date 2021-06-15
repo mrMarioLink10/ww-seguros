@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { FormGroup, Validators } from '@angular/forms';
 import { FieldConfig } from '../form-components/models/field-config';
 
@@ -22,7 +22,10 @@ export class DynamicFieldComponent implements OnInit {
   @Input() values: any[];
   @Input() isRequired: string;
   options: FieldConfig = { options: [] };
-  constructor() { }
+
+  constructor(
+    private cd: ChangeDetectorRef
+  ) { }
 
   ngOnInit() {
 
@@ -46,4 +49,16 @@ export class DynamicFieldComponent implements OnInit {
     }
   }
 
+  uploadFile(event) {
+    const reader = new FileReader();
+
+    const [file] = event.target.files;
+    reader.readAsDataURL(file);
+    reader.onload = () => {
+      this.group.patchValue({
+        [this.name]: reader.result
+      });
+      this.cd.markForCheck();
+    };
+  }
 }

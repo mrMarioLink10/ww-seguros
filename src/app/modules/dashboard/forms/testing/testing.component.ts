@@ -121,6 +121,7 @@ export class TestingComponent implements OnInit {
 
   print() {
     console.log(this.generalForm);
+    console.log(JSON.stringify(this.generalForm.value));
   }
 
   save() {

@@ -1,6 +1,6 @@
 import { HttpParams } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, Validators, FormGroup } from '@angular/forms';
+import { FormBuilder, Validators, FormGroup, FormArray, FormControl } from '@angular/forms';
 import { FormsService } from '../../services/forms/forms.service';
 import { FieldConfig } from '../../../../shared/components/form-components/models/field-config';
 import { AppComponent } from '../../../../app.component';
@@ -96,6 +96,8 @@ export class TestingComponent implements OnInit {
         console.log(res);
 
         this.formDataFillingService.iterateThroughtAllObjectForms(res.data, group.get('form'));
+        this.clearValidators(this.generalForm.get('dynamicForms') as FormGroup);
+
         console.warn('new form unique', group.get('form'));
         setTimeout(() => {
           this.appComponent.showOverlay = false;
@@ -113,6 +115,8 @@ export class TestingComponent implements OnInit {
     this.formsService.getCreatedDynamicForm(idForm)
       .subscribe(res => {
         this.formDataFillingService.iterateThroughtAllObjectForms(res.data, group.get('form'));
+        this.clearValidators(this.generalForm.get('dynamicForms') as FormGroup);
+
         setTimeout(() => {
           this.appComponent.showOverlay = false;
         });
@@ -122,6 +126,23 @@ export class TestingComponent implements OnInit {
   print() {
     console.log(this.generalForm);
     console.log(JSON.stringify(this.generalForm.value));
+
+  }
+
+  clearValidators(formGroup: FormGroup | FormArray): void {
+    Object.keys(formGroup.controls).forEach(key => {
+      const control = formGroup.controls[key] as FormControl | FormGroup | FormArray;
+      if (control instanceof FormControl) {
+        if (key !== 'valueCollectedFromForm') {
+          control.clearValidators();
+          control.updateValueAndValidity();
+        }
+      } else if (control instanceof FormGroup || control instanceof FormArray) {
+        this.clearValidators(control);
+      } else {
+        console.warn('Ignorar control', control);
+      }
+    });
   }
 
   save() {

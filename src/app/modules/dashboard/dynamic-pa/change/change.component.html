@@ -2,3 +2,9 @@
   [changeForm]="changeForm"></app-major-expenses>
 <app-life *ngIf="changeForm.get('solicitudVida')" [changeData]="data" [isChange]="true" [changeForm]="changeForm">
 </app-life>
+
+<div *ngIf="changeForm.get('formularioCambio')" class="p-6 pr-6 xs:pr-6 sm:pr-6 md:pr-12 lg:pr-12 xl:pr-12 bg-white">
+  <h3 class="uppercase dashboard-page-title pt-8 mb-6">Solicitud de Cambio</h3>
+  <app-dynamic-form class="mb-3" *ngIf="changeForm.get('formularioCambio')" [form]="changeForm.get('formularioCambio')"
+    [ID]="null"></app-dynamic-form>
+</div>

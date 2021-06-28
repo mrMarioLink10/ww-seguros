@@ -2899,7 +2899,7 @@
       <button mat-button class="save-button" style="margin-right: 7.5px !important;"
         (click)="formHandler.sendForm(changeForm, 'dynamic-pa', 'save', appComponent)" type="submit">Guardar</button>
       <button *ngIf="!newRequest.invalid" mat-button class="send-button" style="margin-right: 7.5px !important;"
-        (click)="formHandler.sendForm(newRequest, 'dynamic-pa', 'send', appComponent)" type="submit">Enviar</button>
+        (click)="formHandler.sendForm(changeForm, 'dynamic-pa', 'send', appComponent)" type="submit">Enviar</button>
     </div>
   </form>
 </div>

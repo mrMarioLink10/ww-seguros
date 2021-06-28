@@ -5,6 +5,7 @@ import { AppComponent } from '../../../../app.component';
 import { FormDataFillingService } from '../../services/shared/formDataFillingService';
 import { FormBuilder, FormGroup, FormArray, FormControl } from '@angular/forms';
 import { FormsService } from '../../services/forms/forms.service';
+import { FormHandlerService } from 'src/app/core/services/forms/form-handler.service';
 
 @Component({
   selector: 'app-change',
@@ -14,12 +15,12 @@ import { FormsService } from '../../services/forms/forms.service';
 export class ChangeComponent implements OnInit {
 
   constructor(
-    private changeService: ChangeService,
     private route: ActivatedRoute,
-    private appComponent: AppComponent,
+    protected appComponent: AppComponent,
     private dataMappingFromApi: FormDataFillingService,
     private fb: FormBuilder,
-    private formsService: FormsService
+    private formsService: FormsService,
+    protected formHandler: FormHandlerService,
   ) { }
 
   changeForm: FormGroup;
@@ -39,26 +40,26 @@ export class ChangeComponent implements OnInit {
       }
     });
 
-    this.generateCreatedForm(95, this.changeForm.get('formularioCambio'));
+    if (this.changeForm.get('formularioCambio')) {
+      this.generateCreatedForm(95, this.changeForm.get('formularioCambio'));
+    }
 
 
   }
 
   getData(data: any) {
-
     setTimeout(() => {
       this.appComponent.showOverlay = true;
     });
 
     this.dataMappingFromApi.iterateThroughtAllObject(data, this.changeForm);
-
     console.log('FORMULARIO LUEGO', this.changeForm.getRawValue());
-
     this.showContent = true;
 
     setTimeout(() => {
       this.appComponent.showOverlay = false;
     });
+
   }
 
   generateCreatedForm(id, group) {
@@ -70,9 +71,10 @@ export class ChangeComponent implements OnInit {
     console.log(id, group);
     this.formsService.getDynamicForm(idForm)
       .subscribe(res => {
+        console.warn(res.data, group);
         this.dataMappingFromApi.iterateThroughtAllObjectForms(res.data, group);
         this.clearValidators(this.changeForm.get('formularioCambio') as FormGroup);
-
+        this.showContent = true;
         setTimeout(() => {
           this.appComponent.showOverlay = false;
         });

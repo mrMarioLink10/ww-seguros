@@ -7,4 +7,13 @@
   <h3 class="uppercase dashboard-page-title pt-8 mb-6">Solicitud de Cambio</h3>
   <app-dynamic-form class="mb-3" *ngIf="changeForm.get('formularioCambio')" [form]="changeForm.get('formularioCambio')"
     [ID]="null"></app-dynamic-form>
+    <div class="mt-4" *ngIf="showContent">
+      <button mat-button class="cancel-form-button" style="margin-right: 7.5px !important;"
+        (click)="formHandler.sendForm(changeForm, 'dynamic-pa', 'cancel')" type="submit">Cancelar</button>
+      <button mat-button class="save-button" style="margin-right: 7.5px !important;"
+        (click)="formHandler.sendForm(changeForm, 'dynamic-pa', 'save', appComponent)" type="submit">Guardar</button>
+      <button *ngIf="!changeForm.invalid" mat-button class="send-button" style="margin-right: 7.5px !important;"
+        (click)="formHandler.sendForm(changeForm, 'dynamic-pa', 'send', appComponent)" type="submit">Enviar</button>
+    </div>
 </div>
+

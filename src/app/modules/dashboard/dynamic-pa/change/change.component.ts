@@ -59,6 +59,7 @@ export class ChangeComponent implements OnInit {
       const mantainId = data.formularioCambio.id;
 
       this.dataMappingFromApi.iterateThroughtAllObject(data.formularioCambioCreator, this.changeForm.get('formularioCambio'));
+      this.clearValidators(this.changeForm.get('formularioCambio') as FormGroup);
 
       this.changeForm.get('formularioCambio').patchValue({
         id: mantainId

@@ -40,9 +40,9 @@ export class ChangeComponent implements OnInit {
       }
     });
 
-    if (this.changeForm.get('formularioCambio')) {
-      this.generateCreatedForm(95, this.changeForm.get('formularioCambio'));
-    }
+    // if (this.changeForm.get('formularioCambio')) {
+    //   this.generateCreatedForm(95, this.changeForm.get('formularioCambio'));
+    // }
 
 
   }
@@ -52,7 +52,19 @@ export class ChangeComponent implements OnInit {
       this.appComponent.showOverlay = true;
     });
 
+    console.log('GET DATA:', data);
     this.dataMappingFromApi.iterateThroughtAllObject(data, this.changeForm);
+    if (this.changeForm.get('formularioCambio')) {
+
+      const mantainId = data.formularioCambio.id;
+
+      this.dataMappingFromApi.iterateThroughtAllObject(data.formularioCambioCreator, this.changeForm.get('formularioCambio'));
+
+      this.changeForm.get('formularioCambio').patchValue({
+        id: mantainId
+      });
+    }
+
     console.log('FORMULARIO LUEGO', this.changeForm.getRawValue());
     this.showContent = true;
 

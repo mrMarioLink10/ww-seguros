@@ -54,6 +54,12 @@ export class ChangeComponent implements OnInit {
 
     console.log('GET DATA:', data);
     this.dataMappingFromApi.iterateThroughtAllObject(data, this.changeForm);
+
+    if (this.changeForm.get('apellidos')) {
+      this.changeForm.get('apellidos').clearValidators();
+      this.changeForm.get('apellidos').updateValueAndValidity();
+    }
+
     if (this.changeForm.get('formularioCambio')) {
 
       const mantainId = data.formularioCambio.id;
@@ -64,9 +70,59 @@ export class ChangeComponent implements OnInit {
       this.changeForm.get('formularioCambio').patchValue({
         id: mantainId
       });
+
+      if (data.formularioCambio.acordeon.length > 0) {
+        for(let x = 0; x < data.formularioCambio.acordeon.length; x++){
+          if (this.changeForm.get('formularioCambio').get('acordeon').get(x.toString()).get('titulo').value
+          === data.formularioCambio.acordeon[x].titulo) {
+            //data.formularioCambio.acordeon[0].seccion[0].campos[0].label
+            for(let y = 0; y < data.formularioCambio.acordeon[x].seccion.length; y++){
+              for(let z = 0; z < data.formularioCambio.acordeon[x].seccion[y].campos.length; z++){
+                //pdfObject = this.pdfOptions.find(nombrePdf => nombrePdf.value === pdfName);
+
+                for(let z2 = 0; z2 < data.formularioCambio.acordeon[x].seccion[y].campos.length; z2++){
+                  if (data.formularioCambio.acordeon[x].seccion[y].campos[z].label ===
+                    this.changeForm.get('formularioCambio').get('acordeon').get(x.toString()).get('seccion'
+                  ).get(y.toString()).get('campos').get(z2.toString()).get('label').value) {
+
+                    this.changeForm.get('formularioCambio').get('acordeon').get(x.toString()).get('seccion'
+                    ).get(y.toString()).get('campos').get(z2.toString()).get('valueCollectedFromForm'
+                    ).setValue(data.formularioCambio.acordeon[x].seccion[y].campos[z].valueCollectedFromForm);
+
+                    // this.changeForm.get('formularioCambioCreator').get('acordeon').get(x.toString()).get('seccion'
+                    // ).get(y.toString()).get('campos').get(z.toString()).get('valueCollectedFromForm'
+                    // ).clearValidators();
+                    // this.changeForm.get('formularioCambioCreator').get('acordeon').get(x.toString()).get('seccion'
+                    // ).get(y.toString()).get('campos').get(z.toString()).get('valueCollectedFromForm'
+                    // ).updateValueAndValidity();
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+
+      // if (this.changeForm.get('formularioCambio').valid) {
+      //   this.clearValidators(this.changeForm.get('formularioCambioCreator') as FormGroup);
+      // }
     }
 
+    this.clearValidators(this.changeForm.get('formularioCambioCreator') as FormGroup);
+    for(let x = 0; x < data.formularioCambioCreator.acordeon.length; x++){
+      for(let y = 0; y < data.formularioCambioCreator.acordeon[x].seccion.length; y++){
+        for(let z = 0; z < data.formularioCambioCreator.acordeon[x].seccion[y].campos.length; z++){
+              this.changeForm.get('formularioCambioCreator').get('acordeon').get(x.toString()).get('seccion'
+              ).get(y.toString()).get('campos').get(z.toString()).get('valueCollectedFromForm'
+              ).clearValidators();
+              this.changeForm.get('formularioCambioCreator').get('acordeon').get(x.toString()).get('seccion'
+              ).get(y.toString()).get('campos').get(z.toString()).get('valueCollectedFromForm'
+              ).updateValueAndValidity();
+        }
+      }
+    }
     console.log('FORMULARIO LUEGO', this.changeForm.getRawValue());
+    console.log('FORMULARIO LUEGO 2', this.changeForm);
     this.showContent = true;
 
     setTimeout(() => {

@@ -747,10 +747,10 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
 
       noC: [{ value: this.noCotizacion, disabled: (this.noCotizacion === undefined ? false : true) }, Validators.required],
       isComplete: [false, Validators.required],
-      deducibles: [{ value: '', disabled: false }, Validators.required],
-      payment: [{ value: '', disabled: false }, Validators.required],
-      plans: [{ value: '', disabled: false }, Validators.required],
-      requestType: ['', Validators.required],
+      deducibles: [{ value: '', disabled: true }, Validators.required],
+      payment: [{ value: '', disabled: true }, Validators.required],
+      plans: [{ value: '', disabled: true }, Validators.required],
+      requestType: [{ value: '', disabled: true }, Validators.required],
       person: this.fb.group({
         // conozcaSuClientePersona: this.fb.group({}),
         firstName: ['', Validators.required],
@@ -939,10 +939,11 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
 
     if (this.ID != null) {
       this.getData(this.ID);
+      this.newRequest.get('noC').disable();
     } else if (this.ID == null) {
     }
 
-    console.warn(this.isChange, this.changeData.cotizacionInfoCode);
+    console.warn(this.isChange, this.changeData);
 
     if (this.isChange) {
       this.noCotizacion = this.changeData.cotizacionInfoCode;

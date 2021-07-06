@@ -61,4 +61,9 @@ export class DynamicFieldComponent implements OnInit {
       this.cd.markForCheck();
     };
   }
+
+  fileWatcher() {
+    const form = this.group as FormGroup;
+    if (form.value.valueForFormUrl && form.value.valueCollectedFromForm !== '') { return form.value.valueForFormUrl; }
+  }
 }

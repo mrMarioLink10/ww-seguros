@@ -377,6 +377,7 @@ export class FormHandlerService {
                   // 	});
                   console.warn('ESTA ENTRANDO A INVITATION');
                 } else {
+                  console.log(json);
                   this.changeService.postDynamicData(json)
                     .subscribe(res => {
                       this.correctSend(res, dialog, dataClosing, route);
@@ -670,6 +671,7 @@ export class FormHandlerService {
                       });
                   } else {
                     appComponent.showOverlay = true;
+                    console.log(json);
                     this.changeService.postDynamicData(json)
                       .subscribe((res: any) => {
                         if (res.data.id) {

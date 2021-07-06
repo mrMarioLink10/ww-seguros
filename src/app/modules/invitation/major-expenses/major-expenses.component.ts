@@ -726,10 +726,10 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
 
       noC: [{ value: this.noCotizacion, disabled: (this.noCotizacion === null ? false : true) }, Validators.required],
       isComplete: [false, Validators.required],
-      deducibles: [{ value: '', disabled: false }, Validators.required],
-      payment: [{ value: '', disabled: false }, Validators.required],
-      plans: [{ value: '', disabled: false }, Validators.required],
-      requestType: ['', Validators.required],
+      deducibles: [{ value: '', disabled: true }, Validators.required],
+      payment: [{ value: '', disabled: true }, Validators.required],
+      plans: [{ value: '', disabled: true }, Validators.required],
+      requestType: [{ value: '', disabled: true }, Validators.required],
       person: this.fb.group({
         // conozcaSuClientePersona: this.fb.group({}),
         firstName: ['', Validators.required],

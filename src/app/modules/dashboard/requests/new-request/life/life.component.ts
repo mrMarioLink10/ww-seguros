@@ -1907,7 +1907,12 @@ export class LifeComponent implements OnInit, DoCheck {
     // tslint:disable-next-line: forin
     for (const dpd in form.value) {
       if (form.controls[dpd].dirty) { isDirty = true; }
-      total += form.value[dpd].quantity;
+      if(form.value[dpd].quantity){
+        total += form.value[dpd].quantity;
+      }
+      else if (form.value[dpd].quantityBeneficiary) {
+        total += form.value[dpd].quantityBeneficiary;
+      }
 
     }
     return { total, isDirty };

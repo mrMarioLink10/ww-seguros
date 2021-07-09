@@ -674,6 +674,7 @@ export class FormHandlerService {
                     console.log(json);
                     this.changeService.postDynamicData(json)
                       .subscribe((res: any) => {
+                        console.log(res);
                         if (res.data.id) {
                           this.dynamicPaService.sendRequest(res.data.id)
                             .subscribe(response => {

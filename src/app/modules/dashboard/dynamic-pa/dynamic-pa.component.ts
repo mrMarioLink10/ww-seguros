@@ -28,10 +28,18 @@ export class DynamicPaComponent implements OnInit {
     private userService: UserService
   ) { }
 
+  // statusTypes = [
+  //   { value: 0, view: 'Revisar' },
+  //   { value: 1, view: 'En revisión' },
+  //   { value: 2, view: 'Aceptada' },
+  // ];
+
   statusTypes = [
-    { value: 0, view: 'Revisar' },
-    { value: 1, view: 'En revisión' },
-    { value: 2, view: 'Aceptada' },
+    { value: 0, view: 'Incompleto' },
+    { value: 1, view: 'Completo' },
+    { value: 2, view: 'Enviado' },
+    { value: 3, view: 'Cancelado' },
+    { value: 4, view: 'Adjuntar Expediente' },
   ];
 
   fillType = 'tipoSeguro';
@@ -95,6 +103,7 @@ export class DynamicPaComponent implements OnInit {
         this.appComponent.showOverlay = false;
 
         data = res;
+        console.log(data);
         this.requests = data.data;
         this.dataSource = new MatTableDataSource(this.requests);
         this.dataSource.sort = this.sort;

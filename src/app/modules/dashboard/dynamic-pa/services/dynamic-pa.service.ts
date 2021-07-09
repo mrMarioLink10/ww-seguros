@@ -15,6 +15,6 @@ export class DynamicPaService {
   }
 
   sendRequest(id): Observable<any> {
-    return this.http.post(`${environment.apiUrl}/api/FlujoClientesExistenteDinamico/confirm/{id}${id}`, id);
+    return this.http.post(`${environment.apiUrl}/api/FlujoClientesExistenteDinamico/confirm/${id}`, id);
   }
 }

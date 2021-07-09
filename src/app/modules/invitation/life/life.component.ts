@@ -314,13 +314,13 @@ export class LifeComponent implements OnInit, DoCheck {
   };
 
   contigentBenefits = {
-    nameBenefited: [''],
-    id2Benefited: [''],
-    id2AttachedBenefited: [''],
-    nationalityBenefited: [''],
-    ocupationBenefited: [''],
-    familyBenefited: [''],
-    quantityBenefited: ['', [Validators.min(1), Validators.max(100)]]
+    nameBeneficiary: [''],
+    id2Beneficiary: [''],
+    id2AttachedBeneficiary: [''],
+    nationalityBeneficiary: [''],
+    ocupationBeneficiary: [''],
+    familyBeneficiary: [''],
+    quantityBeneficiary: ['', [Validators.min(1), Validators.max(100)]]
   };
 
   annualIncomeValues = {
@@ -1876,7 +1876,12 @@ export class LifeComponent implements OnInit, DoCheck {
     // tslint:disable-next-line: forin
     for (const dpd in form.value) {
       if (form.controls[dpd].dirty) { isDirty = true; }
-      total += form.value[dpd].quantity;
+      if(form.value[dpd].quantity){
+        total += form.value[dpd].quantity;
+      }
+      else if (form.value[dpd].quantityBeneficiary) {
+        total += form.value[dpd].quantityBeneficiary;
+      }
 
     }
     return { total, isDirty };

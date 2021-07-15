@@ -1866,7 +1866,7 @@ export class LifeComponent implements OnInit, DoCheck {
     const bmi = weight / ((height / 100) * (height * 100));
 
     if (bmi !== Infinity && !isNaN(bmi)) {
-      const value = parseFloat(`${bmi}`).toFixed(2);
+      const value = parseFloat(`${bmi}`).toFixed(5);
       this.newRequest.get('person').get('bmi').setValue(value);
     }
   }

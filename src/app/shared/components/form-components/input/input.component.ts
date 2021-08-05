@@ -43,4 +43,8 @@ export class InputComponent implements OnInit, AfterViewChecked {
 	goCap() {
 		this.group.get(this.name).setValue(this.group.value[this.name].toUpperCase());
 	}
+
+	trimMethod() {
+		this.group.get(this.name).setValue(this.group.get(this.name).value.trim());
+	}
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ChangeDetectorRef, AfterViewChecked } from '@angular/core';
+import { Component, OnInit, Input, ChangeDetectorRef, AfterViewChecked} from '@angular/core';
 import { FieldConfig } from '../models/field-config';
 import { FormGroup } from '@angular/forms';
 
@@ -42,5 +42,9 @@ export class InputComponent implements OnInit, AfterViewChecked {
 
 	goCap() {
 		this.group.get(this.name).setValue(this.group.value[this.name].toUpperCase());
+	}
+
+	trimMethod() {
+		this.group.get(this.name).setValue(this.group.get(this.name).value.trim());
 	}
 }

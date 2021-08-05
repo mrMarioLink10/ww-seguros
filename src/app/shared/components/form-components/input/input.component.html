@@ -1,7 +1,7 @@
 <mat-form-field *ngIf="group" color="accent" appearance="outline" class="w-full bg-transparente"
   style="font-size: small !important;" [formGroup]="group">
   <mat-label>{{label}}</mat-label>
-  <input *ngIf="!preventSpace" [formControlName]="name" matInput [type]="type" [min]="min" [max]="max"
+  <input (blur)="trimMethod()" *ngIf="!preventSpace" [formControlName]="name" matInput [type]="type" [min]="min" [max]="max"
     [placeholder]="placeholder" #input (input)="goCap()" (keypress)="omitSpecialChar($event)">
   <input *ngIf="preventSpace" [formControlName]="name" matInput (input)="goCap()" [type]="type" [min]="min" [max]="max"
     [placeholder]="placeholder" #input (keydown.space)="$event.preventDefault()" (keypress)="omitSpecialChar($event)">

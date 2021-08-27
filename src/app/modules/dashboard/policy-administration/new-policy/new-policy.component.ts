@@ -192,19 +192,19 @@ export class NewPolicyComponent implements OnInit {
     },
     {
       name: 'CAMBIO DE INFORMACIÓN',
-      url: ['/assets/pdfs/SOLICITUDCAMBIOPOLIZAVIDAINDIVIDUAL'],
+      url: ['/assets/pdfs/SOLICITUDDECAMBIOINFORMACIONDECONTACTO'],
       text: 'Favor completar la sección correspondiente en el formulario de Solicitud de cambio.'
       , pdfNames: ['CAMBIO DE INFORMACIÓN']
     },
     {
       name: 'CAMBIO DE FRECUENCIA DE PAGO',
-      url: ['/assets/pdfs/SOLICITUDCAMBIOPOLIZAVIDAINDIVIDUAL'],
+      url: ['/assets/pdfs/SOLICITUDDECAMBIOMODALIDADDEPAGO'],
       text: 'Favor completar la sección correspondiente en el formulario de Solicitud de cambio.'
       , pdfNames: ['CAMBIO DE FRECUENCIA DE PAGO']
     },
     {
       name: 'CAMBIO DE PAGADOR',
-      url: ['/assets/pdfs/SOLICITUDCAMBIOPOLIZA', '/assets/pdfs/FORMULARIOCONOZCAASUCLIENTE(PERSONAFISICA)', '/assets/pdfs/FORMULARIOCONOZCAASUCLIENTE(PERSONAJURIDICA)'], // ESTA PERO NO EN CARPETA
+      url: ['/assets/pdfs/SOLICITUDDECAMBIODEPAGADOR', '/assets/pdfs/FORMULARIOCONOZCAASUCLIENTE(PERSONAFISICA)', '/assets/pdfs/FORMULARIOCONOZCAASUCLIENTE(PERSONAJURIDICA)'], // ESTA PERO NO EN CARPETA
       text: 'Favor completar la sección correspondiente en el formulario de Solicitud de cambio. En caso de Persona Física completar el formulario de Conozca a su Cliente y copia de identificación. En caso de Persona Jurídica, anexar registro mercantil y copia de identificación del representante legal.'
       , pdfNames: ['CAMBIO DE PAGADOR', 'FORMULARIO CONOZCA A SU CLIENTE (PERSONA FÍSICA)', 'FORMULARIO CONOZCA A SU CLIENTE (PERSONA JURÍDICA)']
     },
@@ -257,19 +257,19 @@ export class NewPolicyComponent implements OnInit {
     },
     {
       name: 'CAMBIO DE INFORMACIÓN',
-      url: ['/assets/pdfs/SOLICITUDCAMBIOPOLIZASALUDINDIVIDUAL'],
+      url: ['/assets/pdfs/SOLICITUDDECAMBIOINFORMACIONDECONTACTO'],
       text: 'Favor completar la sección correspondiente en el formulario de Solicitud de cambio.'
       , pdfNames: ['CAMBIO DE INFORMACIÓN']
     },
     {
       name: 'CAMBIO DE FRECUENCIA DE PAGO',
-      url: ['/assets/pdfs/SOLICITUDCAMBIOPOLIZASALUDINDIVIDUAL'],
+      url: ['/assets/pdfs/SOLICITUDDECAMBIOMODALIDADDEPAGO'],
       text: 'Favor completar la sección correspondiente en el formulario de Solicitud de cambio.'
       , pdfNames: ['CAMBIO DE FRECUENCIA DE PAGO']
     },
     {
       name: 'CAMBIO DE PAGADOR',
-      url: ['/assets/pdfs/SOLICITUDCAMBIOPOLIZA', '/assets/pdfs/FORMULARIOCONOZCAASUCLIENTE(PERSONAFISICA)', '/assets/pdfs/FORMULARIOCONOZCAASUCLIENTE(PERSONAJURIDICA)'], // ESTA PERO NO EN CARPETA
+      url: ['/assets/pdfs/SOLICITUDDECAMBIODEPAGADOR', '/assets/pdfs/FORMULARIOCONOZCAASUCLIENTE(PERSONAFISICA)', '/assets/pdfs/FORMULARIOCONOZCAASUCLIENTE(PERSONAJURIDICA)'], // ESTA PERO NO EN CARPETA
       text: 'Favor completar la sección correspondiente en el formulario de Solicitud de cambio. En caso de Persona Física completar el formulario de Conozca a su Cliente y copia de identificación. En caso de Persona Jurídica, anexar registro mercantil y copia de identificación del representante legal.'
       , pdfNames: ['CAMBIO DE PAGADOR', 'FORMULARIO CONOZCA A SU CLIENTE (PERSONA FÍSICA)', 'FORMULARIO CONOZCA A SU CLIENTE (PERSONA JURÍDICA)']
     },
@@ -625,6 +625,7 @@ export class NewPolicyComponent implements OnInit {
     for (const key in pdfObject.url) {
       if (Object.prototype.hasOwnProperty.call(pdfObject.url, key)) {
         const element = this.role === 'WWS' ? `${pdfObject.url[key]}(WWS).pdf` : `${pdfObject.url[key]}(WWM).pdf`;
+        const elementName = this.role === 'WWS' ? `(WWS)` : `(WWMA)`;
 
         console.log(element);
 
@@ -636,7 +637,7 @@ export class NewPolicyComponent implements OnInit {
             // tslint:disable-next-line: align
             a.href = objectUrl;
             // tslint:disable-next-line: align
-            a.download = `${pdfObject.pdfNames[key]}.pdf`;
+            a.download = `${pdfObject.pdfNames[key]} ${elementName}.pdf`;
             // tslint:disable-next-line: align
             a.click();
             // tslint:disable-next-line: align

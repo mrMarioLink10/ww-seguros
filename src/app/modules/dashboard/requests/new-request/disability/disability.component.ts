@@ -1405,18 +1405,32 @@ export class DisabilityComponent implements OnInit, DoCheck {
         };
       }
     } else if (name === 'insured_data') {
-      if (event.target.files && event.target.files.length) {
-        const [file] = event.target.files;
-        reader.readAsDataURL(file);
+      // console.log(event.target.files);
+      // console.log(event);
+      // if (event.target.files.size < 2097152) {
 
-        reader.onload = () => {
-          this.disabilityGroup.get(name).patchValue({
-            ['id2Attached']: reader.result
-          });
+        if (event.target.files && event.target.files.length) {
+          const [file] = event.target.files;
+          reader.readAsDataURL(file);
+  
+          reader.onload = () => {
+            this.disabilityGroup.get(name).patchValue({
+              ['id2Attached']: reader.result
+            });
+            
+            //this.markForCheck();
+          };
+        }
+      // }
+      // else {
+      //   this.disabilityGroup.get(name).get('id2Attached').setValue('');
+      //   this.disabilityGroup.get(name).get('id2Attached').patchValue('');
 
-          //this.markForCheck();
-        };
-      }
+      //   // let newFileList = Array.from(event.target.files);
+
+      //   // newFileList.splice(0);
+      //   // console.log(newFileList);
+      // }
     } else if (name === 'incomesCertified') {
       if (event.target.files && event.target.files.length) {
         const [file] = event.target.files;

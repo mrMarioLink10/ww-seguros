@@ -6,8 +6,7 @@
   </ngx-mat-file-input>
   <mat-icon *ngIf="group.get(name).value === ''" style="color: #e2e2e2;" matSuffix>publish</mat-icon>
 
-  <!-- [id]="this.propertyName" para el boton-->
-  <button [ngClass]="{'hidden': disabled}" [disabled]="disabled" mat-icon-button matSuffix *ngIf="group.get(name).value !== ''"
+  <button [attr.id]="this.propertyName" [ngClass]="{'hidden': disabled}" [disabled]="disabled" mat-icon-button matSuffix *ngIf="group.get(name).value !== ''"
     (click)="this.requestService.clearArchives(group.get(name))" (click)="fileinput.clear($event)">
     <mat-icon style="color: #e2e2e2;">clear</mat-icon>
   </button><button mat-icon-button matSuffix *ngIf="group.get(name).value !== ''"

@@ -1,11 +1,12 @@
 <mat-form-field class="mr-3 w-full" appearance="outline"
   [ngClass]="{'file-input': group.get(name).value !== '', 'file-error': group.get(name).touched && !group.get(name).valid}">
   <mat-label>{{label}}</mat-label>
-  <ngx-mat-file-input #fileinput placeholder="Estudios" [accept]="'.pdf,.png,.jpg'" [valuePlaceholder]="fileNameWatcher"
+  <ngx-mat-file-input [disabled]="disabled" #fileinput placeholder="Estudios" [accept]="'.pdf,.png,.jpg'" [valuePlaceholder]="fileNameWatcher"
     (change)="runOnFileChange($event)">
   </ngx-mat-file-input>
   <mat-icon *ngIf="group.get(name).value === ''" style="color: #e2e2e2;" matSuffix>publish</mat-icon>
-  <button mat-icon-button matSuffix *ngIf="group.get(name).value !== ''"
+
+  <button [attr.id]="this.propertyName" [ngClass]="{'hidden': disabled}" [disabled]="disabled" mat-icon-button matSuffix *ngIf="group.get(name).value !== ''"
     (click)="this.requestService.clearArchives(group.get(name))" (click)="fileinput.clear($event)">
     <mat-icon style="color: #e2e2e2;">clear</mat-icon>
   </button><button mat-icon-button matSuffix *ngIf="group.get(name).value !== ''"

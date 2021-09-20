@@ -31,8 +31,8 @@ export class FileInputComponent implements OnInit, DoCheck {
   fileSizeMessage: BaseDialog = {
 		logo: 'warning',
 		title: 'Advertencia',
-		text: `Lo sentimos, pero el archivo que intento subir pesa más de, o es más grande que, 2MB, 
-    por lo cual será borrado. Intente subir un archivo que sea igual o menor que 2MB, por favor.`,
+		text: `Lo sentimos, pero el archivo que intento subir pesa más de, o es más grande que, 4MB, 
+    por lo cual será borrado. Intente subir un archivo que sea igual o menor que 4MB, por favor.`,
 		showButtons: true,
 		showCancelButton: false,
 		textPrincipalButton: 'Aceptar',
@@ -69,7 +69,7 @@ export class FileInputComponent implements OnInit, DoCheck {
 
     if (this.numberEventSizeAccessProperty == 0) {
       if (this.group.get(this.name).value) {
-        if (this.eventProperty.target.files[0].size > 2097152) {
+        if (this.eventProperty.target.files[0].size > 4194304) {
           setTimeout(() => {
             const Dialog = this.dialog.open(BaseDialogComponent, {
               data: this.fileSizeMessage,

@@ -966,7 +966,7 @@ export class FormHandlerService {
     });
   }
 
-  saveDynamicQuote(form: FormGroup, appComponent: any) {
+  saveDynamicQuote(form: FormGroup, appComponent: any, codeValue) {
     console.log('Impresion de formulario de administracion de polizas down here: ', form);
 
     let Dialog;
@@ -1007,10 +1007,11 @@ export class FormHandlerService {
           this.dynamicQuoteService.saveTypeSelected(isDeducible, poliza, selectionId, '')
             .subscribe((res: any) => {
               console.log('Envio realizado correctamente', res);
-              const compania = localStorage.getItem('countryCode') === 'rd' ? 'wws' : 'wma';
+              const compania = localStorage.getItem('countryCode') === 'rd' ? '03' : '02';
               const target = this.sendedForm.tipoSolicitud === 'CAMBIO DE PRODUCTO' ? 'producto' : 'deducible';
+              const targetValue = this.sendedForm.tipoSolicitud === 'CAMBIO DE PRODUCTO' ? codeValue : this.sendedForm.productoTo;
               // tslint:disable-next-line: max-line-length
-              window.open(`${environment.urlCotizadores}/?cia=${compania}&poliza=${res.data.poliza}&${target}=${this.sendedForm.productoTo}&guid=${res.data.directorioSolicitud}`, '_blank');
+              window.open(`${environment.urlCotizadores}/?cia=${compania}&poliza=${res.data.poliza}&${target}=${targetValue}&guid=${res.data.directorioSolicitud}`, '_blank');
               this.correctSend(res, dialog, dataClosing, route, false);
               appComponent.showOverlay = false;
 

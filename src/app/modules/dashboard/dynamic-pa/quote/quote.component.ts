@@ -75,6 +75,8 @@ export class QuoteComponent implements OnInit {
     options: []
   };
 
+  availableCodes = [];
+
   filteredOptions: Observable<any[]>;
 
   dataAutoCompleteIdNumber = [];
@@ -219,6 +221,13 @@ export class QuoteComponent implements OnInit {
           value: i.value,
           viewValue: i.text
         });
+
+        this.availableCodes.push({
+          value: i.value,
+          viewValue: i.text,
+          valueWWS: i.codigoWWS,
+          valueWWM: i.codigoWWM,
+        });
       }
     } else {
       const dialogRef = this.dialog.open(BaseDialogComponent, {
@@ -270,12 +279,12 @@ export class QuoteComponent implements OnInit {
     });
   }
 
-  saveChanges() {
-    // console.log(JSON.stringify(this.administrationPolicyGroup.getRawValue()));
-    this.administrationPolicyGroup.markAllAsTouched();
-    // tslint:disable-next-line: align
-    this.formHandler.saveDynamicQuote(this.administrationPolicyGroup, this.appComponent);
-  }
+  // saveChanges() {
+  //   // console.log(JSON.stringify(this.administrationPolicyGroup.getRawValue()));
+  //   this.administrationPolicyGroup.markAllAsTouched();
+  //   // tslint:disable-next-line: align
+  //   this.formHandler.saveDynamicQuote(this.administrationPolicyGroup, this.appComponent);
+  // }
 
   searchIdNumber(idNumber: string) {
 
@@ -419,7 +428,24 @@ export class QuoteComponent implements OnInit {
 
   newQuote(poliza?, isProducto?, id?) {
     this.administrationPolicyGroup.markAllAsTouched();
-    this.formHandler.saveDynamicQuote(this.administrationPolicyGroup, this.appComponent);
+
+    const productoToValue = this.administrationPolicyGroup.get('productoTo').value;
+    let code;
+
+    if (localStorage.getItem('countryCode') === 'rd') {
+      code = this.availableCodes.find(codigo => codigo.value === productoToValue);
+      const codeWWS = code.valueWWS;
+
+      this.formHandler.saveDynamicQuote(this.administrationPolicyGroup, this.appComponent, codeWWS);
+    }
+    else if (localStorage.getItem('countryCode') === 'pn') {
+      code = this.availableCodes.find(codigo => codigo.value === productoToValue);
+      const codeWWM = code.valueWWM;
+
+      this.formHandler.saveDynamicQuote(this.administrationPolicyGroup, this.appComponent, codeWWM);
+    }
+
+    // this.formHandler.saveDynamicQuote(this.administrationPolicyGroup, this.appComponent);
 
     // if (this.userService.getRoles().includes('WWS') && this.userService.getRoles().includes('WMA')) {
     //   const country = localStorage.getItem('countryCode');

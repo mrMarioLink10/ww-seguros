@@ -662,6 +662,7 @@ export class LifeComponent implements OnInit, DoCheck {
   dependentsNumber = 0;
 
   ID = null;
+  disableRequestDropdown = false;
 
   x = 0;
 
@@ -1366,6 +1367,7 @@ export class LifeComponent implements OnInit, DoCheck {
       console.log('El ID es ' + this.ID);
       this.getData(this.ID);
       this.newRequest.get('noC').disable();
+      this.disableRequestDropdown = true;
     }
     else if (this.ID == null) {
       console.log('ID esta vacio');
@@ -3482,6 +3484,7 @@ export class LifeComponent implements OnInit, DoCheck {
       this.ID = data.data.id;
       console.log(data.data);
       this.dataMappingFromApi.iterateThroughtAllObjectVida(data.data, this.newRequest);
+      this.disableRequestDropdown = true;
 
       console.log(this.newRequest);
       console.log(data.data);

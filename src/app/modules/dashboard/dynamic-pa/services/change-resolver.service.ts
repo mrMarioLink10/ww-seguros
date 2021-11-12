@@ -18,7 +18,8 @@ export class ChangeResolverService {
   resolve(route: ActivatedRouteSnapshot): Observable<any> {
     const guid = route.params.guid;
     const cotizacionId = route.params.cotizacionId;
-    const country = route.params.country;
+    // const country = route.params.country;
+    const country = localStorage.getItem('countryCode');
 
     return this.changeService.getDynamicData(guid, cotizacionId, country)
       .pipe(mergeMap((data: any) => {

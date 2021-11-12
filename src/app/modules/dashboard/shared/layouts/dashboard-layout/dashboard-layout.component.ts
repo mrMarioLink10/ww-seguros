@@ -115,6 +115,7 @@ export class DashboardLayoutComponent implements OnInit, OnDestroy {
         console.log('this.country es igual a: ' + this.country);
       }
     }
+    console.log(localStorage.getItem('countryCode'));
   }
 
   setCountry() {

@@ -646,6 +646,7 @@ export class DisabilityComponent implements OnInit, DoCheck {
   ) { }
 
   ID = null;
+  disableRequestDropdown = false;
 
   ngOnInit() {
 
@@ -687,6 +688,7 @@ export class DisabilityComponent implements OnInit, DoCheck {
     if (this.ID != null) {
       console.log('El ID es ' + this.ID);
       this.getData(this.ID);
+      this.disableRequestDropdown = true;
     } else if (this.ID == null) {
       console.log('ID esta vacio');
     }

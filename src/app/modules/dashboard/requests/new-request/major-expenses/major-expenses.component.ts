@@ -694,6 +694,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
 
   @ViewChild('form', { static: false }) ogForm;
   step: number;
+  disableRequestDropdown = false;
 
   searchQuote(noCotizacion) {
     if (noCotizacion !== undefined && noCotizacion !== '') {
@@ -940,6 +941,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
     if (this.ID != null) {
       this.getData(this.ID);
       this.newRequest.get('noC').disable();
+      this.disableRequestDropdown = true;
     } else if (this.ID == null) {
     }
 
@@ -3782,6 +3784,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
           this.quotesService.returnDataSaludList(id).subscribe(data => {
 
             if (data !== undefined && data.data !== null && data.data !== undefined && data.data.length > 0 /*&& data.data.nombre !== undefined*/) {
+              this.disableRequestDropdown = true;
               const resultPrincipal = data.data.filter(word => word.rol.toLowerCase().includes(filterPrincipal));
               console.log(resultPrincipal);
               const dialogRef = this.dialog.open(BaseDialogComponent, {

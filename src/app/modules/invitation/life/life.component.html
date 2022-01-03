@@ -951,8 +951,9 @@
                   por favor revisar. </label>
               </div>
               <div class="mt-2">
-                <p>Si a mi fallecimiento alguno de mis Beneficiarios Primarios es menor de edad, el beneficio
-                  correspondiente será entregado a</p><br>
+                <p>Sí a mi fallecimiento alguno de mis Beneficiarios Primarios es
+                  menor de edad, el beneficio correspondiente será entregado a su tutor legal en su 
+                  calidad de representación del menor:</p><br>
                 <div class='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-4'>
                   <app-input class="mr-3" [group]="newRequest.get('primaryBenefits').get('personBenefited')"
                     label="Nombre" name="name"></app-input>
@@ -1062,9 +1063,9 @@
               </div>
               <div *ngIf="newRequest.get('contingentBeneficiary').get('dependentsC')['controls'].length > 0"
                 class="mt-2">
-                <div class="radio-button-label" style="font-size: 12px !important; ">Si a mi fallecimiento alguno de mis
-                  Beneficiarios Contingentes es menor de edad, el beneficio
-                  correspondiente será entregado a</div><br>
+                <div class="radio-button-label" style="font-size: 12px !important; ">Sí a mi fallecimiento alguno de 
+                  mis Beneficiarios Contingentes es menor de edad, el beneficio correspondiente será entregado a 
+                  su tutor legal en su calidad de representación del menor:</div><br>
                 <div class='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-4'>
                   <app-input class="mr-3" [group]="newRequest.get('contingentBeneficiary').get('personBenefited')"
                     label="Nombre" name="nameBeneficiary"></app-input>

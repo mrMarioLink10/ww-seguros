@@ -950,6 +950,8 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
     if (this.isChange) {
       this.route.data.subscribe((response: any) => {
         if (response.data) {
+          this.changeForm.removeControl('solicitudGastosMayores');
+          this.changeForm.addControl('solicitudGastosMayores', this.newRequest);
           this.processingDataToForm(response);
 
           setTimeout(() => {
@@ -1708,6 +1710,10 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
       if (womenCount > 0) {
         console.log('Hay mujer');
         this.isThereAWomen = true;
+        if (!this.newRequest.get('sectionAHelper').get('havePregnant')) {
+          (this.newRequest.get('sectionAHelper') as FormGroup).addControl('havePregnant', this.fb.control(''));
+          (this.newRequest.get('sectionAHelper') as FormGroup).addControl('haveReproductiveOrganDisorders', this.fb.control(''));
+        }
       } else {
         this.isThereAWomen = false;
       }
@@ -1834,7 +1840,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
       console.log(index);
     }*/
     // for(let index in this.dependentsFormArray.controls)
-    if (this.newRequest.get('dependents').get('allDependents') !== undefined && this.newRequest.get('dependents').get('allDependents') !== null) {
+    if (this.newRequest.get('dependents') && this.newRequest.get('dependents').get('allDependents') !== undefined && this.newRequest.get('dependents').get('allDependents') !== null) {
       const arrayElement = this.newRequest.get('dependents').get('allDependents') as FormArray;
       for (let index = 0; index < arrayElement.length; index++) {
 
@@ -3951,7 +3957,6 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
       this.AddEventOnEachDependentVariable();
       // console.log(this.newRequest);
 
-
       const formP = this.newRequest.get('person') as FormGroup;
       const formPO = this.newRequest.get('person').get('office') as FormGroup;
       const formQA = this.newRequest.get('questionsA') as FormGroup;
@@ -4150,7 +4155,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
         }
 
         if (!formEP.get('payer')) {
-          if (formEP.get('headline').value !== 'SI') {
+          if (formEP.get('headLine').value !== 'SI') {
             formEP.removeControl('incomesCertified');
           }
         } else if (formEP.get('payer').value !== 'SI') {

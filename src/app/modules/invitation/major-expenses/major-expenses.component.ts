@@ -1391,6 +1391,10 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
       if (womenCount > 0) {
         console.log('Hay mujer');
         this.isThereAWomen = true;
+        if (!this.newRequest.get('sectionAHelper').get('havePregnant')) {
+          (this.newRequest.get('sectionAHelper') as FormGroup).addControl('havePregnant', this.fb.control(''));
+          (this.newRequest.get('sectionAHelper') as FormGroup).addControl('haveReproductiveOrganDisorders', this.fb.control(''));
+        }
       } else {
         this.isThereAWomen = false;
       }
@@ -3985,7 +3989,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
           }
 
           if (!formEP.get('payer')) {
-            if (formEP.get('headline').value !== 'SI') {
+            if (formEP.get('headLine').value !== 'SI') {
               formEP.removeControl('incomesCertified');
             }
           } else if (formEP.get('payer').value !== 'SI') {

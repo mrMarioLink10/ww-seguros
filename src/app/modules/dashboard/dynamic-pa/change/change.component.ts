@@ -112,19 +112,22 @@ export class ChangeComponent implements OnInit {
       // }
     }
 
-    this.clearValidators(this.changeForm.get('formularioCambioCreator') as FormGroup);
-    for(let x = 0; x < data.formularioCambioCreator.acordeon.length; x++){
-      for(let y = 0; y < data.formularioCambioCreator.acordeon[x].seccion.length; y++){
-        for(let z = 0; z < data.formularioCambioCreator.acordeon[x].seccion[y].campos.length; z++){
-              this.changeForm.get('formularioCambioCreator').get('acordeon').get(x.toString()).get('seccion'
-              ).get(y.toString()).get('campos').get(z.toString()).get('valueCollectedFromForm'
-              ).clearValidators();
-              this.changeForm.get('formularioCambioCreator').get('acordeon').get(x.toString()).get('seccion'
-              ).get(y.toString()).get('campos').get(z.toString()).get('valueCollectedFromForm'
-              ).updateValueAndValidity();
+    if (this.changeForm.get('formularioCambioCreator')) {
+      this.clearValidators(this.changeForm.get('formularioCambioCreator') as FormGroup);
+      for(let x = 0; x < data.formularioCambioCreator.acordeon.length; x++){
+        for(let y = 0; y < data.formularioCambioCreator.acordeon[x].seccion.length; y++){
+          for(let z = 0; z < data.formularioCambioCreator.acordeon[x].seccion[y].campos.length; z++){
+                this.changeForm.get('formularioCambioCreator').get('acordeon').get(x.toString()).get('seccion'
+                ).get(y.toString()).get('campos').get(z.toString()).get('valueCollectedFromForm'
+                ).clearValidators();
+                this.changeForm.get('formularioCambioCreator').get('acordeon').get(x.toString()).get('seccion'
+                ).get(y.toString()).get('campos').get(z.toString()).get('valueCollectedFromForm'
+                ).updateValueAndValidity();
+          }
         }
       }
     }
+
     console.log('FORMULARIO LUEGO', this.changeForm.getRawValue());
     console.log('FORMULARIO LUEGO 2', this.changeForm);
     this.showContent = true;

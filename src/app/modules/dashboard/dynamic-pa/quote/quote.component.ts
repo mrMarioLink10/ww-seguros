@@ -200,27 +200,37 @@ export class QuoteComponent implements OnInit {
     if (event.valor === 'CAMBIO DE PRODUCTO') {
       this.quoteService.getProductChange(this.administrationPolicyGroup.value.idNumber, this.country)
         .subscribe((res: any) => {
-          this.completeAvailableOptions(res.data);
+          console.log(res);
+          this.completeAvailableOptions(res.data, event.valor);
           this.appComponent.showOverlay = false;
         });
     } else {
       this.quoteService.getDeductible(this.administrationPolicyGroup.value.idNumber, this.country)
         .subscribe((res: any) => {
-          this.completeAvailableOptions(res.data);
+          console.log(res);
+          this.completeAvailableOptions(res.data, event.valor);
           this.appComponent.showOverlay = false;
         });
     }
   }
 
-  completeAvailableOptions(data) {
+  completeAvailableOptions(data, requestType) {
     console.log(data);
     if (data.length > 0) {
       for (const i of data) {
         console.log(i);
-        this.available.options.push({
-          value: i.value,
-          viewValue: i.text
-        });
+        if (requestType == 'CAMBIO DE PRODUCTO') {
+          this.available.options.push({
+            value: i.value,
+            viewValue: i.text
+          });
+        }
+        else {
+          this.available.options.push({
+            value: i.text,
+            viewValue: i.text
+          });
+        }
 
         this.availableCodes.push({
           value: i.value,
@@ -432,17 +442,22 @@ export class QuoteComponent implements OnInit {
     const productoToValue = this.administrationPolicyGroup.get('productoTo').value;
     let code;
 
-    if (localStorage.getItem('countryCode') === 'rd') {
-      code = this.availableCodes.find(codigo => codigo.value === productoToValue);
-      const codeWWS = code.valueWWS;
-
-      this.formHandler.saveDynamicQuote(this.administrationPolicyGroup, this.appComponent, codeWWS);
+    if (this.administrationPolicyGroup.get('tipoSolicitud').value == 'CAMBIO DE PRODUCTO') {      
+      if (localStorage.getItem('countryCode') === 'rd') {
+        code = this.availableCodes.find(codigo => codigo.value === productoToValue);
+        const codeWWS = code.valueWWS;
+  
+        this.formHandler.saveDynamicQuote(this.administrationPolicyGroup, this.appComponent, codeWWS);
+      }
+      else if (localStorage.getItem('countryCode') === 'pn') {
+        code = this.availableCodes.find(codigo => codigo.value === productoToValue);
+        const codeWWM = code.valueWWM;
+  
+        this.formHandler.saveDynamicQuote(this.administrationPolicyGroup, this.appComponent, codeWWM);
+      }
     }
-    else if (localStorage.getItem('countryCode') === 'pn') {
-      code = this.availableCodes.find(codigo => codigo.value === productoToValue);
-      const codeWWM = code.valueWWM;
-
-      this.formHandler.saveDynamicQuote(this.administrationPolicyGroup, this.appComponent, codeWWM);
+    else {
+      this.formHandler.saveDynamicQuote(this.administrationPolicyGroup, this.appComponent, productoToValue);
     }
 
     // this.formHandler.saveDynamicQuote(this.administrationPolicyGroup, this.appComponent);

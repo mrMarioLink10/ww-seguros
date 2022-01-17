@@ -2076,7 +2076,19 @@ export class LifeComponent implements OnInit, DoCheck {
   }
 
   newQuote() {
-    if (this.userService.getRoleCotizador() === 'WWS') {
+    if ((this.userService.getRoles().includes('WWS') && this.userService.getRoles().includes('WMA'))) {
+      let cia = localStorage.getItem('countryCode');
+      // console.log('countryCode es igual a ' + cia);
+      if (cia == 'rd') {
+        window.open(`${environment.urlCotizadores}/vida?cia=wws`, '_self');
+        // console.log('el cia es igual a wws');
+      }
+      else if (cia == 'pn') {
+        window.open(`${environment.urlCotizadores}/vida?cia=wwm`, '_self');
+        // console.log('el cia es igual a wwm');
+      }
+    }
+    else if (this.userService.getRoleCotizador() === 'WWS') {
       window.open(`${environment.urlCotizadores}/vida?cia=wws`, '_self');
     } else if (this.userService.getRoleCotizador() === 'WMA') {
       window.open(`${environment.urlCotizadores}/vida?cia=wwm`, '_self');

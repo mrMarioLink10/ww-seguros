@@ -27,7 +27,7 @@
             style="display: -webkit-box">
             <img src="/assets/iconos/search-icon.svg">
           </button>
-          <button (click)="newQuote()" class="nofocus flex justify-center small-search-button ml-3"
+          <button *ngIf="ID === null || ID === undefined" (click)="newQuote()" class="nofocus flex justify-center small-search-button ml-3"
             style="display: -webkit-box; color: white;">
             <mat-icon style="font-weight: 900;  margin-top: 7px;">add</mat-icon>
           </button>

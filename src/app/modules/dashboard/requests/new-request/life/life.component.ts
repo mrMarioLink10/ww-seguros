@@ -2085,7 +2085,7 @@ export class LifeComponent implements OnInit, DoCheck {
       }
       else if (cia == 'pn') {
         window.open(`${environment.urlCotizadores}/vida?cia=wwm`, '_self');
-        // console.log('el cia es igual a wwm');
+        // console.log('el cia es igual a wwm'); 
       }
     }
     else if (this.userService.getRoleCotizador() === 'WWS') {

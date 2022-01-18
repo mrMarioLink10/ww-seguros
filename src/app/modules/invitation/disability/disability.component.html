@@ -12,18 +12,18 @@
         <div></div>
         <div></div>
         <div class="mr-3">
-          <mat-form-field color="accent" appearance="outline" class="w-full" style="font-size: small !important;">
+          <!-- <mat-form-field color="accent" appearance="outline" class="w-full" style="font-size: small !important;">
             <mat-label>Tipo de Solicitud</mat-label>
             <mat-select [(value)]="routeSelected" (selectionChange)="selectChangeUrl($event.value)">
               <mat-option value="vida">Seguro de Vida</mat-option>
               <mat-option value="disability">Suscripción Disability</mat-option>
               <mat-option value="gastos mayores">Suscripción Seguro Gastos Médicos Mayores</mat-option>
             </mat-select>
-          </mat-form-field>
+          </mat-form-field> -->
         </div>
       </div>
     </div>
-    <mat-tab-group class="mt-4">
+    <mat-tab-group [ngClass]="{'warn-tab': showAditionalRed()}" class="mt-4">
       <mat-tab label="Asegurado" class="mat-tab-forms">
 
         <div *ngIf="this.form !== undefined">
@@ -2093,8 +2093,9 @@
 
                 <div class="mt-6">
                   <div>
-                    <label class="formulary-labels"> Si a mi fallecimiento alguno de mis Beneficiarios Primarios es
-                      menor de edad, el beneficio correspondiente será entregado a: </label>
+                    <label class="formulary-labels">Sí a mi fallecimiento alguno de mis Beneficiarios Primarios es
+                      menor de edad, el beneficio correspondiente será entregado a su tutor legal en su
+                      calidad de representación del menor:</label>
                   </div>
                   <div class="mt-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4">
                     <div class="mr-3">
@@ -2240,8 +2241,9 @@
                 <div *ngIf="disabilityGroup.get('contingent').get('contingent_array')['controls'].length > 0"
                   class="mt-6">
                   <div>
-                    <label class="formulary-labels"> Si a mi fallecimiento alguno de mis Beneficiarios Primarios es
-                      menor de edad, el beneficio correspondiente será entregado a: </label>
+                    <label class="formulary-labels"> Sí a mi fallecimiento alguno de mis Beneficiarios Contingentes es
+                      menor de edad, el beneficio correspondiente será entregado a su tutor legal en su
+                      calidad de representación del menor: </label>
                   </div>
                   <div class="mt-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4">
                     <div class="mr-3">
@@ -2516,7 +2518,8 @@
 
         </div>
       </mat-tab>
-      <mat-tab label="Cuestionarios médicos" *ngIf="questionsLength() > 0" class="mat-tab-forms">
+      <mat-tab [ngClass]="{'warn-tab': showAditionalRed()}" label="Cuestionarios médicos" *ngIf="questionsLength() > 0"
+        class="mat-tab-forms">
         <mat-accordion #matAccordion="matAccordion" name="matAccordion" class="ww-mat-accordion example-headers-align"
           [togglePosition]="'before'">
           <app-hypertension

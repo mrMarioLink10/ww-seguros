@@ -179,6 +179,15 @@ export class DialogOptionService {
 		};
 	}
 
+	idNumberFoundAnonymus(data: any) {
+		return {
+			logo: 'check',
+			title: `${data.asegurado.no_poliza}`,
+			text: `La póliza ha sido encontrada.`,
+			showButtons: false,
+		};
+	}
+
 	QuoteFound(data: any) {
 		return {
 			logo: 'check',

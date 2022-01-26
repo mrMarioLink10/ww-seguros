@@ -16,6 +16,7 @@ import { startWith, map } from 'rxjs/operators';
 import { BaseDialogComponent } from 'src/app/shared/components/base-dialog/base-dialog.component';
 import { QuoteService } from '../services/quote.service';
 import { environment } from 'src/environments/environment';
+import { PolicyService } from '../../services/consultation/policy.service';
 
 // tslint:disable: max-line-length
 @Component({
@@ -91,6 +92,9 @@ export class QuoteComponent implements OnInit {
   isEditing = false;
   requestInfo = '';
 
+  policyDetail: any;
+  loading = true;
+
   constructor(
     private fb: FormBuilder,
     private appComponent: AppComponent,
@@ -103,6 +107,7 @@ export class QuoteComponent implements OnInit {
     private route: ActivatedRoute,
     private dataMappingFromApi: FormDataFillingService,
     private quoteService: QuoteService,
+    private policyService: PolicyService,
   ) { }
 
   ngOnInit() {
@@ -317,7 +322,45 @@ export class QuoteComponent implements OnInit {
         this.searchIdNumberAccess = true;
         idNumber = (idNumber).toString();
       }
-      if (this.administrationPolicyGroup.get('filterType').value === 'POLIZA' && this.idNumber2Options.length === 0) {
+      // if (this.administrationPolicyGroup.get('filterType').value === 'POLIZA' && this.idNumber2Options.length === 0) {
+      //   this.appComponent.showOverlay = true;
+      //   if (this.dataAutoCompleteIdNumberObject.find(nombre => nombre.policy === idNumber)) {
+      //     console.log('Póliza encontrada');
+      //     const idNumber2Policy = idNumber;
+      //     // tslint:disable-next-line: prefer-for-of
+      //     for (let x = 0; x < this.dataAutoCompleteIdNumberObject.length; x++) {
+      //       if (idNumber2Policy === this.dataAutoCompleteIdNumberObject[x].policy) {
+      //         this.idNumber2Options.push({
+      //           value: this.dataAutoCompleteIdNumberObject[x].name,
+      //           viewValue: this.dataAutoCompleteIdNumberObject[x].name,
+      //           policy: this.dataAutoCompleteIdNumberObject[x].policy
+      //         });
+      //       }
+      //     }
+      //     if (this.idNumber2Options.length > 1) {
+      //       this.idNumber2FieldVisible = true;
+      //       this.searchIdNumberAccess = false;
+      //     } else {
+      //       this.idNumber2FieldVisible = false;
+      //       this.searchIdNumberAccess = true;
+      //       this.administrationPolicyGroup.get('idNumber2').setValue('');
+      //       this.administrationPolicyGroup.get('idNumber2').markAsUntouched();
+
+      //       idNumberObject = this.dataAutoCompleteIdNumberObject.find(nombre =>
+      //         nombre.policy === idNumber);
+      //       idNumber = (idNumberObject.value).toString();
+      //       this.idNumber2Options.splice(0, this.idNumber2Options.length);
+      //     }
+      //   } else {
+      //     console.log('Póliza no encontrada');
+      //     this.searchIdNumberAccess = true;
+      //   }
+      //   // setTimeout(() => {
+      //   this.appComponent.showOverlay = false;
+      //   // }, 1000);
+      // }
+
+      if (this.administrationPolicyGroup.get('filterType').value === 'POLIZA') {
         this.appComponent.showOverlay = true;
         if (this.dataAutoCompleteIdNumberObject.find(nombre => nombre.policy === idNumber)) {
           console.log('Póliza encontrada');
@@ -332,20 +375,15 @@ export class QuoteComponent implements OnInit {
               });
             }
           }
-          if (this.idNumber2Options.length > 1) {
-            this.idNumber2FieldVisible = true;
-            this.searchIdNumberAccess = false;
-          } else {
-            this.idNumber2FieldVisible = false;
-            this.searchIdNumberAccess = true;
-            this.administrationPolicyGroup.get('idNumber2').setValue('');
-            this.administrationPolicyGroup.get('idNumber2').markAsUntouched();
+          this.idNumber2FieldVisible = false;
+          this.searchIdNumberAccess = true;
+          this.administrationPolicyGroup.get('idNumber2').setValue('');
+          this.administrationPolicyGroup.get('idNumber2').markAsUntouched();
 
-            idNumberObject = this.dataAutoCompleteIdNumberObject.find(nombre =>
-              nombre.policy === idNumber);
-            idNumber = (idNumberObject.value).toString();
-            this.idNumber2Options.splice(0, this.idNumber2Options.length);
-          }
+          idNumberObject = this.dataAutoCompleteIdNumberObject.find(nombre =>
+            nombre.policy === idNumber);
+          idNumber = (idNumberObject.value).toString();
+          this.idNumber2Options.splice(0, this.idNumber2Options.length);
         } else {
           console.log('Póliza no encontrada');
           this.searchIdNumberAccess = true;
@@ -355,14 +393,14 @@ export class QuoteComponent implements OnInit {
         // }, 1000);
       }
 
-      if (this.administrationPolicyGroup.get('idNumber2').value !== '' && this.idNumber2FieldVisible === true) {
-        this.searchIdNumberAccess = true;
-        const idNumber2Value = this.administrationPolicyGroup.get('idNumber2').value;
+      // if (this.administrationPolicyGroup.get('idNumber2').value !== '' && this.idNumber2FieldVisible === true) {
+      //   this.searchIdNumberAccess = true;
+      //   const idNumber2Value = this.administrationPolicyGroup.get('idNumber2').value;
 
-        idNumberObject = this.dataAutoCompleteIdNumberObject.find(nombre =>
-          nombre.name === idNumber2Value);
-        idNumber = (idNumberObject.value).toString();
-      }
+      //   idNumberObject = this.dataAutoCompleteIdNumberObject.find(nombre =>
+      //     nombre.name === idNumber2Value);
+      //   idNumber = (idNumberObject.value).toString();
+      // }
 
       idNumberObject = this.dataAutoCompleteIdNumberObject.find(nombre =>
         nombre.name === idNumber);
@@ -407,19 +445,29 @@ export class QuoteComponent implements OnInit {
               };
             }
 
-            this.appComponent.showOverlay = false;
+            setTimeout(() => {
+              this.appComponent.showOverlay = false;
+            }, 2000);
             if (response.data !== null) {
-              this.showContent = true;
-              const dialogRef = this.dialog.open(BaseDialogComponent, {
-                data: this.dialogOption.idNumberFound(response.data),
-                minWidth: 385,
+              this.policyService.getPolicyDetails(response.data.asegurado.no_poliza).subscribe((res: any) => {
+                this.policyDetail = res.data;
+                console.log('DETALLE DE POLIZA: ', this.policyDetail);
               });
-              setTimeout(() => {
-                dialogRef.close();
-              }, 4000);
-
-              // tslint:disable-next-line: max-line-length
-              this.administrationPolicyGroup.get('personName').setValue(`${response.data.asegurado.nombres_asegurado} ${response.data.asegurado.apellidos_asegurado}`);
+              setTimeout(() => {                
+                this.showContent = true;
+                const dialogRef = this.dialog.open(BaseDialogComponent, {
+                  data: this.dialogOption.idNumberFoundAnonymus(response.data),
+                  minWidth: 385,
+                });
+                setTimeout(() => {
+                  dialogRef.close();
+                }, 4000);
+  
+                // tslint:disable-next-line: max-line-length
+                this.administrationPolicyGroup.get('personName').setValue(`${response.data.asegurado.nombres_asegurado} ${response.data.asegurado.apellidos_asegurado}`);
+  
+                this.loading = false;
+              }, 2000);
             } else {
               this.showContent = false;
               const dialogRef = this.dialog.open(BaseDialogComponent, {

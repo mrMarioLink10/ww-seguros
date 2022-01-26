@@ -51,7 +51,7 @@ export class DynamicPaComponent implements OnInit {
 
   newRequestButtonOptions: MatProgressButtonOptions = {
     active: false,
-    text: 'Cotizar',
+    text: 'Cotizar Cambio',
     buttonColor: 'accent',
     barColor: 'primary',
     raised: true,

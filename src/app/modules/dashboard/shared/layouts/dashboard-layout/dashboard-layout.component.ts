@@ -99,6 +99,7 @@ export class DashboardLayoutComponent implements OnInit, OnDestroy {
         console.log('this.role es igual a: ' + this.role);
       }
       else {
+        this.role = 'WWS';
         console.log('this.role es igual a: ' + this.role);
       }
     }

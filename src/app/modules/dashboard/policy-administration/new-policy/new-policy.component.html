@@ -126,9 +126,10 @@
                     [group]="administrationPolicyGroup.get('pdfArchives').get(i.toString())" name="pdfFile"
                     label="Archivos PDF" [fileNameWatcher]="arrayPdfArchivesWatcher(i)"
                     (onFileChange)="onStudiesChange($event, i)"
-                    [disabled]="isWWSeguros">
+                    > <!--[disabled]="isWWSeguros" -->
                   </app-file-input>
-                  <div *ngIf="!isWWSeguros">
+                  
+                  <div > <!-- *ngIf="!isWWSeguros" -->
                     <div *ngIf="administrationPolicyGroup.get('pdfArchives')['controls'].length > 1"
                       [ngClass]="{'': administrationPolicyGroup.get('pdfArchives')['controls'].length === 1, 'col-span-1': administrationPolicyGroup.get('pdfArchives')['controls'].length > 1} ">
                       <app-delete-array-button [array]="administrationPolicyGroup.get('pdfArchives')" [index]="i">
@@ -137,7 +138,7 @@
                   </div>
                 </div>
               </div>
-              <div *ngIf="!isWWSeguros">
+              <div > <!-- *ngIf="!isWWSeguros" -->
                 <app-add-array-button [array]="administrationPolicyGroup.get('pdfArchives')" [item]="createFormArray('pdfFile')">
                 </app-add-array-button>
               </div>

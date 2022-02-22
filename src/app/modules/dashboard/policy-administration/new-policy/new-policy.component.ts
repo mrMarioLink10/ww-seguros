@@ -161,9 +161,15 @@ export class NewPolicyComponent implements OnInit {
     //   text: 'Favor completar este formulario solo para la solicitud de Rehabilitación de Poliza en el dado caso de que piense anexar este formulario en vez de anexar un comprobante de pago.'
     // },
     {
-      name: 'AUMENTO SUMA ASEGURADA',
-      url: ['/assets/pdfs/SOLICITUDDESEGURODEVIDA'],
+      name: 'AUMENTO SUMA ASEGURADA PÓLIZAS INDIVIDUALES',
+      url: ['/assets/pdfs/SOLICITUDDESEGURODEVIDA', '/assets/pdfs/GUÍADEREQUISITOSBÁSICOSDEASEGURABILIDAD'],
       text: 'Favor consultar los requisitos de asegurabilidad de acuerdo a la nueva suma total asegurada. (Ver tabla de requisito anexa) - '
+      , pdfNames: ['AUMENTO SUMA ASEGURADA', 'GUÍA DE REQUISITOS BÁSICOS DE ASEGURABILIDAD']
+    },
+    {
+      name: 'AUMENTO SUMA ASEGURADA PÓLIZAS COLECTIVAS',
+      url: ['/assets/pdfs/SOLICITUDDESEGURODEVIDA'],
+      text: 'Favor validar con nuestro departamento de Servicio al Cliente este requerimiento.'
       , pdfNames: ['AUMENTO SUMA ASEGURADA']
     },
     {

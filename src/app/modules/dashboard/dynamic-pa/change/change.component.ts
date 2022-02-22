@@ -3,9 +3,10 @@ import { ChangeService } from '../services/change.service';
 import { ActivatedRoute } from '@angular/router';
 import { AppComponent } from '../../../../app.component';
 import { FormDataFillingService } from '../../services/shared/formDataFillingService';
-import { FormBuilder, FormGroup, FormArray, FormControl } from '@angular/forms';
+import { FormBuilder, FormGroup, FormArray, FormControl, Validators } from '@angular/forms';
 import { FormsService } from '../../services/forms/forms.service';
 import { FormHandlerService } from 'src/app/core/services/forms/form-handler.service';
+import { PolicyService } from '../../services/consultation/policy.service';
 
 @Component({
   selector: 'app-change',
@@ -21,13 +22,16 @@ export class ChangeComponent implements OnInit {
     private fb: FormBuilder,
     private formsService: FormsService,
     protected formHandler: FormHandlerService,
+    private changeService: ChangeService,
+    private policyService: PolicyService,
   ) { }
 
   changeForm: FormGroup;
 
   showContent = false;
   data: any;
-
+  hideButtonsFechaSolicitud = false;
+  
   ngOnInit() {
     this.changeForm = this.fb.group({});
     this.route.data.subscribe((response: any) => {
@@ -126,6 +130,52 @@ export class ChangeComponent implements OnInit {
           }
         }
       }
+
+      this.changeService.getQuote(data.cotizacionInfoCode, data.ramo).subscribe((response: any)=>{
+        console.log(response);
+  
+        if (data.formularioCambioCreator.acordeon[3].seccion[0].campos[0].label == "PLAN") {
+          this.changeForm.get('formularioCambio').get('acordeon').get('3').get('seccion'
+          ).get('0').get('campos').get('0').get('valueCollectedFromForm'
+          ).setValue(response.data.plan);
+        }
+  
+        if (data.formularioCambioCreator.acordeon[3].seccion[0].campos[1].label == "DEDUCIBLE") {
+          this.changeForm.get('formularioCambio').get('acordeon').get('3').get('seccion'
+          ).get('0').get('campos').get('1').get('valueCollectedFromForm'
+          ).setValue(response.data.deducible);
+        }
+  
+        // if (data.formularioCambioCreator.acordeon[3].seccion[0].campos[2].label == "ANEXAR COTIZACION") {
+        //   this.changeForm.get('formularioCambio').get('acordeon').get('3').get('seccion'
+        //   ).get('0').get('campos').get('2').get('valueCollectedFromForm'
+        //   ).setValue();
+        // }
+      });
+  
+      this.policyService.getPolicyDetails(data.poliza).subscribe((res: any) => {
+  
+        console.log(res.data);
+        if (data.formularioCambioCreator.acordeon[0].seccion[0].campos[0].label == "FECHA VIGENCIA") {
+          this.changeForm.get('formularioCambio').get('acordeon').get('0').get('seccion'
+          ).get('0').get('campos').get('0').get('valueCollectedFromForm'
+          ).setValue(new Date(res.data.endDate));
+        }
+
+        if (data.formularioCambioCreator.acordeon[0].seccion[0].campos[1].label == "FECHA SOLICITUD") {
+
+          this.changeForm.get('formularioCambio').get('acordeon').get('0').get('seccion'
+          ).get('0').get('campos').get('1').get('valueCollectedFromForm'
+          ).setValue(new Date());
+          //POR SI ACASO tengo que hacer alguna condicion con la fecha.
+          // if (new Date() <= new Date(res.data.endDate)) {
+          // }
+          if (new Date() > new Date(res.data.endDate)) {
+            this.hideButtonsFechaSolicitud = true;
+          }
+          console.log(this.hideButtonsFechaSolicitud);
+        }
+      });
     }
 
     console.log('FORMULARIO LUEGO', this.changeForm.getRawValue());

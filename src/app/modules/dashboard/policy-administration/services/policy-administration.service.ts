@@ -25,7 +25,9 @@ export class PolicyAdministrationService {
   // }
 
   getIdNumbers(): Observable<any> {
-    return this.http.get(`${environment.apiUrl}/api/DatosEmpresa/autocompleteDinamicos`);
+
+    let country = localStorage.getItem('countryCode');
+    return this.http.get(`${environment.apiUrl}/api/DatosEmpresa/autocompleteDinamicos`, { params: { country: country } });
   }
 
   download(url: string): Observable<Blob> {

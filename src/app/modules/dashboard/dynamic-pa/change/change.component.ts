@@ -109,6 +109,18 @@ export class ChangeComponent implements OnInit {
             }
           }
         }
+
+        if (data.formularioCambio.acordeon[0].seccion[0].campos[0].label == "FECHA VIGENCIA") {
+          this.changeForm.get('formularioCambio').get('acordeon').get('0').get('seccion'
+          ).get('0').get('campos').get('0').get('valueCollectedFromForm'
+          ).disable();
+        }
+
+        if (data.formularioCambio.acordeon[0].seccion[0].campos[1].label == "FECHA SOLICITUD") {
+          this.changeForm.get('formularioCambio').get('acordeon').get('0').get('seccion'
+          ).get('0').get('campos').get('1').get('valueCollectedFromForm'
+          ).disable();
+        }
       }
 
       // if (this.changeForm.get('formularioCambio').valid) {
@@ -116,42 +128,67 @@ export class ChangeComponent implements OnInit {
       // }
     }
 
-    if (this.changeForm.get('formularioCambioCreator')) {
+    if (this.changeForm.get('formularioCambioCreator') && data.formularioCambio.acordeon.length < 1) {
       this.clearValidators(this.changeForm.get('formularioCambioCreator') as FormGroup);
       for(let x = 0; x < data.formularioCambioCreator.acordeon.length; x++){
         for(let y = 0; y < data.formularioCambioCreator.acordeon[x].seccion.length; y++){
           for(let z = 0; z < data.formularioCambioCreator.acordeon[x].seccion[y].campos.length; z++){
-                this.changeForm.get('formularioCambioCreator').get('acordeon').get(x.toString()).get('seccion'
-                ).get(y.toString()).get('campos').get(z.toString()).get('valueCollectedFromForm'
-                ).clearValidators();
-                this.changeForm.get('formularioCambioCreator').get('acordeon').get(x.toString()).get('seccion'
-                ).get(y.toString()).get('campos').get(z.toString()).get('valueCollectedFromForm'
-                ).updateValueAndValidity();
+            this.changeForm.get('formularioCambioCreator').get('acordeon').get(x.toString()).get('seccion'
+            ).get(y.toString()).get('campos').get(z.toString()).get('valueCollectedFromForm'
+            ).clearValidators();
+            this.changeForm.get('formularioCambioCreator').get('acordeon').get(x.toString()).get('seccion'
+            ).get(y.toString()).get('campos').get(z.toString()).get('valueCollectedFromForm'
+            ).updateValueAndValidity();
+
+            if (data.formularioCambio.acordeon.length < 1) {
+              for(let z2 = 0; z2 < data.formularioCambioCreator.acordeon[x].seccion[y].campos.length; z2++){
+                if (data.formularioCambioCreator.acordeon[x].seccion[y].campos[z].label ===
+                  this.changeForm.get('formularioCambio').get('acordeon').get(x.toString()).get('seccion'
+                ).get(y.toString()).get('campos').get(z2.toString()).get('label').value) {
+  
+                  this.changeForm.get('formularioCambio').get('acordeon').get(x.toString()).get('seccion'
+                  ).get(y.toString()).get('campos').get(z2.toString()).get('valueCollectedFromForm'
+                  ).setValue(data.formularioCambioCreator.acordeon[x].seccion[y].campos[z].valueForForm);
+  
+                  if (data.formularioCambioCreator.acordeon[x].seccion[y].campos[z].type === 'ARCHIVO' &&
+                  data.formularioCambioCreator.acordeon[x].seccion[y].campos[z].valueForFormUrl && 
+                  data.formularioCambioCreator.acordeon[x].seccion[y].campos[z].valueForFormUrl !== ''
+                  && data.formularioCambioCreator.acordeon[x].seccion[y].campos[z].valueForFormUrl !== null &&
+                  data.formularioCambioCreator.acordeon[x].seccion[y].campos[z].valueForFormUrl !== undefined) {
+  
+                    this.changeForm.get('formularioCambio').get('acordeon').get(x.toString()).get('seccion'
+                    ).get(y.toString()).get('campos').get(z.toString()).get('valueForFormUrl'
+                    ).setValue(data.formularioCambioCreator.acordeon[x].seccion[y].campos[z].valueForFormUrl);
+                  }
+                }
+              }
+            }
+
           }
         }
       }
 
-      this.changeService.getQuote(data.cotizacionInfoCode, data.ramo).subscribe((response: any)=>{
-        console.log(response);
+      // this.changeService.getQuote(data.cotizacionInfoCode, data.ramo).subscribe((response: any)=>{
+      //   console.log(response);
   
-        if (data.formularioCambioCreator.acordeon[3].seccion[0].campos[0].label == "PLAN") {
-          this.changeForm.get('formularioCambio').get('acordeon').get('3').get('seccion'
-          ).get('0').get('campos').get('0').get('valueCollectedFromForm'
-          ).setValue(response.data.plan);
-        }
+      //   if (data.formularioCambioCreator.acordeon[3].seccion[0].campos[0].label == "PLAN") {
+      //     this.changeForm.get('formularioCambio').get('acordeon').get('3').get('seccion'
+      //     ).get('0').get('campos').get('0').get('valueCollectedFromForm'
+      //     ).setValue(response.data.plan);
+      //   }
   
-        if (data.formularioCambioCreator.acordeon[3].seccion[0].campos[1].label == "DEDUCIBLE") {
-          this.changeForm.get('formularioCambio').get('acordeon').get('3').get('seccion'
-          ).get('0').get('campos').get('1').get('valueCollectedFromForm'
-          ).setValue(response.data.deducible);
-        }
+      //   if (data.formularioCambioCreator.acordeon[3].seccion[0].campos[1].label == "DEDUCIBLE") {
+      //     this.changeForm.get('formularioCambio').get('acordeon').get('3').get('seccion'
+      //     ).get('0').get('campos').get('1').get('valueCollectedFromForm'
+      //     ).setValue(response.data.deducible);
+      //   }
   
-        // if (data.formularioCambioCreator.acordeon[3].seccion[0].campos[2].label == "ANEXAR COTIZACION") {
-        //   this.changeForm.get('formularioCambio').get('acordeon').get('3').get('seccion'
-        //   ).get('0').get('campos').get('2').get('valueCollectedFromForm'
-        //   ).setValue();
-        // }
-      });
+      //   // if (data.formularioCambioCreator.acordeon[3].seccion[0].campos[2].label == "ANEXAR COTIZACION") {
+      //   //   this.changeForm.get('formularioCambio').get('acordeon').get('3').get('seccion'
+      //   //   ).get('0').get('campos').get('2').get('valueCollectedFromForm'
+      //   //   ).setValue();
+      //   // }
+      // });
   
       this.policyService.getPolicyDetails(data.poliza).subscribe((res: any) => {
   
@@ -160,6 +197,10 @@ export class ChangeComponent implements OnInit {
           this.changeForm.get('formularioCambio').get('acordeon').get('0').get('seccion'
           ).get('0').get('campos').get('0').get('valueCollectedFromForm'
           ).setValue(new Date(res.data.endDate));
+
+          this.changeForm.get('formularioCambioCreator').get('acordeon').get('0').get('seccion'
+          ).get('0').get('campos').get('0').get('valueCollectedFromForm'
+          ).disable();
         }
 
         if (data.formularioCambioCreator.acordeon[0].seccion[0].campos[1].label == "FECHA SOLICITUD") {
@@ -170,6 +211,11 @@ export class ChangeComponent implements OnInit {
           //POR SI ACASO tengo que hacer alguna condicion con la fecha.
           // if (new Date() <= new Date(res.data.endDate)) {
           // }
+    
+          this.changeForm.get('formularioCambioCreator').get('acordeon').get('0').get('seccion'
+          ).get('0').get('campos').get('1').get('valueCollectedFromForm'
+          ).disable();
+
           if (new Date() > new Date(res.data.endDate)) {
             this.hideButtonsFechaSolicitud = true;
           }

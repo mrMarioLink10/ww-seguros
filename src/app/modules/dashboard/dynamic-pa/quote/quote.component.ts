@@ -257,7 +257,7 @@ export class QuoteComponent implements OnInit {
 
   returnAutoCompleteData() {
     this.policyAdministrationService.getIdNumbers().subscribe(data => {
-      console.log(data.data);
+      console.log(data);
       // tslint:disable-next-line: prefer-for-of
       for (let x = 0; x < data.data.length; x++) {
 

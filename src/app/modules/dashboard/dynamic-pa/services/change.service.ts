@@ -19,7 +19,7 @@ export class ChangeService {
   }
 
   postDynamicData(body: any, country?: string) {
-    return (this.http.get(`${environment.apiUrl}/api/FlujoClientesExistenteDinamico/SolicitudDinamica`, body));
+    return (this.http.post(`${environment.apiUrl}/api/FlujoClientesExistenteDinamico/SolicitudDinamica`, body));
   }
 
   getQuote(quoteId, ramo){

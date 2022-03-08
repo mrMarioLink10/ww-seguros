@@ -270,10 +270,10 @@ export class DialogOptionService {
 		return {
 			logo: 'warning',
 			title: 'Confirmación',
-			text: `Se procederá a guardar los cambios en Administración de Pólizas`,
+			text: `Se procederá a enviar los documentos a Administración de Pólizas`,
 			showButtons: true,
 			showCancelButton: true,
-			textPrincipalButton: 'Guardar',
+			textPrincipalButton: 'Enviar',
 			textCancelButton: 'Cancelar'
 		};
 	}
@@ -282,7 +282,7 @@ export class DialogOptionService {
 		return {
 			logo: 'check',
 			title: 'Confirmación',
-			text: `Los cambios en Administración de Pólizas han sido guardados`,
+			text: `Los documentos en Administración de Pólizas han sido guardados y enviados`,
 			showButtons: false,
 		};
 	}

@@ -49,9 +49,9 @@ export class ReceiptTableComponent implements OnInit {
   getBillDownloadLink(billId) {
     switch (this.userRole) {
       case 'WWS':
-        return `${this.BASE_URL}/InvoiceView/ExportToPDF/Reembolsos/${billId}/?location=true`;
+        return `${this.BASE_URL}/InvoiceView/ExportToPDF/Reembolsos/${billId}/${this.policyId}/?location=true`;
       case 'WMA':
-        return `${this.BASE_URL}/InvoiceView/ExportToPDF/Reembolsos/${billId}/?location=false`;
+        return `${this.BASE_URL}/InvoiceView/ExportToPDF/Reembolsos/${billId}/${this.policyId}/?location=false`;
       default:
         return '';
     }

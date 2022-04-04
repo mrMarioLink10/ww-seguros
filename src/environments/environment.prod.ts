@@ -24,7 +24,7 @@ export const environment = {
   mailForHelpPM: 'ayuda_wwma@wwmedicalassurance.com',
   baseUrl: 'https://portal.wwseguros.com.do/',
   keycloak: keycloakConfig,
-  apiUrl: 'https://wwsdevportalbackend.azurewebsites.net',
+  apiUrl: 'https://portal.wwmedicalassurance.com',
   urlNotAccess: 'https://wwsdevportalbackend.azurewebsites.net/AccesoPortal/index/?location=',
   keycloakConfig
 };

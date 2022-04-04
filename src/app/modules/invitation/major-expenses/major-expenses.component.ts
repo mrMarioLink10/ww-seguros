@@ -2217,16 +2217,16 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
           }
           break;
 
-        case 'havePregnant':
-          questionsForm.removeControl('pregnant');
-          break;
-        case 'haveHighRiskSport':
-          questionsForm.removeControl('highRiskSport');
-          break;
+        // case 'havePregnant':
+        //   questionsForm.removeControl('pregnant');
+        //   break;
+        // case 'haveHighRiskSport':
+        //   questionsForm.removeControl('highRiskSport');
+        //   break;
 
-        case 'haveNicotine':
-          questionsForm.removeControl('nicotine');
-          break;
+        // case 'haveNicotine':
+        //   questionsForm.removeControl('nicotine');
+        //   break;
 
         case 'contractor':
           exposedPersonForm.removeControl('contractorExposedInfo');

@@ -14,7 +14,7 @@ export const environment = {
   instructivoMedical: 'http://wwsdevportalbackend.azurewebsites.net/INSTRUCTIVO_WWM_V2.pdf',
   terminosCondiciones: 'http://wwsdevportalbackend.azurewebsites.net/TERMINOS_DE_USO.pdf',
   fileUrl: 'http://wwsdevportalbackend.azurewebsites.net',
-  fileUrlHttps: 'https://wwsdevportalbackend.azurewebsites.net',
+  fileUrlHttps: 'https://portal.wwmedicalassurance.com',
   mailForHelp: 'ayuda_wws@wws.com.do',
   urlCotizadoresPdf: 'https://cotizadores.wwseguros.com.do:30443',
   urlCotizadores: 'https://cotizadores.wwseguros.com.do',
@@ -24,8 +24,8 @@ export const environment = {
   mailForHelpPM: 'ayuda_wwma@wwmedicalassurance.com',
   baseUrl: 'https://portal.wwseguros.com.do/',
   keycloak: keycloakConfig,
-  apiUrl: 'https://wwsdevportalbackend.azurewebsites.net',
-  urlNotAccess: 'https://wwsdevportalbackend.azurewebsites.net/AccesoPortal/index/?location=',
+  apiUrl: 'https://portal.wwmedicalassurance.com',
+  urlNotAccess: 'https://portal.wwmedicalassurance.com/AccesoPortal/index/?location=',
   keycloakConfig
 };
 

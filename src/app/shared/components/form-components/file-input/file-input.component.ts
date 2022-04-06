@@ -69,7 +69,9 @@ export class FileInputComponent implements OnInit, DoCheck {
 
     if (this.numberEventSizeAccessProperty == 0) {
       if (this.group.get(this.name).value) {
-        if (this.eventProperty.target.files[0].size > 4194304) {
+        if (this.eventProperty != null && this.eventProperty.target != null &&
+          this.eventProperty.target.files != null && this.eventProperty.target.files[0] != null &&
+          (this.eventProperty.target.files[0].size > 4194304)) {
           setTimeout(() => {
             const Dialog = this.dialog.open(BaseDialogComponent, {
               data: this.fileSizeMessage,

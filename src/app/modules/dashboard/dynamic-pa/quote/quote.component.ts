@@ -412,66 +412,81 @@ export class QuoteComponent implements OnInit {
         this.userService.getInsurancePeople(idNumber)
           .subscribe((response: any) => {
             console.log(response);
-            console.warn('RAMO: ', response.data.polizas[0].ramo);
-
-            this.administrationPolicyGroup.get('tipoSolicitud').setValue('');
-            this.administrationPolicyGroup.get('tipoSolicitud').reset();
-
-            this.isRamoSalud = response.data.polizas[0].ramo === 'SALUD' ? true : false;
-
-            if (this.isRamoSalud) {
-              this.changeType = {
-                label: 'Tipo de Solicitud',
-                options: [
-                  {
-                    value: 'CAMBIO DE PRODUCTO',
-                    viewValue: 'Cambio de producto'
-                  },
-                  {
-                    value: 'CAMBIO DE DEDUCIBLE',
-                    viewValue: 'Cambio de deducible'
-                  },
-                ]
-              };
-            } else {
-              this.changeType = {
-                label: 'Tipo de Solicitud',
-                options: [
-                  {
-                    value: 'CAMBIO DE PRODUCTO',
-                    viewValue: 'Cambio de producto'
-                  }
-                ]
-              };
-            }
-
-            setTimeout(() => {
-              this.appComponent.showOverlay = false;
-            }, 2000);
             if (response.data !== null) {
-              this.policyService.getPolicyDetails(response.data.asegurado.no_poliza).subscribe((res: any) => {
-                this.policyDetail = res.data;
-                console.log('DETALLE DE POLIZA: ', this.policyDetail);
-              });
-              setTimeout(() => {                
-                this.showContent = true;
+              
+              console.warn('RAMO: ', response.data.polizas[0].ramo);
+  
+              this.administrationPolicyGroup.get('tipoSolicitud').setValue('');
+              this.administrationPolicyGroup.get('tipoSolicitud').reset();
+  
+              this.isRamoSalud = response.data.polizas[0].ramo === 'SALUD' ? true : false;
+  
+              if (this.isRamoSalud) {
+                this.changeType = {
+                  label: 'Tipo de Solicitud',
+                  options: [
+                    {
+                      value: 'CAMBIO DE PRODUCTO',
+                      viewValue: 'Cambio de producto'
+                    },
+                    {
+                      value: 'CAMBIO DE DEDUCIBLE',
+                      viewValue: 'Cambio de deducible'
+                    },
+                  ]
+                };
+              } else {
+                this.changeType = {
+                  label: 'Tipo de Solicitud',
+                  options: [
+                    {
+                      value: 'CAMBIO DE PRODUCTO',
+                      viewValue: 'Cambio de producto'
+                    }
+                  ]
+                };
+              }
+  
+              setTimeout(() => {
+                this.appComponent.showOverlay = false;
+              }, 2000);
+              if (response.data !== null) {
+                this.policyService.getPolicyDetails(response.data.asegurado.no_poliza).subscribe((res: any) => {
+                  this.policyDetail = res.data;
+                  console.log('DETALLE DE POLIZA: ', this.policyDetail);
+                });
+                setTimeout(() => {                
+                  this.showContent = true;
+                  const dialogRef = this.dialog.open(BaseDialogComponent, {
+                    data: this.dialogOption.idNumberFoundAnonymus(response.data),
+                    minWidth: 385,
+                  });
+                  setTimeout(() => {
+                    dialogRef.close();
+                  }, 4000);
+    
+                  // tslint:disable-next-line: max-line-length
+                  this.administrationPolicyGroup.get('personName').setValue(`${response.data.asegurado.nombres_asegurado} ${response.data.asegurado.apellidos_asegurado}`);
+    
+                  this.loading = false;
+                }, 2000);
+              } else {
+                this.showContent = false;
                 const dialogRef = this.dialog.open(BaseDialogComponent, {
-                  data: this.dialogOption.idNumberFoundAnonymus(response.data),
+                  data: this.dialogOption.idNumberNotFound,
                   minWidth: 385,
                 });
                 setTimeout(() => {
                   dialogRef.close();
                 }, 4000);
-  
-                // tslint:disable-next-line: max-line-length
-                this.administrationPolicyGroup.get('personName').setValue(`${response.data.asegurado.nombres_asegurado} ${response.data.asegurado.apellidos_asegurado}`);
-  
-                this.loading = false;
-              }, 2000);
-            } else {
+                this.administrationPolicyGroup.get('personName').setValue('');
+              }
+            }
+            else if (response.data === null) {
               this.showContent = false;
+              this.appComponent.showOverlay = false;
               const dialogRef = this.dialog.open(BaseDialogComponent, {
-                data: this.dialogOption.idNumberNotFound,
+                data: this.dialogOption.idNumberNotFound2,
                 minWidth: 385,
               });
               setTimeout(() => {

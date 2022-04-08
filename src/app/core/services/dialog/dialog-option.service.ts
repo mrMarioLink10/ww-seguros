@@ -82,6 +82,13 @@ export class DialogOptionService {
 		showButtons: false,
 	};
 
+	idNumberNotFound2: BaseDialog = {
+		logo: 'warning',
+		title: 'No se ha encontrado la poliza',
+		text: `Intente con otra poliza`,
+		showButtons: false,
+	};
+
 	noCNotFound: BaseDialog = {
 		logo: 'warning',
 		title: 'No se ha encontrado ningúna cotización',

@@ -669,6 +669,30 @@ export class RacingComponent implements OnInit {
     }));
     this.form.addControl('info', this.fb.control('', Validators.required));
 
+    if (this.form.get('date')) {
+      this.form.get('date').clearValidators();
+      this.form.get('date').updateValueAndValidity();
+    }
+
+    if (this.form.get('last_names')) {
+      this.form.get('last_names').clearValidators();
+      this.form.get('last_names').updateValueAndValidity();
+    }
+
+    if (this.form.get('past_months').get('brand')) {
+      this.form.get('past_months').get('brand').clearValidators();
+      this.form.get('past_months').get('brand').updateValueAndValidity();
+    }
+
+    if (this.form.get('past_months').get('engine')) {
+      this.form.get('past_months').get('engine').clearValidators();
+      this.form.get('past_months').get('engine').updateValueAndValidity();
+    }
+
+    if (this.form.get('past_months').get('type_radio')) {
+      this.form.get('past_months').get('type_radio').clearValidators();
+      this.form.get('past_months').get('type_radio').updateValueAndValidity();
+    }
   }
 
 }

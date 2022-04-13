@@ -385,7 +385,7 @@ export class CardiovascularComponent implements OnInit, DoCheck {
 
         	// tslint:disable-next-line: align
 			this.form.get('edad').clearValidators();
-			this.form.get('edad').setValidators(Validators.min(1));
+			// this.form.get('edad').setValidators(Validators.min(1));
         	// tslint:disable-next-line: align
         	this.form.get('edad').updateValueAndValidity();
 			this.xValidatorsCardiovascular = 1;

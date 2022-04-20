@@ -42,7 +42,7 @@ export class ArthritisComponent implements OnInit, DoCheck {
         this.form.get('name').updateValueAndValidity();
 
         this.form.get('age').clearValidators();
-        this.form.get('age').setValidators(Validators.min(1));
+        // this.form.get('age').setValidators(Validators.min(1));
         this.form.get('age').updateValueAndValidity();
         this.xValidators = 1;
       }

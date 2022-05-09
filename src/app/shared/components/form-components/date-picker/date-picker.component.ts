@@ -16,4 +16,10 @@ export class DatePickerComponent implements OnInit {
 	constructor() { }
 
 	ngOnInit() { }
+
+	deleteNullMethod() {
+		if (this.group.get(this.name).value === null) {
+			this.group.get(this.name).setValue('');
+		}
+	}
 }

@@ -69,4 +69,10 @@ export class DatepickerViewsSelectionSingleMonth {
     this.group.controls[this.fieldId].setValue(ctrlValue);
     datepicker.close();
   }
+
+	deleteNullMethod() {
+		if (this.group.get(this.name).value === null) {
+			this.group.get(this.name).setValue('');
+		}
+	}
 }

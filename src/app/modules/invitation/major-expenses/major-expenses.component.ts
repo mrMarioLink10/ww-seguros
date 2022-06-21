@@ -23,6 +23,8 @@ import { $weightTypes, $heightTypes, $sex, $res, $family, $country, $time, $allF
 import { questionsA, questionsB } from '../../dashboard/requests/new-request/major-expenses/questions';
 import { RequestsService } from '../services/requests.service';
 import { $musculoSkeletalAilment, $cardiovascularSystemAilment, $nervousSystemAilment, $visionHearingAilment, $respiratorySystemAilment, $digestiveSystemAilment, $maleReproductiveOrgansAilment, $bloodDisordersAilment, $endocrineDisordersAilment, $alternateTreatmentAilment, $functionalLimitationAilment, $deformityAilment, $stdAilment, $urinarySystemAilment, $cerebroVascularAilment, $reproductiveOrganDisordersAilment } from 'src/app/core/class/major-expenses-ailments';
+import {CountryRolesService} from '../../../shared/services/country-roles.service';
+import {CiaCountryRoleTypes} from '../../../shared/utils/keys/cia-country-role-types';
 @Component({
   selector: 'app-major-expenses',
   templateUrl: './major-expenses.component.html',
@@ -48,7 +50,8 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
     public appComponent: AppComponent,
     private currencyPipe: CurrencyPipe,
     private cd: ChangeDetectorRef,
-    public requestService: RequestsService
+    public requestService: RequestsService,
+    private countryRolesService: CountryRolesService,
   ) { }
 
   get allDependents(): FormArray {
@@ -1135,12 +1138,10 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
   }
 
   newQuote() {
-    if (this.userService.getRoleCotizador() === 'WWS') {
-      window.open(`${environment.urlCotizadoresSalud}?cia=wws`, '_blank');
-    } else if (this.userService.getRoleCotizador() === 'WMA') {
-      window.open(`${environment.urlCotizadoresSalud}?cia=wwm`, '_blank');
-    }
+    const role = this.userService.getRoleCotizador();
+    window.open(`${environment.urlCotizadoresSalud}?cia=${CiaCountryRoleTypes[role]}`, '_blank');
   }
+
   canDeactivate(): Observable<boolean> | boolean {
     if (this.ogForm.submitted) {
       return true;
@@ -2027,7 +2028,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
           // formP.addControl('isJuridica', this.fb.control('', Validators.required));
           // formEP.addControl('contractor', this.fb.control('', Validators.required));
 
-          // 
+          //
 
           /* if (this.newRequest.get('conozcaSuClientePersona')) {
              formGeneral.removeControl('conozcaSuClientePersona');
@@ -2086,7 +2087,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
           // formP.addControl('isJuridica', this.fb.control('', Validators.required));
           // formEP.addControl('contractor', this.fb.control('', Validators.required));
 
-          // 
+          //
 
           /* if (this.newRequest.get('conozcaSuClientePersona')) {
              formGeneral.removeControl('conozcaSuClientePersona');
@@ -2591,7 +2592,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
       }
     }
 
-    //tslint: disable: forin
+    // tslint: disable: forin
     // for (const key in this.allDependents.controls) {
     //   const element = this.allDependents.controls[key] as FormGroup;
 
@@ -3726,18 +3727,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
         console.log(data.data);
         this.dataMappingFromApi.iterateThroughtAllObject(data.data, this.newRequest);
         this.AddEventOnEachDependentVariable();
-
-        switch (data.data.countryCode) {
-          case 'RD':
-            this.role = 'WWS';
-            break;
-          case 'PM':
-            this.role = 'WMA';
-            break;
-          default:
-            this.role = 'WMA';
-            break;
-        }
+        this.role = this.countryRolesService.getRoleByCountry(data.data.countryCode);
 
         const formP = this.newRequest.get('person') as FormGroup;
         const formPO = this.newRequest.get('person').get('office') as FormGroup;

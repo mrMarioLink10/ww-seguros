@@ -10,6 +10,8 @@ import { FormHandlerService } from '../../../core/services/forms/form-handler.se
 import { AppComponent } from '../../../app.component';
 import { UserService } from '../../../core/services/user/user.service';
 import { environment } from 'src/environments/environment';
+import {CountryRolesService} from '../../../shared/services/country-roles.service';
+import {CountryRoleTypes} from '../../../shared/utils/keys/country-role-types';
 
 export interface Requests {
   no: number;
@@ -80,12 +82,13 @@ export class RequestsComponent implements OnInit {
     private formHandlerService: FormHandlerService,
     private appComponent: AppComponent,
     private userService: UserService,
+    private countryRolesService: CountryRolesService,
   ) { }
 
   getRequests(params: HttpParams = new HttpParams()) {
     let data;
 
-    if (this.userService.getRoles().includes('WWS') && this.userService.getRoles().includes('WMA')) {
+    if (this.countryRolesService.userHasMoreThanOneRole()) {
       params = params.append('country', localStorage.getItem('countryCode'));
     }
 
@@ -119,11 +122,8 @@ export class RequestsComponent implements OnInit {
   }
   BASE_URL: any = `${environment.fileUrl}`;
   seeRequest(id: number, type: string) {
-    if (this.role === 'WWS') {
-      window.open(`${this.BASE_URL}/solicitudesView/${type}/${id}/?location=true`, '_blank');
-    } else {
-      window.open(`${this.BASE_URL}/solicitudesView/${type}/${id}/?location=false`, '_blank');
-    }
+    const country = this.countryRolesService.getCountryByRole(this.role as CountryRoleTypes);
+    window.open(`${this.BASE_URL}/solicitudesView/${type}/${id}/?location=${country}`, '_blank');
   }
 
   deleteTargeting(id: number, type: string) {

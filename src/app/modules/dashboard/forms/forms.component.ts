@@ -7,6 +7,7 @@ import { AppComponent } from 'src/app/app.component';
 import { UserService } from '../../../core/services/user/user.service';
 import { FormsService } from '../services/forms/forms.service';
 import { FormHandlerService } from '../../../core/services/forms/form-handler.service';
+import {CountryRolesService} from '../../../shared/services/country-roles.service';
 
 @Component({
   selector: 'app-forms',
@@ -44,7 +45,8 @@ export class FormsComponent implements OnInit {
     private userService: UserService,
     private appComponent: AppComponent,
     private formsService: FormsService,
-    private formHandlerService: FormHandlerService
+    private formHandlerService: FormHandlerService,
+    private countryRolesService: CountryRolesService,
   ) { }
 
   ngOnInit() {
@@ -60,7 +62,7 @@ export class FormsComponent implements OnInit {
   getForms(params: HttpParams = new HttpParams()) {
     let data;
 
-    if (this.userService.getRoles().includes('WWS') && this.userService.getRoles().includes('WMA')) {
+    if (this.countryRolesService.userHasMoreThanOneRole()) {
       params = params.append('country', localStorage.getItem('countryCode'));
     }
 

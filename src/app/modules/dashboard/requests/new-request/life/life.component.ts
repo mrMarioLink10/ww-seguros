@@ -20,6 +20,9 @@ import { AppComponent } from 'src/app/app.component';
 import { MatProgressButtonOptions } from 'mat-progress-buttons';
 import { FormDataFillingService } from 'src/app/modules/dashboard/services/shared/formDataFillingService';
 import { RequestsService } from 'src/app/modules/dashboard/services/requests/requests.service';
+import {CountryRolesService} from '../../../../../shared/services/country-roles.service';
+import {CountryTypes} from '../../../../../shared/utils/keys/country-types';
+import {CiaCountryRoleTypes} from '../../../../../shared/utils/keys/cia-country-role-types';
 
 // tslint:disable: one-line
 // tslint:disable: max-line-length
@@ -47,9 +50,10 @@ export class LifeComponent implements OnInit, DoCheck {
     private know: KnowYourCustomerComponent,
     public appComponent: AppComponent,
     private cd: ChangeDetectorRef,
-    public requestService: RequestsService
+    public requestService: RequestsService,
+    private countryRolesService: CountryRolesService,
   ) {
-    let d = new Date();
+    const d = new Date();
     d.setFullYear(d.getFullYear() - 18);
     this.maxDate = d;
   }
@@ -1909,7 +1913,7 @@ export class LifeComponent implements OnInit, DoCheck {
     // tslint:disable-next-line: forin
     for (const dpd in form.value) {
       if (form.controls[dpd].dirty) { isDirty = true; }
-      if(form.value[dpd].quantity){
+      if (form.value[dpd].quantity){
         total += form.value[dpd].quantity;
       }
       else if (form.value[dpd].quantityBeneficiary) {
@@ -2076,23 +2080,14 @@ export class LifeComponent implements OnInit, DoCheck {
   }
 
   newQuote() {
-    if ((this.userService.getRoles().includes('WWS') && this.userService.getRoles().includes('WMA'))) {
-      let cia = localStorage.getItem('countryCode');
-      // console.log('countryCode es igual a ' + cia);
-      if (cia == 'rd') {
-        window.open(`${environment.urlCotizadores}/vida?cia=wws`, '_self');
-        // console.log('el cia es igual a wws');
-      }
-      else if (cia == 'pn') {
-        window.open(`${environment.urlCotizadores}/vida?cia=wwm`, '_self');
-        // console.log('el cia es igual a wwm');
-      }
+    let role = '';
+    if (this.countryRolesService.userHasMoreThanOneRole()) {
+      const country = localStorage.getItem('countryCode');
+      role = this.countryRolesService.getRoleByCountry(country as CountryTypes);
+    } else {
+      role = this.userService.getRoleCotizador();
     }
-    else if (this.userService.getRoleCotizador() === 'WWS') {
-      window.open(`${environment.urlCotizadores}/vida?cia=wws`, '_self');
-    } else if (this.userService.getRoleCotizador() === 'WMA') {
-      window.open(`${environment.urlCotizadores}/vida?cia=wwm`, '_self');
-    }
+    window.open(`${environment.urlCotizadores}/vida?cia=${CiaCountryRoleTypes[role]}`, '_self');
   }
 
   showWarningDot(form: any): boolean {
@@ -3444,26 +3439,6 @@ export class LifeComponent implements OnInit, DoCheck {
     else {
 
       return Object.keys(this.newRequest.get('activitiesQuestionnaires').value).length > 0;
-    }
-  }
-
-  isFormValid(form: string) {
-    const isValid = this.newRequest.get(form).valid;
-    const contractor = this.newRequest.get('contractorQuestionnaires') as FormGroup;
-    const payer = this.newRequest.get('contractorQuestionnaires') as FormGroup;
-
-    const getForm = form === 'payer' ? contractor : payer;
-
-    if (isValid) {
-      if (this.role === 'WMA') { getForm.addControl('solicitudConozcaASuCliente', this.fb.group({})); }
-      else if (this.role === 'WWS') { getForm.addControl('knowYourCustomer', this.fb.group({})); }
-
-      return true;
-    } else {
-      if (this.role === 'WMA') { getForm.removeControl('solicitudConozcaASuCliente'); }
-      else if (this.role === 'WWS') { getForm.removeControl('knowYourCustomer'); }
-
-      return false;
     }
   }
 

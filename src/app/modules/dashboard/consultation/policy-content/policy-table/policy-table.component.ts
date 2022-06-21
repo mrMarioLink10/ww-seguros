@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { PolicyService } from '../../../services/consultation/policy.service';
 import { HttpParams } from '@angular/common/http';
 import { UserService } from '../../../../../core/services/user/user.service';
+import {CountryRolesService} from '../../../../../shared/services/country-roles.service';
 
 @Component({
   selector: 'app-policy-table',
@@ -45,7 +46,8 @@ export class PolicyTableComponent implements OnInit {
   constructor(
     private route: Router,
     private policyService: PolicyService,
-    private userService: UserService
+    private userService: UserService,
+    private countryRolesService: CountryRolesService,
   ) { }
 
   ngOnInit() {
@@ -58,7 +60,7 @@ export class PolicyTableComponent implements OnInit {
     this.loading = true;
     let params = this.generatePoliciesParams();
 
-    if (this.userService.getRoles().includes('WWS') && this.userService.getRoles().includes('WMA')) {
+    if (this.countryRolesService.userHasMoreThanOneRole()) {
       params = params.append('country', localStorage.getItem('countryCode'));
     }
 

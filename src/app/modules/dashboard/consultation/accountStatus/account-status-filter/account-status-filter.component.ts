@@ -6,6 +6,8 @@ import { FormBuilder } from '@angular/forms';
 import { AppComponent } from 'src/app/app.component';
 import { UserService } from '../../../../../core/services/user/user.service';
 import { environment } from 'src/environments/environment';
+import {CountryRoleTypes} from '../../../../../shared/utils/keys/country-role-types';
+import {CountryRolesService} from '../../../../../shared/services/country-roles.service';
 
 
 @Component({
@@ -30,7 +32,11 @@ export class AccountStatusFilterComponent implements OnInit {
   });
   BASE_URL: any = `${environment.fileUrlHttps}`;
 
-  constructor(private fb: FormBuilder, private appComponent: AppComponent, private userService: UserService) { }
+  constructor(
+    private fb: FormBuilder,
+    private appComponent: AppComponent,
+    private userService: UserService,
+    private countryRolesService: CountryRolesService) { }
   userRole = "";
   ngOnInit() {
     this.userRole = this.userService.getRoleCotizador();
@@ -64,15 +70,8 @@ export class AccountStatusFilterComponent implements OnInit {
   }
 
   download() {
-    console.log(this.polizaId);
-    switch (this.userRole) {
-      case 'WWS':
-        window.open(`${this.BASE_URL}/InvoiceView/ExportToPDF/EstadoDeCuentas/${this.polizaId}/?location=true`, "_blank");;
-      case 'WMA':
-        window.open(`${this.BASE_URL}/InvoiceView/ExportToPDF/EstadoDeCuentas/${this.polizaId}/?location=false`, "_blank");;
-      default:
-        return '';
-    }
+    const country = this.countryRolesService.getCountryByRole(this.userRole as CountryRoleTypes);
+    window.open(`${this.BASE_URL}/InvoiceView/ExportToPDF/EstadoDeCuentas/${this.polizaId}/?location=${country}`, '_blank');
   }
 
 }

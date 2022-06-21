@@ -15,10 +15,7 @@
         <div class="dashboard-background-color-first  flex justify-center sm:pb-6 md:pb-12 lg:pb-12 xl:pb-12">
           <div class="pr-2 pl-2 sidenav-user-info align-items-center d-flex">
             <div class="flex justify-center pt-2 sm:pt-24 md:pt-24 lg:pt-24 xl:pt-24 pb-3">
-              <img *ngIf="this.role === 'WWS'" src="../../../../../../assets/Logowws@2x.png" width="225px"
-                alt="Logo de WorldWide Seguros">
-              <img *ngIf="this.role !== 'WWS'" src="../../../../../../assets/Logowwm.png" width="225px"
-                alt="Logo de WorldWide Seguros">
+              <img [src]="imageSrc" width="225px" alt="Logo de WorldWide Seguros">
             </div>
             <div class="text-center text-white pt-6">
               <ul class="list-unstyled m-0">
@@ -142,13 +139,12 @@
           </button>
         </div>
         <div class="flex justify-end">
-          <div *ngIf="showMatListen(['WWS']) && showMatListen(['WMA'])"
+          <div *ngIf="!userHasMoreThanOneRole()"
             style="color: white; max-height: 35px !important; padding-left: 0.75rem" class="mt-10">
             <mat-form-field color="accent" appearance="outline" class="w-full country-select"
               style="font-size: small !important;">
-              <mat-select [(ngModel)]="country" (selectionChange)="setCountry()">
-                <mat-option value="rd">RD</mat-option>
-                <mat-option value="pn">PN</mat-option>
+              <mat-select [(ngModel)]="country" (selectionChange)="updateCountry()">
+                <mat-option *ngFor="let country of countries" [value]="country">{{country.toUpperCase()}}</mat-option>
               </mat-select>
             </mat-form-field>
           </div>

@@ -17,6 +17,8 @@ import { BaseDialogComponent } from 'src/app/shared/components/base-dialog/base-
 import { QuoteService } from '../services/quote.service';
 import { environment } from 'src/environments/environment';
 import { PolicyService } from '../../services/consultation/policy.service';
+import {CountryRolesService} from '../../../../shared/services/country-roles.service';
+import {CountryTypes} from '../../../../shared/utils/keys/country-types';
 
 // tslint:disable: max-line-length
 @Component({
@@ -108,6 +110,8 @@ export class QuoteComponent implements OnInit {
     private dataMappingFromApi: FormDataFillingService,
     private quoteService: QuoteService,
     private policyService: PolicyService,
+    private countryRolesService: CountryRolesService,
+
   ) { }
 
   ngOnInit() {
@@ -117,14 +121,10 @@ export class QuoteComponent implements OnInit {
 
     console.log(this.userService.getRoles());
 
-    if (this.userService.getRoles().includes('WWS') && this.userService.getRoles().includes('WMA')) {
+    if (this.countryRolesService.userHasMoreThanOneRole()) {
       this.country = localStorage.getItem('countryCode');
+      this.role = this.countryRolesService.getRoleByCountry(this.country as CountryTypes);
 
-      if (this.country === 'rd') {
-        this.role = 'WWS';
-      } else if (this.country === 'pn') {
-        this.role = 'WMA';
-      }
     } else {
       this.role = this.userService.getRoleCotizador();
     }
@@ -413,14 +413,14 @@ export class QuoteComponent implements OnInit {
           .subscribe((response: any) => {
             console.log(response);
             if (response.data !== null) {
-              
+
               console.warn('RAMO: ', response.data.polizas[0].ramo);
-  
+
               this.administrationPolicyGroup.get('tipoSolicitud').setValue('');
               this.administrationPolicyGroup.get('tipoSolicitud').reset();
-  
+
               this.isRamoSalud = response.data.polizas[0].ramo === 'SALUD' ? true : false;
-  
+
               if (this.isRamoSalud) {
                 this.changeType = {
                   label: 'Tipo de Solicitud',
@@ -446,7 +446,7 @@ export class QuoteComponent implements OnInit {
                   ]
                 };
               }
-  
+
               setTimeout(() => {
                 this.appComponent.showOverlay = false;
               }, 2000);
@@ -455,7 +455,7 @@ export class QuoteComponent implements OnInit {
                   this.policyDetail = res.data;
                   console.log('DETALLE DE POLIZA: ', this.policyDetail);
                 });
-                setTimeout(() => {                
+                setTimeout(() => {
                   this.showContent = true;
                   const dialogRef = this.dialog.open(BaseDialogComponent, {
                     data: this.dialogOption.idNumberFoundAnonymus(response.data),
@@ -464,10 +464,10 @@ export class QuoteComponent implements OnInit {
                   setTimeout(() => {
                     dialogRef.close();
                   }, 4000);
-    
+
                   // tslint:disable-next-line: max-line-length
                   this.administrationPolicyGroup.get('personName').setValue(`${response.data.asegurado.nombres_asegurado} ${response.data.asegurado.apellidos_asegurado}`);
-    
+
                   this.loading = false;
                 }, 2000);
               } else {
@@ -505,17 +505,17 @@ export class QuoteComponent implements OnInit {
     const productoToValue = this.administrationPolicyGroup.get('productoTo').value;
     let code;
 
-    if (this.administrationPolicyGroup.get('tipoSolicitud').value == 'CAMBIO DE PRODUCTO') {      
+    if (this.administrationPolicyGroup.get('tipoSolicitud').value == 'CAMBIO DE PRODUCTO') {
       if (localStorage.getItem('countryCode') === 'rd') {
         code = this.availableCodes.find(codigo => codigo.value === productoToValue);
         const codeWWS = code.valueWWS;
-  
+
         this.formHandler.saveDynamicQuote(this.administrationPolicyGroup, this.appComponent, codeWWS);
       }
       else if (localStorage.getItem('countryCode') === 'pn') {
         code = this.availableCodes.find(codigo => codigo.value === productoToValue);
         const codeWWM = code.valueWWM;
-  
+
         this.formHandler.saveDynamicQuote(this.administrationPolicyGroup, this.appComponent, codeWWM);
       }
     }

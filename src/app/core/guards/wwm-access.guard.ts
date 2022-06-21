@@ -1,44 +1,48 @@
-import { Injectable } from '@angular/core';
-import { CanActivate, CanActivateChild, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, Router } from '@angular/router';
-import { Observable } from 'rxjs';
-import { UserService } from '../services/user/user.service';
+import {Injectable} from '@angular/core';
+import {
+  ActivatedRouteSnapshot,
+  CanActivate,
+  CanActivateChild,
+  Router,
+  RouterStateSnapshot,
+  UrlTree
+} from '@angular/router';
+import {Observable} from 'rxjs';
+import {UserService} from '../services/user/user.service';
+import {CountryRolesService} from '../../shared/services/country-roles.service';
+import {CountryTypes} from '../../shared/utils/keys/country-types';
+import {CountryRoleTypes} from '../../shared/utils/keys/country-role-types';
 
 @Injectable({
   providedIn: 'root'
 })
 export class WwmAccessGuard implements CanActivate, CanActivateChild {
 
-  constructor(private userService: UserService, private router: Router) { }
+  constructor(
+    private userService: UserService,
+    private router: Router,
+    private countryRolesService: CountryRolesService,
+  ) { }
 
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-      if ((this.userService.getRoles().includes('WWS') && this.userService.getRoles().includes('WMA'))) {
-        let country = localStorage.getItem('countryCode');
-        // console.log('countryCode es igual a ' + country);
-        let countryRole = '';
-        if (country == 'rd') {
-          countryRole = 'WWS';
-          // console.log('el country es igual a wws');
-        }
-        else if (country == 'pn') {
-          countryRole = 'WMA';
-          // console.log('el country es igual a wwm');
-        }
+      if ((this.countryRolesService.userHasMoreThanOneRole())) {
+        const country = localStorage.getItem('countryCode');
+        const countryRole = this.countryRolesService.getRoleByCountry(country as CountryTypes);
 
-        if (countryRole === 'WMA') {
-          console.log('No estás logueado');
-          this.router.navigate(['/']);
-          return false;
+        if (countryRole !== CountryRoleTypes.WWS) {
+            console.log('No estás logueado');
+            this.router.navigate(['/']);
+            return false;
         }
-      }
-      else if (this.userService.getRoleCotizador() === 'WMA') {
+      } else if (this.userService.getRoleCotizador() !== CountryRoleTypes.WWS) {
       console.log('No estás logueado');
       this.router.navigate(['/']);
       return false;
     }
 
-    return true;
+      return true;
   }
   canActivateChild(
     next: ActivatedRouteSnapshot,

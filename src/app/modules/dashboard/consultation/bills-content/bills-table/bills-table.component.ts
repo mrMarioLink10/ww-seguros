@@ -5,6 +5,8 @@ import { BillsService } from '../../../services/consultation/bills.service';
 import { UserService } from '../../../../../core/services/user/user.service';
 import { HttpParams } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
+import {CountryRolesService} from '../../../../../shared/services/country-roles.service';
+import {CountryRoleTypes} from '../../../../../shared/utils/keys/country-role-types';
 
 @Component({
   selector: 'app-bills-table',
@@ -12,12 +14,6 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./bills-table.component.scss']
 })
 export class BillsTableComponent implements OnInit {
-
-  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
-  @ViewChild(MatSort, { static: true }) sort: MatSort;
-
-  billsFilter: BillFilter;
-  @Output() pendingBillsEmitter = new EventEmitter<number>();
   @Input() set filters(billsFilter: BillFilter) {
     if (billsFilter) {
       this.billsFilter = billsFilter;
@@ -33,27 +29,37 @@ export class BillsTableComponent implements OnInit {
       };
     }
   }
+  constructor(
+    private billsService: BillsService,
+    private userService: UserService,
+    private countryRolesService: CountryRolesService,
+  ) { }
+
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
+
+  billsFilter: BillFilter;
+  @Output() pendingBillsEmitter = new EventEmitter<number>();
 
   userRole: string;
   dataSource;
   data: Bill[] = [];
   displayedColumns: string[] = ['policyId', 'billId', 'clientName', 'expirationDate', 'totalBalance', 'actions'];
+  BASE_URL: any = `${environment.fileUrlHttps}`;
   emitPendingBills(policies: Bill[]) {
     const filteredPolicies = policies.filter(p => p.paymentState === 'P');
     this.pendingBillsEmitter.emit(filteredPolicies.length);
   }
-  constructor(private billsService: BillsService, private userService: UserService) { }
 
   ngOnInit() {
     this.userRole = this.userService.getRoleCotizador();
-    this.canUserDownloadBills();
     this.loadData();
   }
 
   loadData() {
     let httpParams = this.constructQueryParams();
 
-    if (this.userService.getRoles().includes('WWS') && this.userService.getRoles().includes('WMA')) {
+    if (this.countryRolesService.userHasMoreThanOneRole()) {
       httpParams = httpParams.append('country', localStorage.getItem('countryCode'));
     }
 
@@ -63,7 +69,7 @@ export class BillsTableComponent implements OnInit {
       this.dataSource.sort = this.sort;
       this.dataSource.paginator = this.paginator;
 
-      //this.emitPendingBills(this.data);
+      // this.emitPendingBills(this.data);
     });
 
     this.billsService.getBillsInfo().subscribe((res: any) => {
@@ -75,21 +81,11 @@ export class BillsTableComponent implements OnInit {
 
   }
 
-  canUserDownloadBills() {
-    return this.userRole === 'WWS' || this.userRole === 'WMA';
+  getBillDownloadLink(billId) {
+    const country = this.countryRolesService.getCountryByRole(this.userRole as CountryRoleTypes);
+    return `${this.BASE_URL}/InvoiceView/ExportToPDF/${billId}/?location=${country}`;
   }
 
-  getBillDownloadLink(billId) {
-    switch (this.userRole) {
-      case 'WWS':
-        return `${this.BASE_URL}/InvoiceView/ExportRDToPDF/${billId}`;
-      case 'WMA':
-        return `${this.BASE_URL}/InvoiceView/ExportPMToPDF/${billId}`;
-      default:
-        return '';
-    }
-  }
-  BASE_URL: any = `${environment.fileUrlHttps}`;
   constructQueryParams(): HttpParams {
     let httpParams = new HttpParams();
     if (this.billsFilter.policyId && this.billsFilter.policyId !== '') {

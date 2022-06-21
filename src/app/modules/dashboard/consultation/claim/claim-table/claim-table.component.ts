@@ -7,6 +7,8 @@ import { PolicyService } from '../../../services/consultation/policy.service';
 import { AppComponent } from '../../../../../app.component';
 import { UserService } from '../../../../../core/services/user/user.service';
 import { environment } from 'src/environments/environment';
+import {CountryRolesService} from '../../../../../shared/services/country-roles.service';
+import {CountryRoleTypes} from '../../../../../shared/utils/keys/country-role-types';
 
 
 @Component({
@@ -40,8 +42,14 @@ export class ClaimTableComponent implements OnInit {
     'paymentType', 'paymentDocument', 'paymentDate', 'actions'];
 
 
-  constructor(private claimService: ClaimService, private activatedRoute: ActivatedRoute,
-    private policyService: PolicyService, private appComponent: AppComponent, private userService: UserService) {
+  constructor(
+    private claimService: ClaimService,
+    private activatedRoute: ActivatedRoute,
+    private policyService: PolicyService,
+    private appComponent: AppComponent,
+    private userService: UserService,
+    private countryRolesService: CountryRolesService,
+  ) {
     // this.policyId = this.activatedRoute.snapshot.paramMap.get('policyId');
   }
 
@@ -51,14 +59,8 @@ export class ClaimTableComponent implements OnInit {
   }
   BASE_URL: any = `${environment.fileUrlHttps}`;
   getBillDownloadLink(billId, poliza) {
-    switch (this.userRole) {
-      case 'WWS':
-        return `${this.BASE_URL}/InvoiceView/ExportToPDF/ReclamosData/${billId}/${poliza}/?location=true`;
-      case 'WMA':
-        return `${this.BASE_URL}/InvoiceView/ExportToPDF/ReclamosData/${billId}/${poliza}/?location=false`;
-      default:
-        return '';
-    }
+    const country = this.countryRolesService.getCountryByRole(this.userRole as CountryRoleTypes);
+    return `${this.BASE_URL}/InvoiceView/ExportToPDF/ReclamosData/${billId}/${poliza}/?location=${country}`;
   }
   loadData() {
     // this.policyService.getPolicyDetails(this.policyId).subscribe((res: any) => {
@@ -70,7 +72,7 @@ export class ClaimTableComponent implements OnInit {
 
     let httpParams = this.constructQueryParams();
 
-    if (this.userService.getRoles().includes('WWS') && this.userService.getRoles().includes('WMA')) {
+    if (this.countryRolesService.userHasMoreThanOneRole()) {
       httpParams = httpParams.append('country', localStorage.getItem('countryCode'));
     }
 

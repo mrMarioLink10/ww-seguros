@@ -10,6 +10,8 @@ import { FormHandlerService } from '../../../core/services/forms/form-handler.se
 import { AppComponent } from '../../../app.component';
 import { UserService } from '../../../core/services/user/user.service';
 import { environment } from 'src/environments/environment';
+import {CountryRolesService} from '../../../shared/services/country-roles.service';
+import {CountryRoleTypes} from '../../../shared/utils/keys/country-role-types';
 
 
 
@@ -79,7 +81,8 @@ export class AuthorizationsComponent implements OnInit {
 		public formHandlerService: FormHandlerService,
 		private appComponent: AppComponent,
 		private userService: UserService,
-		private cd: ChangeDetectorRef
+		private cd: ChangeDetectorRef,
+  private countryRolesService: CountryRolesService,
 	) { }
 
 	getAuthorizations(params: HttpParams = new HttpParams()) {
@@ -88,7 +91,7 @@ export class AuthorizationsComponent implements OnInit {
 			this.appComponent.showOverlay = true;
 		});
 
-		if (this.userService.getRoles().includes('WWS') && this.userService.getRoles().includes('WMA')) {
+		if (this.countryRolesService.userHasMoreThanOneRole()) {
 			params = params.append('country', localStorage.getItem('countryCode'));
 		}
 
@@ -120,11 +123,8 @@ export class AuthorizationsComponent implements OnInit {
 	}
 
 	seeRequest(id: number) {
-		if (this.role === 'WWS') {
-			window.open(`${this.BASE_URL}/PrecertificadoView/Index/${id}/?location=true`, '_blank');
-		} else {
-			window.open(`${this.BASE_URL}/PrecertificadoView/Index/${id}/?location=false`, '_blank');
-		}
+    const country = this.countryRolesService.getCountryByRole(this.role as CountryRoleTypes);
+    window.open(`${this.BASE_URL}/PrecertificadoView/Index/${id}/?location=${country}`, '_blank');
 	}
 
 	ngOnInit() {

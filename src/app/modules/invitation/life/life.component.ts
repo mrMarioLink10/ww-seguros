@@ -20,6 +20,8 @@ import { LifeService } from '../../dashboard/requests/new-request/life/services/
 import { KnowYourCustomerComponent } from '../../dashboard/shared/components/disease/know-your-customer/know-your-customer.component';
 import { RequestsService } from '../services/requests.service';
 import { environment } from 'src/environments/environment';
+import {CountryRolesService} from '../../../shared/services/country-roles.service';
+import {CiaCountryRoleTypes} from '../../../shared/utils/keys/cia-country-role-types';
 
 // tslint:disable: one-line
 // tslint:disable: max-line-length
@@ -47,7 +49,8 @@ export class LifeComponent implements OnInit, DoCheck {
     private know: KnowYourCustomerComponent,
     private appComponent: AppComponent,
     private cd: ChangeDetectorRef,
-    public requestService: RequestsService
+    public requestService: RequestsService,
+    private countryRolesService: CountryRolesService,
   ) {
     var d = new Date();
     d.setFullYear(d.getFullYear() - 18);
@@ -2027,11 +2030,8 @@ export class LifeComponent implements OnInit, DoCheck {
   }
 
   newQuote() {
-    if (this.userService.getRoleCotizador() === 'WWS') {
-      window.open(`${environment.urlCotizadores}/?cia=wws`, '_blank');
-    } else if (this.userService.getRoleCotizador() === 'WMA') {
-      window.open(`${environment.urlCotizadores}/?cia=wwm`, '_blank');
-    }
+    const role = this.userService.getRoleCotizador();
+    window.open(`${environment.urlCotizadores}/?cia=${CiaCountryRoleTypes[role]}`, '_blank');
   }
 
   showWarningDot(form: any): boolean {
@@ -3372,26 +3372,6 @@ export class LifeComponent implements OnInit, DoCheck {
     }
   }
 
-  isFormValid(form: string) {
-    const isValid = this.newRequest.get(form).valid;
-    const contractor = this.newRequest.get('contractorQuestionnaires') as FormGroup;
-    const payer = this.newRequest.get('contractorQuestionnaires') as FormGroup;
-
-    const getForm = form === 'payer' ? contractor : payer;
-
-    if (isValid) {
-      if (this.role === 'WMA') { getForm.addControl('solicitudConozcaASuCliente', this.fb.group({})); }
-      else if (this.role === 'WWS') { getForm.addControl('knowYourCustomer', this.fb.group({})); }
-
-      return true;
-    } else {
-      if (this.role === 'WMA') { getForm.removeControl('solicitudConozcaASuCliente'); }
-      else if (this.role === 'WWS') { getForm.removeControl('knowYourCustomer'); }
-
-      return false;
-    }
-  }
-
   showAditionalRed() {
     if (this.newRequest.get('questionnaires').get('solicitudHipertensionArterial')) {
       if (this.newRequest.get('questionnaires').get('solicitudHipertensionArterial').invalid) {
@@ -3443,17 +3423,9 @@ export class LifeComponent implements OnInit, DoCheck {
         data.data != undefined) {
         // this.ID = data.data.id;
         // console.log(data.data);
-        switch (data.data.countryCode) {
-          case 'RD':
-            this.role = 'WWS';
-            break;
-          case 'PM':
-            this.role = 'WMA';
-            break;
-          default:
-            this.role = 'WMA';
-            break;
-        }
+
+        this.role = this.countryRolesService.getRoleByCountry(data.data.countryCode.toLowerCase());
+
         this.dataMappingFromApi.iterateThroughtAllObjectVida(data.data, this.newRequest);
 
         console.log(this.newRequest);

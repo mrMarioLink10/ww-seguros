@@ -23,6 +23,7 @@ import { map } from 'rxjs/operators';
 import { QuoteService } from 'src/app/modules/dashboard/dynamic-pa/services/quote.service';
 import { ChangeService } from '../../../modules/dashboard/dynamic-pa/services/change.service';
 import { DynamicPaService } from '../../../modules/dashboard/dynamic-pa/services/dynamic-pa.service';
+import {CountryRolesService} from "../../../shared/services/country-roles.service";
 // tslint:disable: forin
 // tslint:disable: variable-name
 
@@ -51,7 +52,8 @@ export class FormHandlerService {
     private policyAdministrationService: PolicyAdministrationService,
     private dynamicQuoteService: QuoteService,
     private changeService: ChangeService,
-    private dynamicPaService: DynamicPaService
+    private dynamicPaService: DynamicPaService,
+    private countryRolesService: CountryRolesService,
   ) { }
 
   sendForm(form: FormGroup, name: string, type?: string, appComponent?: any, id?: number, isInvitation?: boolean) {
@@ -192,7 +194,7 @@ export class FormHandlerService {
       }
 
       form.removeControl('countryRoleCode');
-      if (this.userService.getRoles().includes('WWS') && this.userService.getRoles().includes('WMA')) {
+      if (this.countryRolesService.userHasMoreThanOneRole()) {
         form.addControl('countryRoleCode', this.fb.control(localStorage.getItem('countryCode')));
       }
 

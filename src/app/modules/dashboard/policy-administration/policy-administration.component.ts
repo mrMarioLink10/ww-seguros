@@ -10,6 +10,7 @@ import { MatProgressButtonOptions } from 'mat-progress-buttons';
 import { environment } from 'src/environments/environment';
 import { DisabilityService } from '../requests/new-request/disability/services/disability.service';
 import { LifeService } from '../requests/new-request/life/services/life.service';
+import {CountryRolesService} from '../../../shared/services/country-roles.service';
 
 @Component({
 	selector: 'app-policy-administration',
@@ -26,7 +27,8 @@ export class PolicyAdministrationComponent implements OnInit {
 		private formHandlerService: FormHandlerService,
 		private appComponent: AppComponent,
 		private userService: UserService,
-	) { }
+  private countryRolesService: CountryRolesService,
+  ) { }
 
 	statusTypes = [
 		{ value: 0, view: 'Revisar' },
@@ -73,7 +75,7 @@ export class PolicyAdministrationComponent implements OnInit {
 	getRequests(params: HttpParams = new HttpParams()) {
 		let data;
 
-		if (this.userService.getRoles().includes('WWS') && this.userService.getRoles().includes('WMA')) {
+		if (this.countryRolesService.userHasMoreThanOneRole()) {
 			params = params.append('country', localStorage.getItem('countryCode'));
 		}
 

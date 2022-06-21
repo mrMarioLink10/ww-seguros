@@ -5,6 +5,8 @@ import { HttpParams } from '@angular/common/http';
 import { AppComponent } from '../../../../../app.component';
 import { UserService } from '../../../../../core/services/user/user.service';
 import { environment } from 'src/environments/environment';
+import {CountryRolesService} from '../../../../../shared/services/country-roles.service';
+import {CountryRoleTypes} from '../../../../../shared/utils/keys/country-role-types';
 
 
 @Component({
@@ -39,27 +41,28 @@ export class ReceiptTableComponent implements OnInit {
   displayedColumns: string[] = ['receiptNumber', 'client', 'rec', 'chargeDate', 'paymentType',
     'amountCharge', 'actions'];
 
-  constructor(private receiptService: ReceiptService, private appComponent: AppComponent, private userService: UserService) { }
+  constructor(
+    private receiptService: ReceiptService,
+    private appComponent: AppComponent,
+    private userService: UserService,
+    private countryRolesService: CountryRolesService,
+  ) { }
   userRole;
   ngOnInit() {
     // this.appComponent.showOverlay = true;
     this.userRole = this.userService.getRoleCotizador();
     this.loadData();
   }
+
   getBillDownloadLink(billId) {
-    switch (this.userRole) {
-      case 'WWS':
-        return `${this.BASE_URL}/InvoiceView/ExportToPDF/Reembolsos/${billId}/${this.policyId}/?location=true`;
-      case 'WMA':
-        return `${this.BASE_URL}/InvoiceView/ExportToPDF/Reembolsos/${billId}/${this.policyId}/?location=false`;
-      default:
-        return '';
-    }
+    const country = this.countryRolesService.getCountryByRole(this.userRole as CountryRoleTypes);
+    return `${this.BASE_URL}/InvoiceView/ExportToPDF/Reembolsos/${billId}/${this.policyId}/?location=${country}`;
   }
+
   loadData() {
     let httpParams = this.constructQueryParams();
 
-    if (this.userService.getRoles().includes('WWS') && this.userService.getRoles().includes('WMA')) {
+    if (this.countryRolesService.userHasMoreThanOneRole()) {
       httpParams = httpParams.append('country', localStorage.getItem('countryCode'));
     }
 

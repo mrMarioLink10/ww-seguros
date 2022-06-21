@@ -7,6 +7,9 @@ import { HttpParams } from '@angular/common/http';
 import { UserService } from '../../../core/services/user/user.service';
 import { AppComponent } from '../../../app.component';
 import { environment } from 'src/environments/environment';
+import {CountryRolesService} from '../../../shared/services/country-roles.service';
+import {CountryTypes} from '../../../shared/utils/keys/country-types';
+import {CiaCountryRoleTypes} from '../../../shared/utils/keys/cia-country-role-types';
 
 export interface Quotes {
   noCotizacion: number;
@@ -67,14 +70,15 @@ export class QuotesComponent implements OnInit {
     private router: Router,
     private quotesService: QuotesService,
     private userService: UserService,
-    private appComponent: AppComponent
+    private appComponent: AppComponent,
+    private countryRolesService: CountryRolesService,
   ) { }
 
   getQuotes(params: HttpParams = new HttpParams()) {
     let data;
     console.log(params);
 
-    if (this.userService.getRoles().includes('WWS') && this.userService.getRoles().includes('WMA')) {
+    if (this.countryRolesService.userHasMoreThanOneRole()) {
       params = params.append('country', localStorage.getItem('countryCode'));
     }
 
@@ -114,18 +118,15 @@ export class QuotesComponent implements OnInit {
   }
 
   newQuote() {
-    if (this.userService.getRoles().includes('WWS') && this.userService.getRoles().includes('WMA')) {
+    let role = '';
+    if (this.countryRolesService.userHasMoreThanOneRole()) {
       const country = localStorage.getItem('countryCode');
-      country === 'rd' ? window.open(`${environment.urlCotizadores}/?cia=wws`, '_blank') : window.open(`${environment.urlCotizadores}/?cia=wwm`, '_blank');
+      role = this.countryRolesService.getRoleByCountry(country as CountryTypes);
 
     } else {
-      if (this.userService.getRoleCotizador() === 'WWS') {
-        window.open(`${environment.urlCotizadores}/?cia=wws`, '_blank');
-      } else if (this.userService.getRoleCotizador() === 'WMA') {
-        window.open(`${environment.urlCotizadores}/?cia=wwm`, '_blank');
-      }
+      role = this.userService.getRoleCotizador();
     }
-
+    window.open(`${environment.urlCotizadores}/?cia=${CiaCountryRoleTypes[role]}`, '_blank');
   }
 
 }

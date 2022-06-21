@@ -10,6 +10,8 @@ import { FormHandlerService } from 'src/app/core/services/forms/form-handler.ser
 import { AppComponent } from 'src/app/app.component';
 import { UserService } from '../../../../core/services/user/user.service';
 import { environment } from 'src/environments/environment';
+import {CountryRolesService} from '../../../../shared/services/country-roles.service';
+import {CountryRoleTypes} from '../../../../shared/utils/keys/country-role-types';
 
 
 @Component({
@@ -40,13 +42,14 @@ export class RefundsListComponent implements OnInit {
 		public refund: RefundService,
 		public formHandlerService: FormHandlerService,
 		private appComponent: AppComponent,
-		private userService: UserService
+		private userService: UserService,
+  private countryRolesService: CountryRolesService,
 	) { }
 
 	getRefunds(params: HttpParams = new HttpParams()) {
 		let data;
 		console.log(params);
-		if (this.userService.getRoles().includes('WWS') && this.userService.getRoles().includes('WMA')) {
+		if (this.countryRolesService.userHasMoreThanOneRole()) {
 			params = params.append('country', localStorage.getItem('countryCode'));
 		}
 		setTimeout(() => {
@@ -73,11 +76,8 @@ export class RefundsListComponent implements OnInit {
 	}
 
 	seeRequest(id: number) {
-		if (this.role === 'WWS') {
-			window.open(`${this.BASE_URL}/ReembolsosView/Index/${id}/?location=true`, '_blank');
-		} else {
-			window.open(`${this.BASE_URL}/ReembolsosView/Index/${id}/?location=false`, '_blank');
-		}
+    const country = this.countryRolesService.getCountryByRole(this.role as CountryRoleTypes);
+    window.open(`${this.BASE_URL}/ReembolsosView/Index/${id}/?location=${country}`, '_blank');
 	}
 
 	deleteRefund(id: number) {

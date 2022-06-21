@@ -11,6 +11,7 @@ import { MatSort, MatPaginator, MatTableDataSource } from '@angular/material';
 import { environment } from 'src/environments/environment';
 import { HttpParams } from '@angular/common/http';
 import { DynamicPaService } from './services/dynamic-pa.service';
+import {CountryRolesService} from '../../../shared/services/country-roles.service';
 
 @Component({
   selector: 'app-dynamic-pa',
@@ -25,7 +26,8 @@ export class DynamicPaComponent implements OnInit {
     public disability: DisabilityService,
     private formHandlerService: FormHandlerService,
     private appComponent: AppComponent,
-    private userService: UserService
+    private userService: UserService,
+    private countryRolesService: CountryRolesService,
   ) { }
 
   // statusTypes = [
@@ -89,7 +91,7 @@ export class DynamicPaComponent implements OnInit {
   getRequests(params: HttpParams = new HttpParams()) {
     let data;
 
-    if (this.userService.getRoles().includes('WWS') && this.userService.getRoles().includes('WMA')) {
+    if (this.countryRolesService.userHasMoreThanOneRole()) {
       params = params.append('country', localStorage.getItem('countryCode'));
     }
 

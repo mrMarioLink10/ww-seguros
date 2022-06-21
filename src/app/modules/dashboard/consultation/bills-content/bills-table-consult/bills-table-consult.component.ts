@@ -5,6 +5,8 @@ import { BillsService } from '../../../services/consultation/bills.service';
 import { UserService } from '../../../../../core/services/user/user.service';
 import { HttpParams } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
+import {CountryRolesService} from '../../../../../shared/services/country-roles.service';
+import {CountryRoleTypes} from '../../../../../shared/utils/keys/country-role-types';
 
 
 @Component({
@@ -44,18 +46,20 @@ export class BillsTableConsultComponent implements OnInit {
     this.pendingBillsEmitter.emit(filteredPolicies.length);
   }
 
-  constructor(private billsService: BillsService, private userService: UserService) { }
+  constructor(
+    private billsService: BillsService,
+    private userService: UserService,
+    private countryRolesService: CountryRolesService, ) { }
 
   ngOnInit() {
     this.userRole = this.userService.getRoleCotizador();
-    this.canUserDownloadBills();
     this.loadData();
   }
 
   loadData() {
     let httpParams = this.constructQueryParams();
 
-    if (this.userService.getRoles().includes('WWS') && this.userService.getRoles().includes('WMA')) {
+    if (this.countryRolesService.userHasMoreThanOneRole()) {
       httpParams = httpParams.append('country', localStorage.getItem('countryCode'));
     }
 
@@ -70,19 +74,9 @@ export class BillsTableConsultComponent implements OnInit {
     });
   }
 
-  canUserDownloadBills() {
-    return this.userRole === 'WWS' || this.userRole === 'WMA';
-  }
-
   getBillDownloadLink(billId) {
-    switch (this.userRole) {
-      case 'WWS':
-        return `${this.BASE_URL}/InvoiceView/ExportRDToPDF/${billId}`;
-      case 'WMA':
-        return `${this.BASE_URL}/InvoiceView/ExportPMToPDF/${billId}`;
-      default:
-        return '';
-    }
+    const country = this.countryRolesService.getCountryByRole(this.userRole as CountryRoleTypes);
+    return `${this.BASE_URL}/InvoiceView/ExportToPDF/${billId}/?location=${country}`;
   }
 
   constructQueryParams(): HttpParams {

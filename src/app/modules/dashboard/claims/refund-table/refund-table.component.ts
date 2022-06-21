@@ -7,6 +7,8 @@ import { UserService } from '../../../../core/services/user/user.service';
 import { FormHandlerService } from 'src/app/core/services/forms/form-handler.service';
 import { RefundService } from './../new-claim/claim-types/refund/services/refund.service';
 import { environment } from 'src/environments/environment';
+import {CountryRolesService} from '../../../../shared/services/country-roles.service';
+import {CountryRoleTypes} from '../../../../shared/utils/keys/country-role-types';
 
 
 @Component({
@@ -42,9 +44,12 @@ export class RefundTableComponent implements OnInit {
   data = [];
   displayedColumns: string[] = ['noPoliza', 'nombre', 'tipoReclamo', 'totalAmountPesos', 'totalAmount', 'forma', 'userName', 'estatus', 'acciones'];
 
-  constructor(private appComponent: AppComponent, private claimsService: ClaimsService,
+  constructor(
+    private appComponent: AppComponent,
+    private claimsService: ClaimsService,
     private userService: UserService, public formHandlerService: FormHandlerService,
-    public refund: RefundService) { }
+    public refund: RefundService,
+    private countryRolesService: CountryRolesService, ) { }
 
   ngOnInit() {
     this.loadData();
@@ -54,7 +59,7 @@ export class RefundTableComponent implements OnInit {
   loadData() {
     this.appComponent.showOverlay = true;
     let httpParams = this.constructQueryParams();
-    if (this.userService.getRoles().includes('WWS') && this.userService.getRoles().includes('WMA')) {
+    if (this.countryRolesService.userHasMoreThanOneRole()) {
       httpParams = httpParams.append('country', localStorage.getItem('countryCode'));
     }
     this.claimsService.getRefunds(httpParams).subscribe((res: any) => {
@@ -94,11 +99,8 @@ export class RefundTableComponent implements OnInit {
   }
 
   seeRequest(id: number) {
-    if (this.role === 'WWS') {
-      window.open(`${this.BASE_URL}/ReembolsosView/Index/${id}/?location=true`, '_blank');
-    } else {
-      window.open(`${this.BASE_URL}/ReembolsosView/Index/${id}/?location=false`, '_blank');
-    }
+    const country = this.countryRolesService.getCountryByRole(this.role as CountryRoleTypes);
+    window.open(`${this.BASE_URL}/ReembolsosView/Index/${id}/?location=${country}`, '_blank');
   }
 
   deleteRefund(id: number) {

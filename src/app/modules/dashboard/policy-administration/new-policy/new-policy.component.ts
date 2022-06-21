@@ -14,6 +14,9 @@ import { DiseaseService } from '../../shared/components/disease/shared/disease/d
 import { PolicyAdministrationService } from '../services/policy-administration.service';
 import { ActivatedRoute } from '@angular/router';
 import { FormDataFillingService } from '../../services/shared/formDataFillingService';
+import {CountryRolesService} from '../../../../shared/services/country-roles.service';
+import {CountryTypes} from '../../../../shared/utils/keys/country-types';
+import {CountryRoleTypes} from '../../../../shared/utils/keys/country-role-types';
 // tslint:disable: max-line-length
 
 @Component({
@@ -386,6 +389,7 @@ export class NewPolicyComponent implements OnInit {
     private formHandler: FormHandlerService,
     private route: ActivatedRoute,
     private dataMappingFromApi: FormDataFillingService,
+    private countryRolesService: CountryRolesService,
   ) { }
 
   ngOnInit() {
@@ -395,14 +399,10 @@ export class NewPolicyComponent implements OnInit {
 
     console.log(this.userService.getRoles());
 
-    if (this.userService.getRoles().includes('WWS') && this.userService.getRoles().includes('WMA')) {
+    if (this.countryRolesService.userHasMoreThanOneRole()) {
       this.country = localStorage.getItem('countryCode');
 
-      if (this.country === 'rd') {
-        this.role = 'WWS';
-      } else if (this.country === 'pn') {
-        this.role = 'WMA';
-      }
+      this.role = this.countryRolesService.getRoleByCountry(this.country as CountryTypes);
     } else {
       this.role = this.userService.getRoleCotizador();
     }
@@ -498,12 +498,12 @@ export class NewPolicyComponent implements OnInit {
       }
     });
 
-    if (this.isWWSeguros == false) {  
+    if (this.isWWSeguros == false) {
     }
     else {
       this.administrationPolicyGroup.get('pdfSelector').disable();
     }
-    
+
     this.disableEnableComments();
   }
 
@@ -588,13 +588,13 @@ export class NewPolicyComponent implements OnInit {
     }
     console.log('antes', this.pdfOptions);
 
-    if (this.role === 'WWS') {
+    if (this.role === CountryRoleTypes.WWS) {
       pdfOptionsArray.push({
         name: 'CAMBIO DE FACTURA DE CONSUMIDOR FINAL A CRÉDITO FISCAL',
         url: ['/assets/pdfs/FORMULARIOCONOZCAASUCLIENTE(PERSONAJURIDICA)', '/assets/pdfs/FORMULARIOCONOZCAASUCLIENTE(PERSONAFISICA)'],
         text: 'Favor completar el formulario de Conozca a su Cliente correspondiente y copia de RNC.',
         pdfNames: ['FORMULARIO CONOZCA A SU CLIENTE (PERSONA JURÍDICA)', 'FORMULARIO CONOZCA A SU CLIENTE (PERSONA FÍSICA)']
-      })
+      });
     }
 
     // tslint:disable-next-line: prefer-for-of
@@ -630,8 +630,10 @@ export class NewPolicyComponent implements OnInit {
 
     for (const key in pdfObject.url) {
       if (Object.prototype.hasOwnProperty.call(pdfObject.url, key)) {
-        const element = this.role === 'WWS' ? `${pdfObject.url[key]}(WWS).pdf` : `${pdfObject.url[key]}(WWM).pdf`;
-        const elementName = this.role === 'WWS' ? `(WWS)` : `(WWMA)`;
+
+        // TODO: LIDER - py has no access
+        const element = this.role === CountryRoleTypes.WWS ? `${pdfObject.url[key]}(WWS).pdf` : `${pdfObject.url[key]}(WWM).pdf`;
+        const elementName = this.role === CountryRoleTypes.WWS ? `(WWS)` : `(WWMA)`;
 
         console.log(element);
 

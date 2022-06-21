@@ -5,6 +5,7 @@ import { AccountStatusService } from '../service/account-status.service';
 import { HttpParams } from '@angular/common/http';
 import { UserService } from '../../../../../core/services/user/user.service';
 import { environment } from 'src/environments/environment';
+import {CountryRolesService} from '../../../../../shared/services/country-roles.service';
 
 @Component({
   selector: 'app-account-status-table',
@@ -39,8 +40,12 @@ export class AccountStatusTableComponent implements OnInit {
   displayedColumns: string[] = ['type', 'numeroDocument', 'docDate', 'concepto', 'initialDate',
     'finalDate', 'debit', 'credit', 'balance'];
 
-  constructor(private appComponent: AppComponent, private status: AccountStatusService, private userService: UserService) { }
-  userRole = "";
+  constructor(
+    private appComponent: AppComponent,
+    private status: AccountStatusService,
+    private userService: UserService,
+    private countryRolesService: CountryRolesService, ) { }
+  userRole = '';
   ngOnInit() {
     this.userRole = this.userService.getRoleCotizador();
     this.loadData();
@@ -49,7 +54,7 @@ export class AccountStatusTableComponent implements OnInit {
   loadData() {
     let httpParams = this.constructQueryParams();
 
-    if (this.userService.getRoles().includes('WWS') && this.userService.getRoles().includes('WMA')) {
+    if (this.countryRolesService.userHasMoreThanOneRole()) {
       httpParams = httpParams.append('country', localStorage.getItem('countryCode'));
     }
 
@@ -63,16 +68,7 @@ export class AccountStatusTableComponent implements OnInit {
       this.appComponent.showOverlay = false;
     });
   }
-  getDownloadLink(id) {
-    switch (this.userRole) {
-      case 'WWS':
-        return `${this.BASE_URL}/InvoiceView/ExportToPDF/EstadoDeCuentas/${id}/?location=true`;
-      case 'WMA':
-        return `${this.BASE_URL}/InvoiceView/ExportToPDF/EstadoDeCuentas/${id}/?location=false`;
-      default:
-        return '';
-    }
-  }
+
   constructQueryParams(): HttpParams {
     let httpParams = new HttpParams();
     if (this.statusFilter.numeroDocument && this.statusFilter.numeroDocument !== '') {

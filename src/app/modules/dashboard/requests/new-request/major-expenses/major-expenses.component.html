@@ -165,7 +165,8 @@
               <app-number-input *ngIf="role == 'WMA'" isCell="true" class="mr-3" [group]="newRequest.get('person')"
                 label="Tel. Celular" name='cel'>
               </app-number-input>
-              <app-number-input *ngIf="role == 'WWS'" isPhone="true" class="mr-3" [group]="newRequest.get('person')"
+
+              <app-number-input *ngIf="role !== 'WMA'" isPhone="true" class="mr-3" [group]="newRequest.get('person')"
                 label="Tel. Celular" name='cel'>
               </app-number-input>
               <app-number-input isPhone="true" class="mr-3" [group]="newRequest.get('person')" label="Tel. Oficina"
@@ -629,7 +630,7 @@
               <app-number-input *ngIf="role == 'WMA'" isCell="true" class="mr-3" [group]="newRequest.get('contractor')"
                 label="Tel. Celular" name='cel'>
               </app-number-input>
-              <app-number-input *ngIf="role == 'WWS'" isPhone="true" class="mr-3" [group]="newRequest.get('contractor')"
+              <app-number-input *ngIf="role !== 'WMA'" isPhone="true" class="mr-3" [group]="newRequest.get('contractor')"
                 label="Tel. Celular" name='cel'>
               </app-number-input>
               <app-number-input isPhone="true" class="mr-3" [group]="newRequest.get('contractor')" label="Tel. Oficina"
@@ -750,7 +751,7 @@
               <app-number-input *ngIf="role == 'WMA'" isCell="true" class="mr-3" [group]="newRequest.get('payer')"
                 label="Tel. Celular" name='cel'>
               </app-number-input>
-              <app-number-input *ngIf="role == 'WWS'" isPhone="true" class="mr-3" [group]="newRequest.get('payer')"
+              <app-number-input *ngIf="role !== 'WMA'" isPhone="true" class="mr-3" [group]="newRequest.get('payer')"
                 label="Tel. Celular" name='cel'>
               </app-number-input>
               <app-number-input isPhone="true" class="mr-3" [group]="newRequest.get('payer')" label="Tel. Oficina"
@@ -1031,7 +1032,7 @@
                       <app-input class="mr-3"
                         [group]="newRequest.get('dependents').get('allDependents').get(index.toString())"
                         label="Cedula o documento de identidad" name='id2'></app-input>
-  
+
                       <app-select class="mr-3" [options]="nationality"
                         [group]="newRequest.get('dependents').get('allDependents').get(index.toString())">
                       </app-select>
@@ -1039,7 +1040,7 @@
                         [group]="newRequest.get('dependents').get('allDependents').get(index.toString())"
                         label="Fecha de Nacimiento" name='date' [max]="todayDate">
                       </app-date-picker>
-  
+
                       <app-radio-button class="mr-3" (selected)="thereIsAWomenOnTheRequest()"
                         (selected)="thereIsAMenOnTheRequest()"
                         [group]="newRequest.get('dependents').get('allDependents').get(index.toString())" name="sex"
@@ -1048,7 +1049,7 @@
                       <app-select class="mr-3 "
                         [group]="newRequest.get('dependents').get('allDependents').get(index.toString())" name="family"
                         [options]="family"></app-select>
-  
+
                       <!-- <app-input class="mr-3"
                         [group]="newRequest.get('dependents').get('allDependents').get(index.toString())"
                         label="Nacionalidad" name='nationality'></app-input> -->
@@ -2274,7 +2275,7 @@
             </div>
             <div class="mt-4">
               <p>Sí a mi fallecimiento alguno de mis Beneficiarios Primarios es
-                menor de edad, el beneficio correspondiente será entregado a su tutor legal en su 
+                menor de edad, el beneficio correspondiente será entregado a su tutor legal en su
                 calidad de representación del menor:</p><br>
               <div class='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-4'>
                 <app-input class="mr-3" name="name" label="Nombre Completo"
@@ -2399,7 +2400,7 @@
             </div>
             <div *ngIf="newRequest.get('contingentBeneficiary').get('dependentsC')['controls'].length > 0" class="mt-4">
               <p>Sí a mi fallecimiento alguno de mis Beneficiarios Contingentes es
-                menor de edad, el beneficio correspondiente será entregado a su tutor legal en su 
+                menor de edad, el beneficio correspondiente será entregado a su tutor legal en su
                 calidad de representación del menor:</p><br>
               <div class='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-4'>
                 <app-input class="mr-3" name="name" label="Nombre Completo"

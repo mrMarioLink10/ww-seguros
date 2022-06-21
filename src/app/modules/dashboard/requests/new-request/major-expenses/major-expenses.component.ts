@@ -42,6 +42,9 @@ import {
   $stdAilment,
   $reproductiveOrganDisordersAilment,
 } from 'src/app/core/class/major-expenses-ailments';
+import {CountryRolesService} from '../../../../../shared/services/country-roles.service';
+import {CountryTypes} from '../../../../../shared/utils/keys/country-types';
+import {CiaCountryRoleTypes} from '../../../../../shared/utils/keys/cia-country-role-types';
 
 @Component({
   selector: 'app-major-expenses',
@@ -69,6 +72,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
     private currencyPipe: CurrencyPipe,
     private cd: ChangeDetectorRef,
     public requestService: RequestsService,
+    private countryRolesService: CountryRolesService,
     @Inject(DOCUMENT) private document: Document
   ) { }
 
@@ -1451,22 +1455,15 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
   }
 
   newQuote() {
-      if ((this.userService.getRoles().includes('WWS') && this.userService.getRoles().includes('WMA'))) {
-      let cia = localStorage.getItem('countryCode');
-      // console.log('countryCode es igual a ' + cia);
-      if (cia == 'rd') {
-        window.open(`${environment.urlCotizadores}/vida?cia=wws`, '_self');
-        // console.log('el cia es igual a wws');
-      }
-      else if (cia == 'pn') {
-        window.open(`${environment.urlCotizadores}/vida?cia=wwm`, '_self');
-        // console.log('el cia es igual a wwm');
-      }
-    }
-    else if (this.userService.getRoleCotizador() === 'WWS') {
-      window.open(`${environment.urlCotizadoresSalud}?cia=wws`, '_self');
-    } else if (this.userService.getRoleCotizador() === 'WMA') {
-      window.open(`${environment.urlCotizadoresSalud}?cia=wwm`, '_self');
+    let role = '';
+    if (this.countryRolesService.userHasMoreThanOneRole()) {
+    const country = localStorage.getItem('countryCode');
+    role = this.countryRolesService.getRoleByCountry(country as CountryTypes);
+
+    window.open(`${environment.urlCotizadores}/vida?cia=${CiaCountryRoleTypes[role]}`, '_self');
+    } else {
+      role = this.userService.getRoleCotizador();
+      window.open(`${environment.urlCotizadoresSalud}?cia=${CiaCountryRoleTypes[role]}`, '_self');
     }
   }
   canDeactivate(): Observable<boolean> | boolean {

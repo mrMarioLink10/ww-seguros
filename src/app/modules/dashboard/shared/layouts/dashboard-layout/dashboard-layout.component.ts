@@ -9,6 +9,10 @@ import { environment } from 'src/environments/environment';
 import { BaseDialogComponent } from 'src/app/shared/components/base-dialog/base-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogOptionService } from 'src/app/core/services/dialog/dialog-option.service';
+import {CountryRoleTypes} from '../../../../../shared/utils/keys/country-role-types';
+import {CountryRolesService} from '../../../../../shared/services/country-roles.service';
+import {CountryTypes} from '../../../../../shared/utils/keys/country-types';
+import {WWSLogoUrls} from './keys/WWS-logo-urls';
 // tslint:disable: max-line-length
 
 @Component({
@@ -25,7 +29,8 @@ export class DashboardLayoutComponent implements OnInit, OnDestroy {
   role: string;
   roles: any;
   country: string;
-
+  imageSrc: string;
+  countries: CountryTypes[];
   watchRouter: Subscription;
 
   newNotification = [
@@ -61,6 +66,7 @@ export class DashboardLayoutComponent implements OnInit, OnDestroy {
     private dialogOption: DialogOptionService,
     private location: Location,
     protected keycloakAngular: KeycloakService,
+    private countryRolesService: CountryRolesService,
   ) {
     this.role = this.userService.getRoleCotizador();
     this.mobileQuery = media.matchMedia('(max-width: 600px)');
@@ -78,49 +84,41 @@ export class DashboardLayoutComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    if (localStorage.getItem('countryCode')) {
-      this.country = localStorage.getItem('countryCode');
-    } else {
-      this.country = 'rd';
-      localStorage.setItem('countryCode', this.country);
-    }
-    console.log(localStorage.getItem('countryCode'));
-
     this.userName = this.userService.getUserInformation().name;
     this.userEmail = this.userService.getUserInformation().email;
-    this.role = this.userService.getRoleCotizador();
     this.roles = this.userService.getRoles();
-    console.log(this.role);
-    console.log(this.roles);
 
-    if ((this.userService.getRoles().includes('WWS') && this.userService.getRoles().includes('WMA'))) {
-      if (this.country === 'pn') {
-        this.role = 'WMA';
-        console.log('this.role es igual a: ' + this.role);
-      }
-      else {
-        this.role = 'WWS';
-        console.log('this.role es igual a: ' + this.role);
-      }
+    this.initializeCountryRole();
+    this.countries = this.countryRolesService.getCountriesByRoles(this.roles);
+    this.chooseWWLogo();
+
+    console.log('country role: ', this.role);
+    console.log('roles: ', this.roles);
+    console.log('country: ', this.country);
+  }
+
+  userHasMoreThanOneRole() {
+    return this.countryRolesService.userHasMoreThanOneRole();
+  }
+
+  initializeCountryRole() {
+    this.country = localStorage.getItem('countryCode') ?
+      localStorage.getItem('countryCode') : CountryTypes.rd;
+
+    if (this.countryRolesService.userHasMoreThanOneRole()) {
+      this.role = this.countryRolesService.getRoleByCountry(this.country as CountryTypes);
+      return;
     }
-    else {
-      if (this.userService.getRoleCotizador() === 'WWS') {
-        this.country = 'rd';
-        localStorage.setItem('countryCode', this.country);
-        console.log('this.country es igual a: ' + this.country);
-      }
-      else if (this.userService.getRoleCotizador() === 'WMA') {
-        this.country = 'pn';
-        localStorage.setItem('countryCode', this.country);
-        console.log('this.country es igual a: ' + this.country);
-      }
-    }
-    console.log(localStorage.getItem('countryCode'));
+    this.country = this.countryRolesService.getCountryByRole(this.role as CountryRoleTypes);
+    this.setCountry();
+  }
+
+  chooseWWLogo() {
+    this.imageSrc = WWSLogoUrls[this.role];
   }
 
   setCountry() {
     localStorage.setItem('countryCode', this.country);
-    window.location.reload();
   }
 
   showMatListen(permittedRoles: any[]) {
@@ -131,6 +129,11 @@ export class DashboardLayoutComponent implements OnInit, OnDestroy {
     }
   }
 
+  updateCountry() {
+    this.setCountry();
+    window.location.reload();
+  }
+
   navigationInterceptor(event: RouterEvent): string {
     if (event instanceof NavigationEnd) {
       return event.url;
@@ -138,7 +141,8 @@ export class DashboardLayoutComponent implements OnInit, OnDestroy {
   }
 
   sendEmail() {
-    if (this.role === 'WWS') {
+    // TODO: add new mail
+    if (this.role === CountryRoleTypes.WWS) {
       window.location.href = `mailto:${environment.mailForHelp}`;
     } else {
       window.location.href = `mailto:${environment.mailForHelpPM}`;
@@ -150,7 +154,7 @@ export class DashboardLayoutComponent implements OnInit, OnDestroy {
   }
 
   GetInstrucstivo() {
-    if (this.role === 'WWS') {
+    if (this.role === CountryRoleTypes.WWS) {
       window.open(environment.instructivo, '_blank');
     } else {
       window.open(environment.instructivoMedical, '_blank');
@@ -158,11 +162,7 @@ export class DashboardLayoutComponent implements OnInit, OnDestroy {
   }
 
   GetTerminos() {
-    if (this.role === 'WWS') {
-      window.open(environment.terminosCondiciones, '_blank');
-    } else {
-      window.open(environment.terminosCondiciones, '_blank');
-    }
+    window.open(environment.terminosCondiciones, '_blank');
   }
 
   ngOnDestroy() {

@@ -121,8 +121,10 @@ export class QuoteComponent implements OnInit {
 
     console.log(this.userService.getRoles());
 
+    this.country = localStorage.getItem('countryCode') ?
+      localStorage.getItem('countryCode') : CountryTypes.rd;
+
     if (this.countryRolesService.userHasMoreThanOneRole()) {
-      this.country = localStorage.getItem('countryCode');
       this.role = this.countryRolesService.getRoleByCountry(this.country as CountryTypes);
 
     } else {

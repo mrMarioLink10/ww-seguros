@@ -128,10 +128,11 @@ export class DialogOptionService {
 		email: '',
 	};
 
-	noAvaliableChanges: BaseDialog = {
+  noAvailableChanges: BaseDialog = {
 		logo: 'warning',
 		title: 'No se han encontrados cambios disponibles',
-		text: `Esta poliza no tiene cambios disponibles de este tipo`,
+		text: `Esta poliza no tiene cambios disponibles de este tipo.
+		Favor solicitar su cambio próximo a la fecha de aniversario de esta póliza.`,
 		showButtons: false,
 	};
 

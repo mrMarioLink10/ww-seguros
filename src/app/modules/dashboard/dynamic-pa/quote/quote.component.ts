@@ -248,7 +248,7 @@ export class QuoteComponent implements OnInit {
       }
     } else {
       const dialogRef = this.dialog.open(BaseDialogComponent, {
-        data: this.dialogOption.noAvaliableChanges,
+        data: this.dialogOption.noAvailableChanges,
         minWidth: 385,
       });
       setTimeout(() => {

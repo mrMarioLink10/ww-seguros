@@ -119,14 +119,20 @@ export class QuotesComponent implements OnInit {
 
   newQuote() {
     let role = '';
+    let cia = '';
+
     if (this.countryRolesService.userHasMoreThanOneRole()) {
-      const country = localStorage.getItem('countryCode');
-      role = this.countryRolesService.getRoleByCountry(country as CountryTypes);
+      const country = this.countryRolesService.getLocalStorageCountry();
+
+      this.countryRolesService.countriesAndRolesData().subscribe(value => {
+        role = this.countryRolesService.getRoleByCountry(country as CountryTypes, value);
+        cia = this.countryRolesService.getCiaByRole(role, value);
+      });
 
     } else {
       role = this.userService.getRoleCotizador();
     }
-    window.open(`${environment.urlCotizadores}/?cia=${CiaCountryRoleTypes[role]}`, '_blank');
+    window.open(`${environment.urlCotizadores}/?cia=${cia}`, '_blank');
   }
 
 }

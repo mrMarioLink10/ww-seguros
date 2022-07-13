@@ -1009,7 +1009,7 @@ export class FormHandlerService {
           this.dynamicQuoteService.saveTypeSelected(isDeducible, poliza, selectionId, '')
             .subscribe((res: any) => {
               console.log('Envio realizado correctamente', res);
-              const compania = localStorage.getItem('countryCode') === 'rd' ? '03' : '02';
+              const compania = this.countryRolesService.getLocalStorageCountry() === 'rd' ? '03' : '02';
               const target = this.sendedForm.tipoSolicitud === 'CAMBIO DE PRODUCTO' ? 'producto' : 'deducible';
               const targetValue = this.sendedForm.tipoSolicitud === 'CAMBIO DE PRODUCTO' ? codeValue : this.sendedForm.productoTo;
               // tslint:disable-next-line: max-line-length

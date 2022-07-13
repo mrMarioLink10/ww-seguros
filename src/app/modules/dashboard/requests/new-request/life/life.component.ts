@@ -2081,13 +2081,18 @@ export class LifeComponent implements OnInit, DoCheck {
 
   newQuote() {
     let role = '';
+    let cia = '';
     if (this.countryRolesService.userHasMoreThanOneRole()) {
-      const country = localStorage.getItem('countryCode');
-      role = this.countryRolesService.getRoleByCountry(country as CountryTypes);
+      const country = this.countryRolesService.getLocalStorageCountry();
+
+      this.countryRolesService.countriesAndRolesData().subscribe(value => {
+        role = this.countryRolesService.getRoleByCountry(country as CountryTypes, value);
+        cia = this.countryRolesService.getCiaByRole(role, value);
+      });
     } else {
       role = this.userService.getRoleCotizador();
     }
-    window.open(`${environment.urlCotizadores}/vida?cia=${CiaCountryRoleTypes[role]}`, '_self');
+    window.open(`${environment.urlCotizadores}/vida?cia=${cia}`, '_self');
   }
 
   showWarningDot(form: any): boolean {

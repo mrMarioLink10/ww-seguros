@@ -122,8 +122,12 @@ export class RequestsComponent implements OnInit {
   }
   BASE_URL: any = `${environment.fileUrl}`;
   seeRequest(id: number, type: string) {
-    const country = this.countryRolesService.getCountryByRole(this.role as CountryRoleTypes);
-    window.open(`${this.BASE_URL}/solicitudesView/${type}/${id}/?location=${country}`, '_blank');
+    let country = '';
+
+    this.countryRolesService.countriesAndRolesData().subscribe(value => {
+      country = this.countryRolesService.getCountryByRole(this.role as CountryRoleTypes, value);
+    });
+    window.open(`${this.BASE_URL}/solicitudesView/${country}/${type}/${id}`, '_blank');
   }
 
   deleteTargeting(id: number, type: string) {

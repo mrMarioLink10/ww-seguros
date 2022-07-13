@@ -2,13 +2,14 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { Observable } from 'rxjs';
+import {CountryRolesService} from '../../../../shared/services/country-roles.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PolicyAdministrationService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private countryRolesService: CountryRolesService) { }
 
   postPolicyAdministration(body) {
 
@@ -26,8 +27,8 @@ export class PolicyAdministrationService {
 
   getIdNumbers(): Observable<any> {
 
-    let country = localStorage.getItem('countryCode');
-    return this.http.get(`${environment.apiUrl}/api/DatosEmpresa/autocompleteDinamicos`, { params: { country: country } });
+    const country = this.countryRolesService.getLocalStorageCountry();
+    return this.http.get(`${environment.apiUrl}/api/DatosEmpresa/autocompleteDinamicos`, { params: { country } });
   }
 
   download(url: string): Observable<Blob> {

@@ -28,8 +28,12 @@ export class WwmAccessGuard implements CanActivate, CanActivateChild {
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
       if ((this.countryRolesService.userHasMoreThanOneRole())) {
-        const country = localStorage.getItem('countryCode');
-        const countryRole = this.countryRolesService.getRoleByCountry(country as CountryTypes);
+        const country = this.countryRolesService.getLocalStorageCountry();
+        let countryRole = '';
+
+        this.countryRolesService.countriesAndRolesData().subscribe(value => {
+          countryRole = this.countryRolesService.getRoleByCountry(country as CountryTypes, value);
+        });
 
         if (countryRole !== CountryRoleTypes.WWS) {
             console.log('No estás logueado');

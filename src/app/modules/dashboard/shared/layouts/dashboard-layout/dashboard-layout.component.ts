@@ -89,7 +89,9 @@ export class DashboardLayoutComponent implements OnInit, OnDestroy {
     this.roles = this.userService.getRoles();
 
     this.initializeCountryRole();
-    this.countries = this.countryRolesService.getCountriesByRoles(this.roles);
+    this.countryRolesService.countriesAndRolesData().subscribe(value => {
+      this.countries = this.countryRolesService.getCountriesByRoles(this.roles, value);
+    });
     this.chooseWWLogo();
 
     console.log('country role: ', this.role);
@@ -102,14 +104,18 @@ export class DashboardLayoutComponent implements OnInit, OnDestroy {
   }
 
   initializeCountryRole() {
-    this.country = localStorage.getItem('countryCode') ?
-      localStorage.getItem('countryCode') : CountryTypes.rd;
+    this.country = this.countryRolesService.getLocalStorageCountry();
 
     if (this.countryRolesService.userHasMoreThanOneRole()) {
-      this.role = this.countryRolesService.getRoleByCountry(this.country as CountryTypes);
+
+      this.countryRolesService.countriesAndRolesData().subscribe(value => {
+        this.role = this.countryRolesService.getRoleByCountry(this.country as CountryTypes, value);
+      });
       return;
     }
-    this.country = this.countryRolesService.getCountryByRole(this.role as CountryRoleTypes);
+    this.countryRolesService.countriesAndRolesData().subscribe(value => {
+      this.country = this.countryRolesService.getCountryByRole(this.role as CountryRoleTypes, value);
+    });
     this.setCountry();
   }
 

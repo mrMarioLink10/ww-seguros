@@ -59,8 +59,12 @@ export class ClaimTableComponent implements OnInit {
   }
   BASE_URL: any = `${environment.fileUrlHttps}`;
   getBillDownloadLink(billId, poliza) {
-    const country = this.countryRolesService.getCountryByRole(this.userRole as CountryRoleTypes);
-    return `${this.BASE_URL}/InvoiceView/ExportToPDF/ReclamosData/${billId}/${poliza}/?location=${country}`;
+    let country = '';
+
+    this.countryRolesService.countriesAndRolesData().subscribe(value => {
+      country = this.countryRolesService.getCountryByRole(this.userRole as CountryRoleTypes, value);
+    });
+    return `${this.BASE_URL}/InvoiceView/ExportToPDF/ReclamosData/${country}/${billId}/${poliza}`;
   }
   loadData() {
     // this.policyService.getPolicyDetails(this.policyId).subscribe((res: any) => {

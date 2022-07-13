@@ -21,7 +21,6 @@ import { KnowYourCustomerComponent } from '../../dashboard/shared/components/dis
 import { RequestsService } from '../services/requests.service';
 import { environment } from 'src/environments/environment';
 import {CountryRolesService} from '../../../shared/services/country-roles.service';
-import {CiaCountryRoleTypes} from '../../../shared/utils/keys/cia-country-role-types';
 
 // tslint:disable: one-line
 // tslint:disable: max-line-length
@@ -2030,8 +2029,14 @@ export class LifeComponent implements OnInit, DoCheck {
   }
 
   newQuote() {
+    let cia = '';
     const role = this.userService.getRoleCotizador();
-    window.open(`${environment.urlCotizadores}/?cia=${CiaCountryRoleTypes[role]}`, '_blank');
+
+    this.countryRolesService.countriesAndRolesData().subscribe(value => {
+      cia = this.countryRolesService.getCiaByRole(role, value);
+    });
+
+    window.open(`${environment.urlCotizadores}/?cia=${cia}`, '_blank');
   }
 
   showWarningDot(form: any): boolean {
@@ -3424,8 +3429,9 @@ export class LifeComponent implements OnInit, DoCheck {
         // this.ID = data.data.id;
         // console.log(data.data);
 
-        this.role = this.countryRolesService.getRoleByCountry(data.data.countryCode.toLowerCase());
-
+        this.countryRolesService.countriesAndRolesData().subscribe(value => {
+          this.role = this.countryRolesService.getRoleByCountry(data.data.countryCode.toLowerCase(), value);
+        });
         this.dataMappingFromApi.iterateThroughtAllObjectVida(data.data, this.newRequest);
 
         console.log(this.newRequest);

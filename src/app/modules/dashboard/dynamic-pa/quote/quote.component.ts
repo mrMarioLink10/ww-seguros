@@ -121,11 +121,13 @@ export class QuoteComponent implements OnInit {
 
     console.log(this.userService.getRoles());
 
-    this.country = localStorage.getItem('countryCode') ?
-      localStorage.getItem('countryCode') : CountryTypes.rd;
+    this.country = this.countryRolesService.getLocalStorageCountry();
 
     if (this.countryRolesService.userHasMoreThanOneRole()) {
-      this.role = this.countryRolesService.getRoleByCountry(this.country as CountryTypes);
+
+      this.countryRolesService.countriesAndRolesData().subscribe(value => {
+        this.role = this.countryRolesService.getRoleByCountry(this.country as CountryTypes, value);
+      });
 
     } else {
       this.role = this.userService.getRoleCotizador();
@@ -508,20 +510,19 @@ export class QuoteComponent implements OnInit {
     let code;
 
     if (this.administrationPolicyGroup.get('tipoSolicitud').value == 'CAMBIO DE PRODUCTO') {
-      if (localStorage.getItem('countryCode') === 'rd') {
+      if (this.countryRolesService.getLocalStorageCountry() === 'rd') {
         code = this.availableCodes.find(codigo => codigo.value === productoToValue);
         const codeWWS = code.valueWWS;
 
         this.formHandler.saveDynamicQuote(this.administrationPolicyGroup, this.appComponent, codeWWS);
-      }
-      else if (localStorage.getItem('countryCode') === 'pn') {
+
+      } else if (this.countryRolesService.getLocalStorageCountry() === 'pn') {
         code = this.availableCodes.find(codigo => codigo.value === productoToValue);
         const codeWWM = code.valueWWM;
 
         this.formHandler.saveDynamicQuote(this.administrationPolicyGroup, this.appComponent, codeWWM);
       }
-    }
-    else {
+    } else {
       this.formHandler.saveDynamicQuote(this.administrationPolicyGroup, this.appComponent, productoToValue);
     }
 

@@ -123,8 +123,12 @@ export class AuthorizationsComponent implements OnInit {
 	}
 
 	seeRequest(id: number) {
-    const country = this.countryRolesService.getCountryByRole(this.role as CountryRoleTypes);
-    window.open(`${this.BASE_URL}/PrecertificadoView/Index/${id}/?location=${country}`, '_blank');
+    let country = '';
+
+    this.countryRolesService.countriesAndRolesData().subscribe(value => {
+      country = this.countryRolesService.getCountryByRole(this.role as CountryRoleTypes, value);
+    });
+    window.open(`${this.BASE_URL}/PrecertificadoView/Index/${country}/${id}`, '_blank');
 	}
 
 	ngOnInit() {

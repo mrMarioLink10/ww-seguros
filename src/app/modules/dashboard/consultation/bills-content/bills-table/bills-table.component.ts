@@ -82,8 +82,11 @@ export class BillsTableComponent implements OnInit {
   }
 
   getBillDownloadLink(billId) {
-    const country = this.countryRolesService.getCountryByRole(this.userRole as CountryRoleTypes);
-    return `${this.BASE_URL}/InvoiceView/ExportToPDF/${billId}/?location=${country}`;
+    let country = '';
+    this.countryRolesService.countriesAndRolesData().subscribe(value => {
+      country = this.countryRolesService.getCountryByRole(this.userRole as CountryRoleTypes, value);
+    });
+    return `${this.BASE_URL}/InvoiceView/ExportToPDF/${country}/${billId}`;
   }
 
   constructQueryParams(): HttpParams {

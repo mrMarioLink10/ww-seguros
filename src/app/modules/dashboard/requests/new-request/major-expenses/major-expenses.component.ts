@@ -1456,14 +1456,19 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
 
   newQuote() {
     let role = '';
+    let cia = '';
     if (this.countryRolesService.userHasMoreThanOneRole()) {
-    const country = localStorage.getItem('countryCode');
-    role = this.countryRolesService.getRoleByCountry(country as CountryTypes);
+    const country = this.countryRolesService.getLocalStorageCountry();
 
-    window.open(`${environment.urlCotizadores}/vida?cia=${CiaCountryRoleTypes[role]}`, '_self');
+    this.countryRolesService.countriesAndRolesData().subscribe(value => {
+      role = this.countryRolesService.getRoleByCountry(country as CountryTypes, value);
+      cia = this.countryRolesService.getCiaByRole(role, value);
+    });
+
+    window.open(`${environment.urlCotizadores}/vida?cia=${cia}`, '_self');
     } else {
       role = this.userService.getRoleCotizador();
-      window.open(`${environment.urlCotizadoresSalud}?cia=${CiaCountryRoleTypes[role]}`, '_self');
+      window.open(`${environment.urlCotizadoresSalud}?cia=${cia}`, '_self');
     }
   }
   canDeactivate(): Observable<boolean> | boolean {

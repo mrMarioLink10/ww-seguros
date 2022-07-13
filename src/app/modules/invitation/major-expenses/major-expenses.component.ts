@@ -24,7 +24,7 @@ import { questionsA, questionsB } from '../../dashboard/requests/new-request/maj
 import { RequestsService } from '../services/requests.service';
 import { $musculoSkeletalAilment, $cardiovascularSystemAilment, $nervousSystemAilment, $visionHearingAilment, $respiratorySystemAilment, $digestiveSystemAilment, $maleReproductiveOrgansAilment, $bloodDisordersAilment, $endocrineDisordersAilment, $alternateTreatmentAilment, $functionalLimitationAilment, $deformityAilment, $stdAilment, $urinarySystemAilment, $cerebroVascularAilment, $reproductiveOrganDisordersAilment } from 'src/app/core/class/major-expenses-ailments';
 import {CountryRolesService} from '../../../shared/services/country-roles.service';
-import {CiaCountryRoleTypes} from '../../../shared/utils/keys/cia-country-role-types';
+
 @Component({
   selector: 'app-major-expenses',
   templateUrl: './major-expenses.component.html',
@@ -1138,8 +1138,14 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
   }
 
   newQuote() {
+    let cia = '';
     const role = this.userService.getRoleCotizador();
-    window.open(`${environment.urlCotizadoresSalud}?cia=${CiaCountryRoleTypes[role]}`, '_blank');
+
+    this.countryRolesService.countriesAndRolesData().subscribe(value => {
+      cia = this.countryRolesService.getCiaByRole(role, value);
+    });
+
+    window.open(`${environment.urlCotizadoresSalud}?cia=${cia}`, '_blank');
   }
 
   canDeactivate(): Observable<boolean> | boolean {
@@ -3727,7 +3733,10 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
         console.log(data.data);
         this.dataMappingFromApi.iterateThroughtAllObject(data.data, this.newRequest);
         this.AddEventOnEachDependentVariable();
-        this.role = this.countryRolesService.getRoleByCountry(data.data.countryCode);
+
+        this.countryRolesService.countriesAndRolesData().subscribe(value => {
+          this.role = this.countryRolesService.getRoleByCountry(data.data.countryCode, value);
+        });
 
         const formP = this.newRequest.get('person') as FormGroup;
         const formPO = this.newRequest.get('person').get('office') as FormGroup;
@@ -3748,7 +3757,9 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
         formP.removeControl('sameAsPayer');
         formFiles.removeControl('incomesCertified');
 
-        if (formGeneral.get('countryRoleCode')) { formGeneral.get('countryRoleCode').setValidators(null); }
+        if (formGeneral.get('countryRoleCode')) {
+          formGeneral.get('countryRoleCode').setValidators(null);
+        }
 
         if (this.newRequest.get('questionsB').get('familyWithDiseases') !== undefined && this.newRequest.get('questionsB').get('familyWithDiseases') !== null) {
           this.familyWithDiseasesList = this.newRequest.get('questionsB').get('familyWithDiseases') as FormArray;

@@ -1,18 +1,19 @@
-import { Component, OnInit, ChangeDetectorRef, OnDestroy } from '@angular/core';
-import { MediaMatcher } from '@angular/cdk/layout';
-import { Router, NavigationEnd, RouterEvent } from '@angular/router';
-import { Subscription } from 'rxjs';
-import { Location } from '@angular/common';
-import { UserService } from '../../../../../core/services/user/user.service';
-import { KeycloakService } from '../../../../../core/services/keycloak/keycloak.service';
-import { environment } from 'src/environments/environment';
-import { BaseDialogComponent } from 'src/app/shared/components/base-dialog/base-dialog.component';
-import { MatDialog } from '@angular/material/dialog';
-import { DialogOptionService } from 'src/app/core/services/dialog/dialog-option.service';
+import {ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
+import {MediaMatcher} from '@angular/cdk/layout';
+import {NavigationEnd, Router, RouterEvent} from '@angular/router';
+import {Subscription} from 'rxjs';
+import {Location} from '@angular/common';
+import {UserService} from '../../../../../core/services/user/user.service';
+import {KeycloakService} from '../../../../../core/services/keycloak/keycloak.service';
+import {environment} from 'src/environments/environment';
+import {BaseDialogComponent} from 'src/app/shared/components/base-dialog/base-dialog.component';
+import {MatDialog} from '@angular/material/dialog';
+import {DialogOptionService} from 'src/app/core/services/dialog/dialog-option.service';
 import {CountryRoleTypes} from '../../../../../shared/utils/keys/country-role-types';
 import {CountryRolesService} from '../../../../../shared/services/country-roles.service';
 import {CountryTypes} from '../../../../../shared/utils/keys/country-types';
 import {WWSLogoUrls} from './keys/WWS-logo-urls';
+
 // tslint:disable: max-line-length
 
 @Component({
@@ -29,7 +30,7 @@ export class DashboardLayoutComponent implements OnInit, OnDestroy {
   role: string;
   roles: any;
   country: string;
-  imageSrc: string;
+  imageSrc: string = WWSLogoUrls.RD;
   countries: CountryTypes[];
   watchRouter: Subscription;
 
@@ -73,6 +74,7 @@ export class DashboardLayoutComponent implements OnInit, OnDestroy {
     this.mobileQueryListener = () => changeDetectorRef.detectChanges();
     // tslint:disable-next-line: deprecation
     this.mobileQuery.addListener(this.mobileQueryListener);
+    this.initializeCountryRole();
 
     this.watchRouter = router.events.subscribe((url: any) => {
       if (url.url !== undefined && url.url) {
@@ -88,12 +90,6 @@ export class DashboardLayoutComponent implements OnInit, OnDestroy {
     this.userEmail = this.userService.getUserInformation().email;
     this.roles = this.userService.getRoles();
 
-    this.initializeCountryRole();
-    this.countryRolesService.countriesAndRolesData().subscribe(value => {
-      this.countries = this.countryRolesService.getCountriesByRoles(this.roles, value);
-    });
-    this.chooseWWLogo();
-
     console.log('country role: ', this.role);
     console.log('roles: ', this.roles);
     console.log('country: ', this.country);
@@ -106,21 +102,18 @@ export class DashboardLayoutComponent implements OnInit, OnDestroy {
   initializeCountryRole() {
     this.country = this.countryRolesService.getLocalStorageCountry();
 
-    if (this.countryRolesService.userHasMoreThanOneRole()) {
-
-      this.countryRolesService.countriesAndRolesData().subscribe(value => {
-        this.role = this.countryRolesService.getRoleByCountry(this.country as CountryTypes, value);
-      });
-      return;
-    }
     this.countryRolesService.countriesAndRolesData().subscribe(value => {
-      this.country = this.countryRolesService.getCountryByRole(this.role as CountryRoleTypes, value);
+      this.countries = this.countryRolesService.getCountriesByRoles(this.roles, value);
+      this.country = this.countries[0];
+      this.role = this.countryRolesService.getRoleByCountry(this.country as CountryTypes, value);
+      this.chooseWWLogo(this.role);
+      console.log('country role: ', this.role);
+      this.setCountry();
     });
-    this.setCountry();
   }
 
-  chooseWWLogo() {
-    this.imageSrc = WWSLogoUrls[this.role];
+  chooseWWLogo(role) {
+    this.imageSrc = role === CountryRoleTypes.WWS ? WWSLogoUrls.RD : WWSLogoUrls.OTHER;
   }
 
   setCountry() {

@@ -13,7 +13,9 @@ import {ICountryRole} from '../utils/interfaces/country-role.interface';
 export class CountryRolesService {
   BASE_URL: any = `${environment.apiUrl}/api`;
 
-  private countriesAndRoles;
+  private countriesAndRolesSubject: BehaviorSubject<ICountryRole[]> = new BehaviorSubject<ICountryRole[]>(null);
+  countriesAndRoles$: Observable<ICountryRole[]> = this.countriesAndRolesSubject.asObservable();
+
   constructor(
     private userService: UserService,
     private http: HttpClient
@@ -21,10 +23,17 @@ export class CountryRolesService {
   }
 
   countriesAndRolesData() {
-    if (!this.countriesAndRoles) {
+    if (!this.countriesAndRolesSubject.value) {
+      this.initializeCountriesAndRoles();
       return this.getCountriesAndRoles();
     }
-    return this.countriesAndRoles.asObservable();
+    return this.countriesAndRoles$;
+  }
+
+  initializeCountriesAndRoles() {
+    this.getCountriesAndRoles().subscribe(value => {
+      this.countriesAndRolesSubject.next(value);
+    });
   }
 
   getRoleByCountry(country: CountryTypes, countriesAndRoles: ICountryRole[]) {
@@ -32,9 +41,9 @@ export class CountryRolesService {
         countriesAndRole.codigoPortal.toLowerCase() === country.toLowerCase()).dominio;
   }
 
-  getCountryByRole(role: CountryRoleTypes, countriesAndRoles: ICountryRole[]) {
+  getCountryByRole(role: CountryRoleTypes | string, countriesAndRoles: ICountryRole[]) {
     return countriesAndRoles.find(countriesAndRole =>
-      countriesAndRole.dominio.toLowerCase() === role.toLowerCase()).codigoPortal;
+      countriesAndRole.dominio.toLowerCase() === role.toLowerCase()).codigoPortal.toLowerCase();
   }
 
   getCiaByRole(role: CountryRoleTypes | string, countriesAndRoles: ICountryRole[]) {
@@ -44,17 +53,17 @@ export class CountryRolesService {
 
   getCountriesByRoles(roles: string[], countriesAndRoles: ICountryRole[]) {
     const countries = [];
-    const filteredRoles = countriesAndRoles.filter( value => roles.includes(value.dominio));
+    const filteredRoles = roles.filter(role => (countriesAndRoles.some(countryRole => countryRole.dominio === role)));
 
     filteredRoles.forEach(filteredRole => {
-      countries.push(filteredRole.codigoPortal);
+      countries.push(this.getCountryByRole(filteredRole, countriesAndRoles));
     });
 
     return countries;
   }
 
   userHasMoreThanOneRole(): boolean {
-    const roles = this.userService.getRoles().find(role => CountryRoleTypes[role] === role);
+    const roles = this.userService.getRoles().find(role => role.length === 3);
     return roles.length > 1;
   }
 

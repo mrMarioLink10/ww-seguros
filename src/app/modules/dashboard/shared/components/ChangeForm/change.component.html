@@ -1,0 +1,372 @@
+<mat-expansion-panel class="ww-mat-expansion" [expanded]="step === 40" (opened)="setStep(40)">
+  <mat-expansion-panel-header class="body-13 icon-blue">
+    <mat-panel-title>
+      Formulario De Cambio
+    </mat-panel-title>
+    <mat-panel-description>
+      <div></div>
+      <div *ngIf="showWarningDot" class="warning-accordion-dot"></div>
+    </mat-panel-description>
+  </mat-expansion-panel-header>
+  <div class="my-4 affected-form-name" *ngIf="affected">{{affected}}</div>
+  <div class="p-3 pb-0 mb-4" style="background-color: #F2F2F2">
+    <div class="mt-3 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 xl:grid-cols-5">
+         <div class="mr-3">
+          <app-input [group]="form" label="No. de Poliza" name='noPoliza' placeholder="Alberto Matias">
+          </app-input>
+        </div>
+        <div class="mr-3">
+         <app-input [group]="form" label="Vigencia" name='vigencia' placeholder="Alberto Matias">
+         </app-input>
+       </div>
+        <div class="mr-3">
+          <app-number-input [group]="form" label="Deducible" name='deducible' placeholder="34" min="1">
+          </app-number-input>
+        </div>
+      <div class="mr-3">
+        <app-input [group]="form" label="Plan" name='plan' placeholder="Santiago Alberto">
+        </app-input>
+      </div>
+    </div>
+  </div>
+  <div class="px-6">
+    <!-- HA TENIDO USTED-->
+    <div class="body-13" style="color: black !important;">Ha tenido usted:</div>
+    <hr class="w-full my-6 ww-divider">
+    <div *ngFor="let question of questions">
+      <div
+        class="w-full xl:flex xl:justify-between lg:flex lg:justify-between md:flex md:justify-between sm:flex sm:justify-between">
+        <div class="radio-button-label" style="font-size: 12px !important;">{{question.label}}</div>
+        <app-radio-button [group]="form" [name]="question.name" [options]="yesOrNo" (selected)="selectChange($event)">
+        </app-radio-button>
+      </div>
+      <app-diseases-info *ngIf="form.value[question.name] === 'SI'" [form]="form" [group]="question.group">
+      </app-diseases-info>
+      <hr class="w-full mb-6 ww-divider">
+    </div>
+    <!-- ESTUDIOS REALIZADOS -->
+
+    <div class="radio-button-label my-8" style="font-size: 12px !important;">¿Cuáles estudios se ha realizado y cuáles
+      han
+      sido sus resultados?</div>
+    <div *ngFor="let studies of studiesList.controls; let i = index"
+      class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
+      <div class="mr-3">
+        <app-input [group]="form.get('studies').get(i.toString())" name="nombre" label="Nombre del estudio">
+        </app-input>
+      </div>
+      <div class="mr-3">
+        <app-input [group]="form.get('studies').get(i.toString())" name="resultado" label="Resultado del estudio">
+        </app-input>
+      </div>
+      <div *ngIf="studiesList.length > 1"
+        [ngClass]="{'': studiesList.length === 1, 'col-span-1': studiesList.length > 1} ">
+        <button mat-mini-fab aria-label=" Eliminar estudio" (click)="removeToList(i, studiesList)" type="button"
+          class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
+          <mat-icon style="color: #18446B">remove</mat-icon>
+        </button>
+      </div>
+    </div>
+    <div class="mb-8">
+      <button mat-mini-fab aria-label="Agregar estudio" (click)="addToList(studiesList, 'studies')" type="button"
+        class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
+        <mat-icon style="color: #18446B">add</mat-icon>
+      </button>
+    </div>
+    <hr class="w-full mb-6 ww-divider">
+    <!-- HA PRESENTADO UNA ENFERMEDAD-->
+    <div class="mt-8 mb-4">
+      <div
+        class="w-full xl:flex xl:justify-between lg:flex lg:justify-between md:flex md:justify-between sm:flex sm:justify-between">
+        <div class="radio-button-label" style="font-size: 12px !important;">¿Ha presentado alguna otra enfermedad?
+        </div>
+        <app-radio-button [group]="form" name="haveAnotherDisease" [options]="yesOrNo"
+          (selected)="selectChange($event)">
+        </app-radio-button>
+      </div>
+      <div *ngIf="anotherDiseasesList">
+        <div *ngFor="let aDiseases of anotherDiseasesList.controls; let i = index"
+          class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
+          <div class="mr-3">
+            <app-select [group]="form.get('anotherDiseases').get(i.toString())" [options]="anotherDiseasesOptions">
+            </app-select>
+          </div>
+          <div *ngIf="anotherDiseasesList.length > 1"
+            [ngClass]="{'': anotherDiseasesList.length === 1, 'col-span-1': anotherDiseasesList.length > 1} ">
+            <button mat-mini-fab aria-label=" Eliminar estudio" (click)="removeToList(i, anotherDiseasesList)"
+              type="button" class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
+              <mat-icon style="color: #18446B">remove</mat-icon>
+            </button>
+          </div>
+        </div>
+        <div class="mb-8">
+          <button mat-mini-fab aria-label="Agregar estudio" (click)="addToList(anotherDiseasesList, 'anotherDiseases')"
+            type="button" class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
+            <mat-icon style="color: #18446B">add</mat-icon>
+          </button>
+        </div>
+      </div>
+    </div>
+    <hr class="w-full mb-6 ww-divider">
+    <!-- TIENE HISTORIA FAMILIAR DE PADECIMIENTOS CARDIOVASCULARES -->
+    <div class="mt-8 mb-4">
+      <div
+        class="w-full xl:flex xl:justify-between lg:flex lg:justify-between md:flex md:justify-between sm:flex sm:justify-between">
+        <div class="radio-button-label" style="font-size: 12px !important;">¿Tiene historia familiar de padecimientos
+          cardiovasculares?
+        </div>
+        <app-radio-button [group]="form" name="haveFamilyWithCardio" [options]="yesOrNo"
+          (selected)="selectChange($event)">
+        </app-radio-button>
+      </div>
+      <div *ngIf="familiarWithCardioList">
+        <div *ngFor="let aDiseases of familiarWithCardioList.controls; let i = index"
+          class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
+          <div class="mr-3">
+            <app-input [group]="form.get('familyWithCardio').get(i.toString())" name="familiar" label="Familiar">
+            </app-input>
+          </div>
+          <div class="mr-3">
+            <app-input [group]="form.get('familyWithCardio').get(i.toString())" name="condicion" label="Condicion">
+            </app-input>
+          </div>
+          <div *ngIf="familiarWithCardioList.length > 1"
+            [ngClass]="{'': familiarWithCardioList.length === 1, 'col-span-1': familiarWithCardioList.length > 1} ">
+            <button mat-mini-fab aria-label=" Eliminar estudio" (click)="removeToList(i, familiarWithCardioList)"
+              type="button" class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
+              <mat-icon style="color: #18446B">remove</mat-icon>
+            </button>
+          </div>
+        </div>
+        <div class="mb-8">
+          <button mat-mini-fab aria-label="Agregar familiar"
+            (click)="addToList(familiarWithCardioList, 'familyWithCardio')" type="button"
+            class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
+            <mat-icon style="color: #18446B">add</mat-icon>
+          </button>
+        </div>
+      </div>
+    </div>
+    <hr class="w-full mb-6 ww-divider">
+    <!-- FUMA USTED -->
+    <div class="mt-8 mb-4">
+      <div
+        class="w-full xl:flex xl:justify-between lg:flex lg:justify-between md:flex md:justify-between sm:flex sm:justify-between">
+        <div class="radio-button-label" style="font-size: 12px !important;">¿Fuma usted? (cigarrillo – cigarros – puro
+          – tabaco)?
+        </div>
+        <app-radio-button [group]="form" name="haveSmokingHabits" [options]="yesOrNo" (selected)="selectChange($event)">
+        </app-radio-button>
+      </div>
+      <div *ngIf="form.get('haveSmokingHabits').value === 'SI'"
+        class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
+        <div class="mr-3">
+          <app-input [group]="form.get('smokingHabits')" name="cantidad" label="Cantidad por día" type="number" min="1">
+          </app-input>
+        </div>
+      </div>
+    </div>
+    <hr class="w-full mb-6 ww-divider">
+    <!-- Se le ha realizado algún estudio de diagnóstico para hipertensión arterial  -->
+    <div class="mt-8 mb-4">
+      <div
+        class="w-full xl:flex xl:justify-between lg:flex lg:justify-between md:flex md:justify-between sm:flex sm:justify-between">
+        <div class="radio-button-label" style="font-size: 12px !important;">¿Se le ha realizado algún estudio de
+          diagnóstico para hipertensión arterial ?
+        </div>
+        <app-radio-button [group]="form" name="haveHypertensionStudies" [options]="yesOrNo"
+          (selected)="selectChange($event)">
+        </app-radio-button>
+      </div>
+      <div *ngIf="hypertensionStudiesList">
+        <div *ngFor="let hyStudies of hypertensionStudiesList.controls; let i = index">
+          <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
+            <div class="mr-3">
+              <app-select [group]="form.get('hypertensionStudies').get(i.toString())" [options]="hypertensionOptions">
+              </app-select>
+            </div>
+            <div class="mr-3">
+              <datepicker-month fieldId="fecha" [group]="form.get('hypertensionStudies').get(i.toString())" name="fecha"
+                label="Fecha del estudio">
+              </datepicker-month>
+            </div>
+            <div class="mr-3">
+              <app-input [group]="form.get('hypertensionStudies').get(i.toString())" name="resultado" label="Resultado">
+              </app-input>
+            </div>
+            <div *ngIf="hypertensionStudiesList.length > 1"
+              [ngClass]="{'': hypertensionStudiesList.length === 1, 'col-span-1': hypertensionStudiesList.length > 1} ">
+              <button mat-mini-fab aria-label=" Eliminar estudio" (click)="removeToList(i, hypertensionStudiesList)"
+                type="button" class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
+                <mat-icon style="color: #18446B">remove</mat-icon>
+              </button>
+            </div>
+          </div>
+          <div>
+            <div class="radio-button-label mb-4" style="font-size: 12px !important;">Ampliar información
+            </div>
+            <app-text-area [group]="form.get('hypertensionStudies').get(i.toString())" name="informacion" label="Texto">
+            </app-text-area>
+          </div>
+          <hr class="w-full mb-6 ww-divider">
+        </div>
+        <div class="mb-8">
+          <button mat-mini-fab aria-label="Agregar familiar"
+            (click)="addToList(hypertensionStudiesList, 'hypertensionStudies')" type="button"
+            class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
+            <mat-icon style="color: #18446B">add</mat-icon>
+          </button>
+        </div>
+      </div>
+    </div>
+    <hr class="w-full mb-6 ww-divider">
+    <!-- Información relacionada con su tratamiento médico actual -->
+    <div>
+      <div class="radio-button-label my-8" style="font-size: 12px !important;">Información relacionada con su
+        tratamiento médico actual</div>
+      <div *ngFor="let treatment of medicalTreatmentList.controls; let i = index"
+        class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
+        <div class="mr-3">
+          <app-input [group]="form.get('medicalTreatment').get(i.toString())" name="nombre"
+            label="Nombre del medicamento">
+          </app-input>
+        </div>
+        <div class="mr-3">
+          <app-input [group]="form.get('medicalTreatment').get(i.toString())" name="dosis" label="Dosis">
+          </app-input>
+        </div>
+        <div class="mr-3">
+          <app-input [group]="form.get('medicalTreatment').get(i.toString())" name="frecuencia" label="Frecuencia">
+          </app-input>
+        </div>
+        <div *ngIf="medicalTreatmentList.length > 1"
+          [ngClass]="{'': medicalTreatmentList.length === 1, 'col-span-1': medicalTreatmentList.length > 1} ">
+          <button mat-mini-fab aria-label=" Eliminar estudio" (click)="removeToList(i, medicalTreatmentList)"
+            type="button" class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
+            <mat-icon style="color: #18446B">remove</mat-icon>
+          </button>
+        </div>
+      </div>
+      <div class="mb-8">
+        <button mat-mini-fab aria-label="Agregar estudio" (click)="addToList(medicalTreatmentList, 'medicalTreatment')"
+          type="button" class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
+          <mat-icon style="color: #18446B">add</mat-icon>
+        </button>
+      </div>
+    </div>
+    <hr class="w-full mb-6 ww-divider">
+    <!-- ¿Ha cambiado su tratamiento en los últimos 12 meses? -->
+    <div class="mt-8 mb-4">
+      <div
+        class="w-full xl:flex xl:justify-between lg:flex lg:justify-between md:flex md:justify-between sm:flex sm:justify-between">
+        <div class="radio-button-label" style="font-size: 12px !important;">¿Ha cambiado su tratamiento en los últimos
+          12 meses?
+        </div>
+        <app-radio-button [group]="form" name="haveChangedTreatment" [options]="yesOrNo"
+          (selected)="selectChange($event)">
+        </app-radio-button>
+      </div>
+      <div *ngIf="form.get('haveChangedTreatment').value === 'SI'">
+        <div class="radio-button-label mb-2" style="font-size: 12px !important;">¿Por qué razón?</div>
+        <div class="mr-3">
+          <app-text-area [group]="form.get('changedTreatment')" name="razon" label="Texto"></app-text-area>
+        </div>
+      </div>
+    </div>
+    <hr class="w-full mb-6 ww-divider">
+    <!-- ¿Con qué frecuencia va al médico para una consulta de seguimiento?-->
+    <div class="mt-8 mb-4">
+      <div class="radio-button-label mb-4" style="font-size: 12px !important;">¿Con qué frecuencia va al médico para
+        una consulta de seguimiento?
+      </div>
+      <div class="mr-3">
+        <app-text-area [group]="form" name="medicalConsultationFrequency" label="Texto"></app-text-area>
+      </div>
+    </div>
+    <hr class="w-full mb-6 ww-divider">
+    <!-- ¿Cuándo fue la última vez que consultó su médico? -->
+    <div class="mt-8 mb-4">
+      <div class="radio-button-label mb-4" style="font-size: 12px !important;">¿Cuándo fue la última vez que consultó
+        su médico?
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
+        <div class="mr-3">
+          <datepicker-month fieldId="fecha" [group]="form.get('lastMedicalConsultation')" name="fecha"
+            label="Fecha última consulta médico"></datepicker-month>
+        </div>
+        <div class="mr-3">
+          <app-input [group]="form.get('lastMedicalConsultation')" name="resultado" label="Resultado presión arterial">
+          </app-input>
+        </div>
+      </div>
+    </div>
+    <hr class="w-full mb-6 ww-divider">
+    <!--  ¿Se le ha detectado alguna anomalía en la orina, como proteína, sangre o azúcar?  -->
+    <div class="mt-8 mb-4">
+      <div
+        class="w-full xl:flex xl:justify-between lg:flex lg:justify-between md:flex md:justify-between sm:flex sm:justify-between">
+        <div class="radio-button-label" style="font-size: 12px !important;">¿Se le ha detectado alguna anomalía en la
+          orina, como proteína, sangre o azúcar?
+        </div>
+        <app-radio-button [group]="form" name="haveLiquidAnomaly" [options]="yesOrNo" (selected)="selectChange($event)">
+        </app-radio-button>
+      </div>
+      <div *ngIf="liquidAnomalyList">
+        <div *ngFor="let hyStudies of liquidAnomalyList.controls; let i = index">
+          <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
+            <div class="mr-3">
+              <datepicker-month fieldId="fecha" [group]="form.get('liquidAnomaly').get(i.toString())" name="fecha"
+                label="Fecha">
+              </datepicker-month>
+            </div>
+            <div *ngIf="liquidAnomalyList.length > 1"
+              [ngClass]="{'': liquidAnomalyList.length === 1, 'col-span-1': liquidAnomalyList.length > 1} ">
+              <button mat-mini-fab aria-label=" Eliminar estudio" (click)="removeToList(i, liquidAnomalyList)"
+                type="button" class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
+                <mat-icon style="color: #18446B">remove</mat-icon>
+              </button>
+            </div>
+          </div>
+          <div>
+            <div class="radio-button-label mb-4" style="font-size: 12px !important;">Ampliar información
+            </div>
+            <app-text-area [group]="form.get('liquidAnomaly').get(i.toString())" name="informacion" label="Texto">
+            </app-text-area>
+          </div>
+          <hr class="w-full mb-6 ww-divider">
+        </div>
+        <div class="mb-8">
+          <button mat-mini-fab aria-label="Agregar familiar" (click)="addToList(liquidAnomalyList, 'liquidAnomaly')"
+            type="button" class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
+            <mat-icon style="color: #18446B">add</mat-icon>
+          </button>
+        </div>
+      </div>
+    </div>
+    <hr class="w-full mb-6 ww-divider">
+    <!--Proporcione cualquier otra información adicional que considere útil para la tramitación de su solicitud de seguro. -->
+    <div class="mt-8 mb-4">
+      <div class="radio-button-label mb-4" style="font-size: 12px !important;">Proporcione cualquier otra información
+        adicional que considere útil para la tramitación de su solicitud de seguro.
+      </div>
+      <div class="mr-3">
+        <app-text-area [group]="form" name="importantInformation" label="Texto"></app-text-area>
+      </div>
+    </div>
+    <hr class="w-full mb-6 ww-divider">
+    <div class="declaraciones my-4 px-4 sm:px-4 md:px-14 lg:px-12 xl:px-12">
+      Declaro bajo la más solemne fe del juramento que los datos suministrados anteriormente y contenidos en este
+      cuestionario son verdaderos, correctos y actualizados y que no he omitido ni alterado ninguna información,
+      requerida
+      explícita o implícitamente en este cuestionario. Reconozco que el haber completado y firmado el presente
+      cuestionario no supone la aceptación por parte de la Aseguradora, hasta tanto la Aseguradora realice la debida
+      evaluación
+      y aprobación del mismo.
+    </div>
+  </div>
+  <mat-action-row class="action-row">
+    <button mat-button class="next-button" (click)="nextStep()" type="button">
+      Cerrar
+    </button>
+  </mat-action-row>
+</mat-expansion-panel>

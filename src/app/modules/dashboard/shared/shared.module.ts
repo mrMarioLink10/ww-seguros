@@ -27,6 +27,7 @@ import { KnowYourCustomerComponent } from './components/disease/know-your-custom
 import { TableStatusPipe } from '../../../core/pipes/table-status.pipe';
 import { MaterialFileInputModule } from 'ngx-material-file-input';
 import { PolicyStatusPipe } from '../../../core/pipes/policy-status.pipe';
+import {ChangeFormComponent} from './components/ChangeForm/change.component';
 
 @NgModule({
   declarations: [
@@ -49,6 +50,7 @@ import { PolicyStatusPipe } from '../../../core/pipes/policy-status.pipe';
     MountaineeringComponent,
     FinancialStatusComponent,
     KnowYourCustomerComponent,
+    ChangeFormComponent,
     TableStatusPipe,
     PolicyStatusPipe
   ],

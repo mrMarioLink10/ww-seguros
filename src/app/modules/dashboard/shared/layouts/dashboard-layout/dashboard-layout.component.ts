@@ -100,7 +100,7 @@ export class DashboardLayoutComponent implements OnInit, OnDestroy {
       this.countryRoles = value;
       this.countryRole = this.countryRolesService.getLocalStorageCountry();
 
-      if (!this.countryRole) {
+      if (!this.countryRolesService.userHasCountryRole(this.countryRole.codigoPortal, value)) {
         this.countryRolesService.setCountryRole(this.countryRoles[0]);
         this.countryRole = this.countryRolesService.getLocalStorageCountry();
       }

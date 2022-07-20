@@ -11,6 +11,12 @@ import {ICountryRole} from '../utils/interfaces/country-role.interface';
 export class CountryRolesService {
   BASE_URL: any = `${environment.apiUrl}/api`;
 
+  country = {
+    codigoCompania: '03',
+    codigoPortal: 'RD',
+    dominio: 'WWS',
+  };
+
   private countriesAndRolesSubject: BehaviorSubject<ICountryRole[]> = new BehaviorSubject<ICountryRole[]>(null);
   countriesAndRoles$: Observable<ICountryRole[]> = this.countriesAndRolesSubject.asObservable();
 
@@ -43,8 +49,23 @@ export class CountryRolesService {
     return this.http.get(`${this.BASE_URL}/userinfo/countries`);
   }
 
+  userHasCountryRole(country: string, countryRoles: ICountryRole[]): boolean {
+    return countryRoles.some(countryRole => countryRole.codigoPortal === country);
+  }
+
   getLocalStorageCountry(): ICountryRole {
-    return JSON.parse(localStorage.getItem('countryCode'));
+    try {
+      const countryCode: ICountryRole = JSON.parse(localStorage.getItem('countryCode'));
+
+      if (!countryCode || typeof countryCode !== 'object') {
+        this.setCountryRole(this.country);
+        return this.getLocalStorageCountry();
+      }
+      return JSON.parse(localStorage.getItem('countryCode'));
+    } catch (e) {
+      this.setCountryRole(this.country);
+      return this.getLocalStorageCountry();
+    }
   }
 
   setCountryRole(countryRole: ICountryRole) {

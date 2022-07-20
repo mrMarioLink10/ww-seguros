@@ -50,7 +50,8 @@ export class RefundsListComponent implements OnInit {
 		let data;
 		console.log(params);
 		if (this.countryRolesService.userHasMoreThanOneRole()) {
-			params = params.append('country', localStorage.getItem('countryCode'));
+      const country = this.countryRolesService.getLocalStorageCountry();
+			params = params.append('country', country.codigoPortal);
 		}
 		setTimeout(() => {
 			this.appComponent.showOverlay = true;
@@ -76,11 +77,8 @@ export class RefundsListComponent implements OnInit {
 	}
 
 	seeRequest(id: number) {
-    let country = '';
-    this.countryRolesService.countriesAndRolesData().subscribe(value => {
-      country = this.countryRolesService.getCountryByRole(this.role as CountryRoleTypes, value);
-    });
-    window.open(`${this.BASE_URL}/ReembolsosView/Index/${id}/?location=${country}`, '_blank');
+    const country = this.countryRolesService.getLocalStorageCountry();
+    window.open(`${this.BASE_URL}/ReembolsosView/Index/${id}/?location=${country.codigoPortal}`, '_blank');
 	}
 
 	deleteRefund(id: number) {

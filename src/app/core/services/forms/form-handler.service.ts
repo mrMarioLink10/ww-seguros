@@ -195,7 +195,8 @@ export class FormHandlerService {
 
       form.removeControl('countryRoleCode');
       if (this.countryRolesService.userHasMoreThanOneRole()) {
-        form.addControl('countryRoleCode', this.fb.control(localStorage.getItem('countryCode')));
+        const country = this.countryRolesService.getLocalStorageCountry();
+        form.addControl('countryRoleCode', this.fb.control(country.codigoPortal));
       }
 
       this.sendedForm = form.getRawValue();
@@ -1009,11 +1010,11 @@ export class FormHandlerService {
           this.dynamicQuoteService.saveTypeSelected(isDeducible, poliza, selectionId, '')
             .subscribe((res: any) => {
               console.log('Envio realizado correctamente', res);
-              const compania = this.countryRolesService.getLocalStorageCountry() === 'rd' ? '03' : '02';
+              const country = this.countryRolesService.getLocalStorageCountry();
               const target = this.sendedForm.tipoSolicitud === 'CAMBIO DE PRODUCTO' ? 'producto' : 'deducible';
               const targetValue = this.sendedForm.tipoSolicitud === 'CAMBIO DE PRODUCTO' ? codeValue : this.sendedForm.productoTo;
               // tslint:disable-next-line: max-line-length
-              window.open(`${environment.urlCotizadores}/?cia=${compania}&poliza=${res.data.poliza}&${target}=${targetValue}&guid=${res.data.directorioSolicitud}`, '_blank');
+              window.open(`${environment.urlCotizadores}/?cia=${country.codigoCompania}&poliza=${res.data.poliza}&${target}=${targetValue}&guid=${res.data.directorioSolicitud}`, '_blank');
               this.correctSend(res, dialog, dataClosing, route, false);
               appComponent.showOverlay = false;
 

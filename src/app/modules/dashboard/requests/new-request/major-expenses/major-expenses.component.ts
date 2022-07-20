@@ -1455,20 +1455,12 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
   }
 
   newQuote() {
-    let role = '';
-    let cia = '';
-    if (this.countryRolesService.userHasMoreThanOneRole()) {
     const country = this.countryRolesService.getLocalStorageCountry();
 
-    this.countryRolesService.countriesAndRolesData().subscribe(value => {
-      role = this.countryRolesService.getRoleByCountry(country as CountryTypes, value);
-      cia = this.countryRolesService.getCiaByRole(role, value);
-    });
-
-    window.open(`${environment.urlCotizadores}/vida?cia=${cia}`, '_self');
+    if (this.countryRolesService.userHasMoreThanOneRole()) {
+    window.open(`${environment.urlCotizadores}/vida?cia=${country.codigoCompania}`, '_self');
     } else {
-      role = this.userService.getRoleCotizador();
-      window.open(`${environment.urlCotizadoresSalud}?cia=${cia}`, '_self');
+      window.open(`${environment.urlCotizadoresSalud}?cia=${country.codigoCompania}`, '_self');
     }
   }
   canDeactivate(): Observable<boolean> | boolean {

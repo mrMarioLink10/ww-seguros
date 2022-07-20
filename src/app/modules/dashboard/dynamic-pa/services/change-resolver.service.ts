@@ -23,7 +23,7 @@ export class ChangeResolverService {
     // const country = route.params.country;
     const country = this.countryRolesService.getLocalStorageCountry();
 
-    return this.changeService.getDynamicData(guid, cotizacionId, country)
+    return this.changeService.getDynamicData(guid, cotizacionId, country.codigoPortal)
       .pipe(mergeMap((data: any) => {
         if (data.data) {
           return of(data.data);

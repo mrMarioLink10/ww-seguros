@@ -2029,14 +2029,9 @@ export class LifeComponent implements OnInit, DoCheck {
   }
 
   newQuote() {
-    let cia = '';
-    const role = this.userService.getRoleCotizador();
+    const country = this.countryRolesService.getLocalStorageCountry();
 
-    this.countryRolesService.countriesAndRolesData().subscribe(value => {
-      cia = this.countryRolesService.getCiaByRole(role, value);
-    });
-
-    window.open(`${environment.urlCotizadores}/?cia=${cia}`, '_blank');
+    window.open(`${environment.urlCotizadores}/?cia=${country.codigoCompania}`, '_blank');
   }
 
   showWarningDot(form: any): boolean {
@@ -3428,10 +3423,9 @@ export class LifeComponent implements OnInit, DoCheck {
         data.data != undefined) {
         // this.ID = data.data.id;
         // console.log(data.data);
+        const country = this.countryRolesService.getLocalStorageCountry();
 
-        this.countryRolesService.countriesAndRolesData().subscribe(value => {
-          this.role = this.countryRolesService.getRoleByCountry(data.data.countryCode.toLowerCase(), value);
-        });
+        this.role = country.dominio;
         this.dataMappingFromApi.iterateThroughtAllObjectVida(data.data, this.newRequest);
 
         console.log(this.newRequest);

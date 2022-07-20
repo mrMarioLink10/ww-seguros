@@ -79,7 +79,8 @@ export class QuotesComponent implements OnInit {
     console.log(params);
 
     if (this.countryRolesService.userHasMoreThanOneRole()) {
-      params = params.append('country', localStorage.getItem('countryCode'));
+      const country = this.countryRolesService.getLocalStorageCountry();
+      params = params.append('country', country.codigoPortal);
     }
 
     setTimeout(() => {
@@ -118,21 +119,8 @@ export class QuotesComponent implements OnInit {
   }
 
   newQuote() {
-    let role = '';
-    let cia = '';
-
-    if (this.countryRolesService.userHasMoreThanOneRole()) {
-      const country = this.countryRolesService.getLocalStorageCountry();
-
-      this.countryRolesService.countriesAndRolesData().subscribe(value => {
-        role = this.countryRolesService.getRoleByCountry(country as CountryTypes, value);
-        cia = this.countryRolesService.getCiaByRole(role, value);
-      });
-
-    } else {
-      role = this.userService.getRoleCotizador();
-    }
-    window.open(`${environment.urlCotizadores}/?cia=${cia}`, '_blank');
+    const country = this.countryRolesService.getLocalStorageCountry();
+    window.open(`${environment.urlCotizadores}/?cia=${country.codigoCompania}`, '_blank');
   }
 
 }

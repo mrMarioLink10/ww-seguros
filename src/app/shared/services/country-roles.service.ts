@@ -1,6 +1,4 @@
 import { Injectable } from '@angular/core';
-import { CountryTypes } from '../utils/keys/country-types';
-import { CountryRoleTypes } from '../utils/keys/country-role-types';
 import {UserService} from '../../core/services/user/user.service';
 import {HttpClient} from '@angular/common/http';
 import {environment} from '../../../environments/environment';
@@ -36,42 +34,21 @@ export class CountryRolesService {
     });
   }
 
-  getRoleByCountry(country: CountryTypes, countriesAndRoles: ICountryRole[]) {
-      return countriesAndRoles.find(countriesAndRole =>
-        countriesAndRole.codigoPortal.toLowerCase() === country.toLowerCase()).dominio;
-  }
-
-  getCountryByRole(role: CountryRoleTypes | string, countriesAndRoles: ICountryRole[]) {
-    return countriesAndRoles.find(countriesAndRole =>
-      countriesAndRole.dominio.toLowerCase() === role.toLowerCase()).codigoPortal.toLowerCase();
-  }
-
-  getCiaByRole(role: CountryRoleTypes | string, countriesAndRoles: ICountryRole[]) {
-    return countriesAndRoles.find(countriesAndRole =>
-      countriesAndRole.dominio.toLowerCase() === role.toLowerCase()).codigoCompania;
-  }
-
-  getCountriesByRoles(roles: string[], countriesAndRoles: ICountryRole[]) {
-    const countries = [];
-    const filteredRoles = roles.filter(role => (countriesAndRoles.some(countryRole => countryRole.dominio === role)));
-
-    filteredRoles.forEach(filteredRole => {
-      countries.push(this.getCountryByRole(filteredRole, countriesAndRoles));
-    });
-
-    return countries;
-  }
-
   userHasMoreThanOneRole(): boolean {
     const roles = this.userService.getRoles().find(role => role.length === 3);
     return roles.length > 1;
   }
 
-  getCountriesAndRoles(): Observable<any> {
+  getCountriesAndRoles(): Observable<ICountryRole[] | any> {
     return this.http.get(`${this.BASE_URL}/userinfo/countries`);
   }
 
-  getLocalStorageCountry() {
-    return localStorage.getItem('countryCode') || CountryTypes.rd;
+  getLocalStorageCountry(): ICountryRole {
+    return JSON.parse(localStorage.getItem('countryCode'));
+  }
+
+  setCountryRole(countryRole: ICountryRole) {
+    localStorage.setItem('countryCode', JSON.stringify(countryRole));
+    console.log('updated', countryRole);
   }
 }

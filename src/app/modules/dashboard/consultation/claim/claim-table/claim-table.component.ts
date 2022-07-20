@@ -59,12 +59,8 @@ export class ClaimTableComponent implements OnInit {
   }
   BASE_URL: any = `${environment.fileUrlHttps}`;
   getBillDownloadLink(billId, poliza) {
-    let country = '';
-
-    this.countryRolesService.countriesAndRolesData().subscribe(value => {
-      country = this.countryRolesService.getCountryByRole(this.userRole as CountryRoleTypes, value);
-    });
-    return `${this.BASE_URL}/InvoiceView/ExportToPDF/ReclamosData/${country}/${billId}/${poliza}`;
+    const country = this.countryRolesService.getLocalStorageCountry();
+    return `${this.BASE_URL}/InvoiceView/ExportToPDF/ReclamosData/${country.codigoPortal}/${billId}/${poliza}`;
   }
   loadData() {
     // this.policyService.getPolicyDetails(this.policyId).subscribe((res: any) => {
@@ -77,7 +73,8 @@ export class ClaimTableComponent implements OnInit {
     let httpParams = this.constructQueryParams();
 
     if (this.countryRolesService.userHasMoreThanOneRole()) {
-      httpParams = httpParams.append('country', localStorage.getItem('countryCode'));
+      const country = this.countryRolesService.getLocalStorageCountry();
+      httpParams = httpParams.append('country', country.codigoPortal);
     }
 
     this.claimService.getClaims(httpParams, this.policyId).subscribe((res: any) => {

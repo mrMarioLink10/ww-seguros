@@ -92,7 +92,8 @@ export class AuthorizationsComponent implements OnInit {
 		});
 
 		if (this.countryRolesService.userHasMoreThanOneRole()) {
-			params = params.append('country', localStorage.getItem('countryCode'));
+      const country = this.countryRolesService.getLocalStorageCountry();
+			   params = params.append('country', country.codigoPortal);
 		}
 
 		this.authorizationsService.getAuthoriations(params)
@@ -123,12 +124,8 @@ export class AuthorizationsComponent implements OnInit {
 	}
 
 	seeRequest(id: number) {
-    let country = '';
-
-    this.countryRolesService.countriesAndRolesData().subscribe(value => {
-      country = this.countryRolesService.getCountryByRole(this.role as CountryRoleTypes, value);
-    });
-    window.open(`${this.BASE_URL}/PrecertificadoView/Index/${country}/${id}`, '_blank');
+    const country = this.countryRolesService.getLocalStorageCountry();
+    window.open(`${this.BASE_URL}/PrecertificadoView/Index/${country.codigoPortal}/${id}`, '_blank');
 	}
 
 	ngOnInit() {

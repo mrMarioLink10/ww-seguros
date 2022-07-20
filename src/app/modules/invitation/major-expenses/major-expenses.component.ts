@@ -1138,14 +1138,8 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
   }
 
   newQuote() {
-    let cia = '';
-    const role = this.userService.getRoleCotizador();
-
-    this.countryRolesService.countriesAndRolesData().subscribe(value => {
-      cia = this.countryRolesService.getCiaByRole(role, value);
-    });
-
-    window.open(`${environment.urlCotizadoresSalud}?cia=${cia}`, '_blank');
+    const country = this.countryRolesService.getLocalStorageCountry();
+    window.open(`${environment.urlCotizadoresSalud}?cia=${country.codigoCompania}`, '_blank');
   }
 
   canDeactivate(): Observable<boolean> | boolean {
@@ -3734,9 +3728,8 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
         this.dataMappingFromApi.iterateThroughtAllObject(data.data, this.newRequest);
         this.AddEventOnEachDependentVariable();
 
-        this.countryRolesService.countriesAndRolesData().subscribe(value => {
-          this.role = this.countryRolesService.getRoleByCountry(data.data.countryCode, value);
-        });
+        const country = this.countryRolesService.getLocalStorageCountry();
+        this.role = country.dominio;
 
         const formP = this.newRequest.get('person') as FormGroup;
         const formPO = this.newRequest.get('person').get('office') as FormGroup;

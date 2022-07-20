@@ -76,7 +76,8 @@ export class PolicyAdministrationComponent implements OnInit {
 		let data;
 
 		if (this.countryRolesService.userHasMoreThanOneRole()) {
-			params = params.append('country', localStorage.getItem('countryCode'));
+      const country = this.countryRolesService.getLocalStorageCountry();
+			params = params.append('country', country.codigoPortal);
 		}
 
 		this.loading = true;

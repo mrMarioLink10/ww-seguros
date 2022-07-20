@@ -13,6 +13,7 @@ import {CountryRoleTypes} from '../../../../../shared/utils/keys/country-role-ty
 import {CountryRolesService} from '../../../../../shared/services/country-roles.service';
 import {CountryTypes} from '../../../../../shared/utils/keys/country-types';
 import {WWSLogoUrls} from './keys/WWS-logo-urls';
+import {ICountryRole} from '../../../../../shared/utils/interfaces/country-role.interface';
 
 // tslint:disable: max-line-length
 
@@ -27,11 +28,10 @@ export class DashboardLayoutComponent implements OnInit, OnDestroy {
 
   userName: string;
   userEmail: string;
-  role: string;
   roles: any;
-  country: string;
+  countryRole: ICountryRole;
+  countryRoles: ICountryRole[];
   imageSrc: string = WWSLogoUrls.RD;
-  countries: CountryTypes[];
   watchRouter: Subscription;
 
   newNotification = [
@@ -69,7 +69,6 @@ export class DashboardLayoutComponent implements OnInit, OnDestroy {
     protected keycloakAngular: KeycloakService,
     private countryRolesService: CountryRolesService,
   ) {
-    this.role = this.userService.getRoleCotizador();
     this.mobileQuery = media.matchMedia('(max-width: 600px)');
     this.mobileQueryListener = () => changeDetectorRef.detectChanges();
     // tslint:disable-next-line: deprecation
@@ -89,10 +88,6 @@ export class DashboardLayoutComponent implements OnInit, OnDestroy {
     this.userName = this.userService.getUserInformation().name;
     this.userEmail = this.userService.getUserInformation().email;
     this.roles = this.userService.getRoles();
-
-    console.log('country role: ', this.role);
-    console.log('roles: ', this.roles);
-    console.log('country: ', this.country);
   }
 
   userHasMoreThanOneRole() {
@@ -100,24 +95,22 @@ export class DashboardLayoutComponent implements OnInit, OnDestroy {
   }
 
   initializeCountryRole() {
-    this.country = this.countryRolesService.getLocalStorageCountry();
-
     this.countryRolesService.countriesAndRolesData().subscribe(value => {
-      this.countries = this.countryRolesService.getCountriesByRoles(this.roles, value);
-      this.country = this.countries[0];
-      this.role = this.countryRolesService.getRoleByCountry(this.country as CountryTypes, value);
-      this.chooseWWLogo(this.role);
-      console.log('country role: ', this.role);
-      this.setCountry();
+      this.countryRoles = value;
+      this.countryRole = this.countryRolesService.getLocalStorageCountry();
+
+      if (!this.countryRole) {
+        this.countryRolesService.setCountryRole(this.countryRoles[0]);
+        this.countryRole = this.countryRolesService.getLocalStorageCountry();
+      }
+
+      console.log('country role: ', this.countryRole);
+      this.chooseWWLogo(this.countryRole.dominio);
     });
   }
 
   chooseWWLogo(role) {
     this.imageSrc = role === CountryRoleTypes.WWS ? WWSLogoUrls.RD : WWSLogoUrls.OTHER;
-  }
-
-  setCountry() {
-    localStorage.setItem('countryCode', this.country);
   }
 
   showMatListen(permittedRoles: any[]) {
@@ -128,8 +121,14 @@ export class DashboardLayoutComponent implements OnInit, OnDestroy {
     }
   }
 
-  updateCountry() {
-    this.setCountry();
+  setCountry(countryRole: ICountryRole) {
+    this.countryRolesService.setCountryRole(countryRole);
+  }
+
+  updateCountry(countryRole: ICountryRole) {
+    console.log('selection change', countryRole);
+    this.countryRole = countryRole;
+    this.setCountry(countryRole);
     window.location.reload();
   }
 
@@ -141,7 +140,7 @@ export class DashboardLayoutComponent implements OnInit, OnDestroy {
 
   sendEmail() {
     // TODO: add new mail
-    if (this.role === CountryRoleTypes.WWS) {
+    if (this.countryRole.dominio === CountryRoleTypes.WWS) {
       window.location.href = `mailto:${environment.mailForHelp}`;
     } else {
       window.location.href = `mailto:${environment.mailForHelpPM}`;
@@ -153,7 +152,7 @@ export class DashboardLayoutComponent implements OnInit, OnDestroy {
   }
 
   GetInstrucstivo() {
-    if (this.role === CountryRoleTypes.WWS) {
+    if (this.countryRole.dominio === CountryRoleTypes.WWS) {
       window.open(environment.instructivo, '_blank');
     } else {
       window.open(environment.instructivoMedical, '_blank');

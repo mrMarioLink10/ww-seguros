@@ -55,7 +55,8 @@ export class AccountStatusTableComponent implements OnInit {
     let httpParams = this.constructQueryParams();
 
     if (this.countryRolesService.userHasMoreThanOneRole()) {
-      httpParams = httpParams.append('country', localStorage.getItem('countryCode'));
+      const country = this.countryRolesService.getLocalStorageCountry();
+      httpParams = httpParams.append('country', country.codigoPortal);
     }
 
     this.status.getStatus(httpParams, this.policyId).subscribe((res: any) => {

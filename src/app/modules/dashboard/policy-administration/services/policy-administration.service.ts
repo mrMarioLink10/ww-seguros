@@ -28,7 +28,7 @@ export class PolicyAdministrationService {
   getIdNumbers(): Observable<any> {
 
     const country = this.countryRolesService.getLocalStorageCountry();
-    return this.http.get(`${environment.apiUrl}/api/DatosEmpresa/autocompleteDinamicos`, { params: { country } });
+    return this.http.get(`${environment.apiUrl}/api/DatosEmpresa/autocompleteDinamicos`, { params: { country: country.codigoPortal } });
   }
 
   download(url: string): Observable<Blob> {

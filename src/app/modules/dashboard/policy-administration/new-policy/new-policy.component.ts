@@ -398,16 +398,9 @@ export class NewPolicyComponent implements OnInit {
     });
 
     console.log(this.userService.getRoles());
-
-    if (this.countryRolesService.userHasMoreThanOneRole()) {
-      this.country = this.countryRolesService.getLocalStorageCountry();
-
-      this.countryRolesService.countriesAndRolesData().subscribe(value => {
-        this.role = this.countryRolesService.getRoleByCountry(this.country as CountryTypes, value);
-      });
-    } else {
-      this.role = this.userService.getRoleCotizador();
-    }
+    const countryRole = this.countryRolesService.getLocalStorageCountry();
+    this.country = countryRole.codigoPortal;
+    this.role = countryRole.dominio;
 
     if (this.userService.getRoles().includes('wws_intermediario_admin')) {
 			this.isWWSeguros = true;

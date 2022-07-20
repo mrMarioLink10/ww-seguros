@@ -70,12 +70,8 @@ export class AccountStatusFilterComponent implements OnInit {
   }
 
   download() {
-    let country = '';
-
-    this.countryRolesService.countriesAndRolesData().subscribe(value => {
-      country = this.countryRolesService.getCountryByRole(this.userRole as CountryRoleTypes, value);
-    });
-    window.open(`${this.BASE_URL}/InvoiceView/ExportToPDF/EstadoDeCuentas/${country}/${this.polizaId}`, '_blank');
+    const country = this.countryRolesService.getLocalStorageCountry();
+    window.open(`${this.BASE_URL}/InvoiceView/ExportToPDF/EstadoDeCuentas/${country.codigoPortal}/${this.polizaId}`, '_blank');
   }
 
 }

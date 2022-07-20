@@ -2080,19 +2080,8 @@ export class LifeComponent implements OnInit, DoCheck {
   }
 
   newQuote() {
-    let role = '';
-    let cia = '';
-    if (this.countryRolesService.userHasMoreThanOneRole()) {
-      const country = this.countryRolesService.getLocalStorageCountry();
-
-      this.countryRolesService.countriesAndRolesData().subscribe(value => {
-        role = this.countryRolesService.getRoleByCountry(country as CountryTypes, value);
-        cia = this.countryRolesService.getCiaByRole(role, value);
-      });
-    } else {
-      role = this.userService.getRoleCotizador();
-    }
-    window.open(`${environment.urlCotizadores}/vida?cia=${cia}`, '_self');
+    const country = this.countryRolesService.getLocalStorageCountry();
+    window.open(`${environment.urlCotizadores}/vida?cia=${country.codigoCompania}`, '_self');
   }
 
   showWarningDot(form: any): boolean {

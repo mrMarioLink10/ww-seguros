@@ -69,7 +69,7 @@
             <div style="max-height: 35px !important;" class="text-xs uppercase">PRE - Autorizaciones</div>
           </mat-list-item>
 
-          <mat-list-item *ngIf="showMatListen(['Solicitud_suscripcion'])" [routerLink]="['policy-administration']"
+          <mat-list-item *ngIf="showMatListen(['Solicitud_suscripcion']) && false" [routerLink]="['policy-administration']"
             routerLinkActive="router-link-active" style="color: white; max-height: 35px !important;" class="my-3">
             <img style="max-height: 35px !important;"
               [src]="!activeRoute.includes('/dashboard/policy-administration') ? '../../../../../../assets/iconos/user_search_icon.svg' : '../../../../../../assets/iconos/user_search_icon_filled.svg'"
@@ -85,7 +85,7 @@
             <div style="max-height: 35px !important;" class="text-xs uppercase">Formularios</div>
           </mat-list-item>
 
-          <mat-list-item *ngIf="showMatListen(['Solicitud_suscripcion'])" [routerLink]="['dynamic-pa']"
+          <mat-list-item *ngIf="showMatListen(['Solicitud_suscripcion']) && false" [routerLink]="['dynamic-pa']"
             routerLinkActive="router-link-active" style="color: white; max-height: 35px !important;" class="my-3">
             <img style="max-height: 35px !important;"
               [src]="!activeRoute.includes('/dashboard/dynamic-pa') ? '../../../../../../assets/iconos/formulario.svg' : '../../../../../../assets/iconos/formulario-b.svg'"
@@ -139,12 +139,12 @@
           </button>
         </div>
         <div class="flex justify-end">
-          <div *ngIf="userHasMoreThanOneRole() && countries?.length > 1"
+          <div *ngIf="userHasMoreThanOneRole() && countryRoles?.length > 1"
             style="color: white; max-height: 35px !important; padding-left: 0.75rem" class="mt-10">
             <mat-form-field color="accent" appearance="outline" class="w-full country-select"
               style="font-size: small !important;">
-              <mat-select [(ngModel)]="country" (selectionChange)="updateCountry()">
-                <mat-option *ngFor="let country of countries" [value]="country">{{country.toUpperCase()}}</mat-option>
+              <mat-select [(value)]="countryRole.codigoPortal">
+                <mat-option (click)="updateCountry(countryRole)" *ngFor="let countryRole of countryRoles" [value]="countryRole.codigoPortal">{{countryRole.codigoPortal.toUpperCase()}}</mat-option>
               </mat-select>
             </mat-form-field>
           </div>

@@ -121,17 +121,8 @@ export class QuoteComponent implements OnInit {
 
     console.log(this.userService.getRoles());
 
-    this.country = this.countryRolesService.getLocalStorageCountry();
-
-    if (this.countryRolesService.userHasMoreThanOneRole()) {
-
-      this.countryRolesService.countriesAndRolesData().subscribe(value => {
-        this.role = this.countryRolesService.getRoleByCountry(this.country as CountryTypes, value);
-      });
-
-    } else {
-      this.role = this.userService.getRoleCotizador();
-    }
+    this.country = this.countryRolesService.getLocalStorageCountry().codigoPortal;
+    this.role = this.countryRolesService.getLocalStorageCountry().dominio;
 
     // console.log(this.userService.getRoleCotizador());
 
@@ -510,13 +501,13 @@ export class QuoteComponent implements OnInit {
     let code;
 
     if (this.administrationPolicyGroup.get('tipoSolicitud').value == 'CAMBIO DE PRODUCTO') {
-      if (this.countryRolesService.getLocalStorageCountry() === 'rd') {
+      if (this.countryRolesService.getLocalStorageCountry().codigoPortal === CountryTypes.rd.toUpperCase()) {
         code = this.availableCodes.find(codigo => codigo.value === productoToValue);
         const codeWWS = code.valueWWS;
 
         this.formHandler.saveDynamicQuote(this.administrationPolicyGroup, this.appComponent, codeWWS);
 
-      } else if (this.countryRolesService.getLocalStorageCountry() === 'pn') {
+      } else {
         code = this.availableCodes.find(codigo => codigo.value === productoToValue);
         const codeWWM = code.valueWWM;
 

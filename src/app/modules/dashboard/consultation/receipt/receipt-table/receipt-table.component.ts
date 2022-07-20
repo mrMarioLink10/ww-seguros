@@ -55,19 +55,16 @@ export class ReceiptTableComponent implements OnInit {
   }
 
   getBillDownloadLink(billId) {
-    let country = '';
-
-    this.countryRolesService.countriesAndRolesData().subscribe(value => {
-      country = this.countryRolesService.getCountryByRole(this.userRole as CountryRoleTypes, value);
-    });
-    return `${this.BASE_URL}/InvoiceView/ExportToPDF/Reembolsos/${country}/${billId}/${this.policyId}`;
+    const country = this.countryRolesService.getLocalStorageCountry();
+    return `${this.BASE_URL}/InvoiceView/ExportToPDF/Reembolsos/${country.codigoPortal}/${billId}/${this.policyId}`;
   }
 
   loadData() {
     let httpParams = this.constructQueryParams();
 
     if (this.countryRolesService.userHasMoreThanOneRole()) {
-      httpParams = httpParams.append('country', localStorage.getItem('countryCode'));
+      const country = this.countryRolesService.getLocalStorageCountry();
+      httpParams = httpParams.append('country', country.codigoPortal);
     }
 
     this.receiptService.getReceipts(httpParams, this.policyId).subscribe((res: any) => {

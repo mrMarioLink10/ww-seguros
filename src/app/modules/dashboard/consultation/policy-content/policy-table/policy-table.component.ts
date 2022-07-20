@@ -61,7 +61,8 @@ export class PolicyTableComponent implements OnInit {
     let params = this.generatePoliciesParams();
 
     if (this.countryRolesService.userHasMoreThanOneRole()) {
-      params = params.append('country', localStorage.getItem('countryCode'));
+      const country = this.countryRolesService.getLocalStorageCountry();
+      params = params.append('country', country.codigoPortal);
     }
 
     this.policyService.getPolicies(params).subscribe((res: any) => {

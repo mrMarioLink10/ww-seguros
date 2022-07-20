@@ -33,6 +33,7 @@ export class DashboardLayoutComponent implements OnInit, OnDestroy {
   countryRoles: ICountryRole[];
   imageSrc: string = WWSLogoUrls.RD;
   watchRouter: Subscription;
+  role: string;
 
   newNotification = [
     {
@@ -103,6 +104,7 @@ export class DashboardLayoutComponent implements OnInit, OnDestroy {
         this.countryRolesService.setCountryRole(this.countryRoles[0]);
         this.countryRole = this.countryRolesService.getLocalStorageCountry();
       }
+      this.role = this.countryRole.dominio;
 
       console.log('country role: ', this.countryRole);
       this.chooseWWLogo(this.countryRole.dominio);

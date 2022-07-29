@@ -136,6 +136,23 @@ export class DialogOptionService {
 		showButtons: false,
 	};
 
+  test: BaseDialog = {
+    logo: 'check',
+    title: 'Atención',
+    text: `Todos los cambios de planes están sujetos a evaluación y aprobación de la Aseguradora.<br /><br />
+          Al momento de realizar el cambio no puede haber siniestros en curso o condición médica crónica
+          de alto riesgo (esto lo estaría evaluando elanalista una vez reciba el caso, no se gestiona vía portal).<br /><br />
+          Los cambios de planes aprobados de pólizas aceptadas con una condición de aceptación subestándar mantienen,
+          en principio, las mismas condiciones de aceptación de la póliza de origen.<br /><br />
+          Los cambios de planes para personas a partir de 64 años pudieran requerir
+          evaluación médica dependiendo el perfil de riesgo. (Que esta alerta salga solo si
+          la persona que solicita tiene esta edad).`,
+    showButtons: true,
+    showCancelButton: true,
+    textPrincipalButton: 'Cancelar',
+    textCancelButton: 'Aceptar'
+  };
+
 	deleteConfirm(title: string) {
 		return {
 			logo: 'warning',

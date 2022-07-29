@@ -950,6 +950,19 @@ export class DisabilityComponent implements OnInit, DoCheck {
     return true;
   }
 
+  sendTest() {
+    const dialogRef = this.dialog.open(BaseDialogComponent, {
+      data: this.dialogOption.test,
+      minWidth: 385,
+    });
+
+    return dialogRef.componentInstance.dialogRef.afterClosed().pipe(map(result => {
+      if (result === 'true') {
+        return true;
+      }
+    }), first());
+  }
+
   getBmi() {
     const weightUnit = this.disabilityGroup.get('questions').get('weightUnit').value;
     const heightUnit = this.disabilityGroup.get('questions').get('heightUnit').value;
@@ -1410,12 +1423,12 @@ export class DisabilityComponent implements OnInit, DoCheck {
         if (event.target.files && event.target.files.length) {
           const [file] = event.target.files;
           reader.readAsDataURL(file);
-  
+
           reader.onload = () => {
             this.disabilityGroup.get(name).patchValue({
               ['id2Attached']: reader.result
             });
-            
+
             //this.markForCheck();
           };
         }

@@ -2094,7 +2094,7 @@
                 <div class="mt-6">
                   <div>
                     <label class="formulary-labels"> Sí a mi fallecimiento alguno de mis Beneficiarios Primarios es
-                       menor de edad, el beneficio correspondiente será entregado a su tutor legal en su 
+                       menor de edad, el beneficio correspondiente será entregado a su tutor legal en su
                        calidad de representación del menor:</label>
                   </div>
                   <div class="mt-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4">
@@ -2242,7 +2242,7 @@
                   class="mt-6">
                   <div>
                     <label class="formulary-labels">Sí a mi fallecimiento alguno de mis Beneficiarios Contingentes es
-                      menor de edad, el beneficio correspondiente será entregado a su tutor legal en su 
+                      menor de edad, el beneficio correspondiente será entregado a su tutor legal en su
                       calidad de representación del menor:</label>
                   </div>
                   <div class="mt-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4">
@@ -2675,7 +2675,7 @@
       <button mat-button class="cancel-form-button" style="margin-right: 7.5px !important;"
         (click)="formHandler.sendForm(disabilityGroup, 'disability', 'cancel')" type="submit">Cancelar</button>
       <button mat-button class="save-button" style="margin-right: 7.5px !important;"
-        (click)="formHandler.sendForm(disabilityGroup, 'disability', 'save', appComponent)"
+        (click)="sendTest()"
         type="submit">Guardar</button>
       <button *ngIf="!disabilityGroup.invalid" mat-button class="send-button" style="margin-right: 7.5px !important;"
         (click)="formHandler.sendForm(disabilityGroup, 'disability', 'send', appComponent)"

@@ -160,7 +160,7 @@ export class FormHandlerService {
 
       case 'dynamic-pa':
         if (type === 'send') {
-          dataOpen = this.dialogOption.sendForm('cambio');
+          dataOpen = this.dialogOption.sendChangePlans;
           dataClosing = this.dialogOption.confirmedForm('cambio');
         } else if (type === 'save') {
           dataOpen = this.dialogOption.saveForm('cambio');
@@ -758,7 +758,7 @@ export class FormHandlerService {
 
   directSendRequest(id: number, type: string, title: string, appComponent: any): Observable<boolean> {
     const dialogRef = this.dialog.open(BaseDialogComponent, {
-      data: this.dialogOption.sendForm(title),
+      data: type === 'FlujoClientesExistenteDinamico' ? this.dialogOption.sendChangePlans : this.dialogOption.sendForm(title),
       minWidth: 385,
     });
     let deleted: boolean;

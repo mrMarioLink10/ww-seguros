@@ -69,7 +69,7 @@
             <div style="max-height: 35px !important;" class="text-xs uppercase">PRE - Autorizaciones</div>
           </mat-list-item>
 
-         <!-- <mat-list-item *ngIf="showMatListen(['Solicitud_suscripcion']) && false" [routerLink]="['policy-administration']"
+          <mat-list-item *ngIf="showMatListen(['Solicitud_suscripcion'])" [routerLink]="['policy-administration']"
             routerLinkActive="router-link-active" style="color: white; max-height: 35px !important;" class="my-3">
             <img style="max-height: 35px !important;"
               [src]="!activeRoute.includes('/dashboard/policy-administration') ? '../../../../../../assets/iconos/user_search_icon.svg' : '../../../../../../assets/iconos/user_search_icon_filled.svg'"
@@ -85,13 +85,13 @@
             <div style="max-height: 35px !important;" class="text-xs uppercase">Formularios</div>
           </mat-list-item>
 
-          <mat-list-item *ngIf="showMatListen(['Solicitud_suscripcion']) && false" [routerLink]="['dynamic-pa']"
+          <mat-list-item *ngIf="showMatListen(['Solicitud_suscripcion'])" [routerLink]="['dynamic-pa']"
             routerLinkActive="router-link-active" style="color: white; max-height: 35px !important;" class="my-3">
             <img style="max-height: 35px !important;"
               [src]="!activeRoute.includes('/dashboard/dynamic-pa') ? '../../../../../../assets/iconos/formulario.svg' : '../../../../../../assets/iconos/formulario-b.svg'"
               height="24px" width="24px" class="mr-3 ml-3">
             <div style="max-height: 35px !important;" class="text-xs uppercase">Cambio de Plan</div>
-          </mat-list-item> -->
+          </mat-list-item>
 
           <mat-list-item (click)="sendEmail();" style="color: white; max-height: 35px !important;" class="my-3">
             <img style="max-height: 35px !important;" src="../../../../../../assets/iconos/ayuda-icon.svg" height="24px"

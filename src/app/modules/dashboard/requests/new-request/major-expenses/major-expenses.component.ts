@@ -990,6 +990,11 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
     } else if (this.noCotizacion == null) {
       this.noCotizacion = '';
     }
+
+    if (this.changeForm.get('solicitudGastosMayores')) {
+      (this.changeForm.get('solicitudGastosMayores') as FormGroup).removeControl('createdNameBy');
+      (this.changeForm.get('solicitudGastosMayores') as FormGroup).removeControl('directorioSolicitud');
+    }
   }
 
   getBmiUpdated(Form) {
@@ -4360,6 +4365,11 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
           contingentBeneficiaryGroup.get('quantity').setValidators([Validators.min(1), Validators.max(100)]);
           contingentBeneficiaryGroup.get('quantity').updateValueAndValidity();
         }
+      }
+
+      if (this.newRequest.get('changeForm')) {
+        (this.newRequest.get('changeForm') as FormGroup).removeControl('createdNameBy');
+        (this.newRequest.get('changeForm') as FormGroup).removeControl('directorioSolicitud');
       }
 
       this.thereIsAWomenOnTheRequest();

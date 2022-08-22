@@ -78,7 +78,7 @@ export class RefundsListComponent implements OnInit {
 
 	seeRequest(id: number) {
     const country = this.countryRolesService.getLocalStorageCountry();
-    window.open(`${this.BASE_URL}/ReembolsosView/Index/${id}/?location=${country.codigoPortal}`, '_blank');
+    window.open(`${this.BASE_URL}/ReembolsosView/Index/${country.codigoPortal}/${id}`, '_blank');
 	}
 
 	deleteRefund(id: number) {

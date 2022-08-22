@@ -124,7 +124,7 @@ export class RequestsComponent implements OnInit {
   BASE_URL: any = `${environment.fileUrl}`;
   seeRequest(id: number, type: string) {
     const country = this.countryRolesService.getLocalStorageCountry();
-    window.open(`${this.BASE_URL}/solicitudesView/${country.codigoPortal}/${type}/${id}`, '_blank');
+    window.open(`${this.BASE_URL}/solicitudesView/${type}/${country.codigoPortal}/${id}`, '_blank');
   }
 
   deleteTargeting(id: number, type: string) {

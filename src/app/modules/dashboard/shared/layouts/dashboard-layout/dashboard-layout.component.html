@@ -51,7 +51,7 @@
             <div style="max-height: 35px !important;" class="text-xs uppercase">Nuevo negocio</div>
           </mat-list-item>
 
-          <mat-list-item *ngIf="this.role === 'WWS' && showMatListen(['Solicitud_reembolsos'])"
+          <mat-list-item *ngIf="showMatListen(['Solicitud_reembolsos'])"
             [routerLink]="['claims']" routerLinkActive="router-link-active"
             style="color: white; max-height: 35px !important;" class="my-3">
             <img style="max-height: 35px !important;"
@@ -60,7 +60,7 @@
             <div style="max-height: 35px !important;" class="text-xs uppercase">Reembolsos</div>
           </mat-list-item>
 
-          <mat-list-item *ngIf="this.role === 'WWS' && showMatListen(['Solicitud_precertificacion'])"
+          <mat-list-item *ngIf="showMatListen(['Solicitud_precertificacion'])"
             [routerLink]="['authorizations']" routerLinkActive="router-link-active"
             style="color: white; max-height: 35px !important;" class="my-3">
             <img style="max-height: 35px !important;"
@@ -69,7 +69,7 @@
             <div style="max-height: 35px !important;" class="text-xs uppercase">PRE - Autorizaciones</div>
           </mat-list-item>
 
-<!--          <mat-list-item *ngIf="showMatListen(['Solicitud_suscripcion'])" [routerLink]="['policy-administration']"-->
+<!--   this.role === 'WWS' &&       <mat-list-item *ngIf="showMatListen(['Solicitud_suscripcion'])" [routerLink]="['policy-administration']"-->
 <!--            routerLinkActive="router-link-active" style="color: white; max-height: 35px !important;" class="my-3">-->
 <!--            <img style="max-height: 35px !important;"-->
 <!--              [src]="!activeRoute.includes('/dashboard/policy-administration') ? '../../../../../../assets/iconos/user_search_icon.svg' : '../../../../../../assets/iconos/user_search_icon_filled.svg'"-->

@@ -71,7 +71,7 @@ export class AccountStatusFilterComponent implements OnInit {
 
   download() {
     const country = this.countryRolesService.getLocalStorageCountry();
-    window.open(`${this.BASE_URL}/InvoiceView/ExportToPDF/EstadoDeCuentas/${country.codigoPortal}/${this.polizaId}`, '_blank');
+    window.open(`${this.BASE_URL}/InvoiceView/ExportToPDF/${country.codigoPortal}/EstadoDeCuentas/${this.polizaId}`, '_blank');
   }
 
 }

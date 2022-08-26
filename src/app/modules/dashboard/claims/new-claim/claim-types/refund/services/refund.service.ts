@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../../../../../../../environments/environment';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
+import {CountryRolesService} from '../../../../../../../shared/services/country-roles.service';
 
 
 
@@ -11,7 +12,7 @@ import { Router } from '@angular/router';
 })
 export class RefundService {
 
-  constructor(private http: HttpClient, private route: Router) { }
+  constructor(private http: HttpClient, private route: Router, private countryRolesService: CountryRolesService) { }
 
   id = null;
 
@@ -39,7 +40,8 @@ export class RefundService {
   }
 
   getIdNumbers(): Observable<any> {
-    return this.http.get(`${environment.apiUrl}/api/DatosEmpresa/autocomplete`);
+    const country = this.countryRolesService.getLocalStorageCountry();
+    return this.http.get(`${environment.apiUrl}/api/DatosEmpresa/autocomplete`, { params: { country: country.codigoPortal } });
   }
 
   getProveedores(): Observable<any> {

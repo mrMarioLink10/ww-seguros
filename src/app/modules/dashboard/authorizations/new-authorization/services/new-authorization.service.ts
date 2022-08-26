@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../../../../../environments/environment';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
+import {CountryRolesService} from '../../../../../shared/services/country-roles.service';
 
 
 @Injectable({
@@ -10,7 +11,7 @@ import { Observable } from 'rxjs';
 })
 export class NewAuthorizationService {
 
-  constructor(private http: HttpClient, private route: Router) { }
+  constructor(private http: HttpClient, private route: Router, private countryRolesService: CountryRolesService) { }
 
   id = null;
 
@@ -38,7 +39,8 @@ export class NewAuthorizationService {
   }
 
   getIdNumbers(): Observable<any> {
-    return this.http.get(`${environment.apiUrl}/api/DatosEmpresa/autocomplete`);
+    const country = this.countryRolesService.getLocalStorageCountry();
+    return this.http.get(`${environment.apiUrl}/api/DatosEmpresa/autocomplete`, { params: { country: country.codigoPortal } });
   }
 
   getServiceCenters(): Observable<any> {

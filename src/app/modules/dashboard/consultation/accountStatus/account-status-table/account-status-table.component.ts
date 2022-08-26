@@ -47,7 +47,7 @@ export class AccountStatusTableComponent implements OnInit {
     private countryRolesService: CountryRolesService, ) { }
   userRole = '';
   ngOnInit() {
-    this.userRole = this.userService.getRoleCotizador();
+    this.userRole = this.countryRolesService.getLocalStorageCountry().dominio;
     this.loadData();
   }
 

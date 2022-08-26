@@ -52,7 +52,7 @@ export class BillsTableConsultComponent implements OnInit {
     private countryRolesService: CountryRolesService, ) { }
 
   ngOnInit() {
-    this.userRole = this.userService.getRoleCotizador();
+    this.userRole = this.countryRolesService.getLocalStorageCountry().dominio;
     this.loadData();
   }
 

@@ -55,7 +55,7 @@ export class ClaimTableComponent implements OnInit {
 
   userRole: string;
   ngOnInit() {
-    this.userRole = this.userService.getRoleCotizador();
+    this.userRole = this.countryRolesService.getLocalStorageCountry().dominio;
   }
   BASE_URL: any = `${environment.fileUrlHttps}`;
   getBillDownloadLink(billId, poliza) {

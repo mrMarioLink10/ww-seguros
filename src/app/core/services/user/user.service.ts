@@ -1,7 +1,6 @@
 import {Injectable} from '@angular/core';
 import {environment} from 'src/environments/environment';
 import {HttpClient} from '@angular/common/http';
-import {CountryRoleTypes} from '../../../shared/utils/keys/country-role-types';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +8,7 @@ import {CountryRoleTypes} from '../../../shared/utils/keys/country-role-types';
 export class UserService {
 
   constructor(
-    private http: HttpClient
+    private http: HttpClient,
   ) { }
 
   getAccessToken() {
@@ -18,18 +17,6 @@ export class UserService {
 
   getUserInformation() {
     return JSON.parse(localStorage.getItem('user-information'));
-  }
-
-  getRoleCotizador() {
-    this.checkValidAccess();
-    const user = this.getUserInformation();
-    for (const key in user.resource_access.cotizador.roles) {
-      if (user.resource_access.cotizador.roles.hasOwnProperty(key)) {
-        if (CountryRoleTypes[user.resource_access.cotizador.roles[key]]) {
-          return user.resource_access.cotizador.roles[key];
-        }
-      }
-    }
   }
 
   getRoles() {

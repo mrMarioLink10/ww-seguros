@@ -121,7 +121,7 @@ export class DynamicPaComponent implements OnInit {
       this.isWWSeguros = true;
     }
 
-    this.role = this.userService.getRoleCotizador();
+    this.role = this.countryRolesService.getLocalStorageCountry().dominio;
     this.getRequests();
   }
 

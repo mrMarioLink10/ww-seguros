@@ -50,7 +50,7 @@ export class FormsComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.role = this.userService.getRoleCotizador();
+    this.role = this.countryRolesService.getLocalStorageCountry().dominio;
     this.getForms();
   }
 

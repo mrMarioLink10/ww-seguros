@@ -10,6 +10,6 @@ import { HttpClientModule } from '@angular/common/http';
     CommonModule,
     HttpClientModule
   ],
-  providers: [CountriesService, DialogOptionService  ]
+  providers: [CountriesService, DialogOptionService ]
 })
 export class ServicesModule { }

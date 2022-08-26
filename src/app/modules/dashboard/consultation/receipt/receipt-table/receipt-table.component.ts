@@ -50,7 +50,7 @@ export class ReceiptTableComponent implements OnInit {
   userRole;
   ngOnInit() {
     // this.appComponent.showOverlay = true;
-    this.userRole = this.userService.getRoleCotizador();
+    this.userRole = this.countryRolesService.getLocalStorageCountry().dominio;
     this.loadData();
   }
 

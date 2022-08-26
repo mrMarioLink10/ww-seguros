@@ -20,14 +20,12 @@ const routes: Routes = [
 				path: 'claims',
 				loadChildren: () => import('./claims/claims.module').then((m) => m.ClaimsModule),
 				canLoad: [AppAuthGuard],
-				canActivate: [WwmAccessGuard],
 				data: { accessRoles: ['Solicitud_reembolsos'] }
 			},
 			{
 				path: 'authorizations',
 				loadChildren: () => import('./authorizations/authorizations.module').then((m) => m.AuthorizationsModule),
 				canLoad: [AppAuthGuard],
-				canActivate: [WwmAccessGuard],
 				data: { accessRoles: ['Solicitud_precertificacion'] }
 			},
 			{

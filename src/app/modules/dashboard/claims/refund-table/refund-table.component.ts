@@ -53,7 +53,7 @@ export class RefundTableComponent implements OnInit {
 
   ngOnInit() {
     this.loadData();
-    this.role = this.userService.getRoleCotizador();
+    this.role = this.countryRolesService.getLocalStorageCountry().dominio;
   }
 
   loadData() {

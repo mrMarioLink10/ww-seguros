@@ -130,7 +130,7 @@ export class AuthorizationsComponent implements OnInit {
 
 	ngOnInit() {
 		this.getAuthorizations();
-		this.role = this.userService.getRoleCotizador();
+		this.role = this.countryRolesService.getLocalStorageCountry().dominio;
 	}
 
 	newClaim() {

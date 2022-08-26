@@ -11,7 +11,6 @@ import { AppComponent } from 'src/app/app.component';
 import { UserService } from '../../../../core/services/user/user.service';
 import { environment } from 'src/environments/environment';
 import {CountryRolesService} from '../../../../shared/services/country-roles.service';
-import {CountryRoleTypes} from '../../../../shared/utils/keys/country-role-types';
 
 
 @Component({
@@ -73,7 +72,7 @@ export class RefundsListComponent implements OnInit {
 			this.appComponent.showOverlay = false;
 		}
 		this.getRefunds();
-		this.role = this.userService.getRoleCotizador();
+		this.role = this.countryRolesService.getLocalStorageCountry().dominio;
 	}
 
 	seeRequest(id: number) {

@@ -744,7 +744,7 @@ export class LifeComponent implements OnInit, DoCheck {
 
 
 
-    this.role = this.userService.getRoleCotizador();
+    this.role = this.countryRolesService.getLocalStorageCountry().dominio;
     this.newRequest = this.fb.group({
       noC: [{ value: this.noCotizacion }, Validators.required],
       isComplete: [false, Validators.required],

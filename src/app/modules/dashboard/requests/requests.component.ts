@@ -113,7 +113,7 @@ export class RequestsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.role = this.userService.getRoleCotizador();
+    this.role = this.countryRolesService.getLocalStorageCountry().dominio;
     this.getRequests();
   }
 

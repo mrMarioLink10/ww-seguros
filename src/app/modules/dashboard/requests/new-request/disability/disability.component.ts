@@ -17,6 +17,7 @@ import { FormDataFillingService } from 'src/app/modules/dashboard/services/share
 import { map, first } from 'rxjs/operators';
 import { AppComponent } from 'src/app/app.component';
 import { RequestsService } from 'src/app/modules/dashboard/services/requests/requests.service';
+import {CountryRolesService} from "../../../../../shared/services/country-roles.service";
 // tslint:disable: forin
 // tslint:disable: one-line
 
@@ -642,7 +643,8 @@ export class DisabilityComponent implements OnInit, DoCheck {
     public dialog: MatDialog,
     public appComponent: AppComponent,
     private cd: ChangeDetectorRef,
-    public requestService: RequestsService
+    public requestService: RequestsService,
+    private countryRolesService: CountryRolesService,
   ) { }
 
   ID = null;
@@ -693,7 +695,7 @@ export class DisabilityComponent implements OnInit, DoCheck {
       console.log('ID esta vacio');
     }
 
-    this.role = this.userService.getRoleCotizador();
+    this.role = this.countryRolesService.getLocalStorageCountry().dominio;
 
     this.sicknessQuestions = [
       {
@@ -1410,12 +1412,12 @@ export class DisabilityComponent implements OnInit, DoCheck {
         if (event.target.files && event.target.files.length) {
           const [file] = event.target.files;
           reader.readAsDataURL(file);
-  
+
           reader.onload = () => {
             this.disabilityGroup.get(name).patchValue({
               ['id2Attached']: reader.result
             });
-            
+
             //this.markForCheck();
           };
         }

@@ -737,7 +737,7 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
       };
     });
 
-    this.role = this.userService.getRoleCotizador();
+    this.role = this.countryRolesService.getLocalStorageCountry().dominio;
     this.isFormValidToFill = false;
     this.route.params.subscribe(res => {
       this.ID = res.id;

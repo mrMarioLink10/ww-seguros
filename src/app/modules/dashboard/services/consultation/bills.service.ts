@@ -15,8 +15,8 @@ export class BillsService {
   getBills(httpParams: HttpParams) {
     return this.httpClient.get(`${this.BASE_URL}/api/ConsultaFacturas`, {params: httpParams});
   }
-  getBillsInfo() {
-    return this.httpClient.get(`${this.BASE_URL}/api/ConsultaFacturas/facturaspendientes` );
+  getBillsInfo(httpParams: HttpParams) {
+    return this.httpClient.get(`${this.BASE_URL}/api/ConsultaFacturas/facturaspendientes`, {params: httpParams} );
   }
 
 }

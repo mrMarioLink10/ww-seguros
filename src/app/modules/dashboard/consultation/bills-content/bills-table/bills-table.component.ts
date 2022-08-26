@@ -73,7 +73,7 @@ export class BillsTableComponent implements OnInit {
       // this.emitPendingBills(this.data);
     });
 
-    this.billsService.getBillsInfo().subscribe((res: any) => {
+    this.billsService.getBillsInfo(httpParams).subscribe((res: any) => {
       this.data = res.data || [];
 
       this.emitPendingBills(this.data);

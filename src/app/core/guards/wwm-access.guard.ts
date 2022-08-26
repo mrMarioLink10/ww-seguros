@@ -30,13 +30,13 @@ export class WwmAccessGuard implements CanActivate, CanActivateChild {
       if ((this.countryRolesService.userHasMoreThanOneRole())) {
         const country = this.countryRolesService.getLocalStorageCountry();
 
-        if (country.dominio !== CountryRoleTypes.WWS) {
-            console.log('No estás logueado');
+      /*  if (country.dominio !== CountryRoleTypes.WWS) {
+            console.log('No estás logueado aaa');
             this.router.navigate(['/']);
             return false;
-        }
+        }*/
       } else if (this.userService.getRoleCotizador() !== CountryRoleTypes.WWS) {
-      console.log('No estás logueado');
+      console.log('No estás logueado aa');
       this.router.navigate(['/']);
       return false;
     }

@@ -56,7 +56,7 @@ export class ReceiptTableComponent implements OnInit {
 
   getBillDownloadLink(billId) {
     const country = this.countryRolesService.getLocalStorageCountry();
-    return `${this.BASE_URL}/InvoiceView/ExportToPDF/Reembolsos/${country.codigoPortal}/${billId}/${this.policyId}`;
+    return `${this.BASE_URL}/InvoiceView/ExportToPDF/${country.codigoPortal}/Reembolsos/${billId}/${this.policyId}`;
   }
 
   loadData() {

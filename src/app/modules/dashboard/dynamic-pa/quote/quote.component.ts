@@ -402,9 +402,9 @@ export class QuoteComponent implements OnInit {
       console.log(idNumberObject);
 
       if (this.searchIdNumberAccess === true) {
-
+        const country = this.countryRolesService.getLocalStorageCountry();
         this.appComponent.showOverlay = true;
-        this.userService.getInsurancePeople(idNumber)
+        this.userService.getInsurancePeople(idNumber, country.codigoPortal)
           .subscribe((response: any) => {
             console.log(response);
             if (response.data !== null) {

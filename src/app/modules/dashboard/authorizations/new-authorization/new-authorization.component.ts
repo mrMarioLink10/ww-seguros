@@ -14,6 +14,7 @@ import { UserService } from '../../../../core/services/user/user.service';
 import { AppComponent } from '../../../../app.component';
 import { ParamMap, ActivatedRoute, Router } from '@angular/router';
 import { RequestsService } from 'src/app/modules/dashboard/services/requests/requests.service';
+import {CountryRolesService} from '../../../../shared/services/country-roles.service';
 // tslint:disable: no-string-literal
 // tslint:disable: max-line-length
 
@@ -36,7 +37,8 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy, DoCheck {
 		private route: ActivatedRoute,
 		private router: Router,
 		private cd: ChangeDetectorRef,
-		public requestService: RequestsService
+		public requestService: RequestsService,
+    private countryRolesService: CountryRolesService
 	) {
 	}
 
@@ -1086,7 +1088,8 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy, DoCheck {
 
 				this.appComponent.showOverlay = true;
 
-				this.userService.getInsurancePeople(idNumber)
+        const country = this.countryRolesService.getLocalStorageCountry();
+				this.userService.getInsurancePeople(idNumber, country.codigoPortal)
 					.subscribe((response: any) => {
 
 						console.log(response);

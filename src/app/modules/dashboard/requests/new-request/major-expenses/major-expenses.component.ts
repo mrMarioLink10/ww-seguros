@@ -706,7 +706,8 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
     }
   }
   ngOnInit() {
-    this.userService.getWholeQuotes()
+    const country = this.countryRolesService.getLocalStorageCountry();
+    this.userService.getWholeQuotes(country.codigoPortal)
       .subscribe(res => {
         console.log(res);
       });

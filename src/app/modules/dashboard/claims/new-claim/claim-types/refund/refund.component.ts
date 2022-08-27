@@ -16,6 +16,7 @@ import { ClaimsService } from '../../../../services/claims/claims.service';
 import { HttpParams } from '@angular/common/http';
 import { RequestsService } from 'src/app/modules/dashboard/services/requests/requests.service';
 import { FormDataFillingService } from 'src/app/modules/dashboard/services/shared/formDataFillingService';
+import {CountryRolesService} from '../../../../../../shared/services/country-roles.service';
 
 
 // tslint:disable: no-string-literal
@@ -248,6 +249,7 @@ export class RefundComponent implements OnInit {
 		private claimsService: ClaimsService,
 		public requestService: RequestsService,
 		private dataMappingFromApi: FormDataFillingService,
+    private countryRolesService: CountryRolesService
 	) { }
 
 	ID = null;
@@ -1302,7 +1304,9 @@ export class RefundComponent implements OnInit {
 			if (this.searchIdNumberAccess == true) {
 
 				this.appComponent.showOverlay = true;
-				this.userService.getInsurancePeople(idNumber)
+
+        const country = this.countryRolesService.getLocalStorageCountry();
+				this.userService.getInsurancePeople(idNumber, country.codigoPortal)
 					.subscribe((response: any) => {
 						console.log(response);
 						this.appComponent.showOverlay = false;

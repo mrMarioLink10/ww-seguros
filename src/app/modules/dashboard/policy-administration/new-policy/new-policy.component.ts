@@ -832,7 +832,8 @@ export class NewPolicyComponent implements OnInit {
       if (this.searchIdNumberAccess === true) {
         console.log(idNumber);
         this.appComponent.showOverlay = true;
-        this.userService.getInsurancePeople(idNumber)
+        const country = this.countryRolesService.getLocalStorageCountry();
+        this.userService.getInsurancePeople(idNumber, country.codigoPortal)
           .subscribe((response: any) => {
             console.log(response);
             this.appComponent.showOverlay = false;

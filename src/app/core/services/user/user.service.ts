@@ -1,7 +1,6 @@
 import {Injectable} from '@angular/core';
 import {environment} from 'src/environments/environment';
 import {HttpClient} from '@angular/common/http';
-import {CountryRolesService} from '../../../shared/services/country-roles.service';
 
 @Injectable({
   providedIn: 'root'
@@ -9,8 +8,7 @@ import {CountryRolesService} from '../../../shared/services/country-roles.servic
 export class UserService {
 
   constructor(
-    private http: HttpClient,
-    private countryRolesService: CountryRolesService,
+    private http: HttpClient
   ) { }
 
   getAccessToken() {
@@ -46,22 +44,19 @@ export class UserService {
     }
   }
 
-  getInsurancePeople(idNumber: string) {
-    var country = this.countryRolesService.getLocalStorageCountry();
-    return this.http.get(`${environment.apiUrl}/api/DatosEmpresa/${idNumber}?country=${country.codigoPortal}`);
+  getInsurancePeople(idNumber: string, codigoPortal: string) {
+    return this.http.get(`${environment.apiUrl}/api/DatosEmpresa/${idNumber}?country=${codigoPortal}`);
   }
 
-  getWholeInsurancePeople() {
-    var country = this.countryRolesService.getLocalStorageCountry();
-    return this.http.get(`${environment.apiUrl}/api/DatosEmpresa?country=${country.codigoPortal}`);
+  getWholeInsurancePeople(codigoPortal: string) {
+    return this.http.get(`${environment.apiUrl}/api/DatosEmpresa?country=${codigoPortal}`);
   }
 
   getQuotes(idNumber: string, requestType: string) {
     return this.http.get(`${environment.apiUrl}/api/Cotizaciones/${idNumber}/${requestType}`);
   }
 
-  getWholeQuotes() {
-    var country = this.countryRolesService.getLocalStorageCountry();
-    return this.http.get(`${environment.apiUrl}/api/Cotizaciones?country=${country.codigoPortal}`);
+  getWholeQuotes(codigoPortal: string) {
+    return this.http.get(`${environment.apiUrl}/api/Cotizaciones?country=${codigoPortal}`);
   }
 }

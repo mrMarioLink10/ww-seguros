@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {environment} from 'src/environments/environment';
 import {HttpClient} from '@angular/common/http';
+import {CountryRolesService} from '../../../shared/services/country-roles.service';
 
 @Injectable({
   providedIn: 'root'
@@ -9,6 +10,7 @@ export class UserService {
 
   constructor(
     private http: HttpClient,
+    private countryRolesService: CountryRolesService,
   ) { }
 
   getAccessToken() {
@@ -45,11 +47,13 @@ export class UserService {
   }
 
   getInsurancePeople(idNumber: string) {
-    return this.http.get(`${environment.apiUrl}/api/DatosEmpresa/${idNumber}`);
+    var country = this.countryRolesService.getLocalStorageCountry();
+    return this.http.get(`${environment.apiUrl}/api/DatosEmpresa/${idNumber}?country=${country.codigoPortal}`);
   }
 
   getWholeInsurancePeople() {
-    return this.http.get(`${environment.apiUrl}/api/DatosEmpresa`);
+    var country = this.countryRolesService.getLocalStorageCountry();
+    return this.http.get(`${environment.apiUrl}/api/DatosEmpresa?country=${country.codigoPortal}`);
   }
 
   getQuotes(idNumber: string, requestType: string) {
@@ -57,6 +61,7 @@ export class UserService {
   }
 
   getWholeQuotes() {
-    return this.http.get(`${environment.apiUrl}/api/Cotizaciones`);
+    var country = this.countryRolesService.getLocalStorageCountry();
+    return this.http.get(`${environment.apiUrl}/api/Cotizaciones?country=${country.codigoPortal}`);
   }
 }

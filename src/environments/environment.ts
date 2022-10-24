@@ -23,7 +23,7 @@ export const environment = {
   urlCotizadoresSalud: 'http://portalwwg.eastus.cloudapp.azure.com:3000/salud',
   baseUrl: 'https://portal.wwseguros.com.do/',
   keycloak: keycloakConfig,
-  apiUrl: 'https://wwsdevportalbackend-desadevportalbackend.azurewebsites.net',
+  apiUrl: 'https://portal.wwmedicalassurance.com',//'https://wwsdevportalbackend-desadevportalbackend.azurewebsites.net',
   urlNotAccess: 'https://wwsdevportalbackend-desadevportalbackend.azurewebsites.net/AccesoPortal/index/?location=',
   keycloakConfig
 };

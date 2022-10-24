@@ -1089,6 +1089,16 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
     return (validation || dependentValidation);
   }
 
+  showAditionalRedDependant(i) {
+    if (this.newRequest.get('dependents').get('allDependents').get(i.toString())) {
+      if (this.newRequest.get('dependents').get('allDependents').get(i.toString()).invalid) {
+
+        console.log(true);
+        return true;
+      }
+    }
+    return false;//"#007DB7";
+  }
   showAditionalRed() {
     if (this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudHipertensionArterial')) {
       if (this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudHipertensionArterial').invalid) {
@@ -1777,6 +1787,23 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
   showWarningDot(Form: any): boolean {
     if (!this.ID) {
       if (Form.invalid && this.ogForm.submitted) {
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      if (!Form.invalid) {
+        return false;
+      } else {
+        return true;
+      }
+    }
+  }
+  showWarningDot2(Form: any): boolean {
+
+    if (!this.ID) {
+      if (Form.invalid && this.ogForm.submitted) {
+
         return true;
       } else {
         return false;

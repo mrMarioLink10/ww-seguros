@@ -1092,13 +1092,12 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
   showAditionalRedDependant(i) {
     if (this.newRequest.get('dependents').get('allDependents').get(i.toString())) {
       if (this.newRequest.get('dependents').get('allDependents').get(i.toString()).invalid) {
-
-        console.log(true);
         return true;
       }
     }
-    return false;//"#007DB7";
+    return false;
   }
+
   showAditionalRed() {
     if (this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudHipertensionArterial')) {
       if (this.newRequest.get('questionsA').get('questionnairesGastosMayores').get('solicitudHipertensionArterial').invalid) {

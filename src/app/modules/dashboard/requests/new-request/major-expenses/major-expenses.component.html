@@ -2793,12 +2793,13 @@
         </mat-accordion>
       </mat-tab>
 
-      <mat-tab *ngFor=" let element of dependentsFormArray.controls; let i = index"
-        [label]="'D'+ (i+1) +' - '+
-        newRequest.get('dependents').get('allDependents').get(i.toString()).value.name +' '+
-        newRequest.get('dependents').get('allDependents').get(i.toString()).value.lastName"
-        [ngClass]="{'warn-tab': showAditionalRedDependant(i)}"   [class]="'warning-accordion-dot'">
-
+      <mat-tab *ngFor="let element of dependentsFormArray.controls; let i = index" class="warning-accordion-dot">
+        <ng-template mat-tab-label>
+          <span [ngStyle]="{'color': showAditionalRedDependant(i) ? 'red' : 'inherit'}">
+            {{ 'D'+ (i+1) +' - '+ newRequest.get('dependents').get('allDependents').get(i.toString()).value.name +' '+
+            newRequest.get('dependents').get('allDependents').get(i.toString()).value.lastName }}
+          </span>
+        </ng-template>
         <mat-accordion #matAccordion="matAccordion" name="matAccordion" class="ww-mat-accordion example-headers-align"
           [togglePosition]="'before'" >
           <app-hypertension

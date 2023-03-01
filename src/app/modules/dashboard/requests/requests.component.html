@@ -85,8 +85,8 @@
               <img src="../../../../assets/iconos/edit.svg">
             </button>
             -->
-            <button mat-mini-fab aria-label="Ver mas" (click)="seeRequest(element.id, element.seguro)"
-              *ngIf="element.estatus === 2 " class="dashboard-table-buttons" title="Ver Mas">
+            <button disabled mat-mini-fab aria-label="Ver mas" (click)="seeRequest(element.id, element.seguro)" style="background-color: #C4C4C466 !important;"
+              *ngIf="element.estatus === 2 " class="dashboard-table-buttons" title="Deshabilitado temporalmente por mantenimiento"> <!-- title="Ver Mas"-->
               <img src="../../../../assets/iconos/eye.svg">
             </button>
             <button *ngIf="element.estatus === 1" (click)="directSendTargeting(element.id, element.seguro)" mat-mini-fab

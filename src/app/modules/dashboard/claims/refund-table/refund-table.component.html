@@ -54,8 +54,8 @@
           style="max-width: 110px !important; min-width: 68px !important; width: 68px !important;"> Acciones </th>
         <td class="padding-cell" mat-cell *matCellDef="let element"
           style="max-width: 140px !important; min-width: 137px !important; width: 137px !important;">
-          <button disabled mat-mini-fab aria-label="Ver mas" (click)="seeRequest(element.id)" *ngIf="element.status === 2" style="background-color: #C4C4C466 !important;"
-            class="dashboard-table-buttons" title="Deshabilitado temporalmente por mantenimiento"> <!--title="Ver mas"-->
+          <button mat-mini-fab aria-label="Ver mas" (click)="seeRequest(element.id, element.token)" *ngIf="element.status === 2"
+            class="dashboard-table-buttons" title="Ver mas">
             <img src="../../../../assets/iconos/eye.svg">
           </button>
           <button *ngIf="element.status === 1" (click)="directSendRefund(element.id)" mat-mini-fab aria-label="Enviar"

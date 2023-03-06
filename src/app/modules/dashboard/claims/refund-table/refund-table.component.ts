@@ -99,9 +99,9 @@ export class RefundTableComponent implements OnInit {
     return httpParams;
   }
 
-  seeRequest(id: number) {
+  seeRequest(id: number, token: string) {
     const country = this.countryRolesService.getLocalStorageCountry();
-    window.open(`${this.BASE_URL}/ReembolsosView/Index/${country.codigoPortal}/${id}`, '_blank');
+    window.open(`${this.BASE_URL}/ReembolsosView/Index/${country.codigoPortal}/${id}/${token}`, '_blank');
   }
 
   deleteRefund(id: number) {

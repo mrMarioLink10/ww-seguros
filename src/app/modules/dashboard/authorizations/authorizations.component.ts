@@ -123,9 +123,9 @@ export class AuthorizationsComponent implements OnInit {
 			});
 	}
 
-	seeRequest(id: number) {
+	seeRequest(id: number, token: string) {
     const country = this.countryRolesService.getLocalStorageCountry();
-    window.open(`${this.BASE_URL}/PrecertificadoView/Index/${country.codigoPortal}/${id}`, '_blank');
+    window.open(`${this.BASE_URL}/PrecertificadoView/Index/${country.codigoPortal}/${id}/${token}`, '_blank');
 	}
 
 	ngOnInit() {

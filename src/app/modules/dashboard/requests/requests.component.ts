@@ -122,9 +122,9 @@ export class RequestsComponent implements OnInit {
     this.router.navigateByUrl('/dashboard/requests/new-requests');
   }
   BASE_URL: any = `${environment.fileUrl}`;
-  seeRequest(id: number, type: string) {
+  seeRequest(id: number, type: string, token: string) {
     const country = this.countryRolesService.getLocalStorageCountry();
-    window.open(`${this.BASE_URL}/solicitudesView/${type}/${country.codigoPortal}/${id}`, '_blank');
+    window.open(`${this.BASE_URL}/solicitudesView/${type}/${country.codigoPortal}/${id}/${token}`, '_blank');
   }
 
   deleteTargeting(id: number, type: string) {

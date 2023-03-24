@@ -386,7 +386,7 @@
                 <app-number-input isPhone="true" class="mr-3" [group]="newRequest.get('payer')" label="Tel. Residencia"
                   name='tel'>
                 </app-number-input>
-                <app-number-input *ngIf="role !== 'WMA'" isCell="true" class="mr-3" [group]="newRequest.get('payer')"
+                <app-number-input *ngIf="role == 'WMA'" isCell="true" class="mr-3" [group]="newRequest.get('payer')"
                   label="Tel. Celular" name='cel'>
                 </app-number-input>
                 <app-number-input *ngIf="role !== 'WMA'" isPhone="true" class="mr-3" [group]="newRequest.get('payer')"

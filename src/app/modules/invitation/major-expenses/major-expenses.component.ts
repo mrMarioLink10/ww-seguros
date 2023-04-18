@@ -1080,7 +1080,9 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
   searchIdNumber(idNumber: string) {
     this.appComponent.showOverlay = true;
 
-    this.quotesService.returnDataSalud(idNumber).subscribe(data => {
+    const country = this.countryRolesService.getLocalStorageCountry().codigoPortal;
+
+    this.quotesService.returnDataSalud(idNumber, country).subscribe(data => {
       this.appComponent.showOverlay = false;
 
       if (data !== undefined && data.data !== null && data.data !== undefined && data.data.nombre !== undefined) {
@@ -3622,7 +3624,9 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
     this.formHandler.sendForm(newRequestReq, 'major-expenses', 'send');
   }
   getDataCotizaciones(id) {
-    this.quotesService.returnDataSalud(id).subscribe(data => {
+    const country = this.countryRolesService.getLocalStorageCountry().codigoPortal;
+
+    this.quotesService.returnDataSalud(id, country).subscribe(data => {
 
       if (data !== undefined && data.data !== null && data.data !== undefined && data.data.nombre !== undefined) {
         const dialogRef = this.dialog.open(BaseDialogComponent, {

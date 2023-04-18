@@ -52,8 +52,8 @@ export class UserService {
     return this.http.get(`${environment.apiUrl}/api/DatosEmpresa?country=${codigoPortal}`);
   }
 
-  getQuotes(idNumber: string, requestType: string) {
-    return this.http.get(`${environment.apiUrl}/api/Cotizaciones/${idNumber}/${requestType}`);
+  getQuotes(idNumber: string, requestType: string, country) {
+    return this.http.get(`${environment.apiUrl}/api/Cotizaciones/${idNumber}/${requestType}?country=${country}`);
   }
 
   getWholeQuotes(codigoPortal: string) {

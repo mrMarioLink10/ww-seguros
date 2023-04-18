@@ -15,10 +15,10 @@ export class QuotesService {
   getQuotes(params: HttpParams) {
     return (this.http.get(`${environment.apiUrl}/api/Cotizaciones`, {params:  params}));
   }
-  returnDataSalud(id): Observable<any> {
-    return this.http.get(`${environment.apiUrl}/api/Cotizaciones/${id}/salud`);
+  returnDataSalud(id, country): Observable<any> {
+    return this.http.get(`${environment.apiUrl}/api/Cotizaciones/${id}/salud?country=${country}`);
   }
-  returnDataSaludList(id): Observable<any> {
-    return this.http.get(`${environment.apiUrl}/api/Cotizaciones/list/${id}/salud`);
+  returnDataSaludList(id, country): Observable<any> {
+    return this.http.get(`${environment.apiUrl}/api/Cotizaciones/list/${id}/salud?country=${country}`);
   }
 }

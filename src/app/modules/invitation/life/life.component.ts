@@ -1964,7 +1964,9 @@ export class LifeComponent implements OnInit, DoCheck {
 
   searchIdNumber(idNumber: string) {
     // this.appComponent.showOverlay = true;
-    this.userService.getQuotes(idNumber, 'vida')
+    const country = this.countryRolesService.getLocalStorageCountry().codigoPortal;
+
+    this.userService.getQuotes(idNumber, 'vida', country)
       .subscribe((response: any) => {
         console.log(response);
         // this.appComponent.showOverlay = false;

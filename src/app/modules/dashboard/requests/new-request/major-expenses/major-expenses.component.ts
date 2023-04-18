@@ -1342,7 +1342,10 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
 
     const filterPrincipal = 'titula';
     this.newRequest.get('requestType').setValue('PÓLIZA NUEVA');
-    this.quotesService.returnDataSaludList(idNumber).subscribe(data => {
+
+    const country = this.countryRolesService.getLocalStorageCountry().codigoPortal;
+
+    this.quotesService.returnDataSaludList(idNumber, country).subscribe(data => {
       this.appComponent.showOverlay = false;
 
       if (data !== undefined && data.data !== null && data.data !== undefined /*&& data.data.nombre !== undefined*/) {
@@ -3844,7 +3847,10 @@ export class MajorExpensesComponent implements OnInit, DoCheck {
         if (response.data === null || response.data === undefined) {
           const filterPrincipal = 'titula';
           this.newRequest.get('requestType').setValue('PÓLIZA NUEVA');
-          this.quotesService.returnDataSaludList(id).subscribe(data => {
+
+          const country = this.countryRolesService.getLocalStorageCountry().codigoPortal;
+
+          this.quotesService.returnDataSaludList(id, country).subscribe(data => {
 
             if (data !== undefined && data.data !== null && data.data !== undefined && data.data.length > 0 /*&& data.data.nombre !== undefined*/) {
               this.disableRequestDropdown = true;

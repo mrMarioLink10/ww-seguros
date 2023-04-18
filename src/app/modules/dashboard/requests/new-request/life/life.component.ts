@@ -2003,7 +2003,9 @@ export class LifeComponent implements OnInit, DoCheck {
         console.log('response para validar searchIdNumber', response);
         if (response.data === null || response.data === undefined) {
           // this.appComponent.showOverlay = true;
-          this.userService.getQuotes(idNumber, 'vida')
+          const country = this.countryRolesService.getLocalStorageCountry().codigoPortal;
+
+          this.userService.getQuotes(idNumber, 'vida', country)
             .subscribe((response: any) => {
               console.log(response);
               // this.appComponent.showOverlay = false;

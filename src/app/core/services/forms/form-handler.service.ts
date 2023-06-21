@@ -10,7 +10,7 @@ import { NewAuthorizationService } from '../../../modules/dashboard/authorizatio
 import { LifeService } from 'src/app/modules/dashboard/requests/new-request/life/services/life.service';
 import { MajorExpensesService } from '../../../modules/dashboard/requests/new-request/major-expenses/services/major-expenses.service';
 import { DisabilityService } from '../../../modules/dashboard/requests/new-request/disability/services/disability.service';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from '../../../../environments/environment';
 import { AppComponent } from 'src/app/app.component';
 import { Observable, Subject } from 'rxjs';
@@ -33,6 +33,9 @@ import {CountryRolesService} from "../../../shared/services/country-roles.servic
 export class FormHandlerService {
   sendedForm;
   errorServer = this.dialogOption.errorServer;
+
+  country = this.countryRolesService.getLocalStorageCountry();
+
   constructor(
     private dialog: MatDialog,
     private dialogOption: DialogOptionService,
@@ -798,7 +801,11 @@ export class FormHandlerService {
       if (result === 'true') {
         appComponent.showOverlay = true;
 
-        this.http.delete(`${environment.apiUrl}/api/${type}/${id}`)
+        let params: HttpParams = new HttpParams();
+
+        params = params.append('country', this.country.codigoPortal);
+
+        this.http.delete(`${environment.apiUrl}/api/${type}/${id}`, { params })
           .subscribe(response => {
             console.log(response);
             appComponent.showOverlay = false;

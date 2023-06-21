@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { CountryRolesService } from 'src/app/shared/services/country-roles.service';
 
 @Injectable({
   providedIn: 'root'
@@ -8,15 +9,18 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 export class RequestsService {
 
   BASE_URL: any = `${environment.apiUrl}/api`;
+  
+  country = this.countryRolesService.getLocalStorageCountry();
 
   httpOptions = {
-    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+    headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
+    params: { country: this.country.codigoPortal }
   };
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private countryRolesService: CountryRolesService) { }
 
   getRequestData(type, key) {
-    return (this.http.get(`${this.BASE_URL}/SolicitudesUsuariosAnonimos/${type}/${key}`));
+    return (this.http.get(`${this.BASE_URL}/SolicitudesUsuariosAnonimos/${type}/${key}`, { params: { country: this.country.codigoPortal } }));
   }
 
   saveRequestData(type, key, body) {
@@ -67,10 +71,10 @@ export class RequestsService {
   }
 
   getPhysicalObligatoryOptions() {
-    return this.http.get(`${environment.apiUrl}/api/DatosEmpresa/ActividadesPersonaFisica`);
+    return this.http.get(`${environment.apiUrl}/api/DatosEmpresa/ActividadesPersonaFisica`, { params: { country: this.country.codigoPortal }});
   }
 
   getJuridicalObligatoryOptions() {
-    return this.http.get(`${environment.apiUrl}/api/DatosEmpresa/ActividadesPersonaJuridica`);
+    return this.http.get(`${environment.apiUrl}/api/DatosEmpresa/ActividadesPersonaJuridica`, { params: { country: this.country.codigoPortal }});
   }
 }

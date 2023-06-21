@@ -5,6 +5,7 @@ import { FormsService } from '../../services/forms/forms.service';
 import { FieldConfig } from '../../../../shared/components/form-components/models/field-config';
 import { AppComponent } from '../../../../app.component';
 import { FormDataFillingService } from '../../services/shared/formDataFillingService';
+import { CountryRolesService } from 'src/app/shared/services/country-roles.service';
 
 @Component({
   selector: 'app-testing',
@@ -21,11 +22,14 @@ export class TestingComponent implements OnInit {
   showContent = false;
   idsOptions: any = null;
 
+  country = this.countryRolesService.getLocalStorageCountry();
+
   constructor(
     private fb: FormBuilder,
     private formsService: FormsService,
     public appComponent: AppComponent,
-    private formDataFillingService: FormDataFillingService
+    private formDataFillingService: FormDataFillingService,
+    private countryRolesService: CountryRolesService
   ) { }
 
   ngOnInit() {
@@ -58,7 +62,9 @@ export class TestingComponent implements OnInit {
     setTimeout(() => {
       this.appComponent.showOverlay = true;
     });
-    const params: HttpParams = new HttpParams();
+    let params: HttpParams = new HttpParams();
+
+    params = params.append('country', this.country.codigoPortal);
 
     this.formsService.getData(params)
       .subscribe((res: any) => {

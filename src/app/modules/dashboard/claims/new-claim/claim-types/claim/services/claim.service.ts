@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../../../../../../../environments/environment';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
+import { CountryRolesService } from 'src/app/shared/services/country-roles.service';
 
 
 
@@ -11,14 +12,17 @@ import { Router } from '@angular/router';
 })
 export class ClaimService {
 
-  constructor(private http: HttpClient, private route: Router) { }
+  country = this.countryRolesService.getLocalStorageCountry();
+
+  constructor(private http: HttpClient, private route: Router, private countryRolesService: CountryRolesService) { }
 
   id = null;
 
   postClaim(body) {
 
     const httpOptions = {
-      headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+      headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
+      params: { country: this.country.codigoPortal }
     };
 
     console.log('body:', body);
@@ -26,7 +30,7 @@ export class ClaimService {
   }
 
   returnData(id): Observable<any> {
-    return this.http.get(`${environment.apiUrl}/api/Reclamaciones/${id}`);
+    return this.http.get(`${environment.apiUrl}/api/Reclamaciones/${id}`, { params: { country: this.country.codigoPortal } });
   }
   getID(id) {
     this.id = id;

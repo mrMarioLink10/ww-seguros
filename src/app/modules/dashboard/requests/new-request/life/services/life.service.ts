@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
+import { CountryRolesService } from 'src/app/shared/services/country-roles.service';
 
 @Injectable({
   providedIn: 'root'
@@ -12,22 +13,25 @@ export class LifeService {
   id = null;
   idKNOWCustomer = null;
 
-  constructor(private http: HttpClient, private route: Router) { }
+  country = this.countryRolesService.getLocalStorageCountry();
+
+  constructor(private http: HttpClient, private route: Router, private countryRolesService: CountryRolesService) { }
 
   postRequest(body) {
 
     const httpOptions = {
-      headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+      headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
+      params: { country: this.country.codigoPortal }
     };
 
     return this.http.post(`${environment.apiUrl}/api/Solicitudes/vida`, body, httpOptions);
   }
 
   returnData(id): Observable<any> {
-    return this.http.get(`${environment.apiUrl}/api/Solicitudes/vida/${id}`);
+    return this.http.get(`${environment.apiUrl}/api/Solicitudes/vida/${id}`, { params: { country: this.country.codigoPortal } });
   }
   returnCotizacionData(id): Observable<any> {
-    return this.http.get(`${environment.apiUrl}/api/Solicitudes/vida/cotizacion/${id}`);
+    return this.http.get(`${environment.apiUrl}/api/Solicitudes/vida/cotizacion/${id}`, { params: { country: this.country.codigoPortal } });
   }
   sendRequest(id): Observable<any> {
     return this.http.post(`${environment.apiUrl}/api/Solicitudes/vida/confirm/${id}`, id);

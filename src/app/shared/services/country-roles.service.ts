@@ -46,7 +46,7 @@ export class CountryRolesService {
   }
 
   getCountriesAndRoles(): Observable<ICountryRole[] | any> {
-    return this.http.get(`${this.BASE_URL}/userinfo/countries`);
+    return this.http.get(`${this.BASE_URL}/userinfo/countries`, { params: { country: this.country.codigoPortal } });
   }
 
   userHasCountryRole(country: string, countryRoles: ICountryRole[]): boolean {

@@ -15,10 +15,13 @@ export class NewAuthorizationService {
 
   id = null;
 
+  country = this.countryRolesService.getLocalStorageCountry();
+
   postClaim(body) {
 
     const httpOptions = {
-      headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+      headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
+      params: { country: this.country.codigoPortal }
     };
 
     console.log('body:', body);
@@ -26,7 +29,7 @@ export class NewAuthorizationService {
   }
 
   returnData(id): Observable<any> {
-    return this.http.get(`${environment.apiUrl}/api/Precertificado/${id}`);
+    return this.http.get(`${environment.apiUrl}/api/Precertificado/${id}`, { params: { country: this.country.codigoPortal } });
   }
 
   sendAuthorization(id): Observable<any> {
@@ -44,10 +47,10 @@ export class NewAuthorizationService {
   }
 
   getServiceCenters(): Observable<any> {
-    return this.http.get(`${environment.apiUrl}/api/DatosEmpresa/GetCentrosEspecializados`);
+    return this.http.get(`${environment.apiUrl}/api/DatosEmpresa/GetCentrosEspecializados`, { params: { country: this.country.codigoPortal } });
   }
 
   getDoctors(): Observable<any> {
-    return this.http.get(`${environment.apiUrl}/api/DatosEmpresa/GetMedicos`);
+    return this.http.get(`${environment.apiUrl}/api/DatosEmpresa/GetMedicos`, { params: { country: this.country.codigoPortal } });
   }
 }

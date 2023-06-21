@@ -9,12 +9,15 @@ import {CountryRolesService} from '../../../../shared/services/country-roles.ser
 })
 export class PolicyAdministrationService {
 
+  country = this.countryRolesService.getLocalStorageCountry();
+
   constructor(private http: HttpClient, private countryRolesService: CountryRolesService) { }
 
   postPolicyAdministration(body) {
 
     const httpOptions = {
-      headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+      headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
+      params: { country: this.country.codigoPortal }
     };
 
     console.log('body:', body);
@@ -42,7 +45,7 @@ export class PolicyAdministrationService {
   }
 
   rejectRequest(id: number) {
-    return (this.http.post(`${environment.apiUrl}/api/SolicitudesPdf/deny/${id}`, { params: { id: id.toString() } }));
+    return (this.http.post(`${environment.apiUrl}/api/SolicitudesPdf/deny/${id}`, { params: { id: id.toString(), country: this.country.codigoPortal } }));
   }
 
   getRequests(params: HttpParams) {
@@ -50,6 +53,6 @@ export class PolicyAdministrationService {
   }
 
   getRequest(id: number) {
-    return this.http.get(`${environment.apiUrl}/api/SolicitudesPdf/${id}`, { params: { id: id.toString() } });
+    return this.http.get(`${environment.apiUrl}/api/SolicitudesPdf/${id}`, { params: { id: id.toString(), country: this.country.codigoPortal } });
   }
 }

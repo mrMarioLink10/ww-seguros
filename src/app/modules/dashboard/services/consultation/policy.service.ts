@@ -11,6 +11,8 @@ export class PolicyService {
 
   BASE_URL: any = `${environment.apiUrl}`;
 
+  country = this.countryRolesService.getLocalStorageCountry();
+
   constructor(private httpClient: HttpClient, private countryRolesService: CountryRolesService) { }
 
   getPolicies(params: HttpParams) {
@@ -18,7 +20,7 @@ export class PolicyService {
   }
 
   getPolicyDetails(policyId: string) {
-    return this.httpClient.get(`${this.BASE_URL}/api/ConsultaPoliza/detalle/${policyId}`);
+    return this.httpClient.get(`${this.BASE_URL}/api/ConsultaPoliza/detalle/${policyId}`, { params: { country: this.country.codigoPortal } });
   }
 
   getIdNumbers(): Observable<any> {

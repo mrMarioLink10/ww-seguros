@@ -7,6 +7,7 @@ import { ClaimsService } from '../services/claims/claims.service';
 import { HttpParams } from '@angular/common/http';
 import { ClaimsListComponent } from './claims-list/claims-list.component';
 import { RefundsListComponent } from './refunds-list/refunds-list.component';
+import { CountryRolesService } from 'src/app/shared/services/country-roles.service';
 
 
 export interface Claims {
@@ -74,8 +75,10 @@ export class ClaimsComponent implements OnInit {
 
 	testForm: FormGroup;
 
+	country = this.countryRolesService.getLocalStorageCountry();
+
 	constructor(private route: Router, private fb: FormBuilder, private _claimsService: ClaimsService,
-		           private _claimsList: ClaimsListComponent, private _refundsList: RefundsListComponent) { }
+		           private _claimsList: ClaimsListComponent, private _refundsList: RefundsListComponent, private countryRolesService: CountryRolesService) { }
 
 	setRefundFilter(event) {
 		this.refundFilter = event;
@@ -88,6 +91,9 @@ export class ClaimsComponent implements OnInit {
 
 	getClaims(params: HttpParams = new HttpParams) {
 		let data;
+
+		params = params.append('country', this.country.codigoPortal);
+
 		this._claimsService.getClaims(params)
 			.subscribe(res => {
 				data = res;

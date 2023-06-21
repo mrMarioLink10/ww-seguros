@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from '../../../../../environments/environment';
+import { CountryRolesService } from 'src/app/shared/services/country-roles.service';
 @Injectable({
   providedIn: 'root'
 })
@@ -8,7 +9,9 @@ export class RequestsService {
 
   BASE_URL: any = `${environment.apiUrl}/api/Solicitudes`;
 
-  constructor(private http: HttpClient) { }
+  country = this.countryRolesService.getLocalStorageCountry();
+
+  constructor(private http: HttpClient, private countryRolesService: CountryRolesService) { }
 
   getRequests(params: HttpParams) {
     return (this.http.get(this.BASE_URL, { params }));
@@ -55,10 +58,10 @@ export class RequestsService {
   }
 
   getPhysicalObligatoryOptions() {
-    return this.http.get(`${environment.apiUrl}/api/DatosEmpresa/ActividadesPersonaFisica`);
+    return this.http.get(`${environment.apiUrl}/api/DatosEmpresa/ActividadesPersonaFisica`, { params: { country: this.country.codigoPortal } });
   }
 
   getJuridicalObligatoryOptions() {
-    return this.http.get(`${environment.apiUrl}/api/DatosEmpresa/ActividadesPersonaJuridica`);
+    return this.http.get(`${environment.apiUrl}/api/DatosEmpresa/ActividadesPersonaJuridica`, { params: { country: this.country.codigoPortal }});
   }
 }

@@ -12,6 +12,8 @@ import {CountryRolesService} from '../../../../../../../shared/services/country-
 })
 export class RefundService {
 
+  country = this.countryRolesService.getLocalStorageCountry();
+
   constructor(private http: HttpClient, private route: Router, private countryRolesService: CountryRolesService) { }
 
   id = null;
@@ -19,7 +21,8 @@ export class RefundService {
   postClaim(body) {
 
     const httpOptions = {
-      headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+      headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
+      params: { country: this.country.codigoPortal }
     };
 
     console.log('body:', body);
@@ -27,7 +30,7 @@ export class RefundService {
   }
 
   returnData(id): Observable<any> {
-    return this.http.get(`${environment.apiUrl}/api/Reembolsos/${id}`);
+    return this.http.get(`${environment.apiUrl}/api/Reembolsos/${id}`, { params: { country: this.country.codigoPortal } });
   }
 
   sendRefund(id): Observable<any> {
@@ -45,14 +48,14 @@ export class RefundService {
   }
 
   getProveedores(): Observable<any> {
-    return this.http.get(`${environment.apiUrl}/api/DatosEmpresa/GetOtrosProveedores`);
+    return this.http.get(`${environment.apiUrl}/api/DatosEmpresa/GetOtrosProveedores`, { params: { country: this.country.codigoPortal } });
   }
 
   getBanks(): Observable<any> {
-    return this.http.get(`${environment.apiUrl}/api/DatosEmpresa/GetBancos`);
+    return this.http.get(`${environment.apiUrl}/api/DatosEmpresa/GetBancos`, { params: { country: this.country.codigoPortal } });
   }
 
   getCategoriasDatosProveedores(): Observable<any> {
-    return this.http.get(`${environment.apiUrl}/api/DatosEmpresa/GetDatosProveedores`);
+    return this.http.get(`${environment.apiUrl}/api/DatosEmpresa/GetDatosProveedores`, { params: { country: this.country.codigoPortal } });
   }
 }

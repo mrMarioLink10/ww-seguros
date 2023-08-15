@@ -180,6 +180,7 @@ export class DashboardLayoutComponent implements OnInit, OnDestroy {
     // tslint:disable-next-line: deprecation
     Dialog.afterClosed().subscribe((result) => {
       if (result === 'true') {
+        localStorage.removeItem('countryCode');
         this.keycloakService.logOut();
       }
     });

@@ -50,10 +50,10 @@ export class RefundComponent implements OnInit {
 				value: 'TRANSFERENCIA',
 				viewValue: 'TRANSFERENCIA'
 			},
-			{
-				value: 'CHEQUE',
-				viewValue: 'CHEQUE'
-			}
+			// {
+			// 	value: 'CHEQUE',
+			// 	viewValue: 'CHEQUE'
+			// }
 		]
 	};
 

@@ -13,6 +13,7 @@ import { ClaimsListComponent } from './claims-list/claims-list.component';
 import { RefundsListComponent } from './refunds-list/refunds-list.component';
 import { RefundTableComponent } from './refund-table/refund-table.component';
 import { RefundFilterComponent } from './refund-filter/refund-filter.component';
+import { RefundCommentsComponent } from './refund-comments/refund-comments.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { RefundFilterComponent } from './refund-filter/refund-filter.component';
     RefundsListComponent,
     RefundTableComponent,
     RefundFilterComponent,
+    RefundCommentsComponent,
   ],
   imports: [
     CommonModule,

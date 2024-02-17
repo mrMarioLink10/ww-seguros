@@ -58,4 +58,8 @@ export class RefundService {
   getCategoriasDatosProveedores(): Observable<any> {
     return this.http.get(`${environment.apiUrl}/api/DatosEmpresa/GetDatosProveedores`, { params: { country: this.country.codigoPortal } });
   }
+
+  getComments(refundId: number): Observable<any> {
+    return this.http.get(`${environment.apiUrl}/api/reembolsos/comentarios`, {params: {idSolicitud: refundId.toString()}});
+  }
 }

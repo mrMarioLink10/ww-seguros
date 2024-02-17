@@ -5,6 +5,7 @@ import { NewClaimComponent } from './new-claim/new-claim.component';
 import { ClaimComponent } from './new-claim/claim-types/claim/claim.component';
 import { RefundComponent } from './new-claim/claim-types/refund/refund.component';
 import { CanExitGuard } from '../../../core/guards/can-exit.guard';
+import { RefundCommentsComponent } from './refund-comments/refund-comments.component';
 
 const routes: Routes = [
 	{
@@ -29,6 +30,9 @@ const routes: Routes = [
 			{ path: 'refund', component: RefundComponent, canDeactivate: [CanExitGuard] },
 			{ path: 'refund/:id', component: RefundComponent, canDeactivate: [CanExitGuard] },
 		]
+	},
+	{
+		path: 'refund/comments/:id', component: RefundCommentsComponent, canDeactivate: [CanExitGuard] ,
 	}
 ];
 

@@ -1,5 +1,5 @@
 <mat-form-field class="mr-3 w-full" appearance="outline"
-  [ngClass]="{'file-input': group.get(name).value !== '', 'file-error': group.get(name).touched && !group.get(name).valid}">
+  [ngClass]="{'file-input': group.get(name).value !== '', 'file-error': group.get(name).touched && group.get(name).invalid}">
   <mat-label>{{label}}</mat-label>
   <ngx-mat-file-input [disabled]="disabled" #fileinput placeholder="Estudios" [accept]="'.pdf,.png,.jpg'" [valuePlaceholder]="fileNameWatcher"
     (change)="runOnFileChange($event)">

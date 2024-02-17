@@ -231,6 +231,10 @@ export class RefundComponent implements OnInit {
 		options: this.idNumber2Options
 	};
 
+	isEditting: boolean = false;
+	canUploadFiles: boolean = false;
+	entityData: any;
+
 	refundForm: FormGroup;
 	diagnosticList: FormArray;
 	@ViewChild('form', { static: false }) form;
@@ -251,7 +255,7 @@ export class RefundComponent implements OnInit {
 		private dataMappingFromApi: FormDataFillingService,
     private countryRolesService: CountryRolesService
 	) { }
-
+	
 	ID = null;
 
 	timeAutoComplete = 0;
@@ -542,7 +546,6 @@ export class RefundComponent implements OnInit {
 		// }
 
 		this.refundForm.get('informacion').get('tipoReclamo').valueChanges.subscribe(valueReclamo => {
-
 			if (valueReclamo == 'INTERNACIONAL') {
 				for (let x = 0; x < this.diagnosticList.length; x++) {
 					// setTimeout(() => {
@@ -565,19 +568,27 @@ export class RefundComponent implements OnInit {
 			}
 			else {
 				for (let x = 0; x < this.diagnosticList.length; x++) {
-					this.refundForm.get('diagnosticos').get(x.toString()).get('tipoReclamoMoneda').setValue('');
+					if(this.ID && this.entityData) {
+						let formaPago: string = this.entityData.forma || '';
+						this.refundForm.get('forma').setValue(formaPago);
+						this.refundForm.get('forma').updateValueAndValidity();
+					}else {
+						this.refundForm.get('diagnosticos').get(x.toString()).get('tipoReclamoMoneda').setValue('');
+					}
 					setTimeout(() => {
+						if(!this.ID) {
 						// this.refundForm.get('diagnosticos').get(x.toString()).get('categoria').setValue('');
 						this.refundForm.get('diagnosticos').get(x.toString()).get('categoria').enable();
 						this.refundForm.get('diagnosticos').get(x.toString()).get('proveedor').setValue('');
 						this.refundForm.get('diagnosticos').get(x.toString()).get('proveedor').markAsUntouched();
+						}
 					}, 500);
 					// this.manageFilters(x);
 				}
 				if (this.refundForm.get('infoTransferencia')) {
 					(this.refundForm.get('infoTransferencia') as FormGroup).removeControl('instruccion');
 					(this.refundForm.get('infoTransferencia') as FormGroup).addControl('tipoMoneda', this.fb.control('', Validators.required));
-					this.refundForm.get('infoTransferencia').get('tipoMoneda').setValue('');
+					this.refundForm.get('infoTransferencia').get('tipoMoneda').setValue(this.entityData.infoTransferencia.tipoMoneda || '');
 				}
 			}
 		});
@@ -592,7 +603,7 @@ export class RefundComponent implements OnInit {
 		// }
 
 		console.log('El json de todo el formulario: ', JSON.stringify(this.refundForm.value));
-
+		this.checkIfCanUploadFiles();
 	}
 	// role;
 	// idd;
@@ -688,7 +699,7 @@ export class RefundComponent implements OnInit {
 			}
 		} else {
 			if (form === this.refundForm.get('forma') && this.refundForm.get('infoTransferencia')) {
-				if (!this.refundForm.get('infoTransferencia').valid) {
+				if (this.refundForm.get('infoTransferencia').invalid) {
 					return true;
 				} else {
 					return false;
@@ -1354,6 +1365,7 @@ export class RefundComponent implements OnInit {
 			this.appComponent.showOverlay = true;
 		});
 		this.refund.returnData(id).subscribe(data => {
+			this.entityData = data.data;
 			console.log(data);
 			this.refundForm.get('informacion').get('idNumber').disable();
 			this.refundForm.get('informacion').get('filterType').disable();
@@ -1437,12 +1449,13 @@ export class RefundComponent implements OnInit {
 								'tipoReclamoMoneda').value != null) {
 								if (this.refundForm.get('diagnosticos').get(element.toString()).get(
 									'tipoReclamoMoneda').value === 'DOLARES') {
-									console.log('total', this.refundForm.get('diagnosticos').get(element.toString()).value.monto);
-									total += Number.parseFloat(this.refundForm.get('diagnosticos').get(element.toString()).value.monto);
+									console.log('total', this.refundForm.getRawValue().diagnosticos[element].monto);
+									total += Number.parseFloat(this.refundForm.getRawValue().diagnosticos[element].monto);
 								}
 								if (this.refundForm.get('diagnosticos').get(element.toString()).get(
 									'tipoReclamoMoneda').value === 'PESOS') {
-									totalPesos += Number.parseFloat(this.refundForm.get('diagnosticos').get(element.toString()).value.monto);
+									totalPesos += Number.parseFloat(this.refundForm.getRawValue().diagnosticos[element].monto);
+
 								}
 							}
 						}
@@ -1670,6 +1683,8 @@ export class RefundComponent implements OnInit {
 			this.appComponent.showOverlay = false;
 			// },
 			// 5000);
+		}).add(data => {
+			this.setIsEditting(true);
 		});
 		this.refund.id = null;
 
@@ -1685,4 +1700,47 @@ export class RefundComponent implements OnInit {
 		this.formHandler.sendForm(form, formType, sendType, this.appComponent, id);
 
 	}
+
+	setIsEditting(isEditting: boolean) {
+		if(isEditting === true) {
+			this.isEditting = true;
+			let diagnosticFormGroup: FormGroup = (this.refundForm.get('diagnosticos') as FormArray).controls[0] as FormGroup;
+
+			// this.enable(this.refundForm, false);
+			this.disableAllFormControls(this.refundForm);
+			this.refundForm.get('informacion').get('idNumber').setValue(this.entityData.informacion.idNumber || '');
+		}
+	}
+
+	disableAllFormControls(formGroup: FormGroup | FormArray) {
+		Object.keys(formGroup.controls).forEach(controlName => {
+			const control = formGroup.get(controlName);
+			
+			//Disable the control
+			control.disable();
+		});
+	}
+
+	enable(form: FormGroup, enable: boolean) {
+		Object.keys(form.controls).forEach(key => {
+		  const control = form.get(key);
+		  if (control) {
+			if ((control as any).controls){
+				this.enable(control as FormGroup, enable);
+			}
+			else {
+			  if (enable) control.enable();
+			  else control.disable();
+			}
+		  }
+		});
+	  }
+
+	checkIfCanUploadFiles() {
+		let formStatus = this.entityData.status || 0;
+		if(!this.ID || (formStatus === 3 || formStatus === 7)){
+			this.canUploadFiles = true;
+		}
+	}
+
 }

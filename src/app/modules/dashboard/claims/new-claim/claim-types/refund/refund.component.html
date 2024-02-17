@@ -396,151 +396,156 @@
             </div>
           </div>
         </div>
-        <div class="mt-3 mb-1 formulary-labels">
-          <label> <strong> Formato de los documentos: PDF (.pdf), JPG (.jpg) y PNG (.png)</strong> </label>
+
+        <div>
+          <div class="mt-3 mb-1 formulary-labels">
+            <label> <strong> Formato de los documentos: PDF (.pdf), JPG (.jpg) y PNG (.png)</strong> </label>
+          </div>
+          <div class="mt-3 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-5 xl:grid-cols-5">
+            <div class="mr-3">
+              <div
+                *ngFor="let appliedStudies of refundForm.get('diagnosticos').get(i.toString()).get('files').get('invoices')['controls']; let ix = index"
+                [ngClass]="{'grid grid-cols-5': refundForm.get('diagnosticos').get(i.toString()).get('files').get('invoices')['controls'].length > 1}">
+                <app-file-input class="mr-3"
+                  [ngClass]="{'col-span-4': refundForm.get('diagnosticos').get(i.toString()).get('files').get('invoices')['controls'].length > 1}"
+                  [group]="refundForm.get('diagnosticos').get(i.toString()).get('files').get('invoices').get(ix.toString())"
+                  name="invoices" label="Facturas Pendientes" [fileNameWatcher]="fileNameWatcher('invoices', i, ix)"
+                  (onFileChange)="onFileChange($event, 'invoices', i, ix)">
+                </app-file-input>
+                <div
+                  [ngClass]="{'col-span-1 ml-2 mt-1': refundForm.get('diagnosticos').get(i.toString()).get('files').get('invoices')['controls'].length > 1}">
+                  <button mat-mini-fab aria-label=" Eliminar archivo"
+                    *ngIf="refundForm.get('diagnosticos').get(i.toString()).get('files').get('invoices')['controls'].length > 1"
+                    (click)="removeToList(ix, returnAsFormArray(refundForm.get('diagnosticos').get(i.toString()).get('files').get('invoices')))"
+                    type="button" class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
+                    <mat-icon style="color: #18446B">remove</mat-icon>
+                  </button>
+                </div>
+              </div>
+              <button mat-mini-fab aria-label="Agregar archivo"
+                (click)="addToList(returnAsFormArray(refundForm.get('diagnosticos').get(i.toString()).get('files').get('invoices')), 'invoices')"
+                type="button" class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
+                <mat-icon style="color: #18446B">add</mat-icon>
+              </button>
+            </div>
+  
+            <div class="mr-3">
+              <div
+                *ngFor="let appliedStudies of refundForm.get('diagnosticos').get(i.toString()).get('files').get('indications')['controls']; let ix = index"
+                [ngClass]="{'grid grid-cols-5': refundForm.get('diagnosticos').get(i.toString()).get('files').get('indications')['controls'].length > 1}">
+                <app-file-input class="mr-3"
+                  [ngClass]="{'col-span-4': refundForm.get('diagnosticos').get(i.toString()).get('files').get('indications')['controls'].length > 1}"
+                  [group]="refundForm.get('diagnosticos').get(i.toString()).get('files').get('indications').get(ix.toString())"
+                  name="indications" label="Indicaciones médicas"
+                  [fileNameWatcher]="fileNameWatcher('indications', i, ix)"
+                  (onFileChange)="onFileChange($event, 'indications', i, ix)">
+                </app-file-input>
+                <div
+                  [ngClass]="{'col-span-1 ml-2 mt-1': refundForm.get('diagnosticos').get(i.toString()).get('files').get('indications')['controls'].length > 1}">
+                  <button mat-mini-fab aria-label=" Eliminar archivo"
+                    *ngIf="refundForm.get('diagnosticos').get(i.toString()).get('files').get('indications')['controls'].length > 1"
+                    (click)="removeToList(ix, returnAsFormArray(refundForm.get('diagnosticos').get(i.toString()).get('files').get('indications')))"
+                    type="button" class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
+                    <mat-icon style="color: #18446B">remove</mat-icon>
+                  </button>
+                </div>
+              </div>
+              <button mat-mini-fab aria-label="Agregar archivo"
+                (click)="addToList(returnAsFormArray(refundForm.get('diagnosticos').get(i.toString()).get('files').get('indications')), 'indications')"
+                type="button" class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
+                <mat-icon style="color: #18446B">add</mat-icon>
+              </button>
+            </div>
+  
+            <div class="mr-3">
+              <div
+                *ngFor="let appliedStudies of refundForm.get('diagnosticos').get(i.toString()).get('files').get('medicReports')['controls']; let ix = index"
+                [ngClass]="{'grid grid-cols-5': refundForm.get('diagnosticos').get(i.toString()).get('files').get('medicReports')['controls'].length > 1}">
+                <app-file-input class="mr-3"
+                  [ngClass]="{'col-span-4': refundForm.get('diagnosticos').get(i.toString()).get('files').get('medicReports')['controls'].length > 1}"
+                  [group]="refundForm.get('diagnosticos').get(i.toString()).get('files').get('medicReports').get(ix.toString())"
+                  name="medicReports" label="Informe médico" [fileNameWatcher]="fileNameWatcher('medicReports', i, ix)"
+                  (onFileChange)="onFileChange($event, 'medicReports', i, ix)">
+                </app-file-input>
+                <div
+                  [ngClass]="{'col-span-1 ml-2 mt-1': refundForm.get('diagnosticos').get(i.toString()).get('files').get('medicReports')['controls'].length > 1}">
+                  <button mat-mini-fab aria-label=" Eliminar archivo"
+                    *ngIf="refundForm.get('diagnosticos').get(i.toString()).get('files').get('medicReports')['controls'].length > 1"
+                    (click)="removeToList(ix, returnAsFormArray(refundForm.get('diagnosticos').get(i.toString()).get('files').get('medicReports')))"
+                    type="button" class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
+                    <mat-icon style="color: #18446B">remove</mat-icon>
+                  </button>
+                </div>
+              </div>
+              <button mat-mini-fab aria-label="Agregar archivo"
+                (click)="addToList(returnAsFormArray(refundForm.get('diagnosticos').get(i.toString()).get('files').get('medicReports')), 'medicReports')"
+                type="button" class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
+                <mat-icon style="color: #18446B">add</mat-icon>
+              </button>
+            </div>
+  
+            <div class="mr-3">
+              <div
+                *ngFor="let appliedStudies of refundForm.get('diagnosticos').get(i.toString()).get('files').get('paymentVouchers')['controls']; let ix = index"
+                [ngClass]="{'grid grid-cols-5': refundForm.get('diagnosticos').get(i.toString()).get('files').get('paymentVouchers')['controls'].length > 1}">
+                <app-file-input class="mr-3"
+                  [ngClass]="{'col-span-4': refundForm.get('diagnosticos').get(i.toString()).get('files').get('paymentVouchers')['controls'].length > 1}"
+                  [group]="refundForm.get('diagnosticos').get(i.toString()).get('files').get('paymentVouchers').get(ix.toString())"
+                  name="paymentVouchers" label="Comprobante de pagos"
+                  [fileNameWatcher]="fileNameWatcher('paymentVouchers', i, ix)"
+                  (onFileChange)="onFileChange($event, 'paymentVouchers', i, ix)">
+                </app-file-input>
+                <div
+                  [ngClass]="{'col-span-1 ml-2 mt-1': refundForm.get('diagnosticos').get(i.toString()).get('files').get('paymentVouchers')['controls'].length > 1}">
+                  <button mat-mini-fab aria-label=" Eliminar archivo"
+                    *ngIf="refundForm.get('diagnosticos').get(i.toString()).get('files').get('paymentVouchers')['controls'].length > 1"
+                    (click)="removeToList(ix, returnAsFormArray(refundForm.get('diagnosticos').get(i.toString()).get('files').get('paymentVouchers')))"
+                    type="button" class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
+                    <mat-icon style="color: #18446B">remove</mat-icon>
+                  </button>
+                </div>
+              </div>
+              <button mat-mini-fab aria-label="Agregar archivo"
+                (click)="addToList(returnAsFormArray(refundForm.get('diagnosticos').get(i.toString()).get('files').get('paymentVouchers')), 'paymentVouchers')"
+                type="button" class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
+                <mat-icon style="color: #18446B">add</mat-icon>
+              </button>
+            </div>
+  
+            <div class="mr-3">
+              <div
+                *ngFor="let appliedStudies of refundForm.get('diagnosticos').get(i.toString()).get('files').get('otros')['controls']; let ix = index"
+                [ngClass]="{'grid grid-cols-5': refundForm.get('diagnosticos').get(i.toString()).get('files').get('otros')['controls'].length > 1}">
+                <app-file-input class="mr-3"
+                  [ngClass]="{'col-span-4': refundForm.get('diagnosticos').get(i.toString()).get('files').get('otros')['controls'].length > 1}"
+                  [group]="refundForm.get('diagnosticos').get(i.toString()).get('files').get('otros').get(ix.toString())"
+                  name="otros" label="Otros" [fileNameWatcher]="fileNameWatcher('otros', i, ix)"
+                  (onFileChange)="onFileChange($event, 'otros', i, ix)">
+                </app-file-input>
+                <div
+                  [ngClass]="{'col-span-1 ml-2 mt-1': refundForm.get('diagnosticos').get(i.toString()).get('files').get('otros')['controls'].length > 1}">
+                  <button mat-mini-fab aria-label=" Eliminar archivo"
+                    *ngIf="refundForm.get('diagnosticos').get(i.toString()).get('files').get('otros')['controls'].length > 1"
+                    (click)="removeToList(ix, returnAsFormArray(refundForm.get('diagnosticos').get(i.toString()).get('files').get('otros')))"
+                    type="button" class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
+                    <mat-icon style="color: #18446B">remove</mat-icon>
+                  </button>
+                </div>
+              </div>
+              <button mat-mini-fab aria-label="Agregar archivo"
+                (click)="addToList(returnAsFormArray(refundForm.get('diagnosticos').get(i.toString()).get('files').get('otros')), 'otros')"
+                type="button" class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
+                <mat-icon style="color: #18446B">add</mat-icon>
+              </button>
+            </div>
+          </div>
         </div>
-        <div class="mt-3 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-5 xl:grid-cols-5">
-          <div class="mr-3">
-            <div
-              *ngFor="let appliedStudies of refundForm.get('diagnosticos').get(i.toString()).get('files').get('invoices')['controls']; let ix = index"
-              [ngClass]="{'grid grid-cols-5': refundForm.get('diagnosticos').get(i.toString()).get('files').get('invoices')['controls'].length > 1}">
-              <app-file-input class="mr-3"
-                [ngClass]="{'col-span-4': refundForm.get('diagnosticos').get(i.toString()).get('files').get('invoices')['controls'].length > 1}"
-                [group]="refundForm.get('diagnosticos').get(i.toString()).get('files').get('invoices').get(ix.toString())"
-                name="invoices" label="Facturas Pendientes" [fileNameWatcher]="fileNameWatcher('invoices', i, ix)"
-                (onFileChange)="onFileChange($event, 'invoices', i, ix)">
-              </app-file-input>
-              <div
-                [ngClass]="{'col-span-1 ml-2 mt-1': refundForm.get('diagnosticos').get(i.toString()).get('files').get('invoices')['controls'].length > 1}">
-                <button mat-mini-fab aria-label=" Eliminar archivo"
-                  *ngIf="refundForm.get('diagnosticos').get(i.toString()).get('files').get('invoices')['controls'].length > 1"
-                  (click)="removeToList(ix, returnAsFormArray(refundForm.get('diagnosticos').get(i.toString()).get('files').get('invoices')))"
-                  type="button" class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
-                  <mat-icon style="color: #18446B">remove</mat-icon>
-                </button>
-              </div>
-            </div>
-            <button mat-mini-fab aria-label="Agregar archivo"
-              (click)="addToList(returnAsFormArray(refundForm.get('diagnosticos').get(i.toString()).get('files').get('invoices')), 'invoices')"
-              type="button" class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
-              <mat-icon style="color: #18446B">add</mat-icon>
-            </button>
-          </div>
 
-          <div class="mr-3">
-            <div
-              *ngFor="let appliedStudies of refundForm.get('diagnosticos').get(i.toString()).get('files').get('indications')['controls']; let ix = index"
-              [ngClass]="{'grid grid-cols-5': refundForm.get('diagnosticos').get(i.toString()).get('files').get('indications')['controls'].length > 1}">
-              <app-file-input class="mr-3"
-                [ngClass]="{'col-span-4': refundForm.get('diagnosticos').get(i.toString()).get('files').get('indications')['controls'].length > 1}"
-                [group]="refundForm.get('diagnosticos').get(i.toString()).get('files').get('indications').get(ix.toString())"
-                name="indications" label="Indicaciones médicas"
-                [fileNameWatcher]="fileNameWatcher('indications', i, ix)"
-                (onFileChange)="onFileChange($event, 'indications', i, ix)">
-              </app-file-input>
-              <div
-                [ngClass]="{'col-span-1 ml-2 mt-1': refundForm.get('diagnosticos').get(i.toString()).get('files').get('indications')['controls'].length > 1}">
-                <button mat-mini-fab aria-label=" Eliminar archivo"
-                  *ngIf="refundForm.get('diagnosticos').get(i.toString()).get('files').get('indications')['controls'].length > 1"
-                  (click)="removeToList(ix, returnAsFormArray(refundForm.get('diagnosticos').get(i.toString()).get('files').get('indications')))"
-                  type="button" class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
-                  <mat-icon style="color: #18446B">remove</mat-icon>
-                </button>
-              </div>
-            </div>
-            <button mat-mini-fab aria-label="Agregar archivo"
-              (click)="addToList(returnAsFormArray(refundForm.get('diagnosticos').get(i.toString()).get('files').get('indications')), 'indications')"
-              type="button" class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
-              <mat-icon style="color: #18446B">add</mat-icon>
-            </button>
-          </div>
 
-          <div class="mr-3">
-            <div
-              *ngFor="let appliedStudies of refundForm.get('diagnosticos').get(i.toString()).get('files').get('medicReports')['controls']; let ix = index"
-              [ngClass]="{'grid grid-cols-5': refundForm.get('diagnosticos').get(i.toString()).get('files').get('medicReports')['controls'].length > 1}">
-              <app-file-input class="mr-3"
-                [ngClass]="{'col-span-4': refundForm.get('diagnosticos').get(i.toString()).get('files').get('medicReports')['controls'].length > 1}"
-                [group]="refundForm.get('diagnosticos').get(i.toString()).get('files').get('medicReports').get(ix.toString())"
-                name="medicReports" label="Informe médico" [fileNameWatcher]="fileNameWatcher('medicReports', i, ix)"
-                (onFileChange)="onFileChange($event, 'medicReports', i, ix)">
-              </app-file-input>
-              <div
-                [ngClass]="{'col-span-1 ml-2 mt-1': refundForm.get('diagnosticos').get(i.toString()).get('files').get('medicReports')['controls'].length > 1}">
-                <button mat-mini-fab aria-label=" Eliminar archivo"
-                  *ngIf="refundForm.get('diagnosticos').get(i.toString()).get('files').get('medicReports')['controls'].length > 1"
-                  (click)="removeToList(ix, returnAsFormArray(refundForm.get('diagnosticos').get(i.toString()).get('files').get('medicReports')))"
-                  type="button" class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
-                  <mat-icon style="color: #18446B">remove</mat-icon>
-                </button>
-              </div>
-            </div>
-            <button mat-mini-fab aria-label="Agregar archivo"
-              (click)="addToList(returnAsFormArray(refundForm.get('diagnosticos').get(i.toString()).get('files').get('medicReports')), 'medicReports')"
-              type="button" class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
-              <mat-icon style="color: #18446B">add</mat-icon>
-            </button>
-          </div>
-
-          <div class="mr-3">
-            <div
-              *ngFor="let appliedStudies of refundForm.get('diagnosticos').get(i.toString()).get('files').get('paymentVouchers')['controls']; let ix = index"
-              [ngClass]="{'grid grid-cols-5': refundForm.get('diagnosticos').get(i.toString()).get('files').get('paymentVouchers')['controls'].length > 1}">
-              <app-file-input class="mr-3"
-                [ngClass]="{'col-span-4': refundForm.get('diagnosticos').get(i.toString()).get('files').get('paymentVouchers')['controls'].length > 1}"
-                [group]="refundForm.get('diagnosticos').get(i.toString()).get('files').get('paymentVouchers').get(ix.toString())"
-                name="paymentVouchers" label="Comprobante de pagos"
-                [fileNameWatcher]="fileNameWatcher('paymentVouchers', i, ix)"
-                (onFileChange)="onFileChange($event, 'paymentVouchers', i, ix)">
-              </app-file-input>
-              <div
-                [ngClass]="{'col-span-1 ml-2 mt-1': refundForm.get('diagnosticos').get(i.toString()).get('files').get('paymentVouchers')['controls'].length > 1}">
-                <button mat-mini-fab aria-label=" Eliminar archivo"
-                  *ngIf="refundForm.get('diagnosticos').get(i.toString()).get('files').get('paymentVouchers')['controls'].length > 1"
-                  (click)="removeToList(ix, returnAsFormArray(refundForm.get('diagnosticos').get(i.toString()).get('files').get('paymentVouchers')))"
-                  type="button" class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
-                  <mat-icon style="color: #18446B">remove</mat-icon>
-                </button>
-              </div>
-            </div>
-            <button mat-mini-fab aria-label="Agregar archivo"
-              (click)="addToList(returnAsFormArray(refundForm.get('diagnosticos').get(i.toString()).get('files').get('paymentVouchers')), 'paymentVouchers')"
-              type="button" class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
-              <mat-icon style="color: #18446B">add</mat-icon>
-            </button>
-          </div>
-
-          <div class="mr-3">
-            <div
-              *ngFor="let appliedStudies of refundForm.get('diagnosticos').get(i.toString()).get('files').get('otros')['controls']; let ix = index"
-              [ngClass]="{'grid grid-cols-5': refundForm.get('diagnosticos').get(i.toString()).get('files').get('otros')['controls'].length > 1}">
-              <app-file-input class="mr-3"
-                [ngClass]="{'col-span-4': refundForm.get('diagnosticos').get(i.toString()).get('files').get('otros')['controls'].length > 1}"
-                [group]="refundForm.get('diagnosticos').get(i.toString()).get('files').get('otros').get(ix.toString())"
-                name="otros" label="Otros" [fileNameWatcher]="fileNameWatcher('otros', i, ix)"
-                (onFileChange)="onFileChange($event, 'otros', i, ix)">
-              </app-file-input>
-              <div
-                [ngClass]="{'col-span-1 ml-2 mt-1': refundForm.get('diagnosticos').get(i.toString()).get('files').get('otros')['controls'].length > 1}">
-                <button mat-mini-fab aria-label=" Eliminar archivo"
-                  *ngIf="refundForm.get('diagnosticos').get(i.toString()).get('files').get('otros')['controls'].length > 1"
-                  (click)="removeToList(ix, returnAsFormArray(refundForm.get('diagnosticos').get(i.toString()).get('files').get('otros')))"
-                  type="button" class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
-                  <mat-icon style="color: #18446B">remove</mat-icon>
-                </button>
-              </div>
-            </div>
-            <button mat-mini-fab aria-label="Agregar archivo"
-              (click)="addToList(returnAsFormArray(refundForm.get('diagnosticos').get(i.toString()).get('files').get('otros')), 'otros')"
-              type="button" class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
-              <mat-icon style="color: #18446B">add</mat-icon>
-            </button>
-          </div>
-        </div>
         <hr class=" my-4 w-full ww-divider">
 
       </div>
-      <div>
+      <div *ngIf="ID === null || ID === undefined">
         <button mat-mini-fab aria-label="Agregar reclamacion" (click)="addDiagnostic()" type="button"
           class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
           <mat-icon style="color: #18446B">add</mat-icon>
@@ -596,7 +601,7 @@
             (change)="changePayment($event)">
             {{option.viewValue}}</mat-radio-button>
         </mat-radio-group>
-        <mat-error style="font-size: 10px;" *ngIf="refundForm.get('forma').touched && !refundForm.get('forma').valid">
+        <mat-error style="font-size: 10px;" *ngIf="refundForm.get('forma').touched && refundForm.get('forma').invalid">
           Este campo es obligatorio
         </mat-error>
       </div>

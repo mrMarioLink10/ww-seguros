@@ -119,4 +119,19 @@ export class RefundTableComponent implements OnInit {
 
   }
 
+  canDelete(statusId: number): boolean {
+    let status = [11,12,13,14];
+    return status.includes(statusId);
+  }
+
+  canEdit(statusId: number): boolean {
+    let status = [3,7,11,12];
+    return status.includes(statusId);
+  }
+
+  canSend(statusId: number): boolean {
+    let status = [3,7,12];
+    return status.includes(statusId);
+  }
+
 }

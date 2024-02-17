@@ -59,6 +59,8 @@ export class RefundCommentsComponent implements OnInit {
     });
       this.initializeTable();
       this.loading = false;
+    }, (err: any) => {
+      this.loading = false;
     });
   }
 

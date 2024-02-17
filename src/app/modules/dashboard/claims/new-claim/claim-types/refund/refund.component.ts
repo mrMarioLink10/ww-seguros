@@ -1706,7 +1706,6 @@ export class RefundComponent implements OnInit {
 			this.isEditting = true;
 			let diagnosticFormGroup: FormGroup = (this.refundForm.get('diagnosticos') as FormArray).controls[0] as FormGroup;
 
-			// this.enable(this.refundForm, false);
 			this.disableAllFormControls(this.refundForm);
 			this.refundForm.get('informacion').get('idNumber').setValue(this.entityData.informacion.idNumber || '');
 		}

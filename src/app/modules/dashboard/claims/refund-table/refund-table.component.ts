@@ -119,6 +119,11 @@ export class RefundTableComponent implements OnInit {
 
   }
 
+  canSeeDetails(statusId: number): boolean {
+    let status = [1,2];
+    return status.includes(statusId);
+  }
+
   canDelete(statusId: number): boolean {
     let status = [11,12,13,14];
     return status.includes(statusId);

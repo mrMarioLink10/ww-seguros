@@ -613,9 +613,9 @@
           </app-input>
         </div> -->
         <div class="mr-3">
-          <app-number-input [group]="refundForm.get('infoTransferencia')" label="No. Cuenta" name='noCuenta'
-            placeholder="0828908801" min="1">
-          </app-number-input>
+          <app-input [group]="refundForm.get('infoTransferencia')" [onlyNumbers]="true" label="No. Cuenta" name='noCuenta'
+            placeholder="0828908801">
+          </app-input>
         </div>
         <div class="mr-3">
           <app-radio-button [group]="refundForm.get('infoTransferencia')" name="tipoCuenta" [options]="cuentaTipos">

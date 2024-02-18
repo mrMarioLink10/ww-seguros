@@ -15,6 +15,7 @@ export class InputComponent implements OnInit, AfterViewChecked {
 	@Input() name: string;
 	@Input() value?: string;
 	@Input() type: string;
+	@Input() onlyNumbers: boolean;
 	@Input() min: string;
 	@Input() max: string;
 	@Input() placeholder: string;
@@ -34,10 +35,24 @@ export class InputComponent implements OnInit, AfterViewChecked {
 		this.cdr.detectChanges();
 	}
 
+	onKeyPress(event){
+		if(this.onlyNumbers){
+			return this.onlyNumbersEvent(event)
+		}else{
+			return this.omitSpecialChar(event);
+		}
+	}
+
 	omitSpecialChar(event) {
 		let k;
 		k = event.charCode;
 		return ((k > 64 && k < 91) || (k > 96 && k < 123) || k === 8 || k === 32 || (k >= 48 && k <= 57) || k === 44 || k === 46 || k === 64 || k === 241 || k === 209 || k === 32 || k === 95);
+	}
+
+	onlyNumbersEvent(event) {
+		// Get the character code of the key that was pressed
+		const charCode = event.which || event.keyCode;
+		return charCode >= 48 && charCode <= 57;
 	}
 
 	goCap() {

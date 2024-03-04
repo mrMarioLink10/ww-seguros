@@ -15,6 +15,7 @@ import { RefundTableComponent } from './refund-table/refund-table.component';
 import { RefundFilterComponent } from './refund-filter/refund-filter.component';
 import { DiagnosticsTableComponent } from './diagnostics-table/diagnostics-table.component';
 import { DiagnosticsFileUploadDialogComponent } from './diagnostics-file-upload-dialog/diagnostics-file-upload-dialog.component';
+import { RefundCommentsComponent } from './refund-comments/refund-comments.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { DiagnosticsFileUploadDialogComponent } from './diagnostics-file-upload-
     RefundFilterComponent,
     DiagnosticsTableComponent,
     DiagnosticsFileUploadDialogComponent,
+    RefundCommentsComponent,
   ],
   imports: [
     CommonModule,

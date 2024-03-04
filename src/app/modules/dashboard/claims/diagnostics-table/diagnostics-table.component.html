@@ -68,11 +68,11 @@
                 <ng-container matColumnDef="actions">
                     <th mat-header-cell *matHeaderCellDef> Acciones </th>
                     <td mat-cell *matCellDef="let element"> 
-                        <button mat-mini-fab aria-label="Subir Archivo" (click)="openModal(element.id)"
+                        <!-- <button mat-mini-fab aria-label="Subir Archivo" (click)="openModal(element.id)"
                         class="dashboard-table-buttons" title="Subir Archivo">
                             <img class="table-icon" src="../../../../assets/iconos/upload.svg">
-                        </button>
-                        <a mat-mini-fab aria-label="Comentarios" class="dashboard-table-buttons" title="Comentarios" [routerLink]="['/dashboard/claims/refund/',element.id,'diagnostics']">
+                        </button> -->
+                        <a mat-mini-fab aria-label="Comentarios" class="dashboard-table-buttons" title="Comentarios" [routerLink]="[element.id,'comments']">
                             <img class="table-icon" src="../../../../assets/iconos/comment.svg">
                         </a>
                     </td>

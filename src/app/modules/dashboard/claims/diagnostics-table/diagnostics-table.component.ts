@@ -39,7 +39,7 @@ export class DiagnosticsTableComponent implements OnInit {
   constructor(private refundService: RefundService, private route: ActivatedRoute, public dialog: MatDialog) { }
 
   ngOnInit() {
-    this.refundId = this.route.snapshot.params.id;
+    this.refundId = this.route.snapshot.params.refundId;
 
     if(this.refundId){
       this.loadDiagnostics();

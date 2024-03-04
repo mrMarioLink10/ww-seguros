@@ -5,6 +5,7 @@ import { NewClaimComponent } from './new-claim/new-claim.component';
 import { ClaimComponent } from './new-claim/claim-types/claim/claim.component';
 import { RefundComponent } from './new-claim/claim-types/refund/refund.component';
 import { CanExitGuard } from '../../../core/guards/can-exit.guard';
+import { DiagnosticsTableComponent } from './diagnostics-table/diagnostics-table.component';
 
 const routes: Routes = [
 	{
@@ -27,9 +28,10 @@ const routes: Routes = [
 			{ path: 'claim', component: ClaimComponent, canDeactivate: [CanExitGuard] },
 			{ path: 'claim/:id', component: ClaimComponent, canDeactivate: [CanExitGuard] },
 			{ path: 'refund', component: RefundComponent, canDeactivate: [CanExitGuard] },
-			{ path: 'refund/:id', component: RefundComponent, canDeactivate: [CanExitGuard] },
+			{ path: 'refund/:id', component: RefundComponent, canDeactivate: [CanExitGuard] }
 		]
-	}
+	},
+	{ path: 'refund/:id/diagnostics', component: DiagnosticsTableComponent, canDeactivate: [CanExitGuard] },
 ];
 
 @NgModule({

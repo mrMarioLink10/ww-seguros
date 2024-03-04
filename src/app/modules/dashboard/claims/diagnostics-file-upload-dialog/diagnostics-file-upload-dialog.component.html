@@ -1,0 +1,156 @@
+<h2 mat-dialog-title>Subir archivos para diagnóstico # {{diagnosticId}}</h2>
+<mat-dialog-content>
+    
+    <div class="mt-3 mb-1 formulary-labels">
+        <label> <strong> Formato de los documentos: PDF (.pdf), JPG (.jpg) y PNG (.png)</strong> </label>
+    </div>
+
+        <!-- INVOICES -->
+      <div class="mt-3 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-5 xl:grid-cols-5">
+        <div class="mr-3">
+          <div
+            *ngFor="let appliedStudies of filesForm.get('invoices')['controls']; let ix = index"
+            [ngClass]="{'grid grid-cols-5': filesForm.get('invoices')['controls'].length > 1}">
+            <app-file-input class="mr-3"
+              [ngClass]="{'col-span-4': filesForm.get('invoices')['controls'].length > 1}"
+              [group]="filesForm.get('invoices').get(ix.toString())"
+              name="invoices" label="Facturas Pendientes"
+              (onFileChange)="onFileChange($event, 'invoices', ix)">
+            </app-file-input>
+            <div
+              [ngClass]="{'col-span-1 ml-2 mt-1': filesForm.get('invoices')['controls'].length > 1}">
+              <button mat-mini-fab aria-label=" Eliminar archivo"
+                *ngIf="filesForm.get('invoices')['controls'].length > 1"
+                (click)="removeToList(ix, returnAsFormArray(filesForm.get('invoices')))"
+                type="button" class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
+                <mat-icon style="color: #18446B">remove</mat-icon>
+              </button>
+            </div>
+          </div>
+          <button mat-mini-fab aria-label="Agregar archivo"
+            (click)="addToList(returnAsFormArray(filesForm.get('invoices')), 'invoices')"
+            type="button" class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
+            <mat-icon style="color: #18446B">add</mat-icon>
+          </button>
+        </div>
+
+        <!-- INDICATIONS -->
+        <div class="mr-3">
+          <div
+            *ngFor="let appliedStudies of filesForm.get('indications')['controls']; let ix = index"
+            [ngClass]="{'grid grid-cols-5': filesForm.get('indications')['controls'].length > 1}">
+            <app-file-input class="mr-3"
+              [ngClass]="{'col-span-4': filesForm.get('indications')['controls'].length > 1}"
+              [group]="filesForm.get('indications').get(ix.toString())"
+              name="indications" label="Indicaciones médicas"
+              (onFileChange)="onFileChange($event, 'indications', ix)">
+            </app-file-input>
+            <div
+              [ngClass]="{'col-span-1 ml-2 mt-1': filesForm.get('indications')['controls'].length > 1}">
+              <button mat-mini-fab aria-label=" Eliminar archivo"
+                *ngIf="filesForm.get('indications')['controls'].length > 1"
+                (click)="removeToList(ix, returnAsFormArray(filesForm.get('indications')))"
+                type="button" class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
+                <mat-icon style="color: #18446B">remove</mat-icon>
+              </button>
+            </div>
+          </div>
+          <button mat-mini-fab aria-label="Agregar archivo"
+            (click)="addToList(returnAsFormArray(filesForm.get('indications')), 'indications')"
+            type="button" class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
+            <mat-icon style="color: #18446B">add</mat-icon>
+          </button>
+        </div>
+
+        <!-- MEDIC REPORTS -->
+        <div class="mr-3">
+          <div
+            *ngFor="let appliedStudies of filesForm.get('medicReports')['controls']; let ix = index"
+            [ngClass]="{'grid grid-cols-5': filesForm.get('medicReports')['controls'].length > 1}">
+            <app-file-input class="mr-3"
+              [ngClass]="{'col-span-4': filesForm.get('medicReports')['controls'].length > 1}"
+              [group]="filesForm.get('medicReports').get(ix.toString())"
+              name="medicReports" label="Informe médico"
+              (onFileChange)="onFileChange($event, 'medicReports', ix)">
+            </app-file-input>
+            <div
+              [ngClass]="{'col-span-1 ml-2 mt-1': filesForm.get('medicReports')['controls'].length > 1}">
+              <button mat-mini-fab aria-label=" Eliminar archivo"
+                *ngIf="filesForm.get('medicReports')['controls'].length > 1"
+                (click)="removeToList(ix, returnAsFormArray(filesForm.get('medicReports')))"
+                type="button" class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
+                <mat-icon style="color: #18446B">remove</mat-icon>
+              </button>
+            </div>
+          </div>
+          <button mat-mini-fab aria-label="Agregar archivo"
+            (click)="addToList(returnAsFormArray(filesForm.get('medicReports')), 'medicReports')"
+            type="button" class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
+            <mat-icon style="color: #18446B">add</mat-icon>
+          </button>
+        </div>
+
+        <!-- PAYMENT VOUCHERS -->
+        <div class="mr-3">
+          <div
+            *ngFor="let appliedStudies of filesForm.get('paymentVouchers')['controls']; let ix = index"
+            [ngClass]="{'grid grid-cols-5': filesForm.get('paymentVouchers')['controls'].length > 1}">
+            <app-file-input class="mr-3"
+              [ngClass]="{'col-span-4': filesForm.get('paymentVouchers')['controls'].length > 1}"
+              [group]="filesForm.get('paymentVouchers').get(ix.toString())"
+              name="paymentVouchers" label="Comprobante de pagos"
+              (onFileChange)="onFileChange($event, 'paymentVouchers', ix)">
+            </app-file-input>
+            <div
+              [ngClass]="{'col-span-1 ml-2 mt-1': filesForm.get('paymentVouchers')['controls'].length > 1}">
+              <button mat-mini-fab aria-label=" Eliminar archivo"
+                *ngIf="filesForm.get('paymentVouchers')['controls'].length > 1"
+                (click)="removeToList(ix, returnAsFormArray(filesForm.get('paymentVouchers')))"
+                type="button" class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
+                <mat-icon style="color: #18446B">remove</mat-icon>
+              </button>
+            </div>
+          </div>
+          <button mat-mini-fab aria-label="Agregar archivo"
+            (click)="addToList(returnAsFormArray(filesForm.get('paymentVouchers')), 'paymentVouchers')"
+            type="button" class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
+            <mat-icon style="color: #18446B">add</mat-icon>
+          </button>
+        </div>
+
+        <!-- OTHER -->
+        <div class="mr-3">
+          <div
+            *ngFor="let appliedStudies of filesForm.get('otros')['controls']; let ix = index"
+            [ngClass]="{'grid grid-cols-5': filesForm.get('otros')['controls'].length > 1}">
+            <app-file-input class="mr-3"
+              [ngClass]="{'col-span-4': filesForm.get('otros')['controls'].length > 1}"
+              [group]="filesForm.get('otros').get(ix.toString())"
+              name="otros" label="Otros"
+              (onFileChange)="onFileChange($event, 'otros', ix)">
+            </app-file-input>
+            <div
+              [ngClass]="{'col-span-1 ml-2 mt-1': filesForm.get('otros')['controls'].length > 1}">
+              <button mat-mini-fab aria-label=" Eliminar archivo"
+                *ngIf="filesForm.get('otros')['controls'].length > 1"
+                (click)="removeToList(ix, returnAsFormArray(filesForm.get('otros')))"
+                type="button" class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
+                <mat-icon style="color: #18446B">remove</mat-icon>
+              </button>
+            </div>
+          </div>
+          <button mat-mini-fab aria-label="Agregar archivo"
+            (click)="addToList(returnAsFormArray(filesForm.get('otros')), 'otros')"
+            type="button" class="dashboard-toolbar-buttons" style="border: 1px rgb(197, 197, 197) solid">
+            <mat-icon style="color: #18446B">add</mat-icon>
+          </button>
+        </div>
+      </div>
+      <hr class=" my-4 w-full ww-divider">
+
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button mat-button mat-dialog-close>Cancelar</button>
+  <button mat-button (click)="uploadFile()">Subir archivos</button>
+</mat-dialog-actions>

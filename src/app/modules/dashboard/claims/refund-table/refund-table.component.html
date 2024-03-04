@@ -70,6 +70,9 @@
             class="dashboard-table-buttons" title="Eliminar">
             <img src="../../../../assets/iconos/trash.svg">
           </button>
+          <a mat-mini-fab aria-label="Diagnosticos" class="dashboard-table-buttons" title="Diagnosticos" [routerLink]="['/dashboard/claims/refund/',element.id,'diagnostics']">
+            <img style="width: 12px; height: 12px; margin-bottom: -3px; margin-top: -3px;" src="../../../../assets/iconos/prescriptions.svg">
+          </a>
         </td>
       </ng-container>
 

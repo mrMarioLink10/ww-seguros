@@ -1298,13 +1298,14 @@ export class NewAuthorizationComponent implements OnInit, OnDestroy, DoCheck {
 				// tslint:disable-next-line: prefer-for-of
 				for (let x = 0; x < data.data.files.length; x++) {
 
+					if (x >= 1) {
+						this.addToList();
+					}
+
 					const formID7 = this.authorization.get('files').get(x.toString()) as FormGroup;
 					formID7.addControl('id', this.fb.control(data.data.files[x].id,
 						Validators.required));
 
-					if (x >= 1) {
-						this.addToList();
-					}
 					if (data.data.files[x].medicReport) {
 						this.authorization.get('files').get(x.toString()).patchValue({
 							medicReport: data.data.files[x].medicReport

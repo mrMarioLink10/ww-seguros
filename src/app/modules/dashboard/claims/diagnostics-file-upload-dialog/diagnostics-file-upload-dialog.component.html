@@ -148,9 +148,16 @@
       </div>
       <hr class=" my-4 w-full ww-divider">
 
+      <div>
+        <h2 class="my-4">Comentario:</h2>
+        <app-text-area label="Comentario" name="comment" [group]="filesForm"></app-text-area>
+      </div>
+
+
+
 </mat-dialog-content>
 
 <mat-dialog-actions>
   <button mat-raised-button color="accent" style="margin-left: auto;" mat-dialog-close>Cancelar</button>
-  <button mat-raised-button color="primary" (click)="uploadFile()">Subir archivos</button>
+  <button mat-raised-button color="primary" (click)="uploadFile()" [disabled]="!filesForm.valid">Subir archivos</button>
 </mat-dialog-actions>

@@ -9,7 +9,7 @@ import {
   MatDialogContent,
 } from '@angular/material/dialog';
 import { RefundService } from '../new-claim/claim-types/refund/services/refund.service';
-import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-diagnostics-file-upload-dialog',
@@ -59,11 +59,13 @@ export class DiagnosticsFileUploadDialogComponent implements OnInit {
 
   buildForm(){
     this.filesForm = this.fb.group({
+      diagnosticId: this.fb.control(this.diagnosticId,[Validators.required]),
       invoices: this.fb.array([this.createFormArray('invoices')]),
       indications: this.fb.array([this.createFormArray('indications')]),
       medicReports: this.fb.array([this.createFormArray('medicReports')]),
       paymentVouchers: this.fb.array([this.createFormArray('paymentVouchers')]),
       otros: this.fb.array([this.createFormArray('otros')]),
+      comment: this.fb.control('',[Validators.required])
     });
   }
 
@@ -132,7 +134,7 @@ export class DiagnosticsFileUploadDialogComponent implements OnInit {
 	}
 
   uploadFile(){
-    console.log('filesForm', this.filesForm);
+    console.log('filesForm', this.filesForm.getRawValue());
   }
 
 }

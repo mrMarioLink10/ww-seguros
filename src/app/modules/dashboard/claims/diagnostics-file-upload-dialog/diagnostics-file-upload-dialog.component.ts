@@ -3,13 +3,14 @@ import {
   MAT_DIALOG_DATA,
   MatDialog,
   MatDialogRef,
-  MatDialogActions,
-  MatDialogClose,
-  MatDialogTitle,
-  MatDialogContent,
 } from '@angular/material/dialog';
 import { RefundService } from '../new-claim/claim-types/refund/services/refund.service';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { DiagnosticFiles } from '../new-claim/claim-types/models/DiagnosticFiles';
+import { BaseDialogComponent } from 'src/app/shared/components/base-dialog/base-dialog.component';
+import { BaseDialog } from 'src/app/shared/components/base-dialog/models/base-dialog';
+import { throwError } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-diagnostics-file-upload-dialog',
@@ -20,6 +21,8 @@ export class DiagnosticsFileUploadDialogComponent implements OnInit {
 
 	filesForm: FormGroup;
   diagnosticId: number;
+  refundId: number;
+  loading: boolean = false;
 
   fileTypeList: any[] = [
     {
@@ -48,12 +51,15 @@ export class DiagnosticsFileUploadDialogComponent implements OnInit {
 		private fb: FormBuilder,
     private cd: ChangeDetectorRef,
     private refundService: RefundService,
+    private dialog: MatDialog,
+    private router: Router,
     public dialogRef: MatDialogRef<DiagnosticsFileUploadDialogComponent>,
 		@Inject(MAT_DIALOG_DATA) public data: any) { }
 
   ngOnInit() {
     this.dialogRef.disableClose = true;
     this.diagnosticId = this.data.diagnosticId;
+    this.refundId = this.data.refundId;
     this.buildForm();
   }
 
@@ -134,7 +140,80 @@ export class DiagnosticsFileUploadDialogComponent implements OnInit {
 	}
 
   uploadFile(){
-    console.log('filesForm', this.filesForm.getRawValue());
+    let rawFormValue = this.filesForm.getRawValue();
+
+    let diagnosticFiles: DiagnosticFiles = {
+      diagnosticId: this.diagnosticId,
+      comment: rawFormValue.comment.toLowerCase(),
+      files: {
+        invoices: rawFormValue.invoices.filter(x => x.invoices.length > 0).map(x => {return {invoices: x.invoices}}),
+        indications: rawFormValue.indications.filter(x => x.indications.length > 0).map((x) => {return {indications: x.indications}}),
+        medicReports: rawFormValue.medicReports.filter(x => x.medicReports.length > 0).map(x =>{return {medicReports: x.medicReports}}),
+        paymentVouchers: rawFormValue.paymentVouchers.filter(x => x.paymentVouchers.length > 0).map(x =>{return {paymentVouchers: x.paymentVouchers}}),
+        otros: rawFormValue.otros.filter(x => x.otros.length > 0).map(x => {return {otros: x.otros  }})
+      }
+    };
+
+    
+    this.loading = true;
+    this.refundService.uploadDiagnositcFiles(this.refundId, diagnosticFiles).subscribe((res: any) => {
+      if(res.error == true){
+        this.errorHandler();
+      }
+
+      //cerrar modal
+      this.dialogRef.close();
+
+      //redirigir a pagina de diagnosticos
+      this.correctSend();
+    }, (error) => {
+      this.errorHandler();
+    });
+  }
+
+  errorHandler(){
+    this.loading = false;
+    this.dialogRef.close();
+    this.badSend();
+  }
+
+  badSend() {
+    let errorServer: BaseDialog = {
+      logo: 'error',
+      title: 'Ha ocurrido error',
+      text: 'Ha ocurrido un error al intentar subir los archivos.',
+      showButtons: false
+    };
+
+    const dialogRef = this.dialog.open(BaseDialogComponent, {
+      data: errorServer,
+      minWidth: 385
+    });
+    dialogRef.disableClose = true;
+    this.closeDialog(dialogRef, false);
+  }
+
+  correctSend() {
+    let correctDialog: BaseDialog = {
+      logo: 'check',
+      title: 'Confirmación',
+      text: 'Los archivos se subieron correctamente.',
+      showButtons: false
+    };
+
+    const dialogRef = this.dialog.open(BaseDialogComponent, {
+      data: correctDialog,
+      minWidth: 385
+    });
+    dialogRef.disableClose = true;
+    this.closeDialog(dialogRef, true);
+  }
+
+  closeDialog(dialog, redirect:boolean) {
+    setTimeout(() => {
+      dialog.close();
+      this.router.navigate(['/dashboard/claims/refund/',this.refundId,'diagnostics']);
+    }, 5000);
   }
 
 }

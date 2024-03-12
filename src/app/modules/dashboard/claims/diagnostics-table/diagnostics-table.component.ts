@@ -3,21 +3,7 @@ import { RefundService } from '../new-claim/claim-types/refund/services/refund.s
 import { ActivatedRoute } from '@angular/router';
 import { MatDialog, MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 import { DiagnosticsFileUploadDialogComponent } from '../diagnostics-file-upload-dialog/diagnostics-file-upload-dialog.component';
-
-export interface refundDiagnostic {
-  id: number;
-  category: string;
-  description: string;
-  diagnostic: string;
-  place: string;
-  date: Date;
-  files: any;
-  amount: number;
-  provider: string;
-  claimCurrencyType: string;
-  status: number;
-}
-
+import { RefundDiagnostic } from '../models/RefundDiagnostic';
 
 @Component({
   selector: 'app-diagnostics-table',
@@ -29,7 +15,7 @@ export class DiagnosticsTableComponent implements OnInit {
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
-  diagnostics: refundDiagnostic[] = [];
+  diagnostics: RefundDiagnostic[] = [];
   refundId: number;
 
   displayedColumns: string[] = ['id', 'category', 'description', 'diagnostic', 'date', 'amount', 'provider', 'status', 'actions'];
@@ -70,7 +56,7 @@ export class DiagnosticsTableComponent implements OnInit {
           amount: d.monto,
           provider: d.proveedor,
           claimCurrencyType: d.tipoReclamoMoneda,
-          status: 0
+          status: d.idEstadoReembolso
         });
       });
 

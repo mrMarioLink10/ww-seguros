@@ -1,6 +1,13 @@
 <h2 mat-dialog-title>Subir archivos para diagnóstico # {{diagnosticId}}</h2>
-<mat-dialog-content>
-    
+
+<div *ngIf="loading" class="w-full h-full text-center">
+  <mat-spinner class="m-auto"></mat-spinner>
+  <br/>
+  <span>subiendo archivos</span>
+</div>
+
+<div *ngIf="!loading">
+  <mat-dialog-content>
     <div class="mt-3 mb-1 formulary-labels">
         <label> <strong> Formato de los documentos: PDF (.pdf), JPG (.jpg) y PNG (.png)</strong> </label>
     </div>
@@ -161,3 +168,5 @@
   <button mat-raised-button color="accent" style="margin-left: auto;" mat-dialog-close>Cancelar</button>
   <button mat-raised-button color="primary" (click)="uploadFile()" [disabled]="!filesForm.valid">Subir archivos</button>
 </mat-dialog-actions>
+
+</div>

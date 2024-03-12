@@ -11,7 +11,7 @@ export class RefundDiagnosticStatusPipe implements PipeTransform {
         return 'Enviado';
 
       case '2': case 2: 
-        return 'En Evaluación';
+        return 'Recibido';
 
       case '3': case 3:
         return 'Devuelto';
@@ -20,7 +20,7 @@ export class RefundDiagnosticStatusPipe implements PipeTransform {
         return 'Completivo';
 
       case '5': case 5:
-        return 'Asignado';
+        return 'En evaluación';
 
       case '6': case 6:
         return 'Declinado';
@@ -32,19 +32,19 @@ export class RefundDiagnosticStatusPipe implements PipeTransform {
         return 'Evaluado';
 
       case '9': case 9:
-        return 'Pagado';
-
-      case '11': case 11:
         return 'Incompleto';
 
-      case '12': case 12:
+      case '10': case 10:
         return 'Completo';
 
-      case '13': case 13:
+      case '11': case 11:
         return 'Cancelado';
 
-      case '14': case 14:
-        return 'Adjuntar Expediente';
+      case '12': case 12:
+        return 'Adjuntar expediente';
+
+      case '13': case 13:
+        return 'Sin Enviar';
 
       default:
         return 'Indeterminado';

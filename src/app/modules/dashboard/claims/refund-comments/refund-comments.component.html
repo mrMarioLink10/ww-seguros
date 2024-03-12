@@ -3,7 +3,7 @@
     <div style="display: flex;">
         <div style="align-self: flex-end;" class="uppercase dashboard-page-title">Comentarios para diagnóstico {{diagnosticId}}</div>
         <div style="margin-left: auto;">
-            <button style="display: ruby;" mat-raised-button color="primary" (click)="openDiagnosticModal()">
+            <button style="display: ruby;" mat-raised-button color="primary" (click)="openDiagnosticModal()" [disabled]="diasableFileUpload">
                 <img src="../../../../assets/iconos/upload.svg">
                 <span>Subir archivos</span>
             </button>

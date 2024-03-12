@@ -3,6 +3,7 @@ import { MatDialog, MatPaginator, MatSort, MatTableDataSource } from '@angular/m
 import { RefundService } from '../new-claim/claim-types/refund/services/refund.service';
 import { ActivatedRoute } from '@angular/router';
 import { DiagnosticsFileUploadDialogComponent } from '../diagnostics-file-upload-dialog/diagnostics-file-upload-dialog.component';
+import { RefundDiagnostic } from '../models/RefundDiagnostic';
 
 export interface RefundComment {
   id: number;
@@ -27,10 +28,12 @@ export class RefundCommentsComponent implements OnInit {
   displayedColumns: string[] = ['id', 'user', 'comment', 'date'];
   comments: RefundComment[] = [];
   refundId: number;
+  diagnostic: RefundDiagnostic;
   diagnosticId: number;
 
   dataSource;
   loading = false;
+  diasableFileUpload = true;
 
   constructor(private refundService: RefundService, private route: ActivatedRoute, public dialog: MatDialog) { }
 
@@ -39,11 +42,43 @@ export class RefundCommentsComponent implements OnInit {
     this.diagnosticId = this.route.snapshot.params.diagnosticId;
 
     if(this.refundId && this.diagnosticId){
-      this.loadData();
+      this.loadDiagnostic();
+      this.loadComments();
     }
   }
+  
+  loadDiagnostic() {
+    this.loading = true;
+    this.refundService.returnData(this.refundId).subscribe(res => {
+      
+      res.data.diagnosticos.forEach(d => {
+        if(d.id == this.diagnosticId){
+          this.diagnostic = {
+            id: d.id,
+            category: d.categoria,
+            description: d.descripcion,
+            diagnostic: d.diagnostico,
+            place: d.lugar,
+            date: d.fecha,
+            files: d.files,
+            amount: d.monto,
+            provider: d.proveedor,
+            claimCurrencyType: d.tipoReclamoMoneda,
+            status: d.idEstadoReembolso
+          };
+        }
+      });
 
-  loadData() {
+      console.log('diagnostic', this.diagnostic)
+      this.checkIfCanUploadFiles();
+      this.loading = false;
+    }, (error) => {
+      console.log('error', error);
+      this.loading = false;
+    });
+  }
+
+  loadComments() {
     this.loading = true;
 
     this.refundService.getComments(this.refundId, this.diagnosticId).subscribe(res => {
@@ -72,9 +107,14 @@ export class RefundCommentsComponent implements OnInit {
     this.dataSource.sort = this.sort;
   }
 
+  checkIfCanUploadFiles(){
+    let status = [3,7];
+    return this.diagnostic && !status.includes(this.diagnostic.status); 
+  }
+
   openDiagnosticModal(){
     this.dialog.open(DiagnosticsFileUploadDialogComponent, {
-      data: {diagnosticId: this.diagnosticId},
+      data: {diagnosticId: this.diagnosticId, refundId: this.refundId},
       minWidth: 500, 
       maxWidth: 1200
     });

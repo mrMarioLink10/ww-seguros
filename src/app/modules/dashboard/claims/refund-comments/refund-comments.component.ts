@@ -109,7 +109,7 @@ export class RefundCommentsComponent implements OnInit {
 
   checkIfCanUploadFiles(){
     let status = [3,7];
-    return this.diagnostic && !status.includes(this.diagnostic.status); 
+    this.diasableFileUpload = this.diagnostic && !status.includes(this.diagnostic.status); 
   }
 
   openDiagnosticModal(){

@@ -9,7 +9,6 @@ import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@ang
 import { DiagnosticFiles } from '../new-claim/claim-types/models/DiagnosticFiles';
 import { BaseDialogComponent } from 'src/app/shared/components/base-dialog/base-dialog.component';
 import { BaseDialog } from 'src/app/shared/components/base-dialog/models/base-dialog';
-import { throwError } from 'rxjs';
 import { Router } from '@angular/router';
 
 @Component({
@@ -197,7 +196,7 @@ export class DiagnosticsFileUploadDialogComponent implements OnInit {
     let correctDialog: BaseDialog = {
       logo: 'check',
       title: 'Confirmación',
-      text: 'Los archivos se subieron correctamente.',
+      text: 'Los archivos se subieron correctamente. Será redirigido al listado de diagnósticos.',
       showButtons: false
     };
 

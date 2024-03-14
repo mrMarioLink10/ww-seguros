@@ -28,6 +28,7 @@ import { TableStatusPipe } from '../../../core/pipes/table-status.pipe';
 import { MaterialFileInputModule } from 'ngx-material-file-input';
 import { PolicyStatusPipe } from '../../../core/pipes/policy-status.pipe';
 import { ChangeFormComponent } from './components/ChangeForm/change.component';
+import { RefundDiagnosticStatusPipe } from 'src/app/core/pipes/refund-diagnostic-status.pipe';
 
 @NgModule({
   declarations: [
@@ -52,6 +53,7 @@ import { ChangeFormComponent } from './components/ChangeForm/change.component';
     KnowYourCustomerComponent,
     TableStatusPipe,
     PolicyStatusPipe,
+    RefundDiagnosticStatusPipe,
     ChangeFormComponent
   ],
   imports: [CommonModule, MaterialModule, GlobalSharedModule, FormsModule, ReactiveFormsModule, HttpClientModule, MaterialFileInputModule],
@@ -77,6 +79,7 @@ import { ChangeFormComponent } from './components/ChangeForm/change.component';
     KnowYourCustomerComponent,
     TableStatusPipe,
     PolicyStatusPipe,
+    RefundDiagnosticStatusPipe,
     MaterialFileInputModule
   ]
 })

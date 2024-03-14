@@ -13,6 +13,9 @@ import { ClaimsListComponent } from './claims-list/claims-list.component';
 import { RefundsListComponent } from './refunds-list/refunds-list.component';
 import { RefundTableComponent } from './refund-table/refund-table.component';
 import { RefundFilterComponent } from './refund-filter/refund-filter.component';
+import { DiagnosticsTableComponent } from './diagnostics-table/diagnostics-table.component';
+import { DiagnosticsFileUploadDialogComponent } from './diagnostics-file-upload-dialog/diagnostics-file-upload-dialog.component';
+import { RefundCommentsComponent } from './refund-comments/refund-comments.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +27,9 @@ import { RefundFilterComponent } from './refund-filter/refund-filter.component';
     RefundsListComponent,
     RefundTableComponent,
     RefundFilterComponent,
+    DiagnosticsTableComponent,
+    DiagnosticsFileUploadDialogComponent,
+    RefundCommentsComponent,
   ],
   imports: [
     CommonModule,
@@ -32,6 +38,7 @@ import { RefundFilterComponent } from './refund-filter/refund-filter.component';
     SharedModule,
     MaterialModule,
     GlobalSharedModule
-  ]
+  ],
+  entryComponents: [DiagnosticsFileUploadDialogComponent]
 })
 export class ClaimsModule { }

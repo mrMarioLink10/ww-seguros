@@ -119,4 +119,29 @@ export class RefundTableComponent implements OnInit {
 
   }
 
+  canSend(refundStatus: number): boolean {
+    let statusList = [13];
+    return statusList.includes(refundStatus);
+  }
+
+  canViewDetails(refundStatus: number): boolean {
+    let statusList = [9,13];
+    return !statusList.includes(refundStatus);
+  }
+
+  canEdit(refundStatus: number): boolean {
+    let statusList = [9,13];
+    return statusList.includes(refundStatus);
+  }
+
+  canDelete(refundStatus: number): boolean {
+    let statusList = [9,11,13];
+    return statusList.includes(refundStatus);
+  }
+
+  canViewDiagnostics(refundStatus: number): boolean {
+    let statusList = [9,11,13];
+    return !statusList.includes(refundStatus);
+  }
+
 }

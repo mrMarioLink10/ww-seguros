@@ -27,12 +27,20 @@ export class RefundFilterComponent implements OnInit {
     to: ['']
   });
 
+  // statusTypes = [
+  //   { value: 0, view: 'Reiniciar estatus' },
+  //   { value: 1, view: 'Completo' },
+  //   { value: 2, view: 'Enviado' },
+  //   { value: 3, view: 'Cancelado' },
+  //   { value: 4, view: 'Adjuntar Expediente' },
+  // ];
+
   statusTypes = [
     { value: 0, view: 'Reiniciar estatus' },
-    { value: 1, view: 'Completo' },
     { value: 2, view: 'Enviado' },
-    { value: 3, view: 'Cancelado' },
-    { value: 4, view: 'Adjuntar Expediente' },
+    { value: 10, view: 'Completo' },
+    { value: 11, view: 'Cancelado' },
+    { value: 12, view: 'Adjuntar Expediente' },
   ];
 
   constructor(private fb: FormBuilder, private appComponent: AppComponent) { }

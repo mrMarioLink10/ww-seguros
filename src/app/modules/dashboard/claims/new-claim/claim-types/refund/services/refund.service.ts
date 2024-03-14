@@ -4,6 +4,7 @@ import { environment } from '../../../../../../../../environments/environment';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import {CountryRolesService} from '../../../../../../../shared/services/country-roles.service';
+import { DiagnosticFiles } from '../../models/DiagnosticFiles';
 
 
 
@@ -57,5 +58,18 @@ export class RefundService {
 
   getCategoriasDatosProveedores(): Observable<any> {
     return this.http.get(`${environment.apiUrl}/api/DatosEmpresa/GetDatosProveedores`, { params: { country: this.country.codigoPortal } });
+  }
+
+  getComments(refundId: number, diagnosticId: number): Observable<any> {
+    return this.http.get(`${environment.apiUrl}/api/reembolsos/comentarios`, {params: {idSolicitud: refundId.toString(), idDiagnostico: diagnosticId.toString()}});
+  }
+
+  uploadDiagnositcFiles(refundId: number, diagnosticFiles: DiagnosticFiles): Observable<any> {
+    const httpOptions = {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
+      params: { country: this.country.codigoPortal }
+    };
+
+    return this.http.post(`${environment.apiUrl}/api/reembolsos/upload-file/${refundId}`, diagnosticFiles, httpOptions);
   }
 }

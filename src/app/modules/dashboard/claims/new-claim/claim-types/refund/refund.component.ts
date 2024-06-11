@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, ChangeDetectorRef, SimpleChanges } from '@angular/core';
-import { FormGroup, FormArray, FormBuilder, Validators, FormControl } from '@angular/forms';
+import { FormGroup, FormArray, FormBuilder, Validators, FormControl, ValidatorFn, AbstractControl } from '@angular/forms';
 import { FieldConfig, Validator } from '../../../../../../shared/components/form-components/models/field-config';
 import { FormHandlerService } from '../../../../../../core/services/forms/form-handler.service';
 import { RefundService } from '../../../../claims/new-claim/claim-types/refund/services/refund.service';
@@ -910,6 +910,9 @@ export class RefundComponent implements OnInit {
 				// });
 				this.banks.push(data.data[x].descripcion);
 			}
+
+		console.log('bancos',this.banks)
+
 		});
 	}
 
@@ -1010,9 +1013,9 @@ export class RefundComponent implements OnInit {
 			this.refundForm.addControl(
 				'infoTransferencia',
 				this.fb.group({
-					noCuenta: ['', Validators.required],
+					noCuenta: ['', [Validators.required, this.accountNumberValidator()]],
 					tipoCuenta: ['', Validators.required],
-					bancoEmisor: ['', Validators.required],
+					bancoEmisor: ['', [Validators.required, this.bankValidator()]],
 					// tipoMoneda: ['', Validators.required]
 				})
 			);
@@ -1047,12 +1050,46 @@ export class RefundComponent implements OnInit {
 	createInfo(): FormGroup {
 		return this.fb.group({
 			// cedula: ['', Validators.required],
-			noCuenta: ['', Validators.required],
+			noCuenta: ['', [Validators.required, this.accountNumberValidator()]],
 			tipoCuenta: ['', Validators.required],
-			bancoEmisor: ['', Validators.required],
+			bancoEmisor: ['', [Validators.required, this.bankValidator()]],
 			// tipoMoneda: ['', Validators.required],
 			// correo: ['', Validators.required]
 		});
+	}
+
+	bankValidator(): ValidatorFn {
+		return (control: AbstractControl): { [key: string]: any } | null => {
+		  // Get the input value
+		  const inputValue: string = control.value;
+
+		  // Check your validation condition here
+		  if (!this.banks.includes(inputValue)) {
+			return { 'customValidation': { value: ''} };
+		  }
+	  
+		  // Return null if validation passes
+		  return null;
+		};
+	}
+
+	accountNumberValidator(): ValidatorFn {
+		return (control: AbstractControl): { [key: string]: any } | null => {
+		  console.log('validando numero de cuenta', control)
+		  if(control.value == null && control.touched) {
+			return { 'customValidation': { value: control.value } };
+		  }
+		  // Get the input value
+		  const inputValue: string = control.value.toString();
+
+		  // Check your validation condition here
+		  if (inputValue.length < 6) { 
+			return { 'customValidation': { value: control.value } };
+		  }
+	  
+		  // Return null if validation passes
+		  return null;
+		};
 	}
 
 	createDiagnostic(): FormGroup {
@@ -1623,6 +1660,9 @@ export class RefundComponent implements OnInit {
 						map(value => typeof value === 'string' ? value : value),
 						map(value => value ? this._filterBanks(value) : this.banks.slice())
 					);
+				this.refundForm.get('infoTransferencia').get('bancoEmisor').setValidators([Validators.required, this.bankValidator()]);
+				this.refundForm.get('infoTransferencia').get('noCuenta').setValidators([Validators.required, this.accountNumberValidator()]);
+				
 				setTimeout(() => {
 					this.refundForm.get('infoTransferencia').get('bancoEmisor').setValue(valueBanco + ' ');
 					console.log('yaaaaaaaaaaaaaa bancoEmisor ');
@@ -1680,8 +1720,17 @@ export class RefundComponent implements OnInit {
 		console.log('thing:', thing);
 	}
 
+	sanitizeAccountNumber(form: FormGroup) {
+		let accountNumber: AbstractControl = form.get('infoTransferencia').get('noCuenta');
+
+		if(accountNumber && accountNumber.value == null) {
+			accountNumber.setValue(0);
+		}
+	}
+
 	sendForm(form: FormGroup, formType: string, sendType: string, id?: number) {
 		console.log(id);
+		this.sanitizeAccountNumber(form);
 		this.formHandler.sendForm(form, formType, sendType, this.appComponent, id);
 
 	}

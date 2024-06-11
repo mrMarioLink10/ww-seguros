@@ -1075,7 +1075,6 @@ export class RefundComponent implements OnInit {
 
 	accountNumberValidator(): ValidatorFn {
 		return (control: AbstractControl): { [key: string]: any } | null => {
-		  console.log('validando numero de cuenta', control)
 		  if(control.value == null && control.touched) {
 			return { 'customValidation': { value: control.value } };
 		  }

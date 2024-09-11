@@ -910,9 +910,6 @@ export class RefundComponent implements OnInit {
 				// });
 				this.banks.push(data.data[x].descripcion);
 			}
-
-		console.log('bancos',this.banks)
-
 		});
 	}
 

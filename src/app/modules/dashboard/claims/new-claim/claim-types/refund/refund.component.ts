@@ -592,7 +592,7 @@ export class RefundComponent implements OnInit {
 		// }
 
 		console.log('El json de todo el formulario: ', JSON.stringify(this.refundForm.value));
-
+		
 	}
 	// role;
 	// idd;
@@ -1720,17 +1720,26 @@ export class RefundComponent implements OnInit {
 	}
 
 	sanitizeAccountNumber(form: FormGroup) {
-		let accountNumber: AbstractControl = form.get('infoTransferencia').get('noCuenta');
+		if(form.get('infoTransferencia')) {
+			let accountNumber: AbstractControl = form.get('infoTransferencia').get('noCuenta') || null;
 
-		if(accountNumber && accountNumber.value == null) {
-			accountNumber.setValue(0);
+			if(accountNumber && accountNumber.value == null) {
+				accountNumber.setValue(0);
+			}
+		}
+	}
+
+	setStatus(form: FormGroup){
+		if(form.get('status') && form.status == 'VALID'){
+			form.get('status').setValue(1);
+		} else if(form.get('status') && form.status == 'INVALID'){
+			form.get('status').setValue(0);
 		}
 	}
 
 	sendForm(form: FormGroup, formType: string, sendType: string, id?: number) {
-		console.log(id);
 		this.sanitizeAccountNumber(form);
+		this.setStatus(form);
 		this.formHandler.sendForm(form, formType, sendType, this.appComponent, id);
-
 	}
 }

@@ -1104,16 +1104,16 @@ export class RefundComponent implements OnInit {
 				medicReports: this.fb.array([this.createFormArray('medicReports')]),
 				paymentVouchers: this.fb.array([this.createFormArray('paymentVouchers')]),
 				otros: this.fb.array([this.createFormArray('otros')]),
-			}, { validators: this.atLeastOneArrayValid })
+			})
 		});
 	}
 
-	atLeastOneArrayValid(control: AbstractControl): ValidationErrors | null {
+	atLeastOneInvoiceAttached(control: AbstractControl): ValidationErrors | null {
 		const formGroup = control as FormGroup;
 
 		// Check if any FormArray has at least one valid FormGroup
 		const isAnyArrayValid = Object.keys(formGroup.controls).some(key => {
-			if (key != 'id') {
+			if (key != 'id' && key == 'invoices') {
 				const formArray = formGroup.get(key) as FormArray;
 				return formArray.value[0][key].length > 0;
 			}
@@ -1149,7 +1149,7 @@ export class RefundComponent implements OnInit {
 		switch (type) {
 			case 'invoices':
 				return this.fb.group({
-					invoices: [''],
+					invoices: ['',Validators.required],
 				});
 
 			case 'indications':
@@ -1687,29 +1687,29 @@ export class RefundComponent implements OnInit {
 			}
 			for (let x = 0; x < this.diagnosticList.length; x++) {
 
-				this.refundForm.get('diagnosticos').get(x.toString()).get('files').setValidators([this.atLeastOneArrayValid]);
-
 				for (let y = 0; y < this.refundForm.get('diagnosticos').get(x.toString()).get('files').get('invoices')['controls'].length; y++) {
+					this.refundForm.get('diagnosticos').get(x.toString()).get('files').get('invoices').get(y.toString()).get('invoices').setValidators(Validators.required);
 					this.refundForm.get('diagnosticos').get(x.toString()).get('files').get('invoices').get(y.toString()).get('invoices').updateValueAndValidity();
 				}
 
 				for (let y = 0; y < this.refundForm.get('diagnosticos').get(x.toString()).get('files').get('indications')['controls'].length; y++) {
-
+					this.refundForm.get('diagnosticos').get(x.toString()).get('files').get('indications').get(y.toString()).get('indications').clearValidators();
 					this.refundForm.get('diagnosticos').get(x.toString()).get('files').get('indications').get(y.toString()).get('indications').updateValueAndValidity();
 				}
 
 				for (let y = 0; y < this.refundForm.get('diagnosticos').get(x.toString()).get('files').get('medicReports')['controls'].length; y++) {
-
+					this.refundForm.get('diagnosticos').get(x.toString()).get('files').get('medicReports').get(y.toString()).get('medicReports').clearValidators();
 					this.refundForm.get('diagnosticos').get(x.toString()).get('files').get('medicReports').get(y.toString()).get('medicReports').updateValueAndValidity();
 				}
 
 				for (let y = 0; y < this.refundForm.get('diagnosticos').get(x.toString()).get('files').get('paymentVouchers')['controls'].length; y++) {
-
+					this.refundForm.get('diagnosticos').get(x.toString()).get('files').get('paymentVouchers').get(y.toString()).get('paymentVouchers').clearValidators();
 					this.refundForm.get('diagnosticos').get(x.toString()).get('files').get('paymentVouchers').get(y.toString()).get('paymentVouchers').updateValueAndValidity();
 				}
 
 				for (let y = 0; y < this.refundForm.get('diagnosticos').get(x.toString()).get('files').get('otros')['controls'].length; y++) {
 
+					this.refundForm.get('diagnosticos').get(x.toString()).get('files').get('otros').get(y.toString()).get('otros').clearValidators();
 					this.refundForm.get('diagnosticos').get(x.toString()).get('files').get('otros').get(y.toString()).get('otros').updateValueAndValidity();
 				}
 			}

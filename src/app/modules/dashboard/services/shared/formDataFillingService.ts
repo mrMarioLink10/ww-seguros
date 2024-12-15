@@ -23,7 +23,7 @@ export class FormDataFillingService {
     'diabetesOther',
     'everHospitalized', 'lastTimeSmoked',
     'healthDeclaration',
-    'invoices','indications','medicReports','paymentVouchers','otros'
+    'invoices'
   ];
 
   excludedKeysForm = [
